@@ -544,9 +544,11 @@
 <body>
 <div class="page-wrap">
 
+  <a href="../../" style="display:inline-block;margin-bottom:18px;font-size:0.875rem;color:var(--muted);text-decoration:none;">← Back to tools</a>
+
   <header>
     <h1>ELIZA Simulator</h1>
-    <p class="subtitle">A 1966 rule-based chatbot — see every rule it fires</p>
+    <p class="subtitle">Rule-based pattern matching — Session 1</p>
   </header>
 
   <div class="notice">
@@ -582,14 +584,25 @@
             <button class="btn btn-primary" id="sendBtn">Send</button>
             <button class="btn btn-ghost" id="resetBtn">Reset</button>
           </div>
-          <div class="examples-row">
-            <span class="examples-label">Try:</span>
-            <button class="example-btn">I feel really sad today</button>
-            <button class="example-btn">My mother doesn't understand me</button>
-            <button class="example-btn">Nobody likes me</button>
-            <button class="example-btn">I want to quit my job</button>
-            <button class="example-btn">I dreamed about flying</button>
-            <button class="example-btn">I can't stop thinking about the past</button>
+          <div class="examples-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
+            <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+              <span class="examples-label" title="These feel empathetic — notice what rule fires">1 · Start here:</span>
+              <button class="example-btn">I feel really sad today</button>
+              <button class="example-btn">My mother doesn't understand me</button>
+              <button class="example-btn">I dreamed about flying</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+              <span class="examples-label" title="Watch the inspector — ELIZA ignores most of what you said">2 · See the mechanism:</span>
+              <button class="example-btn">I feel like the concept of mother is overrated</button>
+              <button class="example-btn">I can't stop thinking about the past</button>
+              <button class="example-btn">Everyone always ignores me</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+              <span class="examples-label" title="No keywords — watch what happens">3 · Try to break it:</span>
+              <button class="example-btn">The weather is nice today</button>
+              <button class="example-btn">What is the capital of France?</button>
+              <button class="example-btn">You don't understand me at all</button>
+            </div>
           </div>
           <div id="testStatus"></div>
         </div>
@@ -658,12 +671,22 @@
     </div>
 
     <div class="facilitator-card">
-      <div class="facilitator-label">Facilitator Note</div>
-      <p>The key insight: ELIZA never "understands" — it just finds the highest-weight keyword and slots your words into a template. Weizenbaum called this the "ELIZA effect": people attribute understanding to a machine that has none. Ask students: <em>what would have to be true for a machine to actually understand you?</em></p>
+      <div class="facilitator-label">Facilitator Note — Workshop Sequence</div>
+      <p><strong>Opening move (2 min):</strong> Ask everyone to try Step 1 (Start here) without reading the Rule Inspector. Let the responses land. Ask: "Did any of those feel meaningful?" Hold that feeling — don't explain it yet.</p>
+      <p style="margin-top:10px;"><strong>Reveal move (5 min):</strong> Now point everyone to the Rule Inspector. Walk through one example together — "I feel really sad today." Show: keyword found → rule selected → pattern matched → template filled. The machine never read the word "sad" for meaning. It found a pattern and filled a slot.</p>
+      <p style="margin-top:10px;"><strong>Stress-test move (5 min):</strong> Step 2 and 3. "I feel like the concept of <em>mother</em> is overrated" — does the MOTHER rule (weight 8) beat the FEEL rule? Try "The weather is nice today" — what happens when nothing matches? Try "What is the capital of France?" — the WHAT rule deflects the question back. The rule fires regardless of whether a question makes sense to deflect.</p>
+      <ul style="margin-top:12px;">
+        <li>Try the same feeling phrased two different ways — "I feel sad" vs. "I am feeling down." Do the same rules fire?</li>
+        <li>What happens if you put "mother" and "dream" in the same sentence? Which keyword wins, and why?</li>
+        <li>Type something ELIZA has no rule for. How many fallbacks does it cycle through before repeating?</li>
+      </ul>
+      <p style="margin-top:12px;"><strong>Debrief questions:</strong></p>
       <ul>
-        <li>Try typing the same feeling in different words — does ELIZA behave differently?</li>
-        <li>Try deliberately triggering a high-priority keyword (mother, father, dream) mid-sentence.</li>
-        <li>Try a statement with no keywords at all — what happens?</li>
+        <li>At what point did ELIZA feel like it understood you? What made it feel that way?</li>
+        <li>Weizenbaum said he was disturbed that people found ELIZA empathetic. Why would that disturb a researcher?</li>
+        <li>A modern LLM also doesn't understand — it predicts tokens. But it trained on billions of examples instead of a few dozen rules. What changes about the failure modes? What stays the same?</li>
+        <li>If you replaced the Rule Inspector with a "Confidence: 94%" badge, would participants still notice it was pattern-matching? What does that suggest about LLM interfaces?</li>
+        <li>What would a machine need to actually <em>understand</em> you — not just respond plausibly?</li>
       </ul>
     </div>
 
