@@ -480,11 +480,28 @@ const buf    = document.createElement('canvas');
 const bufCtx = buf.getContext('2d');
 
 function resize() {
+  const hadBuffer = buf.width > 0 && buf.height > 0;
+  const oldBuf = document.createElement('canvas');
+  const oldCtx = oldBuf.getContext('2d');
+  if (hadBuffer) {
+    oldBuf.width = buf.width;
+    oldBuf.height = buf.height;
+    oldCtx.drawImage(buf, 0, 0);
+  }
+
   const W = wrap.clientWidth;
   const H = Math.round(W * 0.6);
   cv.width  = W; cv.height  = H;
   buf.width = W; buf.height = H;
-  wipeBuf();
+
+  if (hadBuffer) {
+    bufCtx.fillStyle = BG;
+    bufCtx.fillRect(0, 0, buf.width, buf.height);
+    bufCtx.drawImage(oldBuf, 0, 0, buf.width, buf.height);
+  } else {
+    wipeBuf();
+  }
+
   render();
 }
 
