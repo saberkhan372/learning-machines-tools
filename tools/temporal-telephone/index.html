@@ -1,465 +1,781 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Temporal Telephone</title>
-  <style>
-    :root {
-      --bg: #f7f1e6;
-      --paper: #fffaf1;
-      --ink: #20201d;
-      --muted: #6f675b;
-      --line: #d9ccb8;
-      --accent: #2364aa;
-      --green: #2f7d57;
-      --warm: #b45f3a;
-      --shadow: 0 10px 28px rgba(49, 39, 25, 0.10);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temporal Telephone — Learning Machines</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    * { box-sizing: border-box; }
+body {
+  font-family: system-ui, sans-serif;
+  background: #f0efe9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px;
+  min-height: 100vh;
+}
 
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
-      background: var(--bg);
-      line-height: 1.5;
-    }
+.back-nav {
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 10px;
+}
+.back-nav a {
+  font-size: 13px;
+  color: #555;
+  text-decoration: none;
+}
+.back-nav a:hover { color: #111; }
 
-    main {
-      width: min(1160px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 34px 0;
-    }
+h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #111;
+}
 
-    a { color: var(--accent); }
+.subtitle {
+  font-size: 13px;
+  color: #888;
+  margin-top: 2px;
+}
 
-    h1 {
-      margin: 18px 0 8px;
-      font-size: clamp(2rem, 6vw, 4rem);
-      line-height: 1;
-      letter-spacing: 0;
-    }
+header {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
 
-    .intro {
-      max-width: 780px;
-      margin: 0;
-      color: var(--muted);
-    }
+.round-pills {
+  display: flex;
+  gap: 4px;
+}
 
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 340px;
-      gap: 16px;
-      margin-top: 22px;
-      align-items: start;
-    }
+.pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 2px solid #ccc;
+  background: #fff;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.pill.active {
+  border-color: #111;
+  background: #111;
+  color: #fff;
+}
 
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--paper);
-      box-shadow: var(--shadow);
-    }
+/* Info strip */
+.info-strip {
+  width: 100%;
+  max-width: 640px;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.info-strip.r1 { background: #FFEBEE; color: #7f1010; border-left: 4px solid #E53935; }
+.info-strip.r2 { background: #E3F2FD; color: #0d3a6b; border-left: 4px solid #1E88E5; }
+.info-strip.r3 { background: #E8F5E9; color: #1b4a1e; border-left: 4px solid #43A047; }
 
-    .stage { padding: 18px; }
+/* Prompt bar */
+.prompt-bar {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #E3F2FD;
+  border: 1.5px solid #90CAF9;
+  border-radius: 8px;
+  padding: 7px 12px;
+  margin-bottom: 10px;
+}
+.prompt-bar label { font-size: 11px; font-weight: 700; color: #1565C0; text-transform: uppercase; white-space: nowrap; }
+.prompt-bar input { flex: 1; border: none; background: transparent; font-size: 14px; font-weight: 600; color: #111; outline: none; }
 
-    .canvas-stack {
-      position: relative;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-      background: #fff;
-      touch-action: none;
-    }
+/* Canvas wrapper */
+.canvas-wrap {
+  width: 100%;
+  max-width: 640px;
+  border: 3px solid #111;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: crosshair;
+  touch-action: none;
+  background: #fffef9;
+}
+.canvas-wrap canvas { display: block; width: 100%; }
+.canvas-wrap.playback { cursor: default; }
 
-    canvas {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      display: block;
-      background: transparent;
-    }
+/* Color + size toolbar */
+.toolbar {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
 
-    #ghostCanvas,
-    #drawCanvas {
-      position: absolute;
-      inset: 0;
-    }
+.colors {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.color-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s;
+  flex-shrink: 0;
+}
+.color-dot:hover { transform: scale(1.15); }
+.color-dot.on { border-color: #111; box-shadow: 0 0 0 1px white inset; }
 
-    .controls {
-      padding: 18px;
-      display: grid;
-      gap: 15px;
-    }
+.divider { width: 1px; height: 28px; background: #ddd; margin: 0 2px; }
 
-    label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: 750;
-    }
+.sizes {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.size-opt {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.size-opt.on, .size-opt:hover { border-color: #111; background: #111; }
+.size-opt .dot { background: #888; border-radius: 50%; }
+.size-opt.on .dot, .size-opt:hover .dot { background: #fff; }
 
-    select,
-    input[type="range"] {
-      width: 100%;
-    }
+.spacer { flex: 1; }
 
-    select {
-      min-height: 42px;
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      padding: 8px;
-      background: #fff;
-      color: var(--ink);
-      font: inherit;
-    }
+.erase-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  color: #555;
+}
+.erase-btn.on, .erase-btn:hover { border-color: #111; background: #111; color: #fff; }
 
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+.clear-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid #ffb3b3;
+  background: #fff;
+  cursor: pointer;
+  color: #c62828;
+}
+.clear-btn:hover { background: #FFEBEE; }
 
-    button {
-      min-height: 40px;
-      border: 1px solid var(--ink);
-      border-radius: 7px;
-      padding: 8px 11px;
-      background: var(--ink);
-      color: #fffaf1;
-      font: inherit;
-      font-weight: 760;
-      cursor: pointer;
-    }
+/* Bottom action bar */
+.actions {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
 
-    button.secondary {
-      border-color: var(--line);
-      background: #fff;
-      color: var(--ink);
-    }
+.frame-badge {
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.frame-badge span { color: #aaa; font-weight: 400; font-size: 11px; margin-left: 4px; }
 
-    button.warn {
-      border-color: #c98972;
-      background: #fff4ed;
-      color: #833f28;
-    }
+.lock-btn {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 9px 22px;
+  border-radius: 8px;
+  border: none;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.lock-btn:hover { opacity: 0.8; }
+.lock-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-    button:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
+.reset-btn {
+  font-size: 12px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  color: #c62828;
+}
+.reset-btn:hover { background: #FFEBEE; border-color: #ffb3b3; }
 
-    .readout {
-      padding: 12px;
-      border-radius: 8px;
-      background: #f3eadb;
-      color: var(--muted);
-    }
+/* Playback controls */
+.playback-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.pb-btn {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  color: #111;
+}
+.pb-btn:hover { background: #eee; }
+.pb-btn.on { background: #111; color: #fff; border-color: #111; }
+.fps-wrap { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888; }
+.fps-wrap input { width: 70px; accent-color: #111; cursor: pointer; }
+.pos-label { font-size: 12px; font-weight: 700; color: #555; white-space: nowrap; }
 
-    .readout strong {
-      display: block;
-      color: var(--ink);
-      margin-bottom: 4px;
-    }
+/* Toast */
+.toast {
+  width: 100%;
+  max-width: 640px;
+  font-size: 12px;
+  color: #555;
+  text-align: center;
+  min-height: 18px;
+  margin-top: 4px;
+}
 
-    .frames {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 8px;
-      margin-top: 14px;
-    }
+/* Ghost mode bar */
+.ghost-mode-bar {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+.gm-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  margin-right: 2px;
+}
+.gm-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 2px solid #ddd;
+  background: #f5f5f5;
+  color: #777;
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+.gm-btn:hover { border-color: #aaa; color: #333; }
+.gm-btn.on { border-color: #111; background: #111; color: #fff; }
+.gm-run {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.gm-run.rA { background: #FFEBEE; color: #B71C1C; }
+.gm-run.rB { background: #E3F2FD; color: #0D47A1; }
+.gm-run.rC { background: #E8F5E9; color: #1B5E20; }
 
-    .thumb {
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      min-height: 70px;
-      background: #fff;
-      display: grid;
-      place-items: center;
-      color: var(--muted);
-      font-size: 0.78rem;
-      overflow: hidden;
-    }
+/* Thumbnails strip */
+.thumbs-wrap {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 8px;
+}
+.thumbs-label { font-size: 11px; color: #aaa; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.thumbs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.thumb {
+  flex-shrink: 0;
+  width: 72px;
+  cursor: pointer;
+}
+.thumb img {
+  width: 72px;
+  height: 45px;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  display: block;
+}
+.thumb img.on { border-color: #111; }
+.thumb-n { font-size: 10px; color: #aaa; text-align: center; margin-top: 2px; }
 
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .thumb.active {
-      outline: 3px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .questions {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-    }
-
-    .questions li { margin: 6px 0; }
-
-    @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
-      .frames { grid-template-columns: repeat(4, 1fr); }
-    }
-  </style>
+/* Reflection card */
+.reflection-card {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1.5px solid #d9ccb8;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+}
+.reflection-card strong { color: #111; display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.reflection-card ol { padding-left: 18px; }
+.reflection-card li { margin-bottom: 3px; }
+</style>
 </head>
 <body>
-  <main>
-    <a href="../../">Back to tools</a>
+
+<div class="back-nav"><a href="../../">← Back to tools</a></div>
+
+<header>
+  <div>
     <h1>Temporal Telephone</h1>
-    <p class="intro">
-      Draw a short frame sequence twice: once with only the previous frame as a guide, and once with the first frame as an anchor. The comparison makes drift, continuity, and temporal coherence visible before discussing AI video.
-    </p>
+    <div class="subtitle">Generative video activity — Session 3</div>
+  </div>
+  <div class="round-pills">
+    <button class="pill active" onclick="setRound(1)">Round 1</button>
+    <button class="pill" onclick="setRound(2)">Round 2</button>
+    <button class="pill" onclick="setRound(3)">Round 3</button>
+  </div>
+</header>
 
-    <div class="layout">
-      <section class="panel stage" aria-label="Drawing stage">
-        <div class="canvas-stack">
-          <canvas id="baseCanvas" width="960" height="600"></canvas>
-          <canvas id="ghostCanvas" width="960" height="600"></canvas>
-          <canvas id="drawCanvas" width="960" height="600"></canvas>
-        </div>
-        <div class="frames" id="frames"></div>
-      </section>
+<div class="info-strip r1" id="info-strip">
+  <strong>Round 1 — Telephone:</strong> Draw what happens next. The prompt is hidden. Only a faint ghost of the previous frame is visible.
+</div>
 
-      <aside class="panel controls">
-        <div>
-          <label for="roundMode">Round mode</label>
-          <select id="roundMode">
-            <option value="previous">Previous frame only</option>
-            <option value="anchor">Frame 1 anchor + previous frame</option>
-          </select>
-        </div>
+<div class="prompt-bar" id="prompt-bar" style="display:none">
+  <label>Prompt</label>
+  <input id="prompt-input" type="text" value="A person at work">
+</div>
 
-        <div>
-          <label for="frameSlider">Frame: <span id="frameReadout">1</span> / 8</label>
-          <input id="frameSlider" type="range" min="0" max="7" value="0">
-        </div>
+<div class="canvas-wrap" id="canvas-wrap">
+  <canvas id="cv"></canvas>
+</div>
 
-        <div>
-          <label for="brush">Brush size: <span id="brushReadout">8</span></label>
-          <input id="brush" type="range" min="2" max="24" value="8">
-        </div>
+<div class="toolbar" id="toolbar">
+  <div class="colors" id="colors"></div>
+  <div class="divider"></div>
+  <div class="sizes" id="sizes"></div>
+  <div class="divider"></div>
+  <button class="erase-btn" id="erase-btn" onclick="toggleErase()">Erase</button>
+  <button class="clear-btn" onclick="clearCanvas()">Clear</button>
+</div>
 
-        <div class="button-row">
-          <button id="saveFrame" type="button">Save frame</button>
-          <button id="play" type="button" class="secondary">Play</button>
-          <button id="clearCurrent" type="button" class="secondary">Clear frame</button>
-          <button id="resetAll" type="button" class="warn">Reset all</button>
-        </div>
+<div class="ghost-mode-bar">
+  <span class="gm-label">Ghost mode</span>
+  <button class="gm-btn on" id="gm-prev"   onclick="setGhostMode('prev')">Previous frame</button>
+  <button class="gm-btn"    id="gm-anchor" onclick="setGhostMode('anchor')">Anchor (Frame 1)</button>
+  <button class="gm-btn"    id="gm-both"   onclick="setGhostMode('both')">Both</button>
+  <span class="gm-run rA"   id="run-label">Run A</span>
+</div>
 
-        <div class="readout" id="readout">
-          <strong>Previous frame only</strong>
-          Draw frame 1. For later frames, you will see only a faint version of the frame immediately before it.
-        </div>
-
-        <ul class="questions">
-          <li>Where does identity drift begin?</li>
-          <li>What stays coherent when only the previous frame is visible?</li>
-          <li>What changes when the first frame remains available as an anchor?</li>
-          <li>How is this different from judging a single generated image?</li>
-        </ul>
-      </aside>
+<div class="actions" id="actions">
+  <div class="frame-badge" id="frame-badge">Frame 1 <span id="locked-count"></span></div>
+  <button class="lock-btn" id="lock-btn" onclick="lockFrame()">Lock &amp; Pass →</button>
+  <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
+  <div class="playback-bar" id="pb-bar">
+    <button class="pb-btn" onclick="pbStep(-1)">◀</button>
+    <button class="pb-btn" id="play-btn" onclick="togglePlay()">▶ Play</button>
+    <button class="pb-btn" onclick="pbStep(1)">▶▶</button>
+    <div class="fps-wrap">
+      <input type="range" min="1" max="20" value="6" step="1" id="fps-sl" oninput="setFPS(+this.value)">
+      <span id="fps-v">6</span>fps
     </div>
-  </main>
+    <div class="pos-label" id="pos-label">— / —</div>
+  </div>
+</div>
 
-  <script>
-    (() => {
-      const totalFrames = 8;
-      const base = document.querySelector("#baseCanvas");
-      const ghost = document.querySelector("#ghostCanvas");
-      const draw = document.querySelector("#drawCanvas");
-      const bctx = base.getContext("2d");
-      const gctx = ghost.getContext("2d");
-      const dctx = draw.getContext("2d");
-      const framesEl = document.querySelector("#frames");
-      const roundMode = document.querySelector("#roundMode");
-      const frameSlider = document.querySelector("#frameSlider");
-      const frameReadout = document.querySelector("#frameReadout");
-      const brush = document.querySelector("#brush");
-      const brushReadout = document.querySelector("#brushReadout");
-      const readout = document.querySelector("#readout");
-      const saveFrame = document.querySelector("#saveFrame");
-      const playButton = document.querySelector("#play");
-      const clearCurrent = document.querySelector("#clearCurrent");
-      const resetAll = document.querySelector("#resetAll");
+<div class="toast" id="toast"></div>
 
-      let frames = Array(totalFrames).fill(null);
-      let current = 0;
-      let drawing = false;
-      let playing = false;
-      let playTimer = null;
+<div class="thumbs-wrap" id="thumbs-wrap" style="display:none">
+  <div class="thumbs-label">Locked frames</div>
+  <div class="thumbs" id="thumbs"></div>
+</div>
 
-      function drawPaper() {
-        bctx.fillStyle = "#fffaf1";
-        bctx.fillRect(0, 0, base.width, base.height);
-        bctx.strokeStyle = "#eadfce";
-        bctx.lineWidth = 1;
-        for (let x = 0; x <= base.width; x += 60) {
-          bctx.beginPath(); bctx.moveTo(x, 0); bctx.lineTo(x, base.height); bctx.stroke();
-        }
-        for (let y = 0; y <= base.height; y += 60) {
-          bctx.beginPath(); bctx.moveTo(0, y); bctx.lineTo(base.width, y); bctx.stroke();
-        }
+<div class="reflection-card">
+  <strong>Reflection prompts</strong>
+  <ol>
+    <li>Where did the drawing drift furthest from the original prompt?</li>
+    <li>Which ghost mode (previous frame / anchor / both) kept the sequence most coherent? Why?</li>
+    <li>What would a video model need to "remember" to avoid this drift?</li>
+    <li>What failure modes in AI-generated video does this activity help explain?</li>
+  </ol>
+</div>
+
+<script>
+// ── Config ────────────────────────────────────────────────────────────────────
+const COLORS = ['#111111','#e53935','#1e88e5','#43a047','#fb8c00','#8e24aa','#00acc1','#f5f0e8'];
+const SIZES  = [4, 10, 20];
+const BG = '#fffef9';
+
+// ── State ─────────────────────────────────────────────────────────────────────
+const S = {
+  round: 1,
+  color: '#111111',
+  size: 10,
+  erasing: false,
+  ghostMode: 'prev',  // 'prev' | 'anchor' | 'both'
+  frames: [],         // data URLs
+  ghostEl: null,      // HTMLImageElement — previous frame
+  anchorEl: null,     // HTMLImageElement — frame 1
+  pbEls: [],          // HTMLImageElements for playback
+  playing: false,
+  fps: 6,
+  pbIndex: 0,
+  timer: null,
+};
+
+// ── Canvas setup ──────────────────────────────────────────────────────────────
+const wrap = document.getElementById('canvas-wrap');
+const cv   = document.getElementById('cv');
+const ctx  = cv.getContext('2d');
+
+const buf    = document.createElement('canvas');
+const bufCtx = buf.getContext('2d');
+
+function resize() {
+  const W = wrap.clientWidth;
+  const H = Math.round(W * 0.6);
+  cv.width  = W; cv.height  = H;
+  buf.width = W; buf.height = H;
+  wipeBuf();
+  render();
+}
+
+function wipeBuf() {
+  bufCtx.fillStyle = BG;
+  bufCtx.fillRect(0, 0, buf.width, buf.height);
+}
+
+// ── Render loop ───────────────────────────────────────────────────────────────
+function render() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, cv.width, cv.height);
+
+  if (S.round === 3 || S.playing) {
+    const pbFrame = S.pbEls[S.pbIndex];
+    if (pbFrame && pbFrame.complete && pbFrame.naturalWidth) {
+      ctx.drawImage(pbFrame, 0, 0, cv.width, cv.height);
+    }
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    roundRect(ctx, 8, cv.height - 26, 88, 18, 4);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = '11px monospace';
+    ctx.fillText('frame ' + (S.pbIndex + 1) + ' / ' + S.frames.length, 14, cv.height - 12);
+    requestAnimationFrame(render);
+    return;
+  }
+
+  if (S.frames.length > 0) {
+    function drawGhost(el, alpha) {
+      if (el && el.naturalWidth > 0) {
+        ctx.globalAlpha = alpha;
+        ctx.drawImage(el, 0, 0, cv.width, cv.height);
+        ctx.globalAlpha = 1;
       }
+    }
+    if (S.ghostMode === 'prev') {
+      drawGhost(S.ghostEl, 0.18);
+    } else if (S.ghostMode === 'anchor') {
+      drawGhost(S.anchorEl, 0.18);
+    } else {
+      drawGhost(S.anchorEl, 0.12);
+      drawGhost(S.ghostEl,  0.22);
+    }
+  }
 
-      function clearLayer(ctx) {
-        ctx.clearRect(0, 0, draw.width, draw.height);
-      }
+  ctx.drawImage(buf, 0, 0);
+  requestAnimationFrame(render);
+}
 
-      function loadCurrentDrawing() {
-        clearLayer(dctx);
-        if (!frames[current]) return;
-        const img = new Image();
-        img.onload = () => dctx.drawImage(img, 0, 0, draw.width, draw.height);
-        img.src = frames[current];
-      }
+function roundRect(c, x, y, w, h, r) {
+  c.beginPath();
+  c.moveTo(x + r, y);
+  c.lineTo(x + w - r, y);
+  c.quadraticCurveTo(x + w, y, x + w, y + r);
+  c.lineTo(x + w, y + h - r);
+  c.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  c.lineTo(x + r, y + h);
+  c.quadraticCurveTo(x, y + h, x, y + h - r);
+  c.lineTo(x, y + r);
+  c.quadraticCurveTo(x, y, x + r, y);
+  c.closePath();
+}
 
-      function drawGhosts() {
-        clearLayer(gctx);
-        if (current === 0) return;
+// ── Drawing ───────────────────────────────────────────────────────────────────
+function getPos(e) {
+  const r = cv.getBoundingClientRect();
+  const src = e.touches ? e.touches[0] : e;
+  return [(src.clientX - r.left) * (cv.width / r.width),
+          (src.clientY - r.top)  * (cv.height / r.height)];
+}
 
-        if (roundMode.value === "anchor" && frames[0]) {
-          const anchor = new Image();
-          anchor.onload = () => {
-            gctx.globalAlpha = 0.14;
-            gctx.drawImage(anchor, 0, 0, ghost.width, ghost.height);
-            gctx.globalAlpha = 1;
-          };
-          anchor.src = frames[0];
-        }
+let prev = null;
+function startDraw(e) {
+  if (S.round === 3) return;
+  e.preventDefault();
+  prev = getPos(e);
+  const [x, y] = prev;
+  if (!S.erasing) { dot(x, y); }
+}
+function moveDraw(e) {
+  if (!prev || S.round === 3) return;
+  e.preventDefault();
+  const [x, y] = getPos(e);
+  const [px, py] = prev;
+  stroke(px, py, x, y);
+  prev = [x, y];
+}
+function endDraw() { prev = null; }
 
-        if (frames[current - 1]) {
-          const previous = new Image();
-          previous.onload = () => {
-            gctx.globalAlpha = 0.28;
-            gctx.drawImage(previous, 0, 0, ghost.width, ghost.height);
-            gctx.globalAlpha = 1;
-          };
-          previous.src = frames[current - 1];
-        }
-      }
+function dot(x, y) {
+  bufCtx.fillStyle = S.color;
+  bufCtx.beginPath();
+  bufCtx.arc(x, y, S.size / 2, 0, Math.PI * 2);
+  bufCtx.fill();
+}
+function stroke(x1, y1, x2, y2) {
+  bufCtx.lineCap = bufCtx.lineJoin = 'round';
+  bufCtx.strokeStyle = S.erasing ? BG : S.color;
+  bufCtx.lineWidth   = S.erasing ? S.size * 3 : S.size;
+  bufCtx.beginPath(); bufCtx.moveTo(x1, y1); bufCtx.lineTo(x2, y2); bufCtx.stroke();
+}
 
-      function updateReadout() {
-        frameReadout.textContent = String(current + 1);
-        brushReadout.textContent = brush.value;
-        if (roundMode.value === "previous") {
-          readout.innerHTML = "<strong>Previous frame only</strong>Each new frame can only lean on the frame before it. Small changes can accumulate into drift.";
-        } else {
-          readout.innerHTML = "<strong>Anchor + previous frame</strong>The first frame stays faintly visible, so identity and layout have a stable reference.";
-        }
-      }
+cv.addEventListener('mousedown',  startDraw);
+cv.addEventListener('mousemove',  moveDraw);
+cv.addEventListener('mouseup',    endDraw);
+cv.addEventListener('mouseleave', endDraw);
+cv.addEventListener('touchstart', startDraw, { passive: false });
+cv.addEventListener('touchmove',  moveDraw,  { passive: false });
+cv.addEventListener('touchend',   endDraw);
 
-      function renderThumbs() {
-        framesEl.innerHTML = "";
-        frames.forEach((src, index) => {
-          const div = document.createElement("button");
-          div.type = "button";
-          div.className = "thumb" + (index === current ? " active" : "");
-          div.setAttribute("aria-label", `Go to frame ${index + 1}`);
-          if (src) {
-            const img = document.createElement("img");
-            img.alt = `Frame ${index + 1}`;
-            img.src = src;
-            div.appendChild(img);
-          } else {
-            div.textContent = `Frame ${index + 1}`;
-          }
-          div.addEventListener("click", () => goToFrame(index));
-          framesEl.appendChild(div);
-        });
-      }
+// ── Actions ───────────────────────────────────────────────────────────────────
+function clearCanvas() { wipeBuf(); }
 
-      function goToFrame(index) {
-        current = Math.max(0, Math.min(totalFrames - 1, index));
-        frameSlider.value = String(current);
-        drawPaper();
-        drawGhosts();
-        loadCurrentDrawing();
-        updateReadout();
-        renderThumbs();
-      }
+function setColor(c) {
+  S.color = c; S.erasing = false;
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.toggle('on', d.dataset.c === c));
+  document.getElementById('erase-btn').classList.remove('on');
+}
 
-      function pointerPoint(event) {
-        const rect = draw.getBoundingClientRect();
-        return {
-          x: (event.clientX - rect.left) * (draw.width / rect.width),
-          y: (event.clientY - rect.top) * (draw.height / rect.height),
-        };
-      }
+function setSize(s) {
+  S.size = s;
+  document.querySelectorAll('.size-opt').forEach(b => b.classList.toggle('on', +b.dataset.s === s));
+}
 
-      function startDrawing(event) {
-        drawing = true;
-        draw.setPointerCapture(event.pointerId);
-        const p = pointerPoint(event);
-        dctx.beginPath();
-        dctx.moveTo(p.x, p.y);
-      }
+function toggleErase() {
+  S.erasing = !S.erasing;
+  document.getElementById('erase-btn').classList.toggle('on', S.erasing);
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.toggle('on', !S.erasing && d.dataset.c === S.color));
+}
 
-      function continueDrawing(event) {
-        if (!drawing) return;
-        const p = pointerPoint(event);
-        dctx.strokeStyle = "#20201d";
-        dctx.lineWidth = Number(brush.value);
-        dctx.lineCap = "round";
-        dctx.lineJoin = "round";
-        dctx.lineTo(p.x, p.y);
-        dctx.stroke();
-      }
+function makeImg(url) {
+  const el = new Image();
+  el.src = url;
+  return el;
+}
 
-      function stopDrawing() {
-        drawing = false;
-      }
+function lockFrame() {
+  if (S.frames.length >= 12) { toast('Max 12 frames!'); return; }
+  const url = buf.toDataURL('image/png');
+  S.frames.push(url);
+  S.ghostEl = makeImg(url);
+  if (S.frames.length === 1) S.anchorEl = S.ghostEl;
+  rebuildPb();
+  addThumb(url, S.frames.length);
+  wipeBuf();
+  updateUI();
+  toast('Frame ' + S.frames.length + ' locked — pass to the next student!');
+}
 
-      function saveCurrentFrame() {
-        frames[current] = draw.toDataURL("image/png");
-        renderThumbs();
-        if (current < totalFrames - 1) goToFrame(current + 1);
-      }
+function setRound(r) {
+  stopPlay();
+  S.round = r;
+  document.querySelectorAll('.pill').forEach((b, i) => b.classList.toggle('active', i + 1 === r));
+  const msgs = [
+    '<strong>Round 1 — Telephone:</strong> Draw what happens next. The prompt is hidden. Use the Ghost mode bar to switch between Run A, B, and C.',
+    '<strong>Round 2 — Conditioned:</strong> The prompt is now visible. Use it as your anchor while drawing.',
+    '<strong>Round 3 — Playback:</strong> Watch the flipbook. Press Play or step through frames to find the drift.',
+  ];
+  const strip = document.getElementById('info-strip');
+  strip.innerHTML = msgs[r - 1];
+  strip.className = 'info-strip r' + r;
+  document.getElementById('prompt-bar').style.display = r === 2 ? 'flex' : 'none';
+  const off = r === 3;
+  document.getElementById('toolbar').style.opacity = off ? '0.35' : '1';
+  document.getElementById('toolbar').style.pointerEvents = off ? 'none' : '';
+  document.getElementById('lock-btn').disabled = off;
+  wrap.classList.toggle('playback', off);
+  if (r === 3) rebuildPb();
+}
 
-      function play() {
-        if (playing) {
-          clearInterval(playTimer);
-          playTimer = null;
-          playing = false;
-          playButton.textContent = "Play";
-          return;
-        }
-        playing = true;
-        playButton.textContent = "Stop";
-        let index = 0;
-        playTimer = setInterval(() => {
-          goToFrame(index);
-          index = (index + 1) % totalFrames;
-        }, 550);
-      }
+function resetAll() {
+  if (S.frames.length && !confirm('Reset everything and start over?')) return;
+  stopPlay();
+  Object.assign(S, { frames: [], pbEls: [], ghostEl: null, anchorEl: null, pbIndex: 0 });
+  wipeBuf();
+  document.getElementById('thumbs').innerHTML = '';
+  document.getElementById('thumbs-wrap').style.display = 'none';
+  updateUI(); toast('Reset — ready for a new run.');
+}
 
-      draw.addEventListener("pointerdown", startDrawing);
-      draw.addEventListener("pointermove", continueDrawing);
-      draw.addEventListener("pointerup", stopDrawing);
-      draw.addEventListener("pointercancel", stopDrawing);
-      saveFrame.addEventListener("click", saveCurrentFrame);
-      playButton.addEventListener("click", play);
-      clearCurrent.addEventListener("click", () => {
-        frames[current] = null;
-        clearLayer(dctx);
-        renderThumbs();
-      });
-      resetAll.addEventListener("click", () => {
-        frames = Array(totalFrames).fill(null);
-        goToFrame(0);
-      });
-      roundMode.addEventListener("change", () => goToFrame(current));
-      frameSlider.addEventListener("input", () => goToFrame(Number(frameSlider.value)));
-      brush.addEventListener("input", updateReadout);
+// ── Ghost mode ────────────────────────────────────────────────────────────────
+function setGhostMode(mode) {
+  S.ghostMode = mode;
+  document.querySelectorAll('.gm-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById('gm-' + mode).classList.add('on');
+  const cfg = {
+    prev:   { label: 'Run A — Previous frame only', cls: 'rA' },
+    anchor: { label: 'Run B — Anchor (Frame 1)',    cls: 'rB' },
+    both:   { label: 'Run C — Both',                cls: 'rC' },
+  };
+  const lbl = document.getElementById('run-label');
+  lbl.textContent = cfg[mode].label;
+  lbl.className   = 'gm-run ' + cfg[mode].cls;
+  if (mode !== 'prev' && !S.anchorEl) {
+    toast('Tip: lock at least one frame first — that becomes the anchor.');
+  }
+}
 
-      drawPaper();
-      updateReadout();
-      renderThumbs();
-    })();
-  </script>
+// ── Playback ──────────────────────────────────────────────────────────────────
+function rebuildPb() { S.pbEls = S.frames.map(makeImg); }
+
+function togglePlay() {
+  if (!S.frames.length) { toast('No frames yet!'); return; }
+  S.playing ? stopPlay() : startPlay();
+}
+function startPlay() {
+  rebuildPb(); S.playing = true;
+  document.getElementById('play-btn').textContent = '⏸';
+  document.getElementById('play-btn').classList.add('on');
+  S.timer = setInterval(() => {
+    S.pbIndex = (S.pbIndex + 1) % S.frames.length;
+    highlightThumb(S.pbIndex); updatePos();
+  }, Math.round(1000 / S.fps));
+}
+function stopPlay() {
+  S.playing = false;
+  document.getElementById('play-btn').textContent = '▶ Play';
+  document.getElementById('play-btn').classList.remove('on');
+  if (S.timer) { clearInterval(S.timer); S.timer = null; }
+}
+function pbStep(d) {
+  stopPlay(); if (!S.frames.length) return;
+  S.pbEls = S.frames.map(makeImg);
+  S.pbIndex = (S.pbIndex + d + S.frames.length) % S.frames.length;
+  highlightThumb(S.pbIndex); updatePos();
+}
+function setFPS(v) {
+  S.fps = v; document.getElementById('fps-v').textContent = v;
+  if (S.playing) { stopPlay(); startPlay(); }
+}
+function updatePos() {
+  document.getElementById('pos-label').textContent =
+    S.frames.length ? (S.pbIndex + 1) + ' / ' + S.frames.length : '— / —';
+}
+
+// ── Thumbnails ────────────────────────────────────────────────────────────────
+function addThumb(url, n) {
+  const wrap  = document.getElementById('thumbs-wrap');
+  const strip = document.getElementById('thumbs');
+  wrap.style.display = 'block';
+  const div = document.createElement('div'); div.className = 'thumb';
+  const im  = document.createElement('img'); im.src = url; im.id = 'th-' + n;
+  im.onclick = () => { stopPlay(); S.pbIndex = n - 1; S.pbEls = S.frames.map(makeImg); highlightThumb(n - 1); updatePos(); };
+  const lbl = document.createElement('div'); lbl.className = 'thumb-n'; lbl.textContent = n;
+  div.appendChild(im); div.appendChild(lbl);
+  strip.appendChild(div); strip.scrollLeft = strip.scrollWidth;
+}
+function highlightThumb(i) {
+  document.querySelectorAll('#thumbs img').forEach((el, idx) => el.classList.toggle('on', idx === i));
+}
+
+// ── UI updates ────────────────────────────────────────────────────────────────
+function updateUI() {
+  const n = S.frames.length;
+  const badge = document.getElementById('frame-badge');
+  badge.innerHTML = 'Frame ' + (n + 1) + (n ? ' <span>' + n + ' locked</span>' : '');
+  updatePos();
+}
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast'); el.textContent = msg;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.textContent = '', 3000);
+}
+
+// ── Build color + size controls ───────────────────────────────────────────────
+const cg = document.getElementById('colors');
+COLORS.forEach(c => {
+  const d = document.createElement('div');
+  d.className = 'color-dot' + (c === S.color ? ' on' : '');
+  d.dataset.c = c; d.style.background = c;
+  if (c === '#f5f0e8') d.style.border = '3px solid #ccc';
+  d.onclick = () => setColor(c); cg.appendChild(d);
+});
+
+const sg = document.getElementById('sizes');
+SIZES.forEach(s => {
+  const b = document.createElement('button');
+  b.className = 'size-opt' + (s === S.size ? ' on' : ''); b.dataset.s = s;
+  const d = document.createElement('div'); d.className = 'dot';
+  const dim = Math.min(s * 1.3, 20);
+  d.style.cssText = 'width:' + dim + 'px;height:' + dim + 'px';
+  b.appendChild(d); b.onclick = () => setSize(s); sg.appendChild(b);
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => { resize(); });
+resize();
+requestAnimationFrame(render);
+</script>
 </body>
 </html>
