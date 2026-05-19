@@ -35,6 +35,24 @@ Choose any pathway for any activity.
 - May screenshots or clips of your work appear in recaps or recordings?
 - Do you have concerns about recordings, transcripts, AI-generated recaps, or public summaries?
 
+## Required Acknowledgment
+
+This camp includes critical investigation of generative AI tools and systems. Some activities may involve using AI tools directly, while others offer non-AI, observation, critique, or classroom-design pathways. We will discuss data, consent, labor, bias, ownership, attribution, privacy, and creative practice.
+
+Choose one:
+
+- I understand and am comfortable participating.
+- I understand and would prefer low-AI or non-AI options.
+- I have concerns and would like more information.
+
+## Recap and Attribution Protocol
+
+- Use the display name participants provide.
+- Ask before quoting comments, linking projects, or sharing screenshots.
+- Review AI-assisted summaries manually before publication.
+- Provide a correction path for names, pronouns, project links, and attribution.
+- Do not treat silence as consent for public sharing.
+
 ## Reflection
 
 - What did the human decide?
@@ -43,4 +61,3 @@ Choose any pathway for any activity.
 - Who might be copied, misrepresented, erased, stereotyped, or excluded?
 - What would responsible use require?
 - What would opting out look like?
-

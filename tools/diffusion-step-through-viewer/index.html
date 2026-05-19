@@ -120,6 +120,22 @@
       color: var(--ink);
     }
 
+    .prompt-card {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .prompt-card strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
     .note {
       margin-top: 16px;
       color: var(--muted);
@@ -165,8 +181,18 @@
           <p id="stageText">The image begins as random values. There is no stable subject yet.</p>
         </div>
 
+        <div class="prompt-card">
+          <strong>Prompt guidance</strong>
+          <p id="promptText">A cinematic photo of a flooded golden city at sunset.</p>
+        </div>
+
+        <div class="prompt-card">
+          <strong>What to notice</strong>
+          <p id="annotationText">The prompt does not specify every detail. The process still fills in color, layout, lighting, texture, and style.</p>
+        </div>
+
         <p class="note">
-          Workshop framing: generation is not drawing from imagination. It is an iterative process that moves from noise toward structures that fit a prompt and learned patterns.
+          Workshop framing: generation is not drawing from imagination. It is an iterative process that moves from noise toward structures that fit a prompt and learned patterns. If pre-generated PNG steps are later added, this page will use them; otherwise it uses the reliable canvas fallback.
         </p>
       </aside>
     </div>
@@ -181,6 +207,8 @@
       const stageTitle = document.querySelector("#stageTitle");
       const stageText = document.querySelector("#stageText");
       const sequenceSelect = document.querySelector("#sequence");
+      const promptText = document.querySelector("#promptText");
+      const annotationText = document.querySelector("#annotationText");
 
       const stages = [
         [0, "Pure noise", "The image begins as random values. There is no stable subject yet."],
@@ -194,14 +222,23 @@
 
       const palettes = {
         city: {
+          prompt: "A cinematic photo of a flooded golden city at sunset.",
+          annotation: "Photo-like prompts often fill in camera language: dramatic light, reflective surfaces, atmospheric haze, and a polished viewpoint.",
+          assets: [],
           bg: ["#151c2b", "#3d5f78", "#e2b65d", "#f6e7b4"],
           shapes: ["#1e3147", "#6d8794", "#c28f45", "#f1d99c"],
         },
         classroom: {
+          prompt: "A stylized illustration of a futuristic classroom where people are learning with machines.",
+          annotation: "Stylized prompts reveal visual defaults around schools, technology, bodies, desks, screens, and who appears to be learning.",
+          assets: [],
           bg: ["#17212e", "#44657b", "#d6e7de", "#f5f0df"],
           shapes: ["#253b4a", "#668c91", "#9dbf9e", "#e2b45f"],
         },
         abstract: {
+          prompt: "An abstract image about prediction, uncertainty, and emergence.",
+          annotation: "Abstract prompts show that structure can emerge without a named subject. Color, contrast, and composition still become more specific over time.",
+          assets: [],
           bg: ["#241f31", "#345f73", "#a74f4d", "#f3c86b"],
           shapes: ["#703f66", "#2f7d57", "#2364aa", "#fff0bf"],
         },
@@ -367,10 +404,25 @@
         const step = Number(stepInput.value);
         const progress = step / Number(stepInput.max);
         const kind = sequenceSelect.value;
+        const sequence = palettes[kind];
+        promptText.textContent = sequence.prompt;
+        annotationText.textContent = sequence.annotation;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawNoise(progress, palettes[kind]);
-        drawScene(progress, kind);
         updateLabels(step);
+
+        if (sequence.assets && sequence.assets[step]) {
+          const img = new Image();
+          img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          img.onerror = () => {
+            drawNoise(progress, sequence);
+            drawScene(progress, kind);
+          };
+          img.src = sequence.assets[step];
+          return;
+        }
+
+        drawNoise(progress, sequence);
+        drawScene(progress, kind);
       }
 
       stepInput.addEventListener("input", render);

@@ -5,28 +5,467 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Feature Extraction / Pixel Resolution Tool</title>
   <style>
-    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #20201d; background: #f7f1e6; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: #2364aa; }
-    .card { border: 1px solid #d9ccb8; border-radius: 8px; padding: 22px; background: #fffaf1; box-shadow: 0 10px 28px rgba(49, 39, 25, 0.10); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; }
-    p, li { color: #6f675b; line-height: 1.55; }
+    :root {
+      --bg: #f7f1e6;
+      --paper: #fffaf1;
+      --ink: #20201d;
+      --muted: #6f675b;
+      --line: #d9ccb8;
+      --accent: #2364aa;
+      --green: #2f7d57;
+      --warm: #b45f3a;
+      --shadow: 0 10px 28px rgba(49, 39, 25, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0;
+    }
+
+    a { color: var(--accent); }
+
+    h1 {
+      margin: 18px 0 8px;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 760px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 16px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .stage { padding: 18px; }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .canvas-wrap {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .canvas-wrap h2 {
+      margin: 0;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    canvas {
+      width: 100%;
+      aspect-ratio: 1;
+      display: block;
+      background: #fff;
+      image-rendering: pixelated;
+    }
+
+    .controls {
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 750;
+    }
+
+    select,
+    input[type="range"] {
+      width: 100%;
+    }
+
+    select {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 8px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .segmented button {
+      min-height: 40px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 720;
+      cursor: pointer;
+    }
+
+    .segmented button:last-child { border-right: 0; }
+    .segmented button[aria-pressed="true"] { background: var(--ink); color: #fffaf1; }
+
+    .readout {
+      padding: 12px;
+      border-radius: 8px;
+      background: #f3eadb;
+      color: var(--muted);
+    }
+
+    .readout strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .questions {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .questions li { margin: 7px 0; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(255,255,255,0.58);
+      color: #4f493f;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .layout,
+      .compare {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <main>
     <a href="../../">Back to tools</a>
-    <div class="card">
-      <h1>Feature Extraction / Pixel Resolution Tool</h1>
-      <p>Placeholder for the existing p5.js pixel-resolution tool.</p>
-      <p>Teaching goal: make image representation visible by showing that recognition changes as pixel detail, feature clarity, and image type change.</p>
-      <ul>
-        <li>Add swappable images: face, landscape, handwritten digit, abstract pattern, cluttered room.</li>
-        <li>Keep projection-friendly controls.</li>
-        <li>Prompt participants to notice when recognition becomes possible.</li>
-      </ul>
+    <h1>Feature Extraction / Pixel Resolution</h1>
+    <p class="intro">
+      A projection-friendly teaching tool for asking what changes when an image is reduced to fewer pixels, stronger edges, or simpler visual features.
+    </p>
+
+    <div class="layout">
+      <section class="panel stage" aria-label="Image comparison">
+        <div class="compare">
+          <div class="canvas-wrap">
+            <h2>Original teaching image</h2>
+            <canvas id="sourceCanvas" width="720" height="720"></canvas>
+          </div>
+          <div class="canvas-wrap">
+            <h2 id="processedTitle">Reduced representation</h2>
+            <canvas id="outputCanvas" width="720" height="720"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel controls">
+        <div>
+          <label for="scene">Image type</label>
+          <select id="scene">
+            <option value="portrait">Person / face</option>
+            <option value="landscape">Landscape</option>
+            <option value="digit">Handwritten digit</option>
+            <option value="abstract">Abstract pattern</option>
+            <option value="classroom">Room / classroom</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="detail">Detail level: <span id="detailReadout">18</span> x <span id="detailReadout2">18</span></label>
+          <input id="detail" type="range" min="6" max="96" value="18">
+        </div>
+
+        <div>
+          <label>Representation</label>
+          <div class="segmented" aria-label="Representation mode">
+            <button type="button" data-mode="pixel" aria-pressed="true">Pixels</button>
+            <button type="button" data-mode="edges" aria-pressed="false">Edges</button>
+            <button type="button" data-mode="blocks" aria-pressed="false">Features</button>
+          </div>
+        </div>
+
+        <div class="readout" id="readout">
+          <strong>Recognition threshold</strong>
+          Reduce detail until the subject becomes hard to name. Then increase it slowly and notice which cues return first.
+        </div>
+
+        <div class="tag-row">
+          <span class="tag">Pixels</span>
+          <span class="tag">Edges</span>
+          <span class="tag">Features</span>
+          <span class="tag">Recognition</span>
+        </div>
+
+        <ul class="questions">
+          <li>When did you first recognize the image?</li>
+          <li>Which cues mattered most: color, outline, texture, location, or context?</li>
+          <li>What could a machine measure that a person might ignore?</li>
+          <li>What does this help explain about model defaults or mistakes?</li>
+        </ul>
+      </aside>
     </div>
   </main>
+
+  <script>
+    (() => {
+      const source = document.querySelector("#sourceCanvas");
+      const output = document.querySelector("#outputCanvas");
+      const sctx = source.getContext("2d");
+      const octx = output.getContext("2d");
+      const sceneSelect = document.querySelector("#scene");
+      const detail = document.querySelector("#detail");
+      const detailReadout = document.querySelector("#detailReadout");
+      const detailReadout2 = document.querySelector("#detailReadout2");
+      const processedTitle = document.querySelector("#processedTitle");
+      const readout = document.querySelector("#readout");
+      let mode = "pixel";
+
+      function clear(ctx) {
+        ctx.clearRect(0, 0, 720, 720);
+        ctx.fillStyle = "#fffaf1";
+        ctx.fillRect(0, 0, 720, 720);
+      }
+
+      function drawPortrait() {
+        clear(sctx);
+        const g = sctx.createLinearGradient(0, 0, 720, 720);
+        g.addColorStop(0, "#d7e7df");
+        g.addColorStop(1, "#f6d7a8");
+        sctx.fillStyle = g;
+        sctx.fillRect(0, 0, 720, 720);
+        sctx.fillStyle = "#2c3942";
+        sctx.beginPath();
+        sctx.ellipse(360, 336, 156, 190, 0, 0, Math.PI * 2);
+        sctx.fill();
+        sctx.fillStyle = "#8b5f43";
+        sctx.beginPath();
+        sctx.ellipse(360, 318, 116, 142, 0, 0, Math.PI * 2);
+        sctx.fill();
+        sctx.fillStyle = "#6f412d";
+        sctx.beginPath();
+        sctx.ellipse(360, 232, 126, 82, 0, 0, Math.PI * 2);
+        sctx.fill();
+        sctx.fillStyle = "#20201d";
+        sctx.beginPath(); sctx.arc(315, 318, 10, 0, Math.PI * 2); sctx.fill();
+        sctx.beginPath(); sctx.arc(405, 318, 10, 0, Math.PI * 2); sctx.fill();
+        sctx.strokeStyle = "#4f3024";
+        sctx.lineWidth = 10;
+        sctx.beginPath(); sctx.arc(360, 368, 42, 0.16, Math.PI - 0.16); sctx.stroke();
+        sctx.fillStyle = "#2364aa";
+        sctx.fillRect(234, 520, 252, 132);
+      }
+
+      function drawLandscape() {
+        clear(sctx);
+        const sky = sctx.createLinearGradient(0, 0, 0, 520);
+        sky.addColorStop(0, "#7db8d8");
+        sky.addColorStop(1, "#f5d18b");
+        sctx.fillStyle = sky;
+        sctx.fillRect(0, 0, 720, 520);
+        sctx.fillStyle = "#f7e39c";
+        sctx.beginPath(); sctx.arc(560, 130, 54, 0, Math.PI * 2); sctx.fill();
+        sctx.fillStyle = "#345f73";
+        sctx.beginPath(); sctx.moveTo(0, 490); sctx.lineTo(180, 230); sctx.lineTo(340, 490); sctx.fill();
+        sctx.fillStyle = "#4c7b6b";
+        sctx.beginPath(); sctx.moveTo(160, 500); sctx.lineTo(380, 260); sctx.lineTo(660, 500); sctx.fill();
+        sctx.fillStyle = "#2f7d57";
+        sctx.fillRect(0, 470, 720, 250);
+        sctx.fillStyle = "#2364aa";
+        sctx.beginPath(); sctx.moveTo(330, 470); sctx.bezierCurveTo(260, 540, 430, 590, 360, 720); sctx.lineTo(450, 720); sctx.bezierCurveTo(510, 602, 350, 552, 430, 470); sctx.fill();
+      }
+
+      function drawDigit() {
+        clear(sctx);
+        sctx.fillStyle = "#f4efe5";
+        for (let x = 80; x < 680; x += 60) {
+          sctx.fillRect(x, 70, 2, 580);
+          sctx.fillRect(70, x, 580, 2);
+        }
+        sctx.strokeStyle = "#20201d";
+        sctx.lineWidth = 84;
+        sctx.lineCap = "round";
+        sctx.lineJoin = "round";
+        sctx.beginPath();
+        sctx.moveTo(430, 150);
+        sctx.bezierCurveTo(280, 120, 220, 240, 308, 326);
+        sctx.bezierCurveTo(392, 406, 470, 442, 410, 548);
+        sctx.bezierCurveTo(365, 624, 242, 592, 230, 505);
+        sctx.stroke();
+      }
+
+      function drawAbstract() {
+        clear(sctx);
+        sctx.fillStyle = "#241f31";
+        sctx.fillRect(0, 0, 720, 720);
+        const colors = ["#2364aa", "#2f7d57", "#b45f3a", "#f3c86b", "#fffaf1"];
+        for (let i = 0; i < 20; i++) {
+          sctx.globalAlpha = 0.72;
+          sctx.fillStyle = colors[i % colors.length];
+          sctx.beginPath();
+          sctx.ellipse(80 + (i * 97) % 560, 90 + (i * 151) % 540, 90 + (i % 4) * 24, 42 + (i % 5) * 18, i * 0.45, 0, Math.PI * 2);
+          sctx.fill();
+        }
+        sctx.globalAlpha = 1;
+      }
+
+      function drawClassroom() {
+        clear(sctx);
+        sctx.fillStyle = "#d9e4df";
+        sctx.fillRect(0, 0, 720, 720);
+        sctx.fillStyle = "#f2d59d";
+        sctx.fillRect(0, 470, 720, 250);
+        sctx.fillStyle = "#263a40";
+        sctx.fillRect(150, 120, 420, 190);
+        sctx.fillStyle = "#e5f4ed";
+        sctx.fillRect(176, 146, 368, 138);
+        sctx.fillStyle = "#8b5f43";
+        for (let i = 0; i < 5; i++) {
+          const x = 70 + i * 118;
+          sctx.fillRect(x, 430, 92, 52);
+          sctx.fillRect(x + 10, 482, 12, 80);
+          sctx.fillRect(x + 68, 482, 12, 80);
+        }
+        sctx.fillStyle = "#2364aa";
+        sctx.beginPath(); sctx.arc(360, 384, 26, 0, Math.PI * 2); sctx.fill();
+        sctx.fillRect(336, 410, 48, 78);
+      }
+
+      const drawers = { portrait: drawPortrait, landscape: drawLandscape, digit: drawDigit, abstract: drawAbstract, classroom: drawClassroom };
+
+      function pixelate(cells) {
+        const tiny = document.createElement("canvas");
+        tiny.width = cells;
+        tiny.height = cells;
+        const tctx = tiny.getContext("2d");
+        tctx.drawImage(source, 0, 0, cells, cells);
+        octx.imageSmoothingEnabled = false;
+        octx.clearRect(0, 0, 720, 720);
+        octx.drawImage(tiny, 0, 0, 720, 720);
+      }
+
+      function edges(cells) {
+        pixelate(cells);
+        const img = octx.getImageData(0, 0, 720, 720);
+        const data = img.data;
+        const out = octx.createImageData(720, 720);
+        for (let y = 1; y < 719; y += 1) {
+          for (let x = 1; x < 719; x += 1) {
+            const i = (y * 720 + x) * 4;
+            const r = data[i], g = data[i + 1], b = data[i + 2];
+            const j = (y * 720 + x + 1) * 4;
+            const k = ((y + 1) * 720 + x) * 4;
+            const diff = Math.abs(r - data[j]) + Math.abs(g - data[j + 1]) + Math.abs(b - data[j + 2]) + Math.abs(r - data[k]) + Math.abs(g - data[k + 1]) + Math.abs(b - data[k + 2]);
+            const v = diff > 90 ? 32 : 246;
+            out.data[i] = v;
+            out.data[i + 1] = v;
+            out.data[i + 2] = v;
+            out.data[i + 3] = 255;
+          }
+        }
+        octx.putImageData(out, 0, 0);
+      }
+
+      function featureBlocks(cells) {
+        pixelate(cells);
+        octx.globalAlpha = 0.86;
+        octx.strokeStyle = "rgba(32,32,29,.38)";
+        octx.lineWidth = Math.max(4, 720 / cells / 9);
+        const step = 720 / Math.max(6, Math.round(cells / 2));
+        for (let x = step; x < 720; x += step) {
+          octx.beginPath(); octx.moveTo(x, 0); octx.lineTo(x, 720); octx.stroke();
+        }
+        for (let y = step; y < 720; y += step) {
+          octx.beginPath(); octx.moveTo(0, y); octx.lineTo(720, y); octx.stroke();
+        }
+        octx.globalAlpha = 1;
+      }
+
+      function render() {
+        drawers[sceneSelect.value]();
+        const cells = Number(detail.value);
+        detailReadout.textContent = cells;
+        detailReadout2.textContent = cells;
+
+        if (mode === "pixel") {
+          processedTitle.textContent = "Pixel-reduced representation";
+          pixelate(cells);
+        } else if (mode === "edges") {
+          processedTitle.textContent = "Edge-like representation";
+          edges(cells);
+        } else {
+          processedTitle.textContent = "Coarse feature blocks";
+          featureBlocks(cells);
+        }
+
+        const difficulty = cells < 14 ? "hard to recognize" : cells < 34 ? "recognizable from broad cues" : "rich enough for fine detail";
+        readout.innerHTML = `<strong>Recognition threshold</strong>${cells} x ${cells} cells is ${difficulty}. Ask which cues are doing the work before naming the image.`;
+      }
+
+      document.querySelectorAll("[data-mode]").forEach((button) => {
+        button.addEventListener("click", () => {
+          mode = button.dataset.mode;
+          document.querySelectorAll("[data-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+          render();
+        });
+      });
+
+      sceneSelect.addEventListener("change", render);
+      detail.addEventListener("input", render);
+      render();
+    })();
+  </script>
 </body>
 </html>
-

@@ -1,5 +1,15 @@
 # Image Default Test Board
 
+Use this with the Feature Extraction / Pixel Resolution tool, Diffusion Step-Through Viewer, or curated image outputs.
+
+Participation options:
+
+- Use: generate images directly if you choose.
+- Observe / Critique: analyze pre-generated examples without logging into a model.
+- Teach / Design: adapt a Default Test for your classroom or community.
+- Build / Code: make a visual explainer or comparison board.
+- Critical / No-AI: write a consent, attribution, or representation critique.
+
 ## Investigation
 
 Generate or analyze images from deliberately underspecified prompts.
@@ -32,10 +42,14 @@ Example prompts:
 
 ## Reflection
 
+- Human: what did you choose, frame, select, revise, or reject?
+- Machine: what did the system generate, classify, complete, or distort?
+- System: what data, defaults, interface choices, or platform assumptions shaped the result?
+- Ethics: who might be copied, misrepresented, erased, stereotyped, or excluded?
+- Pedagogy: how would this need to change for students or community learners?
 - What did the model assume?
 - What did I need to specify?
 - What was hard to control?
 - What did the image do that surprised me?
 - What choices still belonged to me?
 - What concern did this raise around data, labor, bias, privacy, ownership, consent, attribution, or representation?
-

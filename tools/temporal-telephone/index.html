@@ -5,28 +5,461 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Temporal Telephone</title>
   <style>
-    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #20201d; background: #f7f1e6; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: #2364aa; }
-    .card { border: 1px solid #d9ccb8; border-radius: 8px; padding: 22px; background: #fffaf1; box-shadow: 0 10px 28px rgba(49, 39, 25, 0.10); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; }
-    p, li { color: #6f675b; line-height: 1.55; }
+    :root {
+      --bg: #f7f1e6;
+      --paper: #fffaf1;
+      --ink: #20201d;
+      --muted: #6f675b;
+      --line: #d9ccb8;
+      --accent: #2364aa;
+      --green: #2f7d57;
+      --warm: #b45f3a;
+      --shadow: 0 10px 28px rgba(49, 39, 25, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0;
+    }
+
+    a { color: var(--accent); }
+
+    h1 {
+      margin: 18px 0 8px;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 780px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 16px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .stage { padding: 18px; }
+
+    .canvas-stack {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      touch-action: none;
+    }
+
+    canvas {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      display: block;
+      background: transparent;
+    }
+
+    #ghostCanvas,
+    #drawCanvas {
+      position: absolute;
+      inset: 0;
+    }
+
+    .controls {
+      padding: 18px;
+      display: grid;
+      gap: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 750;
+    }
+
+    select,
+    input[type="range"] {
+      width: 100%;
+    }
+
+    select {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 8px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      min-height: 40px;
+      border: 1px solid var(--ink);
+      border-radius: 7px;
+      padding: 8px 11px;
+      background: var(--ink);
+      color: #fffaf1;
+      font: inherit;
+      font-weight: 760;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    button.warn {
+      border-color: #c98972;
+      background: #fff4ed;
+      color: #833f28;
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .readout {
+      padding: 12px;
+      border-radius: 8px;
+      background: #f3eadb;
+      color: var(--muted);
+    }
+
+    .readout strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .frames {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .thumb {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      min-height: 70px;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+      overflow: hidden;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb.active {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .questions {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .questions li { margin: 6px 0; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .frames { grid-template-columns: repeat(4, 1fr); }
+    }
   </style>
 </head>
 <body>
   <main>
     <a href="../../">Back to tools</a>
-    <div class="card">
-      <h1>Temporal Telephone</h1>
-      <p>Placeholder for the existing Temporal Telephone digital tool.</p>
-      <p>Teaching goal: make temporal drift and anchoring visible by comparing previous-frame-only drawing with anchor-frame drawing.</p>
-      <ul>
-        <li>Round 1: participants see only the previous frame.</li>
-        <li>Round 2: participants can see Frame 1 as an anchor.</li>
-        <li>Round 3: compare playback and identify where coherence breaks.</li>
-      </ul>
+    <h1>Temporal Telephone</h1>
+    <p class="intro">
+      Draw a short frame sequence twice: once with only the previous frame as a guide, and once with the first frame as an anchor. The comparison makes drift, continuity, and temporal coherence visible before discussing AI video.
+    </p>
+
+    <div class="layout">
+      <section class="panel stage" aria-label="Drawing stage">
+        <div class="canvas-stack">
+          <canvas id="baseCanvas" width="960" height="600"></canvas>
+          <canvas id="ghostCanvas" width="960" height="600"></canvas>
+          <canvas id="drawCanvas" width="960" height="600"></canvas>
+        </div>
+        <div class="frames" id="frames"></div>
+      </section>
+
+      <aside class="panel controls">
+        <div>
+          <label for="roundMode">Round mode</label>
+          <select id="roundMode">
+            <option value="previous">Previous frame only</option>
+            <option value="anchor">Frame 1 anchor + previous frame</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="frameSlider">Frame: <span id="frameReadout">1</span> / 8</label>
+          <input id="frameSlider" type="range" min="0" max="7" value="0">
+        </div>
+
+        <div>
+          <label for="brush">Brush size: <span id="brushReadout">8</span></label>
+          <input id="brush" type="range" min="2" max="24" value="8">
+        </div>
+
+        <div class="button-row">
+          <button id="saveFrame" type="button">Save frame</button>
+          <button id="play" type="button" class="secondary">Play</button>
+          <button id="clearCurrent" type="button" class="secondary">Clear frame</button>
+          <button id="resetAll" type="button" class="warn">Reset all</button>
+        </div>
+
+        <div class="readout" id="readout">
+          <strong>Previous frame only</strong>
+          Draw frame 1. For later frames, you will see only a faint version of the frame immediately before it.
+        </div>
+
+        <ul class="questions">
+          <li>Where does identity drift begin?</li>
+          <li>What stays coherent when only the previous frame is visible?</li>
+          <li>What changes when the first frame remains available as an anchor?</li>
+          <li>How is this different from judging a single generated image?</li>
+        </ul>
+      </aside>
     </div>
   </main>
+
+  <script>
+    (() => {
+      const totalFrames = 8;
+      const base = document.querySelector("#baseCanvas");
+      const ghost = document.querySelector("#ghostCanvas");
+      const draw = document.querySelector("#drawCanvas");
+      const bctx = base.getContext("2d");
+      const gctx = ghost.getContext("2d");
+      const dctx = draw.getContext("2d");
+      const framesEl = document.querySelector("#frames");
+      const roundMode = document.querySelector("#roundMode");
+      const frameSlider = document.querySelector("#frameSlider");
+      const frameReadout = document.querySelector("#frameReadout");
+      const brush = document.querySelector("#brush");
+      const brushReadout = document.querySelector("#brushReadout");
+      const readout = document.querySelector("#readout");
+      const saveFrame = document.querySelector("#saveFrame");
+      const playButton = document.querySelector("#play");
+      const clearCurrent = document.querySelector("#clearCurrent");
+      const resetAll = document.querySelector("#resetAll");
+
+      let frames = Array(totalFrames).fill(null);
+      let current = 0;
+      let drawing = false;
+      let playing = false;
+      let playTimer = null;
+
+      function drawPaper() {
+        bctx.fillStyle = "#fffaf1";
+        bctx.fillRect(0, 0, base.width, base.height);
+        bctx.strokeStyle = "#eadfce";
+        bctx.lineWidth = 1;
+        for (let x = 0; x <= base.width; x += 60) {
+          bctx.beginPath(); bctx.moveTo(x, 0); bctx.lineTo(x, base.height); bctx.stroke();
+        }
+        for (let y = 0; y <= base.height; y += 60) {
+          bctx.beginPath(); bctx.moveTo(0, y); bctx.lineTo(base.width, y); bctx.stroke();
+        }
+      }
+
+      function clearLayer(ctx) {
+        ctx.clearRect(0, 0, draw.width, draw.height);
+      }
+
+      function loadCurrentDrawing() {
+        clearLayer(dctx);
+        if (!frames[current]) return;
+        const img = new Image();
+        img.onload = () => dctx.drawImage(img, 0, 0, draw.width, draw.height);
+        img.src = frames[current];
+      }
+
+      function drawGhosts() {
+        clearLayer(gctx);
+        if (current === 0) return;
+
+        if (roundMode.value === "anchor" && frames[0]) {
+          const anchor = new Image();
+          anchor.onload = () => {
+            gctx.globalAlpha = 0.14;
+            gctx.drawImage(anchor, 0, 0, ghost.width, ghost.height);
+            gctx.globalAlpha = 1;
+          };
+          anchor.src = frames[0];
+        }
+
+        if (frames[current - 1]) {
+          const previous = new Image();
+          previous.onload = () => {
+            gctx.globalAlpha = 0.28;
+            gctx.drawImage(previous, 0, 0, ghost.width, ghost.height);
+            gctx.globalAlpha = 1;
+          };
+          previous.src = frames[current - 1];
+        }
+      }
+
+      function updateReadout() {
+        frameReadout.textContent = String(current + 1);
+        brushReadout.textContent = brush.value;
+        if (roundMode.value === "previous") {
+          readout.innerHTML = "<strong>Previous frame only</strong>Each new frame can only lean on the frame before it. Small changes can accumulate into drift.";
+        } else {
+          readout.innerHTML = "<strong>Anchor + previous frame</strong>The first frame stays faintly visible, so identity and layout have a stable reference.";
+        }
+      }
+
+      function renderThumbs() {
+        framesEl.innerHTML = "";
+        frames.forEach((src, index) => {
+          const div = document.createElement("button");
+          div.type = "button";
+          div.className = "thumb" + (index === current ? " active" : "");
+          div.setAttribute("aria-label", `Go to frame ${index + 1}`);
+          if (src) {
+            const img = document.createElement("img");
+            img.alt = `Frame ${index + 1}`;
+            img.src = src;
+            div.appendChild(img);
+          } else {
+            div.textContent = `Frame ${index + 1}`;
+          }
+          div.addEventListener("click", () => goToFrame(index));
+          framesEl.appendChild(div);
+        });
+      }
+
+      function goToFrame(index) {
+        current = Math.max(0, Math.min(totalFrames - 1, index));
+        frameSlider.value = String(current);
+        drawPaper();
+        drawGhosts();
+        loadCurrentDrawing();
+        updateReadout();
+        renderThumbs();
+      }
+
+      function pointerPoint(event) {
+        const rect = draw.getBoundingClientRect();
+        return {
+          x: (event.clientX - rect.left) * (draw.width / rect.width),
+          y: (event.clientY - rect.top) * (draw.height / rect.height),
+        };
+      }
+
+      function startDrawing(event) {
+        drawing = true;
+        draw.setPointerCapture(event.pointerId);
+        const p = pointerPoint(event);
+        dctx.beginPath();
+        dctx.moveTo(p.x, p.y);
+      }
+
+      function continueDrawing(event) {
+        if (!drawing) return;
+        const p = pointerPoint(event);
+        dctx.strokeStyle = "#20201d";
+        dctx.lineWidth = Number(brush.value);
+        dctx.lineCap = "round";
+        dctx.lineJoin = "round";
+        dctx.lineTo(p.x, p.y);
+        dctx.stroke();
+      }
+
+      function stopDrawing() {
+        drawing = false;
+      }
+
+      function saveCurrentFrame() {
+        frames[current] = draw.toDataURL("image/png");
+        renderThumbs();
+        if (current < totalFrames - 1) goToFrame(current + 1);
+      }
+
+      function play() {
+        if (playing) {
+          clearInterval(playTimer);
+          playTimer = null;
+          playing = false;
+          playButton.textContent = "Play";
+          return;
+        }
+        playing = true;
+        playButton.textContent = "Stop";
+        let index = 0;
+        playTimer = setInterval(() => {
+          goToFrame(index);
+          index = (index + 1) % totalFrames;
+        }, 550);
+      }
+
+      draw.addEventListener("pointerdown", startDrawing);
+      draw.addEventListener("pointermove", continueDrawing);
+      draw.addEventListener("pointerup", stopDrawing);
+      draw.addEventListener("pointercancel", stopDrawing);
+      saveFrame.addEventListener("click", saveCurrentFrame);
+      playButton.addEventListener("click", play);
+      clearCurrent.addEventListener("click", () => {
+        frames[current] = null;
+        clearLayer(dctx);
+        renderThumbs();
+      });
+      resetAll.addEventListener("click", () => {
+        frames = Array(totalFrames).fill(null);
+        goToFrame(0);
+      });
+      roundMode.addEventListener("change", () => goToFrame(current));
+      frameSlider.addEventListener("input", () => goToFrame(Number(frameSlider.value)));
+      brush.addEventListener("input", updateReadout);
+
+      drawPaper();
+      updateReadout();
+      renderThumbs();
+    })();
+  </script>
 </body>
 </html>
-

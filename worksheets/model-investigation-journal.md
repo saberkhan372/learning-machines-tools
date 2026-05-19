@@ -2,6 +2,8 @@
 
 Use this for any tool, model, activity, or artifact.
 
+You do not need to use a live AI model to complete this journal. You can investigate a classroom activity, a pre-generated example, an interface, a policy, or a tool in this repo.
+
 ## Basic Information
 
 | Field | Notes |
@@ -38,3 +40,11 @@ What can you reasonably claim based on your evidence?
 
 How could this become a classroom activity, artwork, larger project, responsible-use protocol, or further investigation?
 
+## Public Sharing Check
+
+| Question | Yes / No / Notes |
+| --- | --- |
+| May this project be mentioned in a recap? |  |
+| May your name be attached to it? |  |
+| May screenshots, clips, or excerpts be shown? |  |
+| Are there people, places, students, or communities that need additional consent? |  |

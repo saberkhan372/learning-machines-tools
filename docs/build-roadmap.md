@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Planning and MVP buildout.
+Launch MVP ready for first-cohort QA.
 
 Target launch: **Summer 2026**
 
@@ -12,19 +12,19 @@ The first repo goal is to create a static, GitHub Pages-ready tool ecosystem wit
 
 | Priority | Item | Current Repo Status | Needed Next |
 | --- | --- | --- | --- |
-| 1 | Worksheets + AI Use / Consent Checklist | Drafted | Refine into printable/facilitator versions |
-| 2 | Tokenizer + Temperature Visualizer | Imported as canonical tool | Review against report specs, then harden if needed |
-| 3 | ELIZA Simulator | Imported as canonical tool | Polish rules, add canned LLM comparison examples |
-| 4 | Diffusion Step-Through Viewer | First draft built | Replace canvas teaching states with pre-generated image sequences when available |
-| 5 | Feature Extraction / Pixel Resolution Tool | Existing elsewhere | Import/polish for this repo |
-| 6 | Temporal Telephone | Existing elsewhere | Import/docs or link to stable hosted version |
-| 7 | Facilitation docs | Not started | Add session scripts and tool notes |
+| 1 | Worksheets + AI Use / Consent Checklist | Launch ready Markdown | Optional printable/PDF versions later |
+| 2 | Tokenizer + Temperature Visualizer | Launch ready | Manual browser QA before session |
+| 3 | ELIZA Simulator | Launch ready | Manual browser QA before session |
+| 4 | Diffusion Step-Through Viewer | Launch ready draft | Add pre-generated PNG sequences when available |
+| 5 | Feature Extraction / Pixel Resolution Tool | Launch ready | Replace generated teaching images with curated assets later if desired |
+| 6 | Temporal Telephone | Launch ready | Pilot with facilitators before Session 3 |
+| 7 | Facilitation docs | Launch ready | Expand after first cohort feedback |
 
 Canonical tool folders now exist for every launch, second-wave, and stretch tool. See [`../tools/README.md`](../tools/README.md).
 
 ## Critical Path
 
-### 1. Finish Tokenizer + Temperature Visualizer
+### 1. Maintain Tokenizer + Temperature Visualizer
 
 The report identifies this as the highest-value Session 1 tool.
 
@@ -50,7 +50,7 @@ Teaching insight to preserve:
 - Probability is not truth.
 - Sampling can produce surprise without understanding.
 
-### 2. Harden ELIZA Simulator
+### 2. Maintain ELIZA Simulator
 
 Current draft already supports:
 
@@ -61,16 +61,11 @@ Current draft already supports:
 - chat interface
 - comparison notes panel
 
-Next polish:
-
-- add a fixed prompt set for the workshop
-- add pre-written LLM comparison examples
-- add a facilitator note about projection and debrief questions
-- make the rule table more explicit for participants
+Launch behavior includes a fixed prompt set, pre-written LLM comparison examples, facilitator notes, and visible rule inspection.
 
 ### 3. Upgrade Diffusion Viewer
 
-Current draft uses canvas-generated teaching states.
+Current launch version uses canvas-generated teaching states and includes hooks for future pre-generated PNG steps.
 
 Next version should support:
 
@@ -84,7 +79,7 @@ Launch sequences:
 1. realistic photo prompt
 2. illustrated/stylized prompt
 3. abstract prompt
-4. carefully framed Default Test prompt
+Optional next step: add a carefully framed Default Test sequence after collecting or generating appropriate assets.
 
 ## Later Tools
 
@@ -120,5 +115,5 @@ Build after the first cohort, using real participant examples.
 - Open registration or capped cohort?
 - Which guest speakers for language, image generation, video, and community connection?
 - What pre-generated output sets are needed for participants without model access?
-- Where should existing Feature Extraction and Temporal Telephone tools live?
 - Should worksheets stay as Markdown, become printable PDFs, or become interactive boards?
+- Which pre-generated diffusion image sequences should replace or supplement the canvas fallback?

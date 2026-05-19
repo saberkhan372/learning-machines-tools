@@ -73,6 +73,20 @@ Participants should leave with a repeatable investigation protocol:
 
 > hypothesis -> controlled A/B/C test -> output comparison -> evidence-based claim -> ethical/pedagogical reflection
 
+## Launch MVP Surface
+
+The first-cohort repo is organized around five launch tools:
+
+- Tokenizer + Temperature Visualizer
+- ELIZA Simulator
+- Diffusion Step-Through Viewer
+- Feature Extraction / Pixel Resolution
+- Temporal Telephone
+
+Second-wave and stretch tools remain visible as future directions, but the launch cohort does not depend on them.
+
+Each content session has a concise facilitation note in `docs/`, plus a worksheet that supports direct AI use, observation/critique, teaching/design, build/code, and critical/no-AI pathways.
+
 ## Ethics and Consent
 
 Ethics is structural, not topical. It appears in every session, tool, worksheet, recap, and final project.
@@ -112,4 +126,3 @@ Full description:
 Short description:
 
 > How do AI systems write, imagine, and generate motion? In this four-session creative AI camp, we explore text generation, image generation, and video generation through hands-on experiments and reflective making. Participants test prompts, compare outputs, investigate defaults and failures, and create a final project or classroom activity to share in a closing showcase. Beginner-friendly. No coding required. Great for educators, artists, students, and curious learners.
-

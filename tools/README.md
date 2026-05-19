@@ -6,28 +6,28 @@ Canonical tool folders for the Learning Machines camp.
 
 | Tool | Folder | Status |
 | --- | --- | --- |
-| Tokenizer + Temperature Visualizer | `tokenizer-temperature-visualizer/` | Imported canonical tool |
-| ELIZA Simulator | `eliza-simulator/` | Imported canonical tool |
-| Diffusion Step-Through Viewer | `diffusion-step-through-viewer/` | First draft |
-| Feature Extraction / Pixel Resolution Tool | `feature-extraction-pixel-resolution/` | Placeholder; import existing p5.js tool |
-| Temporal Telephone | `temporal-telephone/` | Placeholder; import/link existing tool |
+| Tokenizer + Temperature Visualizer | `tokenizer-temperature-visualizer/` | Launch ready |
+| ELIZA Simulator | `eliza-simulator/` | Launch ready |
+| Diffusion Step-Through Viewer | `diffusion-step-through-viewer/` | Launch ready draft |
+| Feature Extraction / Pixel Resolution Tool | `feature-extraction-pixel-resolution/` | Launch ready |
+| Temporal Telephone | `temporal-telephone/` | Launch ready |
 
 ## Second-Wave Tools
 
 | Tool | Folder | Status |
 | --- | --- | --- |
-| Default Test Comparison Viewer | `default-test-comparison-viewer/` | Placeholder |
-| Video Failure Gallery Viewer | `video-failure-gallery-viewer/` | Placeholder |
-| A/B/C Comparison Board | `abc-comparison-board/` | Placeholder |
-| Model Card Builder | `model-card-builder/` | Placeholder |
-| Concept Bridge Pages | `concept-bridges/` | Placeholder |
+| Default Test Comparison Viewer | `default-test-comparison-viewer/` | Coming later |
+| Video Failure Gallery Viewer | `video-failure-gallery-viewer/` | Coming later |
+| A/B/C Comparison Board | `abc-comparison-board/` | Coming later |
+| Model Card Builder | `model-card-builder/` | Coming later |
+| Concept Bridge Pages | `concept-bridges/` | Coming later |
 
 ## Stretch Tools
 
 | Tool | Folder | Status |
 | --- | --- | --- |
-| Prompt Guidance Word-by-Word Reveal | `prompt-guidance-word-by-word/` | Placeholder |
-| Frame-by-Frame Coherence Viewer | `frame-by-frame-coherence-viewer/` | Placeholder |
-| Next-Token Prediction Game | `next-token-prediction-game/` | Placeholder |
-| Latent Space Explorer | `latent-space-explorer/` | Placeholder |
-| Dataset Balance Simulator | `dataset-balance-simulator/` | Placeholder |
+| Prompt Guidance Word-by-Word Reveal | `prompt-guidance-word-by-word/` | Coming later |
+| Frame-by-Frame Coherence Viewer | `frame-by-frame-coherence-viewer/` | Coming later |
+| Next-Token Prediction Game | `next-token-prediction-game/` | Coming later |
+| Latent Space Explorer | `latent-space-explorer/` | Coming later |
+| Dataset Balance Simulator | `dataset-balance-simulator/` | Coming later |

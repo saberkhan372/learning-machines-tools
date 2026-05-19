@@ -34,11 +34,11 @@ The tool principle is:
 
 | Priority | Tool | Status | Purpose |
 | --- | --- | --- | --- |
-| 1 | Tokenizer + Temperature Visualizer | Imported as canonical tool | Make tokenization, probability, and sampling visible |
-| 2 | ELIZA Simulator | Imported as canonical tool | Make rule-based AI legible |
-| 3 | Diffusion Step-Through Viewer | Scaffolded | Make denoising visible |
-| 4 | Feature Extraction / Pixel Resolution Tool | Existing elsewhere | Make image representation visible |
-| 5 | Temporal Telephone | Existing elsewhere | Make temporal drift and anchoring visible |
+| 1 | Tokenizer + Temperature Visualizer | Launch ready | Make tokenization, probability, and sampling visible |
+| 2 | ELIZA Simulator | Launch ready | Make rule-based AI legible |
+| 3 | Diffusion Step-Through Viewer | Launch ready draft | Make denoising visible with canvas fallback and future image-sequence support |
+| 4 | Feature Extraction / Pixel Resolution Tool | Launch ready | Make image representation visible |
+| 5 | Temporal Telephone | Launch ready | Make temporal drift and anchoring visible |
 
 ### Later Tools
 
@@ -88,6 +88,10 @@ Canonical folders live under [`tools/`](tools/).
 
 - [Project brief](docs/project-brief.md)
 - [Build roadmap](docs/build-roadmap.md)
+- [Session 1 facilitation notes](docs/session-1-facilitation.md)
+- [Session 2 facilitation notes](docs/session-2-facilitation.md)
+- [Session 3 facilitation notes](docs/session-3-facilitation.md)
+- [Launch QA checklist](docs/qa-checklist.md)
 
 ## Participation Norms
 
@@ -103,4 +107,4 @@ Canonical folders live under [`tools/`](tools/).
 
 ## Local Use
 
-Open `index.html` in a browser. Each tool is a static page under `tools/`.
+Open `index.html` in a browser. Each tool is a static page under `tools/`. Launch-critical tools do not require accounts, API keys, npm, a build step, or live model access.

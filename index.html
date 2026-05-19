@@ -154,6 +154,26 @@
       font-weight: 650;
     }
 
+    .status {
+      width: fit-content;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: #e8f2ec;
+      color: #225f42;
+      font-size: 0.78rem;
+      font-weight: 780;
+    }
+
+    .status.draft {
+      background: #f4eadc;
+      color: #8a4d2e;
+    }
+
+    .status.future {
+      background: #ece6dc;
+      color: #6f675b;
+    }
+
     .button {
       display: inline-flex;
       align-items: center;
@@ -250,6 +270,7 @@
           <p class="label">Session 1</p>
           <h3>Tokenizer + Temperature Visualizer</h3>
           <p>Shows how text becomes tokens, how next-token probabilities work, and how temperature changes sampling.</p>
+          <span class="status">Launch ready</span>
           <div class="tags">
             <span class="tag">Tokens</span>
             <span class="tag">Probability</span>
@@ -262,6 +283,7 @@
           <p class="label">Session 1</p>
           <h3>ELIZA Simulator</h3>
           <p>Contrasts visible rule-matching with more opaque LLM behavior so participants can compare mechanism and effect.</p>
+          <span class="status">Launch ready</span>
           <div class="tags">
             <span class="tag">Rules</span>
             <span class="tag">Pattern matching</span>
@@ -274,36 +296,39 @@
           <p class="label">Session 2</p>
           <h3>Diffusion Step-Through Viewer</h3>
           <p>Uses a slider-controlled teaching sequence to make iterative denoising visible without requiring a live model.</p>
+          <span class="status">Launch ready draft</span>
           <div class="tags">
             <span class="tag">Noise</span>
             <span class="tag">Denoising</span>
             <span class="tag">Defaults</span>
           </div>
-          <a class="button secondary" href="tools/diffusion-step-through-viewer/">Open draft</a>
+          <a class="button" href="tools/diffusion-step-through-viewer/">Open tool</a>
         </article>
 
         <article class="tool">
           <p class="label">Session 2</p>
           <h3>Feature Extraction / Pixel Resolution</h3>
           <p>Shows how recognition changes as image detail is reduced, making pixels and features easier to discuss.</p>
+          <span class="status">Launch ready</span>
           <div class="tags">
             <span class="tag">Pixels</span>
             <span class="tag">Features</span>
             <span class="tag">Recognition</span>
           </div>
-          <a class="button secondary" href="tools/feature-extraction-pixel-resolution/">Open placeholder</a>
+          <a class="button" href="tools/feature-extraction-pixel-resolution/">Open tool</a>
         </article>
 
         <article class="tool">
           <p class="label">Session 3</p>
           <h3>Temporal Telephone</h3>
           <p>Compares drift and anchoring across frames so temporal coherence becomes visible before AI video analysis.</p>
+          <span class="status">Launch ready</span>
           <div class="tags">
             <span class="tag">Time</span>
             <span class="tag">Drift</span>
             <span class="tag">Anchor</span>
           </div>
-          <a class="button secondary" href="tools/temporal-telephone/">Open placeholder</a>
+          <a class="button" href="tools/temporal-telephone/">Open tool</a>
         </article>
       </div>
     </section>
@@ -315,60 +340,65 @@
           <p class="label">Session 2</p>
           <h3>Default Test Comparison Viewer</h3>
           <p>Side-by-side prompt, output, model, observed default, revision, and ethical concern viewer.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">Defaults</span>
             <span class="tag">Comparison</span>
             <span class="tag">Annotation</span>
           </div>
-          <a class="button secondary" href="tools/default-test-comparison-viewer/">Open placeholder</a>
+          <a class="button secondary" href="tools/default-test-comparison-viewer/">Coming later</a>
         </article>
 
         <article class="tool">
           <p class="label">Session 3</p>
           <h3>Video Failure Gallery Viewer</h3>
           <p>Frame-step and label video failure modes such as identity drift, physics breaks, and camera inconsistency.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">Failure</span>
             <span class="tag">Frames</span>
             <span class="tag">Coherence</span>
           </div>
-          <a class="button secondary" href="tools/video-failure-gallery-viewer/">Open placeholder</a>
+          <a class="button secondary" href="tools/video-failure-gallery-viewer/">Coming later</a>
         </article>
 
         <article class="tool">
           <p class="label">All Sessions</p>
           <h3>A/B/C Comparison Board</h3>
           <p>The recurring investigation board for baseline, changed variable, correction or stress test, and evidence claim.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">A/B/C</span>
             <span class="tag">Evidence</span>
             <span class="tag">Reflection</span>
           </div>
-          <a class="button secondary" href="tools/abc-comparison-board/">Open placeholder</a>
+          <a class="button secondary" href="tools/abc-comparison-board/">Coming later</a>
         </article>
 
         <article class="tool">
           <p class="label">Session 4</p>
           <h3>Model Card Builder</h3>
           <p>Helps participants document claims, observed behavior, defaults, failure modes, and responsible-use boundaries.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">Model card</span>
             <span class="tag">Ethics</span>
             <span class="tag">Use limits</span>
           </div>
-          <a class="button secondary" href="tools/model-card-builder/">Open placeholder</a>
+          <a class="button secondary" href="tools/model-card-builder/">Coming later</a>
         </article>
 
         <article class="tool">
           <p class="label">All Sessions</p>
           <h3>Concept Bridges</h3>
           <p>Short explainers for durable ideas: prediction, machine seeing, confidence, and defaults.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">Bridge</span>
             <span class="tag">Explainer</span>
             <span class="tag">Teaching</span>
           </div>
-          <a class="button secondary" href="tools/concept-bridges/">Open placeholder</a>
+          <a class="button secondary" href="tools/concept-bridges/">Coming later</a>
         </article>
       </div>
     </section>
@@ -380,60 +410,65 @@
           <p class="label">Session 1</p>
           <h3>Next-Token Prediction Game</h3>
           <p>A standalone version of the Zoom prediction game for testing genre, context, and likely continuations.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">Prediction</span>
             <span class="tag">Context</span>
             <span class="tag">Genre</span>
           </div>
-          <a class="button secondary" href="tools/next-token-prediction-game/">Open placeholder</a>
+          <a class="button secondary" href="tools/next-token-prediction-game/">Coming later</a>
         </article>
 
         <article class="tool">
           <p class="label">Session 2</p>
           <h3>Prompt Guidance Word-by-Word</h3>
           <p>Reveals a prompt one word at a time so participants can see how language constrains possible images.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">Prompt</span>
             <span class="tag">Guidance</span>
             <span class="tag">Revision</span>
           </div>
-          <a class="button secondary" href="tools/prompt-guidance-word-by-word/">Open placeholder</a>
+          <a class="button secondary" href="tools/prompt-guidance-word-by-word/">Coming later</a>
         </article>
 
         <article class="tool">
           <p class="label">Session 2</p>
           <h3>Latent Space Explorer</h3>
           <p>A future explorer for similarity, learned features, style, and compressed model representations.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">Latent space</span>
             <span class="tag">Similarity</span>
             <span class="tag">Features</span>
           </div>
-          <a class="button secondary" href="tools/latent-space-explorer/">Open placeholder</a>
+          <a class="button secondary" href="tools/latent-space-explorer/">Coming later</a>
         </article>
 
         <article class="tool">
           <p class="label">Session 2</p>
           <h3>Dataset Balance Simulator</h3>
           <p>Shows how dataset composition can shape model defaults, confidence, and errors.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">Data</span>
             <span class="tag">Balance</span>
             <span class="tag">Bias</span>
           </div>
-          <a class="button secondary" href="tools/dataset-balance-simulator/">Open placeholder</a>
+          <a class="button secondary" href="tools/dataset-balance-simulator/">Coming later</a>
         </article>
 
         <article class="tool">
           <p class="label">Session 3</p>
           <h3>Frame-by-Frame Coherence Viewer</h3>
           <p>Overlays consecutive video frames to inspect what changed, drifted, or broke over time.</p>
+          <span class="status future">Coming later</span>
           <div class="tags">
             <span class="tag">Frames</span>
             <span class="tag">Motion</span>
             <span class="tag">Continuity</span>
           </div>
-          <a class="button secondary" href="tools/frame-by-frame-coherence-viewer/">Open placeholder</a>
+          <a class="button secondary" href="tools/frame-by-frame-coherence-viewer/">Coming later</a>
         </article>
       </div>
     </section>
@@ -456,6 +491,10 @@
         <a class="doc-link" href="tools/README.md">Tool Directory<span>Canonical folders and status</span></a>
         <a class="doc-link" href="docs/project-brief.md">Project Brief<span>Identity, origins, structure, ethics</span></a>
         <a class="doc-link" href="docs/build-roadmap.md">Build Roadmap<span>MVP order, timeline, open questions</span></a>
+        <a class="doc-link" href="docs/qa-checklist.md">QA Checklist<span>Links, tools, responsive, offline</span></a>
+        <a class="doc-link" href="docs/session-1-facilitation.md">Session 1 Notes<span>Text, prediction, ELIZA</span></a>
+        <a class="doc-link" href="docs/session-2-facilitation.md">Session 2 Notes<span>Images, features, diffusion</span></a>
+        <a class="doc-link" href="docs/session-3-facilitation.md">Session 3 Notes<span>Video, drift, coherence</span></a>
       </div>
     </section>
   </main>
