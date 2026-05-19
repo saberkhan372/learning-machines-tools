@@ -1,3 +1,8 @@
+---
+layout: page
+title: Video Test Report
+---
+
 # Video Test Report
 
 Use this with Temporal Telephone, curated video examples, or optional video-generation tests.

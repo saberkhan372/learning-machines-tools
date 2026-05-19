@@ -1,0 +1,8 @@
+title: Learning Machines Tools
+description: CC Fest creative AI / machine learning camp tools and workshop materials.
+url: "https://saberkhan372.github.io"
+baseurl: "/learning-machines-tools"
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false

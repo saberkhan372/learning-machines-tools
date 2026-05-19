@@ -1,8 +1,13 @@
+---
+layout: page
+title: Build Roadmap
+---
+
 # Build Roadmap
 
 ## Current Phase
 
-Launch MVP ready for first-cohort QA.
+Pilot readiness and first-cohort QA.
 
 Target launch: **Summer 2026**
 
@@ -18,11 +23,23 @@ The first repo goal is to create a static, GitHub Pages-ready tool ecosystem wit
 | 4 | Diffusion Step-Through Viewer | Launch ready draft | Add pre-generated PNG sequences when available |
 | 5 | Feature Extraction / Pixel Resolution Tool | Launch ready | Replace generated teaching images with curated assets later if desired |
 | 6 | Temporal Telephone | Launch ready | Pilot with facilitators before Session 3 |
-| 7 | Facilitation docs | Launch ready | Expand after first cohort feedback |
+| 7 | Facilitation docs | Pilot scripts ready | Expand after first cohort feedback |
+| 8 | Pilot checklist + feedback template | Ready for pilot | Convert to form only if needed |
 
-Canonical tool folders now exist for every launch, second-wave, and stretch tool. See [`../tools/README.md`](../tools/README.md).
+Canonical tool folders now exist for every launch, second-wave, and stretch tool. See [`../tools/README.html`](../tools/README.html).
 
 ## Critical Path
+
+### 0. Run a Small Pilot
+
+Before adding second-wave tools, run a 60-90 minute pilot using one session script, one worksheet, and the Pilot Feedback Form.
+
+Classify feedback as:
+
+- launch blocker
+- pilot caveat
+- later polish
+- second-wave tool idea
 
 ### 1. Maintain Tokenizer + Temperature Visualizer
 

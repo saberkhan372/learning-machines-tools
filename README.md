@@ -1,3 +1,8 @@
+---
+layout: page
+title: Learning Machines Tools
+---
+
 # Learning Machines: Text, Images, Video
 
 A CC Fest creative AI / machine learning camp tool ecosystem.
@@ -86,12 +91,18 @@ Canonical folders live under [`tools/`](tools/).
 
 ## Planning Docs
 
-- [Project brief](docs/project-brief.md)
-- [Build roadmap](docs/build-roadmap.md)
-- [Session 1 facilitation notes](docs/session-1-facilitation.md)
-- [Session 2 facilitation notes](docs/session-2-facilitation.md)
-- [Session 3 facilitation notes](docs/session-3-facilitation.md)
-- [Launch QA checklist](docs/qa-checklist.md)
+- [Project brief](docs/project-brief.html)
+- [Build roadmap](docs/build-roadmap.html)
+- [Pilot checklist](docs/pilot-checklist.html)
+- [Pilot feedback form template](docs/pilot-feedback-form.html)
+- [Session 1 facilitation notes](docs/session-1-facilitation.html)
+- [Session 2 facilitation notes](docs/session-2-facilitation.html)
+- [Session 3 facilitation notes](docs/session-3-facilitation.html)
+- [Launch QA checklist](docs/qa-checklist.html)
+
+## Pilot Readiness
+
+The repo is ready for a small live pilot. Start from the published homepage, use the pilot checklist, run one session script, collect feedback, and classify issues as launch blockers, pilot caveats, later polish, or second-wave ideas.
 
 ## Participation Norms
 

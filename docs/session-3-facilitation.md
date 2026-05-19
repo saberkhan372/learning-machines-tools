@@ -1,16 +1,39 @@
-# Session 3 Facilitation Notes: Video
+---
+layout: page
+title: "Session 3 Pilot Script: Video"
+---
 
-## Session Goal
+# Session 3 Pilot Script: Video
 
-Participants investigate why video generation is harder than image generation: identity, motion, continuity, camera logic, and physics must hold across time.
+Use this script for a 60-90 minute pilot focused on temporal coherence, drift, anchoring, and why video generation is harder than generating a single image.
 
 Core question: what changes when generation has to work across time?
 
-## Tool Order
+## Materials
 
-1. Temporal Telephone: draw frame sequences with previous-frame-only and anchor-frame modes.
-2. Curated failure examples or optional video tests: identify drift, breaks, and coherence failures.
-3. Video Test Report: document an A/B/C test or failure analysis.
+- Temporal Telephone
+- Video Test Report
+- AI Use + Consent Checklist
+- Optional: curated video clips or still-frame sequences showing drift and failure modes
+
+## Run of Show
+
+| Time | Segment | Facilitator Move | Participant Action |
+| --- | --- | --- | --- |
+| 0-5 min | Welcome and bridge | Connect Session 2 to Session 3: a good frame is not enough; video must stay coherent across time. | Choose a participation pathway. |
+| 5-35 min | Temporal Telephone round 1 | Open Temporal Telephone in previous-frame-only mode. Ask participants to draw or direct a simple sequence. | Draw/save frames or observe where small changes accumulate into drift. |
+| 35-50 min | Temporal Telephone round 2 | Switch to anchor mode and repeat with the same basic subject or motion. | Compare whether identity, layout, and motion stay more stable. |
+| 50-70 min | Failure analysis | Use curated clips, still frames, or optional generated video examples. Name failure modes precisely. | Mark identity drift, physics breaks, camera inconsistency, style drift, or temporal jumps. |
+| 70-90 min | Video Test Report | Ask participants to complete one A/B/C or failure-analysis section. | Share one coherence claim and one responsible-use boundary. |
+
+## Facilitator Prompts
+
+- "Where did the sequence first begin to drift?"
+- "What stayed consistent when only the previous frame was visible?"
+- "What did the anchor preserve?"
+- "What does video require that a single image does not?"
+- "Which failure type is easiest to spot frame by frame?"
+- "What would you need to specify to keep identity, motion, and setting stable?"
 
 ## Investigation Prompt
 
@@ -20,10 +43,19 @@ Compare a baseline motion prompt with one revision that adds an anchor: a consis
 
 Participants can complete the session using Temporal Telephone and curated clips only. No one needs to generate video to investigate temporal coherence.
 
-## Reflection Questions
+## Fallback Plan
 
-- Where did the sequence begin to drift?
-- What stayed consistent across frames?
-- What did the anchor help preserve?
-- Which video failures reveal model limits most clearly?
-- What responsible-use boundary would you set for classroom use?
+- If drawing with the tool is awkward, have one facilitator draw while participants direct changes verbally.
+- If playback is too fast or hard to see, step through thumbnails manually.
+- If no curated clips are available, use Temporal Telephone outputs as the failure gallery.
+- If participants do not want to analyze AI video, focus on continuity, consent, and classroom-safe critique protocols.
+
+## Pilot QA Notes
+
+During the pilot, note:
+
+- Whether participants understood previous-frame-only versus anchor mode.
+- Whether the Save frame and Play controls were discoverable.
+- Whether thumbnails were large enough for discussion.
+- Which failure categories participants used naturally.
+- Any ethical concerns around generating motion, simulating people, or using real likenesses.

@@ -1,16 +1,40 @@
-# Session 2 Facilitation Notes: Images
+---
+layout: page
+title: "Session 2 Pilot Script: Images"
+---
 
-## Session Goal
+# Session 2 Pilot Script: Images
 
-Participants investigate how image systems work with pixels, features, learned patterns, and iterative denoising rather than human imagination.
+Use this script for a 60-90 minute pilot focused on pixels, features, diffusion, image defaults, and the question of what a machine "sees."
 
 Core question: when a model sees or generates an image, what is it actually working with?
 
-## Tool Order
+## Materials
 
-1. Feature Extraction / Pixel Resolution: reduce detail and notice when recognition becomes possible.
-2. Diffusion Step-Through Viewer: move through denoising steps from noise to structure.
-3. Image Default Test Board: compare outputs or curated examples from underspecified prompts.
+- Feature Extraction / Pixel Resolution
+- Diffusion Step-Through Viewer
+- Image Default Test Board
+- AI Use + Consent Checklist
+- Optional: curated image outputs from vague prompts
+
+## Run of Show
+
+| Time | Segment | Facilitator Move | Participant Action |
+| --- | --- | --- | --- |
+| 0-5 min | Welcome and bridge | Connect Session 1 to Session 2: text becomes tokens; images become pixels, features, and learned patterns. | Choose a participation pathway. |
+| 5-25 min | Feature / pixel activity | Open Feature Extraction. Switch image types and reduce detail until recognition becomes difficult. | Identify which cues return first: color, outline, texture, context, or location. |
+| 25-45 min | Diffusion step-through | Open Diffusion Viewer. Move slowly from pure noise to final image and read the prompt guidance. | Describe what appears at each stage: composition, subject, edges, texture, details. |
+| 45-70 min | Default Test | Introduce a vague prompt such as "a doctor," "a classroom," or "a beautiful home." | Generate, observe, or critique outputs and fill the Image Default Test Board. |
+| 70-90 min | Debrief | Ask what the system filled in without being asked and where those defaults may come from. | Share one observed default and one responsible revision. |
+
+## Facilitator Prompts
+
+- "When did the image become recognizable?"
+- "Which visual cue did the most work?"
+- "What does the feature view preserve, and what does it erase?"
+- "At what diffusion step does the subject become guessable?"
+- "What did the prompt leave unspecified?"
+- "Which defaults are technical, and which are social?"
 
 ## Investigation Prompt
 
@@ -18,12 +42,21 @@ Choose a vague visual prompt such as "a doctor," "a classroom," or "a beautiful 
 
 ## Low-AI / No-AI Pathway
 
-Participants can analyze curated screenshots or facilitator-provided image sets instead of generating images. They can also design a classroom-safe Default Test without using AI tools.
+Participants can analyze curated screenshots or facilitator-provided image sets instead of generating images. They can also design an age-appropriate Default Test without using AI tools.
 
-## Reflection Questions
+## Fallback Plan
 
-- What details appeared before they were specified?
-- Which visual cues made recognition possible?
-- What did the system assume about people, places, roles, or style?
-- What consent, labor, bias, or attribution concern appeared?
-- How would this investigation need to change for students?
+- If no image generator is available, use pre-generated examples or ask participants to predict likely defaults before revealing examples.
+- If the Diffusion Viewer feels abstract, pause at seven named stages and ask participants to describe only what they can see.
+- If Default Test prompts feel socially loaded, use safer prompts first, then explicitly frame more sensitive prompts as optional critique.
+- If participants object to image generation, shift to consent, attribution, and visual-default analysis.
+
+## Pilot QA Notes
+
+During the pilot, note:
+
+- Which image types in Feature Extraction were most useful.
+- Whether the detail slider made recognition thresholds visible.
+- Whether the Diffusion Viewer explained denoising without live AI.
+- Which Default Test prompts produced the richest discussion.
+- Any discomfort around bias, labor, consent, or artist imitation.

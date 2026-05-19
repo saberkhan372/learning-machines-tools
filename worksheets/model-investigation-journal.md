@@ -1,3 +1,8 @@
+---
+layout: page
+title: Model Investigation Journal
+---
+
 # Model Investigation Journal
 
 Use this for any tool, model, activity, or artifact.

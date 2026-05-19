@@ -77,6 +77,7 @@
 
     .principle div,
     .tool,
+    .pilot-panel,
     .doc-link {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -102,6 +103,36 @@
       font-size: 1.28rem;
       font-weight: 760;
       line-height: 1.18;
+    }
+
+    .pilot-panel {
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr;
+      gap: 18px;
+      align-items: start;
+      padding: 18px;
+      background: #fffaf1;
+    }
+
+    .pilot-panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+    }
+
+    .pilot-panel p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .pilot-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .pilot-actions .doc-link {
+      background: #fff;
+      box-shadow: none;
     }
 
     section {
@@ -228,6 +259,8 @@
 
     @media (max-width: 880px) {
       .principle,
+      .pilot-panel,
+      .pilot-actions,
       .tool-grid,
       .docs {
         grid-template-columns: 1fr;
@@ -263,6 +296,26 @@
   </header>
 
   <main>
+    <section class="wrap">
+      <div class="pilot-panel">
+        <div>
+          <p class="label">Pilot ready path</p>
+          <h2>Start here for a live test session</h2>
+          <p>
+            Use this path to run a 60-90 minute pilot with the published tools, collect feedback, and identify launch blockers before expanding the ecosystem.
+          </p>
+        </div>
+        <div class="pilot-actions" aria-label="Pilot readiness links">
+          <a class="doc-link" href="docs/pilot-checklist.html">Pilot Checklist<span>Before, during, after, consent, evidence</span></a>
+          <a class="doc-link" href="docs/pilot-feedback-form.html">Feedback Template<span>Usability, clarity, pacing, comfort</span></a>
+          <a class="doc-link" href="docs/session-1-facilitation.html">Session 1 Script<span>Text, prediction, ELIZA</span></a>
+          <a class="doc-link" href="docs/session-2-facilitation.html">Session 2 Script<span>Images, features, diffusion</span></a>
+          <a class="doc-link" href="docs/session-3-facilitation.html">Session 3 Script<span>Video, drift, coherence</span></a>
+          <a class="doc-link" href="docs/qa-checklist.html">QA Checklist<span>Live links, tools, responsive, offline</span></a>
+        </div>
+      </div>
+    </section>
+
     <section class="wrap">
       <h2>Launch Tools</h2>
       <div class="tool-grid">
@@ -476,25 +529,27 @@
     <section class="wrap">
       <h2>Worksheets</h2>
       <div class="docs">
-        <a class="doc-link" href="worksheets/ai-use-consent-checklist.md">AI Use + Consent<span>Norms, pathways, recap permissions</span></a>
-        <a class="doc-link" href="worksheets/text-experiment-board.md">Text Board<span>Prompt versions and observations</span></a>
-        <a class="doc-link" href="worksheets/image-default-test-board.md">Image Default Test<span>Defaults, assumptions, revisions</span></a>
-        <a class="doc-link" href="worksheets/video-test-report.md">Video Report<span>Motion, failure, coherence</span></a>
-        <a class="doc-link" href="worksheets/model-investigation-journal.md">Investigation Journal<span>Human / machine / system / ethics</span></a>
+        <a class="doc-link" href="worksheets/ai-use-consent-checklist.html">AI Use + Consent<span>Norms, pathways, recap permissions</span></a>
+        <a class="doc-link" href="worksheets/text-experiment-board.html">Text Board<span>Prompt versions and observations</span></a>
+        <a class="doc-link" href="worksheets/image-default-test-board.html">Image Default Test<span>Defaults, assumptions, revisions</span></a>
+        <a class="doc-link" href="worksheets/video-test-report.html">Video Report<span>Motion, failure, coherence</span></a>
+        <a class="doc-link" href="worksheets/model-investigation-journal.html">Investigation Journal<span>Human / machine / system / ethics</span></a>
       </div>
     </section>
 
     <section class="wrap">
       <h2>Project Docs</h2>
       <div class="docs">
-        <a class="doc-link" href="README.md">README<span>Repo overview and launch tool list</span></a>
-        <a class="doc-link" href="tools/README.md">Tool Directory<span>Canonical folders and status</span></a>
-        <a class="doc-link" href="docs/project-brief.md">Project Brief<span>Identity, origins, structure, ethics</span></a>
-        <a class="doc-link" href="docs/build-roadmap.md">Build Roadmap<span>MVP order, timeline, open questions</span></a>
-        <a class="doc-link" href="docs/qa-checklist.md">QA Checklist<span>Links, tools, responsive, offline</span></a>
-        <a class="doc-link" href="docs/session-1-facilitation.md">Session 1 Notes<span>Text, prediction, ELIZA</span></a>
-        <a class="doc-link" href="docs/session-2-facilitation.md">Session 2 Notes<span>Images, features, diffusion</span></a>
-        <a class="doc-link" href="docs/session-3-facilitation.md">Session 3 Notes<span>Video, drift, coherence</span></a>
+        <a class="doc-link" href="README.html">README<span>Repo overview and launch tool list</span></a>
+        <a class="doc-link" href="tools/README.html">Tool Directory<span>Canonical folders and status</span></a>
+        <a class="doc-link" href="docs/project-brief.html">Project Brief<span>Identity, origins, structure, ethics</span></a>
+        <a class="doc-link" href="docs/build-roadmap.html">Build Roadmap<span>MVP order, timeline, open questions</span></a>
+        <a class="doc-link" href="docs/qa-checklist.html">QA Checklist<span>Links, tools, responsive, offline</span></a>
+        <a class="doc-link" href="docs/pilot-checklist.html">Pilot Checklist<span>Run-of-show and evidence capture</span></a>
+        <a class="doc-link" href="docs/pilot-feedback-form.html">Feedback Template<span>Questions for pilot participants</span></a>
+        <a class="doc-link" href="docs/session-1-facilitation.html">Session 1 Script<span>Text, prediction, ELIZA</span></a>
+        <a class="doc-link" href="docs/session-2-facilitation.html">Session 2 Script<span>Images, features, diffusion</span></a>
+        <a class="doc-link" href="docs/session-3-facilitation.html">Session 3 Script<span>Video, drift, coherence</span></a>
       </div>
     </section>
   </main>

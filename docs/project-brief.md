@@ -1,3 +1,8 @@
+---
+layout: page
+title: Learning Machines Project Brief
+---
+
 # Learning Machines Project Brief
 
 ## Project Identity

@@ -1,3 +1,8 @@
+---
+layout: page
+title: Launch QA Checklist
+---
+
 # Launch QA Checklist
 
 Use this before publishing or sharing the repo.
@@ -5,10 +10,14 @@ Use this before publishing or sharing the repo.
 ## Link QA
 
 - Open `index.html`.
+- Open the live GitHub Pages homepage.
+- Open at least one rendered document URL ending in `.html`.
 - Open every launch tool from the homepage.
 - Open every worksheet and project doc link.
 - Use each tool's "Back to tools" link.
 - Confirm second-wave and stretch tools are labeled "Coming later."
+- Confirm the Pilot Ready path links to the pilot checklist, feedback template, and three session scripts.
+- Confirm Markdown pages render as styled HTML instead of raw Markdown.
 
 ## Tool QA
 
@@ -37,3 +46,5 @@ Use this before publishing or sharing the repo.
 - Each session has a worksheet.
 - Each session has low-AI/no-AI options.
 - Consent and public attribution questions are explicit.
+- Each session script includes timing, facilitator prompts, participant actions, and fallback notes.
+- The pilot checklist explains how to classify feedback as launch blocker, pilot caveat, later polish, or second-wave idea.

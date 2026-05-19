@@ -1,3 +1,8 @@
+---
+layout: page
+title: Text Experiment Board
+---
+
 # Text Experiment Board
 
 Use this with the Tokenizer + Temperature Visualizer, ELIZA Simulator, or any text model investigation.

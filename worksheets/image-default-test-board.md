@@ -1,3 +1,8 @@
+---
+layout: page
+title: Image Default Test Board
+---
+
 # Image Default Test Board
 
 Use this with the Feature Extraction / Pixel Resolution tool, Diffusion Step-Through Viewer, or curated image outputs.

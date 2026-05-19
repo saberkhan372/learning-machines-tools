@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <style>
+    :root {
+      --bg: #f7f1e6;
+      --paper: #fffaf1;
+      --ink: #20201d;
+      --muted: #6f675b;
+      --line: #d9ccb8;
+      --accent: #2364aa;
+      --warm: #b45f3a;
+      --shadow: 0 10px 28px rgba(49, 39, 25, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255, 250, 241, 0.88), rgba(247, 241, 230, 0.96)),
+        var(--bg);
+      line-height: 1.58;
+    }
+
+    a { color: var(--accent); }
+
+    .wrap {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 28px 0 14px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-weight: 720;
+      text-decoration: none;
+    }
+
+    article {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 4vw, 34px);
+      margin-bottom: 42px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+    }
+
+    h2 {
+      margin: 34px 0 12px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: 1.45rem;
+    }
+
+    h3 {
+      margin: 26px 0 10px;
+      font-size: 1.1rem;
+    }
+
+    p, li {
+      color: var(--muted);
+    }
+
+    blockquote {
+      margin: 18px 0;
+      padding: 14px 18px;
+      border-left: 4px solid var(--warm);
+      background: #fff5e6;
+      color: var(--ink);
+    }
+
+    blockquote p { color: var(--ink); margin: 0; }
+
+    code {
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 1px 5px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #20201d;
+      color: #fffaf1;
+    }
+
+    pre code {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      background: #fff;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f2e6d3;
+      color: var(--ink);
+    }
+
+    footer {
+      padding: 0 0 36px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a class="back-link" href="{{ '/' | relative_url }}">Back to tools</a>
+  </header>
+  <main class="wrap">
+    <article>
+      {{ content }}
+    </article>
+  </main>
+  <footer class="wrap">
+    Static workshop materials for Learning Machines: Text, Images, Video.
+  </footer>
+</body>
+</html>

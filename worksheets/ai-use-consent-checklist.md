@@ -1,3 +1,8 @@
+---
+layout: page
+title: AI Use + Consent Checklist
+---
+
 # AI Use + Consent Checklist
 
 Use this before, during, and after the camp to keep participation visible, optional, and discussable.

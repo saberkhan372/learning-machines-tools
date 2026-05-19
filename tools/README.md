@@ -1,3 +1,8 @@
+---
+layout: page
+title: Tool Directory
+---
+
 # Tool Directory
 
 Canonical tool folders for the Learning Machines camp.
