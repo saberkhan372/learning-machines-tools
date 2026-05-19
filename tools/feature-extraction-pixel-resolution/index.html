@@ -1,32 +1,597 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Feature Extraction / Pixel Resolution Tool</title>
-  <style>
-    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #20201d; background: #f7f1e6; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: #2364aa; }
-    .card { border: 1px solid #d9ccb8; border-radius: 8px; padding: 22px; background: #fffaf1; box-shadow: 0 10px 28px rgba(49, 39, 25, 0.10); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; }
-    p, li { color: #6f675b; line-height: 1.55; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Does the Machine See? — Learning Machines</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, sans-serif;
+  background: #f0efe9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px;
+  min-height: 100vh;
+}
+.back-nav { width: 100%; max-width: 860px; margin-bottom: 10px; }
+.back-nav a { font-size: 13px; color: #555; text-decoration: none; }
+.back-nav a:hover { color: #111; }
+header { width: 100%; max-width: 860px; margin-bottom: 14px; }
+h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #111; }
+.subtitle { font-size: 13px; color: #888; margin-top: 2px; }
+
+/* Image picker */
+.image-picker { width: 100%; max-width: 860px; display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.img-pill {
+  font-size: 12px; font-weight: 600; padding: 5px 14px;
+  border-radius: 20px; border: 2px solid #ccc;
+  background: #fff; color: #777; cursor: pointer; transition: all 0.12s;
+}
+.img-pill:hover { border-color: #888; color: #333; }
+.img-pill.active { border-color: #111; background: #111; color: #fff; }
+
+/* Two-canvas comparison area */
+.compare-area {
+  width: 100%; max-width: 860px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.canvas-box {
+  border: 3px solid #111; border-radius: 10px; overflow: hidden; background: #fff;
+}
+.canvas-box-label {
+  font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 6px 10px; background: #f8f7f3;
+  border-bottom: 1px solid #d9ccb8;
+}
+.canvas-box canvas {
+  display: block; width: 100%;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+}
+
+/* Mode picker */
+.mode-row {
+  width: 100%; max-width: 860px;
+  display: flex; gap: 6px; align-items: center; margin-top: 10px; flex-wrap: wrap;
+}
+.mode-label { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px; }
+.mode-pill {
+  font-size: 12px; font-weight: 600; padding: 5px 14px;
+  border-radius: 20px; border: 2px solid #ccc;
+  background: #fff; color: #777; cursor: pointer; transition: all 0.12s;
+}
+.mode-pill:hover { border-color: #888; color: #333; }
+.mode-pill.active { border-color: #111; background: #111; color: #fff; }
+
+/* Slider */
+.slider-section { width: 100%; max-width: 860px; margin-top: 10px; }
+.slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-bottom: 4px; font-weight: 600; }
+#res-slider { width: 100%; accent-color: #111; cursor: pointer; }
+
+/* Info row */
+.info-row {
+  width: 100%; max-width: 860px;
+  display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap;
+}
+.info-chip {
+  font-size: 12px; font-weight: 700; padding: 5px 12px;
+  border-radius: 6px; background: #111; color: #fff; white-space: nowrap;
+}
+.info-note { font-size: 12px; color: #888; }
+.recog-chip {
+  font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 6px;
+  white-space: nowrap; margin-left: auto;
+}
+.recog-hard   { background: #FFEBEE; color: #B71C1C; }
+.recog-medium { background: #FFF8E1; color: #5D4000; }
+.recog-easy   { background: #E8F5E9; color: #1B5E20; }
+
+/* Two-panel row: pixel values + mode note */
+.panel-row {
+  width: 100%; max-width: 860px;
+  display: flex; gap: 10px; margin-top: 12px; align-items: flex-start;
+}
+.pixel-panel-wrap {
+  flex: 0 0 auto;
+  background: #fff; border: 1.5px solid #d9ccb8; border-radius: 10px; padding: 12px;
+  transition: opacity 0.2s;
+}
+.pixel-panel-wrap.hidden { opacity: 0; pointer-events: none; }
+.panel-label {
+  font-size: 11px; font-weight: 700; color: #888;
+  text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+}
+.pv-grid { display: flex; flex-direction: column; gap: 4px; }
+.pv-row { display: flex; gap: 4px; }
+.pv-cell {
+  width: 52px; padding: 4px 2px; border-radius: 5px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  border: 1px solid rgba(0,0,0,0.08); background: #fafafa;
+}
+.pv-swatch { width: 38px; height: 18px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.12); }
+.pv-num { font-size: 8px; font-family: monospace; font-weight: 700; }
+.pv-r { color: #c62828; } .pv-g { color: #2e7d32; } .pv-b { color: #1565c0; }
+
+/* Mode note / teaching card */
+.mode-note {
+  flex: 1; background: #fff; border: 1.5px solid #d9ccb8;
+  border-radius: 10px; padding: 14px; font-size: 13px; color: #555; line-height: 1.55;
+}
+.mode-note strong {
+  color: #111; display: block; margin-bottom: 8px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+/* Reflection card */
+.reflection-card {
+  width: 100%; max-width: 860px; margin-top: 10px; margin-bottom: 14px;
+  padding: 14px 16px; background: #fff;
+  border: 1.5px solid #d9ccb8; border-radius: 10px;
+  font-size: 13px; color: #555; line-height: 1.6;
+}
+.reflection-card strong {
+  color: #111; display: block; margin-bottom: 6px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.reflection-card ol { padding-left: 18px; }
+.reflection-card li { margin-bottom: 4px; }
+
+@media (max-width: 600px) {
+  .compare-area { grid-template-columns: 1fr; }
+  .panel-row { flex-direction: column; }
+  .pixel-panel-wrap { width: 100%; }
+}
+</style>
 </head>
 <body>
-  <main>
-    <a href="../../">Back to tools</a>
-    <div class="card">
-      <h1>Feature Extraction / Pixel Resolution Tool</h1>
-      <p>Placeholder for the existing p5.js pixel-resolution tool.</p>
-      <p>Teaching goal: make image representation visible by showing that recognition changes as pixel detail, feature clarity, and image type change.</p>
-      <ul>
-        <li>Add swappable images: face, landscape, handwritten digit, abstract pattern, cluttered room.</li>
-        <li>Keep projection-friendly controls.</li>
-        <li>Prompt participants to notice when recognition becomes possible.</li>
-      </ul>
-    </div>
-  </main>
+
+<div class="back-nav"><a href="../../">← Back to tools</a></div>
+
+<header>
+  <h1>What Does the Machine See?</h1>
+  <div class="subtitle">Feature Extraction &amp; Pixel Resolution — Session 2</div>
+</header>
+
+<div class="image-picker" id="image-picker"></div>
+
+<div class="compare-area">
+  <div class="canvas-box">
+    <div class="canvas-box-label">Original</div>
+    <canvas id="src-cv"></canvas>
+  </div>
+  <div class="canvas-box">
+    <div class="canvas-box-label" id="out-label">Pixel-reduced representation</div>
+    <canvas id="out-cv"></canvas>
+  </div>
+</div>
+
+<div class="mode-row">
+  <span class="mode-label">Representation</span>
+  <button class="mode-pill active" data-mode="pixel">Pixels</button>
+  <button class="mode-pill"        data-mode="edges">Edges</button>
+  <button class="mode-pill"        data-mode="features">Features</button>
+</div>
+
+<div class="slider-section">
+  <div class="slider-labels">
+    <span>← Fewer pixels (compressed)</span>
+    <span>More pixels (full resolution) →</span>
+  </div>
+  <input type="range" id="res-slider" min="0" max="100" value="60">
+</div>
+
+<div class="info-row">
+  <div class="info-chip" id="grid-chip">Grid: — × —</div>
+  <div class="info-chip" id="pixel-chip">— pixels</div>
+  <div class="info-note">Phone camera: ~12,000,000 pixels</div>
+  <div class="recog-chip" id="recog-chip"></div>
+</div>
+
+<div class="panel-row">
+  <div class="pixel-panel-wrap" id="pixel-panel-wrap">
+    <div class="panel-label">Pixel values — center sample</div>
+    <div class="pv-grid" id="pixel-panel"></div>
+  </div>
+  <div class="mode-note" id="mode-note"></div>
+</div>
+
+<div class="reflection-card">
+  <strong>Discussion prompts</strong>
+  <ol>
+    <li>At what grid size did you first recognize the image? Which cues were decisive — color, outline, texture, or context?</li>
+    <li>Switch between Pixels, Edges, and Features on the same image. What does each reveal or hide?</li>
+    <li>If you only had the numbers in the sample panel, could you name what the image shows?</li>
+    <li>What could a machine measure in the edge or feature map that a human might ignore?</li>
+  </ol>
+</div>
+
+<script>
+const SRC_W = 640, SRC_H = 400;
+const SAMPLE_COLS = 5, SAMPLE_ROWS = 4;
+
+const srcCv = document.getElementById('src-cv');
+const outCv = document.getElementById('out-cv');
+const srcCtx = srcCv.getContext('2d');
+const outCtx = outCv.getContext('2d');
+srcCv.width = SRC_W; srcCv.height = SRC_H;
+outCv.width = SRC_W; outCv.height = SRC_H;
+
+const tinyCv = document.createElement('canvas');
+const tinyCtx = tinyCv.getContext('2d');
+
+// ── Drawing functions ─────────────────────────────────────────────────────────
+
+function drawFace(c, W, H) {
+  c.fillStyle = '#fdf6ee'; c.fillRect(0, 0, W, H);
+  c.fillStyle = '#3498db';
+  c.beginPath();
+  c.moveTo(W*.15,H); c.lineTo(W*.85,H); c.lineTo(W*.78,H*.82);
+  c.lineTo(W*.55,H*.78); c.lineTo(W*.5,H*.74); c.lineTo(W*.45,H*.78);
+  c.lineTo(W*.22,H*.82); c.closePath(); c.fill();
+  c.fillStyle = '#f5cba0'; c.fillRect(W*.45, H*.70, W*.10, H*.09);
+  c.fillStyle = '#3d2314';
+  c.beginPath(); c.ellipse(W*.5, H*.37, W*.26, H*.34, 0, 0, Math.PI*2); c.fill();
+  c.fillStyle = '#f5cba0';
+  c.beginPath(); c.ellipse(W*.5, H*.44, W*.22, H*.30, 0, 0, Math.PI*2); c.fill();
+  c.strokeStyle = '#3d2314'; c.lineWidth = W*.012; c.lineCap = 'round';
+  [-1,1].forEach(s => {
+    c.beginPath(); c.moveTo(W*.5+s*W*.065, H*.34);
+    c.quadraticCurveTo(W*.5+s*W*.105, H*.31, W*.5+s*W*.14, H*.34); c.stroke();
+  });
+  c.fillStyle = '#fff';
+  [-1,1].forEach(s => { c.beginPath(); c.ellipse(W*.5+s*W*.1, H*.41, W*.055, H*.042, 0,0,Math.PI*2); c.fill(); });
+  c.fillStyle = '#5d4037';
+  [-1,1].forEach(s => { c.beginPath(); c.ellipse(W*.5+s*W*.1, H*.41, W*.030, H*.034, 0,0,Math.PI*2); c.fill(); });
+  c.fillStyle = '#111';
+  [-1,1].forEach(s => { c.beginPath(); c.ellipse(W*.5+s*W*.1, H*.41, W*.014, H*.018, 0,0,Math.PI*2); c.fill(); });
+  c.fillStyle = '#fff';
+  [-1,1].forEach(s => { c.beginPath(); c.arc(W*.5+s*W*.1+W*.01, H*.404, W*.007, 0, Math.PI*2); c.fill(); });
+  c.strokeStyle = '#d4956a'; c.lineWidth = W*.009;
+  c.beginPath(); c.moveTo(W*.5,H*.46); c.lineTo(W*.47,H*.52);
+  c.quadraticCurveTo(W*.5,H*.535,W*.53,H*.52); c.stroke();
+  c.strokeStyle = '#c0392b'; c.lineWidth = W*.014;
+  c.beginPath(); c.arc(W*.5, H*.565, W*.09, 0.15, Math.PI-0.15); c.stroke();
+  c.fillStyle = 'rgba(255,150,120,0.22)';
+  [-1,1].forEach(s => { c.beginPath(); c.ellipse(W*.5+s*W*.17, H*.5, W*.07, H*.05, 0,0,Math.PI*2); c.fill(); });
+  c.fillStyle = '#3d2314';
+  c.beginPath();
+  c.moveTo(W*.28,H*.22); c.quadraticCurveTo(W*.30,H*.14,W*.5,H*.12);
+  c.quadraticCurveTo(W*.70,H*.14,W*.72,H*.22);
+  c.quadraticCurveTo(W*.64,H*.28,W*.57,H*.25);
+  c.quadraticCurveTo(W*.5,H*.22,W*.43,H*.25);
+  c.quadraticCurveTo(W*.36,H*.28,W*.28,H*.22);
+  c.closePath(); c.fill();
+}
+
+function drawLandscape(c, W, H) {
+  c.fillStyle = '#64b5f6'; c.fillRect(0, 0, W, H*.58);
+  c.fillStyle = '#a5d6a7'; c.fillRect(0, H*.58, W, H*.42);
+  c.fillStyle = 'rgba(255,220,0,0.3)'; c.beginPath(); c.arc(W*.8, H*.16, W*.13, 0, Math.PI*2); c.fill();
+  c.fillStyle = '#ffd700'; c.beginPath(); c.arc(W*.8, H*.16, W*.09, 0, Math.PI*2); c.fill();
+  function cloud(cx,cy,r) {
+    c.fillStyle = 'rgba(255,255,255,0.9)';
+    [[0,0,r*.7],[r*.55,-r*.25,r*.55],[-r*.55,-r*.2,r*.5]].forEach(([dx,dy,rad]) => {
+      c.beginPath(); c.arc(cx+dx, cy+dy, rad, 0, Math.PI*2); c.fill();
+    });
+  }
+  cloud(W*.2, H*.12, W*.12); cloud(W*.5, H*.08, W*.10);
+  c.fillStyle = '#81c784';
+  c.beginPath(); c.moveTo(0,H*.58); c.quadraticCurveTo(W*.25,H*.38,W*.5,H*.52);
+  c.quadraticCurveTo(W*.75,H*.38,W,H*.5); c.lineTo(W,H*.65); c.lineTo(0,H*.65); c.closePath(); c.fill();
+  c.fillStyle = '#388e3c';
+  c.beginPath(); c.moveTo(0,H*.68); c.quadraticCurveTo(W*.3,H*.5,W*.55,H*.64);
+  c.quadraticCurveTo(W*.75,H*.52,W,H*.64); c.lineTo(W,H); c.lineTo(0,H); c.closePath(); c.fill();
+  c.fillStyle = '#c4a35a';
+  c.beginPath(); c.moveTo(W*.43,H); c.lineTo(W*.57,H); c.lineTo(W*.54,H*.64);
+  c.quadraticCurveTo(W*.5,H*.6,W*.46,H*.64); c.closePath(); c.fill();
+  function tree(cx, bot, hw, h) {
+    c.fillStyle = '#1b5e20';
+    c.beginPath(); c.moveTo(cx,bot-h); c.lineTo(cx-hw,bot); c.lineTo(cx+hw,bot); c.closePath(); c.fill();
+  }
+  tree(W*.12,H*.68,W*.055,H*.15); tree(W*.22,H*.70,W*.045,H*.13);
+  tree(W*.82,H*.68,W*.055,H*.14); tree(W*.72,H*.70,W*.045,H*.12);
+}
+
+function drawDigit(c, W, H) {
+  c.fillStyle = '#ffffff'; c.fillRect(0, 0, W, H);
+  c.fillStyle = '#111111';
+  c.font = `bold ${Math.floor(H*.88)}px serif`;
+  c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillText('8', W/2, H/2 + H*.04);
+}
+
+function drawCat(c, W, H) {
+  c.fillStyle = '#dce9f2'; c.fillRect(0, 0, W, H);
+  c.strokeStyle = '#9e9e9e'; c.lineWidth = W*.042; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(W*.76,H*.82); c.quadraticCurveTo(W*.96,H*.68,W*.88,H*.48); c.stroke();
+  c.fillStyle = '#bdbdbd';
+  c.beginPath(); c.ellipse(W*.5,H*.74,W*.28,H*.22,0,0,Math.PI*2); c.fill();
+  c.beginPath(); c.arc(W*.5,H*.42,W*.19,0,Math.PI*2); c.fill();
+  c.fillStyle = '#9e9e9e';
+  [[W*.35,H*.27,W*.3,H*.12,W*.44,H*.24],[W*.65,H*.27,W*.7,H*.12,W*.56,H*.24]].forEach(([x1,y1,x2,y2,x3,y3]) => {
+    c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.lineTo(x3,y3); c.closePath(); c.fill();
+  });
+  c.fillStyle = '#f48fb1';
+  [[W*.37,H*.26,W*.34,H*.16,W*.43,H*.24],[W*.63,H*.26,W*.66,H*.16,W*.57,H*.24]].forEach(([x1,y1,x2,y2,x3,y3]) => {
+    c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.lineTo(x3,y3); c.closePath(); c.fill();
+  });
+  c.fillStyle = '#66bb6a';
+  [W*.41,W*.59].forEach(ex => { c.beginPath(); c.ellipse(ex,H*.4,W*.052,H*.057,0,0,Math.PI*2); c.fill(); });
+  c.fillStyle = '#111';
+  [W*.41,W*.59].forEach(ex => { c.beginPath(); c.ellipse(ex,H*.4,W*.018,H*.046,0,0,Math.PI*2); c.fill(); });
+  c.fillStyle = '#fff';
+  [W*.41,W*.59].forEach(ex => { c.beginPath(); c.arc(ex+W*.01,H*.394,W*.009,0,Math.PI*2); c.fill(); });
+  c.fillStyle = '#f48fb1';
+  c.beginPath(); c.moveTo(W*.5,H*.46); c.lineTo(W*.47,H*.49); c.lineTo(W*.53,H*.49); c.closePath(); c.fill();
+  c.strokeStyle = 'rgba(60,60,60,0.5)'; c.lineWidth = 1.5; c.lineCap = 'round';
+  [[-1,1],[-1,0],[-1,-1],[1,1],[1,0],[1,-1]].forEach(([sx,sy]) => {
+    const ox = sx > 0 ? W*.54 : W*.46;
+    c.beginPath(); c.moveTo(ox,H*.475); c.lineTo(ox+sx*W*.24,H*.475+sy*H*.04); c.stroke();
+  });
+}
+
+function drawAbstract(c, W, H) {
+  c.fillStyle = '#f5f5f5'; c.fillRect(0, 0, W, H);
+  [
+    [0,.0,.36,.48,'#e53935'],[.64,.0,.36,.32,'#1565c0'],
+    [0,.68,.26,.32,'#f9a825'],[.64,.58,.36,.42,'#e53935'],
+    [.36,.48,.28,.30,'#1565c0'],[.26,.68,.38,.32,'#f9a825'],
+  ].forEach(([x,y,w,h,col]) => { c.fillStyle=col; c.fillRect(x*W,y*H,w*W,h*H); });
+  c.strokeStyle = '#111'; c.lineWidth = W*.02;
+  [[.36,0,.36,1],[.64,0,.64,1]].forEach(([x1,y1,x2,y2]) => {
+    c.beginPath(); c.moveTo(x1*W,y1*H); c.lineTo(x2*W,y2*H); c.stroke();
+  });
+  [[0,.32,1,.32],[0,.48,1,.48],[0,.58,1,.58],[0,.68,1,.68]].forEach(([x1,y1,x2,y2]) => {
+    c.beginPath(); c.moveTo(x1*W,y1*H); c.lineTo(x2*W,y2*H); c.stroke();
+  });
+}
+
+function drawRoom(c, W, H) {
+  c.fillStyle = '#fff9f0'; c.fillRect(0, 0, W, H);
+  c.fillStyle = '#c8a97e'; c.fillRect(0, H*.68, W, H*.32);
+  c.strokeStyle = '#bba07a'; c.lineWidth = 2;
+  c.beginPath(); c.moveTo(0,H*.68); c.lineTo(W,H*.68); c.stroke();
+  c.fillStyle = '#b3e0f7'; c.fillRect(W*.55, H*.08, W*.32, H*.38);
+  c.strokeStyle = '#888'; c.lineWidth = 3; c.strokeRect(W*.55, H*.08, W*.32, H*.38);
+  c.beginPath(); c.moveTo(W*.71,H*.08); c.lineTo(W*.71,H*.46); c.stroke();
+  c.beginPath(); c.moveTo(W*.55,H*.27); c.lineTo(W*.87,H*.27); c.stroke();
+  c.fillStyle = 'rgba(180,230,255,0.18)';
+  c.beginPath(); c.moveTo(W*.55,H*.68); c.lineTo(W*.87,H*.68); c.lineTo(W*.95,H); c.lineTo(W*.4,H); c.closePath(); c.fill();
+  c.fillStyle = '#8b5e3c'; c.fillRect(W*.06, H*.52, W*.38, H*.06);
+  c.fillRect(W*.08, H*.58, W*.03, H*.10); c.fillRect(W*.38, H*.58, W*.03, H*.10);
+  c.fillStyle = '#a47348'; c.fillRect(W*.06, H*.52, W*.38, H*.015);
+  c.fillStyle = '#222'; c.fillRect(W*.14, H*.33, W*.18, H*.19);
+  c.fillStyle = '#4fc3f7'; c.fillRect(W*.155, H*.345, W*.15, H*.155);
+  c.fillStyle = '#333'; c.fillRect(W*.215, H*.52, W*.02, H*.03); c.fillRect(W*.19, H*.548, W*.07, H*.015);
+  c.fillStyle = '#555'; c.fillRect(W*.08, H*.44, W*.12, H*.09); c.fillRect(W*.08, H*.31, W*.025, H*.14);
+  c.fillStyle = '#444'; c.fillRect(W*.07, H*.52, W*.14, H*.03);
+  c.fillRect(W*.085, H*.55, W*.025, H*.08); c.fillRect(W*.17, H*.55, W*.025, H*.08);
+  c.fillStyle = '#8b5e3c'; c.fillRect(W*.56, H*.48, W*.30, H*.21);
+  c.fillStyle = '#a47348';
+  [H*.48,H*.55,H*.62].forEach(y => c.fillRect(W*.56, y, W*.30, H*.015));
+  [
+    [W*.57,H*.49,W*.04,H*.06,'#e53935'],[W*.62,H*.49,W*.03,H*.06,'#1565c0'],
+    [W*.66,H*.49,W*.05,H*.06,'#f9a825'],[W*.72,H*.49,W*.03,H*.06,'#388e3c'],
+    [W*.57,H*.565,W*.05,H*.055,'#7b1fa2'],[W*.63,H*.565,W*.04,H*.055,'#e65100'],
+    [W*.68,H*.565,W*.06,H*.055,'#1565c0'],
+  ].forEach(([x,y,w,h,col]) => { c.fillStyle=col; c.fillRect(x,y,w,h); });
+}
+
+// ── Images ────────────────────────────────────────────────────────────────────
+const IMAGES = [
+  { label: 'Face',      draw: drawFace },
+  { label: 'Landscape', draw: drawLandscape },
+  { label: 'Digit "8"', draw: drawDigit },
+  { label: 'Cat',       draw: drawCat },
+  { label: 'Abstract',  draw: drawAbstract },
+  { label: 'Room',      draw: drawRoom },
+];
+
+// ── Mode notes ────────────────────────────────────────────────────────────────
+const MODE_NOTES = {
+  pixel: {
+    title: 'Pixels',
+    body: `Each block in the right panel shows the <em>average</em> R, G, B values for that region of the original. The pixel values panel below shows exact numbers. The model works with all these values — it never has access to "meaning," only to numerical patterns across millions of training examples.`,
+  },
+  edges: {
+    title: 'Edges',
+    body: `Edge detection finds pixels where neighboring values differ sharply. The output highlights boundaries and outlines while discarding interior color. Early convolutional layers in neural networks learn similar operations automatically — finding oriented edges, corners, and discontinuities as a first step toward recognizing shape.`,
+  },
+  features: {
+    title: 'Feature blocks',
+    body: `Deeper layers in a neural network don't look at individual pixels — they look at larger regions called <em>receptive fields</em>. Each block here represents a region the model might process together: a region of color, a patch of texture, or a local pattern. Recognition emerges from combining these regional patterns, not from reading the image like text.`,
+  },
+};
+
+// ── Core: pixelation ──────────────────────────────────────────────────────────
+function getBlockSize(v) {
+  return Math.max(1, Math.round(Math.pow(40, (100 - v) / 100)));
+}
+
+function applyPixelate(bSize) {
+  const cols = Math.ceil(SRC_W / bSize);
+  const rows = Math.ceil(SRC_H / bSize);
+
+  tinyCv.width = cols; tinyCv.height = rows;
+  tinyCtx.imageSmoothingEnabled = false;
+  tinyCtx.clearRect(0, 0, cols, rows);
+  tinyCtx.drawImage(srcCv, 0, 0, cols, rows);
+
+  outCtx.imageSmoothingEnabled = false;
+  outCtx.clearRect(0, 0, SRC_W, SRC_H);
+  outCtx.drawImage(tinyCv, 0, 0, cols, rows, 0, 0, SRC_W, SRC_H);
+
+  if (bSize >= 4) {
+    const cw = SRC_W / cols, ch = SRC_H / rows;
+    outCtx.strokeStyle = 'rgba(0,0,0,0.10)';
+    outCtx.lineWidth = 0.5;
+    for (let i = 1; i < cols; i++) {
+      outCtx.beginPath(); outCtx.moveTo(i*cw,0); outCtx.lineTo(i*cw,SRC_H); outCtx.stroke();
+    }
+    for (let i = 1; i < rows; i++) {
+      outCtx.beginPath(); outCtx.moveTo(0,i*ch); outCtx.lineTo(SRC_W,i*ch); outCtx.stroke();
+    }
+  }
+  return { cols, rows };
+}
+
+function applyEdges(bSize) {
+  applyPixelate(bSize);
+  const img = outCtx.getImageData(0, 0, SRC_W, SRC_H);
+  const data = img.data;
+  const out = outCtx.createImageData(SRC_W, SRC_H);
+  const od = out.data;
+
+  for (let y = 1; y < SRC_H - 1; y++) {
+    for (let x = 1; x < SRC_W - 1; x++) {
+      const i = (y * SRC_W + x) * 4;
+      const r = data[i], g = data[i+1], b = data[i+2];
+      const ri = (y * SRC_W + x + 1) * 4; // right
+      const di = ((y+1) * SRC_W + x) * 4; // below
+      const diff =
+        Math.abs(r - data[ri])   + Math.abs(g - data[ri+1]) + Math.abs(b - data[ri+2]) +
+        Math.abs(r - data[di])   + Math.abs(g - data[di+1]) + Math.abs(b - data[di+2]);
+      const v = diff > 80 ? 20 : 245;
+      od[i] = v; od[i+1] = v; od[i+2] = v; od[i+3] = 255;
+    }
+  }
+  outCtx.putImageData(out, 0, 0);
+}
+
+function applyFeatures(bSize) {
+  applyPixelate(bSize);
+  // Overlay a coarser feature-region grid
+  const featureCols = Math.max(4, Math.round(SRC_W / bSize / 3));
+  const featureRows = Math.max(3, Math.round(SRC_H / bSize / 3));
+  const fcw = SRC_W / featureCols, fch = SRC_H / featureRows;
+
+  outCtx.strokeStyle = 'rgba(0,0,0,0.7)';
+  outCtx.lineWidth = 2;
+  for (let i = 0; i <= featureCols; i++) {
+    outCtx.beginPath(); outCtx.moveTo(i*fcw,0); outCtx.lineTo(i*fcw,SRC_H); outCtx.stroke();
+  }
+  for (let i = 0; i <= featureRows; i++) {
+    outCtx.beginPath(); outCtx.moveTo(0,i*fch); outCtx.lineTo(SRC_W,i*fch); outCtx.stroke();
+  }
+}
+
+// ── Pixel values panel ────────────────────────────────────────────────────────
+function updatePixelPanel(cols, rows) {
+  const wrap = document.getElementById('pixel-panel-wrap');
+  if (currentMode !== 'pixel') { wrap.classList.add('hidden'); return; }
+  wrap.classList.remove('hidden');
+
+  const sx = Math.max(0, Math.floor(cols/2) - Math.floor(SAMPLE_COLS/2));
+  const sy = Math.max(0, Math.floor(rows * 0.22));
+  const sc = Math.min(SAMPLE_COLS, cols - sx);
+  const sr = Math.min(SAMPLE_ROWS, rows - sy);
+  if (sc < 1 || sr < 1) { document.getElementById('pixel-panel').innerHTML = ''; return; }
+
+  const data = tinyCtx.getImageData(sx, sy, sc, sr).data;
+  let html = '';
+  for (let r = 0; r < sr; r++) {
+    html += '<div class="pv-row">';
+    for (let c = 0; c < sc; c++) {
+      const i = (r * sc + c) * 4;
+      const R = data[i], G = data[i+1], B = data[i+2];
+      html += `<div class="pv-cell">
+        <div class="pv-swatch" style="background:rgb(${R},${G},${B})"></div>
+        <div class="pv-num pv-r">R:${R}</div>
+        <div class="pv-num pv-g">G:${G}</div>
+        <div class="pv-num pv-b">B:${B}</div>
+      </div>`;
+    }
+    html += '</div>';
+  }
+  document.getElementById('pixel-panel').innerHTML = html;
+}
+
+// ── Info row updates ──────────────────────────────────────────────────────────
+function updateInfo(cols, rows, bSize) {
+  const total = cols * rows;
+  document.getElementById('grid-chip').textContent = `Grid: ${cols} × ${rows}`;
+  document.getElementById('pixel-chip').textContent =
+    total >= 1000 ? `${(total/1000).toFixed(1)}K pixels` : `${total} pixels`;
+
+  const chip = document.getElementById('recog-chip');
+  if (total < 200)       { chip.textContent = 'Hard to recognize'; chip.className = 'recog-chip recog-hard'; }
+  else if (total < 2000) { chip.textContent = 'Recognizable from broad cues'; chip.className = 'recog-chip recog-medium'; }
+  else                   { chip.textContent = 'Rich enough for fine detail'; chip.className = 'recog-chip recog-easy'; }
+}
+
+// ── Mode note update ──────────────────────────────────────────────────────────
+function updateModeNote() {
+  const m = MODE_NOTES[currentMode];
+  document.getElementById('mode-note').innerHTML =
+    `<strong>${m.title}</strong>${m.body}`;
+}
+
+// ── Output label ──────────────────────────────────────────────────────────────
+const OUT_LABELS = {
+  pixel: 'Pixel-reduced representation',
+  edges: 'Edge-like representation',
+  features: 'Coarse feature blocks',
+};
+
+// ── Render ────────────────────────────────────────────────────────────────────
+let currentMode = 'pixel';
+let currentImageIdx = 0;
+
+function render() {
+  const bSize = getBlockSize(+document.getElementById('res-slider').value);
+  let cols, rows;
+
+  document.getElementById('out-label').textContent = OUT_LABELS[currentMode];
+
+  if (currentMode === 'pixel') {
+    ({ cols, rows } = applyPixelate(bSize));
+  } else if (currentMode === 'edges') {
+    applyEdges(bSize);
+    cols = Math.ceil(SRC_W / bSize); rows = Math.ceil(SRC_H / bSize);
+  } else {
+    applyFeatures(bSize);
+    cols = Math.ceil(SRC_W / bSize); rows = Math.ceil(SRC_H / bSize);
+  }
+
+  updateInfo(cols, rows, bSize);
+  updatePixelPanel(cols, rows);
+}
+
+// ── UI ────────────────────────────────────────────────────────────────────────
+function selectImage(idx) {
+  currentImageIdx = idx;
+  document.querySelectorAll('.img-pill').forEach((b,i) => b.classList.toggle('active', i === idx));
+  srcCtx.clearRect(0, 0, SRC_W, SRC_H);
+  IMAGES[idx].draw(srcCtx, SRC_W, SRC_H);
+  render();
+}
+
+// Build image picker
+const picker = document.getElementById('image-picker');
+IMAGES.forEach((img, i) => {
+  const b = document.createElement('button');
+  b.className = 'img-pill' + (i === 0 ? ' active' : '');
+  b.textContent = img.label;
+  b.onclick = () => selectImage(i);
+  picker.appendChild(b);
+});
+
+// Mode buttons
+document.querySelectorAll('.mode-pill').forEach(b => {
+  b.addEventListener('click', () => {
+    currentMode = b.dataset.mode;
+    document.querySelectorAll('.mode-pill').forEach(p => p.classList.toggle('active', p === b));
+    updateModeNote();
+    render();
+  });
+});
+
+document.getElementById('res-slider').addEventListener('input', render);
+
+// Init
+updateModeNote();
+selectImage(0);
+</script>
 </body>
 </html>
-
