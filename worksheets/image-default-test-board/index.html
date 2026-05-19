@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Default Test Board — Learning Machines</title>
+<style>
+  :root {
+    --bg: #f5f3ee; --card: #ffffff; --border: #e2ddd5; --ink: #1c1917;
+    --muted: #78716c; --accent: #2563eb; --accent-bg: #eff6ff;
+    --warm: #b45f3a; --radius: 10px; --shadow: 0 1px 4px rgba(0,0,0,.07); --row-bg: #fafaf9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .back { display: inline-block; font-size: .875rem; color: var(--muted); text-decoration: none; margin-bottom: 16px; }
+  .back:hover { color: var(--ink); }
+  header { margin-bottom: 20px; }
+  .eyebrow { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--warm); margin-bottom: 6px; }
+  h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 4px; }
+  .subtitle { font-size: .9rem; color: var(--muted); }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; align-items: center; }
+  .save-status { font-size: .78rem; color: var(--muted); margin-left: auto; font-style: italic; }
+  .btn { font-family: inherit; font-size: .82rem; font-weight: 600; padding: 7px 14px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--card); color: var(--ink); cursor: pointer; transition: background .12s; }
+  .btn:hover { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+  .btn-print { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-print:hover { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
+  .section { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+  .section-head { padding: 12px 16px 10px; border-bottom: 1px solid var(--border); background: var(--row-bg); }
+  .section-title { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+  .section-desc { font-size: .85rem; color: var(--muted); margin-top: 3px; }
+  .prompt-seeds { font-size: .78rem; color: var(--muted); padding: 8px 12px; font-style: italic; border-bottom: 1px solid var(--border); background: var(--row-bg); }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: var(--row-bg); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding: 9px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 4px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  textarea { width: 100%; font-family: inherit; font-size: .875rem; color: var(--ink); border: 1px solid transparent; border-radius: 6px; padding: 6px 8px; background: transparent; resize: none; line-height: 1.5; min-height: 54px; overflow: hidden; transition: border-color .15s, background .15s; }
+  textarea:focus { outline: none; border-color: var(--accent); background: var(--accent-bg); }
+  .version-label { font-size: .78rem; font-weight: 700; color: var(--muted); padding: 10px 12px; width: 36px; }
+  .reflect-item { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .reflect-item:last-child { border-bottom: none; }
+  .reflect-q { font-size: .875rem; font-weight: 600; margin-bottom: 4px; }
+  .claim-box { padding: 14px 16px; }
+  .claim-label { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
+  @media print {
+    body { background: #fff; }
+    .controls, .back { display: none; }
+    .wrap { padding: 12px 0; max-width: 100%; }
+    .section { box-shadow: none; border-color: #ccc; page-break-inside: avoid; }
+    textarea { border: 1px solid #ccc !important; background: #fff !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../../">← Back to tools</a>
+  <header>
+    <div class="eyebrow">Session 2 · Images</div>
+    <h1>Image Default Test Board</h1>
+    <p class="subtitle">Generate from underspecified prompts. Document what appears, what the model assumed, and what a different framing would require.</p>
+  </header>
+  <div class="controls">
+    <button class="btn btn-print" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn" id="clearBtn">Clear all</button>
+    <span class="save-status" id="saveStatus">Not saved yet</span>
+  </div>
+
+  <!-- Default Test Investigation -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Default Test Investigation</div>
+      <div class="section-desc">Use deliberately underspecified prompts. Record what the model fills in without being asked.</div>
+    </div>
+    <div class="prompt-seeds">Suggested prompts: "a doctor examining a patient" · "a CEO giving a speech" · "a beautiful family home" · "a student working late" · "a programmer at a computer" · "a safe neighborhood" · "a futuristic classroom"</div>
+    <table>
+      <thead>
+        <tr><th style="width:26%">Prompt</th><th style="width:26%">What appeared?</th><th style="width:24%">What was assumed?</th><th>What could be changed?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><textarea data-key="dt1-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt1-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea data-key="dt1-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt1-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea data-key="dt2-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt2-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea data-key="dt2-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt2-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea data-key="dt3-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt3-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea data-key="dt3-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt3-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea data-key="dt4-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt4-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea data-key="dt4-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt4-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- A/B/C Control -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">A/B/C Prompt Control</div>
+      <div class="section-desc">Start with a basic prompt. Add specificity in B. Respond to a failure, bias, or unwanted default in C.</div>
+    </div>
+    <table>
+      <thead>
+        <tr><th style="width:30px"></th><th style="width:18%">Purpose</th><th style="width:35%">Prompt</th><th>Observation</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="version-label">A</td><td><textarea data-key="abc-purpose-a" rows="3" placeholder="Basic prompt">Basic prompt</textarea></td><td><textarea data-key="abc-prompt-a" rows="3" placeholder="Your prompt…"></textarea></td><td><textarea data-key="abc-obs-a" rows="3" placeholder="What appeared?"></textarea></td></tr>
+        <tr><td class="version-label">B</td><td><textarea data-key="abc-purpose-b" rows="3" placeholder="More visual control">More visual control</textarea></td><td><textarea data-key="abc-prompt-b" rows="3" placeholder="Specify more…"></textarea></td><td><textarea data-key="abc-obs-b" rows="3" placeholder="What changed?"></textarea></td></tr>
+        <tr><td class="version-label">C</td><td><textarea data-key="abc-purpose-c" rows="3" placeholder="Address a default">Address a default</textarea></td><td><textarea data-key="abc-prompt-c" rows="3" placeholder="Correct something…"></textarea></td><td><textarea data-key="abc-obs-c" rows="3" placeholder="Did it work?"></textarea></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Claim -->
+  <div class="section">
+    <div class="claim-box">
+      <div class="claim-label">Evidence-based claim</div>
+      <textarea data-key="claim" rows="3" placeholder="When given [prompt], this model assumed [X], which I believe reflects [Y]…"></textarea>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div class="section">
+    <div class="section-head"><div class="section-title">Reflection</div></div>
+    <div class="reflect-item"><div class="reflect-q">What did the model assume that you didn't specify?</div><textarea data-key="r1" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">Which assumptions surprised you? Which did you predict?</div><textarea data-key="r2" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">Where do these defaults come from — training data, curation, labeling, platform choices?</div><textarea data-key="r3" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">Who benefits from the current defaults? Who doesn't?</div><textarea data-key="r4" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">What ethical concern did this raise?</div><textarea data-key="r5" rows="2"></textarea></div>
+  </div>
+</div>
+<script>
+const KEY = 'lm-image-default-test';
+const status = document.getElementById('saveStatus');
+function save() {
+  const data = {};
+  document.querySelectorAll('textarea[data-key]').forEach(t => { data[t.dataset.key] = t.value; });
+  localStorage.setItem(KEY, JSON.stringify(data));
+  status.textContent = 'Saved ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
+function load() {
+  try {
+    const data = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (!data) return;
+    document.querySelectorAll('textarea[data-key]').forEach(t => { if (data[t.dataset.key]) { t.value = data[t.dataset.key]; autosize(t); } });
+    status.textContent = 'Restored from last session';
+  } catch(e) {}
+}
+function autosize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+document.querySelectorAll('textarea').forEach(t => { t.addEventListener('input', () => { autosize(t); save(); }); autosize(t); });
+document.getElementById('clearBtn').addEventListener('click', () => {
+  if (!confirm('Clear all entries on this worksheet?')) return;
+  document.querySelectorAll('textarea[data-key]').forEach(t => { t.value = ''; autosize(t); });
+  localStorage.removeItem(KEY); status.textContent = 'Cleared';
+});
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text Experiment Board — Learning Machines</title>
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --card: #ffffff;
+    --border: #e2ddd5;
+    --ink: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-bg: #eff6ff;
+    --warm: #b45f3a;
+    --radius: 10px;
+    --shadow: 0 1px 4px rgba(0,0,0,.07);
+    --row-bg: #fafaf9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .back { display: inline-block; font-size: .875rem; color: var(--muted); text-decoration: none; margin-bottom: 16px; }
+  .back:hover { color: var(--ink); }
+
+  header { margin-bottom: 20px; }
+  .eyebrow { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--warm); margin-bottom: 6px; }
+  h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 4px; }
+  .subtitle { font-size: .9rem; color: var(--muted); }
+
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; align-items: center; }
+  .save-status { font-size: .78rem; color: var(--muted); margin-left: auto; font-style: italic; }
+
+  .btn { font-family: inherit; font-size: .82rem; font-weight: 600; padding: 7px 14px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--card); color: var(--ink); cursor: pointer; transition: background .12s, border-color .12s; }
+  .btn:hover { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+  .btn-print { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-print:hover { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
+
+  .section { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+  .section-head { padding: 12px 16px 10px; border-bottom: 1px solid var(--border); background: var(--row-bg); }
+  .section-title { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+  .section-desc { font-size: .85rem; color: var(--muted); margin-top: 3px; }
+  .section-body { padding: 0; }
+
+  /* Experiment table */
+  .exp-table { width: 100%; border-collapse: collapse; }
+  .exp-table th { background: var(--row-bg); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .exp-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .exp-table tr:last-child td { border-bottom: none; }
+  .version-label { font-size: .78rem; font-weight: 700; color: var(--muted); padding: 10px 12px; width: 36px; }
+
+  textarea {
+    width: 100%; font-family: inherit; font-size: .875rem; color: var(--ink);
+    border: 1px solid transparent; border-radius: 6px; padding: 6px 8px;
+    background: transparent; resize: none; line-height: 1.5; min-height: 58px;
+    transition: border-color .15s, background .15s;
+    overflow: hidden;
+  }
+  textarea:focus { outline: none; border-color: var(--accent); background: var(--accent-bg); }
+
+  .default-table { width: 100%; border-collapse: collapse; }
+  .default-table th { background: var(--row-bg); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding: 9px 12px; border-bottom: 1px solid var(--border); }
+  .default-table td { padding: 4px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .default-table tr:last-child td { border-bottom: none; }
+  .prompt-seed { font-size: .78rem; color: var(--muted); padding: 8px 12px; font-style: italic; border-bottom: 1px solid var(--border); }
+
+  .reflect-list { list-style: none; padding: 0; }
+  .reflect-item { display: grid; grid-template-columns: 1fr; gap: 2px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .reflect-item:last-child { border-bottom: none; }
+  .reflect-q { font-size: .875rem; font-weight: 600; margin-bottom: 2px; }
+
+  .claim-box { padding: 14px 16px; }
+  .claim-label { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
+
+  @media print {
+    body { background: #fff; }
+    .controls, .back { display: none; }
+    .wrap { padding: 12px 0; max-width: 100%; }
+    .section { box-shadow: none; border-color: #ccc; page-break-inside: avoid; }
+    textarea { border: 1px solid #ccc !important; background: #fff !important; min-height: 48px; }
+    h1 { font-size: 1.4rem; }
+    .btn { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="../../">← Back to tools</a>
+
+  <header>
+    <div class="eyebrow">Session 1 · Text</div>
+    <h1>Text Experiment Board</h1>
+    <p class="subtitle">Run a controlled A/B/C prompt experiment and document what the model adds, assumes, or avoids.</p>
+  </header>
+
+  <div class="controls">
+    <button class="btn btn-print" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn" id="clearBtn">Clear all</button>
+    <span class="save-status" id="saveStatus">Not saved yet</span>
+  </div>
+
+  <!-- Prompt Set -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Prompt Set</div>
+      <div class="section-desc">Choose a topic or genre. Write versions A, B, C, D — changing one thing each time.</div>
+    </div>
+    <div class="section-body">
+      <table class="exp-table">
+        <thead>
+          <tr>
+            <th style="width:36px"></th>
+            <th style="width:35%">Prompt / Genre Frame</th>
+            <th style="width:32%">What changed in the output?</th>
+            <th>What I learned</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="version-label">A</td><td><textarea data-key="prompt-a" rows="3" placeholder="Baseline prompt…"></textarea></td><td><textarea data-key="change-a" rows="3" placeholder="Observation…"></textarea></td><td><textarea data-key="learn-a" rows="3" placeholder="Learning…"></textarea></td></tr>
+          <tr><td class="version-label">B</td><td><textarea data-key="prompt-b" rows="3" placeholder="Variation — change one thing…"></textarea></td><td><textarea data-key="change-b" rows="3" placeholder="Observation…"></textarea></td><td><textarea data-key="learn-b" rows="3" placeholder="Learning…"></textarea></td></tr>
+          <tr><td class="version-label">C</td><td><textarea data-key="prompt-c" rows="3" placeholder="Respond to something that surprised you…"></textarea></td><td><textarea data-key="change-c" rows="3" placeholder="Observation…"></textarea></td><td><textarea data-key="learn-c" rows="3" placeholder="Learning…"></textarea></td></tr>
+          <tr><td class="version-label">D</td><td><textarea data-key="prompt-d" rows="3" placeholder="Optional — push further…"></textarea></td><td><textarea data-key="change-d" rows="3" placeholder="Observation…"></textarea></td><td><textarea data-key="learn-d" rows="3" placeholder="Learning…"></textarea></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Default Test -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Default Test</div>
+      <div class="section-desc">Use a deliberately vague prompt and record what the model fills in without being asked.</div>
+    </div>
+    <div class="section-body">
+      <div class="prompt-seed">Suggested prompts: "Write a story about a family." · "Describe a successful person." · "Write a classroom scene." · "Explain what a good student does."</div>
+      <table class="default-table">
+        <thead>
+          <tr>
+            <th style="width:28%">Prompt</th>
+            <th style="width:28%">What appeared?</th>
+            <th style="width:24%">What was assumed?</th>
+            <th>What could be changed?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><textarea data-key="dt-prompt-1" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt-appeared-1" rows="3" placeholder="Output…"></textarea></td><td><textarea data-key="dt-assumed-1" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt-change-1" rows="3" placeholder="Revisions…"></textarea></td></tr>
+          <tr><td><textarea data-key="dt-prompt-2" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt-appeared-2" rows="3" placeholder="Output…"></textarea></td><td><textarea data-key="dt-assumed-2" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt-change-2" rows="3" placeholder="Revisions…"></textarea></td></tr>
+          <tr><td><textarea data-key="dt-prompt-3" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt-appeared-3" rows="3" placeholder="Output…"></textarea></td><td><textarea data-key="dt-assumed-3" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt-change-3" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Claim -->
+  <div class="section">
+    <div class="claim-box">
+      <div class="claim-label">Evidence-based claim</div>
+      <textarea data-key="claim" rows="3" placeholder="When given [prompt], this model [did X], which suggests [Y]…"></textarea>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div class="section">
+    <div class="section-head"><div class="section-title">Reflection</div></div>
+    <ul class="reflect-list">
+      <li class="reflect-item"><span class="reflect-q">Did the model understand the story, or imitate patterns of stories?</span><textarea data-key="r1" rows="2"></textarea></li>
+      <li class="reflect-item"><span class="reflect-q">What did I control through language? What did the model add without being asked?</span><textarea data-key="r2" rows="2"></textarea></li>
+      <li class="reflect-item"><span class="reflect-q">What would I need to revise as a human creator?</span><textarea data-key="r3" rows="2"></textarea></li>
+      <li class="reflect-item"><span class="reflect-q">What ethical concern did this raise?</span><textarea data-key="r4" rows="2"></textarea></li>
+    </ul>
+  </div>
+
+</div>
+<script>
+const KEY = 'lm-text-experiment';
+const status = document.getElementById('saveStatus');
+
+function save() {
+  const data = {};
+  document.querySelectorAll('textarea[data-key]').forEach(t => { data[t.dataset.key] = t.value; });
+  localStorage.setItem(KEY, JSON.stringify(data));
+  const now = new Date();
+  status.textContent = 'Saved ' + now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
+
+function load() {
+  const raw = localStorage.getItem(KEY);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    document.querySelectorAll('textarea[data-key]').forEach(t => {
+      if (data[t.dataset.key]) { t.value = data[t.dataset.key]; autosize(t); }
+    });
+    status.textContent = 'Restored from last session';
+  } catch(e) {}
+}
+
+function autosize(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+document.querySelectorAll('textarea').forEach(t => {
+  t.addEventListener('input', () => { autosize(t); save(); });
+  autosize(t);
+});
+
+document.getElementById('clearBtn').addEventListener('click', () => {
+  if (!confirm('Clear all entries on this worksheet?')) return;
+  document.querySelectorAll('textarea[data-key]').forEach(t => { t.value = ''; autosize(t); });
+  localStorage.removeItem(KEY);
+  status.textContent = 'Cleared';
+});
+
+load();
+</script>
+</body>
+</html>
