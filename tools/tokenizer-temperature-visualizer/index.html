@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tokenizer + Temperature Visualizer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --panel: rgba(255,255,255,0.94);
+    --ink: #1c2028;
+    --mid: #555d6e;
+    --muted: #7f8694;
+    --line: #d9dce3;
+    --accent: #2563eb;
+    --accent-soft: #dbeafe;
+    --accent-dark: #1d4ed8;
+    --warm: #fef9ef;
+    --warm-border: #e8d8ae;
+    --generated-bg: #ecfdf5;
+    --generated-border: #a7f3d0;
+    --shadow: 0 8px 30px rgba(28,32,40,0.08);
+    --radius: 14px;
+    --tc0: #dbeafe; --tc0t: #1e40af;
+    --tc1: #fce7f3; --tc1t: #9d174d;
+    --tc2: #dcfce7; --tc2t: #166534;
+    --tc3: #fef3c7; --tc3t: #92400e;
+    --tc4: #ede9fe; --tc4t: #5b21b6;
+    --tc5: #ffedd5; --tc5t: #9a3412;
+    --tc6: #e0f2fe; --tc6t: #075985;
+    --tc7: #fecdd3; --tc7t: #9f1239;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 24px 6px;
+  }
+
+  .site-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .site-header .subtitle {
+    color: var(--mid);
+    font-size: 0.98rem;
+    max-width: 680px;
+  }
+
+  .notice-wrap {
+    max-width: 1280px;
+    margin: 12px auto 0;
+    padding: 0 24px;
+  }
+
+  .notice-inner {
+    background: var(--warm);
+    border: 1px solid var(--warm-border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    color: #6b5311;
+    max-width: 780px;
+  }
+
+  .notice-inner strong { color: #4a3808; }
+
+  /* ── MODE TABS ── */
+  .mode-tabs {
+    max-width: 1280px;
+    margin: 16px auto 0;
+    padding: 0 24px;
+    display: flex;
+  }
+
+  .mode-tab {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 9px 20px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+  }
+
+  .mode-tab:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+  .mode-tab:last-child  { border-radius: 0 var(--radius) var(--radius) 0; border-left: 0; }
+
+  .mode-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .mode-tab:not(.active):hover { color: var(--ink); background: #f0f1f4; }
+
+  /* ── PANELS ── */
+  .panel-wrap { display: none; }
+  .panel-wrap.active { display: block; }
+
+  /* ── TOKENIZE PANEL ── */
+  .tokenize-container {
+    max-width: 1280px;
+    margin: 14px auto 0;
+    padding: 0 24px 40px;
+  }
+
+  .tok-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+
+  .tok-card-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .tok-textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+    resize: vertical;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+
+  .tok-textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  .example-btns { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+
+  .example-btn {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--mid);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+
+  .example-btn:hover { background: var(--accent-soft); color: var(--accent-dark); border-color: var(--accent); }
+
+  .token-display { display: flex; flex-wrap: wrap; gap: 5px; min-height: 40px; }
+
+  .token-chip {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 0.84rem;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 6px;
+    white-space: pre;
+    line-height: 1.5;
+    position: relative;
+    cursor: default;
+    transition: transform 0.12s;
+  }
+
+  .token-chip:hover { transform: translateY(-2px); }
+
+  .token-tip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.66rem;
+    font-weight: 500;
+    padding: 3px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .token-chip:hover .token-tip { display: block; }
+
+  .tc0 { background: var(--tc0); color: var(--tc0t); }
+  .tc1 { background: var(--tc1); color: var(--tc1t); }
+  .tc2 { background: var(--tc2); color: var(--tc2t); }
+  .tc3 { background: var(--tc3); color: var(--tc3t); }
+  .tc4 { background: var(--tc4); color: var(--tc4t); }
+  .tc5 { background: var(--tc5); color: var(--tc5t); }
+  .tc6 { background: var(--tc6); color: var(--tc6t); }
+  .tc7 { background: var(--tc7); color: var(--tc7t); }
+
+  .tok-stats { font-size: 0.82rem; color: var(--muted); margin-top: 10px; line-height: 1.6; }
+  .tok-stats b { color: var(--mid); font-weight: 700; }
+
+  .tok-note {
+    background: #f0f4f8;
+    border-left: 3px solid #94a3b8;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 14px;
+    font-size: 0.86rem;
+    color: var(--mid);
+    line-height: 1.55;
+  }
+
+  .tok-note strong { color: var(--ink); font-weight: 700; }
+
+  /* ── GENERATE PANEL ── */
+  .gen-container {
+    max-width: 1280px;
+    margin: 14px auto 0;
+    padding: 0 24px 40px;
+    display: grid;
+    grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .gen-sidebar {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px;
+    align-self: start;
+    position: sticky;
+    top: 14px;
+  }
+
+  .gen-main { display: flex; flex-direction: column; gap: 14px; }
+
+  .gen-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .gen-select {
+    width: 100%;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23555d6e' viewBox='0 0 16 16'%3E%3Cpath d='M8 12L2 5h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
+  /* Temperature */
+  .temp-row { display: flex; align-items: center; gap: 10px; }
+
+  .temp-pill {
+    min-width: 52px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .temp-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    border-radius: 3px;
+    background: linear-gradient(to right, #bfdbfe, #fde68a, #fca5a5);
+    outline: none;
+  }
+
+  .temp-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--accent);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    cursor: pointer;
+    transition: transform 0.12s;
+  }
+
+  .temp-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+  .temp-slider::-moz-range-thumb {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--accent);
+    cursor: pointer;
+  }
+
+  .temp-endpoints {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 3px;
+    font-weight: 600;
+  }
+
+  .temp-hint { font-size: 0.82rem; color: var(--mid); margin-top: 6px; font-style: italic; min-height: 2.5em; }
+
+  /* Mode toggle */
+  .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
+
+  .mode-btn {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: #f7f8fa;
+    color: var(--mid);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .mode-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-dark); }
+  .mode-btn:not(.active):hover { background: #eef0f4; }
+
+  .mode-note { font-size: 0.78rem; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+
+  /* Action buttons */
+  .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 12px; }
+
+  .btn {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.15s, opacity 0.15s;
+  }
+
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .btn-accent { background: var(--accent); color: #fff; }
+  .btn-accent:hover:not(:disabled) { background: var(--accent-dark); box-shadow: 0 4px 12px rgba(37,99,235,0.25); }
+
+  .btn-dark { background: var(--ink); color: #fff; }
+  .btn-dark:hover:not(:disabled) { box-shadow: 0 4px 12px rgba(28,32,40,0.2); }
+
+  .btn-ghost { background: #eef0f4; color: var(--ink); }
+  .btn-ghost:hover:not(:disabled) { background: #dfe2e8; }
+
+  /* Stat chips */
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+
+  .stat-chip { background: #f7f8fa; border: 1px solid var(--line); border-radius: 8px; padding: 8px 6px; text-align: center; }
+
+  .stat-chip .num {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-chip .lbl {
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  .test-status {
+    margin-top: 10px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #f7f8fa;
+    border: 1px solid var(--line);
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  hr.sep { border: 0; border-top: 1px solid var(--line); margin: 14px 0; }
+
+  /* Canvas */
+  #chartCanvas {
+    display: block;
+    width: 100%;
+    height: 460px;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+
+  /* Below-chart grid */
+  .below-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .stream-card { padding: 16px; }
+
+  .gen-text-render {
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fcfdff;
+    font-size: 0.98rem;
+    min-height: 60px;
+    line-height: 1.7;
+  }
+
+  .gen-text-render .prompt-span { color: var(--mid); }
+  .gen-text-render .gen-span { background: var(--generated-bg); padding: 1px 3px; border-radius: 3px; }
+
+  .stream-tokens { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+
+  .stream-tok {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 4px 7px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: #fff;
+    white-space: pre;
+  }
+
+  .stream-tok.gen { background: var(--generated-bg); border-color: var(--generated-border); }
+
+  /* Lesson card */
+  .lesson-card { padding: 18px; background: rgba(255,255,255,0.8); }
+  .lesson-card h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 10px; }
+  .lesson-card ul { padding-left: 18px; margin: 0; font-size: 0.86rem; color: var(--mid); line-height: 1.55; }
+  .lesson-card li { margin-bottom: 7px; }
+  .lesson-card li strong { color: var(--ink); }
+
+  /* Teaching note */
+  .gen-teaching-note {
+    background: var(--warm);
+    border: 1px solid var(--warm-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: #6b5311;
+    line-height: 1.5;
+    display: none;
+  }
+
+  .gen-teaching-note.visible { display: block; }
+  .gen-teaching-note strong { color: #4a3808; }
+
+  /* Reflection grid */
+  .reflection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+  .reflection-card {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.7);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.84rem;
+    color: var(--mid);
+    line-height: 1.45;
+  }
+
+  .reflection-card strong { display: block; color: var(--ink); font-weight: 800; margin-bottom: 4px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Facilitator card */
+  .facilitator-card {
+    background: var(--accent-soft);
+    border: 1px solid #93c5fd;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 0.86rem;
+    color: var(--accent-dark);
+    line-height: 1.5;
+  }
+
+  .facilitator-card strong { font-weight: 800; }
+
+  /* Footer */
+  .site-footer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px 30px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .site-footer a { color: var(--accent); text-decoration: none; }
+  .site-footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 920px) {
+    .gen-container { grid-template-columns: 1fr; }
+    .gen-sidebar { position: static; }
+    .below-grid { grid-template-columns: 1fr; }
+    .reflection-grid { grid-template-columns: 1fr; }
+    #chartCanvas { height: 380px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <h1>Tokenizer + Temperature Visualizer</h1>
+  <p class="subtitle">A teaching tool for seeing how language models break text into tokens, build probability distributions, and sample the next token.</p>
+</div>
+
+<div class="notice-wrap">
+  <div class="notice-inner">
+    <strong>Teaching model.</strong> This visualizer uses curated examples, not a live LLM. Distributions are hand-authored so the mechanism stays visible, reliable, and discussable in a classroom.
+  </div>
+</div>
+
+<div class="mode-tabs" role="tablist">
+  <button class="mode-tab active" data-panel="tokenize" role="tab" aria-selected="true" aria-controls="panel-tokenize">Explore Tokens</button>
+  <button class="mode-tab" data-panel="generate" role="tab" aria-selected="false" aria-controls="panel-generate">Generate with Temperature</button>
+</div>
+
+<!-- ═══ PANEL 1: EXPLORE TOKENS ═══ -->
+<div id="panel-tokenize" class="panel-wrap active" role="tabpanel">
+<div class="tokenize-container">
+
+  <div class="tok-note" style="margin-bottom:14px;">
+    <strong>Language models don't read words.</strong> They read <em>tokens</em> — subword pieces that may or may not align with what we think of as a "word." Common words are usually one token. Uncommon or compound words get split. Punctuation, spaces, and numbers each become their own tokens. The model never sees text — it sees a sequence of token numbers.
+  </div>
+
+  <div class="tok-card">
+    <div class="tok-card-label">Type or paste any text</div>
+    <textarea class="tok-textarea" id="tokInput" spellcheck="false">The unhappiness of the remarkable scientist was noteworthy.</textarea>
+    <div class="example-btns" aria-label="Example text">
+      <button class="example-btn" data-text="The cat sat on the mat.">Simple sentence</button>
+      <button class="example-btn" data-text="Unhappiness is understandable and overwhelming.">Compound words</button>
+      <button class="example-btn" data-text="She couldn't believe the 1,000 participants loved p5.js!">Mixed content</button>
+      <button class="example-btn" data-text="¡Hola! ¿Cómo estás? Je m'appelle Claude.">Non-English</button>
+      <button class="example-btn" data-text="The extraordinary telecommunications infrastructure is impressively interconnected.">Long words</button>
+      <button class="example-btn" data-text="function draw() { circle(mouseX, mouseY, 40); }">Code</button>
+    </div>
+  </div>
+
+  <div class="tok-card">
+    <div class="tok-card-label">Tokens</div>
+    <div class="token-display" id="tokDisplay" aria-live="polite"></div>
+    <div class="tok-stats" id="tokStats"></div>
+  </div>
+
+  <div class="tok-note">
+    <strong>Why this matters:</strong> When a model's "context window" is 128,000 tokens, that's not 128,000 words. English averages about 1.3 tokens per word, so 128K tokens ≈ 100K words. Non-English text, code, and unusual words use more tokens per word — they consume the context window faster.
+    <br><br>
+    <em>This is a simplified approximation. Real tokenizers use Byte-Pair Encoding (BPE) trained on billions of text samples. The boundaries here capture the key insight: text → subword pieces → numbers. Hover any token chip to see its ID.</em>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ PANEL 2: GENERATE WITH TEMPERATURE ═══ -->
+<div id="panel-generate" class="panel-wrap" role="tabpanel">
+<div class="gen-container">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="gen-sidebar">
+    <p class="section-label">1 · Choose a sentence</p>
+    <select class="gen-select" id="seqSelect" aria-label="Choose a sentence starter"></select>
+
+    <hr class="sep">
+
+    <p class="section-label">2 · Adjust temperature</p>
+    <div class="temp-row">
+      <input type="range" class="temp-slider" id="tempSlider" min="0.1" max="2.0" step="0.05" value="0.7" aria-label="Temperature">
+      <span class="temp-pill" id="tempPill">0.70</span>
+    </div>
+    <div class="temp-endpoints">
+      <span>0.1 · Focused</span>
+      <span>2.0 · Wild</span>
+    </div>
+    <p class="temp-hint" id="tempHint">Balanced — guided by likely tokens but allows some surprise.</p>
+
+    <hr class="sep">
+
+    <p class="section-label">3 · Decoding mode</p>
+    <div class="mode-grid" role="group" aria-label="Decoding mode">
+      <button class="mode-btn active" id="modeGreedy">Greedy</button>
+      <button class="mode-btn" id="modeSample">Sample</button>
+    </div>
+    <p class="mode-note"><strong>Greedy</strong> always picks the highest probability. <strong>Sample</strong> rolls a weighted die — same model can produce different text each time.</p>
+
+    <div class="action-grid">
+      <button class="btn btn-accent" id="btnStep">Next Token</button>
+      <button class="btn btn-dark" id="btnAuto">Auto Run</button>
+      <button class="btn btn-ghost" id="btnReset">Reset</button>
+      <button class="btn btn-ghost" id="btnSeed">New Roll</button>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-chip"><div class="num" id="statStep">0</div><div class="lbl">Step</div></div>
+      <div class="stat-chip"><div class="num" id="statTop">—</div><div class="lbl">Top %</div></div>
+      <div class="stat-chip"><div class="num" id="statSpread">—</div><div class="lbl">Spread</div></div>
+    </div>
+
+    <div class="test-status" id="testStatus" aria-live="polite">Self-tests not run yet.</div>
+  </aside>
+
+  <!-- RIGHT MAIN -->
+  <div class="gen-main">
+    <div class="gen-card" style="padding:12px;">
+      <canvas id="chartCanvas" height="460" aria-label="Next-token probability distribution chart"></canvas>
+    </div>
+
+    <div class="gen-teaching-note" id="teachingNote" aria-live="polite"></div>
+
+    <div class="below-grid">
+      <div class="gen-card stream-card">
+        <p class="section-label">Generated text</p>
+        <div class="gen-text-render" id="genTextRender" aria-live="polite"></div>
+        <div class="stream-tokens" id="streamTokens"></div>
+      </div>
+
+      <div class="gen-card lesson-card">
+        <h3>What this tool shows</h3>
+        <ul>
+          <li><strong>Text becomes tokens.</strong> The model predicts chunks, not whole words.</li>
+          <li><strong>Next-token prediction is probabilistic.</strong> Many continuations are possible at each step.</li>
+          <li><strong>Temperature changes risk.</strong> Low sharpens the top choice. High flattens the distribution.</li>
+          <li><strong>Greedy ≠ sampling.</strong> Sampling rolls a weighted die — the same model, different text.</li>
+          <li><strong>Confidence is not truth.</strong> High probability means "fits the learned pattern," not "is correct or fair."</li>
+          <li><strong>Human judgment matters.</strong> The model continues a pattern. People decide goal, context, ethics, meaning.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gen-card">
+      <p class="section-label">Human · Machine · System Reflection</p>
+      <div class="reflection-grid">
+        <div class="reflection-card"><strong>Human</strong>What prompt, mode, and temperature did you choose? Why? What would you change?</div>
+        <div class="reflection-card"><strong>Machine</strong>Which token became most likely? Which unlikely token still had a real chance?</div>
+        <div class="reflection-card"><strong>System</strong>What assumptions or defaults shaped this continuation? Where did training data show up?</div>
+      </div>
+    </div>
+
+    <div class="facilitator-card">
+      <strong>Try this live with participants:</strong> Start at temperature 0.1 and run Auto. Then reset, move to 2.0, and run again. Ask: what changed, and why? Switch between Greedy and Sample at the same temperature — discuss why the same model produces different text.
+    </div>
+  </div>
+
+</div>
+</div>
+
+<p class="site-footer">
+  CC Fest Learning Machines: Text, Images, Video · Teaching tool · Static distributions are hand-authored for classroom reliability · No live AI model is used · Token IDs are deterministic fake IDs for demonstration ·
+  <a href="https://ccfest.rocks">ccfest.rocks</a>
+  · <em>Fonts: DM Sans + DM Mono via Google Fonts — remove the &lt;link&gt; tag for fully offline use; the tool falls back to system fonts.</em>
+</p>
+
+<script>
+(() => {
+  "use strict";
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  TOKENIZER
+  // ═══════════════════════════════════════════════════════════════════
+
+  const COMMON = new Set([
+    "the","a","an","and","or","but","is","are","was","were","be","been","being",
+    "in","on","at","to","for","of","with","by","from","that","this","it","its",
+    "he","she","they","we","i","you","me","him","her","us","them",
+    "my","your","his","our","their","who","what","which","where","when","how","why",
+    "not","no","yes","all","each","every","some","any","few","many","much","more",
+    "most","other","new","old","big","small","long","first","last","great","little",
+    "just","like","over","also","back","up","out","so","if","then","than","very",
+    "do","did","does","done","have","had","has","will","would","could","should",
+    "can","may","might","must","shall","get","got","make","made","take","took",
+    "come","came","go","went","see","saw","know","knew","think","thought",
+    "say","said","tell","told","give","gave","find","found","want","need",
+    "use","used","try","work","call","ask","seem","feel","leave","put",
+    "mean","keep","let","begin","show","hear","play","run","move","live",
+    "believe","hold","bring","happen","write","provide","sit","stand","lose",
+    "pay","meet","include","continue","set","learn","change","lead","understand",
+    "watch","follow","stop","create","speak","read","allow","add","spend","grow",
+    "open","walk","win","offer","remember","love","consider","appear","buy","wait",
+    "serve","die","send","expect","build","stay","fall","cut","reach","kill",
+    "remain","suggest","raise","pass","sell","require","report","decide","pull",
+    "about","after","before","between","under","above","into","through","during",
+    "against","without","within","along","however","never","always","sometimes",
+    "often","still","already","away","again","here","there","now","today",
+    "house","street","end","door","window","night","light","dark",
+    "upon","time","once","world","day","year","people","way","life","hand",
+    "part","place","case","week","head","side","water","room","story","fact",
+    "point","home","man","woman","child","eye","thing","word","name","number",
+    "cat","dog","sun","moon","tree","book","car","food","city","school",
+    "data","test","result","study","system","research","group","edge","river",
+    "rain","warm","forms","air","rises","moist","please","remember","submit",
+    "project","reflection","class","until","silent","carried","mat","sat","hello"
+  ]);
+
+  const PREFIXES = ["un","re","pre","dis","mis","over","under","out","non","sub","inter","trans","anti","auto","co","de","ex","extra","fore","hyper","macro","micro","mid","mini","multi","neo","para","post","pro","semi","super","tele","tri","ultra"];
+  const SUFFIXES = ["ing","tion","sion","ment","ness","able","ible","ful","less","ous","ious","ive","ity","ty","ly","er","or","est","ed","es","al","ial","ent","ant","ence","ance","ism","ist","ize","ise","ify","ward","wise","like","ship","dom","ical"];
+
+  function tokenize(text) {
+    if (!text) return [];
+    const tokens = [];
+    let i = 0;
+    while (i < text.length) {
+      if (text[i] === " " || text[i] === "\t" || text[i] === "\n") {
+        let ws = "";
+        while (i < text.length && (text[i] === " " || text[i] === "\t" || text[i] === "\n")) { ws += text[i]; i++; }
+        if (i < text.length && /[a-zA-Z0-9À-ɏ]/.test(text[i])) {
+          let word = "";
+          while (i < text.length && /[a-zA-Z0-9À-ɏ''\-]/.test(text[i])) { word += text[i]; i++; }
+          tokens.push(...splitWord(word, ws));
+        } else {
+          tokens.push(ws);
+        }
+        continue;
+      }
+      if (/[^a-zA-Z0-9À-ɏ]/.test(text[i])) { tokens.push(text[i]); i++; continue; }
+      let word = "";
+      while (i < text.length && /[a-zA-Z0-9À-ɏ''\-]/.test(text[i])) { word += text[i]; i++; }
+      if (word) tokens.push(...splitWord(word, ""));
+    }
+    return tokens;
+  }
+
+  function splitWord(word, prefix) {
+    if (COMMON.has(word.toLowerCase())) return [prefix + word];
+    const ai = word.indexOf("'") >= 0 ? word.indexOf("'") : word.indexOf("’");
+    if (ai > 0) {
+      const before = word.slice(0, ai), after = word.slice(ai);
+      if (COMMON.has(before.toLowerCase())) return [prefix + before, after];
+      return [...splitUncommon(before, prefix), after];
+    }
+    return splitUncommon(word, prefix);
+  }
+
+  function splitUncommon(word, prefix) {
+    const lw = word.toLowerCase();
+    for (const pfx of PREFIXES) {
+      if (lw.startsWith(pfx) && lw.length > pfx.length + 1) {
+        const rest = word.slice(pfx.length);
+        return [prefix + word.slice(0, pfx.length), ...trySuffix(rest)];
+      }
+    }
+    const sfx = trySuffix(word);
+    if (sfx.length > 1) { sfx[0] = prefix + sfx[0]; return sfx; }
+    return chunkSplit(word, prefix);
+  }
+
+  function trySuffix(word) {
+    const lw = word.toLowerCase();
+    for (const sfx of SUFFIXES) {
+      if (lw.endsWith(sfx) && lw.length > sfx.length + 1) {
+        const root = word.slice(0, word.length - sfx.length);
+        if (root.length >= 2) return [root, word.slice(word.length - sfx.length)];
+      }
+    }
+    return [word];
+  }
+
+  function chunkSplit(word, prefix) {
+    const parts = [];
+    const sz = word.length <= 6 ? 3 : 4;
+    for (let i = 0; i < word.length; i += sz) {
+      parts.push((i === 0 ? prefix : "") + word.slice(i, i + sz));
+    }
+    return parts;
+  }
+
+  // Deterministic token ID via FNV-1a hash — same token always gets same ID.
+  function stableTokenId(tokenText) {
+    let hash = 2166136261;
+    for (let i = 0; i < tokenText.length; i++) {
+      hash ^= tokenText.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+    return 1000 + Math.abs(hash % 90000);
+  }
+
+  function assignIds(tokens) {
+    return tokens.map(t => ({ text: t, id: stableTokenId(t) }));
+  }
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  SCENARIO DATA  —  4 scenarios × 8 steps × 8 candidates
+  //  Each step: [token, baseProbability] pairs summing to ~1.
+  // ═══════════════════════════════════════════════════════════════════
+
+  const SCENARIOS = [
+    {
+      title: "Story opening — The old house",
+      prompt: "The old house at the end of the street was silent until",
+      note: "Genre shapes prediction. Horror, fairy tale, and literary fiction pull this sentence in different directions.",
+      steps: [
+        [[" the",0.28],[" a",0.20],[" one",0.14],[" someone",0.12],[" midnight",0.10],[" dawn",0.07],[" suddenly",0.05],[" Tuesday",0.04]],
+        [[" door",0.26],[" wind",0.20],[" clock",0.15],[" children",0.12],[" lights",0.10],[" piano",0.08],[" phone",0.05],[" algorithm",0.04]],
+        [[" creaked",0.28],[" opened",0.22],[" began",0.16],[" slammed",0.12],[" whispered",0.09],[" rattled",0.06],[" dissolved",0.04],[" uploaded",0.03]],
+        [[" open",0.30],[" shut",0.18],[" slowly",0.16],[" and",0.12],[" again",0.09],[" loudly",0.06],[" inward",0.05],[" backwards",0.04]],
+        [[" and",0.26],[" to",0.20],[",",0.16],[".",0.12],[" revealing",0.10],[" in",0.07],[" from",0.05],[" like",0.04]],
+        [[" a",0.30],[" the",0.22],[" something",0.14],[" cold",0.11],[" light",0.08],[" nothing",0.06],[" an",0.05],[" footsteps",0.04]],
+        [[" cold",0.25],[" figure",0.20],[" sound",0.16],[" voice",0.13],[" shadow",0.10],[" gust",0.07],[" faint",0.05],[" strange",0.04]],
+        [[" swept",0.27],[" filled",0.21],[" echoed",0.16],[" crept",0.12],[" rushed",0.09],[" howled",0.07],[" poured",0.05],[" laughed",0.03]]
+      ]
+    },
+    {
+      title: "Poetic line — River at the edge",
+      prompt: "At the edge of the city, the river carried",
+      note: "Poetic writing rewards imagery. Higher temperature makes this more interesting — and less coherent.",
+      steps: [
+        [[" the",0.23],[" old",0.17],[" light",0.15],[" names",0.13],[" memories",0.11],[" glass",0.09],[" everything",0.07],[" thunder",0.05]],
+        [[" names",0.22],[" light",0.18],[" leaves",0.15],[" voices",0.13],[" weight",0.11],[" rumors",0.09],[" bridges",0.07],[" satellites",0.05]],
+        [[" of",0.26],[" through",0.18],[" under",0.15],[" like",0.12],[" past",0.10],[" without",0.08],[" toward",0.06],[" electric",0.05]],
+        [[" everyone",0.21],[" rain",0.18],[" stone",0.15],[" children",0.13],[" forgotten",0.12],[" birds",0.10],[" silence",0.06],[" circuitry",0.05]],
+        [[" who",0.24],[" and",0.19],[" who'd",0.14],[" that",0.12],[" into",0.10],[" away",0.08],[" softly",0.07],[" still",0.06]],
+        [[" had",0.22],[" ever",0.18],[" once",0.15],[" never",0.13],[" forgot",0.11],[" left",0.09],[" drowned",0.07],[" believed",0.05]],
+        [[" lived",0.24],[" spoken",0.19],[" walked",0.15],[" dreamed",0.13],[" stood",0.10],[" listened",0.08],[" mattered",0.06],[" vanished",0.05]],
+        [[" there",0.26],[" here",0.19],[".",0.16],[" before",0.12],[" alone",0.09],[" twice",0.07],[" at all",0.06],[" in winter",0.05]]
+      ]
+    },
+    {
+      title: "Science explanation — Rain",
+      prompt: "Rain forms when warm moist air rises and",
+      note: "Explanatory text rewards precise, expected continuations. Low temperature works well here.",
+      steps: [
+        [[" cools",0.38],[" condenses",0.20],[" expands",0.14],[" meets",0.10],[" changes",0.07],[" reaches",0.05],[" dances",0.03],[" forgets",0.03]],
+        [[",",0.28],[" enough",0.18],[" at",0.15],[" as",0.12],[" to",0.10],[" rapidly",0.07],[" which",0.06],[" into",0.04]],
+        [[" causing",0.26],[" allowing",0.20],[" the",0.16],[" water",0.13],[" its",0.10],[" making",0.06],[" until",0.05],[" creating",0.04]],
+        [[" water",0.30],[" the",0.20],[" moisture",0.16],[" tiny",0.12],[" vapor",0.09],[" invisible",0.06],[" microscopic",0.04],[" magical",0.03]],
+        [[" vapor",0.28],[" droplets",0.22],[" molecules",0.16],[" in",0.12],[" to",0.09],[" particles",0.06],[" inside",0.04],[" dreams",0.03]],
+        [[" to",0.32],[" in",0.20],[" into",0.16],[" that",0.12],[" within",0.08],[" around",0.05],[" forming",0.04],[" beyond",0.03]],
+        [[" condense",0.30],[" form",0.22],[" collect",0.14],[" become",0.12],[" gather",0.09],[" nucleate",0.06],[" crystallize",0.04],[" evaporate",0.03]],
+        [[" into",0.32],[" around",0.20],[" on",0.16],[" as",0.12],[" together",0.08],[" rapidly",0.05],[" visibly",0.04],[" backwards",0.03]]
+      ]
+    },
+    {
+      title: "Classroom announcement",
+      prompt: "Please remember to submit your project reflection before",
+      note: "Institutional text has strong defaults — deadlines, instructions, formality. The model has seen thousands of syllabi.",
+      steps: [
+        [[" class",0.28],[" Friday",0.22],[" the",0.16],[" midnight",0.12],[" tomorrow",0.09],[" next",0.06],[" leaving",0.04],[" moonrise",0.03]],
+        [[" ends",0.26],[" at",0.20],[" begins",0.16],[" on",0.13],[" so",0.10],[" this",0.07],[" if",0.05],[" vanishes",0.03]],
+        [[" so",0.24],[" we",0.19],[" I",0.16],[" your",0.13],[" you",0.10],[" the",0.08],[" everyone",0.06],[" robots",0.04]],
+        [[" can",0.27],[" have",0.21],[" will",0.16],[" know",0.12],[" receive",0.10],[" might",0.07],[" should",0.04],[" orbit",0.03]],
+        [[" review",0.28],[" provide",0.20],[" share",0.16],[" read",0.12],[" discuss",0.10],[" grade",0.06],[" celebrate",0.05],[" levitate",0.03]],
+        [[" them",0.26],[" your",0.20],[" feedback",0.16],[" it",0.13],[" everyone",0.09],[" the",0.07],[" each",0.05],[" everything",0.04]],
+        [[" before",0.27],[" by",0.21],[" in",0.16],[" during",0.12],[" at",0.10],[" with",0.07],[" on",0.04],[" after",0.03]],
+        [[" next",0.26],[" the",0.22],[" our",0.16],[" Monday",0.12],[" class",0.10],[" week",0.06],[" tomorrow",0.05],[" eternity",0.03]]
+      ]
+    }
+  ];
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  MATH
+  // ═══════════════════════════════════════════════════════════════════
+
+  function adjustDist(raw, temp) {
+    if (!raw || !raw.length) return [];
+    const t = Math.max(0.05, temp);
+    const weighted = raw.map(([tok, p]) => [tok, Math.pow(p, 1 / t)]);
+    const sum = weighted.reduce((s, [, w]) => s + w, 0);
+    if (!Number.isFinite(sum) || sum <= 0) return [];
+    return weighted.map(([tok, w]) => [tok, w / sum]).sort((a, b) => b[1] - a[1]);
+  }
+
+  function entropy(dist) {
+    if (!dist.length) return 0;
+    const h = -dist.reduce((s, [, p]) => s + (p > 0 ? p * Math.log2(p) : 0), 0);
+    const max = Math.log2(dist.length);
+    return max ? h / max : 0;
+  }
+
+  function fmtPct(v) { const p = v * 100; return p < 1 ? p.toFixed(1) + "%" : Math.round(p) + "%"; }
+
+  function escHtml(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  STATE
+  // ═══════════════════════════════════════════════════════════════════
+
+  const state = {
+    seqIdx: 0,
+    generated: [],
+    mode: "greedy",
+    autoTimer: null,
+    seed: Math.random() * 233280,
+  };
+
+  function seq() { return SCENARIOS[state.seqIdx]; }
+  function getTemp() { return Number(els.tempSlider.value); }
+  function rawDist() { const s = state.generated.length; return s < seq().steps.length ? seq().steps[s] : []; }
+  function adjDist() { return adjustDist(rawDist(), getTemp()); }
+
+  function seededRandom() {
+    state.seed = (state.seed * 9301 + 49297) % 233280;
+    return state.seed / 233280;
+  }
+
+  function pickGreedy(dist) { return dist[0]?.[0] || ""; }
+
+  function pickSample(dist) {
+    const r = seededRandom();
+    let cum = 0;
+    for (const [tok, p] of dist) { cum += p; if (r <= cum) return tok; }
+    return dist[dist.length - 1]?.[0] || "";
+  }
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  DOM
+  // ═══════════════════════════════════════════════════════════════════
+
+  const $ = id => {
+    const el = document.getElementById(id);
+    if (!el) throw new Error("Missing element: #" + id);
+    return el;
+  };
+
+  const els = {
+    tokInput: $("tokInput"), tokDisplay: $("tokDisplay"), tokStats: $("tokStats"),
+    seqSelect: $("seqSelect"), tempSlider: $("tempSlider"), tempPill: $("tempPill"), tempHint: $("tempHint"),
+    modeGreedy: $("modeGreedy"), modeSample: $("modeSample"),
+    btnStep: $("btnStep"), btnAuto: $("btnAuto"), btnReset: $("btnReset"), btnSeed: $("btnSeed"),
+    statStep: $("statStep"), statTop: $("statTop"), statSpread: $("statSpread"),
+    testStatus: $("testStatus"),
+    canvas: $("chartCanvas"),
+    genText: $("genTextRender"), streamTokens: $("streamTokens"),
+    teachingNote: $("teachingNote"),
+  };
+
+  const ctx = els.canvas.getContext("2d");
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  TOKENIZER UI
+  // ═══════════════════════════════════════════════════════════════════
+
+  function renderTokens() {
+    const text = els.tokInput.value;
+    const tokens = assignIds(tokenize(text));
+    els.tokDisplay.innerHTML = "";
+    tokens.forEach((t, i) => {
+      const chip = document.createElement("span");
+      chip.className = "token-chip tc" + (i % 8);
+      chip.textContent = t.text.replace(/ /g, "·").replace(/\n/g, "↵").replace(/\t/g, "→");
+      const tip = document.createElement("span");
+      tip.className = "token-tip";
+      tip.textContent = "id " + t.id;
+      chip.appendChild(tip);
+      els.tokDisplay.appendChild(chip);
+    });
+    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    const ratio = words > 0 ? (tokens.length / words).toFixed(1) : "—";
+    els.tokStats.innerHTML = `<b>${tokens.length}</b> tokens · <b>${words}</b> words · <b>${text.length}</b> chars · <b>${ratio}</b> tokens/word`;
+  }
+
+  els.tokInput.addEventListener("input", renderTokens);
+  document.querySelectorAll(".example-btn").forEach(btn => {
+    btn.addEventListener("click", () => { els.tokInput.value = btn.dataset.text; renderTokens(); });
+  });
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  CANVAS CHART
+  // ═══════════════════════════════════════════════════════════════════
+
+  function resizeCanvas() {
+    const rect = els.canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const w = Math.max(300, Math.round(rect.width));
+    const h = 460;
+    const pw = Math.round(w * dpr), ph = Math.round(h * dpr);
+    if (els.canvas.width !== pw || els.canvas.height !== ph) {
+      els.canvas.width = pw; els.canvas.height = ph;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    return { w, h };
+  }
+
+  function rrect(x, y, w, h, r) {
+    r = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function wrapText(text, x, y, maxW, lh, maxLines) {
+    const words = String(text).split(" ");
+    const lines = []; let line = "";
+    for (const word of words) {
+      const test = line ? line + " " + word : word;
+      if (ctx.measureText(test).width > maxW && line) { lines.push(line); line = word; } else { line = test; }
+    }
+    if (line) lines.push(line);
+    lines.slice(0, maxLines).forEach((l, i) => ctx.fillText(l, x, y + i * lh));
+  }
+
+  function drawChart() {
+    const { w, h } = resizeCanvas();
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, w, h);
+
+    const mx = 20;
+    const dist = adjDist();
+    const raw = rawDist();
+    const done = state.generated.length >= seq().steps.length;
+
+    ctx.fillStyle = "#1c2028";
+    ctx.font = "700 16px 'DM Sans', system-ui, sans-serif";
+    ctx.fillText("Next-token probability distribution", mx, 30);
+
+    ctx.fillStyle = "#7f8694";
+    ctx.font = "13px 'DM Sans', system-ui, sans-serif";
+    wrapText(seq().note, mx, 50, w - mx * 2, 17, 2);
+
+    ctx.fillStyle = "#2563eb";
+    ctx.font = "600 12px 'DM Mono', ui-monospace, monospace";
+    const context = seq().prompt + state.generated.join("");
+    wrapText(context.length > 90 ? "…" + context.slice(-88) : context, mx, 82, w - mx * 2, 16, 2);
+
+    if (done || !dist.length) {
+      ctx.fillStyle = "#f7f8fa";
+      rrect(mx, 115, w - mx * 2, 80, 10); ctx.fill();
+      ctx.fillStyle = "#555d6e";
+      ctx.font = "700 14px 'DM Sans', system-ui, sans-serif";
+      ctx.fillText("No more curated steps. Reset or choose another sentence.", mx + 16, 148);
+      ctx.font = "12px 'DM Sans', system-ui, sans-serif";
+      ctx.fillText("Discussion: where did the model go, and does the continuation make sense?", mx + 16, 172);
+      drawTempFooter(w, h);
+      return;
+    }
+
+    const topP = dist[0][1];
+    const rawMap = new Map(raw.map(([t, p]) => [t, p]));
+    const chartY = 115, barH = 28, gap = 9;
+    const labelW = Math.min(170, w * 0.28);
+    const barAreaW = w - mx * 2 - labelW - 85;
+
+    dist.forEach(([tok, prob], i) => {
+      const y = chartY + i * (barH + gap);
+      const barW = Math.max(2, (prob / topP) * barAreaW);
+
+      ctx.fillStyle = i === 0 ? "#eef2ff" : "#f9fafb";
+      rrect(mx, y - 3, w - mx * 2, barH + 6, 10); ctx.fill();
+
+      ctx.fillStyle = "#1c2028";
+      ctx.font = "700 13px 'DM Mono', ui-monospace, monospace";
+      ctx.textAlign = "left";
+      ctx.fillText(tok.replace(/ /g, "·"), mx + 10, y + 19);
+
+      ctx.fillStyle = i === 0 ? "#2563eb" : "#93c5fd";
+      rrect(mx + labelW, y + 1, barW, barH - 2, 7); ctx.fill();
+
+      ctx.fillStyle = "#1c2028";
+      ctx.font = "700 13px 'DM Sans', system-ui, sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText(fmtPct(prob), mx + w - mx * 2 - 8, y + 19);
+      ctx.textAlign = "left";
+
+      const rawP = rawMap.get(tok);
+      if (rawP !== undefined && Math.abs(rawP - prob) > 0.005) {
+        ctx.fillStyle = "#94a3b8";
+        ctx.font = "11px 'DM Sans', system-ui, sans-serif";
+        ctx.fillText("base " + fmtPct(rawP), mx + labelW + barW + 8, y + 19);
+      }
+    });
+
+    drawTempFooter(w, h);
+  }
+
+  function drawTempFooter(w, h) {
+    const mx = 20, y = h - 48, fw = w - mx * 2;
+    ctx.fillStyle = "#f7f8fa";
+    rrect(mx, y, fw, 34, 12); ctx.fill();
+
+    ctx.fillStyle = "#7f8694";
+    ctx.font = "700 11px 'DM Sans', system-ui, sans-serif";
+    ctx.fillText("TEMPERATURE EFFECT", mx + 12, y + 22);
+
+    const t = getTemp();
+    const start = mx + 168, end = mx + fw - 20;
+    const markerX = start + ((t - 0.1) / 1.9) * (end - start);
+
+    ctx.strokeStyle = "#d9dce3"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(start, y + 17); ctx.lineTo(end, y + 17); ctx.stroke();
+
+    ctx.fillStyle = "#2563eb";
+    ctx.beginPath(); ctx.arc(markerX, y + 17, 6.5, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "11px 'DM Sans', system-ui, sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillText("predictable", start, y + 34);
+    ctx.textAlign = "right";
+    ctx.fillText("surprising", end, y + 34);
+    ctx.textAlign = "left";
+  }
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  GENERATE UI
+  // ═══════════════════════════════════════════════════════════════════
+
+  SCENARIOS.forEach((s, i) => {
+    const opt = document.createElement("option");
+    opt.value = i; opt.textContent = s.title;
+    els.seqSelect.appendChild(opt);
+  });
+
+  function renderGenText() {
+    const prompt = escHtml(seq().prompt);
+    const gen = state.generated.map(t => `<span class="gen-span">${escHtml(t)}</span>`).join("");
+    els.genText.innerHTML = `<span class="prompt-span">${prompt}</span>${gen}`;
+  }
+
+  function renderStreamTokens() {
+    els.streamTokens.innerHTML = "";
+    tokenize(seq().prompt).forEach(t => {
+      const span = document.createElement("span");
+      span.className = "stream-tok";
+      span.textContent = t.replace(/ /g, "·");
+      els.streamTokens.appendChild(span);
+    });
+    state.generated.forEach(t => {
+      const span = document.createElement("span");
+      span.className = "stream-tok gen";
+      span.textContent = t.replace(/ /g, "·");
+      els.streamTokens.appendChild(span);
+    });
+  }
+
+  function tempDesc(t) {
+    if (t < 0.3)  return "Very low — the top token dominates. Output becomes predictable and repetitive.";
+    if (t < 0.65) return "Low — still guided by top choices but with slight variation.";
+    if (t < 0.95) return "Balanced — guided by likely tokens but allows some surprise.";
+    if (t < 1.3)  return "High — probability spreads. Surprising tokens become plausible.";
+    if (t < 1.7)  return "Very high — the distribution flattens. Output may wander.";
+    return "Near chaos — almost any token could be picked. The text may stop making sense.";
+  }
+
+  function updateStats() {
+    const dist = adjDist();
+    els.statStep.textContent = state.generated.length;
+    if (!dist.length) { els.statTop.textContent = "—"; els.statSpread.textContent = "—"; return; }
+    els.statTop.textContent = fmtPct(dist[0][1]);
+    els.statSpread.textContent = Math.round(entropy(dist) * 100) + "%";
+  }
+
+  function showTeachingNote() {
+    const step = state.generated.length;
+    let note = "";
+    if (step === 1) {
+      note = `<strong>Notice:</strong> The model doesn't "know" what makes a good continuation. It calculates probabilities based on patterns in training data. "${state.generated[0].trim()}" appeared after similar phrases often enough to earn a high probability.`;
+    } else if (step === 4) {
+      note = `<strong>Try this:</strong> Move the temperature slider and watch the bars change. At 0.1, the top token has nearly all the probability. At 2.0, the distribution is almost flat. Then switch between Greedy and Sample.`;
+    } else if (step >= seq().steps.length) {
+      note = `<strong>Reflection:</strong> This text was generated one token at a time, each time picking from a probability distribution shaped by everything before it. The model never "understood" the meaning — it predicted patterns. Reset and run again at a different temperature.`;
+    }
+    if (note) { els.teachingNote.innerHTML = note; els.teachingNote.classList.add("visible"); }
+  }
+
+  function updateUI() {
+    const t = getTemp();
+    els.tempPill.textContent = t.toFixed(2);
+    els.tempHint.textContent = tempDesc(t);
+    const done = state.generated.length >= seq().steps.length;
+    els.btnStep.disabled = done;
+    els.btnAuto.disabled = done;
+    els.modeGreedy.classList.toggle("active", state.mode === "greedy");
+    els.modeSample.classList.toggle("active", state.mode === "sample");
+    updateStats();
+    renderGenText();
+    renderStreamTokens();
+    drawChart();
+  }
+
+  function generateNext() {
+    const dist = adjDist();
+    if (!dist.length) return;
+    const token = state.mode === "greedy" ? pickGreedy(dist) : pickSample(dist);
+    state.generated.push(token);
+    updateUI();
+    showTeachingNote();
+  }
+
+  function stopAuto() {
+    if (state.autoTimer) { clearInterval(state.autoTimer); state.autoTimer = null; }
+    els.btnAuto.textContent = "Auto Run";
+  }
+
+  function toggleAuto() {
+    if (state.autoTimer) { stopAuto(); return; }
+    els.btnAuto.textContent = "Stop";
+    state.autoTimer = setInterval(() => {
+      if (state.generated.length >= seq().steps.length) { stopAuto(); return; }
+      generateNext();
+    }, 900);
+  }
+
+  function resetGen() {
+    state.generated = [];
+    stopAuto();
+    els.teachingNote.classList.remove("visible");
+    updateUI();
+  }
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  EVENTS
+  // ═══════════════════════════════════════════════════════════════════
+
+  els.seqSelect.addEventListener("change", () => { state.seqIdx = Number(els.seqSelect.value); resetGen(); });
+  els.tempSlider.addEventListener("input", updateUI);
+  els.btnStep.addEventListener("click", generateNext);
+  els.btnAuto.addEventListener("click", toggleAuto);
+  els.btnReset.addEventListener("click", resetGen);
+  els.btnSeed.addEventListener("click", () => {
+    state.seed = Math.random() * 233280;
+    if (state.mode === "sample") resetGen(); else updateUI();
+  });
+  els.modeGreedy.addEventListener("click", () => { state.mode = "greedy"; updateUI(); });
+  els.modeSample.addEventListener("click", () => { state.mode = "sample"; updateUI(); });
+  window.addEventListener("resize", drawChart);
+
+  document.querySelectorAll(".mode-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".mode-tab").forEach(t => {
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+      });
+      document.querySelectorAll(".panel-wrap").forEach(p => p.classList.remove("active"));
+      tab.classList.add("active");
+      tab.setAttribute("aria-selected", "true");
+      document.getElementById("panel-" + tab.dataset.panel).classList.add("active");
+      if (tab.dataset.panel === "generate") drawChart();
+    });
+  });
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  SELF-TESTS  —  failures shown in UI, not just console
+  // ═══════════════════════════════════════════════════════════════════
+
+  function runTests() {
+    const results = [];
+    function test(name, fn) {
+      try { fn(); results.push({ name, ok: true }); }
+      catch (e) { results.push({ name, ok: false, msg: e.message || String(e) }); }
+    }
+
+    test("tokenize splits compound word", () => {
+      const t = tokenize("unhappiness");
+      if (t.length < 2) throw new Error("Expected split, got: " + JSON.stringify(t));
+    });
+
+    test("tokenize keeps common word whole", () => {
+      const t = tokenize("the cat");
+      if (t[0] !== "the") throw new Error("Expected 'the', got: " + JSON.stringify(t));
+    });
+
+    test("stableTokenId is deterministic", () => {
+      if (stableTokenId(" the") !== stableTokenId(" the")) throw new Error("Token IDs not deterministic");
+    });
+
+    test("adjustDist sums to ~1", () => {
+      const d = adjustDist([[" a", 0.7], [" b", 0.2], [" c", 0.1]], 0.7);
+      const s = d.reduce((sum, [, p]) => sum + p, 0);
+      if (Math.abs(s - 1) > 0.001) throw new Error("Sum: " + s);
+    });
+
+    test("low temp sharpens top", () => {
+      const lo = adjustDist([[" a", 0.5], [" b", 0.3], [" c", 0.2]], 0.2);
+      const hi = adjustDist([[" a", 0.5], [" b", 0.3], [" c", 0.2]], 1.5);
+      if (lo[0][1] <= hi[0][1]) throw new Error("Low temp did not sharpen distribution");
+    });
+
+    test("entropy in range 0-1", () => {
+      const e = entropy([[" a", 0.5], [" b", 0.3], [" c", 0.2]]);
+      if (e < 0 || e > 1) throw new Error("Entropy out of range: " + e);
+    });
+
+    test("scenario data integrity", () => {
+      for (const s of SCENARIOS) {
+        if (s.steps.length !== 8) throw new Error(s.title + ": need 8 steps, got " + s.steps.length);
+        for (const [si, step] of s.steps.entries()) {
+          if (step.length !== 8) throw new Error(s.title + " step " + si + ": need 8 candidates");
+          const sum = step.reduce((acc, [, p]) => acc + p, 0);
+          if (Math.abs(sum - 1) > 0.02) throw new Error(s.title + " step " + si + ": probs sum to " + sum.toFixed(3));
+        }
+      }
+    });
+
+    const failed = results.filter(r => !r.ok);
+    if (failed.length) {
+      const detail = failed.map(r => r.name + ": " + r.msg).join(" | ");
+      els.testStatus.textContent = `Self-tests: ${results.length - failed.length}/${results.length} passed. Failures: ${detail}`;
+      els.testStatus.style.color = "#b91c1c";
+      console.error("Self-test failures:", failed);
+    } else {
+      els.testStatus.textContent = `All ${results.length} self-tests passed.`;
+      els.testStatus.style.color = "#16a34a";
+    }
+  }
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  INIT
+  // ═══════════════════════════════════════════════════════════════════
+
+  renderTokens();
+  resetGen();
+  runTests();
+
+})();
+</script>
+</body>
+</html>

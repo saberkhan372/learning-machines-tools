@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning Machines Tools</title>
+  <style>
+    :root {
+      --bg: #f7f1e6;
+      --paper: #fffaf1;
+      --ink: #20201d;
+      --muted: #6f675b;
+      --line: #d9ccb8;
+      --accent: #2364aa;
+      --accent-2: #2f7d57;
+      --warm: #b45f3a;
+      --shadow: 0 10px 28px rgba(49, 39, 25, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255, 250, 241, 0.88), rgba(247, 241, 230, 0.96)),
+        var(--bg);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 48px 0 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--warm);
+      font-size: 0.82rem;
+      font-weight: 750;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 860px;
+      margin: 0;
+      font-size: clamp(2.2rem, 7vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .principle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 30px 0 34px;
+    }
+
+    .principle div,
+    .tool,
+    .doc-link {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 250, 241, 0.74);
+      box-shadow: var(--shadow);
+    }
+
+    .principle div {
+      padding: 18px;
+    }
+
+    .label {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .principle p {
+      margin: 0;
+      font-size: 1.28rem;
+      font-weight: 760;
+      line-height: 1.18;
+    }
+
+    section {
+      padding: 18px 0 36px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.4rem;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .tool {
+      min-height: 250px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tool h3 {
+      margin: 0;
+      font-size: 1.16rem;
+    }
+
+    .tool p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.55);
+      color: #4f493f;
+      font-size: 0.78rem;
+      font-weight: 650;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      min-height: 38px;
+      border-radius: 7px;
+      padding: 8px 12px;
+      background: var(--ink);
+      color: #fffaf1;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .button.secondary {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .button.disabled {
+      border: 1px solid var(--line);
+      background: #eee3d2;
+      color: #6f675b;
+    }
+
+    .docs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .doc-link {
+      padding: 13px;
+      text-decoration: none;
+      font-weight: 720;
+    }
+
+    .doc-link span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 500;
+    }
+
+    footer {
+      padding: 26px 0 42px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 880px) {
+      .principle,
+      .tool-grid,
+      .docs {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding-top: 34px;
+      }
+
+      .tool {
+        min-height: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <p class="eyebrow">CC Fest Creative AI / Machine Learning Camp</p>
+    <h1>Learning Machines: Text, Images, Video</h1>
+    <p class="intro">
+      A tool ecosystem for investigating how generative systems write, imagine, and move. These tools are built for creative learning, classroom adaptation, and critical reflection.
+    </p>
+    <div class="principle" aria-label="Core principles">
+      <div>
+        <p class="label">Repeated question</p>
+        <p>What is the machine actually doing?</p>
+      </div>
+      <div>
+        <p class="label">Tool principle</p>
+        <p>Every tool should make something invisible visible.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap">
+      <h2>Launch Tools</h2>
+      <div class="tool-grid">
+        <article class="tool">
+          <p class="label">Session 1</p>
+          <h3>Tokenizer + Temperature Visualizer</h3>
+          <p>Shows how text becomes tokens, how next-token probabilities work, and how temperature changes sampling.</p>
+          <div class="tags">
+            <span class="tag">Tokens</span>
+            <span class="tag">Probability</span>
+            <span class="tag">Temperature</span>
+          </div>
+          <a class="button" href="tools/tokenizer-temperature-visualizer/">Open tool</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 1</p>
+          <h3>ELIZA Simulator</h3>
+          <p>Contrasts visible rule-matching with more opaque LLM behavior so participants can compare mechanism and effect.</p>
+          <div class="tags">
+            <span class="tag">Rules</span>
+            <span class="tag">Pattern matching</span>
+            <span class="tag">Trust</span>
+          </div>
+          <a class="button" href="tools/eliza-simulator/">Open tool</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 2</p>
+          <h3>Diffusion Step-Through Viewer</h3>
+          <p>Uses a slider-controlled teaching sequence to make iterative denoising visible without requiring a live model.</p>
+          <div class="tags">
+            <span class="tag">Noise</span>
+            <span class="tag">Denoising</span>
+            <span class="tag">Defaults</span>
+          </div>
+          <a class="button secondary" href="tools/diffusion-step-through-viewer/">Open draft</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 2</p>
+          <h3>Feature Extraction / Pixel Resolution</h3>
+          <p>Shows how recognition changes as image detail is reduced, making pixels and features easier to discuss.</p>
+          <div class="tags">
+            <span class="tag">Pixels</span>
+            <span class="tag">Features</span>
+            <span class="tag">Recognition</span>
+          </div>
+          <a class="button secondary" href="tools/feature-extraction-pixel-resolution/">Open placeholder</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 3</p>
+          <h3>Temporal Telephone</h3>
+          <p>Compares drift and anchoring across frames so temporal coherence becomes visible before AI video analysis.</p>
+          <div class="tags">
+            <span class="tag">Time</span>
+            <span class="tag">Drift</span>
+            <span class="tag">Anchor</span>
+          </div>
+          <a class="button secondary" href="tools/temporal-telephone/">Open placeholder</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2>Second-Wave Tools</h2>
+      <div class="tool-grid">
+        <article class="tool">
+          <p class="label">Session 2</p>
+          <h3>Default Test Comparison Viewer</h3>
+          <p>Side-by-side prompt, output, model, observed default, revision, and ethical concern viewer.</p>
+          <div class="tags">
+            <span class="tag">Defaults</span>
+            <span class="tag">Comparison</span>
+            <span class="tag">Annotation</span>
+          </div>
+          <a class="button secondary" href="tools/default-test-comparison-viewer/">Open placeholder</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 3</p>
+          <h3>Video Failure Gallery Viewer</h3>
+          <p>Frame-step and label video failure modes such as identity drift, physics breaks, and camera inconsistency.</p>
+          <div class="tags">
+            <span class="tag">Failure</span>
+            <span class="tag">Frames</span>
+            <span class="tag">Coherence</span>
+          </div>
+          <a class="button secondary" href="tools/video-failure-gallery-viewer/">Open placeholder</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">All Sessions</p>
+          <h3>A/B/C Comparison Board</h3>
+          <p>The recurring investigation board for baseline, changed variable, correction or stress test, and evidence claim.</p>
+          <div class="tags">
+            <span class="tag">A/B/C</span>
+            <span class="tag">Evidence</span>
+            <span class="tag">Reflection</span>
+          </div>
+          <a class="button secondary" href="tools/abc-comparison-board/">Open placeholder</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 4</p>
+          <h3>Model Card Builder</h3>
+          <p>Helps participants document claims, observed behavior, defaults, failure modes, and responsible-use boundaries.</p>
+          <div class="tags">
+            <span class="tag">Model card</span>
+            <span class="tag">Ethics</span>
+            <span class="tag">Use limits</span>
+          </div>
+          <a class="button secondary" href="tools/model-card-builder/">Open placeholder</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">All Sessions</p>
+          <h3>Concept Bridges</h3>
+          <p>Short explainers for durable ideas: prediction, machine seeing, confidence, and defaults.</p>
+          <div class="tags">
+            <span class="tag">Bridge</span>
+            <span class="tag">Explainer</span>
+            <span class="tag">Teaching</span>
+          </div>
+          <a class="button secondary" href="tools/concept-bridges/">Open placeholder</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2>Stretch Tools</h2>
+      <div class="tool-grid">
+        <article class="tool">
+          <p class="label">Session 1</p>
+          <h3>Next-Token Prediction Game</h3>
+          <p>A standalone version of the Zoom prediction game for testing genre, context, and likely continuations.</p>
+          <div class="tags">
+            <span class="tag">Prediction</span>
+            <span class="tag">Context</span>
+            <span class="tag">Genre</span>
+          </div>
+          <a class="button secondary" href="tools/next-token-prediction-game/">Open placeholder</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 2</p>
+          <h3>Prompt Guidance Word-by-Word</h3>
+          <p>Reveals a prompt one word at a time so participants can see how language constrains possible images.</p>
+          <div class="tags">
+            <span class="tag">Prompt</span>
+            <span class="tag">Guidance</span>
+            <span class="tag">Revision</span>
+          </div>
+          <a class="button secondary" href="tools/prompt-guidance-word-by-word/">Open placeholder</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 2</p>
+          <h3>Latent Space Explorer</h3>
+          <p>A future explorer for similarity, learned features, style, and compressed model representations.</p>
+          <div class="tags">
+            <span class="tag">Latent space</span>
+            <span class="tag">Similarity</span>
+            <span class="tag">Features</span>
+          </div>
+          <a class="button secondary" href="tools/latent-space-explorer/">Open placeholder</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 2</p>
+          <h3>Dataset Balance Simulator</h3>
+          <p>Shows how dataset composition can shape model defaults, confidence, and errors.</p>
+          <div class="tags">
+            <span class="tag">Data</span>
+            <span class="tag">Balance</span>
+            <span class="tag">Bias</span>
+          </div>
+          <a class="button secondary" href="tools/dataset-balance-simulator/">Open placeholder</a>
+        </article>
+
+        <article class="tool">
+          <p class="label">Session 3</p>
+          <h3>Frame-by-Frame Coherence Viewer</h3>
+          <p>Overlays consecutive video frames to inspect what changed, drifted, or broke over time.</p>
+          <div class="tags">
+            <span class="tag">Frames</span>
+            <span class="tag">Motion</span>
+            <span class="tag">Continuity</span>
+          </div>
+          <a class="button secondary" href="tools/frame-by-frame-coherence-viewer/">Open placeholder</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2>Worksheets</h2>
+      <div class="docs">
+        <a class="doc-link" href="worksheets/ai-use-consent-checklist.md">AI Use + Consent<span>Norms, pathways, recap permissions</span></a>
+        <a class="doc-link" href="worksheets/text-experiment-board.md">Text Board<span>Prompt versions and observations</span></a>
+        <a class="doc-link" href="worksheets/image-default-test-board.md">Image Default Test<span>Defaults, assumptions, revisions</span></a>
+        <a class="doc-link" href="worksheets/video-test-report.md">Video Report<span>Motion, failure, coherence</span></a>
+        <a class="doc-link" href="worksheets/model-investigation-journal.md">Investigation Journal<span>Human / machine / system / ethics</span></a>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2>Project Docs</h2>
+      <div class="docs">
+        <a class="doc-link" href="README.md">README<span>Repo overview and launch tool list</span></a>
+        <a class="doc-link" href="tools/README.md">Tool Directory<span>Canonical folders and status</span></a>
+        <a class="doc-link" href="docs/project-brief.md">Project Brief<span>Identity, origins, structure, ethics</span></a>
+        <a class="doc-link" href="docs/build-roadmap.md">Build Roadmap<span>MVP order, timeline, open questions</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    Static HTML, vanilla JavaScript, no required accounts, and no live model dependency for core teaching moments.
+  </footer>
+</body>
+</html>

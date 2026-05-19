@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diffusion Step-Through Viewer</title>
+  <style>
+    :root {
+      --bg: #f7f1e6;
+      --paper: #fffaf1;
+      --ink: #20201d;
+      --muted: #6f675b;
+      --line: #d9ccb8;
+      --accent: #2364aa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    main {
+      width: min(1040px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 720px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) 320px;
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: 0 10px 28px rgba(49, 39, 25, 0.10);
+    }
+
+    .stage {
+      min-height: 580px;
+      padding: 18px;
+    }
+
+    canvas {
+      width: 100%;
+      aspect-ratio: 1;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .controls {
+      padding: 18px;
+    }
+
+    label {
+      display: block;
+      margin: 0 0 8px;
+      font-weight: 750;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 8px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .readout {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f3eadb;
+    }
+
+    .readout p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .step-title {
+      margin: 0 0 6px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .note {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../">Back to tools</a>
+    <h1>Diffusion Step-Through Viewer</h1>
+    <p class="intro">
+      A teaching model of denoising. This version uses generated canvas states instead of a live image model so the workshop moment stays reliable.
+    </p>
+
+    <div class="layout">
+      <section class="panel stage" aria-label="Diffusion visualization">
+        <canvas id="canvas" width="900" height="900"></canvas>
+      </section>
+
+      <aside class="panel controls">
+        <label for="sequence">Sequence</label>
+        <select id="sequence">
+          <option value="city">Flooded golden city</option>
+          <option value="classroom">Futuristic classroom</option>
+          <option value="abstract">Abstract color field</option>
+        </select>
+
+        <div style="height: 18px"></div>
+
+        <label for="step">Denoising step: <span id="stepNumber">0</span></label>
+        <input id="step" type="range" min="0" max="24" value="0">
+
+        <div class="readout">
+          <p class="step-title" id="stageTitle">Pure noise</p>
+          <p id="stageText">The image begins as random values. There is no stable subject yet.</p>
+        </div>
+
+        <p class="note">
+          Workshop framing: generation is not drawing from imagination. It is an iterative process that moves from noise toward structures that fit a prompt and learned patterns.
+        </p>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const canvas = document.querySelector("#canvas");
+      const ctx = canvas.getContext("2d");
+      const stepInput = document.querySelector("#step");
+      const stepNumber = document.querySelector("#stepNumber");
+      const stageTitle = document.querySelector("#stageTitle");
+      const stageText = document.querySelector("#stageText");
+      const sequenceSelect = document.querySelector("#sequence");
+
+      const stages = [
+        [0, "Pure noise", "The image begins as random values. There is no stable subject yet."],
+        [4, "Rough composition", "Large regions begin to organize, but the image is still ambiguous."],
+        [8, "Major color regions", "The model-like process is settling on broad colors, contrast, and placement."],
+        [12, "Subject emerges", "A viewer can begin to guess what the image might become."],
+        [16, "Edges sharpen", "Boundaries and recognizable parts become more stable."],
+        [20, "Textures appear", "Surface detail, lighting, and smaller features become more specific."],
+        [24, "Final image", "The last stage looks coherent, but its defaults came from the prompt and the system."],
+      ];
+
+      const palettes = {
+        city: {
+          bg: ["#151c2b", "#3d5f78", "#e2b65d", "#f6e7b4"],
+          shapes: ["#1e3147", "#6d8794", "#c28f45", "#f1d99c"],
+        },
+        classroom: {
+          bg: ["#17212e", "#44657b", "#d6e7de", "#f5f0df"],
+          shapes: ["#253b4a", "#668c91", "#9dbf9e", "#e2b45f"],
+        },
+        abstract: {
+          bg: ["#241f31", "#345f73", "#a74f4d", "#f3c86b"],
+          shapes: ["#703f66", "#2f7d57", "#2364aa", "#fff0bf"],
+        },
+      };
+
+      function seededRandom(seed) {
+        let value = seed % 2147483647;
+        if (value <= 0) value += 2147483646;
+        return () => {
+          value = value * 16807 % 2147483647;
+          return (value - 1) / 2147483646;
+        };
+      }
+
+      function mix(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function hexToRgb(hex) {
+        const clean = hex.replace("#", "");
+        return [
+          parseInt(clean.slice(0, 2), 16),
+          parseInt(clean.slice(2, 4), 16),
+          parseInt(clean.slice(4, 6), 16),
+        ];
+      }
+
+      function rgbToHex(rgb) {
+        return "#" + rgb.map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
+      }
+
+      function grayHex(value) {
+        return rgbToHex([value, value, value]);
+      }
+
+      function blend(c1, c2, t) {
+        const a = hexToRgb(c1);
+        const b = hexToRgb(c2);
+        return rgbToHex([mix(a[0], b[0], t), mix(a[1], b[1], t), mix(a[2], b[2], t)]);
+      }
+
+      function drawNoise(progress, palette) {
+        const rand = seededRandom(1097);
+        const cell = Math.max(4, Math.round(mix(18, 6, progress)));
+        for (let y = 0; y < canvas.height; y += cell) {
+          for (let x = 0; x < canvas.width; x += cell) {
+            const pick = palette.bg[Math.floor(rand() * palette.bg.length)];
+            const gray = Math.floor(rand() * 255);
+            ctx.fillStyle = progress < 0.08 ? grayHex(gray) : blend(grayHex(gray), pick, progress);
+            ctx.globalAlpha = mix(1, 0.28, progress);
+            ctx.fillRect(x, y, cell + 1, cell + 1);
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawScene(progress, kind) {
+        const palette = palettes[kind];
+        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, blend(palette.bg[0], palette.bg[1], progress));
+        gradient.addColorStop(0.6, blend(palette.bg[1], palette.bg[2], progress));
+        gradient.addColorStop(1, blend(palette.bg[2], palette.bg[3], progress));
+        ctx.globalAlpha = Math.max(0, progress - 0.12) / 0.88;
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
+
+        if (kind === "abstract") {
+          drawAbstract(progress, palette);
+        } else {
+          drawEnvironment(progress, palette, kind);
+        }
+      }
+
+      function drawEnvironment(progress, palette, kind) {
+        const detail = Math.max(0, progress - 0.25) / 0.75;
+        const horizon = kind === "city" ? 560 : 610;
+        ctx.globalAlpha = detail;
+        ctx.fillStyle = kind === "city" ? "rgba(237, 213, 148, 0.34)" : "rgba(255, 250, 241, 0.42)";
+        ctx.beginPath();
+        ctx.ellipse(450, horizon + 40, 380, 90, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        for (let i = 0; i < 9; i++) {
+          const w = 48 + i * 4;
+          const h = kind === "city" ? 130 + (i % 4) * 58 : 90 + (i % 3) * 34;
+          const x = 92 + i * 78;
+          const y = horizon - h;
+          ctx.fillStyle = palette.shapes[i % palette.shapes.length];
+          ctx.globalAlpha = detail * (0.56 + i * 0.035);
+          ctx.fillRect(x, y, w, h);
+
+          if (progress > 0.66) {
+            ctx.globalAlpha = (progress - 0.66) / 0.34 * 0.75;
+            ctx.fillStyle = "rgba(255, 244, 190, 0.9)";
+            for (let wy = y + 18; wy < y + h - 12; wy += 28) {
+              ctx.fillRect(x + 12, wy, 10, 12);
+              ctx.fillRect(x + 30, wy, 10, 12);
+            }
+          }
+        }
+
+        if (kind === "classroom") {
+          ctx.globalAlpha = detail;
+          ctx.fillStyle = "rgba(33, 32, 29, 0.72)";
+          ctx.fillRect(240, 385, 420, 120);
+          ctx.fillStyle = "rgba(220, 237, 226, 0.9)";
+          ctx.fillRect(262, 405, 376, 78);
+        }
+
+        ctx.globalAlpha = Math.max(0, progress - 0.78) / 0.22;
+        ctx.strokeStyle = "rgba(255, 250, 241, 0.72)";
+        ctx.lineWidth = 3;
+        for (let i = 0; i < 5; i++) {
+          ctx.beginPath();
+          ctx.arc(300 + i * 70, 190 + (i % 2) * 24, 18, Math.PI * 1.1, Math.PI * 1.8);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawAbstract(progress, palette) {
+        const detail = Math.max(0, progress - 0.18) / 0.82;
+        const rand = seededRandom(4242);
+        for (let i = 0; i < 14; i++) {
+          ctx.globalAlpha = detail * 0.52;
+          ctx.fillStyle = palette.shapes[i % palette.shapes.length];
+          ctx.beginPath();
+          ctx.ellipse(
+            140 + rand() * 660,
+            130 + rand() * 640,
+            40 + rand() * 180 * detail,
+            35 + rand() * 150 * detail,
+            rand() * Math.PI,
+            0,
+            Math.PI * 2
+          );
+          ctx.fill();
+        }
+        ctx.globalAlpha = Math.max(0, progress - 0.7) / 0.3;
+        ctx.strokeStyle = "rgba(255, 250, 241, 0.82)";
+        ctx.lineWidth = 5;
+        for (let i = 0; i < 7; i++) {
+          ctx.beginPath();
+          ctx.moveTo(120, 190 + i * 80);
+          ctx.bezierCurveTo(300, 80 + i * 40, 560, 340 + i * 20, 780, 160 + i * 75);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function updateLabels(step) {
+        let current = stages[0];
+        for (const stage of stages) {
+          if (step >= stage[0]) current = stage;
+        }
+        stepNumber.textContent = step;
+        stageTitle.textContent = current[1];
+        stageText.textContent = current[2];
+      }
+
+      function render() {
+        const step = Number(stepInput.value);
+        const progress = step / Number(stepInput.max);
+        const kind = sequenceSelect.value;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawNoise(progress, palettes[kind]);
+        drawScene(progress, kind);
+        updateLabels(step);
+      }
+
+      stepInput.addEventListener("input", render);
+      sequenceSelect.addEventListener("change", render);
+      render();
+    })();
+  </script>
+</body>
+</html>

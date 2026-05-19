@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ELIZA Simulator</title>
+  <style>
+    :root {
+      --bg: #f7f1e6;
+      --paper: #fffaf1;
+      --ink: #20201d;
+      --muted: #6f675b;
+      --line: #d9ccb8;
+      --accent: #2364aa;
+      --green: #2f7d57;
+      --warm: #b45f3a;
+      --shadow: 0 10px 28px rgba(49, 39, 25, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      font-size: clamp(2rem, 6vw, 4.4rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .notice,
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .notice {
+      margin: 22px 0 16px;
+      padding: 14px 16px;
+      color: var(--muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .chat-log {
+      min-height: 360px;
+      max-height: 520px;
+      overflow: auto;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf8;
+    }
+
+    .message {
+      max-width: 82%;
+      margin-bottom: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      line-height: 1.45;
+    }
+
+    .message.user {
+      margin-left: auto;
+      background: #dfeafa;
+    }
+
+    .message.eliza {
+      background: #f2eadb;
+    }
+
+    .message strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .composer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    textarea {
+      min-height: 122px;
+      resize: vertical;
+    }
+
+    button {
+      min-height: 42px;
+      border: 0;
+      border-radius: 7px;
+      padding: 9px 12px;
+      background: var(--ink);
+      color: #fffaf1;
+      font-weight: 760;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .rule-box {
+      display: grid;
+      gap: 10px;
+    }
+
+    .rule-row {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fffdf8;
+    }
+
+    .rule-label {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 780;
+      text-transform: uppercase;
+    }
+
+    .rule-value {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .example {
+      min-height: 0;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 650;
+    }
+
+    .compare {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .compare strong {
+      color: var(--ink);
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../">Back to tools</a>
+    <h1>ELIZA Simulator</h1>
+    <p class="intro">
+      A rule-based chatbot you can inspect. The point is not that ELIZA is powerful; the point is that its mechanism is visible.
+    </p>
+
+    <div class="notice">
+      Teaching question: when a response feels human, what part of that feeling came from the system, and what part came from us?
+    </div>
+
+    <div class="layout">
+      <section class="panel">
+        <h2>Conversation</h2>
+        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+        <form class="composer" id="form">
+          <input id="userInput" autocomplete="off" placeholder="Type a message, for example: I feel nervous about AI in my classroom">
+          <button type="submit">Send</button>
+        </form>
+        <div class="examples">
+          <button class="example" type="button">I feel nervous about AI in my classroom</button>
+          <button class="example" type="button">My students use it for homework</button>
+          <button class="example" type="button">Can you explain what you are doing?</button>
+          <button class="example" type="button">Everyone says this will change school</button>
+        </div>
+      </section>
+
+      <aside class="stack">
+        <section class="panel">
+          <h2>Rule Inspector</h2>
+          <div class="rule-box">
+            <div class="rule-row">
+              <p class="rule-label">Input</p>
+              <p class="rule-value" id="ruleInput">No message yet.</p>
+            </div>
+            <div class="rule-row">
+              <p class="rule-label">Pattern matched</p>
+              <p class="rule-value" id="rulePattern">None</p>
+            </div>
+            <div class="rule-row">
+              <p class="rule-label">Rule fired</p>
+              <p class="rule-value" id="ruleName">None</p>
+            </div>
+            <div class="rule-row">
+              <p class="rule-label">Response template</p>
+              <p class="rule-value" id="ruleTemplate">None</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>LLM Comparison Notes</h2>
+          <textarea id="llmNotes" placeholder="Paste or summarize a response from a modern LLM to the same prompt. What feels different? What is harder to inspect?"></textarea>
+          <p class="compare">
+            <strong>Compare:</strong> ELIZA shows the rule it used. A modern LLM can produce richer language, but the mechanism is not visible in the same way, so we test behavior with structured prompts and evidence.
+          </p>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const rules = [
+        {
+          name: "Feeling reflection",
+          pattern: /\b(i feel|i am feeling|i'm feeling|i am|i'm)\s+(.+)/i,
+          template: "Why do you say you are {1}?",
+          respond(match) {
+            return `Why do you say you are ${clean(match[2])}?`;
+          },
+        },
+        {
+          name: "Possessive reflection",
+          pattern: /\bmy\s+(.+)/i,
+          template: "Tell me more about your {1}.",
+          respond(match) {
+            return `Tell me more about your ${clean(match[1])}.`;
+          },
+        },
+        {
+          name: "Question deflection",
+          pattern: /\b(can you|could you|will you|would you)\s+(.+)/i,
+          template: "What makes you interested in whether I can {1}?",
+          respond(match) {
+            return `What makes you interested in whether I can ${clean(match[2])}?`;
+          },
+        },
+        {
+          name: "Everyone/generalization",
+          pattern: /\b(everyone|people|teachers|students)\b(.+)?/i,
+          template: "When you say {0}, who are you thinking of?",
+          respond(match) {
+            return `When you say "${clean(match[0])}", who are you thinking of?`;
+          },
+        },
+        {
+          name: "AI keyword",
+          pattern: /\b(ai|chatgpt|machine learning|model|algorithm)\b/i,
+          template: "What concerns or possibilities do you associate with {0}?",
+          respond(match) {
+            return `What concerns or possibilities do you associate with ${clean(match[1])}?`;
+          },
+        },
+        {
+          name: "Because prompt",
+          pattern: /\bbecause\s+(.+)/i,
+          template: "Is that the main reason?",
+          respond() {
+            return "Is that the main reason?";
+          },
+        },
+      ];
+
+      const fallback = {
+        name: "Fallback",
+        pattern: /.*/i,
+        template: "Please go on.",
+        respond() {
+          const options = [
+            "Please go on.",
+            "What do you notice about that?",
+            "Can you say more about what changed?",
+            "What makes that important to you?",
+          ];
+          return options[Math.floor(Math.random() * options.length)];
+        },
+      };
+
+      const chatLog = document.querySelector("#chatLog");
+      const form = document.querySelector("#form");
+      const input = document.querySelector("#userInput");
+      const ruleInput = document.querySelector("#ruleInput");
+      const rulePattern = document.querySelector("#rulePattern");
+      const ruleName = document.querySelector("#ruleName");
+      const ruleTemplate = document.querySelector("#ruleTemplate");
+
+      function clean(text) {
+        return String(text || "")
+          .trim()
+          .replace(/[.?!]+$/g, "")
+          .replace(/\s+/g, " ");
+      }
+
+      function addMessage(kind, text) {
+        const div = document.createElement("div");
+        div.className = `message ${kind}`;
+        div.innerHTML = `<strong>${kind === "user" ? "You" : "ELIZA"}</strong>${escapeHtml(text)}`;
+        chatLog.appendChild(div);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      }
+
+      function escapeHtml(text) {
+        return String(text)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      function inspect(text, rule, match) {
+        ruleInput.textContent = text;
+        rulePattern.textContent = rule.pattern.toString();
+        ruleName.textContent = rule.name;
+        ruleTemplate.textContent = rule.template;
+      }
+
+      function respond(text) {
+        const found = rules
+          .map((rule) => ({ rule, match: text.match(rule.pattern) }))
+          .find((result) => result.match);
+        const result = found || { rule: fallback, match: text.match(fallback.pattern) };
+        inspect(text, result.rule, result.match);
+        return result.rule.respond(result.match);
+      }
+
+      function submit(text) {
+        const value = clean(text);
+        if (!value) return;
+        addMessage("user", value);
+        addMessage("eliza", respond(value));
+        input.value = "";
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        submit(input.value);
+      });
+
+      document.querySelectorAll(".example").forEach((button) => {
+        button.addEventListener("click", () => submit(button.textContent));
+      });
+
+      addMessage("eliza", "Hello. Type a message and then inspect which rule I used.");
+    })();
+  </script>
+</body>
+</html>
+
