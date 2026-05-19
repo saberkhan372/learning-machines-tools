@@ -549,8 +549,9 @@
 <body>
 
 <div class="site-header">
+  <a href="../../" style="display:inline-block;margin-bottom:14px;font-size:0.875rem;color:var(--muted);text-decoration:none;">← Back to tools</a>
   <h1>Tokenizer + Temperature Visualizer</h1>
-  <p class="subtitle">A teaching tool for seeing how language models break text into tokens, build probability distributions, and sample the next token.</p>
+  <p class="subtitle">How language models break text into tokens and sample what comes next — Session 1</p>
 </div>
 
 <div class="notice-wrap">
@@ -685,7 +686,21 @@
     </div>
 
     <div class="facilitator-card">
-      <strong>Try this live with participants:</strong> Start at temperature 0.1 and run Auto. Then reset, move to 2.0, and run again. Ask: what changed, and why? Switch between Greedy and Sample at the same temperature — discuss why the same model produces different text.
+      <strong>Workshop sequence (10 min):</strong>
+      <ol style="margin:8px 0 0 18px;line-height:1.7;font-size:0.86rem;">
+        <li><strong>Tokens first.</strong> Switch to Explore Tokens. Type a simple sentence, then an unusual word. Ask: where did the model draw the boundary? Why might "unhappiness" split differently than "the"?</li>
+        <li><strong>Greedy at low temperature.</strong> Switch to Generate. Set temperature to 0.1, mode to Greedy. Run Auto. Ask: does this feel predictable? Why?</li>
+        <li><strong>Raise the temperature.</strong> Reset, move to 1.5, run again. Ask: what changed? Which tokens appeared that wouldn't have at 0.1?</li>
+        <li><strong>Greedy vs. Sample.</strong> At the same temperature, toggle between Greedy and Sample and reset between runs. Ask: same model, same temperature — why different text?</li>
+      </ol>
+      <p style="margin-top:10px;font-size:0.86rem;"><strong>Debrief questions:</strong></p>
+      <ul style="margin:6px 0 0 18px;font-size:0.86rem;line-height:1.7;">
+        <li>The top token had 38% probability. Does that mean it's 38% likely to be true?</li>
+        <li>At temperature 2.0, "dances" and "forgets" became plausible continuations for a science explanation. What does that tell you about what the model learned?</li>
+        <li>If you ran this 100 times in Greedy mode at temperature 0.1, would you always get the same text? What about Sample mode?</li>
+        <li>The model never "read" the sentence for meaning — it predicted the next token. What would it mean for a model to actually understand what it's continuing?</li>
+        <li>Where does human judgment enter the loop in a real writing tool built on this mechanism?</li>
+      </ul>
     </div>
   </div>
 
