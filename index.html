@@ -284,10 +284,14 @@
       overflow: hidden;
     }
     .arc-step {
+      display: block;
       flex: 1;
       padding: 16px 18px;
       border-right: 1px solid var(--line);
+      text-decoration: none;
+      transition: background 150ms ease;
     }
+    .arc-step:hover { background: rgba(255, 255, 255, 0.46); }
     .arc-step:last-child { border-right: none; }
     .arc-num {
       font-size: 0.72rem;
@@ -381,6 +385,80 @@
     .credits-block a { color: var(--accent); text-decoration: none; }
     .credits-block a:hover { text-decoration: underline; }
 
+    /* How-to use strip */
+    .how-to-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,250,241,0.74);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .how-to-step {
+      padding: 16px 18px;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+    }
+    .how-to-step:last-child { border-right: none; }
+    .step-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 0.72rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+    }
+    .how-to-step strong {
+      font-size: 0.92rem;
+      font-weight: 760;
+      margin-bottom: 5px;
+      line-height: 1.2;
+    }
+    .how-to-step span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* Participation pathways */
+    .pathway-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .pathway-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,250,241,0.74);
+      box-shadow: var(--shadow);
+      padding: 14px 16px;
+    }
+    .pathway-name {
+      margin: 0 0 5px;
+      font-size: 0.92rem;
+      font-weight: 760;
+    }
+    .pathway-card > p:not(.pathway-name) {
+      margin: 0;
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .pathway-note {
+      margin: 0 0 12px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
     footer {
       padding: 26px 0 42px;
       color: var(--muted);
@@ -394,7 +472,9 @@
       .tool-grid,
       .docs,
       .where-grid,
-      .credits-grid {
+      .credits-grid,
+      .how-to-strip,
+      .pathway-grid {
         grid-template-columns: 1fr;
       }
 
@@ -419,6 +499,12 @@
     <p class="intro">
       A tool ecosystem for investigating how generative systems write, imagine, and move. These tools are built for creative learning, classroom adaptation, and critical reflection.
     </p>
+    <div class="stats-row" aria-label="Camp at a glance">
+      <div class="stat-item"><span class="stat-num">4</span><span class="stat-lbl">sessions</span></div>
+      <div class="stat-item"><span class="stat-num">5</span><span class="stat-lbl">launch tools</span></div>
+      <div class="stat-item"><span class="stat-num">5</span><span class="stat-lbl">worksheets</span></div>
+      <div class="stat-item"><span class="stat-num">3</span><span class="stat-lbl">modalities</span></div>
+    </div>
     <div class="principle" aria-label="Core principles">
       <div>
         <p class="label">Repeated question</p>
@@ -433,38 +519,32 @@
         <p>Predict first. Change one thing. Document what moved.</p>
       </div>
     </div>
-    <div class="stats-row" aria-label="Camp at a glance">
-      <div class="stat-item"><span class="stat-num">4</span><span class="stat-lbl">sessions</span></div>
-      <div class="stat-item"><span class="stat-num">5</span><span class="stat-lbl">launch tools</span></div>
-      <div class="stat-item"><span class="stat-num">5</span><span class="stat-lbl">worksheets</span></div>
-      <div class="stat-item"><span class="stat-num">1</span><span class="stat-lbl">showcase</span></div>
-    </div>
   </header>
 
   <main>
     <section class="wrap">
       <h2>Four sessions. One investigation arc.</h2>
       <div class="session-arc">
-        <div class="arc-step">
+        <a class="arc-step" href="docs/session-1-text.html">
           <p class="arc-num">Session 1</p>
           <p class="arc-title">Text</p>
-          <p class="arc-sub">Prediction, tokens, temperature</p>
-        </div>
-        <div class="arc-step">
+          <p class="arc-sub">Tokens, prediction, ELIZA</p>
+        </a>
+        <a class="arc-step" href="docs/session-2-images.html">
           <p class="arc-num">Session 2</p>
           <p class="arc-title">Images</p>
-          <p class="arc-sub">Diffusion, defaults, bias</p>
-        </div>
-        <div class="arc-step">
+          <p class="arc-sub">Pixels, diffusion, defaults</p>
+        </a>
+        <a class="arc-step" href="docs/session-3-video.html">
           <p class="arc-num">Session 3</p>
           <p class="arc-title">Video</p>
-          <p class="arc-sub">Drift, coherence, failure</p>
-        </div>
-        <div class="arc-step">
+          <p class="arc-sub">Drift, coherence, motion defaults</p>
+        </a>
+        <a class="arc-step" href="docs/session-4-showcase.html">
           <p class="arc-num">Session 4</p>
           <p class="arc-title">Showcase</p>
-          <p class="arc-sub">Evidence, reflection, artifact</p>
-        </div>
+          <p class="arc-sub">Evidence, reflection, teaching/critique</p>
+        </a>
       </div>
     </section>
 
@@ -488,6 +568,64 @@
           <p class="where-title">Predict first. Change one thing. Document what moved.</p>
           <p class="where-desc">Every tool works without a facilitator. Open a worksheet alongside it. What you find can become a final project, classroom activity, or model card.</p>
           <a class="button secondary" href="worksheets/text-experiment-board/">Try a worksheet →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2>How to use these tools</h2>
+      <div class="how-to-strip">
+        <div class="how-to-step">
+          <span class="step-num">1</span>
+          <strong>Predict</strong>
+          <span>Before you run the tool, write down what you expect to happen.</span>
+        </div>
+        <div class="how-to-step">
+          <span class="step-num">2</span>
+          <strong>Change one variable</strong>
+          <span>Adjust one setting, prompt, or input. Keep everything else the same.</span>
+        </div>
+        <div class="how-to-step">
+          <span class="step-num">3</span>
+          <strong>Compare the evidence</strong>
+          <span>What actually appeared? How does it match your prediction?</span>
+        </div>
+        <div class="how-to-step">
+          <span class="step-num">4</span>
+          <strong>Name what the machine did</strong>
+          <span>Not "it was weird" — name the specific behavior: default, failure, or pattern.</span>
+        </div>
+        <div class="how-to-step">
+          <span class="step-num">5</span>
+          <strong>Decide what the human does next</strong>
+          <span>Revise, reject, document, or turn what you found into a project or lesson.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2>Participation pathways</h2>
+      <p class="pathway-note">Every activity has five pathways. Opting out of direct AI use never means opting out of the camp.</p>
+      <div class="pathway-grid">
+        <div class="pathway-card">
+          <p class="pathway-name">Use</p>
+          <p>Try a tool directly and document what happens.</p>
+        </div>
+        <div class="pathway-card">
+          <p class="pathway-name">Observe / Critique</p>
+          <p>Analyze pre-generated examples without logging into a tool.</p>
+        </div>
+        <div class="pathway-card">
+          <p class="pathway-name">Teach / Design</p>
+          <p>Create a lesson, worksheet, or facilitation plan.</p>
+        </div>
+        <div class="pathway-card">
+          <p class="pathway-name">Build / Code</p>
+          <p>Make an explainer or small interactive tool.</p>
+        </div>
+        <div class="pathway-card">
+          <p class="pathway-name">Critical / No-AI</p>
+          <p>Write a critique, consent checklist, model card, or unplugged activity.</p>
         </div>
       </div>
     </section>
@@ -619,7 +757,7 @@
         <article class="tool">
           <p class="label">All Sessions</p>
           <h3>A/B/C Comparison Board</h3>
-          <span class="use-label">Worksheet</span>
+          <span class="use-label">Evidence Board</span>
           <p>A pilot evidence board for comparing a baseline, changed variable, correction or stress test, and evidence claim.</p>
           <span class="status">Second-wave draft</span>
           <div class="tags">
@@ -633,7 +771,7 @@
         <article class="tool">
           <p class="label">Session 4</p>
           <h3>Model Card Builder</h3>
-          <span class="use-label capstone">Capstone</span>
+          <span class="use-label capstone">Reflection Tool</span>
           <p>Helps participants document claims, observed behavior, defaults, failure modes, and responsible-use boundaries.</p>
           <span class="status">Second-wave draft</span>
           <div class="tags">
@@ -647,6 +785,7 @@
         <article class="tool">
           <p class="label">All Sessions</p>
           <h3>Concept Bridges</h3>
+          <span class="use-label">Concept Bridge</span>
           <p>Short explainers for durable ideas: prediction, machine seeing, confidence, and defaults.</p>
           <span class="status">Second-wave draft</span>
           <div class="tags">
@@ -770,15 +909,15 @@
       <div class="credits-grid">
         <div class="credits-block">
           <p class="label">AI use in development</p>
-          <p>These tools were designed and built with AI assistance (Claude, Anthropic) throughout — code generation, content drafting, facilitation scripts, and iteration. All pedagogical framing, session design, and tool concepts were authored by human educators and reviewed against classroom use. Every facilitation guide was written for real sessions, not generated and published unchanged.</p>
+          <p>These tools were designed and revised with LLM assistance, including Claude and ChatGPT, for code generation, content drafting, facilitation scripts, and iteration. Because this camp studies AI systems, that assistance should stay visible, reviewed, and open to critique.</p>
         </div>
         <div class="credits-block">
           <p class="label">Classroom origins</p>
-          <p>Investigation activities, bridge framings, and discussion questions draw on <em>Generative AI as a Creative Collaborator</em>, a UC-approved high school elective co-taught by Saber Khan and Danny Gámez at Campbell Hall School, Los Angeles. Student testing and classroom iteration shaped these tools directly.</p>
+          <p>Investigation activities, bridge framings, and discussion questions grew from classroom testing, workshop planning, and human review. The goal is not to make AI feel magical, but to make mechanisms, defaults, failures, and judgment visible.</p>
         </div>
         <div class="credits-block">
-          <p class="label">CC Fest context</p>
-          <p>Learning Machines is a CC Fest program. CC Fest builds free, open creative technology education for educators, artists, and learners. This camp extends the <a href="https://saberkhan372.github.io/CC-Fest-Coding-Camp/">CC Fest Coding Camp</a> into AI literacy and critical investigation. Source is open on <a href="https://github.com/saberkhan372/learning-machines-tools">GitHub</a>.</p>
+          <p class="label">Consent and context</p>
+          <p>Public sharing, screenshots, recordings, and recaps should follow the <a href="docs/consent-recap-protocol.html">Consent Protocol</a>. For the full program frame, read the <a href="docs/project-brief.html">Project Brief</a> or visit the original <a href="https://saberkhan372.github.io/CC-Fest-Coding-Camp/">CC Fest Coding Camp</a>.</p>
         </div>
       </div>
     </section>
