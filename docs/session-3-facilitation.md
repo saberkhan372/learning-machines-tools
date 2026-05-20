@@ -22,16 +22,17 @@ Core question: what changes when generation has to work across time?
 | Time | Segment | Facilitator Move | Participant Action |
 | --- | --- | --- | --- |
 | 0-5 min | Welcome and bridge | Connect Session 2 to Session 3: a good frame is not enough; video must stay coherent across time. | Choose a participation pathway. |
-| 5-35 min | Temporal Telephone round 1 | Open Temporal Telephone in previous-frame-only mode. Ask participants to draw or direct a simple sequence. | Draw/save frames or observe where small changes accumulate into drift. |
+| 5-35 min | Temporal Telephone round 1 | Open Temporal Telephone in previous-frame-only mode. Use "a person at work" as the vague prompt, then check motion defaults after playback: job, body, setting, tool, pace, gesture. | Draw/save frames or observe where defaults and small changes accumulate into drift. |
 | 35-50 min | Temporal Telephone round 2 | Switch to anchor mode and repeat with the same basic subject or motion. | Compare whether identity, layout, and motion stay more stable. |
 | 50-70 min | Failure analysis | Use curated clips, still frames, or optional generated video examples. Name failure modes precisely. | Mark identity drift, physics breaks, camera inconsistency, style drift, or temporal jumps. |
 | 70-90 min | Video Test Report | Ask participants to complete one A/B/C or failure-analysis section. | Share one coherence claim and one responsible-use boundary. |
 
-Optional pilot evidence move: use the A/B/C Comparison Board to document a baseline motion prompt, one continuity anchor, and a stronger anchor or stress test. Keep real-person likeness and consent concerns visible before exporting.
+Optional pilot evidence move: use the A/B/C Comparison Board to document a hypothesis, one changed variable, a baseline motion prompt, one continuity anchor, and a stronger anchor or stress test. Keep real-person likeness and consent concerns visible before exporting.
 
 ## Facilitator Prompts
 
 - "Where did the sequence first begin to drift?"
+- "For the vague prompt 'a person at work,' what job, body, setting, tool, pace, or gesture appeared by default?"
 - "What stayed consistent when only the previous frame was visible?"
 - "What did the anchor preserve?"
 - "What does video require that a single image does not?"

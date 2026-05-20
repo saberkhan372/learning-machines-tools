@@ -48,6 +48,7 @@
     .segmented { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
     .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .notice { border-left: 4px solid var(--green); background: #f2fbf5; padding: 12px 14px; color: #315942; font-size: 0.92rem; line-height: 1.45; }
+    .test-status { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.78rem; min-height: 1rem; }
     .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
     .board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
     .column { overflow: hidden; }
@@ -116,6 +117,7 @@
         </div>
 
         <div class="notice">Autosaves in this browser only. Export Markdown or JSON before clearing shared devices.</div>
+        <div class="test-status" id="testStatus" aria-live="polite">Self-tests not run yet.</div>
 
         <div class="actions" aria-label="Export actions">
           <button type="button" class="primary" id="copyMarkdown">Copy Markdown</button>
@@ -135,6 +137,14 @@
       <div class="field">
         <label for="context">Context or class use</label>
         <input id="context" data-field="context" type="text" placeholder="Example: Session 2 image investigation">
+      </div>
+      <div class="field">
+        <label for="hypothesis">Hypothesis</label>
+        <input id="hypothesis" data-field="hypothesis" type="text" placeholder="If I change [one thing], then I expect [observable result].">
+      </div>
+      <div class="field">
+        <label for="oneVariable">One changed variable / fair-test rule</label>
+        <input id="oneVariable" data-field="oneVariable" type="text" placeholder="Name the one variable you will change between A and B.">
       </div>
     </section>
 
@@ -168,14 +178,14 @@
       const STORAGE_KEY = "learningMachinesAbcBoard.v1";
       const versions = [
         ["a", "Version A", "Baseline prompt, output, or example."],
-        ["b", "Version B", "One changed variable."],
+        ["b", "Version B", "The planned one-variable change."],
         ["c", "Version C", "Correction, stress test, or anchor."]
       ];
       const versionFields = [
         ["purpose", "Purpose", "What is this version testing?", true],
         ["input", "Prompt / Input", "Paste or describe the prompt, task, frame, or example.", false],
         ["output", "Output / Evidence Notes", "Describe what appeared. Add screenshot/video links if useful.", false],
-        ["change", "Changed Variable", "What changed from the previous version?", true]
+        ["change", "Changed Variable", "A: baseline/no change. B: planned variable. C: correction, stress test, or stronger anchor.", true]
       ];
       const comparisonFields = [
         ["observedDifference", "What changed across A/B/C?", "Name the visible or behavioral difference."],
@@ -196,6 +206,8 @@
         template: "blank",
         title: "",
         context: "",
+        hypothesis: "",
+        oneVariable: "",
         versions: {
           a: { purpose: "Baseline", input: "", output: "", change: "None; this is the baseline." },
           b: { purpose: "One changed variable", input: "", output: "", change: "" },
@@ -216,6 +228,8 @@
           template: "textTemperature",
           title: "Text temperature test",
           context: "Session 1: next-token prediction and sampling",
+          hypothesis: "If temperature increases, output will become less predictable.",
+          oneVariable: "Temperature",
           versions: {
             a: { purpose: "Baseline low-temperature run", input: "Use the same sentence starter at a low temperature.", output: "Note the most predictable continuations and whether the output feels generic or stable.", change: "Low temperature" },
             b: { purpose: "Higher-temperature run", input: "Use the same sentence starter at a higher temperature.", output: "Note what becomes more surprising, unstable, specific, or strange.", change: "Temperature increased" },
@@ -228,6 +242,8 @@
           template: "imageDefault",
           title: "Image default test",
           context: "Session 2: visual defaults and representation",
+          hypothesis: "If the prompt is vague, the model will fill in visual defaults.",
+          oneVariable: "Prompt specificity",
           versions: {
             a: { purpose: "Vague prompt baseline", input: "Example: a doctor / a classroom / a beautiful home", output: "Describe what appears by default: people, setting, style, objects, lighting, roles.", change: "Vague prompt" },
             b: { purpose: "One specification added", input: "Add one detail, such as location, age group, style, or context.", output: "Describe which defaults changed and which stayed the same.", change: "One prompt detail added" },
@@ -241,6 +257,8 @@
           template: "videoCoherence",
           title: "Video coherence test",
           context: "Session 3: drift, anchoring, and temporal consistency",
+          hypothesis: "If one continuity anchor is added, some drift will reduce but not disappear.",
+          oneVariable: "Continuity anchor",
           versions: {
             a: { purpose: "Baseline motion prompt or frame sequence", input: "Describe the subject, action, camera, and setting with minimal detail.", output: "Note identity, object, background, camera, or physics changes over time.", change: "Baseline" },
             b: { purpose: "One continuity detail added", input: "Add one anchor such as fixed camera, consistent outfit, repeated setting, or simple motion.", output: "Describe what becomes more stable and what still drifts.", change: "One continuity anchor" },
@@ -336,7 +354,7 @@
       }
 
       function render() {
-        ["title", "context"].concat(comparisonFields.map(function (field) { return field[0]; })).forEach(function (field) {
+        ["title", "context", "hypothesis", "oneVariable"].concat(comparisonFields.map(function (field) { return field[0]; })).forEach(function (field) {
           const element = document.querySelector("[data-field='" + field + "']");
           if (element) element.value = state[field] || "";
         });
@@ -418,7 +436,16 @@
       }
 
       function markdownExport() {
-        const lines = ["# " + text(state.title || "A/B/C Comparison Board"), "", "- Modality: " + text(state.modality), "- Context: " + text(state.context), "- Exported: " + new Date().toLocaleString(), ""];
+        const lines = [
+          "# " + text(state.title || "A/B/C Comparison Board"),
+          "",
+          "- Modality: " + text(state.modality),
+          "- Context: " + text(state.context),
+          "- Hypothesis: " + (text(state.hypothesis) || "_Not recorded._"),
+          "- One changed variable: " + (text(state.oneVariable) || "_Not recorded._"),
+          "- Exported: " + new Date().toLocaleString(),
+          ""
+        ];
         ["a", "b", "c"].forEach(function (version) {
           const data = state.versions[version];
           lines.push("## Version " + version.toUpperCase(), "", "**Purpose:** " + text(data.purpose), "", "**Prompt / Input**", "", text(data.input) || "_No input recorded._", "", "**Output / Evidence Notes**", "", text(data.output) || "_No evidence notes recorded._", "", "**Changed Variable:** " + (text(data.change) || "_Not recorded._"), "");
@@ -496,9 +523,52 @@
         }, 2400);
       }
 
+      function runTests() {
+        const results = [];
+        function test(name, fn) {
+          try { fn(); results.push({ name: name, ok: true }); }
+          catch (error) { results.push({ name: name, ok: false, msg: error.message || String(error) }); }
+        }
+        function assert(condition, message) {
+          if (!condition) throw new Error(message || "assertion failed");
+        }
+
+        test("fair-test fields render", function () {
+          assert(document.getElementById("hypothesis"), "missing hypothesis field");
+          assert(document.getElementById("oneVariable"), "missing one-variable field");
+        });
+        test("state includes fair-test fields", function () {
+          assert(Object.prototype.hasOwnProperty.call(state, "hypothesis"), "state missing hypothesis");
+          assert(Object.prototype.hasOwnProperty.call(state, "oneVariable"), "state missing oneVariable");
+        });
+        test("starter templates include fair-test fields", function () {
+          ["textTemperature", "imageDefault", "videoCoherence"].forEach(function (key) {
+            assert(templates[key].hypothesis, key + " missing hypothesis");
+            assert(templates[key].oneVariable, key + " missing oneVariable");
+          });
+        });
+        test("markdown export includes fair-test fields", function () {
+          const exported = markdownExport();
+          assert(exported.indexOf("- Hypothesis:") !== -1, "export missing hypothesis");
+          assert(exported.indexOf("- One changed variable:") !== -1, "export missing one-variable field");
+        });
+
+        const element = document.getElementById("testStatus");
+        const failed = results.filter(function (result) { return !result.ok; });
+        if (failed.length === 0) {
+          element.textContent = "All " + results.length + " self-tests passed.";
+          element.style.color = "var(--green)";
+        } else {
+          element.textContent = "Self-tests: " + (results.length - failed.length) + "/" + results.length + " passed. Failures: " +
+            failed.map(function (result) { return result.name + ": " + result.msg; }).join(" | ");
+          element.style.color = "var(--rose)";
+        }
+      }
+
       buildUi();
       bindInputs();
       render();
+      runTests();
     }());
   </script>
 </body>

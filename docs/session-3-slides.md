@@ -153,7 +153,7 @@ These are the categories. Name what you saw.
 
 Options:
 1. **Analyze** curated AI video clips — identify and name failure modes with timestamps
-2. **Test** a video generation tool with a baseline, one variable changed, and one stress test
+2. **Test** a video generation tool with a hypothesis, a baseline, one changed variable, and one stress test
 3. **Design** a classroom activity around one video failure mode
 
 *Speaker note: Curated clips will be available if participants don't want to generate directly. The key evidence is: what failed, when, and what the likely mechanism is.*
@@ -162,11 +162,12 @@ Options:
 
 ## SLIDE 12 — Investigation Protocol
 
-1. **Baseline prompt** — observe what appears
-2. **Change one variable** — motion instruction, style, character detail
-3. **Stress test** — push the model toward a known failure mode
-4. **Document** — what failed, at what frame, why you think it failed
-5. **Claim** — "When given [prompt type], this model tends to [failure], which suggests [mechanism]"
+1. **Hypothesis** — predict what will change before you test
+2. **Baseline prompt** — observe what appears
+3. **Change one variable** — motion instruction, style, character detail
+4. **Stress test** — push the model toward a known failure mode
+5. **Document** — what failed, at what frame, why you think it failed
+6. **Claim** — "When given [prompt type], this model tends to [failure], which suggests [mechanism]"
 
 ---
 

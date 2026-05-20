@@ -378,6 +378,51 @@ header {
 .lens-who.system  { color: #6d28d9; }
 .lens-who.ethics  { color: #b91c1c; }
 
+/* Motion defaults panel */
+.motion-defaults-card {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: #fff7ed;
+  border: 1.5px solid #fed7aa;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #7c2d12;
+  line-height: 1.6;
+}
+.motion-defaults-card strong {
+  color: #9a3412;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.motion-defaults-card p { margin: 0 0 10px; color: #7c2d12; }
+.defaults-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.default-chip {
+  border: 1px solid #fdba74;
+  border-radius: 8px;
+  background: #fffaf3;
+  padding: 9px 10px;
+  min-height: 74px;
+}
+.default-chip span {
+  display: block;
+  color: #9a3412;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+@media (max-width: 560px) { .defaults-grid { grid-template-columns: 1fr; } }
+
 /* Failure bridge card */
 .failure-card {
   width: 100%;
@@ -494,6 +539,19 @@ header {
   <div class="thumbs" id="thumbs"></div>
 </div>
 
+<div class="motion-defaults-card" id="motion-defaults">
+  <strong>Motion Defaults — Video Default Test</strong>
+  <p>This is the video version of the Default Test. The prompt is vague, but motion still becomes specific. After playback, check what the group made visible from "A person at work."</p>
+  <div class="defaults-grid" aria-label="Motion default checklist">
+    <div class="default-chip"><span>Job</span>What kind of work appeared?</div>
+    <div class="default-chip"><span>Body</span>Who did participants imagine?</div>
+    <div class="default-chip"><span>Setting</span>Where did the work happen?</div>
+    <div class="default-chip"><span>Tool</span>What object or technology appeared?</div>
+    <div class="default-chip"><span>Pace</span>What movement or speed emerged?</div>
+    <div class="default-chip"><span>Gesture</span>What repeated action appeared?</div>
+  </div>
+</div>
+
 <div class="reflection-card">
   <strong>Reflection — Human · Machine · System · Ethics</strong>
   <div class="lens-grid">
@@ -533,7 +591,7 @@ header {
   <strong>Facilitator note — Workshop sequence (15–20 min)</strong>
   <ul>
     <li><strong>Before the tool (5 min) — unplugged version.</strong> If time allows: give participants slips of paper. One person draws "a person at work." Pass the drawing face-down. Next person draws what happens next, seeing only a faint trace. Repeat 6–8 times. This makes drift physical before the digital tool.</li>
-    <li><strong>Round 1 — Run A, telephone (5 min).</strong> Use "Previous frame" ghost mode. 6–8 frames. Don't reveal the prompt. Play back. Ask: where did it go? What drifted? Reveal the original prompt.</li>
+    <li><strong>Round 1 — Run A, telephone (5 min).</strong> Use "Previous frame" ghost mode. 6–8 frames. Don't reveal the prompt. Play back. Ask: where did it go? What drifted? Reveal the original prompt, then use the Motion Defaults checklist before moving to failure modes.</li>
     <li><strong>Round 2 — Run B or C, conditioned (5 min).</strong> Reveal the prompt. Use Anchor or Both mode. Same number of frames. Play back. Compare directly: does anchoring help? What still drifts?</li>
     <li><strong>Debrief with the failure bridge (5 min).</strong> Show the failure card. Ask participants to match each failure mode to something they saw in the playback. Name the drift precisely.</li>
   </ul>
@@ -894,6 +952,11 @@ function runTests() {
   });
   test('round controls exist', () => {
     assert(document.querySelectorAll('.pill').length === 3, 'expected three round controls');
+  });
+  test('motion defaults panel renders', () => {
+    assert(document.getElementById('motion-defaults'), 'missing motion defaults panel');
+    assert(document.querySelectorAll('.default-chip').length === 6, 'expected six motion default prompts');
+    assert(document.getElementById('prompt-input').value === 'A person at work', 'default prompt changed');
   });
   test('initial state is empty and previous-frame mode', () => {
     assert(S.frames.length === 0, 'initial frames should be empty');
