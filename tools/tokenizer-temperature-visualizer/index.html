@@ -522,6 +522,25 @@
 
   .facilitator-card strong { font-weight: 800; }
 
+  /* Bridge card — unplugged-to-tool connection */
+  .bridge-card {
+    background: var(--warm);
+    border: 1px solid var(--warm-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 0.86rem;
+    color: #5a4010;
+    line-height: 1.5;
+  }
+  .bridge-card strong { color: #3d2a08; font-weight: 800; }
+  .bridge-card .bridge-activity {
+    margin-top: 10px;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid var(--warm-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+
   /* Footer */
   .site-footer {
     max-width: 1280px;
@@ -673,6 +692,16 @@
           <li><strong>Human judgment matters.</strong> The model continues a pattern. People decide goal, context, ethics, meaning.</li>
         </ul>
       </div>
+    </div>
+
+    <div class="bridge-card">
+      <strong>If you did BookBot — this is BookBot at scale.</strong>
+      <p style="margin-top:8px;">In BookBot, you built a bigram table from a children's book: which word follows which, and how often. You rolled a die to pick the next word. Low-loaded dice meant always picking the top word (low temperature). Loose dice meant picking from the full distribution (high temperature).</p>
+      <p style="margin-top:6px;">This tool runs the same process — for every token, across millions of learned patterns, thousands of times per second. The bar chart is the probability table. The temperature slider is the die. The difference is scale and training data, not the mechanism.</p>
+      <div class="bridge-activity">
+        <strong>Try this before clicking Next Token:</strong> Look at the current prompt and the generated text so far. What word do you predict will have the tallest bar? Write it down — then click and check.
+      </div>
+      <p style="margin-top:10px;"><strong>The key line:</strong> A likely continuation is not the same as a true one. The model predicts what fits the learned pattern — not what is accurate, fair, or meaningful.</p>
     </div>
 
     <div class="gen-card">
