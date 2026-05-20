@@ -76,7 +76,7 @@ Show a blurry or pixelated image.
 ## SLIDE 6 — FEATURE EXTRACTION / PIXEL RESOLUTION TOOL
 
 **Open the tool:**
-[feature-extraction-pixel-resolution link]
+https://saberkhan372.github.io/learning-machines-tools/tools/feature-extraction-pixel-resolution/
 
 Try each image:
 - When does the face first become recognizable?
@@ -106,7 +106,7 @@ Image models learn at all these levels simultaneously.
 ## SLIDE 8 — DIFFUSION STEP-THROUGH VIEWER
 
 **Open the tool:**
-[diffusion-step-through-viewer link]
+https://saberkhan372.github.io/learning-machines-tools/tools/diffusion-step-through-viewer/
 
 *"Generation is not drawing from imagination. It is iterative denoising."*
 
@@ -181,7 +181,7 @@ Defaults emerge from:
 
 ## SLIDE 13 — INVESTIGATION: Image Default Test Board
 
-**Open:** [Image Default Test Board link]
+**Open:** https://saberkhan372.github.io/learning-machines-tools/worksheets/image-default-test-board/
 
 1. Choose a vague prompt: "a teacher," "a family dinner," "a beautiful home," "a criminal," "a scientist"
 2. Generate (or analyze a pre-generated example)

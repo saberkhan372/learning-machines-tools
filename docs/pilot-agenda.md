@@ -35,9 +35,9 @@ All tools must be open and tested before participants arrive.
 
 | Tool | URL | Session it supports |
 |---|---|---|
-| Tokenizer + Temperature Visualizer | [link] | Session 1 — Text |
-| ELIZA Simulator | [link] | Session 1 — Text |
-| Diffusion Step-Through Viewer | [link] | Session 2 — Images |
+| Tokenizer + Temperature Visualizer | https://saberkhan372.github.io/learning-machines-tools/tools/tokenizer-temperature-visualizer/ | Session 1 — Text |
+| ELIZA Simulator | https://saberkhan372.github.io/learning-machines-tools/tools/eliza-simulator/ | Session 1 — Text |
+| Diffusion Step-Through Viewer | https://saberkhan372.github.io/learning-machines-tools/tools/diffusion-step-through-viewer/ | Session 2 — Images |
 
 No live AI model accounts required. All tools work offline after initial load.
 
@@ -82,7 +82,7 @@ Hold it. We will come back to it.
 
 ### 0:18–0:35 — ELIZA Simulator (17 min)
 
-Open [ELIZA Simulator link] on screen. Walk through one example as a group:
+Open the [ELIZA Simulator](https://saberkhan372.github.io/learning-machines-tools/tools/eliza-simulator/) on screen. Walk through one example as a group:
 
 1. Type "I feel really sad today" — point to the Rule Inspector
 2. Show: keyword found → rule selected → pattern matched → template filled
@@ -101,7 +101,7 @@ Key contrast to introduce: ELIZA fails visibly; LLMs fail fluently. Neither unde
 
 ### 0:35–0:55 — Diffusion Step-Through Viewer (20 min)
 
-Open [Diffusion Step-Through Viewer link].
+Open the [Diffusion Step-Through Viewer](https://saberkhan372.github.io/learning-machines-tools/tools/diffusion-step-through-viewer/).
 
 **Part 1 — Mechanism (5 min):**
 Start at Step 0 (noise). Step slowly to 20 together. Ask: when did you first recognize the subject? What appeared first — color, shape, or detail?

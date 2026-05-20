@@ -69,7 +69,7 @@ Every frame is a new prediction. The model has no persistent memory.
 ## SLIDE 5 — TEMPORAL TELEPHONE
 
 **Open the tool:**
-[temporal-telephone link]
+https://saberkhan372.github.io/learning-machines-tools/tools/temporal-telephone/
 
 **Round 1 — Telephone (prompt hidden):**
 Draw what happens next. You can see a ghost of the previous frame. Lock your frame when done.
@@ -149,7 +149,7 @@ These are the categories. Name what you saw.
 
 ## SLIDE 11 — INVESTIGATION: Video Test Report
 
-**Open:** [Video Test Report link]
+**Open:** https://saberkhan372.github.io/learning-machines-tools/worksheets/video-test-report/
 
 Options:
 1. **Analyze** curated AI video clips — identify and name failure modes with timestamps

@@ -98,7 +98,7 @@ What appeared in your head? Hold that image.
 ## SLIDE 8 — ELIZA SIMULATOR
 
 **Open the tool:**
-[eliza-simulator link]
+https://saberkhan372.github.io/learning-machines-tools/tools/eliza-simulator/
 
 ELIZA was built in 1966. No model. No training data. No understanding.
 
@@ -132,7 +132,7 @@ The failure modes are just very different.
 ## SLIDE 10 — TOKENIZER + TEMPERATURE VISUALIZER
 
 **Open the tool:**
-[tokenizer-temperature-visualizer link]
+https://saberkhan372.github.io/learning-machines-tools/tools/tokenizer-temperature-visualizer/
 
 **Part 1 — Tokenization (10 min):**
 Type a sentence. Watch it chunk into tokens.
@@ -185,7 +185,7 @@ A 70% token probability means "fits the pattern" — not "is correct."
 
 ## SLIDE 14 — INVESTIGATION: Text Experiment Board
 
-**Open:** [Text Experiment Board link]
+**Open:** https://saberkhan372.github.io/learning-machines-tools/worksheets/text-experiment-board/
 
 Choose a prompt type: story, description, explanation, dialogue, or Default Test.
 

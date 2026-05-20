@@ -64,8 +64,8 @@ Participants will leave not just knowing how to use AI tools, but knowing how to
 
 **Free. Virtual. Beginner-friendly.**
 
-→ [Register here] *(link)*
-→ [Read the full program description] *(link)*
+→ [Register here](https://forms.gle/Knw7T7nUJAjUA28n9)
+→ [Read the full program description](https://saberkhan372.github.io/learning-machines-tools/)
 
 Questions? Reply to this email.
 
