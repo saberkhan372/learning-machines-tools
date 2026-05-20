@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Default Is a Design Decision - Concept Bridge</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f3ee;
+      color: #1c2028;
+      line-height: 1.55;
+      padding: 24px 20px 60px;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; }
+    .back { font-size: 13px; color: #7f8694; margin-bottom: 20px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .back a { color: inherit; text-decoration: none; }
+    .back a:hover { color: #1c2028; }
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+    }
+    .badge.bridge { background: #fef9ef; color: #b45f3a; border: 1.5px solid #d9ccb8; }
+    .badge.session { background: #fee2e2; color: #991b1b; border: 1.5px solid #fecaca; }
+    h1 {
+      font-size: clamp(1.7rem, 5vw, 2.55rem);
+      font-weight: 850;
+      line-height: 1;
+      letter-spacing: 0;
+      margin-bottom: 14px;
+    }
+    .lead {
+      font-size: 0.98rem;
+      color: #3a3530;
+      border-left: 3px solid #d9ccb8;
+      padding-left: 14px;
+      margin-bottom: 28px;
+      line-height: 1.65;
+    }
+    .key-line {
+      background: #1c2028;
+      color: #fffaf1;
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+      font-weight: 760;
+      line-height: 1.45;
+    }
+    .kl-label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,250,241,0.56);
+      margin-bottom: 7px;
+    }
+    .prompt-panel {
+      background: #fff;
+      border: 1.5px solid #d9ccb8;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 22px;
+    }
+    .prompt-label {
+      font-size: 0.72rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #b45f3a;
+      margin-bottom: 8px;
+    }
+    .prompt {
+      background: #f5f3ee;
+      border: 1px solid #d9ccb8;
+      border-radius: 7px;
+      padding: 13px 16px;
+      font-size: 1rem;
+      margin-bottom: 16px;
+      color: #1c2028;
+    }
+    .defaults-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .default-card {
+      background: #fff7ed;
+      border: 1.5px solid #fed7aa;
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 112px;
+    }
+    .default-card strong {
+      display: block;
+      color: #9a3412;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 5px;
+    }
+    .default-card p {
+      color: #7c2d12;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+    .sources {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .source {
+      background: #fff;
+      border: 1.5px solid #d9ccb8;
+      border-radius: 9px;
+      padding: 14px;
+    }
+    .source strong {
+      display: block;
+      color: #1c2028;
+      margin-bottom: 4px;
+      font-size: 0.92rem;
+    }
+    .source p {
+      color: #555d6e;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+    .checklist {
+      background: #fef9ef;
+      border: 1.5px solid #d9ccb8;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 22px;
+    }
+    .checklist h2 {
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      color: #1c2028;
+    }
+    .check-row {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 9px 0;
+      border-top: 1px solid #e8dccb;
+    }
+    .check-row:first-of-type { border-top: none; }
+    .box {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      border: 2px solid #b45f3a;
+      border-radius: 4px;
+      background: #fff;
+    }
+    .check-row p { color: #5a4010; font-size: 0.9rem; }
+    .connect {
+      background: #eff6ff;
+      border: 1.5px solid #93c5fd;
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .connect-label {
+      font-size: 0.72rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #1e40af;
+    }
+    .connect p { font-size: 0.88rem; color: #1e3a8a; line-height: 1.55; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .links a {
+      display: inline-block;
+      padding: 9px 14px;
+      background: #2563eb;
+      color: #fff;
+      border-radius: 7px;
+      font-size: 0.84rem;
+      font-weight: 750;
+      text-decoration: none;
+    }
+    .links a:hover { background: #1d4ed8; }
+    @media (max-width: 680px) {
+      body { padding: 18px 14px 46px; }
+      .defaults-grid,
+      .sources { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="back">
+      <a href="../">Concept Bridges</a>
+      <a href="../../../">All tools</a>
+    </nav>
+
+    <div class="badges">
+      <span class="badge bridge">Bridge 2</span>
+      <span class="badge session">Before Session 2: Images</span>
+    </div>
+
+    <h1>Default Is a Design Decision</h1>
+
+    <p class="lead">A default is what appears when the prompt leaves something unsaid. Generative systems still have to make the missing details specific: who appears, where they are, what style shows up, what kind of motion feels normal, and whose version of normal is treated as obvious.</p>
+
+    <div class="key-line">
+      <span class="kl-label">Key line</span>
+      "If you did not ask for it, but it appeared anyway, that is evidence."
+    </div>
+
+    <section class="prompt-panel" aria-label="Default test example">
+      <p class="prompt-label">Default Test prompt</p>
+      <div class="prompt">"Generate an image of a doctor."</div>
+      <div class="defaults-grid">
+        <div class="default-card">
+          <strong>Body</strong>
+          <p>What age, gender, skin tone, ability, expression, or posture appeared?</p>
+        </div>
+        <div class="default-card">
+          <strong>Setting</strong>
+          <p>Where did the scene happen? Clinic, hospital, office, home, lab, or somewhere else?</p>
+        </div>
+        <div class="default-card">
+          <strong>Role</strong>
+          <p>Who seems to have authority? Who is centered? Who is absent?</p>
+        </div>
+        <div class="default-card">
+          <strong>Objects</strong>
+          <p>What tools, clothing, symbols, or props did the model treat as obvious?</p>
+        </div>
+        <div class="default-card">
+          <strong>Style</strong>
+          <p>What visual style, lighting, realism, polish, or cultural reference appeared?</p>
+        </div>
+        <div class="default-card">
+          <strong>Action</strong>
+          <p>What is the person doing? What kind of labor or expertise did the model assume?</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sources" aria-label="Where defaults come from">
+      <div class="source">
+        <strong>Training data</strong>
+        <p>Images, text, captions, labels, and social patterns teach the system what usually goes with a prompt.</p>
+      </div>
+      <div class="source">
+        <strong>Tool design</strong>
+        <p>Interfaces, safety filters, style presets, ranking systems, and default settings shape what appears first.</p>
+      </div>
+      <div class="source">
+        <strong>Prompt ambiguity</strong>
+        <p>When a prompt is vague, the system fills the gaps. Specificity can shift defaults, but it does not make them neutral.</p>
+      </div>
+      <div class="source">
+        <strong>Social history</strong>
+        <p>Defaults often reflect who has been overrepresented, underrepresented, stereotyped, or treated as normal.</p>
+      </div>
+    </section>
+
+    <section class="checklist" aria-label="Default test checklist">
+      <h2>Before you call something biased, collect evidence</h2>
+      <div class="check-row">
+        <span class="box" aria-hidden="true"></span>
+        <p>Write the exact prompt before generating or revealing the output.</p>
+      </div>
+      <div class="check-row">
+        <span class="box" aria-hidden="true"></span>
+        <p>Predict what you think the model will fill in by default.</p>
+      </div>
+      <div class="check-row">
+        <span class="box" aria-hidden="true"></span>
+        <p>Record what actually appeared: body, setting, role, objects, style, and action.</p>
+      </div>
+      <div class="check-row">
+        <span class="box" aria-hidden="true"></span>
+        <p>Name what changed when you added one specific detail.</p>
+      </div>
+      <div class="check-row">
+        <span class="box" aria-hidden="true"></span>
+        <p>Make a careful claim: "This model defaulted to X, which may reflect Y."</p>
+      </div>
+    </section>
+
+    <div class="connect">
+      <p class="connect-label">Now open the tool</p>
+      <p>Use the Diffusion Step-Through Viewer to watch structure emerge from noise, then use the Image Default Test Board to document what the model filled in without being asked.</p>
+      <div class="links">
+        <a href="../../diffusion-step-through-viewer/">Open Diffusion Viewer</a>
+        <a href="../../../worksheets/image-default-test-board/">Open Image Default Test Board</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

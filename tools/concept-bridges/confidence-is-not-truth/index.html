@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confidence Is Not Truth — Concept Bridge</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f3ee;
+  color: #1c2028;
+  line-height: 1.55;
+  padding: 24px 20px 60px;
+}
+.wrap { max-width: 680px; margin: 0 auto; }
+.back { font-size: 13px; color: #7f8694; margin-bottom: 20px; display: flex; gap: 16px; }
+.back a { color: inherit; text-decoration: none; }
+.back a:hover { color: #1c2028; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.badge {
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em;
+}
+.badge.bridge { background: #fef9ef; color: #b45f3a; border: 1.5px solid #d9ccb8; }
+.badge.session { background: #e8f2ec; color: #225f42; border: 1.5px solid #b3d9c5; }
+h1 {
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 800; line-height: 1;
+  letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.lead {
+  font-size: 0.96rem; color: #3a3530;
+  border-left: 3px solid #d9ccb8;
+  padding-left: 14px;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+/* Scenario tabs */
+.scenario-tabs { display: flex; gap: 0; }
+.stab {
+  font-family: inherit; font-size: 0.84rem; font-weight: 700;
+  padding: 9px 18px;
+  border: 1.5px solid #d9ccb8; border-bottom: none;
+  background: #ece6dc; color: #7f8694;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  margin-right: 4px;
+  transition: background 0.12s;
+}
+.stab.active { background: #fff; color: #1c2028; }
+.stab:hover:not(.active) { background: #dfd8cc; }
+
+/* Scenario card */
+.scenario-card {
+  background: #fff;
+  border: 1.5px solid #d9ccb8;
+  border-radius: 0 10px 10px 10px;
+  padding: 22px;
+  display: none;
+  margin-bottom: 24px;
+}
+.scenario-card.active { display: block; }
+
+.prompt-box {
+  background: #f5f3ee;
+  border: 1px solid #d9ccb8;
+  border-radius: 7px;
+  padding: 13px 16px;
+  font-size: 1rem;
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+.blank {
+  display: inline-block;
+  min-width: 72px;
+  border-bottom: 2px solid #1c2028;
+  margin: 0 3px;
+  vertical-align: bottom;
+}
+
+/* Bar chart */
+.chart { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.bar-row { display: flex; align-items: center; gap: 10px; }
+.bar-token {
+  width: 140px; font-size: 0.86rem;
+  flex-shrink: 0;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  color: #555d6e;
+}
+.bar-row.top .bar-token { font-weight: 700; color: #1c2028; }
+.bar-track { flex: 1; height: 22px; background: #eae5dd; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; background: #93c5fd; }
+.bar-row.top .bar-fill { background: #2563eb; }
+.bar-pct { width: 38px; font-size: 0.84rem; font-weight: 700; text-align: right; color: #7f8694; }
+.bar-row.top .bar-pct { color: #1c2028; }
+
+/* Verdict */
+.verdict {
+  border-radius: 8px; padding: 13px 16px;
+  font-size: 0.88rem; line-height: 1.6;
+  border: 1.5px solid;
+}
+.verdict strong {
+  display: block; margin-bottom: 4px;
+  font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.verdict.correct { background: #f0fdf4; border-color: #86efac; color: #14532d; }
+.verdict.correct strong { color: #15803d; }
+.verdict.uncertain { background: #fff7ed; border-color: #fed7aa; color: #7c2d12; }
+.verdict.uncertain strong { color: #c2410c; }
+.verdict.fluent { background: #f8fafc; border-color: #cbd5e1; color: #334155; }
+.verdict.fluent strong { color: #475569; }
+
+/* Key line */
+.key-line {
+  background: #1c2028; color: #fffaf1;
+  border-radius: 10px; padding: 20px 22px;
+  margin-bottom: 20px;
+  font-size: 1.05rem; font-weight: 700; line-height: 1.45;
+}
+.kl-label {
+  display: block; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: rgba(255,250,241,0.5);
+  margin-bottom: 7px;
+}
+
+/* Nuance */
+.nuance {
+  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  border-radius: 8px; padding: 14px 16px;
+  font-size: 0.86rem; color: #5a4010; line-height: 1.6;
+  margin-bottom: 24px;
+}
+.nuance strong { color: #3d2a08; }
+
+/* Connect card */
+.connect {
+  background: #eff6ff; border: 1.5px solid #93c5fd;
+  border-radius: 10px; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.connect-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #1e40af;
+}
+.connect p { font-size: 0.88rem; color: #1e3a8a; line-height: 1.55; }
+.connect a {
+  display: inline-block; padding: 9px 14px;
+  background: #2563eb; color: #fff;
+  border-radius: 7px; font-size: 0.84rem; font-weight: 700;
+  text-decoration: none; width: fit-content;
+}
+.connect a:hover { background: #1d4ed8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="back">
+    <a href="../">← Concept Bridges</a>
+    <a href="../../../">All tools</a>
+  </nav>
+
+  <div class="badges">
+    <span class="badge bridge">Bridge 1</span>
+    <span class="badge session">Before Session 1: Text</span>
+  </div>
+
+  <h1>Confidence Is Not Truth</h1>
+
+  <p class="lead">A language model assigns probability to every possible next token based on what usually follows in training data. When a completion has a very high probability — when the model is "confident" — that means one thing: this token appeared most often in similar contexts during training. It does not mean the completion is accurate, fair, or meaningful.</p>
+
+  <div class="scenario-tabs" role="tablist">
+    <button class="stab active" data-s="a" role="tab" aria-selected="true">Scenario A</button>
+    <button class="stab" data-s="b" role="tab" aria-selected="false">Scenario B</button>
+    <button class="stab" data-s="c" role="tab" aria-selected="false">Scenario C</button>
+  </div>
+
+  <div class="scenario-card active" id="s-a" role="tabpanel">
+    <div class="prompt-box">"The capital of Japan is <span class="blank">&nbsp;</span>"</div>
+    <div class="chart" aria-label="Token probability chart for Scenario A">
+      <div class="bar-row top">
+        <span class="bar-token">Tokyo</span>
+        <div class="bar-track"><div class="bar-fill" style="width:94%"></div></div>
+        <span class="bar-pct">94%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">Kyoto</span>
+        <div class="bar-track"><div class="bar-fill" style="width:3%"></div></div>
+        <span class="bar-pct">3%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">Osaka</span>
+        <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
+        <span class="bar-pct">2%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">Hiroshima</span>
+        <div class="bar-track"><div class="bar-fill" style="width:1%"></div></div>
+        <span class="bar-pct">1%</span>
+      </div>
+    </div>
+    <div class="verdict correct">
+      <strong>Confident — and correct</strong>
+      The model's highest-probability completion happens to be accurate. But notice: it arrived here by pattern-matching, not by checking a source. The confidence and the truth align in this case because this fact appears consistently and unambiguously across training data. That won't always be true.
+    </div>
+  </div>
+
+  <div class="scenario-card" id="s-b" role="tabpanel">
+    <div class="prompt-box">"The nurse told <span class="blank">&nbsp;</span> to come back tomorrow"</div>
+    <div class="chart" aria-label="Token probability chart for Scenario B">
+      <div class="bar-row top">
+        <span class="bar-token">her</span>
+        <div class="bar-track"><div class="bar-fill" style="width:63%"></div></div>
+        <span class="bar-pct">63%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">him</span>
+        <div class="bar-track"><div class="bar-fill" style="width:24%"></div></div>
+        <span class="bar-pct">24%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">them</span>
+        <div class="bar-track"><div class="bar-fill" style="width:11%"></div></div>
+        <span class="bar-pct">11%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">the patient</span>
+        <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
+        <span class="bar-pct">2%</span>
+      </div>
+    </div>
+    <div class="verdict uncertain">
+      <strong>Confident — but no correct answer exists</strong>
+      No nurse was specified. The model predicts "her" with 63% confidence — but that's confidence about a statistical pattern in training data, not a fact about this nurse. The nurse's actual gender is unknown. Confidence is high. Truth value is zero.
+    </div>
+  </div>
+
+  <div class="scenario-card" id="s-c" role="tabpanel">
+    <div class="prompt-box">"Our innovative solution leverages cutting-edge <span class="blank">&nbsp;</span>"</div>
+    <div class="chart" aria-label="Token probability chart for Scenario C">
+      <div class="bar-row top">
+        <span class="bar-token">technology</span>
+        <div class="bar-track"><div class="bar-fill" style="width:36%"></div></div>
+        <span class="bar-pct">36%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">algorithms</span>
+        <div class="bar-track"><div class="bar-fill" style="width:27%"></div></div>
+        <span class="bar-pct">27%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">frameworks</span>
+        <div class="bar-track"><div class="bar-fill" style="width:19%"></div></div>
+        <span class="bar-pct">19%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">methodologies</span>
+        <div class="bar-track"><div class="bar-fill" style="width:12%"></div></div>
+        <span class="bar-pct">12%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-token">solutions</span>
+        <div class="bar-track"><div class="bar-fill" style="width:6%"></div></div>
+        <span class="bar-pct">6%</span>
+      </div>
+    </div>
+    <div class="verdict fluent">
+      <strong>Confident — and equally meaningless in all directions</strong>
+      Every completion is grammatically perfect and statistically common. None of them add meaning because the sentence had none to add. The model cannot detect that this is word salad. It predicts what usually follows this opening, not what would actually mean something.
+    </div>
+  </div>
+
+  <div class="key-line">
+    <span class="kl-label">Key line</span>
+    "High probability means 'fits the learned pattern.' It does not mean 'is true.'"
+  </div>
+
+  <div class="nuance">
+    <strong>This doesn't mean models are always wrong.</strong> In Scenario A, the confident completion was correct. The distinction that matters: the model arrived at the correct answer by pattern-matching, not by understanding. The cases where this difference is dangerous are exactly the ones where the prompt is ambiguous, the topic is contested, or the training data reflects historical bias — not the easy, unambiguous ones.
+  </div>
+
+  <div class="connect">
+    <p class="connect-label">Now open the tool</p>
+    <p>In the Tokenizer + Temperature Visualizer, you can see a real probability distribution for each next token and watch what happens as temperature changes. The bar chart there is the same mechanism you just explored here — at the scale and speed a real model uses it.</p>
+    <a href="../../tokenizer-temperature-visualizer/">Open Tokenizer + Temperature Visualizer →</a>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.stab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.stab').forEach(function(b) {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.scenario-card').forEach(function(s) {
+      s.classList.remove('active');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    document.getElementById('s-' + btn.dataset.s).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
