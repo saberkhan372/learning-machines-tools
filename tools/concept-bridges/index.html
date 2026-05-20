@@ -44,6 +44,29 @@
     .use-with { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
     .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
     .links a { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; background: #fff; text-decoration: none; font-size: 0.84rem; font-weight: 700; }
+    .open-bridge {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 14px;
+      border-radius: 7px;
+      padding: 8px 12px;
+      background: var(--ink);
+      color: #fffdf8;
+      font-size: 0.86rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .draft-note {
+      display: inline-block;
+      width: fit-content;
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
     .facilitator { margin-top: 18px; padding: 18px; }
     .facilitator ol { padding-left: 20px; margin-bottom: 0; }
     @media (max-width: 760px) {
@@ -75,6 +98,7 @@
           <li>High-probability text can still be false, biased, or empty.</li>
           <li>Human judgment supplies purpose, context, and accountability.</li>
         </ul>
+        <span class="draft-note">Full bridge coming later</span>
         <div class="use-with">
           <strong>Use with</strong>
           <div class="links">
@@ -94,6 +118,7 @@
           <li>Diffusion builds structure through iterative denoising.</li>
           <li>The prompt leaves gaps; the model fills them with defaults.</li>
         </ul>
+        <span class="draft-note">Full bridge coming later</span>
         <div class="use-with">
           <strong>Use with</strong>
           <div class="links">
@@ -113,6 +138,7 @@
           <li>In images, denoising choices can look polished without being neutral.</li>
           <li>In video, coherent-looking motion can still break physics or identity.</li>
         </ul>
+        <a class="open-bridge" href="confidence-is-not-truth/">Open full bridge</a>
         <div class="use-with">
           <strong>Use with</strong>
           <div class="links">
@@ -132,6 +158,7 @@
           <li>Ask who is centered, erased, stereotyped, or copied.</li>
           <li>Ask what responsible revision would require.</li>
         </ul>
+        <a class="open-bridge" href="default-is-a-design-decision/">Open full bridge</a>
         <div class="use-with">
           <strong>Use with</strong>
           <div class="links">
