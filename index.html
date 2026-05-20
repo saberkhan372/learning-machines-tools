@@ -70,9 +70,9 @@
 
     .principle {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-      margin: 30px 0 34px;
+      margin: 30px 0 20px;
     }
 
     .principle div,
@@ -251,6 +251,136 @@
       font-weight: 500;
     }
 
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      margin-bottom: 4px;
+    }
+    .stat-item { display: flex; flex-direction: column; }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .stat-lbl {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* Session arc */
+    .session-arc {
+      display: flex;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,250,241,0.74);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .arc-step {
+      flex: 1;
+      padding: 16px 18px;
+      border-right: 1px solid var(--line);
+    }
+    .arc-step:last-child { border-right: none; }
+    .arc-num {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin: 0 0 4px;
+    }
+    .arc-title {
+      font-size: 1.05rem;
+      font-weight: 760;
+      margin: 0 0 4px;
+      line-height: 1.2;
+    }
+    .arc-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* Where to start */
+    .where-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .where-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,250,241,0.74);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .where-card .where-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 760;
+      line-height: 1.25;
+    }
+    .where-card .where-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      flex: 1;
+    }
+
+    /* Use label */
+    .use-label {
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 10px;
+      background: rgba(255,255,255,0.55);
+      color: #6f675b;
+      font-size: 0.75rem;
+      font-weight: 700;
+      width: fit-content;
+    }
+    .use-label.collab {
+      background: #e8f2ec;
+      color: #225f42;
+      border-color: #b3d9c5;
+    }
+    .use-label.capstone {
+      background: #ece6dc;
+      color: #6f675b;
+    }
+
+    /* Credits */
+    .credits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .credits-block {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,250,241,0.74);
+    }
+    .credits-block p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .credits-block a { color: var(--accent); text-decoration: none; }
+    .credits-block a:hover { text-decoration: underline; }
+
     footer {
       padding: 26px 0 42px;
       color: var(--muted);
@@ -262,9 +392,15 @@
       .pilot-panel,
       .pilot-actions,
       .tool-grid,
-      .docs {
+      .docs,
+      .where-grid,
+      .credits-grid {
         grid-template-columns: 1fr;
       }
+
+      .session-arc { flex-direction: column; }
+      .arc-step { border-right: none; border-bottom: 1px solid var(--line); }
+      .arc-step:last-child { border-bottom: none; }
 
       header {
         padding-top: 34px;
@@ -292,10 +428,70 @@
         <p class="label">Tool principle</p>
         <p>Every tool should make something invisible visible.</p>
       </div>
+      <div>
+        <p class="label">Method</p>
+        <p>Predict first. Change one thing. Document what moved.</p>
+      </div>
+    </div>
+    <div class="stats-row" aria-label="Camp at a glance">
+      <div class="stat-item"><span class="stat-num">4</span><span class="stat-lbl">sessions</span></div>
+      <div class="stat-item"><span class="stat-num">5</span><span class="stat-lbl">launch tools</span></div>
+      <div class="stat-item"><span class="stat-num">5</span><span class="stat-lbl">worksheets</span></div>
+      <div class="stat-item"><span class="stat-num">1</span><span class="stat-lbl">showcase</span></div>
     </div>
   </header>
 
   <main>
+    <section class="wrap">
+      <h2>Four sessions. One investigation arc.</h2>
+      <div class="session-arc">
+        <div class="arc-step">
+          <p class="arc-num">Session 1</p>
+          <p class="arc-title">Text</p>
+          <p class="arc-sub">Prediction, tokens, temperature</p>
+        </div>
+        <div class="arc-step">
+          <p class="arc-num">Session 2</p>
+          <p class="arc-title">Images</p>
+          <p class="arc-sub">Diffusion, defaults, bias</p>
+        </div>
+        <div class="arc-step">
+          <p class="arc-num">Session 3</p>
+          <p class="arc-title">Video</p>
+          <p class="arc-sub">Drift, coherence, failure</p>
+        </div>
+        <div class="arc-step">
+          <p class="arc-num">Session 4</p>
+          <p class="arc-title">Showcase</p>
+          <p class="arc-sub">Evidence, reflection, artifact</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2>Where to start</h2>
+      <div class="where-grid">
+        <div class="where-card">
+          <p class="label">New to AI investigation?</p>
+          <p class="where-title">Start with a concept bridge.</p>
+          <p class="where-desc">Build intuition before opening a tool. The bridges connect a fuzzy idea — what is a token? what is a default? — to the mechanism behind it.</p>
+          <a class="button secondary" href="tools/concept-bridges/">Concept Bridges →</a>
+        </div>
+        <div class="where-card">
+          <p class="label">Running a session?</p>
+          <p class="where-title">Open the facilitation guide, then the tool.</p>
+          <p class="where-desc">Each tool has a workshop sequence and debrief questions built in. The facilitation guides add timing, facilitation moves, and ethics reflection prompts.</p>
+          <a class="button secondary" href="docs/session-1-facilitation.html">Session 1 Guide →</a>
+        </div>
+        <div class="where-card">
+          <p class="label">Exploring on your own?</p>
+          <p class="where-title">Predict first. Change one thing. Document what moved.</p>
+          <p class="where-desc">Every tool works without a facilitator. Open a worksheet alongside it. What you find can become a final project, classroom activity, or model card.</p>
+          <a class="button secondary" href="worksheets/text-experiment-board/">Try a worksheet →</a>
+        </div>
+      </div>
+    </section>
+
     <section class="wrap">
       <div class="pilot-panel">
         <div>
@@ -322,6 +518,7 @@
         <article class="tool">
           <p class="label">Session 1</p>
           <h3>Tokenizer + Temperature Visualizer</h3>
+          <span class="use-label">Interactive</span>
           <p>Shows how text becomes tokens, how next-token probabilities work, and how temperature changes sampling.</p>
           <span class="status">Launch ready</span>
           <div class="tags">
@@ -335,6 +532,7 @@
         <article class="tool">
           <p class="label">Session 1</p>
           <h3>ELIZA Simulator</h3>
+          <span class="use-label">Interactive</span>
           <p>Contrasts visible rule-matching with more opaque LLM behavior so participants can compare mechanism and effect.</p>
           <span class="status">Launch ready</span>
           <div class="tags">
@@ -348,6 +546,7 @@
         <article class="tool">
           <p class="label">Session 2</p>
           <h3>Diffusion Step-Through Viewer</h3>
+          <span class="use-label">Interactive</span>
           <p>Uses a slider-controlled teaching sequence to make iterative denoising visible without requiring a live model.</p>
           <span class="status">Launch ready</span>
           <div class="tags">
@@ -361,6 +560,7 @@
         <article class="tool">
           <p class="label">Session 2</p>
           <h3>Feature Extraction / Pixel Resolution</h3>
+          <span class="use-label">Interactive</span>
           <p>Shows how recognition changes as image detail is reduced, making pixels and features easier to discuss.</p>
           <span class="status">Launch ready</span>
           <div class="tags">
@@ -374,6 +574,7 @@
         <article class="tool">
           <p class="label">Session 3</p>
           <h3>Temporal Telephone</h3>
+          <span class="use-label collab">Collaborative</span>
           <p>Compares drift and anchoring across frames so temporal coherence becomes visible before AI video analysis.</p>
           <span class="status">Launch ready</span>
           <div class="tags">
@@ -418,6 +619,7 @@
         <article class="tool">
           <p class="label">All Sessions</p>
           <h3>A/B/C Comparison Board</h3>
+          <span class="use-label">Worksheet</span>
           <p>A pilot evidence board for comparing a baseline, changed variable, correction or stress test, and evidence claim.</p>
           <span class="status">Second-wave draft</span>
           <div class="tags">
@@ -431,6 +633,7 @@
         <article class="tool">
           <p class="label">Session 4</p>
           <h3>Model Card Builder</h3>
+          <span class="use-label capstone">Capstone</span>
           <p>Helps participants document claims, observed behavior, defaults, failure modes, and responsible-use boundaries.</p>
           <span class="status">Second-wave draft</span>
           <div class="tags">
@@ -560,6 +763,23 @@
         <a class="doc-link" href="docs/session-3-slides.html">Session 3 Slides<span>Video — slide-ready outline</span></a>
         <a class="doc-link" href="docs/session-4-showcase.html">Session 4 Guide<span>Showcase — presentations + closing</span></a>
         <a class="doc-link" href="docs/session-4-slides.html">Session 4 Slides<span>Showcase — slide-ready outline</span></a>
+      </div>
+    </section>
+    <section class="wrap">
+      <h2>How these tools were made</h2>
+      <div class="credits-grid">
+        <div class="credits-block">
+          <p class="label">AI use in development</p>
+          <p>These tools were designed and built with AI assistance (Claude, Anthropic) throughout — code generation, content drafting, facilitation scripts, and iteration. All pedagogical framing, session design, and tool concepts were authored by human educators and reviewed against classroom use. Every facilitation guide was written for real sessions, not generated and published unchanged.</p>
+        </div>
+        <div class="credits-block">
+          <p class="label">Classroom origins</p>
+          <p>Investigation activities, bridge framings, and discussion questions draw on <em>Generative AI as a Creative Collaborator</em>, a UC-approved high school elective co-taught by Saber Khan and Danny Gámez at Campbell Hall School, Los Angeles. Student testing and classroom iteration shaped these tools directly.</p>
+        </div>
+        <div class="credits-block">
+          <p class="label">CC Fest context</p>
+          <p>Learning Machines is a CC Fest program. CC Fest builds free, open creative technology education for educators, artists, and learners. This camp extends the <a href="https://saberkhan372.github.io/CC-Fest-Coding-Camp/">CC Fest Coding Camp</a> into AI literacy and critical investigation. Source is open on <a href="https://github.com/saberkhan372/learning-machines-tools">GitHub</a>.</p>
+        </div>
       </div>
     </section>
   </main>
