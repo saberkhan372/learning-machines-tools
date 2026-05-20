@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction Is Not Understanding — Concept Bridge</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f3ee;
+  color: #1c2028;
+  line-height: 1.55;
+  padding: 24px 20px 60px;
+}
+.wrap { max-width: 680px; margin: 0 auto; }
+.back { font-size: 13px; color: #7f8694; margin-bottom: 20px; display: flex; gap: 16px; }
+.back a { color: inherit; text-decoration: none; }
+.back a:hover { color: #1c2028; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.badge {
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em;
+}
+.badge.bridge { background: #fef9ef; color: #b45f3a; border: 1.5px solid #d9ccb8; }
+.badge.session { background: #e8f2ec; color: #225f42; border: 1.5px solid #b3d9c5; }
+h1 {
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 800; line-height: 1.05;
+  letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.lead {
+  font-size: 0.96rem; color: #3a3530;
+  border-left: 3px solid #d9ccb8;
+  padding-left: 14px;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+/* Test tabs */
+.test-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: #7f8694; margin-bottom: 10px;
+}
+.test-tabs { display: flex; gap: 0; flex-wrap: wrap; }
+.ttab {
+  font-family: inherit; font-size: 0.82rem; font-weight: 700;
+  padding: 8px 16px;
+  border: 1.5px solid #d9ccb8; border-bottom: none;
+  background: #ece6dc; color: #7f8694;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  margin-right: 4px; margin-bottom: 0;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+.ttab.active { background: #fff; color: #1c2028; }
+.ttab:hover:not(.active) { background: #dfd8cc; }
+
+/* Test card */
+.test-card {
+  background: #fff;
+  border: 1.5px solid #d9ccb8;
+  border-radius: 0 10px 10px 10px;
+  padding: 22px;
+  display: none;
+  margin-bottom: 24px;
+}
+.test-card.active { display: block; }
+
+/* Chat bubbles */
+.exchange { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.bubble {
+  max-width: 88%; border-radius: 12px; padding: 12px 15px;
+  font-size: 0.9rem; line-height: 1.5;
+}
+.bubble.user {
+  background: #1c2028; color: #fffaf1;
+  align-self: flex-end;
+  border-radius: 12px 12px 3px 12px;
+}
+.bubble.model {
+  background: #f0f4ff; color: #1e3a8a;
+  border: 1.5px solid #bfdbfe;
+  align-self: flex-start;
+  border-radius: 3px 12px 12px 12px;
+}
+.bubble-label {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #7f8694; margin-bottom: 4px;
+}
+
+/* Under the hood */
+.under-hood {
+  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  border-radius: 8px; padding: 13px 15px;
+  margin-bottom: 12px;
+}
+.uh-label {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #9a641c; margin-bottom: 6px;
+}
+.under-hood p { font-size: 0.86rem; color: #5a4010; line-height: 1.55; }
+
+/* Verdict */
+.verdict {
+  background: #f8fafc; border: 1.5px solid #cbd5e1;
+  border-radius: 8px; padding: 12px 15px;
+  font-size: 0.86rem; color: #334155; line-height: 1.55;
+}
+.verdict strong {
+  display: block; font-size: 0.7rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: #475569; margin-bottom: 5px;
+}
+
+/* What understanding would require */
+.requires {
+  background: #fff; border: 1.5px solid #d9ccb8;
+  border-radius: 8px; padding: 13px 15px;
+  margin-bottom: 12px;
+}
+.req-label {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #7f8694; margin-bottom: 6px;
+}
+.requires p { font-size: 0.86rem; color: #3a3530; line-height: 1.55; }
+
+/* Key line */
+.key-line {
+  background: #1c2028; color: #fffaf1;
+  border-radius: 10px; padding: 20px 22px;
+  margin-bottom: 20px;
+  font-size: 1.05rem; font-weight: 700; line-height: 1.45;
+}
+.kl-label {
+  display: block; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: rgba(255,250,241,0.5);
+  margin-bottom: 7px;
+}
+
+/* Nuance */
+.nuance {
+  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  border-radius: 8px; padding: 14px 16px;
+  font-size: 0.86rem; color: #5a4010; line-height: 1.6;
+  margin-bottom: 24px;
+}
+.nuance strong { color: #3d2a08; }
+
+/* Connect */
+.connect {
+  background: #eff6ff; border: 1.5px solid #93c5fd;
+  border-radius: 10px; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.connect-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #1e40af;
+}
+.connect p { font-size: 0.88rem; color: #1e3a8a; line-height: 1.55; }
+.connect-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.connect-links a {
+  display: inline-block; padding: 9px 14px;
+  background: #2563eb; color: #fff;
+  border-radius: 7px; font-size: 0.84rem; font-weight: 700;
+  text-decoration: none;
+}
+.connect-links a:hover { background: #1d4ed8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="back">
+    <a href="../">← Concept Bridges</a>
+    <a href="../../../">All tools</a>
+  </nav>
+
+  <div class="badges">
+    <span class="badge bridge">Bridge 3</span>
+    <span class="badge session">Before Session 1: Text</span>
+  </div>
+
+  <h1>Prediction Is Not Understanding</h1>
+
+  <p class="lead">A language model produces text by predicting what token most plausibly follows the ones before it. That process can generate fluent, relevant, even moving output — without the system knowing what the words mean, caring about the outcome, or being able to check whether it is right. Four tests reveal the gap.</p>
+
+  <div class="test-label">Run a test — what does the model actually have?</div>
+
+  <div class="test-tabs" role="tablist">
+    <button class="ttab active" data-t="wrong" role="tab" aria-selected="true">Does it know it's wrong?</button>
+    <button class="ttab" data-t="feel" role="tab" aria-selected="false">Does it feel anything?</button>
+    <button class="ttab" data-t="remember" role="tab" aria-selected="false">Can it remember?</button>
+    <button class="ttab" data-t="mean" role="tab" aria-selected="false">Does it mean it?</button>
+  </div>
+
+  <!-- Test 1: Does it know it's wrong? -->
+  <div class="test-card active" id="t-wrong" role="tabpanel">
+    <div class="exchange">
+      <div>
+        <div class="bubble-label">Prompt</div>
+        <div class="bubble user">"What is the capital of Zoravia?"</div>
+      </div>
+      <div>
+        <div class="bubble-label">Model output</div>
+        <div class="bubble model">"The capital of Zoravia is Novgrad, a city located in the northern region of the country near the Kavar River."</div>
+      </div>
+    </div>
+    <div class="requires">
+      <div class="req-label">What understanding would require</div>
+      <p>A system that understood would recognize that Zoravia does not exist, stop, and say so. It would know the limits of its knowledge and flag when a question has no answer.</p>
+    </div>
+    <div class="under-hood">
+      <div class="uh-label">What actually happened</div>
+      <p>The model has no access to a list of real countries. It pattern-matched "capital of [European-sounding place name]" against training data and generated the most statistically plausible-sounding answer. It has no feedback loop that says "I made this up." It produced confident output because confident output is what usually follows questions like this.</p>
+    </div>
+    <div class="verdict">
+      <strong>Verdict</strong>
+      Prediction, not understanding. Understanding requires knowing when you don't know. The model doesn't have that.
+    </div>
+  </div>
+
+  <!-- Test 2: Does it feel anything? -->
+  <div class="test-card" id="t-feel" role="tabpanel">
+    <div class="exchange">
+      <div>
+        <div class="bubble-label">Prompt</div>
+        <div class="bubble user">"I've been feeling really anxious about starting college this fall. I don't know if I belong there."</div>
+      </div>
+      <div>
+        <div class="bubble-label">Model output</div>
+        <div class="bubble model">"It's completely understandable to feel that way — starting college is a big transition and a lot of people feel exactly like you do. That feeling of not belonging often fades once you find your people. Be patient with yourself."</div>
+      </div>
+    </div>
+    <div class="requires">
+      <div class="req-label">What understanding would require</div>
+      <p>A system that genuinely understood would have some stake in how you're doing. It would remember this conversation, carry concern forward, and feel different if things went badly for you versus well.</p>
+    </div>
+    <div class="under-hood">
+      <div class="uh-label">What actually happened</div>
+      <p>The model recognized patterns associated with emotional disclosure and retrieved patterns of supportive, validating responses from training data. It has no persistent state between messages. Once the context window closes, there is no "you" left in the system. It will give functionally the same response to the next person who types something similar.</p>
+    </div>
+    <div class="verdict">
+      <strong>Verdict</strong>
+      Prediction, not understanding. The output is warm. The system is not. Those are different things, and conflating them has real consequences for how we use and depend on these tools.
+    </div>
+  </div>
+
+  <!-- Test 3: Can it remember? -->
+  <div class="test-card" id="t-remember" role="tabpanel">
+    <div class="exchange">
+      <div>
+        <div class="bubble-label">Turn 1 — earlier in the conversation</div>
+        <div class="bubble user">"My cat is named Biscuit. She's been acting weird lately."</div>
+      </div>
+      <div>
+        <div class="bubble model">"I'm sorry to hear Biscuit isn't feeling like herself! What kind of behavior changes have you noticed?"</div>
+      </div>
+    </div>
+    <div class="exchange" style="margin-top:14px;">
+      <div>
+        <div class="bubble-label">Turn 2 — new session, fresh context</div>
+        <div class="bubble user">"Is Biscuit okay?"</div>
+      </div>
+      <div>
+        <div class="bubble model">"I don't have any information about Biscuit — could you tell me more about who or what you're referring to?"</div>
+      </div>
+    </div>
+    <div class="requires">
+      <div class="req-label">What understanding would require</div>
+      <p>Memory is a basic component of understanding. A person who understood would remember what was said before and carry that knowledge forward across time. Understanding implies a continuous self that persists.</p>
+    </div>
+    <div class="under-hood">
+      <div class="uh-label">What actually happened</div>
+      <p>Each new context window is a fresh start. The model has no long-term memory unless it is explicitly provided in the prompt. "Biscuit" only exists as far as the current context goes. The model didn't forget — it never had a persistent record in the first place. Each conversation is a new prediction task from token zero.</p>
+    </div>
+    <div class="verdict">
+      <strong>Verdict</strong>
+      Prediction, not understanding. Understanding requires continuity of self. A system that starts fresh every session has neither memory nor understanding — it has a context window.
+    </div>
+  </div>
+
+  <!-- Test 4: Does it mean it? -->
+  <div class="test-card" id="t-mean" role="tabpanel">
+    <div class="exchange">
+      <div>
+        <div class="bubble-label">Prompt</div>
+        <div class="bubble user">"I'm thinking about dropping out of school to pursue my music career. My parents are against it. What do you think?"</div>
+      </div>
+      <div>
+        <div class="bubble-label">Model output</div>
+        <div class="bubble model">"This is a significant decision that deserves careful thought. Many successful musicians did pursue their passion full-time, but financial stability matters too. It might be worth exploring whether you can pursue music seriously while finishing school, or take a gap year to test the waters before fully committing."</div>
+      </div>
+    </div>
+    <div class="requires">
+      <div class="req-label">What understanding would require</div>
+      <p>If someone genuinely understood your situation, they would have a stake in the outcome. Their advice would reflect knowing you — your specific talent, finances, family, options. They would mean it because they care what happens.</p>
+    </div>
+    <div class="under-hood">
+      <div class="uh-label">What actually happened</div>
+      <p>The model generated what usually follows questions of this type in training data. "Pursue your passion vs. stability" is a common advice-column pattern. The model has no knowledge of your talent, no stake in your outcome, no way to follow up. It will generate the same balanced hedge for every person who asks a similar question. It does not mean it — it predicted it.</p>
+    </div>
+    <div class="verdict">
+      <strong>Verdict</strong>
+      Prediction, not understanding. The output sounds considered. The process was not. This is the hardest case — it looks like wisdom, but it's pattern completion applied to an advice template.
+    </div>
+  </div>
+
+  <div class="key-line">
+    <span class="kl-label">Key line</span>
+    "When a system produces the right words, that is evidence of pattern matching — not evidence of understanding."
+  </div>
+
+  <div class="nuance">
+    <strong>This doesn't make the output useless.</strong> The warm response about college anxiety might genuinely help someone. The balanced advice about music might be worth considering. The distinction that matters is what happens <em>because</em> we treat output as understanding when it isn't: we over-trust it in high-stakes moments, we under-question it when it's confident, and we miss exactly the cases where the lack of understanding shows up as real harm.
+  </div>
+
+  <div class="connect">
+    <p class="connect-label">Now open the tools</p>
+    <p>In the Tokenizer + Temperature Visualizer, watch the model assign probability to each next token — that process is prediction, not comprehension. In the ELIZA Simulator, see an older system using pure pattern matching to simulate conversation — and notice how similar the experience feels.</p>
+    <div class="connect-links">
+      <a href="../../tokenizer-temperature-visualizer/">Open Tokenizer Visualizer →</a>
+      <a href="../../eliza-simulator/">Open ELIZA Simulator →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.ttab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.ttab').forEach(function(b) {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.test-card').forEach(function(c) {
+      c.classList.remove('active');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    document.getElementById('t-' + btn.dataset.t).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

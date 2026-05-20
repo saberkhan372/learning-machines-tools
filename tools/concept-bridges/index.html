@@ -40,6 +40,7 @@
     .seeing .tag { background: var(--green); }
     .confidence .tag { background: var(--violet); }
     .defaults .tag { background: var(--rose); }
+    .time .tag { background: var(--amber); }
     .bridge ul { padding-left: 20px; margin: 10px 0 0; }
     .use-with { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
     .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
@@ -79,7 +80,7 @@
   <main>
     <div class="topbar">
       <a class="back-link" href="../../">Back to tools</a>
-      <span class="status">Second-wave draft</span>
+      <span class="status">5 bridges complete</span>
     </div>
 
     <section class="hero panel">
@@ -98,7 +99,7 @@
           <li>High-probability text can still be false, biased, or empty.</li>
           <li>Human judgment supplies purpose, context, and accountability.</li>
         </ul>
-        <span class="draft-note">Full bridge coming later</span>
+        <a class="open-bridge" href="prediction-is-not-understanding/">Open full bridge</a>
         <div class="use-with">
           <strong>Use with</strong>
           <div class="links">
@@ -118,7 +119,7 @@
           <li>Diffusion builds structure through iterative denoising.</li>
           <li>The prompt leaves gaps; the model fills them with defaults.</li>
         </ul>
-        <span class="draft-note">Full bridge coming later</span>
+        <a class="open-bridge" href="what-does-the-machine-see/">Open full bridge</a>
         <div class="use-with">
           <strong>Use with</strong>
           <div class="links">
@@ -164,6 +165,25 @@
           <div class="links">
             <a href="../../worksheets/ai-use-consent-checklist/">Consent Checklist</a>
             <a href="../abc-comparison-board/">A/B/C Board</a>
+            <a href="../model-card-builder/">Model Card</a>
+          </div>
+        </div>
+      </article>
+      <article class="bridge panel time" style="grid-column: 1 / -1;">
+        <span class="tag">Cross-session · Evidence</span>
+        <h2>Time Makes Failure Visible</h2>
+        <p>Every model has a training cutoff. It is then deployed into a world that keeps changing. It cannot know how much time has passed or what has shifted. Asking about current events, rankings, prices, or people surfaces this gap — with the same confidence the model applies to everything else.</p>
+        <ul>
+          <li>Specific claims drift into confident assertions as sources fall away.</li>
+          <li>The gap between training cutoff and deployment is invisible to the model.</li>
+          <li>"When was this trained?" is one of the most practical critical questions in AI literacy.</li>
+        </ul>
+        <a class="open-bridge" href="time-makes-failure-visible/">Open full bridge</a>
+        <div class="use-with">
+          <strong>Use with</strong>
+          <div class="links">
+            <a href="../temporal-telephone/">Temporal Telephone</a>
+            <a href="../../worksheets/model-investigation-journal/">Investigation Journal</a>
             <a href="../model-card-builder/">Model Card</a>
           </div>
         </div>

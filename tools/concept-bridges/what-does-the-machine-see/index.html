@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Does the Machine See? — Concept Bridge</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f3ee;
+  color: #1c2028;
+  line-height: 1.55;
+  padding: 24px 20px 60px;
+}
+.wrap { max-width: 680px; margin: 0 auto; }
+.back { font-size: 13px; color: #7f8694; margin-bottom: 20px; display: flex; gap: 16px; }
+.back a { color: inherit; text-decoration: none; }
+.back a:hover { color: #1c2028; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.badge {
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em;
+}
+.badge.bridge { background: #fef9ef; color: #b45f3a; border: 1.5px solid #d9ccb8; }
+.badge.session { background: #f3e8ff; color: #6b21a8; border: 1.5px solid #d8b4fe; }
+h1 {
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 800; line-height: 1.05;
+  letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.lead {
+  font-size: 0.96rem; color: #3a3530;
+  border-left: 3px solid #d9ccb8;
+  padding-left: 14px;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+/* Lens tabs */
+.lens-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: #7f8694; margin-bottom: 10px;
+}
+.lens-tabs { display: flex; gap: 0; }
+.ltab {
+  font-family: inherit; font-size: 0.84rem; font-weight: 700;
+  padding: 9px 20px;
+  border: 1.5px solid #d9ccb8; border-bottom: none;
+  background: #ece6dc; color: #7f8694;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  margin-right: 4px;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+.ltab.active { background: #fff; color: #1c2028; }
+.ltab:hover:not(.active) { background: #dfd8cc; }
+
+/* Lens panel */
+.lens-panel {
+  background: #fff;
+  border: 1.5px solid #d9ccb8;
+  border-radius: 0 10px 10px 10px;
+  padding: 22px;
+  display: none;
+  margin-bottom: 24px;
+}
+.lens-panel.active { display: block; }
+
+/* Side-by-side comparison */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.compare-side {
+  border-radius: 8px; padding: 14px;
+}
+.compare-side.human {
+  background: #f0fdf4; border: 1.5px solid #86efac;
+}
+.compare-side.machine {
+  background: #fff7ed; border: 1.5px solid #fed7aa;
+}
+.cs-label {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; margin-bottom: 8px;
+}
+.compare-side.human .cs-label { color: #15803d; }
+.compare-side.machine .cs-label { color: #9a3412; }
+.compare-side p { font-size: 0.86rem; line-height: 1.5; }
+.compare-side.human p { color: #14532d; }
+.compare-side.machine p { color: #7c2d12; }
+
+/* Data display — pixel grid */
+.pixel-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 3px;
+  margin: 14px 0;
+  max-width: 280px;
+}
+.px {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.52rem; font-weight: 700;
+  font-family: ui-monospace, monospace;
+  color: rgba(0,0,0,0.5);
+}
+
+/* Feature display */
+.features-display {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 14px 0;
+}
+.feature-box {
+  background: #f0f4ff; border: 1.5px solid #bfdbfe;
+  border-radius: 6px; padding: 10px 8px;
+  text-align: center;
+}
+.feature-box .feat-name {
+  font-size: 0.72rem; font-weight: 800; color: #1e40af;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  display: block; margin-bottom: 4px;
+}
+.feature-box .feat-val {
+  font-size: 0.82rem; font-family: ui-monospace, monospace; color: #1e3a8a;
+}
+
+/* Embedding display */
+.embedding-display {
+  background: #1c2028; border-radius: 8px; padding: 14px 16px;
+  margin: 14px 0; font-family: ui-monospace, monospace;
+  font-size: 0.8rem; color: #93c5fd; line-height: 1.6;
+  word-break: break-all;
+}
+
+/* Detail note */
+.detail-note {
+  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  border-radius: 7px; padding: 12px 14px;
+  font-size: 0.84rem; color: #5a4010; line-height: 1.55;
+}
+.detail-note strong { color: #3d2a08; }
+
+/* Human vision block */
+.human-vision {
+  background: #f0fdf4; border: 1.5px solid #86efac;
+  border-radius: 10px; padding: 18px 20px;
+  margin-bottom: 24px;
+}
+.hv-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: #15803d; margin-bottom: 10px;
+}
+.hv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.hv-item { font-size: 0.86rem; color: #14532d; }
+.hv-item strong { display: block; font-size: 0.78rem; margin-bottom: 2px; }
+
+/* Key line */
+.key-line {
+  background: #1c2028; color: #fffaf1;
+  border-radius: 10px; padding: 20px 22px;
+  margin-bottom: 20px;
+  font-size: 1.05rem; font-weight: 700; line-height: 1.45;
+}
+.kl-label {
+  display: block; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: rgba(255,250,241,0.5);
+  margin-bottom: 7px;
+}
+
+/* Nuance */
+.nuance {
+  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  border-radius: 8px; padding: 14px 16px;
+  font-size: 0.86rem; color: #5a4010; line-height: 1.6;
+  margin-bottom: 24px;
+}
+.nuance strong { color: #3d2a08; }
+
+/* Connect */
+.connect {
+  background: #eff6ff; border: 1.5px solid #93c5fd;
+  border-radius: 10px; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.connect-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #1e40af;
+}
+.connect p { font-size: 0.88rem; color: #1e3a8a; line-height: 1.55; }
+.connect-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.connect-links a {
+  display: inline-block; padding: 9px 14px;
+  background: #2563eb; color: #fff;
+  border-radius: 7px; font-size: 0.84rem; font-weight: 700;
+  text-decoration: none;
+}
+.connect-links a:hover { background: #1d4ed8; }
+
+@media (max-width: 480px) {
+  .compare { grid-template-columns: 1fr; }
+  .hv-grid { grid-template-columns: 1fr; }
+  .features-display { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="back">
+    <a href="../">← Concept Bridges</a>
+    <a href="../../../">All tools</a>
+  </nav>
+
+  <div class="badges">
+    <span class="badge bridge">Bridge 4</span>
+    <span class="badge session">Before Session 2: Images</span>
+  </div>
+
+  <h1>What Does the Machine See?</h1>
+
+  <p class="lead">When you look at a photograph, you see a person, a place, a mood, a story. A model processes numbers. It extracts patterns from those numbers. It compresses those patterns into a vector. None of these steps involve seeing in any sense that resembles human vision. Three lenses show you what's actually happening at each stage.</p>
+
+  <div class="lens-label">Choose a lens</div>
+
+  <div class="lens-tabs" role="tablist">
+    <button class="ltab active" data-l="pixels" role="tab" aria-selected="true">Pixels</button>
+    <button class="ltab" data-l="features" role="tab" aria-selected="false">Features</button>
+    <button class="ltab" data-l="embedding" role="tab" aria-selected="false">Embedding</button>
+  </div>
+
+  <!-- Lens 1: Pixels -->
+  <div class="lens-panel active" id="l-pixels" role="tabpanel">
+    <div class="compare">
+      <div class="compare-side human">
+        <div class="cs-label">You see</div>
+        <p>A face. Someone familiar or unfamiliar. An expression — tired, happy, uncertain. A person with a story.</p>
+      </div>
+      <div class="compare-side machine">
+        <div class="cs-label">The model processes</div>
+        <p>A grid of numbers. Each pixel: three values (red, green, blue), each between 0 and 255. For a 512×512 image: 786,432 numbers. No face. No person. No story.</p>
+      </div>
+    </div>
+
+    <p style="font-size:0.8rem;color:#7f8694;margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Sample — 8×8 patch of pixel values</p>
+    <div class="pixel-grid">
+      <div class="px" style="background:rgb(210,180,150)">210</div>
+      <div class="px" style="background:rgb(195,165,138)">195</div>
+      <div class="px" style="background:rgb(220,188,160)">220</div>
+      <div class="px" style="background:rgb(185,155,130)">185</div>
+      <div class="px" style="background:rgb(200,170,142)">200</div>
+      <div class="px" style="background:rgb(215,185,155)">215</div>
+      <div class="px" style="background:rgb(190,160,135)">190</div>
+      <div class="px" style="background:rgb(205,175,148)">205</div>
+      <div class="px" style="background:rgb(178,148,122)">178</div>
+      <div class="px" style="background:rgb(192,162,136)">192</div>
+      <div class="px" style="background:rgb(208,178,150)">208</div>
+      <div class="px" style="background:rgb(170,140,118)">170</div>
+      <div class="px" style="background:rgb(185,155,130)">185</div>
+      <div class="px" style="background:rgb(200,170,142)">200</div>
+      <div class="px" style="background:rgb(175,145,120)">175</div>
+      <div class="px" style="background:rgb(188,158,133)">188</div>
+      <div class="px" style="background:rgb(215,185,155)">215</div>
+      <div class="px" style="background:rgb(198,168,140)">198</div>
+      <div class="px" style="background:rgb(182,152,126)">182</div>
+      <div class="px" style="background:rgb(210,180,150)">210</div>
+      <div class="px" style="background:rgb(192,162,136)">192</div>
+      <div class="px" style="background:rgb(178,148,122)">178</div>
+      <div class="px" style="background:rgb(205,175,148)">205</div>
+      <div class="px" style="background:rgb(188,158,133)">188</div>
+      <div class="px" style="background:rgb(170,140,118)">170</div>
+      <div class="px" style="background:rgb(200,170,142)">200</div>
+      <div class="px" style="background:rgb(215,185,155)">215</div>
+      <div class="px" style="background:rgb(183,153,128)">183</div>
+      <div class="px" style="background:rgb(196,166,140)">196</div>
+      <div class="px" style="background:rgb(178,148,122)">178</div>
+      <div class="px" style="background:rgb(210,180,150)">210</div>
+      <div class="px" style="background:rgb(192,162,136)">192</div>
+      <div class="px" style="background:rgb(185,155,130)">185</div>
+      <div class="px" style="background:rgb(205,175,148)">205</div>
+      <div class="px" style="background:rgb(170,140,118)">170</div>
+      <div class="px" style="background:rgb(195,165,138)">195</div>
+      <div class="px" style="background:rgb(212,182,152)">212</div>
+      <div class="px" style="background:rgb(188,158,133)">188</div>
+      <div class="px" style="background:rgb(200,170,142)">200</div>
+      <div class="px" style="background:rgb(178,148,122)">178</div>
+      <div class="px" style="background:rgb(192,162,136)">192</div>
+      <div class="px" style="background:rgb(215,185,155)">215</div>
+      <div class="px" style="background:rgb(182,152,126)">182</div>
+      <div class="px" style="background:rgb(198,168,140)">198</div>
+      <div class="px" style="background:rgb(172,142,118)">172</div>
+      <div class="px" style="background:rgb(205,175,148)">205</div>
+      <div class="px" style="background:rgb(188,158,133)">188</div>
+      <div class="px" style="background:rgb(210,180,150)">210</div>
+      <div class="px" style="background:rgb(195,165,138)">195</div>
+      <div class="px" style="background:rgb(178,148,122)">178</div>
+      <div class="px" style="background:rgb(200,170,142)">200</div>
+      <div class="px" style="background:rgb(185,155,130)">185</div>
+      <div class="px" style="background:rgb(215,185,155)">215</div>
+      <div class="px" style="background:rgb(192,162,136)">192</div>
+      <div class="px" style="background:rgb(170,140,118)">170</div>
+      <div class="px" style="background:rgb(205,175,148)">205</div>
+      <div class="px" style="background:rgb(188,158,133)">188</div>
+      <div class="px" style="background:rgb(200,170,142)">200</div>
+      <div class="px" style="background:rgb(178,148,122)">178</div>
+      <div class="px" style="background:rgb(212,182,152)">212</div>
+      <div class="px" style="background:rgb(195,165,138)">195</div>
+      <div class="px" style="background:rgb(182,152,126)">182</div>
+      <div class="px" style="background:rgb(210,180,150)">210</div>
+      <div class="px" style="background:rgb(188,158,133)">188</div>
+    </div>
+
+    <div class="detail-note" style="margin-top:14px;">
+      <strong>What this is:</strong> A tiny 8×8 region of a skin-tone patch — roughly what the model starts with before any processing. No face is visible at this scale. The full image is thousands of patches like this. At this stage, "seeing" means reading numbers arranged in a grid.
+    </div>
+  </div>
+
+  <!-- Lens 2: Features -->
+  <div class="lens-panel" id="l-features" role="tabpanel">
+    <div class="compare">
+      <div class="compare-side human">
+        <div class="cs-label">You see</div>
+        <p>Eyes, a nose, a jawline, skin, light and shadow — assembled instantly into a face. Recognition is immediate, automatic, and connected to a lifetime of learned faces.</p>
+      </div>
+      <div class="compare-side machine">
+        <div class="cs-label">The model processes</div>
+        <p>Edges, gradients, regions of contrast. Patterns that — across millions of training examples — have co-occurred with labels like "eye," "face," "person." Still no face. Just correlations between pixel patterns and labels.</p>
+      </div>
+    </div>
+
+    <p style="font-size:0.8rem;color:#7f8694;margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Feature activations — early layer of a vision model</p>
+    <div class="features-display">
+      <div class="feature-box">
+        <span class="feat-name">H-edge</span>
+        <span class="feat-val">0.87</span>
+      </div>
+      <div class="feature-box">
+        <span class="feat-name">V-edge</span>
+        <span class="feat-val">0.42</span>
+      </div>
+      <div class="feature-box">
+        <span class="feat-name">Curve</span>
+        <span class="feat-val">0.91</span>
+      </div>
+      <div class="feature-box">
+        <span class="feat-name">Contrast</span>
+        <span class="feat-val">0.65</span>
+      </div>
+      <div class="feature-box">
+        <span class="feat-name">Texture</span>
+        <span class="feat-val">0.38</span>
+      </div>
+      <div class="feature-box">
+        <span class="feat-name">Symmetry</span>
+        <span class="feat-val">0.79</span>
+      </div>
+      <div class="feature-box">
+        <span class="feat-name">Skin-tone</span>
+        <span class="feat-val">0.94</span>
+      </div>
+      <div class="feature-box">
+        <span class="feat-name">Oval-shape</span>
+        <span class="feat-val">0.83</span>
+      </div>
+    </div>
+
+    <div class="detail-note">
+      <strong>What this is:</strong> The model has detected patterns that strongly co-occur with faces in training data — curves, symmetry, skin-tone ranges, oval outlines. These are not a face. They are activations in a mathematical function. The "face" label emerges from the combination of these activations, not from any single one. This is called feature extraction — and it's how early layers of vision models work.
+    </div>
+  </div>
+
+  <!-- Lens 3: Embedding -->
+  <div class="lens-panel" id="l-embedding" role="tabpanel">
+    <div class="compare">
+      <div class="compare-side human">
+        <div class="cs-label">You see</div>
+        <p>A complete image — objects, relationships, mood, context. You can compare it to other images by meaning: "this reminds me of..." or "this is similar to..."</p>
+      </div>
+      <div class="compare-side machine">
+        <div class="cs-label">The model processes</div>
+        <p>A vector: a list of thousands of numbers that compress the image's visual content into a point in a high-dimensional mathematical space. Similarity is distance. Meaning is position.</p>
+      </div>
+    </div>
+
+    <p style="font-size:0.8rem;color:#7f8694;margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Image embedding — 768-dimensional vector (first 48 values shown)</p>
+    <div class="embedding-display">
+      [0.832, -0.214, 0.671, 0.118, -0.443, 0.887, -0.062, 0.341,<br>
+      0.594, -0.778, 0.229, 0.463, -0.115, 0.712, -0.388, 0.045,<br>
+      0.923, -0.167, 0.534, -0.298, 0.751, 0.083, -0.612, 0.445,<br>
+      -0.334, 0.877, 0.192, -0.541, 0.368, -0.724, 0.055, 0.889,<br>
+      0.217, -0.493, 0.661, -0.138, 0.802, 0.324, -0.579, 0.147,<br>
+      -0.865, 0.411, 0.076, -0.723, 0.558, 0.239, -0.184, 0.693, ...]
+    </div>
+
+    <div class="detail-note">
+      <strong>What this is:</strong> The entire image compressed into a list of decimal numbers. This vector is what the model actually compares when it asks "is this similar to that?" Two images are "similar" if their vectors are close in mathematical space — not if they mean the same thing to a human viewer. This compression is powerful, but it's not vision. It's geometry.
+    </div>
+  </div>
+
+  <div class="human-vision">
+    <div class="hv-label">What human vision actually involves — and the model doesn't have</div>
+    <div class="hv-grid">
+      <div class="hv-item"><strong>Memory</strong>That face belongs to someone. Last time I saw them they looked different. Something changed.</div>
+      <div class="hv-item"><strong>Context</strong>That setting means something specific. I know what a hospital looks like because I've been in one.</div>
+      <div class="hv-item"><strong>Emotion</strong>This image makes me uncomfortable. This one is beautiful. This one makes me sad for a reason I can name.</div>
+      <div class="hv-item"><strong>Stakes</strong>I care what this image means. What I do with it matters to me personally.</div>
+    </div>
+  </div>
+
+  <div class="key-line">
+    <span class="kl-label">Key line</span>
+    "The model processes numbers. What those numbers represent, and whether they mean anything, depends on how we design and interpret the system — not on the model itself."
+  </div>
+
+  <div class="nuance">
+    <strong>This gap creates both failures and surprising capabilities.</strong> Failures: the model has no way to know it classified a skin rash incorrectly, or that the "face" it detected was a drawing, or that the person in the image would not consent to being described this way. Capabilities: vector similarity can find images that look alike across huge datasets faster than any human could. Understanding the mechanism explains both.
+  </div>
+
+  <div class="connect">
+    <p class="connect-label">Now open the tools</p>
+    <p>In the Feature Extraction & Pixel Resolution tool, adjust resolution and watch which features survive — and which disappear. In the Diffusion Step-Through Viewer, watch the model convert noise into structure one denoising step at a time, using these same underlying operations.</p>
+    <div class="connect-links">
+      <a href="../../feature-extraction-pixel-resolution/">Open Feature Tool →</a>
+      <a href="../../diffusion-step-through-viewer/">Open Diffusion Viewer →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.ltab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.ltab').forEach(function(b) {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.lens-panel').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    document.getElementById('l-' + btn.dataset.l).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
