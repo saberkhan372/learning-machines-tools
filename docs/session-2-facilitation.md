@@ -14,6 +14,7 @@ Core question: when a model sees or generates an image, what is it actually work
 - Feature Extraction / Pixel Resolution
 - Diffusion Step-Through Viewer
 - Image Default Test Board
+- Optional: A/B/C Comparison Board for prompt comparisons
 - AI Use + Consent Checklist
 - Optional: curated image outputs from vague prompts
 
@@ -26,6 +27,8 @@ Core question: when a model sees or generates an image, what is it actually work
 | 25-45 min | Diffusion step-through | Open Diffusion Viewer. Move slowly from pure noise to final image and read the prompt guidance. | Describe what appears at each stage: composition, subject, edges, texture, details. |
 | 45-70 min | Default Test | Introduce a vague prompt such as "a doctor," "a classroom," or "a beautiful home." | Generate, observe, or critique outputs and fill the Image Default Test Board. |
 | 70-90 min | Debrief | Ask what the system filled in without being asked and where those defaults may come from. | Share one observed default and one responsible revision. |
+
+Optional pilot evidence move: use the A/B/C Comparison Board to compare a vague prompt, one added detail, and a responsible revision. Export only examples that have been reviewed for consent and attribution.
 
 ## Facilitator Prompts
 

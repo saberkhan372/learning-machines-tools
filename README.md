@@ -45,11 +45,11 @@ The tool principle is:
 | 4 | Feature Extraction / Pixel Resolution Tool | Launch ready | Make image representation visible |
 | 5 | Temporal Telephone | Launch ready | Make temporal drift and anchoring visible |
 
-### Later Tools
+### Second-Wave and Later Tools
 
 - Default Test Comparison Viewer
 - Video Failure Gallery Viewer
-- A/B/C Comparison Board
+- A/B/C Comparison Board - second-wave draft
 - Model Card Builder
 - Concept Bridge pages
 - Prompt Guidance Word-by-Word Reveal
@@ -60,7 +60,7 @@ The tool principle is:
 
 ## Tool Folders
 
-Canonical folders live under [`tools/`](tools/).
+Canonical folders are listed in the [tool directory](tools/).
 
 ### Session 1: Text
 

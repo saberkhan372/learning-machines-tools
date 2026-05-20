@@ -14,6 +14,7 @@ Core question: when a language model writes, what is it actually doing?
 - Tokenizer + Temperature Visualizer
 - ELIZA Simulator
 - Text Experiment Board
+- Optional: A/B/C Comparison Board for pilot evidence
 - AI Use + Consent Checklist
 - Optional: 3-5 pre-written sentence stems for the prediction game
 
@@ -27,6 +28,8 @@ Core question: when a language model writes, what is it actually doing?
 | 35-55 min | ELIZA vs. LLM | Open ELIZA. Try examples and inspect the matched rule, pattern, and response template. | Compare visible rule matching with the pre-generated LLM comparison examples. |
 | 55-75 min | Investigation | Ask participants to complete one Text Experiment Board section. | Run or analyze a text default test, prompt variation, or ELIZA comparison. |
 | 75-90 min | Debrief | Use the reflection frame: human, machine, system, ethics, pedagogy. | Share one evidence-based claim and one question. |
+
+Optional pilot evidence move: after the investigation, ask one group to enter its baseline, temperature change, and greedy/sample comparison in the A/B/C Comparison Board, then export Markdown for facilitator notes.
 
 ## Facilitator Prompts
 

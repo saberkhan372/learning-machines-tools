@@ -60,6 +60,7 @@ Use this checklist for a 60-90 minute live pilot using the published GitHub Page
 - What participants noticed.
 - What the machine/system appeared to assume.
 - What ethical or classroom concern appeared.
+- Optional: export an A/B/C Comparison Board as Markdown or JSON when a group produces a useful text, image, or video investigation.
 
 ## Consent Check Before Sharing
 

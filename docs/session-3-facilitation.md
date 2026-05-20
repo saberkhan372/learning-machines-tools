@@ -13,6 +13,7 @@ Core question: what changes when generation has to work across time?
 
 - Temporal Telephone
 - Video Test Report
+- Optional: A/B/C Comparison Board for coherence tests
 - AI Use + Consent Checklist
 - Optional: curated video clips or still-frame sequences showing drift and failure modes
 
@@ -25,6 +26,8 @@ Core question: what changes when generation has to work across time?
 | 35-50 min | Temporal Telephone round 2 | Switch to anchor mode and repeat with the same basic subject or motion. | Compare whether identity, layout, and motion stay more stable. |
 | 50-70 min | Failure analysis | Use curated clips, still frames, or optional generated video examples. Name failure modes precisely. | Mark identity drift, physics breaks, camera inconsistency, style drift, or temporal jumps. |
 | 70-90 min | Video Test Report | Ask participants to complete one A/B/C or failure-analysis section. | Share one coherence claim and one responsible-use boundary. |
+
+Optional pilot evidence move: use the A/B/C Comparison Board to document a baseline motion prompt, one continuity anchor, and a stronger anchor or stress test. Keep real-person likeness and consent concerns visible before exporting.
 
 ## Facilitator Prompts
 

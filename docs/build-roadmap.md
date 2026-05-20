@@ -98,17 +98,17 @@ Launch sequences:
 3. abstract prompt
 Optional next step: add a carefully framed Default Test sequence after collecting or generating appropriate assets.
 
-## Later Tools
+## Second-Wave Tools
 
-Build after the first cohort, using real participant examples.
+Build these after the launch MVP, using pilot evidence before turning examples into public galleries.
 
-| Tool | Why Later |
+| Tool | Current Direction |
 | --- | --- |
-| Default Test Comparison Viewer | More useful after collecting real examples |
-| Failure Gallery Viewer | Needs curated video clips and failure labels |
-| A/B/C Comparison Board | Worksheets are enough for pilot |
-| Model Card Builder | Strong showcase and critical-pathway tool |
-| Concept Bridge Pages | Better once camp language stabilizes |
+| A/B/C Comparison Board | Second-wave draft; use it to collect structured pilot evidence across text, image, and video |
+| Model Card Builder | Build next with the same local export pattern for claims, tests, limits, defaults, and responsible-use boundaries |
+| Concept Bridge Pages | Build as lightweight Jekyll pages once pilot language stabilizes |
+| Default Test Comparison Viewer | Keep parked until there are reviewed participant examples |
+| Failure Gallery Viewer | Keep parked until there are curated video clips and failure labels |
 | Prompt Guidance Word-by-Word Reveal | Useful after the diffusion activity language stabilizes |
 | Frame-by-Frame Coherence Viewer | Needs curated video/image sequences |
 | Next-Token Prediction Game | Zoom version is enough for pilot |
