@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Current Is Not Known — Concept Bridge</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f3ee;
+  color: #1c2028;
+  line-height: 1.55;
+  padding: 24px 20px 60px;
+}
+.wrap { max-width: 680px; margin: 0 auto; }
+.back { font-size: 13px; color: #7f8694; margin-bottom: 20px; display: flex; gap: 16px; }
+.back a { color: inherit; text-decoration: none; }
+.back a:hover { color: #1c2028; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.badge {
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em;
+}
+.badge.bridge { background: #fef9ef; color: #b45f3a; border: 1.5px solid #d9ccb8; }
+.badge.session { background: #fef3c7; color: #92400e; border: 1.5px solid #fde68a; }
+h1 {
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 800; line-height: 1.05;
+  letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.lead {
+  font-size: 0.96rem; color: #3a3530;
+  border-left: 3px solid #d9ccb8;
+  padding-left: 14px;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+/* Telephone chain */
+.chain-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: #7f8694; margin-bottom: 12px;
+}
+.chain { display: flex; flex-direction: column; gap: 0; margin-bottom: 24px; }
+.chain-step { display: flex; gap: 14px; align-items: flex-start; }
+.step-num-wrap { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.step-dot {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 800; flex-shrink: 0; margin-top: 4px;
+}
+.step-dot.origin { background: #1c2028; color: #fffaf1; }
+.step-dot.drift1 { background: #d97706; color: #fff; }
+.step-dot.drift2 { background: #b45309; color: #fff; }
+.step-dot.drift3 { background: #92400e; color: #fff; }
+.step-dot.final  { background: #7c2d12; color: #fff; }
+.step-line {
+  width: 2px; flex: 1; min-height: 18px;
+  background: #d9ccb8; margin: 4px 0;
+}
+.step-body { flex: 1; padding-bottom: 22px; }
+.step-tag {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; margin-bottom: 5px;
+}
+.step-tag.origin { color: #1c2028; }
+.step-tag.drift1 { color: #d97706; }
+.step-tag.drift2 { color: #b45309; }
+.step-tag.drift3 { color: #92400e; }
+.step-tag.final  { color: #7c2d12; }
+.step-text {
+  background: #fff; border: 1.5px solid #d9ccb8;
+  border-radius: 8px; padding: 12px 14px;
+  font-size: 0.9rem; line-height: 1.55; color: #1c2028;
+}
+.step-text.faded { color: #555d6e; }
+.step-text.very-faded { color: #7f8694; background: #f5f3ee; }
+.step-note { font-size: 0.8rem; color: #7f8694; margin-top: 6px; line-height: 1.45; font-style: italic; }
+
+/* Comparison table */
+.compare-box {
+  background: #fff; border: 1.5px solid #d9ccb8;
+  border-radius: 10px; overflow: hidden; margin-bottom: 24px;
+}
+.cb-header {
+  background: #f5f3ee; padding: 10px 16px;
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: #7f8694; border-bottom: 1px solid #d9ccb8;
+}
+.cb-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #e8e3db; }
+.cb-row:last-child { border-bottom: none; }
+.cb-cell { padding: 12px 14px; font-size: 0.86rem; line-height: 1.5; }
+.cb-cell:first-child { border-right: 1px solid #e8e3db; color: #1c2028; }
+.cb-cell:last-child { color: #9a641c; }
+.cb-cell strong { display: block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #7f8694; margin-bottom: 4px; }
+
+/* Cutoff explainer */
+.cutoff-box {
+  background: #1c2028; color: #fffaf1;
+  border-radius: 10px; padding: 18px 20px; margin-bottom: 20px;
+}
+.cutoff-label {
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.08em; color: rgba(255,250,241,0.5); margin-bottom: 8px;
+}
+.cutoff-box p { font-size: 0.92rem; line-height: 1.6; }
+.cutoff-timeline {
+  display: flex; align-items: stretch; gap: 0;
+  margin-top: 14px; border-radius: 6px; overflow: hidden;
+}
+.ct-seg {
+  flex: 1; padding: 8px 10px; text-align: center;
+  font-size: 0.76rem; font-weight: 700;
+}
+.ct-seg.trained { background: #2563eb; color: #fff; }
+.ct-seg.cutoff  { background: #dc2626; color: #fff; flex: 0 0 auto; padding: 8px 14px; }
+.ct-seg.gap     { background: rgba(255,250,241,0.12); color: rgba(255,250,241,0.6); }
+.ct-seg.now     { background: rgba(255,250,241,0.2); color: #fffaf1; }
+
+/* Key line */
+.key-line {
+  background: #1c2028; color: #fffaf1;
+  border-radius: 10px; padding: 20px 22px; margin-bottom: 20px;
+  font-size: 1.05rem; font-weight: 700; line-height: 1.45;
+}
+.kl-label {
+  display: block; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: rgba(255,250,241,0.5); margin-bottom: 7px;
+}
+
+/* Nuance */
+.nuance {
+  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  border-radius: 8px; padding: 14px 16px;
+  font-size: 0.86rem; color: #5a4010; line-height: 1.6; margin-bottom: 24px;
+}
+.nuance strong { color: #3d2a08; }
+
+/* Connect */
+.connect {
+  background: #eff6ff; border: 1.5px solid #93c5fd;
+  border-radius: 10px; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.connect-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #1e40af; }
+.connect p { font-size: 0.88rem; color: #1e3a8a; line-height: 1.55; }
+.connect-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.connect-links a {
+  display: inline-block; padding: 9px 14px;
+  background: #2563eb; color: #fff;
+  border-radius: 7px; font-size: 0.84rem; font-weight: 700; text-decoration: none;
+}
+.connect-links a:hover { background: #1d4ed8; }
+
+@media (max-width: 480px) {
+  .cb-row { grid-template-columns: 1fr; }
+  .cb-cell:first-child { border-right: none; border-bottom: 1px solid #e8e3db; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="back">
+    <a href="../">← Concept Bridges</a>
+    <a href="../../../">All tools</a>
+  </nav>
+
+  <div class="badges">
+    <span class="badge bridge">Bridge 5</span>
+    <span class="badge session">Cross-session · Evaluation</span>
+  </div>
+
+  <h1>Current Is Not Known</h1>
+
+  <p class="lead">A model is trained on data up to a specific cutoff date, then deployed into a world that keeps moving. It has no calendar. It cannot know how much time has passed, what has changed, or what new facts have emerged. When you ask it about current events, current people, or current rankings, it answers from its training window — with the same confidence it brings to everything else.</p>
+
+  <div class="chain-label">Watch a claim drift — from source to model output</div>
+
+  <div class="chain">
+    <div class="chain-step">
+      <div class="step-num-wrap">
+        <div class="step-dot origin">0</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-tag origin">Original source — 2021</div>
+        <div class="step-text">"A peer-reviewed study published in October 2021 found that the three most-visited websites globally were Google, YouTube, and Facebook, in that order, based on monthly active user data compiled by a web analytics firm."</div>
+        <div class="step-note">Specific. Dated. Sourced. Scoped.</div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="step-num-wrap">
+        <div class="step-dot drift1">1</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-tag drift1">Rephrased in a blog post — 2022</div>
+        <div class="step-text faded">"According to recent data, Google, YouTube, and Facebook remain the internet's most popular destinations."</div>
+        <div class="step-note">The date is gone. "Recent" now does the work the date used to do.</div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="step-num-wrap">
+        <div class="step-dot drift2">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-tag drift2">Compressed into a listicle — 2023</div>
+        <div class="step-text faded">"The top websites on the internet are Google, YouTube, and Facebook."</div>
+        <div class="step-note">Source gone. Qualifier gone. A present-tense assertion that reads as permanently true.</div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="step-num-wrap">
+        <div class="step-dot drift3">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-tag drift3">Absorbed into training data</div>
+        <div class="step-text very-faded">[Millions of variations — "Google YouTube Facebook most popular" — appear across training text in many forms and time periods, weighted toward the most common phrasing. The model has no record of which version was sourced or when.]</div>
+        <div class="step-note">The model learned a pattern, not a dated fact.</div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="step-num-wrap">
+        <div class="step-dot final">→</div>
+      </div>
+      <div class="step-body">
+        <div class="step-tag final">Model output — asked in 2025</div>
+        <div class="step-text" style="border-color:#fecaca; background:#fff5f5;">"The most visited websites in the world are Google, YouTube, and Facebook."</div>
+        <div class="step-note">Confident. Present tense. Plausible — but the landscape has shifted. TikTok's traffic has surged. The model doesn't know. It never will, from training data alone.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-box">
+    <div class="cb-header">Original claim vs. model output — what got lost</div>
+    <div class="cb-row">
+      <div class="cb-cell"><strong>Original</strong>"October 2021"</div>
+      <div class="cb-cell"><strong>Model output</strong>No date. Present tense implied.</div>
+    </div>
+    <div class="cb-row">
+      <div class="cb-cell"><strong>Original</strong>"peer-reviewed study"</div>
+      <div class="cb-cell"><strong>Model output</strong>No source. No verifiability.</div>
+    </div>
+    <div class="cb-row">
+      <div class="cb-cell"><strong>Original</strong>"monthly active user data"</div>
+      <div class="cb-cell"><strong>Model output</strong>No methodology. No metric defined.</div>
+    </div>
+    <div class="cb-row">
+      <div class="cb-cell"><strong>Original</strong>Scope: a specific ranking</div>
+      <div class="cb-cell"><strong>Model output</strong>Universal-sounding assertion.</div>
+    </div>
+  </div>
+
+  <div class="cutoff-box">
+    <div class="cutoff-label">The training cutoff</div>
+    <p>Every model has a cutoff date — the point after which no new training data was added. The model is deployed and used for months or years after that. When you ask about current events, current rankings, current prices, or living people — it answers from its training window as if now and then are the same. It has no way to flag what it doesn't know because it happened after the cutoff.</p>
+    <div class="cutoff-timeline">
+      <div class="ct-seg trained">Training data collected</div>
+      <div class="ct-seg cutoff">Cutoff</div>
+      <div class="ct-seg gap">Deployment gap</div>
+      <div class="ct-seg now">You, asking now</div>
+    </div>
+  </div>
+
+  <div class="key-line">
+    <span class="kl-label">Key line</span>
+    "Current is not a category the model has. It knows what was in its training data. That's all. The gap between then and now is invisible to it — and has to be visible to you."
+  </div>
+
+  <div class="nuance">
+    <strong>This is a stress test for the other bridges too.</strong> Confidence is not truth — temporal drift is one of the clearest examples. Defaults are not neutral — and stale defaults don't update when the world does. Prediction is not understanding — a system that cannot track time cannot understand change. Asking "when was this trained, and how much has shifted since?" is one of the most practical habits in AI evaluation.
+  </div>
+
+  <div class="connect">
+    <p class="connect-label">Now open the tools</p>
+    <p>The Model Card Builder asks you to document what a model knows and doesn't know — including its training cutoff. The Investigation Journal prompts you to note when confidence and currency come apart. Both are places where this bridge becomes evidence.</p>
+    <div class="connect-links">
+      <a href="../../model-card-builder/">Open Model Card Builder →</a>
+      <a href="../../../worksheets/model-investigation-journal/">Open Investigation Journal →</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

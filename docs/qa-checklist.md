@@ -18,6 +18,7 @@ Use this before publishing or sharing the repo.
 - Confirm second-wave drafts are labeled "Second-wave draft" and parked stretch/gallery tools are labeled "Coming later."
 - Confirm the Pilot Ready path links to the pilot checklist, feedback template, and three session scripts.
 - Confirm Markdown pages render as styled HTML instead of raw Markdown.
+- Confirm homepage credits name classroom origins without exposing private student work and link to the consent protocol.
 
 ## Tool QA
 
@@ -28,7 +29,7 @@ Use this before publishing or sharing the repo.
 - Temporal Telephone: confirm self-tests pass, draw frames, save, switch previous/anchor/both modes, play sequence, use the failure bridge, clear and reset.
 - A/B/C Comparison Board: load a starter template, edit fields, copy Markdown, export JSON, and reset only after export.
 - Model Card Builder: load a starter template, edit fields, copy Markdown, export JSON, and confirm self-tests pass.
-- Concept Bridges: open each bridge link and confirm the four bridge cards fit at desktop and mobile widths.
+- Concept Bridges: open the index and all six full bridge pages (Prediction Is Not Understanding, What Does the Machine See, Confidence Is Not Truth, Default Is a Design Decision, Time Makes Failure Visible, Current Is Not Known); confirm links, tabs/widgets, frame viewer, and bridge cards fit at desktop and mobile widths.
 
 ## Responsive QA
 

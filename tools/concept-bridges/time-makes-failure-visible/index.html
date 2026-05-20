@@ -23,7 +23,7 @@ body {
   padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em;
 }
 .badge.bridge { background: #fef9ef; color: #b45f3a; border: 1.5px solid #d9ccb8; }
-.badge.session { background: #fef3c7; color: #92400e; border: 1.5px solid #fde68a; }
+.badge.session { background: #fdf2f8; color: #831843; border: 1.5px solid #f9a8d4; }
 h1 {
   font-size: clamp(1.6rem, 5vw, 2.4rem);
   font-weight: 800; line-height: 1.05;
@@ -37,132 +37,150 @@ h1 {
   line-height: 1.65;
 }
 
-/* Telephone chain */
-.chain-label {
+/* Frame viewer */
+.viewer-label {
   font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.07em; color: #7f8694; margin-bottom: 12px;
+  letter-spacing: 0.07em; color: #7f8694; margin-bottom: 10px;
 }
-.chain { display: flex; flex-direction: column; gap: 0; margin-bottom: 24px; }
-
-.chain-step {
-  display: flex; gap: 14px; align-items: flex-start;
-  padding: 0 0 0 0;
-}
-.chain-step:not(:last-child) .step-connector {
-  display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
-}
-.step-num-wrap { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-.step-dot {
-  width: 32px; height: 32px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; font-weight: 800; flex-shrink: 0;
-  margin-top: 4px;
-}
-.step-dot.origin { background: #1c2028; color: #fffaf1; }
-.step-dot.drift1 { background: #d97706; color: #fff; }
-.step-dot.drift2 { background: #b45309; color: #fff; }
-.step-dot.drift3 { background: #92400e; color: #fff; }
-.step-dot.final  { background: #7c2d12; color: #fff; }
-
-.step-line {
-  width: 2px; flex: 1; min-height: 18px;
-  background: linear-gradient(#d9ccb8, #d9ccb8);
-  margin: 4px 0;
-}
-
-.step-body {
-  flex: 1; padding-bottom: 22px;
-}
-.step-tag {
-  font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.07em; margin-bottom: 5px;
-}
-.step-tag.origin { color: #1c2028; }
-.step-tag.drift1 { color: #d97706; }
-.step-tag.drift2 { color: #b45309; }
-.step-tag.drift3 { color: #92400e; }
-.step-tag.final  { color: #7c2d12; }
-
-.step-text {
+.frame-viewer {
   background: #fff; border: 1.5px solid #d9ccb8;
-  border-radius: 8px; padding: 12px 14px;
-  font-size: 0.9rem; line-height: 1.55; color: #1c2028;
+  border-radius: 10px; overflow: hidden; margin-bottom: 24px;
 }
-.step-text.faded { color: #555d6e; }
-.step-text.very-faded { color: #7f8694; background: #f5f3ee; }
+.frame-header {
+  background: #f5f3ee; border-bottom: 1px solid #d9ccb8;
+  padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
+}
+.frame-nav { display: flex; align-items: center; gap: 10px; }
+.nav-btn {
+  font-family: inherit; font-size: 0.84rem; font-weight: 700;
+  padding: 6px 14px; border-radius: 999px;
+  border: 1.5px solid #d9ccb8; background: #fff; color: #1c2028;
+  cursor: pointer; transition: background 0.1s;
+}
+.nav-btn:hover:not(:disabled) { background: #f5f3ee; }
+.nav-btn:disabled { opacity: 0.35; cursor: default; }
+.frame-counter {
+  font-size: 0.8rem; font-weight: 700; color: #7f8694; min-width: 80px; text-align: center;
+}
+.drift-badge {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.05em; padding: 4px 10px; border-radius: 999px;
+}
+.drift-none    { background: #f0fdf4; color: #15803d; border: 1.5px solid #86efac; }
+.drift-low     { background: #fefce8; color: #a16207; border: 1.5px solid #fde047; }
+.drift-medium  { background: #fff7ed; color: #c2410c; border: 1.5px solid #fed7aa; }
+.drift-high    { background: #fef2f2; color: #dc2626; border: 1.5px solid #fca5a5; }
+.drift-severe  { background: #fdf2f8; color: #9d174d; border: 1.5px solid #f9a8d4; }
 
-.step-note {
-  font-size: 0.8rem; color: #7f8694; margin-top: 6px; line-height: 1.45;
-  font-style: italic;
+/* Frame content */
+.frame-content { padding: 20px; display: flex; gap: 18px; }
+
+/* Abstract frame art */
+.frame-art {
+  width: 140px; flex-shrink: 0;
+  border-radius: 8px; overflow: hidden;
+  border: 1.5px solid #e5e7eb;
+  aspect-ratio: 9/12;
+  position: relative;
+}
+.art-bg {
+  position: absolute; inset: 0;
+}
+.art-figure {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center;
+}
+.art-head {
+  border-radius: 50%; z-index: 1;
+}
+.art-body {
+  z-index: 1; border-radius: 3px;
+  margin-top: -4px;
+}
+.art-hair {
+  position: absolute; z-index: 2; border-radius: 50% 50% 0 0;
 }
 
-/* Comparison */
-.compare-box {
+/* Attribute grid */
+.attr-grid { flex: 1; }
+.attr-row {
+  display: grid; grid-template-columns: 90px 1fr;
+  gap: 8px; align-items: start; margin-bottom: 9px;
+  padding-bottom: 9px; border-bottom: 1px solid #f0ede8;
+}
+.attr-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.attr-name {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.05em; color: #7f8694; padding-top: 2px;
+}
+.attr-val {
+  font-size: 0.86rem; color: #1c2028; line-height: 1.4;
+  display: flex; align-items: baseline; gap: 6px;
+}
+.attr-status {
+  font-size: 0.7rem; font-weight: 800; padding: 1px 6px;
+  border-radius: 4px; flex-shrink: 0; white-space: nowrap;
+}
+.s-match   { background: #f0fdf4; color: #15803d; }
+.s-drift   { background: #fff7ed; color: #c2410c; }
+.s-wrong   { background: #fef2f2; color: #dc2626; }
+.s-added   { background: #fdf4ff; color: #7e22ce; }
+.s-missing { background: #f8fafc; color: #475569; }
+
+/* Frame note */
+.frame-note {
+  border-top: 1px solid #e8e3db;
+  padding: 12px 20px;
+  font-size: 0.84rem; color: #5a4010; line-height: 1.5;
+  background: #fef9ef;
+}
+.frame-note strong { color: #3d2a08; }
+
+/* Drift tracker */
+.drift-tracker {
   background: #fff; border: 1.5px solid #d9ccb8;
-  border-radius: 10px; overflow: hidden;
-  margin-bottom: 24px;
+  border-radius: 10px; overflow: hidden; margin-bottom: 24px;
 }
-.cb-header {
+.dt-header {
   background: #f5f3ee; padding: 10px 16px;
   font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.07em; color: #7f8694;
-  border-bottom: 1px solid #d9ccb8;
+  letter-spacing: 0.07em; color: #7f8694; border-bottom: 1px solid #d9ccb8;
 }
-.cb-row {
-  display: grid; grid-template-columns: 1fr 1fr;
+.dt-row {
+  display: grid; grid-template-columns: 80px repeat(5, 1fr);
   border-bottom: 1px solid #e8e3db;
 }
-.cb-row:last-child { border-bottom: none; }
-.cb-cell {
-  padding: 12px 14px; font-size: 0.86rem; line-height: 1.5;
+.dt-row:last-child { border-bottom: none; }
+.dt-cell {
+  padding: 9px 8px; font-size: 0.78rem;
+  border-right: 1px solid #e8e3db; text-align: center;
 }
-.cb-cell:first-child { border-right: 1px solid #e8e3db; color: #1c2028; }
-.cb-cell:last-child { color: #9a641c; }
-.cb-cell strong { display: block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #7f8694; margin-bottom: 4px; }
-
-/* Cutoff explainer */
-.cutoff-box {
-  background: #1c2028; color: #fffaf1;
-  border-radius: 10px; padding: 18px 20px;
-  margin-bottom: 20px;
-}
-.cutoff-label {
-  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.08em; color: rgba(255,250,241,0.5); margin-bottom: 8px;
-}
-.cutoff-box p { font-size: 0.92rem; line-height: 1.6; }
-.cutoff-timeline {
-  display: flex; align-items: center; gap: 0;
-  margin-top: 14px; border-radius: 6px; overflow: hidden;
-}
-.ct-seg {
-  flex: 1; padding: 8px 10px; text-align: center;
-  font-size: 0.76rem; font-weight: 700;
-}
-.ct-seg.trained { background: #2563eb; color: #fff; }
-.ct-seg.cutoff { background: #dc2626; color: #fff; flex: 0 0 auto; padding: 8px 14px; }
-.ct-seg.gap { background: rgba(255,250,241,0.12); color: rgba(255,250,241,0.6); }
-.ct-seg.now { background: rgba(255,250,241,0.2); color: #fffaf1; }
+.dt-cell:last-child { border-right: none; }
+.dt-cell.label { text-align: left; font-weight: 700; color: #555d6e; }
+.dt-cell.head { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #7f8694; background: #f5f3ee; }
+.dt-cell.head.label { text-align: left; }
+.dc-match   { background: #f0fdf4; color: #15803d; }
+.dc-drift   { background: #fff7ed; color: #c2410c; }
+.dc-wrong   { background: #fef2f2; color: #dc2626; font-weight: 700; }
+.dc-added   { background: #fdf4ff; color: #7e22ce; font-style: italic; }
+.dc-na      { color: #d1d5db; }
 
 /* Key line */
 .key-line {
   background: #1c2028; color: #fffaf1;
-  border-radius: 10px; padding: 20px 22px;
-  margin-bottom: 20px;
+  border-radius: 10px; padding: 20px 22px; margin-bottom: 20px;
   font-size: 1.05rem; font-weight: 700; line-height: 1.45;
 }
 .kl-label {
   display: block; font-size: 0.7rem; text-transform: uppercase;
-  letter-spacing: 0.08em; color: rgba(255,250,241,0.5);
-  margin-bottom: 7px;
+  letter-spacing: 0.08em; color: rgba(255,250,241,0.5); margin-bottom: 7px;
 }
 
 /* Nuance */
 .nuance {
   background: #fef9ef; border: 1.5px solid #d9ccb8;
   border-radius: 8px; padding: 14px 16px;
-  font-size: 0.86rem; color: #5a4010; line-height: 1.6;
-  margin-bottom: 24px;
+  font-size: 0.86rem; color: #5a4010; line-height: 1.6; margin-bottom: 24px;
 }
 .nuance strong { color: #3d2a08; }
 
@@ -172,23 +190,20 @@ h1 {
   border-radius: 10px; padding: 16px 18px;
   display: flex; flex-direction: column; gap: 10px;
 }
-.connect-label {
-  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.06em; color: #1e40af;
-}
+.connect-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #1e40af; }
 .connect p { font-size: 0.88rem; color: #1e3a8a; line-height: 1.55; }
 .connect-links { display: flex; gap: 8px; flex-wrap: wrap; }
 .connect-links a {
   display: inline-block; padding: 9px 14px;
   background: #2563eb; color: #fff;
-  border-radius: 7px; font-size: 0.84rem; font-weight: 700;
-  text-decoration: none;
+  border-radius: 7px; font-size: 0.84rem; font-weight: 700; text-decoration: none;
 }
 .connect-links a:hover { background: #1d4ed8; }
 
-@media (max-width: 480px) {
-  .cb-row { grid-template-columns: 1fr; }
-  .cb-cell:first-child { border-right: none; border-bottom: 1px solid #e8e3db; }
+@media (max-width: 520px) {
+  .frame-content { flex-direction: column; }
+  .frame-art { width: 100%; aspect-ratio: 16/9; }
+  .art-figure { bottom: 0; }
 }
 </style>
 </head>
@@ -200,129 +215,234 @@ h1 {
   </nav>
 
   <div class="badges">
-    <span class="badge bridge">Bridge 5</span>
-    <span class="badge session">Cross-session · Evidence</span>
+    <span class="badge bridge">Bridge 6</span>
+    <span class="badge session">Before Session 3: Video</span>
   </div>
 
   <h1>Time Makes Failure Visible</h1>
 
-  <p class="lead">A model is trained on data up to a specific point in time, then deployed into a world that keeps moving. It has no way to know how much time has passed or what has changed. It answers 2025 questions with 2022 patterns — with the same confidence it brings to everything else. Time is one of the clearest lenses for seeing how the gap between training and truth works.</p>
+  <p class="lead">A video model generates frames in sequence — but it has no continuous representation of who or what is in the scene. Each frame is a new prediction, conditioned on the prompt and previous frames, but without a persistent "identity" for any subject. Over a few seconds, small inconsistencies accumulate. A face drifts. A detail appears that wasn't specified. Physics breaks. What looks stable in a single frame becomes obviously wrong in motion.</p>
 
-  <div class="chain-label">Watch a claim drift — one transformation at a time</div>
+  <div class="viewer-label">Step through 5 frames — watch identity drift over time</div>
 
-  <div class="chain">
-    <!-- Step 0: Origin -->
-    <div class="chain-step">
-      <div class="step-num-wrap">
-        <div class="step-dot origin">0</div>
-        <div class="step-line"></div>
+  <div class="frame-viewer">
+    <div class="frame-header">
+      <div class="frame-nav">
+        <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
+        <span class="frame-counter" id="frameCounter">Frame 0 of 4</span>
+        <button class="nav-btn" id="nextBtn">Next →</button>
       </div>
-      <div class="step-body">
-        <div class="step-tag origin">Original source — 2021</div>
-        <div class="step-text">"A peer-reviewed study published in October 2021 found that the three most-visited websites globally were Google, YouTube, and Facebook, in that order, based on monthly active user data compiled by a web analytics firm."</div>
-        <div class="step-note">Specific. Dated. Sourced. Scoped.</div>
-      </div>
+      <span class="drift-badge drift-none" id="driftBadge">No drift yet</span>
     </div>
 
-    <!-- Step 1 -->
-    <div class="chain-step">
-      <div class="step-num-wrap">
-        <div class="step-dot drift1">1</div>
-        <div class="step-line"></div>
-      </div>
-      <div class="step-body">
-        <div class="step-tag drift1">Rephrased in a blog post — 2022</div>
-        <div class="step-text faded">"According to recent data, Google, YouTube, and Facebook remain the internet's most popular destinations."</div>
-        <div class="step-note">The date is gone. "Recent" now does the work the date used to do.</div>
-      </div>
+    <div class="frame-content" id="frameContent">
+      <!-- populated by JS -->
     </div>
 
-    <!-- Step 2 -->
-    <div class="chain-step">
-      <div class="step-num-wrap">
-        <div class="step-dot drift2">2</div>
-        <div class="step-line"></div>
-      </div>
-      <div class="step-body">
-        <div class="step-tag drift2">Compressed into a listicle — 2023</div>
-        <div class="step-text faded">"The top websites on the internet are Google, YouTube, and Facebook."</div>
-        <div class="step-note">Source gone. Qualifier gone. Present-tense assertion that could be read as always true.</div>
-      </div>
-    </div>
-
-    <!-- Step 3 -->
-    <div class="chain-step">
-      <div class="step-num-wrap">
-        <div class="step-dot drift3">3</div>
-        <div class="step-line"></div>
-      </div>
-      <div class="step-body">
-        <div class="step-tag drift3">Absorbed into training data</div>
-        <div class="step-text very-faded">[Millions of variations of this pattern — "Google YouTube Facebook most popular" — have now been seen across training text in many forms and dates, weighted toward the most common phrasing]</div>
-        <div class="step-note">The model has no record of which version was sourced or when. It learned a pattern, not a fact.</div>
-      </div>
-    </div>
-
-    <!-- Step 4: Model output -->
-    <div class="chain-step">
-      <div class="step-num-wrap">
-        <div class="step-dot final">→</div>
-      </div>
-      <div class="step-body">
-        <div class="step-tag final">Model output — asked in 2025</div>
-        <div class="step-text" style="border-color:#fecaca; background:#fff5f5;">"The most visited websites in the world are Google, YouTube, and Facebook."</div>
-        <div class="step-note">Confident. Present tense. Plausible — but the landscape has shifted. TikTok's traffic has surged. Meta's dominance has changed. The model doesn't know. It never will, from training data alone.</div>
-      </div>
-    </div>
+    <div class="frame-note" id="frameNote"></div>
   </div>
 
-  <div class="compare-box">
-    <div class="cb-header">Original claim vs. model output — what got lost</div>
-    <div class="cb-row">
-      <div class="cb-cell"><strong>Original</strong>"October 2021"</div>
-      <div class="cb-cell"><strong>Model output</strong>No date. Present tense implied.</div>
+  <!-- Drift tracker table -->
+  <div class="drift-tracker">
+    <div class="dt-header">Cumulative drift — all 5 frames at once</div>
+    <div class="dt-row">
+      <div class="dt-cell head label">Attribute</div>
+      <div class="dt-cell head">F0 (prompt)</div>
+      <div class="dt-cell head">F1 (+2s)</div>
+      <div class="dt-cell head">F2 (+4s)</div>
+      <div class="dt-cell head">F3 (+6s)</div>
+      <div class="dt-cell head">F4 (+8s)</div>
     </div>
-    <div class="cb-row">
-      <div class="cb-cell"><strong>Original</strong>"peer-reviewed study"</div>
-      <div class="cb-cell"><strong>Model output</strong>No source cited or available.</div>
+    <div class="dt-row">
+      <div class="dt-cell label">Face</div>
+      <div class="dt-cell dc-match">✓</div>
+      <div class="dt-cell dc-match">✓</div>
+      <div class="dt-cell dc-drift">⚠ slight</div>
+      <div class="dt-cell dc-wrong">✗ different</div>
+      <div class="dt-cell dc-wrong">✗ different</div>
     </div>
-    <div class="cb-row">
-      <div class="cb-cell"><strong>Original</strong>"monthly active user data"</div>
-      <div class="cb-cell"><strong>Model output</strong>No methodology. No metric defined.</div>
+    <div class="dt-row">
+      <div class="dt-cell label">Hair</div>
+      <div class="dt-cell dc-match">✓</div>
+      <div class="dt-cell dc-drift">⚠ longer</div>
+      <div class="dt-cell dc-wrong">✗ wavy</div>
+      <div class="dt-cell dc-wrong">✗ wavy</div>
+      <div class="dt-cell dc-wrong">✗ wavy</div>
     </div>
-    <div class="cb-row">
-      <div class="cb-cell"><strong>Original</strong>Scope: specific ranking</div>
-      <div class="cb-cell"><strong>Model output</strong>Universal-sounding assertion.</div>
+    <div class="dt-row">
+      <div class="dt-cell label">Jacket</div>
+      <div class="dt-cell dc-match">✓ red</div>
+      <div class="dt-cell dc-drift">⚠ brighter</div>
+      <div class="dt-cell dc-drift">⚠ red-orange</div>
+      <div class="dt-cell dc-wrong">✗ orange</div>
+      <div class="dt-cell dc-wrong">✗ orange</div>
     </div>
-  </div>
-
-  <div class="cutoff-box">
-    <div class="cutoff-label">The training cutoff problem</div>
-    <p>Every model has a cutoff date — the point after which no new training data was added. The model is then deployed and used for months or years. It has no calendar. It cannot tell you how long it has been deployed. When you ask about current events, current rankings, current prices, or current people — it answers from its training window as if now and then are the same.</p>
-    <div class="cutoff-timeline">
-      <div class="ct-seg trained">Training data collected</div>
-      <div class="ct-seg cutoff">Cutoff</div>
-      <div class="ct-seg gap">Deployment gap</div>
-      <div class="ct-seg now">You, asking now</div>
+    <div class="dt-row">
+      <div class="dt-cell label">Earring</div>
+      <div class="dt-cell dc-na">—</div>
+      <div class="dt-cell dc-na">—</div>
+      <div class="dt-cell dc-added">+ added</div>
+      <div class="dt-cell dc-added">persists</div>
+      <div class="dt-cell dc-added">persists</div>
+    </div>
+    <div class="dt-row">
+      <div class="dt-cell label">Setting</div>
+      <div class="dt-cell dc-match">✓</div>
+      <div class="dt-cell dc-match">✓</div>
+      <div class="dt-cell dc-match">✓</div>
+      <div class="dt-cell dc-drift">⚠ light</div>
+      <div class="dt-cell dc-wrong">✗ path changed</div>
     </div>
   </div>
 
   <div class="key-line">
     <span class="kl-label">Key line</span>
-    "A model trained on data from last year still answers as if it's last year — with the same confidence. The gap is invisible to the model. It has to be visible to you."
+    "Each frame is a new prediction. The model has no memory of what the face looked like two seconds ago — only a statistical pull toward what usually comes next."
   </div>
 
   <div class="nuance">
-    <strong>Time is a stress test for all the other concepts.</strong> Confidence is not truth — and temporal drift is one of the clearest cases where confident output is wrong. Defaults are not neutral — and old defaults don't update when the world does. Prediction is not understanding — and a system that cannot track time cannot understand change. Asking "when was this model trained?" and "how much has changed since then?" is one of the most practical critical habits in AI literacy.
+    <strong>This is not a bug that will be fixed.</strong> It is the mechanism. Video generation is frame prediction under temporal conditioning — not a continuous simulation of a stable world. As duration increases, drift accumulates. Identity consistency tools (ControlNet, IP-Adapter, and similar) reduce drift but do not eliminate it — they add constraints, not understanding. Seeing the failure makes the mechanism visible.
   </div>
 
   <div class="connect">
     <p class="connect-label">Now open the tool</p>
-    <p>In the Temporal Telephone, a fact passes through multiple AI rewriting stages. Watch what survives, what gets dropped, and what gets confidently added. The chain you just saw — specificity degrading into confident assertion — is exactly what the tool demonstrates in real time.</p>
+    <p>In the Temporal Telephone, a visual scene passes through multiple AI transformation stages. Watch what the model preserves, what it loses, and what it invents. The drift you just stepped through — stable in frame one, different person by frame four — is exactly what the tool lets you observe and document.</p>
     <div class="connect-links">
       <a href="../../temporal-telephone/">Open Temporal Telephone →</a>
     </div>
   </div>
 </div>
+
+<script>
+var FRAMES = [
+  {
+    label: "Frame 0 — Prompt baseline",
+    drift: "drift-none",
+    driftText: "Baseline",
+    bgColor: "#c7e0c7",
+    faceColor: "#d4a574",
+    hairColor: "#3d2b1f",
+    bodyColor: "#dc2626",
+    attrs: [
+      { name: "Face",    val: "Woman, late 20s, neutral expression", status: "s-match", statusText: "Prompt" },
+      { name: "Hair",    val: "Dark brown, shoulder-length, straight", status: "s-match", statusText: "Prompt" },
+      { name: "Jacket",  val: "Red", status: "s-match", statusText: "Prompt" },
+      { name: "Earring", val: "Not specified, not present", status: "s-match", statusText: "Correct" },
+      { name: "Setting", val: "Park path, afternoon light", status: "s-match", statusText: "Prompt" }
+    ],
+    note: "<strong>The model establishes the scene.</strong> The first frame follows the prompt closely — this is where constraints are strongest. Every attribute matches what was asked for. Nothing has drifted yet. The failure hasn't started — but the process that causes it already has."
+  },
+  {
+    label: "Frame 1 — +2 seconds",
+    drift: "drift-low",
+    driftText: "Minor drift",
+    bgColor: "#b8d9b8",
+    faceColor: "#d4a574",
+    hairColor: "#3d2b1f",
+    bodyColor: "#ef4444",
+    attrs: [
+      { name: "Face",    val: "Woman, late 20s, slight smile", status: "s-match", statusText: "✓ Match" },
+      { name: "Hair",    val: "Dark brown, slightly longer", status: "s-drift", statusText: "⚠ Drift" },
+      { name: "Jacket",  val: "Red (slightly brighter)", status: "s-drift", statusText: "⚠ Drift" },
+      { name: "Earring", val: "Not present", status: "s-match", statusText: "✓ Correct" },
+      { name: "Setting", val: "Park path, afternoon light", status: "s-match", statusText: "✓ Match" }
+    ],
+    note: "<strong>Small changes have begun.</strong> The hair grew slightly longer — no one asked for that. The jacket shade shifted. These are within the tolerance of most viewers, but they are not what was specified. The model is not remembering the first frame as ground truth; it is predicting what usually follows a frame like this."
+  },
+  {
+    label: "Frame 2 — +4 seconds",
+    drift: "drift-medium",
+    driftText: "Moderate drift",
+    bgColor: "#a8cfa8",
+    faceColor: "#d4a574",
+    hairColor: "#5a3d28",
+    bodyColor: "#f97316",
+    attrs: [
+      { name: "Face",    val: "Slightly different proportions", status: "s-drift", statusText: "⚠ Drift" },
+      { name: "Hair",    val: "Dark brown, wavy now (was straight)", status: "s-wrong", statusText: "✗ Wrong" },
+      { name: "Jacket",  val: "Red-orange (colour shifting)", status: "s-drift", statusText: "⚠ Drift" },
+      { name: "Earring", val: "Small hoop appeared", status: "s-added", statusText: "+ Added" },
+      { name: "Setting", val: "Park path, afternoon light", status: "s-match", statusText: "✓ Match" }
+    ],
+    note: "<strong>An earring appeared that no one asked for.</strong> This is the clearest sign so far: the model filled a gap with a statistically common detail for a woman in a park. The hair is now wavy — it was straight in frame 0. The model is no longer tracking the original specification. It is following its own accumulated momentum."
+  },
+  {
+    label: "Frame 3 — +6 seconds",
+    drift: "drift-high",
+    driftText: "High drift",
+    bgColor: "#98c498",
+    faceColor: "#c49060",
+    hairColor: "#6b4c32",
+    bodyColor: "#ea580c",
+    attrs: [
+      { name: "Face",    val: "Different person — different bone structure", status: "s-wrong", statusText: "✗ Wrong" },
+      { name: "Hair",    val: "Brown, wavy — drifted baseline now locked in", status: "s-wrong", statusText: "✗ Wrong" },
+      { name: "Jacket",  val: "Orange (not red)", status: "s-wrong", statusText: "✗ Wrong" },
+      { name: "Earring", val: "Hoop persists — now part of the scene's 'normal'", status: "s-added", statusText: "+ Persists" },
+      { name: "Setting", val: "Park — lighting has shifted", status: "s-drift", statusText: "⚠ Drift" }
+    ],
+    note: "<strong>A different person is walking through the scene.</strong> The face structure has changed enough that this is not the same subject. The earring that appeared without being asked is now a stable fixture — the model treats it as part of the scene. The jacket has drifted from red to orange. The model is not correcting toward the prompt; it is predicting forward from its own drift."
+  },
+  {
+    label: "Frame 4 — +8 seconds",
+    drift: "drift-severe",
+    driftText: "Severe drift",
+    bgColor: "#88b888",
+    faceColor: "#b88050",
+    hairColor: "#7a5a3a",
+    bodyColor: "#c2410c",
+    attrs: [
+      { name: "Face",    val: "Distinct third facial structure emerging", status: "s-wrong", statusText: "✗ Wrong" },
+      { name: "Hair",    val: "Brown, wavy — now fully normalized away from prompt", status: "s-wrong", statusText: "✗ Wrong" },
+      { name: "Jacket",  val: "Dark orange-red — not the red jacket from the prompt", status: "s-wrong", statusText: "✗ Wrong" },
+      { name: "Earring", val: "Now treated as canonical — won't be removed", status: "s-added", statusText: "+ Locked" },
+      { name: "Setting", val: "Park, different path — scene has evolved", status: "s-wrong", statusText: "✗ Wrong" }
+    ],
+    note: "<strong>The original person is gone.</strong> Four of five attributes are wrong relative to the initial prompt. The earring — added without being asked in frame 2 — is now locked into the scene's identity. The model has no way to refer back to frame 0 as ground truth. It is predicting what plausibly follows what came before, and what came before has drifted far from the prompt."
+  }
+];
+
+var current = 0;
+
+function renderFrame(i) {
+  var f = FRAMES[i];
+  document.getElementById('frameCounter').textContent = 'Frame ' + i + ' of ' + (FRAMES.length - 1);
+  document.getElementById('driftBadge').className = 'drift-badge ' + f.drift;
+  document.getElementById('driftBadge').textContent = f.driftText;
+  document.getElementById('prevBtn').disabled = (i === 0);
+  document.getElementById('nextBtn').disabled = (i === FRAMES.length - 1);
+  document.getElementById('frameNote').innerHTML = f.note;
+
+  // Build art
+  var artHtml = '<div class="frame-art">' +
+    '<div class="art-bg" style="background:' + f.bgColor + ';"></div>' +
+    '<div class="art-figure" style="bottom:0;top:18%;">' +
+      '<div class="art-head" style="width:36px;height:40px;background:' + f.faceColor + ';position:relative;">' +
+        '<div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:40px;height:22px;background:' + f.hairColor + ';border-radius:50% 50% 0 0;top:-8px;"></div>' +
+      '</div>' +
+      '<div class="art-body" style="width:52px;height:70px;background:' + f.bodyColor + ';"></div>' +
+    '</div>' +
+  '</div>';
+
+  // Build attrs
+  var attrHtml = '<div class="attr-grid">';
+  f.attrs.forEach(function(a) {
+    attrHtml += '<div class="attr-row"><div class="attr-name">' + a.name + '</div>' +
+      '<div class="attr-val">' + a.val + ' <span class="attr-status ' + a.status + '">' + a.statusText + '</span></div></div>';
+  });
+  attrHtml += '</div>';
+
+  document.getElementById('frameContent').innerHTML = artHtml + attrHtml;
+}
+
+document.getElementById('prevBtn').addEventListener('click', function() {
+  if (current > 0) { current--; renderFrame(current); }
+});
+document.getElementById('nextBtn').addEventListener('click', function() {
+  if (current < FRAMES.length - 1) { current++; renderFrame(current); }
+});
+
+renderFrame(0);
+</script>
 </body>
 </html>

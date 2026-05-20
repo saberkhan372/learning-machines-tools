@@ -41,6 +41,7 @@
     .confidence .tag { background: var(--violet); }
     .defaults .tag { background: var(--rose); }
     .time .tag { background: var(--amber); }
+    .cutoff .tag { background: #0f766e; }
     .bridge ul { padding-left: 20px; margin: 10px 0 0; }
     .use-with { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
     .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
@@ -80,7 +81,7 @@
   <main>
     <div class="topbar">
       <a class="back-link" href="../../">Back to tools</a>
-      <span class="status">5 bridges complete</span>
+      <span class="status">6 bridges complete</span>
     </div>
 
     <section class="hero panel">
@@ -170,21 +171,38 @@
         </div>
       </article>
       <article class="bridge panel time" style="grid-column: 1 / -1;">
-        <span class="tag">Cross-session · Evidence</span>
+        <span class="tag">Session 3 · Video</span>
         <h2>Time Makes Failure Visible</h2>
-        <p>Every model has a training cutoff. It is then deployed into a world that keeps changing. It cannot know how much time has passed or what has shifted. Asking about current events, rankings, prices, or people surfaces this gap — with the same confidence the model applies to everything else.</p>
+        <p>Video generation is frame prediction, not continuous simulation. Each frame is computed from the prompt and previous frames, but the model has no persistent "identity" for any subject. Over seconds, drift accumulates: a face shifts, a detail appears that wasn't specified, physics breaks. What looks stable in one frame becomes obviously wrong in motion.</p>
         <ul>
-          <li>Specific claims drift into confident assertions as sources fall away.</li>
-          <li>The gap between training cutoff and deployment is invisible to the model.</li>
-          <li>"When was this trained?" is one of the most practical critical questions in AI literacy.</li>
+          <li>Each frame is a new prediction — the model has no memory of what the face looked like two seconds ago.</li>
+          <li>Details added without being asked (an earring, a prop) can lock in and persist as the scene's new normal.</li>
+          <li>Seeing the failure over time makes the mechanism visible in a way a single frame never could.</li>
         </ul>
         <a class="open-bridge" href="time-makes-failure-visible/">Open full bridge</a>
         <div class="use-with">
           <strong>Use with</strong>
           <div class="links">
             <a href="../temporal-telephone/">Temporal Telephone</a>
-            <a href="../../worksheets/model-investigation-journal/">Investigation Journal</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bridge panel cutoff" style="grid-column: 1 / -1;">
+        <span class="tag">Cross-session · Evaluation</span>
+        <h2>Current Is Not Known</h2>
+        <p>A model is trained on data up to a cutoff date, then deployed into a world that keeps moving. It has no calendar and no way to know what has changed. It answers 2025 questions with 2022 patterns — with the same confidence it applies to everything else.</p>
+        <ul>
+          <li>Specific, dated claims degrade into confident undated assertions as they travel through training data.</li>
+          <li>The gap between training cutoff and the moment you're asking is invisible to the model.</li>
+          <li>"When was this trained, and how much has changed since?" is one of the most practical evaluation questions in AI literacy.</li>
+        </ul>
+        <a class="open-bridge" href="current-is-not-known/">Open full bridge</a>
+        <div class="use-with">
+          <strong>Use with</strong>
+          <div class="links">
             <a href="../model-card-builder/">Model Card</a>
+            <a href="../../worksheets/model-investigation-journal/">Investigation Journal</a>
           </div>
         </div>
       </article>
