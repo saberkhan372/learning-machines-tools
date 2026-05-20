@@ -15,7 +15,7 @@ Use this before publishing or sharing the repo.
 - Open every launch tool from the homepage.
 - Open every worksheet and project doc link.
 - Use each tool's "Back to tools" link.
-- Confirm second-wave and stretch tools are labeled "Coming later."
+- Confirm second-wave drafts are labeled "Second-wave draft" and parked stretch/gallery tools are labeled "Coming later."
 - Confirm the Pilot Ready path links to the pilot checklist, feedback template, and three session scripts.
 - Confirm Markdown pages render as styled HTML instead of raw Markdown.
 
@@ -23,9 +23,12 @@ Use this before publishing or sharing the repo.
 
 - Tokenizer + Temperature Visualizer: run self-tests, try token examples, step next token, run auto, reset, switch greedy/sample.
 - ELIZA Simulator: run self-tests, click example prompts, inspect matched rule, review comparison examples.
-- Diffusion Step-Through Viewer: switch sequences, move slider from 0 to final, read prompt and annotation cards.
+- Diffusion Step-Through Viewer: confirm self-tests pass, switch sequences, move slider from 0 to final, read prompt, annotation, facilitator, and reflection cards.
 - Feature Extraction / Pixel Resolution: switch image types, change detail level, switch Pixels/Edges/Features.
-- Temporal Telephone: draw frames, save, switch previous/anchor mode, play sequence, clear and reset.
+- Temporal Telephone: confirm self-tests pass, draw frames, save, switch previous/anchor/both modes, play sequence, use the failure bridge, clear and reset.
+- A/B/C Comparison Board: load a starter template, edit fields, copy Markdown, export JSON, and reset only after export.
+- Model Card Builder: load a starter template, edit fields, copy Markdown, export JSON, and confirm self-tests pass.
+- Concept Bridges: open each bridge link and confirm the four bridge cards fit at desktop and mobile widths.
 
 ## Responsive QA
 

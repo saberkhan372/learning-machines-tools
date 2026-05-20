@@ -131,7 +131,7 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #111; }
 .reflection-card li { margin-bottom: 4px; }
 
 /* Reflection lenses grid */
-.lens-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.lens-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
 @media (max-width: 560px) { .lens-grid { grid-template-columns: 1fr; } }
 .lens-card {
   border: 1px solid #d9ccb8; border-radius: 8px; padding: 10px 12px;
@@ -141,6 +141,7 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #111; }
 .lens-who.human  { color: #b45309; }
 .lens-who.machine{ color: #1d4ed8; }
 .lens-who.system { color: #6d28d9; }
+.lens-who.ethics { color: #b91c1c; }
 
 /* Facilitator card */
 .facilitator-card {
@@ -210,7 +211,7 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #111; }
 </div>
 
 <div class="reflection-card">
-  <strong>Discussion — Human · Machine · System</strong>
+  <strong>Discussion — Human · Machine · System · Ethics</strong>
   <div class="lens-grid">
     <div class="lens-card">
       <div class="lens-who human">Human</div>
@@ -223,6 +224,10 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #111; }
     <div class="lens-card">
       <div class="lens-who system">System</div>
       For the Default Test prompt ("a doctor") — what skin tone, gender, age, setting, and pose appeared by default? What training data shapes those assumptions?
+    </div>
+    <div class="lens-card">
+      <div class="lens-who ethics">Ethics</div>
+      Who might be stereotyped, erased, copied, or misrepresented by the defaults that appear before anyone explicitly asks for them?
     </div>
   </div>
   <ol style="margin-top:10px;padding-left:18px;">

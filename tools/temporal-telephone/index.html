@@ -412,6 +412,17 @@ header {
 .facilitator-card strong { color: #1e40af; }
 .facilitator-card ul { padding-left: 18px; margin: 6px 0 0; }
 .facilitator-card li { margin-bottom: 4px; }
+
+/* Self-test status */
+#test-status {
+  width: 100%;
+  max-width: 640px;
+  font-size: 11px;
+  font-family: ui-monospace, monospace;
+  color: #888;
+  min-height: 16px;
+  margin: -10px 0 20px;
+}
 </style>
 </head>
 <body>
@@ -535,6 +546,8 @@ header {
     <li>You made intentional choices each frame. The model doesn't. What is lost when that judgment is removed?</li>
   </ul>
 </div>
+
+<div id="test-status" aria-live="polite">Self-tests not run yet.</div>
 
 <script>
 // ── Config ────────────────────────────────────────────────────────────────────
@@ -860,9 +873,54 @@ SIZES.forEach(s => {
   b.appendChild(d); b.onclick = () => setSize(s); sg.appendChild(b);
 });
 
+// ── Self-tests ────────────────────────────────────────────────────────────────
+function runTests() {
+  const results = [];
+  function test(name, fn) {
+    try { fn(); results.push({ name, ok: true }); }
+    catch (e) { results.push({ name, ok: false, msg: e.message || String(e) }); }
+  }
+  function assert(cond, msg) { if (!cond) throw new Error(msg || 'assertion failed'); }
+
+  test('canvas contexts exist', () => {
+    assert(cv && ctx && buf && bufCtx, 'missing canvas or buffer context');
+  });
+  test('drawing controls populated', () => {
+    assert(document.querySelectorAll('.color-dot').length === COLORS.length, 'color controls mismatch');
+    assert(document.querySelectorAll('.size-opt').length === SIZES.length, 'size controls mismatch');
+  });
+  test('ghost modes have controls', () => {
+    ['prev', 'anchor', 'both'].forEach(mode => assert(document.getElementById('gm-' + mode), 'missing ghost mode ' + mode));
+  });
+  test('round controls exist', () => {
+    assert(document.querySelectorAll('.pill').length === 3, 'expected three round controls');
+  });
+  test('initial state is empty and previous-frame mode', () => {
+    assert(S.frames.length === 0, 'initial frames should be empty');
+    assert(S.ghostMode === 'prev', 'initial ghost mode should be previous-frame');
+    assert(S.fps === 6, 'initial fps should be 6');
+  });
+  test('frame guard max is reachable', () => {
+    assert(typeof lockFrame === 'function', 'lockFrame missing');
+    assert(S.frames.length < 12, 'initial frame count should be below max');
+  });
+
+  const el = document.getElementById('test-status');
+  const failed = results.filter(r => !r.ok);
+  if (failed.length === 0) {
+    el.textContent = `All ${results.length} self-tests passed.`;
+    el.style.color = '#16a34a';
+  } else {
+    el.textContent = `Self-tests: ${results.length - failed.length}/${results.length} passed. Failures: ` +
+      failed.map(r => r.name + ': ' + r.msg).join(' | ');
+    el.style.color = '#b91c1c';
+  }
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 window.addEventListener('resize', () => { resize(); });
 resize();
+runTests();
 requestAnimationFrame(render);
 </script>
 </body>

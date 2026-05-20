@@ -20,9 +20,9 @@ The first repo goal is to create a static, GitHub Pages-ready tool ecosystem wit
 | 1 | Worksheets + AI Use / Consent Checklist | Launch ready Markdown | Optional printable/PDF versions later |
 | 2 | Tokenizer + Temperature Visualizer | Launch ready | Manual browser QA before session |
 | 3 | ELIZA Simulator | Launch ready | Manual browser QA before session |
-| 4 | Diffusion Step-Through Viewer | Launch ready draft | Add pre-generated PNG sequences when available |
+| 4 | Diffusion Step-Through Viewer | Launch ready | Add pre-generated PNG sequences later if curated assets become available |
 | 5 | Feature Extraction / Pixel Resolution Tool | Launch ready | Replace generated teaching images with curated assets later if desired |
-| 6 | Temporal Telephone | Launch ready | Pilot with facilitators before Session 3 |
+| 6 | Temporal Telephone | Launch ready | Use as the Session 3 centerpiece and pilot with facilitators before live run |
 | 7 | Facilitation docs | Pilot scripts ready | Expand after first cohort feedback |
 | 8 | Pilot checklist + feedback template | Ready for pilot | Convert to form only if needed |
 
@@ -105,8 +105,8 @@ Build these after the launch MVP, using pilot evidence before turning examples i
 | Tool | Current Direction |
 | --- | --- |
 | A/B/C Comparison Board | Second-wave draft; use it to collect structured pilot evidence across text, image, and video |
-| Model Card Builder | Build next with the same local export pattern for claims, tests, limits, defaults, and responsible-use boundaries |
-| Concept Bridge Pages | Build as lightweight Jekyll pages once pilot language stabilizes |
+| Model Card Builder | Second-wave draft; use for the critical/no-AI pathway and Session 4 showcase preparation |
+| Concept Bridge Pages | Second-wave draft; use during debriefs, recaps, and classroom adaptation |
 | Default Test Comparison Viewer | Keep parked until there are reviewed participant examples |
 | Failure Gallery Viewer | Keep parked until there are curated video clips and failure labels |
 | Prompt Guidance Word-by-Word Reveal | Useful after the diffusion activity language stabilizes |

@@ -13,7 +13,7 @@ Canonical tool folders for the Learning Machines camp.
 | --- | --- | --- |
 | Tokenizer + Temperature Visualizer | `tokenizer-temperature-visualizer/` | Launch ready |
 | ELIZA Simulator | `eliza-simulator/` | Launch ready |
-| Diffusion Step-Through Viewer | `diffusion-step-through-viewer/` | Launch ready draft |
+| Diffusion Step-Through Viewer | `diffusion-step-through-viewer/` | Launch ready |
 | Feature Extraction / Pixel Resolution Tool | `feature-extraction-pixel-resolution/` | Launch ready |
 | Temporal Telephone | `temporal-telephone/` | Launch ready |
 
@@ -24,8 +24,8 @@ Canonical tool folders for the Learning Machines camp.
 | Default Test Comparison Viewer | `default-test-comparison-viewer/` | Coming later |
 | Video Failure Gallery Viewer | `video-failure-gallery-viewer/` | Coming later |
 | A/B/C Comparison Board | `abc-comparison-board/` | Second-wave draft |
-| Model Card Builder | `model-card-builder/` | Coming later |
-| Concept Bridge Pages | `concept-bridges/` | Coming later |
+| Model Card Builder | `model-card-builder/` | Second-wave draft |
+| Concept Bridge Pages | `concept-bridges/` | Second-wave draft |
 
 ## Stretch Tools
 

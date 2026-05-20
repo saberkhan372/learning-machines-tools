@@ -3,29 +3,155 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Concept Bridges</title>
+  <title>Concept Bridges — Learning Machines</title>
   <style>
-    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #20201d; background: #f7f1e6; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: #2364aa; }
-    .card { border: 1px solid #d9ccb8; border-radius: 8px; padding: 22px; background: #fffaf1; box-shadow: 0 10px 28px rgba(49, 39, 25, 0.10); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; }
-    p, li { color: #6f675b; line-height: 1.55; }
+    :root {
+      --bg: #eef4f1;
+      --paper: #fffdf8;
+      --ink: #20201d;
+      --muted: #66706c;
+      --line: #c8d3cf;
+      --accent: #2364aa;
+      --green: #3b7d59;
+      --amber: #9a641c;
+      --rose: #9a3e4a;
+      --violet: #6d28d9;
+      --shadow: 0 14px 34px rgba(28, 40, 38, 0.10);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
+    main { width: min(1120px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0 48px; }
+    a { color: var(--accent); }
+    h1, h2, h3, p { margin-top: 0; letter-spacing: 0; }
+    h1 { margin-bottom: 12px; font-size: clamp(2.1rem, 6vw, 4.4rem); line-height: 1.04; }
+    p, li { color: var(--muted); line-height: 1.55; }
+    .topbar { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 18px; }
+    .back-link { font-weight: 700; text-decoration: none; }
+    .status { color: var(--muted); font-size: 0.92rem; }
+    .panel { border: 1px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: var(--shadow); }
+    .hero { padding: 24px; margin-bottom: 18px; }
+    .eyebrow { margin-bottom: 8px; color: var(--amber); font-size: 0.82rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .hero p { max-width: 76ch; margin-bottom: 0; font-size: 1.03rem; }
+    .bridge-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .bridge { padding: 18px; }
+    .bridge h2 { margin-bottom: 8px; font-size: 1.25rem; }
+    .bridge .tag { display: inline-block; margin-bottom: 12px; border-radius: 999px; padding: 4px 9px; font-size: 0.76rem; font-weight: 800; color: #fff; }
+    .prediction .tag { background: var(--accent); }
+    .seeing .tag { background: var(--green); }
+    .confidence .tag { background: var(--violet); }
+    .defaults .tag { background: var(--rose); }
+    .bridge ul { padding-left: 20px; margin: 10px 0 0; }
+    .use-with { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .links a { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; background: #fff; text-decoration: none; font-size: 0.84rem; font-weight: 700; }
+    .facilitator { margin-top: 18px; padding: 18px; }
+    .facilitator ol { padding-left: 20px; margin-bottom: 0; }
+    @media (max-width: 760px) {
+      main { width: min(100% - 20px, 1120px); padding-top: 18px; }
+      .topbar, .bridge-grid { display: grid; grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
   <main>
-    <a href="../../">Back to tools</a>
-    <div class="card">
-      <h1>Concept Bridges</h1>
-      <p><strong>Coming later.</strong> This hub will collect short explainers that connect camp activities to durable AI literacy ideas after the launch language stabilizes.</p>
-      <ul>
-        <li>Prediction Is Not Understanding</li>
-        <li>What Does the Machine See?</li>
-        <li>Confidence Is Not Truth</li>
-        <li>Default Is a Design Decision</li>
-      </ul>
+    <div class="topbar">
+      <a class="back-link" href="../../">Back to tools</a>
+      <span class="status">Second-wave draft</span>
     </div>
+
+    <section class="hero panel">
+      <p class="eyebrow">Concept bridge pages</p>
+      <h1>Concept Bridges</h1>
+      <p>Short explainers that connect camp activities to durable AI literacy ideas. Use these during debriefs, recaps, showcase prep, or classroom adaptation.</p>
+    </section>
+
+    <section class="bridge-grid" aria-label="Concept bridges">
+      <article class="bridge panel prediction">
+        <span class="tag">Session 1</span>
+        <h2>Prediction Is Not Understanding</h2>
+        <p>A system can produce fluent language without understanding meaning the way humans do. The key evidence is behavioral: token probabilities, rule matching, and failures under vague or misleading prompts.</p>
+        <ul>
+          <li>Fluency can create trust before evidence supports it.</li>
+          <li>High-probability text can still be false, biased, or empty.</li>
+          <li>Human judgment supplies purpose, context, and accountability.</li>
+        </ul>
+        <div class="use-with">
+          <strong>Use with</strong>
+          <div class="links">
+            <a href="../tokenizer-temperature-visualizer/">Tokenizer</a>
+            <a href="../eliza-simulator/">ELIZA</a>
+            <a href="../../worksheets/text-experiment-board/">Text Board</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bridge panel seeing">
+        <span class="tag">Session 2</span>
+        <h2>What Does the Machine See?</h2>
+        <p>Models work with numerical representations, not human meaning. Pixels, features, embeddings, and denoising steps are ways of turning images into patterns a system can process.</p>
+        <ul>
+          <li>Recognition changes as resolution and features change.</li>
+          <li>Diffusion builds structure through iterative denoising.</li>
+          <li>The prompt leaves gaps; the model fills them with defaults.</li>
+        </ul>
+        <div class="use-with">
+          <strong>Use with</strong>
+          <div class="links">
+            <a href="../feature-extraction-pixel-resolution/">Feature Tool</a>
+            <a href="../diffusion-step-through-viewer/">Diffusion</a>
+            <a href="../../worksheets/image-default-test-board/">Image Board</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bridge panel confidence">
+        <span class="tag">All sessions</span>
+        <h2>Confidence Is Not Truth</h2>
+        <p>A confidence score or high probability means the output fits the model's learned pattern. It does not mean the output is true, fair, meaningful, or appropriate.</p>
+        <ul>
+          <li>In text, probability shapes the next token.</li>
+          <li>In images, denoising choices can look polished without being neutral.</li>
+          <li>In video, coherent-looking motion can still break physics or identity.</li>
+        </ul>
+        <div class="use-with">
+          <strong>Use with</strong>
+          <div class="links">
+            <a href="../abc-comparison-board/">A/B/C Board</a>
+            <a href="../model-card-builder/">Model Card</a>
+            <a href="../../worksheets/model-investigation-journal/">Journal</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bridge panel defaults">
+        <span class="tag">Ethics spine</span>
+        <h2>Default Is a Design Decision</h2>
+        <p>A model's default output is not neutral. Defaults emerge from training data, tool design, platform decisions, prompt ambiguity, and social patterns.</p>
+        <ul>
+          <li>Ask what appeared without being requested.</li>
+          <li>Ask who is centered, erased, stereotyped, or copied.</li>
+          <li>Ask what responsible revision would require.</li>
+        </ul>
+        <div class="use-with">
+          <strong>Use with</strong>
+          <div class="links">
+            <a href="../../worksheets/ai-use-consent-checklist/">Consent Checklist</a>
+            <a href="../abc-comparison-board/">A/B/C Board</a>
+            <a href="../model-card-builder/">Model Card</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="facilitator panel">
+      <h2>Facilitator Move</h2>
+      <ol>
+        <li>Ask participants to name the mechanism they observed.</li>
+        <li>Ask what evidence supports that claim.</li>
+        <li>Ask where human judgment entered the loop.</li>
+        <li>Ask what ethical or classroom boundary the evidence reveals.</li>
+      </ol>
+    </section>
   </main>
 </body>
 </html>

@@ -41,7 +41,7 @@ The tool principle is:
 | --- | --- | --- | --- |
 | 1 | Tokenizer + Temperature Visualizer | Launch ready | Make tokenization, probability, and sampling visible |
 | 2 | ELIZA Simulator | Launch ready | Make rule-based AI legible |
-| 3 | Diffusion Step-Through Viewer | Launch ready draft | Make denoising visible with canvas fallback and future image-sequence support |
+| 3 | Diffusion Step-Through Viewer | Launch ready | Make denoising visible with canvas fallback and future image-sequence support |
 | 4 | Feature Extraction / Pixel Resolution Tool | Launch ready | Make image representation visible |
 | 5 | Temporal Telephone | Launch ready | Make temporal drift and anchoring visible |
 
@@ -50,8 +50,8 @@ The tool principle is:
 - Default Test Comparison Viewer
 - Video Failure Gallery Viewer
 - A/B/C Comparison Board - second-wave draft
-- Model Card Builder
-- Concept Bridge pages
+- Model Card Builder - second-wave draft
+- Concept Bridge pages - second-wave draft
 - Prompt Guidance Word-by-Word Reveal
 - Frame-by-Frame Coherence Viewer
 - Next-Token Prediction Game
