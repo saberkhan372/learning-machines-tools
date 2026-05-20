@@ -367,6 +367,51 @@ header {
 .reflection-card strong { color: #111; display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
 .reflection-card ol { padding-left: 18px; }
 .reflection-card li { margin-bottom: 3px; }
+
+/* Lens grid */
+.lens-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
+@media (max-width: 480px) { .lens-grid { grid-template-columns: 1fr; } }
+.lens-card { border: 1px solid #d9ccb8; border-radius: 8px; padding: 10px 12px; font-size: 12px; color: #555; line-height: 1.5; }
+.lens-who { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.lens-who.human   { color: #b45309; }
+.lens-who.machine { color: #1d4ed8; }
+.lens-who.system  { color: #6d28d9; }
+.lens-who.ethics  { color: #b91c1c; }
+
+/* Failure bridge card */
+.failure-card {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: #FFEBEE;
+  border: 1.5px solid #ffcdd2;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #7f1010;
+  line-height: 1.6;
+}
+.failure-card strong { color: #b71c1c; display: block; margin-bottom: 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+.failure-card ul { padding-left: 18px; margin: 6px 0 0; }
+.failure-card li { margin-bottom: 3px; }
+
+/* Facilitator card */
+.facilitator-card {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  background: #eff6ff;
+  border: 1.5px solid #93c5fd;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #1e3a8a;
+  line-height: 1.6;
+}
+.facilitator-card strong { color: #1e40af; }
+.facilitator-card ul { padding-left: 18px; margin: 6px 0 0; }
+.facilitator-card li { margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -439,13 +484,56 @@ header {
 </div>
 
 <div class="reflection-card">
-  <strong>Reflection prompts</strong>
-  <ol>
-    <li>Where did the drawing drift furthest from the original prompt?</li>
-    <li>Which ghost mode (previous frame / anchor / both) kept the sequence most coherent? Why?</li>
-    <li>What would a video model need to "remember" to avoid this drift?</li>
-    <li>What failure modes in AI-generated video does this activity help explain?</li>
-  </ol>
+  <strong>Reflection — Human · Machine · System · Ethics</strong>
+  <div class="lens-grid">
+    <div class="lens-card">
+      <div class="lens-who human">Human</div>
+      Which ghost mode did you use? What decision did you make at each frame? When did you choose to drift versus anchor? What would you do differently in Round 2?
+    </div>
+    <div class="lens-card">
+      <div class="lens-who machine">Machine</div>
+      Where did the sequence drift furthest from the prompt? At what frame did identity first break? Which ghost mode produced the most coherent sequence — and why might anchoring help?
+    </div>
+    <div class="lens-card">
+      <div class="lens-who system">System</div>
+      A video model generates each frame conditioned on the prompt and sometimes the previous frame — just like Run A. What would it need to maintain identity across 100 frames? What system choices make coherence more or less likely?
+    </div>
+    <div class="lens-card">
+      <div class="lens-who ethics">Ethics</div>
+      If a video model generates a person whose appearance drifts across frames — different skin tone, age, or expression — who is affected? What are the risks of identity drift in real-person video generation?
+    </div>
+  </div>
+</div>
+
+<div class="failure-card">
+  <strong>Bridge to AI video failure modes</strong>
+  <ul>
+    <li><strong>Identity drift</strong> — a character's face, age, or appearance changes across frames. Your sequence likely showed this.</li>
+    <li><strong>Motion continuity break</strong> — an object or body part teleports between frames. Caused by the same frame-by-frame prediction problem you simulated.</li>
+    <li><strong>Physics break</strong> — objects fall the wrong way, cloth ignores gravity, water moves backwards. Each frame is a prediction, not a simulation.</li>
+    <li><strong>Background teleport</strong> — the scene behind a subject changes without camera movement. The model re-predicts the background independently at each step.</li>
+    <li><strong>Style drift</strong> — the visual style shifts across the sequence. No global style memory across frames.</li>
+    <li><strong>Text corruption</strong> — readable text in frame 1 becomes garbled by frame 10. Text is predicted pixel-by-pixel, not recalled as symbols.</li>
+  </ul>
+  <p style="margin-top:8px;">Run A (previous frame only) simulates standard video generation. Run B (anchor) simulates using a reference image. Run C (both) simulates hybrid conditioning. Real models use more sophisticated approaches — but the fundamental drift problem is the same.</p>
+</div>
+
+<div class="facilitator-card">
+  <strong>Facilitator note — Workshop sequence (15–20 min)</strong>
+  <ul>
+    <li><strong>Before the tool (5 min) — unplugged version.</strong> If time allows: give participants slips of paper. One person draws "a person at work." Pass the drawing face-down. Next person draws what happens next, seeing only a faint trace. Repeat 6–8 times. This makes drift physical before the digital tool.</li>
+    <li><strong>Round 1 — Run A, telephone (5 min).</strong> Use "Previous frame" ghost mode. 6–8 frames. Don't reveal the prompt. Play back. Ask: where did it go? What drifted? Reveal the original prompt.</li>
+    <li><strong>Round 2 — Run B or C, conditioned (5 min).</strong> Reveal the prompt. Use Anchor or Both mode. Same number of frames. Play back. Compare directly: does anchoring help? What still drifts?</li>
+    <li><strong>Debrief with the failure bridge (5 min).</strong> Show the failure card. Ask participants to match each failure mode to something they saw in the playback. Name the drift precisely.</li>
+  </ul>
+  <p style="margin-top:8px;"><strong>Key debrief questions:</strong></p>
+  <ul>
+    <li>A video model generates each frame using the prompt and sometimes the previous frame. After Round 1, does that mechanism surprise you?</li>
+    <li>What information would a model need to keep a character's face consistent across 60 seconds of video?</li>
+    <li>Run B used a fixed anchor — the first frame. Why might that help? What would it miss?</li>
+    <li>If this model generated a real person's likeness and it drifted — different skin tone, age, expression — what are the ethical problems with that?</li>
+    <li>You made intentional choices each frame. The model doesn't. What is lost when that judgment is removed?</li>
+  </ul>
 </div>
 
 <script>

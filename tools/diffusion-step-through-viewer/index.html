@@ -129,6 +129,35 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #111; }
 }
 .reflection-card ol { padding-left: 18px; }
 .reflection-card li { margin-bottom: 4px; }
+
+/* Reflection lenses grid */
+.lens-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+@media (max-width: 560px) { .lens-grid { grid-template-columns: 1fr; } }
+.lens-card {
+  border: 1px solid #d9ccb8; border-radius: 8px; padding: 10px 12px;
+  font-size: 12px; color: #555; line-height: 1.5;
+}
+.lens-who { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.lens-who.human  { color: #b45309; }
+.lens-who.machine{ color: #1d4ed8; }
+.lens-who.system { color: #6d28d9; }
+
+/* Facilitator card */
+.facilitator-card {
+  width: 100%; max-width: 680px; margin-top: 10px; margin-bottom: 20px;
+  background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px;
+  padding: 14px 16px; font-size: 13px; color: #1e3a8a; line-height: 1.6;
+}
+.facilitator-card strong { color: #1e40af; }
+.facilitator-card ul { padding-left: 18px; margin: 6px 0 0; }
+.facilitator-card li { margin-bottom: 4px; }
+
+/* Self-test status */
+#test-status {
+  width: 100%; max-width: 680px;
+  font-size: 11px; font-family: ui-monospace, monospace; color: #888;
+  margin-top: 6px; min-height: 16px;
+}
 </style>
 </head>
 <body>
@@ -181,14 +210,46 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #111; }
 </div>
 
 <div class="reflection-card">
-  <strong>Discussion prompts</strong>
-  <ol>
-    <li>At which step did the subject first become recognizable to you?</li>
-    <li>What appeared first — color, shape, or detail? Why might that be?</li>
-    <li>What did the model assume that the prompt didn't specify?</li>
-    <li>Where do those assumptions come from?</li>
+  <strong>Discussion — Human · Machine · System</strong>
+  <div class="lens-grid">
+    <div class="lens-card">
+      <div class="lens-who human">Human</div>
+      What did you choose? (Prompt, sequence, step to stop on.) What would you change? What surprised you about when recognition kicked in?
+    </div>
+    <div class="lens-card">
+      <div class="lens-who machine">Machine</div>
+      At which step did the subject first become recognizable? What appeared first — color, shape, or detail? What did the model add that the prompt never specified?
+    </div>
+    <div class="lens-card">
+      <div class="lens-who system">System</div>
+      For the Default Test prompt ("a doctor") — what skin tone, gender, age, setting, and pose appeared by default? What training data shapes those assumptions?
+    </div>
+  </div>
+  <ol style="margin-top:10px;padding-left:18px;">
+    <li>Generation is described as iterative denoising, not drawing. What does that mean for how the model "thinks about" the subject?</li>
+    <li>The prompt doesn't specify every detail — the model fills gaps. Where do those gap-fillers come from?</li>
+    <li>Bridge back to Session 1: in text generation, the model predicted the next token. What is the analogous prediction step here?</li>
   </ol>
 </div>
+
+<div class="facilitator-card">
+  <strong>Facilitator note — Workshop sequence (10–12 min)</strong>
+  <ul>
+    <li><strong>Step 1 (2 min) — Color first.</strong> Open Golden City at step 0. Ask: what do you see? Step to 6 together. Ask: what resolved? Establish that low-frequency color information emerges before fine detail.</li>
+    <li><strong>Step 2 (3 min) — Mechanism.</strong> Walk through the teaching card. Generation is denoising, not drawing. The prompt does not specify everything — defaults are baked in at each step.</li>
+    <li><strong>Step 3 (3 min) — Default Test.</strong> Switch to "A doctor." Start at step 0, step to 20 together. Ask: what did the model decide without being asked? Skin tone, gender, pose, setting, stethoscope. Where do those defaults come from?</li>
+    <li><strong>Step 4 (4 min) — Bridge.</strong> Ask: "In Session 1, the model predicted the next token. What is it predicting here?" (Each denoising step is a prediction about which pixels are most likely given the prompt and current state.) Both are prediction. Both reflect training data. Both have defaults.</li>
+  </ul>
+  <p style="margin-top:8px;"><strong>Debrief questions:</strong></p>
+  <ul>
+    <li>If you ran this 100 times with the prompt "a doctor," would you always get the same image? What would vary?</li>
+    <li>At what step would the image be most useful to show to a student who doesn't understand diffusion?</li>
+    <li>The image looks finished at step 20 — but every assumption is "baked in" at that point. What would it take to change one of those assumptions?</li>
+    <li>A more specific prompt changes the defaults. Is specificity in a prompt neutral — or is it itself a kind of design choice?</li>
+  </ul>
+</div>
+
+<div id="test-status"></div>
 
 <script>
 const CV_W = 640, CV_H = 400, MAX_STEPS = 20, N_NOISE = 6;
@@ -589,6 +650,48 @@ SEQUENCES.forEach((seq, i) => {
 });
 
 selectSeq(0);
+
+// ── Self-tests ────────────────────────────────────────────────────────────────
+(function runTests() {
+  const results = [];
+  function test(name, fn) {
+    try { fn(); results.push({ name, ok: true }); }
+    catch (e) { results.push({ name, ok: false, msg: e.message || String(e) }); }
+  }
+  function assert(cond, msg) { if (!cond) throw new Error(msg || 'assertion failed'); }
+
+  test('sequences defined', () => assert(SEQUENCES.length >= 3, 'need at least 3 sequences'));
+  test('one default-test sequence', () => assert(SEQUENCES.some(s => s.defaultTest), 'need a Default Test sequence'));
+  test('stages cover full range', () => {
+    const steps = STAGES.map(s => s[0]);
+    assert(steps[0] === 0, 'first stage must start at 0');
+    assert(steps[steps.length - 1] === MAX_STEPS, 'last stage must reach MAX_STEPS');
+  });
+  test('PRNG is deterministic', () => {
+    const rng1 = lcg(42); const rng2 = lcg(42);
+    assert(rng1() === rng2(), 'same seed must produce same first value');
+  });
+  test('getStage returns Pure noise at 0', () => {
+    const [step] = getStage(0);
+    assert(step === 0, 'getStage(0) should return stage at step 0');
+  });
+  test('getStage returns Final image at MAX_STEPS', () => {
+    const [, name] = getStage(MAX_STEPS);
+    assert(name === 'Final image', `expected Final image, got: ${name}`);
+  });
+  test('noise canvases pre-generated', () => assert(noiseCanvases.length === N_NOISE, `expected ${N_NOISE} noise canvases`));
+
+  const el = document.getElementById('test-status');
+  const failed = results.filter(r => !r.ok);
+  if (failed.length === 0) {
+    el.textContent = `All ${results.length} self-tests passed.`;
+    el.style.color = '#16a34a';
+  } else {
+    el.textContent = `Self-tests: ${results.length - failed.length}/${results.length} passed. Failures: ` +
+      failed.map(r => r.name + ': ' + r.msg).join(' | ');
+    el.style.color = '#b91c1c';
+  }
+})();
 </script>
 </body>
 </html>
