@@ -1,307 +1,398 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Default Is a Design Decision - Concept Bridge</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f3ee;
-      color: #1c2028;
-      line-height: 1.55;
-      padding: 24px 20px 60px;
-    }
-    .wrap { max-width: 760px; margin: 0 auto; }
-    .back { font-size: 13px; color: #7f8694; margin-bottom: 20px; display: flex; gap: 16px; flex-wrap: wrap; }
-    .back a { color: inherit; text-decoration: none; }
-    .back a:hover { color: #1c2028; }
-    .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-    .badge {
-      font-size: 0.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 999px;
-      letter-spacing: 0.05em;
-    }
-    .badge.bridge { background: #fef9ef; color: #b45f3a; border: 1.5px solid #d9ccb8; }
-    .badge.session { background: #fee2e2; color: #991b1b; border: 1.5px solid #fecaca; }
-    h1 {
-      font-size: clamp(1.7rem, 5vw, 2.55rem);
-      font-weight: 850;
-      line-height: 1;
-      letter-spacing: 0;
-      margin-bottom: 14px;
-    }
-    .lead {
-      font-size: 0.98rem;
-      color: #3a3530;
-      border-left: 3px solid #d9ccb8;
-      padding-left: 14px;
-      margin-bottom: 28px;
-      line-height: 1.65;
-    }
-    .key-line {
-      background: #1c2028;
-      color: #fffaf1;
-      border-radius: 10px;
-      padding: 20px 22px;
-      margin-bottom: 20px;
-      font-size: 1.05rem;
-      font-weight: 760;
-      line-height: 1.45;
-    }
-    .kl-label {
-      display: block;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(255,250,241,0.56);
-      margin-bottom: 7px;
-    }
-    .prompt-panel {
-      background: #fff;
-      border: 1.5px solid #d9ccb8;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 22px;
-    }
-    .prompt-label {
-      font-size: 0.72rem;
-      font-weight: 850;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #b45f3a;
-      margin-bottom: 8px;
-    }
-    .prompt {
-      background: #f5f3ee;
-      border: 1px solid #d9ccb8;
-      border-radius: 7px;
-      padding: 13px 16px;
-      font-size: 1rem;
-      margin-bottom: 16px;
-      color: #1c2028;
-    }
-    .defaults-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-    .default-card {
-      background: #fff7ed;
-      border: 1.5px solid #fed7aa;
-      border-radius: 8px;
-      padding: 12px;
-      min-height: 112px;
-    }
-    .default-card strong {
-      display: block;
-      color: #9a3412;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 5px;
-    }
-    .default-card p {
-      color: #7c2d12;
-      font-size: 0.86rem;
-      line-height: 1.45;
-    }
-    .sources {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-    .source {
-      background: #fff;
-      border: 1.5px solid #d9ccb8;
-      border-radius: 9px;
-      padding: 14px;
-    }
-    .source strong {
-      display: block;
-      color: #1c2028;
-      margin-bottom: 4px;
-      font-size: 0.92rem;
-    }
-    .source p {
-      color: #555d6e;
-      font-size: 0.86rem;
-      line-height: 1.55;
-    }
-    .checklist {
-      background: #fef9ef;
-      border: 1.5px solid #d9ccb8;
-      border-radius: 10px;
-      padding: 18px;
-      margin-bottom: 22px;
-    }
-    .checklist h2 {
-      font-size: 1.05rem;
-      margin-bottom: 10px;
-      color: #1c2028;
-    }
-    .check-row {
-      display: grid;
-      grid-template-columns: 26px 1fr;
-      gap: 10px;
-      align-items: start;
-      padding: 9px 0;
-      border-top: 1px solid #e8dccb;
-    }
-    .check-row:first-of-type { border-top: none; }
-    .box {
-      width: 18px;
-      height: 18px;
-      margin-top: 2px;
-      border: 2px solid #b45f3a;
-      border-radius: 4px;
-      background: #fff;
-    }
-    .check-row p { color: #5a4010; font-size: 0.9rem; }
-    .connect {
-      background: #eff6ff;
-      border: 1.5px solid #93c5fd;
-      border-radius: 10px;
-      padding: 16px 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .connect-label {
-      font-size: 0.72rem;
-      font-weight: 850;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #1e40af;
-    }
-    .connect p { font-size: 0.88rem; color: #1e3a8a; line-height: 1.55; }
-    .links { display: flex; flex-wrap: wrap; gap: 8px; }
-    .links a {
-      display: inline-block;
-      padding: 9px 14px;
-      background: #2563eb;
-      color: #fff;
-      border-radius: 7px;
-      font-size: 0.84rem;
-      font-weight: 750;
-      text-decoration: none;
-    }
-    .links a:hover { background: #1d4ed8; }
-    @media (max-width: 680px) {
-      body { padding: 18px 14px 46px; }
-      .defaults-grid,
-      .sources { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Default Is a Design Decision — Concept Bridge</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f3ee;
+  color: #1c2028;
+  line-height: 1.55;
+  padding: 24px 20px 60px;
+}
+.wrap { max-width: 680px; margin: 0 auto; }
+.back { font-size: 13px; color: #7f8694; margin-bottom: 20px; display: flex; gap: 16px; }
+.back a { color: inherit; text-decoration: none; }
+.back a:hover { color: #1c2028; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.badge {
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em;
+}
+.badge.bridge { background: #fef9ef; color: #b45f3a; border: 1.5px solid #d9ccb8; }
+.badge.session { background: #f3e8ff; color: #6b21a8; border: 1.5px solid #d8b4fe; }
+h1 {
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 800; line-height: 1;
+  letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.lead {
+  font-size: 0.96rem; color: #3a3530;
+  border-left: 3px solid #d9ccb8;
+  padding-left: 14px;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+/* Prompt selector */
+.selector-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: #7f8694; margin-bottom: 10px;
+}
+.prompt-btns {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 0;
+}
+.pbtn {
+  font-family: inherit; font-size: 0.9rem; font-weight: 600;
+  padding: 9px 18px;
+  border: 1.5px solid #d9ccb8;
+  background: #ece6dc; color: #7f8694;
+  border-radius: 999px; cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.pbtn.active {
+  background: #1c2028; color: #fffaf1;
+  border-color: #1c2028;
+}
+.pbtn:hover:not(.active) { background: #dfd8cc; color: #1c2028; }
+
+/* Decision board */
+.decision-board {
+  background: #fff;
+  border: 1.5px solid #d9ccb8;
+  border-radius: 0 10px 10px 10px;
+  padding: 20px;
+  margin-bottom: 24px;
+  display: none;
+}
+.decision-board.active { display: block; }
+
+.db-prompt {
+  background: #f5f3ee;
+  border: 1px solid #d9ccb8;
+  border-radius: 7px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: #1c2028;
+}
+.db-prompt em { font-style: normal; font-weight: 700; color: #b45f3a; }
+
+.defaults-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.dc {
+  background: #fff7ed;
+  border: 1.5px solid #fed7aa;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.dc strong {
+  display: block; font-size: 0.7rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: #9a3412; margin-bottom: 5px;
+}
+.dc p { font-size: 0.86rem; color: #7c2d12; line-height: 1.45; }
+
+.db-note {
+  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  border-radius: 7px; padding: 11px 14px;
+  font-size: 0.84rem; color: #5a4010; line-height: 1.55;
+}
+.db-note strong { color: #3d2a08; }
+
+/* Selector connector line — board sits right below buttons */
+.selector-wrap {
+  margin-bottom: 0;
+}
+.selector-wrap .prompt-btns {
+  border-radius: 8px 8px 0 0;
+}
+
+/* Key line */
+.key-line {
+  background: #1c2028; color: #fffaf1;
+  border-radius: 10px; padding: 20px 22px;
+  margin-bottom: 20px;
+  font-size: 1.05rem; font-weight: 700; line-height: 1.45;
+}
+.kl-label {
+  display: block; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: rgba(255,250,241,0.5);
+  margin-bottom: 7px;
+}
+
+/* Sources */
+.sources-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 10px; margin-bottom: 24px;
+}
+.src {
+  background: #fff; border: 1.5px solid #d9ccb8;
+  border-radius: 8px; padding: 13px 14px;
+}
+.src strong {
+  display: block; font-size: 0.78rem; font-weight: 800;
+  color: #1c2028; margin-bottom: 4px;
+}
+.src p { font-size: 0.84rem; color: #555d6e; line-height: 1.5; }
+
+/* Nuance */
+.nuance {
+  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  border-radius: 8px; padding: 14px 16px;
+  font-size: 0.86rem; color: #5a4010; line-height: 1.6;
+  margin-bottom: 24px;
+}
+.nuance strong { color: #3d2a08; }
+
+/* Connect */
+.connect {
+  background: #eff6ff; border: 1.5px solid #93c5fd;
+  border-radius: 10px; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.connect-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #1e40af;
+}
+.connect p { font-size: 0.88rem; color: #1e3a8a; line-height: 1.55; }
+.connect-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.connect-links a {
+  display: inline-block; padding: 9px 14px;
+  background: #2563eb; color: #fff;
+  border-radius: 7px; font-size: 0.84rem; font-weight: 700;
+  text-decoration: none; width: fit-content;
+}
+.connect-links a:hover { background: #1d4ed8; }
+
+@media (max-width: 500px) {
+  .defaults-grid { grid-template-columns: 1fr; }
+  .sources-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <nav class="back">
-      <a href="../">Concept Bridges</a>
-      <a href="../../../">All tools</a>
-    </nav>
+<div class="wrap">
+  <nav class="back">
+    <a href="../">← Concept Bridges</a>
+    <a href="../../../">All tools</a>
+  </nav>
 
-    <div class="badges">
-      <span class="badge bridge">Bridge 2</span>
-      <span class="badge session">Before Session 2: Images</span>
+  <div class="badges">
+    <span class="badge bridge">Bridge 2</span>
+    <span class="badge session">Before Session 2: Images</span>
+  </div>
+
+  <h1>Default Is a Design Decision</h1>
+
+  <p class="lead">When you leave something out of a prompt, the model still has to make it specific. Age, gender, skin tone, setting, style — all of it gets filled in. That filling-in is not random and it is not neutral. It reflects what appeared most often in training data and what the people who built the tool decided to preserve, filter, or amplify.</p>
+
+  <div class="selector-label">Pick a prompt to investigate its defaults</div>
+  <div class="selector-wrap">
+    <div class="prompt-btns" role="tablist">
+      <button class="pbtn active" data-p="doctor" role="tab" aria-selected="true">"a doctor"</button>
+      <button class="pbtn" data-p="ceo" role="tab" aria-selected="false">"a CEO"</button>
+      <button class="pbtn" data-p="criminal" role="tab" aria-selected="false">"a criminal"</button>
+      <button class="pbtn" data-p="family" role="tab" aria-selected="false">"a family"</button>
     </div>
 
-    <h1>Default Is a Design Decision</h1>
-
-    <p class="lead">A default is what appears when the prompt leaves something unsaid. Generative systems still have to make the missing details specific: who appears, where they are, what style shows up, what kind of motion feels normal, and whose version of normal is treated as obvious.</p>
-
-    <div class="key-line">
-      <span class="kl-label">Key line</span>
-      "If you did not ask for it, but it appeared anyway, that is evidence."
-    </div>
-
-    <section class="prompt-panel" aria-label="Default test example">
-      <p class="prompt-label">Default Test prompt</p>
-      <div class="prompt">"Generate an image of a doctor."</div>
+    <!-- Doctor -->
+    <div class="decision-board active" id="p-doctor" role="tabpanel">
+      <div class="db-prompt">Generate an image of <em>a doctor</em>.</div>
       <div class="defaults-grid">
-        <div class="default-card">
+        <div class="dc">
           <strong>Body</strong>
-          <p>What age, gender, skin tone, ability, expression, or posture appeared?</p>
+          <p>Often: white or light-skinned, male, 35–55, standing, confident posture. Rarely: older, disabled, non-Western features.</p>
         </div>
-        <div class="default-card">
+        <div class="dc">
           <strong>Setting</strong>
-          <p>Where did the scene happen? Clinic, hospital, office, home, lab, or somewhere else?</p>
+          <p>Sterile hospital corridor or exam room. Western clinical architecture — not a clinic, field hospital, or home visit.</p>
         </div>
-        <div class="default-card">
+        <div class="dc">
           <strong>Role</strong>
-          <p>Who seems to have authority? Who is centered? Who is absent?</p>
+          <p>Authority figure at the center. Patient absent or backgrounded. No one else appears unless specified.</p>
         </div>
-        <div class="default-card">
+        <div class="dc">
           <strong>Objects</strong>
-          <p>What tools, clothing, symbols, or props did the model treat as obvious?</p>
+          <p>Stethoscope around the neck. White coat. Clipboard or tablet. These props are treated as definitional.</p>
         </div>
-        <div class="default-card">
+        <div class="dc">
           <strong>Style</strong>
-          <p>What visual style, lighting, realism, polish, or cultural reference appeared?</p>
+          <p>Realistic, professional lighting. Aspirational polish — the visual language of a hospital brochure.</p>
         </div>
-        <div class="default-card">
+        <div class="dc">
           <strong>Action</strong>
-          <p>What is the person doing? What kind of labor or expertise did the model assume?</p>
+          <p>Examining, reviewing a chart, or explaining. Labor of expertise. Never administrative, emotional, or caregiving.</p>
         </div>
       </div>
-    </section>
+      <div class="db-note">
+        <strong>What this reflects:</strong> Doctors in English-language media, stock photography, and medical textbooks have historically skewed toward this profile. The model learned what "doctor" looks like from that corpus — not from who doctors actually are globally.
+      </div>
+    </div>
 
-    <section class="sources" aria-label="Where defaults come from">
-      <div class="source">
-        <strong>Training data</strong>
-        <p>Images, text, captions, labels, and social patterns teach the system what usually goes with a prompt.</p>
+    <!-- CEO -->
+    <div class="decision-board" id="p-ceo" role="tabpanel">
+      <div class="db-prompt">Generate an image of <em>a CEO</em>.</div>
+      <div class="defaults-grid">
+        <div class="dc">
+          <strong>Body</strong>
+          <p>Often: white, male, 45–60, formally dressed, tall stance. Power-coded appearance. Rarely: women, people of color, younger adults.</p>
+        </div>
+        <div class="dc">
+          <strong>Setting</strong>
+          <p>Corner office, boardroom, or branded stage. City skyline visible through floor-to-ceiling windows. No other workplaces.</p>
+        </div>
+        <div class="dc">
+          <strong>Role</strong>
+          <p>Centered, alone or with subordinates looking toward them. Sole decision-maker. Surveying from above.</p>
+        </div>
+        <div class="dc">
+          <strong>Objects</strong>
+          <p>Dark suit. Tie or watch. Podium or conference table. These signal "executive" in the visual language of business media.</p>
+        </div>
+        <div class="dc">
+          <strong>Style</strong>
+          <p>High-contrast, confident lighting. Clean backgrounds. The visual register of Forbes covers and LinkedIn profile photos.</p>
+        </div>
+        <div class="dc">
+          <strong>Action</strong>
+          <p>Speaking, presenting, pointing at a screen, or arms crossed. Projecting leadership. Never listening, collaborating, or learning.</p>
+        </div>
       </div>
-      <div class="source">
-        <strong>Tool design</strong>
-        <p>Interfaces, safety filters, style presets, ranking systems, and default settings shape what appears first.</p>
+      <div class="db-note">
+        <strong>What this reflects:</strong> Business media, corporate stock photography, and leadership profiles have long over-represented a specific demographic. Models trained on that corpus inherit a narrow visual definition of "executive" — one that excludes most of the world's actual leaders.
       </div>
-      <div class="source">
-        <strong>Prompt ambiguity</strong>
-        <p>When a prompt is vague, the system fills the gaps. Specificity can shift defaults, but it does not make them neutral.</p>
-      </div>
-      <div class="source">
-        <strong>Social history</strong>
-        <p>Defaults often reflect who has been overrepresented, underrepresented, stereotyped, or treated as normal.</p>
-      </div>
-    </section>
+    </div>
 
-    <section class="checklist" aria-label="Default test checklist">
-      <h2>Before you call something biased, collect evidence</h2>
-      <div class="check-row">
-        <span class="box" aria-hidden="true"></span>
-        <p>Write the exact prompt before generating or revealing the output.</p>
+    <!-- Criminal -->
+    <div class="decision-board" id="p-criminal" role="tabpanel">
+      <div class="db-prompt">Generate an image of <em>a criminal</em>.</div>
+      <div class="defaults-grid">
+        <div class="dc">
+          <strong>Body</strong>
+          <p>Research shows these prompts produce darker skin tones at higher rates than the population. Age skews young, male. This is the most direct evidence of racial bias.</p>
+        </div>
+        <div class="dc">
+          <strong>Setting</strong>
+          <p>Urban street, alley, or low-light environment. Coded as dangerous — specific to particular neighborhoods.</p>
+        </div>
+        <div class="dc">
+          <strong>Role</strong>
+          <p>Dehumanized, threatening, alone. No context, no story, no complexity. Guilt is assumed, not depicted.</p>
+        </div>
+        <div class="dc">
+          <strong>Objects</strong>
+          <p>Weapons, masks, or hoodie. Props that signal threat rather than depicting any actual act or legal status.</p>
+        </div>
+        <div class="dc">
+          <strong>Style</strong>
+          <p>High contrast, dramatic shadow, menacing framing. The visual language of crime reporting — not neutral documentation.</p>
+        </div>
+        <div class="dc">
+          <strong>Action</strong>
+          <p>Lurking, running, or confronting. Never shown in context — arrested, acquitted, or incarcerated. Just threatening.</p>
+        </div>
       </div>
-      <div class="check-row">
-        <span class="box" aria-hidden="true"></span>
-        <p>Predict what you think the model will fill in by default.</p>
+      <div class="db-note">
+        <strong>Why this matters most:</strong> Unlike "doctor" defaults, which are limiting, these defaults cause direct harm. Images like these reinforce stereotypes that affect how people are policed, judged, and feared. The model learned from a corpus that already over-represented certain groups in crime coverage. Generating more of that is not neutral.
       </div>
-      <div class="check-row">
-        <span class="box" aria-hidden="true"></span>
-        <p>Record what actually appeared: body, setting, role, objects, style, and action.</p>
-      </div>
-      <div class="check-row">
-        <span class="box" aria-hidden="true"></span>
-        <p>Name what changed when you added one specific detail.</p>
-      </div>
-      <div class="check-row">
-        <span class="box" aria-hidden="true"></span>
-        <p>Make a careful claim: "This model defaulted to X, which may reflect Y."</p>
-      </div>
-    </section>
+    </div>
 
-    <div class="connect">
-      <p class="connect-label">Now open the tool</p>
-      <p>Use the Diffusion Step-Through Viewer to watch structure emerge from noise, then use the Image Default Test Board to document what the model filled in without being asked.</p>
-      <div class="links">
-        <a href="../../diffusion-step-through-viewer/">Open Diffusion Viewer</a>
-        <a href="../../../worksheets/image-default-test-board/">Open Image Default Test Board</a>
+    <!-- Family -->
+    <div class="decision-board" id="p-family" role="tabpanel">
+      <div class="db-prompt">Generate an image of <em>a family</em>.</div>
+      <div class="defaults-grid">
+        <div class="dc">
+          <strong>Body</strong>
+          <p>Often: two adults of different genders, multiple children, all of similar race. Nuclear structure treated as default. Multigenerational, same-sex, or single-parent families rarely appear.</p>
+        </div>
+        <div class="dc">
+          <strong>Setting</strong>
+          <p>Suburban home with yard or indoor living room. Vacation or leisure location. Not urban apartments, rural homes, or informal settings.</p>
+        </div>
+        <div class="dc">
+          <strong>Role</strong>
+          <p>Clearly gendered adult roles. Mother often cooking or caregiving. Father often standing and surveying. Children playing.</p>
+        </div>
+        <div class="dc">
+          <strong>Objects</strong>
+          <p>House, car, toys, dining table. Consumer goods that signal middle-class stability. Working-class or low-income home contexts excluded.</p>
+        </div>
+        <div class="dc">
+          <strong>Style</strong>
+          <p>Warm, bright, aspirational lifestyle photography. Soft filters. The visual language of advertising — not documentary life.</p>
+        </div>
+        <div class="dc">
+          <strong>Action</strong>
+          <p>Cooking together, playing, hugging, or gathered for a meal. Scenes of harmony and abundance. No stress, conflict, or ordinary monotony.</p>
+        </div>
+      </div>
+      <div class="db-note">
+        <strong>What this reflects:</strong> "Family" in English-language media, advertising, and stock photography has long meant one specific structure, class, and presentation. The model learned that definition and reproduces it. Most of the world's families don't look like this default.
       </div>
     </div>
   </div>
+
+  <div class="key-line">
+    <span class="kl-label">Key line</span>
+    "A default is not neutral. It is a choice made by whoever assembled the training data."
+  </div>
+
+  <div class="sources-grid">
+    <div class="src">
+      <strong>Training data</strong>
+      <p>Images, captions, and labels teach the system what usually goes with a prompt. Overrepresented groups stay overrepresented.</p>
+    </div>
+    <div class="src">
+      <strong>Social history</strong>
+      <p>Media, stock photography, textbooks, and journalism all had their own defaults before AI existed. Models inherit them.</p>
+    </div>
+    <div class="src">
+      <strong>Tool design</strong>
+      <p>Safety filters, style presets, and ranking systems make additional choices about what gets surfaced first.</p>
+    </div>
+    <div class="src">
+      <strong>Prompt ambiguity</strong>
+      <p>Vague prompts hand maximum control to the system. Specificity can shift defaults — but doesn't make them disappear.</p>
+    </div>
+  </div>
+
+  <div class="nuance">
+    <strong>Defaults are not always wrong.</strong> Sometimes the most common pattern is accurate or harmless. The distinction that matters: when a default excludes, demeans, or reinforces a stereotype — especially for already-marginalized groups — it stops being a statistical pattern and becomes a systemic harm. The "criminal" prompt is not the same kind of problem as the "doctor" prompt.
+  </div>
+
+  <div class="connect">
+    <p class="connect-label">Now open the tools</p>
+    <p>In the Diffusion Step-Through Viewer, watch structure emerge from noise — every frame is the model making a choice. In the Image Default Test Board, document what appeared in your prompts and build an evidence-based claim about what the model treated as normal.</p>
+    <div class="connect-links">
+      <a href="../../diffusion-step-through-viewer/">Open Diffusion Viewer →</a>
+      <a href="../../../worksheets/image-default-test-board/">Open Image Default Test Board →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.pbtn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.pbtn').forEach(function(b) {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.decision-board').forEach(function(d) {
+      d.classList.remove('active');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    document.getElementById('p-' + btn.dataset.p).classList.add('active');
+  });
+});
+</script>
 </body>
 </html>
