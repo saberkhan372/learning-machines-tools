@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Prompt Pack - Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/lm.css">
+  <link rel="stylesheet" href="../../assets/sub.css">
+  <script src="../../assets/theme.js"></script>
+  <style>
+    .pack-grid { display: grid; gap: 22px; margin: 28px 0 52px; }
+    .prompt-family { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: clamp(18px, 3vw, 28px); }
+    .prompt-text, .image-shell { border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); }
+    .prompt-text { padding: 16px; font-family: var(--font-mono); color: var(--ink); }
+    .image-shell { overflow: hidden; margin: 16px 0; }
+    .image-shell img { display: block; width: 100%; min-height: 260px; object-fit: cover; background: linear-gradient(135deg, var(--surface-2), color-mix(in oklab, var(--accent) 18%, var(--surface))); }
+    .placeholder-caption { padding: 10px 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    .annotation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 16px 0; }
+    .annotation-card { border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--surface); }
+    .annotation-card strong { display: block; color: var(--accent); font-family: var(--font-mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+    .notes { display: grid; gap: 8px; color: var(--muted); font-weight: 700; }
+    .notes textarea { min-height: 96px; resize: vertical; border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--surface-2); color: var(--ink); font: inherit; }
+    @media (max-width: 760px) { .annotation-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&larr; All tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero">
+    <div class="wrap">
+      <div class="crumb"><a href="../../index.html">Home</a><span class="sep">/</span><span>Image pack</span></div>
+      <p class="sess-kicker">Session 2 · Images</p>
+      <h1 class="sess-title">Frozen image prompt families</h1>
+      <p class="sess-lede">Use these examples to discuss visual defaults, missing context, and revision choices when real media is not available.</p>
+    </div>
+  </header>
+
+  <main class="wrap pack-grid">
+    <section class="prompt-family">
+      <h2>Professional default</h2>
+      <div class="prompt-text">A portrait of a software engineer presenting a new machine learning tool to a classroom.</div>
+      <!-- PLACEHOLDER: portrait-style generated image showing a classroom technology presentation -->
+      <figure class="image-shell">
+        <img alt="Placeholder image of a software engineer presenting a machine learning tool in a classroom" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 420'%3E%3Crect width='900' height='420' fill='%23202630'/%3E%3Ccircle cx='260' cy='150' r='58' fill='%235eead4'/%3E%3Crect x='190' y='225' width='150' height='120' rx='28' fill='%23c084fc'/%3E%3Crect x='440' y='90' width='280' height='180' rx='18' fill='%23303742'/%3E%3Cpath d='M480 230h190M480 185h130M480 140h200' stroke='%235eead4' stroke-width='18' stroke-linecap='round'/%3E%3C/svg%3E">
+        <figcaption class="placeholder-caption">Static placeholder for layout review.</figcaption>
+      </figure>
+      <div class="annotation-grid">
+        <div class="annotation-card"><strong>Observed default</strong>Likely to overrepresent polished tech-demo aesthetics and narrow ideas of expertise.</div>
+        <div class="annotation-card"><strong>Revision tried</strong>Add age range, role diversity, classroom context, and what the audience is doing.</div>
+        <div class="annotation-card"><strong>Ethical concern</strong>Professional imagery can encode who appears to belong in technical authority.</div>
+      </div>
+      <label class="notes">Your notes <textarea></textarea></label>
+    </section>
+
+    <section class="prompt-family">
+      <h2>Community place</h2>
+      <div class="prompt-text">A public library workshop where people are learning how image generators make pictures.</div>
+      <!-- PLACEHOLDER: wide scene of a public library workshop with tables, laptops, and discussion -->
+      <figure class="image-shell">
+        <img alt="Placeholder image of a public library workshop with learners at tables discussing image generation" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 420'%3E%3Crect width='900' height='420' fill='%2317181f'/%3E%3Crect x='65' y='70' width='770' height='90' rx='12' fill='%23303742'/%3E%3Cpath d='M110 120h680' stroke='%23c084fc' stroke-width='10' stroke-linecap='round'/%3E%3Crect x='110' y='230' width='220' height='90' rx='18' fill='%232a3440'/%3E%3Crect x='370' y='230' width='220' height='90' rx='18' fill='%232a3440'/%3E%3Crect x='630' y='230' width='160' height='90' rx='18' fill='%232a3440'/%3E%3Ccircle cx='160' cy='215' r='28' fill='%235eead4'/%3E%3Ccircle cx='430' cy='215' r='28' fill='%23c084fc'/%3E%3Ccircle cx='690' cy='215' r='28' fill='%235eead4'/%3E%3C/svg%3E">
+        <figcaption class="placeholder-caption">Static placeholder for layout review.</figcaption>
+      </figure>
+      <div class="annotation-grid">
+        <div class="annotation-card"><strong>Observed default</strong>The model may invent generic library markers while missing local culture and access needs.</div>
+        <div class="annotation-card"><strong>Revision tried</strong>Specify wheelchair access, multilingual signage, facilitators, and non-laptop participation.</div>
+        <div class="annotation-card"><strong>Ethical concern</strong>Community images can flatten real places into stock-like scenes.</div>
+      </div>
+      <label class="notes">Your notes <textarea></textarea></label>
+    </section>
+
+    <section class="prompt-family">
+      <h2>Scientific diagram</h2>
+      <div class="prompt-text">A clear diagram showing how noise becomes an image during diffusion.</div>
+      <!-- PLACEHOLDER: diagram-like image showing noisy squares becoming a clearer object -->
+      <figure class="image-shell">
+        <img alt="Placeholder diagram of noisy blocks gradually resolving into a simple image through diffusion steps" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 420'%3E%3Crect width='900' height='420' fill='%23202630'/%3E%3Crect x='90' y='110' width='150' height='150' rx='12' fill='%233a4655'/%3E%3Crect x='375' y='110' width='150' height='150' rx='12' fill='%232a3440'/%3E%3Crect x='660' y='110' width='150' height='150' rx='12' fill='%2317181f'/%3E%3Cpath d='M270 185h70M555 185h70' stroke='%235eead4' stroke-width='12' stroke-linecap='round'/%3E%3Cpath d='M320 165l25 20-25 20M605 165l25 20-25 20' fill='none' stroke='%235eead4' stroke-width='12' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='735' cy='185' r='44' fill='%23c084fc'/%3E%3C/svg%3E">
+        <figcaption class="placeholder-caption">Static placeholder for layout review.</figcaption>
+      </figure>
+      <div class="annotation-grid">
+        <div class="annotation-card"><strong>Observed default</strong>Diagrams often imply a clean left-to-right pipeline and hide training data.</div>
+        <div class="annotation-card"><strong>Revision tried</strong>Add labels for training examples, denoising step, and human prompt choice.</div>
+        <div class="annotation-card"><strong>Ethical concern</strong>Simplified diagrams can make extraction and uncertainty disappear.</div>
+      </div>
+      <label class="notes">Your notes <textarea></textarea></label>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="wrap mono">Learning Machines - Image prompt pack</div></footer>
+</body>
+</html>

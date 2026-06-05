@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Count the Next Token · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/lm.css">
+  <script src="../../assets/theme.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  main { width: min(1000px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 64px; }
+
+  /* header strip */
+  .tool-header { margin-bottom: 28px; }
+  .tool-header .tag { font-family: var(--font-mono); font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin: 0 0 10px; }
+  .tool-header h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin: 0 0 10px; line-height: 1.05; }
+  .tool-header p { color: var(--muted); max-width: 62ch; margin: 0; line-height: 1.55; }
+
+  /* two-col layout */
+  .layout { display: grid; grid-template-columns: 280px 1fr; gap: 18px; align-items: start; }
+
+  /* context picker */
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .panel-label { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted); margin: 0 0 12px; }
+  .context-btn { display: block; width: 100%; text-align: left; background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-bottom: 6px;
+    cursor: pointer; font-family: var(--font-body); font-size: 0.88rem; color: var(--ink);
+    transition: border-color 0.14s; }
+  .context-btn:hover { border-color: var(--accent); }
+  .context-btn.active { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+  .context-word { font-weight: 700; display: block; }
+  .context-hint { font-size: 0.74rem; color: var(--muted); font-family: var(--font-mono); }
+
+  /* step panel */
+  .step-area { display: flex; flex-direction: column; gap: 16px; }
+
+  /* step card */
+  .step-card { border: 1px solid var(--line); border-radius: 12px;
+    background: var(--surface); overflow: hidden; }
+  .step-head { display: flex; align-items: center; gap: 12px; padding: 14px 18px;
+    border-bottom: 1px solid var(--line); background: var(--surface-2); }
+  .step-num { width: 28px; height: 28px; border-radius: 7px; border: 1.5px solid var(--accent);
+    color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600;
+    display: grid; place-items: center; flex: none; }
+  .step-title { font-family: var(--font-display); font-weight: 600; font-size: 1rem; }
+  .step-body { padding: 16px 18px; }
+
+  /* frequency table */
+  .freq-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .freq-table th { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); font-weight: 500;
+    padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--line); }
+  .freq-table td { padding: 8px 10px; border-bottom: 1px solid var(--line-soft);
+    vertical-align: middle; }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table td:first-child { font-family: var(--font-mono); font-weight: 600;
+    color: var(--ink); }
+  .freq-table td:nth-child(2) { color: var(--muted); font-size: 0.82rem;
+    font-family: var(--font-mono); }
+  .count-bar { height: 8px; background: var(--surface-2); border-radius: 999px;
+    border: 1px solid var(--line-soft); overflow: hidden; min-width: 60px; }
+  .count-fill { height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .highlight-row td { background: color-mix(in oklab, var(--accent) 8%, transparent); }
+  .highlight-row td:first-child { color: var(--accent); }
+
+  /* arithmetic panel */
+  .arith { font-family: var(--font-mono); font-size: 0.9rem; line-height: 2; }
+  .arith-step { display: grid; grid-template-columns: 1fr auto; gap: 12px;
+    padding: 6px 0; border-bottom: 1px solid var(--line-soft); }
+  .arith-step:last-child { border-bottom: none; }
+  .arith-lhs { color: var(--muted); }
+  .arith-rhs { color: var(--ink); font-weight: 600; text-align: right; }
+  .arith-rhs.accent { color: var(--accent); }
+  .arith-rhs.accent2 { color: var(--accent-2); }
+  .arith-divider { height: 1px; background: var(--line); margin: 6px 0; }
+
+  /* prediction bar */
+  .pred-bar-row { display: grid; grid-template-columns: 90px 1fr 52px;
+    align-items: center; gap: 10px; margin-bottom: 10px; }
+  .pred-word { font-family: var(--font-mono); font-size: 0.86rem; color: var(--ink);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pred-track { height: 10px; background: var(--surface-2); border-radius: 999px;
+    border: 1px solid var(--line-soft); overflow: hidden; }
+  .pred-fill { height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .pred-pct { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);
+    text-align: right; }
+  .pred-bar-row.winner .pred-word { color: var(--accent); font-weight: 700; }
+  .pred-bar-row.winner .pred-pct { color: var(--ink); }
+
+  /* callout */
+  .callout { padding: 14px 18px; border: 1px solid var(--line);
+    border-left: 3px solid var(--accent-2); border-radius: 0 10px 10px 0;
+    background: var(--surface); font-size: 0.9rem; color: var(--ink-dim); }
+  .callout b { color: var(--ink); }
+
+  /* corpus preview */
+  .corpus-lines { display: flex; flex-direction: column; gap: 4px; }
+  .corpus-line { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);
+    padding: 4px 8px; border-radius: 5px; background: var(--surface-2); }
+  .corpus-line .match { color: var(--accent); font-weight: 600; }
+
+  .empty-msg { color: var(--faint); font-family: var(--font-mono);
+    font-size: 0.82rem; padding: 12px 0; }
+
+  @media (max-width: 780px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+</style>
+<style id="lm-tool-nav-overrides">
+  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
+  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
+  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
+  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
+  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
+  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
+  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
+  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
+  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
+  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
+  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
+  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+    <div class="nav-links">
+      <a href="../../index.html#tools" class="hide-sm">Tools</a>
+      <a href="../../pages/session-text.html" class="hide-sm">Session 1</a>
+      <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="tool-header">
+    <p class="tag">Session 1 · Text · Count → Probability → Prediction</p>
+    <h1>Count the Next Token</h1>
+    <p>Language models predict the next word by counting — how often does word B follow word A in training text? Pick a context word, watch the bigram frequency table build, then follow the arithmetic from raw count to probability to prediction. No guessing. The machine is doing division.</p>
+  </div>
+
+  <div class="layout">
+    <!-- ── Context picker ── -->
+    <div class="panel">
+      <div class="panel-label">Choose a context word</div>
+      <div id="contextList"></div>
+      <div style="margin-top:16px;">
+        <div class="panel-label" style="margin-bottom:8px;">Corpus</div>
+        <p style="font-size:0.78rem;color:var(--faint);font-family:var(--font-mono);margin:0;">
+          80 sentences drawn from four registers: news, story, classroom, conversation.
+          Inline data — no network calls.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── Steps ── -->
+    <div class="step-area" id="stepArea">
+      <div class="panel" style="color:var(--muted);font-family:var(--font-mono);font-size:0.86rem;padding:24px;">
+        ← Pick a context word to begin.
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+/* ==========================================================
+   Count the Next Token
+   Teaching goal: make the count → probability → prediction
+   chain fully visible so learners can see the model is
+   performing frequency arithmetic, not "understanding."
+   Code style: let, if/else, no ternaries (SHARED-CONTRACT §6).
+   ========================================================== */
+
+/* ── Corpus ─────────────────────────────────────────────────
+   80 short sentences across four registers (news, story,
+   classroom, conversation) plus extra AI-concept sentences.
+   This is the only "training data" for this tool.
+   ────────────────────────────────────────────────────────── */
+let CORPUS_RAW = [
+  /* News */
+  "the city announced a new plan to reduce traffic",
+  "officials said the decision was made after months of review",
+  "the report found that temperatures have risen steadily",
+  "scientists said the results were unexpected and significant",
+  "the company released a statement saying the change was necessary",
+  "the team was preparing for the final round of talks",
+  "the new policy will take effect at the start of next year",
+  "residents said they were frustrated by the lack of information",
+  "the government announced funding for a new transit project",
+  "the investigation found no evidence of wrongdoing",
+  "officials confirmed the arrest was made early this morning",
+  "the study was published in a peer-reviewed scientific journal",
+  "the council voted to approve the development after a long debate",
+  "the school was closed following a report of flooding",
+  "the team said results would be available by the end of the week",
+  /* Story */
+  "the old house stood at the end of a quiet street",
+  "she walked slowly through the dark and empty corridor",
+  "the dog ran across the field and disappeared into the trees",
+  "he opened the door and stepped into the cold morning air",
+  "the letter arrived on a Tuesday with no return address",
+  "the child looked up and saw the light fading in the sky",
+  "she placed the book on the table and sat down beside him",
+  "the rain began just as they reached the edge of the forest",
+  "he remembered the last time he had stood in this place",
+  "the crowd fell silent when the speaker stepped onto the stage",
+  "she found the key hidden beneath a loose stone near the gate",
+  "the village had not changed much in the years since he left",
+  "he turned the corner and nearly collided with a stranger",
+  "the fire burned low and the room grew cold",
+  "she heard a sound from the room at the top of the stairs",
+  /* Classroom */
+  "students will be able to identify the main idea of a text",
+  "the lesson begins with a warm-up activity and class discussion",
+  "participants should record their observations in the journal",
+  "the teacher asked students to compare the two examples carefully",
+  "by the end of the session participants will be able to explain",
+  "the activity requires students to work in small groups",
+  "learners should be encouraged to ask questions throughout",
+  "the worksheet guides students through the evidence framework",
+  "each group will present their findings to the rest of the class",
+  "students are invited to choose their own participation pathway",
+  "the facilitator should model the process before asking students",
+  "this activity can be completed without any digital tools",
+  "participants should focus on what changed between version a and b",
+  "the reflection prompt asks what the human decided and why",
+  "students who prefer not to use AI can work from pre-made examples",
+  /* Conversation */
+  "I think the problem is that we never actually talked about it",
+  "she said she was fine but her voice told a different story",
+  "we need to make a decision before the end of the day",
+  "I was not sure what to say so I said nothing at all",
+  "he asked if I wanted to come along and I said yes",
+  "we should probably check before we assume it is true",
+  "I think you are right but I am not completely sure",
+  "she mentioned it once and then never brought it up again",
+  "let me know if you need anything before Thursday",
+  "I had no idea what was going to happen next",
+  "he said the whole thing was a misunderstanding from the start",
+  "we decided to leave early to avoid the morning traffic",
+  "she called three times and I missed every single one",
+  "I thought it was strange but I did not say anything",
+  "we talked for a while and then went our separate ways",
+  /* Extra variety */
+  "the new tool makes prediction visible step by step",
+  "every tool should make something invisible visible",
+  "the model predicts the next word based on what came before",
+  "temperature changes how the model samples from its predictions",
+  "tokens are the units the model counts not the words we read",
+  "the model never reads a sentence it reads a sequence of tokens",
+  "prediction is not the same as understanding",
+  "high confidence does not mean the output is true",
+  "the default is not neutral it is a design decision",
+  "the machine fills in what the prompt left unspecified",
+  "participants can choose to observe rather than generate",
+  "no account is required to use any tool in this ecosystem",
+  "the workshop does not require direct AI use to participate",
+  "evidence is what the machine actually did not what we expected",
+  "refusal is a valid form of participation in the camp",
+  /* Five more to reach 80 */
+  "the model does not know what it is saying it only knows what follows what",
+  "students said the activity made the process feel less mysterious",
+  "the pattern appears across many examples but it is not a rule",
+  "she decided to change one variable and hold everything else constant",
+  "the gap between what the model predicted and what appeared was the lesson"
+];
+
+/* ── Build bigram index from corpus ─────────────────────── */
+/* We tokenize by splitting on whitespace and stripping punctuation.
+   Then we walk each sentence building a map:
+     bigramIndex[wordA][wordB] = count of times B follows A
+*/
+let bigramIndex = {};
+let wordFreq = {};
+
+function buildIndex() {
+  CORPUS_RAW.forEach(function(sentence) {
+    let tokens = sentence.toLowerCase().split(/\s+/).map(function(t) {
+      return t.replace(/[^a-z']/g, "");
+    }).filter(function(t) { return t.length > 0; });
+
+    tokens.forEach(function(t) {
+      if (wordFreq[t] === undefined) { wordFreq[t] = 0; }
+      wordFreq[t] += 1;
+    });
+
+    for (let i = 0; i < tokens.length - 1; i++) {
+      let a = tokens[i];
+      let b = tokens[i + 1];
+      if (bigramIndex[a] === undefined) { bigramIndex[a] = {}; }
+      if (bigramIndex[a][b] === undefined) { bigramIndex[a][b] = 0; }
+      bigramIndex[a][b] += 1;
+    }
+  });
+}
+
+/* ── Context words to expose in the picker ─────────────── */
+let CONTEXT_WORDS = [
+  { word: "the",        hint: "most common word" },
+  { word: "students",   hint: "classroom register" },
+  { word: "she",        hint: "story pronoun" },
+  { word: "the model",  hint: "two-word phrase", phrase: ["the", "model"] },
+  { word: "said",       hint: "reporting verb" },
+  { word: "prediction", hint: "AI concept" },
+  { word: "we",         hint: "conversational" },
+  { word: "not",        hint: "negation" }
+];
+
+/* ── State ──────────────────────────────────────────────── */
+let activeWord = null;
+
+/* ── DOM refs ───────────────────────────────────────────── */
+let contextListEl = document.getElementById("contextList");
+let stepAreaEl    = document.getElementById("stepArea");
+
+/* ── Build context picker ───────────────────────────────── */
+function buildContextList() {
+  CONTEXT_WORDS.forEach(function(entry) {
+    let btn = document.createElement("button");
+    btn.className = "context-btn";
+    btn.type = "button";
+    btn.dataset.word = entry.word;
+    btn.innerHTML =
+      "<span class='context-word'>" + escapeHtml(entry.word) + "</span>" +
+      "<span class='context-hint'>" + escapeHtml(entry.hint) + "</span>";
+    btn.addEventListener("click", function() { selectContext(entry); });
+    contextListEl.appendChild(btn);
+  });
+}
+
+/* ── Select context + render steps ─────────────────────── */
+function selectContext(entry) {
+  activeWord = entry.word;
+
+  let buttons = contextListEl.querySelectorAll(".context-btn");
+  buttons.forEach(function(b) {
+    b.classList.toggle("active", b.dataset.word === entry.word);
+  });
+
+  /* Determine which key to look up in bigramIndex */
+  let lookupWord = entry.word;
+  if (entry.phrase) { lookupWord = entry.phrase[entry.phrase.length - 1]; }
+  let followers = bigramIndex[lookupWord];
+
+  if (!followers || Object.keys(followers).length === 0) {
+    stepAreaEl.innerHTML =
+      "<div class='panel'><div class='empty-msg'>No bigrams found for &ldquo;" +
+      escapeHtml(entry.word) + "&rdquo; in the corpus.</div></div>";
+    return;
+  }
+
+  /* Build sorted array of follower entries */
+  let entries = Object.keys(followers).map(function(w) {
+    return { word: w, count: followers[w] };
+  });
+  entries.sort(function(a, b) { return b.count - a.count; });
+
+  let total = 0;
+  entries.forEach(function(e) { total += e.count; });
+
+  let contextCount = wordFreq[lookupWord] || total;
+  let maxCount = entries[0].count;
+  let topEntries = entries.slice(0, 8);
+
+  renderSteps(entry, lookupWord, topEntries, total, contextCount, maxCount);
+}
+
+function renderSteps(entry, lookupWord, topEntries, total, contextCount, maxCount) {
+  let html = "";
+
+  /* ── Step 1: Corpus scan ── */
+  html += stepCard("01", "Scan the corpus", function() {
+    let lines = "";
+    /* Show up to 6 sentences that contain the context word */
+    let shown = 0;
+    CORPUS_RAW.forEach(function(sentence) {
+      if (shown >= 6) { return; }
+      let tokens = sentence.toLowerCase().split(/\s+/);
+      let hasWord = false;
+      tokens.forEach(function(t) {
+        if (t.replace(/[^a-z]/g, "") === lookupWord) { hasWord = true; }
+      });
+      if (hasWord) {
+        /* Highlight the target word */
+        let highlighted = escapeHtml(sentence).replace(
+          new RegExp("\\b" + lookupWord + "\\b", "gi"),
+          "<span class='match'>$&</span>"
+        );
+        lines += "<div class='corpus-line'>" + highlighted + "</div>";
+        shown += 1;
+      }
+    });
+    return "<p style='color:var(--muted);font-size:0.88rem;margin:0 0 12px;'>Sentences in the corpus containing <span style='font-family:var(--font-mono);color:var(--accent);'>" + escapeHtml(entry.word) + "</span>:</p>" +
+      "<div class='corpus-lines'>" + lines + "</div>" +
+      "<p style='color:var(--faint);font-family:var(--font-mono);font-size:0.76rem;margin:12px 0 0;'>Total appearances of &ldquo;" + escapeHtml(entry.word) + "&rdquo;: <b style='color:var(--ink);'>" + contextCount + "</b></p>";
+  });
+
+  /* ── Step 2: Frequency table ── */
+  html += stepCard("02", "Build the frequency table", function() {
+    let rows = "";
+    topEntries.forEach(function(e, i) {
+      let barW = Math.round((e.count / maxCount) * 100);
+      let highlight = "";
+      if (i === 0) { highlight = " class='highlight-row'"; }
+      rows +=
+        "<tr" + highlight + ">" +
+          "<td>" + escapeHtml(e.word) + "</td>" +
+          "<td>" + e.count + " / " + total + "</td>" +
+          "<td><div class='count-bar'><div class='count-fill' style='width:" + barW + "%'></div></div></td>" +
+        "</tr>";
+    });
+    return "<p style='color:var(--muted);font-size:0.88rem;margin:0 0 12px;'>How often does each word follow <span style='font-family:var(--font-mono);color:var(--accent);'>" + escapeHtml(entry.word) + "</span>?</p>" +
+      "<table class='freq-table'>" +
+        "<thead><tr><th>Word after &ldquo;" + escapeHtml(entry.word) + "&rdquo;</th><th>Count</th><th>Visual</th></tr></thead>" +
+        "<tbody>" + rows + "</tbody>" +
+      "</table>";
+  });
+
+  /* ── Step 3: The arithmetic ── */
+  html += stepCard("03", "Divide: count → probability", function() {
+    let arithRows = "";
+    topEntries.slice(0, 5).forEach(function(e) {
+      let prob = e.count / total;
+      let probStr = prob.toFixed(3);
+      let pct = Math.round(prob * 100);
+      let isTop = (e === topEntries[0]);
+      let accentClass = "";
+      if (isTop) { accentClass = " accent"; }
+      arithRows +=
+        "<div class='arith-step'>" +
+          "<span class='arith-lhs'>" + e.count + " ÷ " + total + " = </span>" +
+          "<span class='arith-rhs" + accentClass + "'>" +
+            escapeHtml(e.word) + ": " + probStr + " (" + pct + "%)" +
+          "</span>" +
+        "</div>";
+    });
+    return "<p style='color:var(--muted);font-size:0.88rem;margin:0 0 14px;'>Each count divided by the total gives the probability. The model doesn't know language — it knows this division.</p>" +
+      "<div class='arith'>" + arithRows + "</div>";
+  });
+
+  /* ── Step 4: Prediction ── */
+  html += stepCard("04", "Predict: pick the highest probability", function() {
+    let barRows = "";
+    let predMax = topEntries[0].count / total;
+    topEntries.slice(0, 6).forEach(function(e, i) {
+      let prob = e.count / total;
+      let barW = Math.round((prob / predMax) * 100);
+      let pct = Math.round(prob * 100);
+      let isWinner = (i === 0);
+      let winnerClass = "";
+      if (isWinner) { winnerClass = " winner"; }
+      barRows +=
+        "<div class='pred-bar-row" + winnerClass + "'>" +
+          "<span class='pred-word'>" + escapeHtml(e.word) + "</span>" +
+          "<div class='pred-track'><div class='pred-fill' style='width:" + barW + "%'></div></div>" +
+          "<span class='pred-pct'>" + pct + "%</span>" +
+        "</div>";
+    });
+    let winner = topEntries[0];
+    return "<p style='color:var(--muted);font-size:0.88rem;margin:0 0 14px;'>Greedy prediction: pick the word with the highest probability.</p>" +
+      barRows +
+      "<div class='callout' style='margin-top:16px;'>" +
+        "<b>Prediction:</b> after &ldquo;" + escapeHtml(entry.word) + "&rdquo; &rarr; " +
+        "<span style='font-family:var(--font-mono);color:var(--accent);font-weight:700;'>" + escapeHtml(winner.word) + "</span>" +
+        " (seen " + winner.count + " times out of " + total + " = " +
+        Math.round((winner.count / total) * 100) + "%).<br>" +
+        "<span style='color:var(--muted);font-size:0.85rem;'>This is not intuition or understanding. It is frequency arithmetic over the 80-sentence corpus above.</span>" +
+      "</div>";
+  });
+
+  stepAreaEl.innerHTML = html;
+
+  /* Animate bars after paint */
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      stepAreaEl.querySelectorAll(".count-fill, .pred-fill").forEach(function(el) {
+        let w = el.style.width;
+        el.style.width = "0%";
+        requestAnimationFrame(function() { el.style.width = w; });
+      });
+    });
+  });
+}
+
+/* ── Helpers ────────────────────────────────────────────── */
+function stepCard(num, title, contentFn) {
+  return "<div class='step-card'>" +
+    "<div class='step-head'>" +
+      "<div class='step-num'>" + num + "</div>" +
+      "<span class='step-title'>" + escapeHtml(title) + "</span>" +
+    "</div>" +
+    "<div class='step-body'>" + contentFn() + "</div>" +
+  "</div>";
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/* ── Self-tests ─────────────────────────────────────────── */
+function runTests() {
+  let pass = 0;
+  let fail = 0;
+
+  function assert(condition, msg) {
+    if (condition) {
+      pass += 1;
+    } else {
+      fail += 1;
+      console.warn("FAIL: " + msg);
+    }
+  }
+
+  /* corpus was built */
+  assert(Object.keys(bigramIndex).length > 50, "index: > 50 unique context words");
+  assert(bigramIndex["the"] !== undefined, "index: 'the' has bigrams");
+
+  /* 'the' must have followers */
+  let theFollowers = bigramIndex["the"];
+  assert(theFollowers !== undefined, "bigrams: 'the' has followers");
+  let theTotal = 0;
+  if (theFollowers) {
+    Object.keys(theFollowers).forEach(function(w) { theTotal += theFollowers[w]; });
+  }
+  assert(theTotal > 20, "bigrams: 'the' followed > 20 times total");
+
+  /* probabilities sum ≤ 1 for a known word */
+  if (bigramIndex["the"]) {
+    let total = 0;
+    Object.keys(bigramIndex["the"]).forEach(function(w) {
+      total += bigramIndex["the"][w];
+    });
+    let probSum = 0;
+    Object.keys(bigramIndex["the"]).forEach(function(w) {
+      probSum += bigramIndex["the"][w] / total;
+    });
+    assert(Math.abs(probSum - 1.0) < 0.001, "probs: 'the' followers sum to 1");
+  }
+
+  /* context word list non-empty */
+  assert(CONTEXT_WORDS.length >= 6, "config: >= 6 context words");
+
+  if (fail === 0) {
+    console.log("All " + pass + " self-tests passed.");
+  } else {
+    console.warn(fail + " test(s) failed, " + pass + " passed.");
+  }
+}
+
+/* ── Init ───────────────────────────────────────────────── */
+buildIndex();
+buildContextList();
+runTests();
+</script>
+</body>
+</html>

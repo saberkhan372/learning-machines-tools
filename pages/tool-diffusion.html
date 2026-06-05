@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diffusion Step-Through Viewer &#8212; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/lm.css">
+  <link rel="stylesheet" href="../assets/home.css">
+  <link rel="stylesheet" href="../assets/sub.css">
+  <script src="../assets/theme.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tools</a>
+        <a href="session-images.html" class="hide-sm">Session 2</a>
+        <a href="../index.html#method" class="hide-sm">Method</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="../tools/diffusion-step-through-viewer/">Launch tool <span class="arrow">&#8594;</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#tools">Tools</a><span class="sep">/</span>
+        <span>Diffusion Step-Through</span>
+      </div>
+      <div class="tool-hero-grid">
+        <div class="tool-hero">
+          <div class="meta-row">
+            <span class="status ready">Launch ready</span>
+            <span class="chip">Session 2 &#183; Images</span>
+            <span class="chip">Interactive</span>
+          </div>
+          <h1>Diffusion Step-Through Viewer</h1>
+          <p class="tool-lede">Step from pure noise to final image and watch structure emerge one denoising pass at a time. The viewer makes iterative denoising inspectable &#8212; slowing down the process so you can name what the prompt is guiding and what the model is deciding on its own.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="../tools/diffusion-step-through-viewer/">Launch the tool <span class="arrow">&#8594;</span></a>
+            <a class="btn btn-ghost" href="../worksheets/image-default-test-board/">Open the worksheet</a>
+          </div>
+        </div>
+        <div class="preview">
+          <div class="preview-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url">tools/diffusion-step-through-viewer/</span>
+          </div>
+          <div class="preview-body">
+            <iframe src="../tools/diffusion-step-through-viewer/" title="Diffusion Step-Through Viewer" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">A.</span><h2>What it makes visible</h2></div>
+      <div class="visible-grid">
+        <div class="vis-card">
+          <div class="vn">01</div>
+          <h3>Iterative denoising</h3>
+          <p>Images don&#8217;t appear all at once. Each step removes a small amount of noise, pushing pixels toward a prompt-consistent distribution &#8212; one pass at a time.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">02</div>
+          <h3>Structure from noise</h3>
+          <p>Composition appears before subject, subject before texture, texture before detail. The sequence reveals what the model is building toward &#8212; and in what order.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">03</div>
+          <h3>Prompt guidance at each step</h3>
+          <p>The prompt doesn&#8217;t just shape the final output. It guides every denoising step. You can watch it pull structure out of noise &#8212; or watch where it stops mattering.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">B.</span><h2>How to investigate it</h2></div>
+      <p class="sess-lede" style="margin:0 0 26px;">Don&#8217;t skip to the end. Pause at each stage and describe only what you can see &#8212; not what you expect.</p>
+      <div class="invest">
+        <div class="invest-card">
+          <div class="ic-k">01 &#183; Predict</div>
+          <h4>Before stepping through</h4>
+          <p>Write down which step you expect the subject to become recognizable. Then step through and see if you were right.</p>
+          <div class="eg">prompt: &#8220;a doctor examining a patient&#8221;</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">02 &#183; Describe each stage</div>
+          <h4>Composition, then subject</h4>
+          <p>At each stage: what regions exist? What subject? What texture? What detail? Describe only what you can observe, not what you infer.</p>
+          <div class="eg">step 3 &#8594; &#8220;two regions, no subject yet&#8221;</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">03 &#183; Compare two prompts</div>
+          <h4>Vague vs. specific</h4>
+          <p>Run the same sequence with a vague and a specific prompt. At which step does the difference become visible?</p>
+          <div class="eg">&#8220;a person&#8221; vs. &#8220;a doctor in a white coat&#8221;</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">04 &#183; Name the default</div>
+          <h4>What the prompt didn&#8217;t specify</h4>
+          <p>What did the model generate that your prompt left open? That unspecified choice is a default &#8212; name it precisely.</p>
+          <div class="eg">age, race, setting, style &#183; all chosen without being asked</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" style="border-top:1px solid var(--line-soft);">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">C.</span><h2>Debrief questions</h2></div>
+      <div class="prompts">
+        <div class="prompt">At what step did the subject become recognizable?</div>
+        <div class="prompt">What appeared before you expected it? What appeared later?</div>
+        <div class="prompt">What does the prompt guide, and what does the model fill in?</div>
+        <div class="prompt">When does denoising become a decision about who or what gets drawn?</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap doc-cols">
+      <div class="doc-group">
+        <h3>Pairs well with</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="tool-feature-extraction.html"><span class="d-name">Feature Extraction</span><span class="d-desc">What survives when images become numbers</span></a>
+          <a class="doc-row" href="../tools/concept-bridges/what-does-the-machine-see/"><span class="d-name">Bridge &#183; What does the machine see?</span><span class="d-desc">Pixels, features, representation</span></a>
+        </div>
+      </div>
+      <div class="doc-group">
+        <h3>Use it in context</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="session-images.html"><span class="d-name">Session 2 &#183; Images</span><span class="d-desc">Diffusion step-through and prompt defaults lab</span></a>
+          <a class="doc-row" href="docs-session-2-facilitation.html"><span class="d-name">Session 2 Facilitation</span><span class="d-desc">Step-through sequence and debrief on defaults</span></a>
+          <a class="doc-row" href="../worksheets/image-default-test-board/"><span class="d-name">Image Default Test Board</span><span class="d-desc">Log what the prompt left unspecified</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-images.html"><div class="pg-dir mono">&#8592; Back to session</div><div class="pg-title">Session 2 &#183; Images</div></a>
+        <a class="next" href="../tools/diffusion-step-through-viewer/"><div class="pg-dir mono">Open it &#8594;</div><div class="pg-title">Launch the tool</div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <p class="mono">Single-file &#183; vanilla JavaScript &#183; no account &#183; no live model required.</p>
+    </div>
+  </footer>
+</body>
+</html>

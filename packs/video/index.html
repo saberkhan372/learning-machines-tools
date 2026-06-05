@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Video Prompt Pack - Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/lm.css">
+  <link rel="stylesheet" href="../../assets/sub.css">
+  <script src="../../assets/theme.js"></script>
+  <style>
+    .pack-grid { display: grid; gap: 22px; margin: 28px 0 52px; }
+    .prompt-family { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: clamp(18px, 3vw, 28px); }
+    .prompt-text, .caption-block { border: 1px solid var(--line); border-radius: 10px; padding: 16px; background: var(--surface-2); color: var(--ink); }
+    .prompt-text, .caption-block { font-family: var(--font-mono); white-space: pre-wrap; overflow-x: auto; }
+    .frame-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 16px 0; }
+    .frame { min-height: 130px; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(135deg, var(--surface-2), color-mix(in oklab, var(--accent-2) 20%, var(--surface))); display: grid; place-items: center; color: var(--ink); font-family: var(--font-mono); }
+    .annotation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 16px 0; }
+    .annotation-card { border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--surface); }
+    .annotation-card strong { display: block; color: var(--accent); font-family: var(--font-mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+    details { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--surface); margin: 14px 0; color: var(--ink); }
+    summary { cursor: pointer; color: var(--accent); font-weight: 700; }
+    .notes { display: grid; gap: 8px; color: var(--muted); font-weight: 700; }
+    .notes textarea { min-height: 96px; resize: vertical; border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--surface-2); color: var(--ink); font: inherit; }
+    @media (max-width: 760px) { .annotation-grid, .frame-strip { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&larr; All tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero">
+    <div class="wrap">
+      <div class="crumb"><a href="../../index.html">Home</a><span class="sep">/</span><span>Video pack</span></div>
+      <p class="sess-kicker">Session 3 · Video</p>
+      <h1 class="sess-title">Frozen video prompt families</h1>
+      <p class="sess-lede">Use frame strips, captions, and transcripts to inspect temporal coherence without requiring a live video generator.</p>
+    </div>
+  </header>
+
+  <main class="wrap pack-grid">
+    <section class="prompt-family">
+      <h2>Object permanence</h2>
+      <div class="prompt-text">A red mug slides across a wooden table, passes behind a notebook, and reappears unchanged.</div>
+      <!-- PLACEHOLDER: four-frame strip showing mug before, hidden, reappearing, and final position -->
+      <div class="frame-strip" aria-label="Placeholder four-frame strip showing a mug moving behind a notebook">
+        <div class="frame">frame 1</div><div class="frame">frame 2</div><div class="frame">frame 3</div><div class="frame">frame 4</div>
+      </div>
+      <pre class="caption-block">WEBVTT
+00:00.000 --> 00:02.000
+A red mug moves toward a notebook.
+00:02.000 --> 00:04.000
+The mug disappears behind the notebook.
+00:04.000 --> 00:06.000
+The mug reappears on the other side.</pre>
+      <details><summary>Transcript</summary><p>The clip asks whether the same object stays visually consistent after being hidden. Watch for color, handle direction, size, and table position.</p></details>
+      <div class="annotation-grid">
+        <div class="annotation-card"><strong>Observed default</strong>The mug may change shape or handle direction after occlusion.</div>
+        <div class="annotation-card"><strong>Revision tried</strong>Specify camera lock, object identity, and no change after passing behind the notebook.</div>
+        <div class="annotation-card"><strong>Ethical concern</strong>Video can look evidentiary even when temporal continuity is fabricated.</div>
+      </div>
+      <label class="notes">Your notes <textarea></textarea></label>
+    </section>
+
+    <section class="prompt-family">
+      <h2>Human motion</h2>
+      <div class="prompt-text">A teacher writes the word "prediction" on a whiteboard, turns to the class, and asks a question.</div>
+      <!-- PLACEHOLDER: five-frame strip showing writing, turning, and addressing class -->
+      <div class="frame-strip" aria-label="Placeholder frame strip of a teacher writing prediction on a board and turning to a class">
+        <div class="frame">frame 1</div><div class="frame">frame 2</div><div class="frame">frame 3</div><div class="frame">frame 4</div>
+      </div>
+      <pre class="caption-block">WEBVTT
+00:00.000 --> 00:02.500
+The teacher writes on the board.
+00:02.500 --> 00:05.000
+The teacher turns toward the classroom.
+00:05.000 --> 00:07.000
+The teacher gestures while asking a question.</pre>
+      <details><summary>Transcript</summary><p>The example focuses on hands, written text, body orientation, and whether the board remains legible across frames.</p></details>
+      <div class="annotation-grid">
+        <div class="annotation-card"><strong>Observed default</strong>Hands, marker contact, and written letters may drift or become unreadable.</div>
+        <div class="annotation-card"><strong>Revision tried</strong>Ask for a still camera, slow movement, and one clearly spelled board word.</div>
+        <div class="annotation-card"><strong>Ethical concern</strong>Synthetic classroom footage may blur consent expectations for students and teachers.</div>
+      </div>
+      <label class="notes">Your notes <textarea></textarea></label>
+    </section>
+
+    <section class="prompt-family">
+      <h2>Cause and effect</h2>
+      <div class="prompt-text">A paper airplane hits a stack of index cards, and only the top card falls.</div>
+      <!-- PLACEHOLDER: three-frame strip showing airplane approach, impact, and one card falling -->
+      <div class="frame-strip" aria-label="Placeholder frame strip of a paper airplane hitting index cards">
+        <div class="frame">frame 1</div><div class="frame">frame 2</div><div class="frame">frame 3</div><div class="frame">frame 4</div>
+      </div>
+      <pre class="caption-block">WEBVTT
+00:00.000 --> 00:02.000
+A paper airplane moves toward stacked cards.
+00:02.000 --> 00:03.500
+The airplane touches the top card.
+00:03.500 --> 00:05.500
+Only the top card falls away.</pre>
+      <details><summary>Transcript</summary><p>The clip tests whether the model maintains a physical cause, a single effect, and stable object count across time.</p></details>
+      <div class="annotation-grid">
+        <div class="annotation-card"><strong>Observed default</strong>Cause and effect may blur: extra cards move, the airplane bends oddly, or the stack changes count.</div>
+        <div class="annotation-card"><strong>Revision tried</strong>Make the camera static and specify that all other cards remain upright.</div>
+        <div class="annotation-card"><strong>Ethical concern</strong>Physics errors matter when synthetic video is used to explain or document events.</div>
+      </div>
+      <label class="notes">Your notes <textarea></textarea></label>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="wrap mono">Learning Machines - Video prompt pack</div></footer>
+</body>
+</html>

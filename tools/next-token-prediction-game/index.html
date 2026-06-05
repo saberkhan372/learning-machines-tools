@@ -1,26 +1,619 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark" data-font="lab">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Next-Token Prediction Game</title>
-  <style>
-    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #20201d; background: #f7f1e6; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: #2364aa; }
-    .card { border: 1px solid #d9ccb8; border-radius: 8px; padding: 22px; background: #fffaf1; box-shadow: 0 10px 28px rgba(49, 39, 25, 0.10); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; }
-    p, li { color: #6f675b; line-height: 1.55; }
-  </style>
+  <title>Next-Token Prediction Game · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/lm.css">
+  <script src="../../assets/theme.js"></script>
+<style>
+  /* ── tool-specific tokens ── */
+  :root {
+    --bar-human: var(--accent);
+    --bar-model: var(--accent-2);
+  }
+
+  * { box-sizing: border-box; }
+  main { width: min(1100px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 60px; }
+
+  /* intro */
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+  .panel h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: 0 0 10px; line-height: 1.05; }
+  .panel p { color: var(--muted); margin: 0 0 10px; font-size: 0.95rem; line-height: 1.55; }
+  .panel p:last-child { margin-bottom: 0; }
+
+  /* prompt selector */
+  .prompt-label { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted); margin: 0 0 10px; }
+  .prompt-list { display: flex; flex-direction: column; gap: 6px; }
+  .prompt-btn { text-align: left; font-family: var(--font-body); font-size: 0.88rem;
+    padding: 9px 13px; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--surface-2); color: var(--ink); cursor: pointer;
+    transition: border-color 0.14s, background 0.14s; }
+  .prompt-btn:hover { border-color: var(--accent); background: var(--surface); }
+  .prompt-btn.active { border-color: var(--accent); background: var(--surface);
+    box-shadow: inset 3px 0 0 var(--accent); }
+  .stem-display { font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 2rem);
+    color: var(--ink); margin: 0 0 6px; line-height: 1.15; }
+  .stem-display .blank { display: inline-block; min-width: 2.4em; height: 1.1em;
+    border-bottom: 2.5px solid var(--accent); vertical-align: bottom; margin-left: 6px; }
+  .stem-context { font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 18px; }
+
+  /* paste zone */
+  .paste-section { margin-bottom: 22px; }
+  .paste-section label { display: block; font-family: var(--font-mono); font-size: 0.74rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .paste-section textarea { width: 100%; min-height: 110px; resize: vertical;
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+    color: var(--ink); font-family: var(--font-mono); font-size: 0.84rem;
+    padding: 10px 12px; line-height: 1.5; }
+  .paste-section textarea:focus { outline: none; border-color: var(--accent); }
+  .paste-help { font-size: 0.78rem; color: var(--faint); margin-top: 6px; }
+
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+  .btn-tally { display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: var(--on-accent); border: none;
+    border-radius: 9px; padding: 11px 20px; font-family: var(--font-body);
+    font-weight: 600; font-size: 0.95rem; cursor: pointer;
+    transition: background 0.14s, transform 0.12s; }
+  .btn-tally:hover { background: var(--teal-dim); transform: translateY(-1px); }
+  .btn-clear { display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--muted); border: 1px solid var(--line);
+    border-radius: 9px; padding: 11px 18px; font-family: var(--font-body);
+    font-size: 0.9rem; cursor: pointer; transition: border-color 0.14s, color 0.14s; }
+  .btn-clear:hover { border-color: var(--accent); color: var(--ink); }
+
+  /* results */
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .results-panel h2 { font-size: 1.05rem; margin: 0 0 14px; color: var(--ink-dim);
+    font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+  .legend { display: flex; gap: 16px; margin-bottom: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+  .legend-dot.human { background: var(--bar-human); }
+  .legend-dot.model { background: var(--bar-model); }
+
+  .bar-row { display: grid; grid-template-columns: 90px 1fr 44px;
+    align-items: center; gap: 10px; margin-bottom: 9px; }
+  .bar-word { font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar-track { height: 10px; background: var(--surface-2); border-radius: 999px;
+    border: 1px solid var(--line-soft); overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px;
+    transition: width 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .bar-fill.human { background: var(--bar-human); }
+  .bar-fill.model { background: var(--bar-model); }
+  .bar-pct { font-family: var(--font-mono); font-size: 0.78rem;
+    color: var(--muted); text-align: right; }
+
+  .empty-state { color: var(--faint); font-family: var(--font-mono);
+    font-size: 0.84rem; padding: 24px 0; }
+
+  /* compare note */
+  .compare-note { margin-top: 20px; padding: 14px 16px;
+    border: 1px solid var(--line); border-left: 3px solid var(--accent-2);
+    border-radius: 0 10px 10px 0; background: var(--surface);
+    font-size: 0.9rem; color: var(--ink-dim); }
+  .compare-note b { color: var(--ink); }
+
+  /* parse status */
+  .parse-status { font-family: var(--font-mono); font-size: 0.78rem;
+    color: var(--muted); min-height: 1.2em; margin-bottom: 8px; }
+  .parse-status.ok { color: var(--teal-dim); }
+  .parse-status.warn { color: var(--warm); }
+
+  @media (max-width: 860px) {
+    .intro-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+  }
+  @media print {
+    .paste-section, .btn-row { display: none; }
+    .panel { box-shadow: none; }
+  }
+</style>
+<style id="lm-tool-nav-overrides">
+  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
+  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
+  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
+  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
+  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
+  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
+  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
+  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
+  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
+  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
+  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
+  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
+</style>
 </head>
 <body>
-  <main>
-    <a href="../../">Back to tools</a>
-    <div class="card">
-      <h1>Next-Token Prediction Game</h1>
-      <p><strong>Coming later.</strong> This stretch tool will become a standalone version of the Zoom prediction game. The live facilitation version is enough for launch.</p>
-      <p>Teaching goal: participants feel how context, genre, and expectation shape likely continuations.</p>
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+    <div class="nav-links">
+      <a href="../../index.html#tools" class="hide-sm">Tools</a>
+      <a href="../../pages/session-text.html" class="hide-sm">Session 1</a>
+      <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
     </div>
-  </main>
+  </div>
+</nav>
+
+<main>
+  <!-- ── INTRO + PROMPT SELECTOR ── -->
+  <div class="intro-grid">
+    <div class="panel">
+      <p style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin:0 0 10px;">Session 1 · Text · Paste-aggregation</p>
+      <h1>Next-Token Prediction Game</h1>
+      <p>Before opening a language model, humans guess the next word in a sentence. This tool collects those guesses from a Zoom chat paste and shows the room's distribution beside the model's predicted probabilities.</p>
+      <p>The gap between the two distributions is the discussion. <b>Every tool should make something invisible visible.</b></p>
+
+      <div style="margin-top:18px;">
+        <div class="stem-context" id="stemContext">Choose a prompt →</div>
+        <div class="stem-display" id="stemDisplay">Select a sentence stem on the right.</div>
+      </div>
+
+      <!-- paste zone -->
+      <div class="paste-section" style="margin-top:20px;">
+        <label for="pasteArea">Paste Zoom chat here — one guess per line, or "Name: word" format</label>
+        <textarea id="pasteArea" placeholder="Jan: cat&#10;Alex: floor&#10;Sam: mat&#10;&#10;— or just one word per line —&#10;&#10;cat&#10;floor&#10;chair"></textarea>
+        <div class="parse-status" id="parseStatus">Paste chat guesses, then click Tally.</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-tally" id="tallyBtn" type="button">Tally guesses →</button>
+        <button class="btn-clear" id="clearBtn" type="button">Clear</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="prompt-label">Choose a sentence stem</div>
+      <div class="prompt-list" id="promptList"></div>
+    </div>
+  </div>
+
+  <!-- ── RESULTS ── -->
+  <div class="results-grid" id="resultsGrid" style="display:none;">
+    <div class="panel results-panel">
+      <h2>Room guesses</h2>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot human"></div>Participant</div>
+      </div>
+      <div id="humanBars"><div class="empty-state">No guesses tallied yet.</div></div>
+    </div>
+    <div class="panel results-panel">
+      <h2>Model top predictions</h2>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot model"></div>Model probability</div>
+      </div>
+      <div id="modelBars"></div>
+    </div>
+  </div>
+
+  <div class="compare-note" id="compareNote" style="display:none;">
+    <b>What to notice:</b> Where do participants and the model agree most? Where do they diverge? Does the model's top choice feel obvious or surprising? A word ranked 4th by the model might be 1st for participants — what does that tell you about context, genre, or expectation?
+  </div>
+</main>
+
+<script>
+/* ==========================================================
+   Next-Token Prediction Game
+   Teaching goal: make next-word prediction visible by
+   comparing room guesses with precomputed model probabilities.
+   Pattern: paste-aggregation (SHARED-CONTRACT §5).
+   Code style: let, if/else, no ternaries (SHARED-CONTRACT §6).
+   ========================================================== */
+
+/* ── Precomputed prompts with model top-k ─────────────────
+   Probabilities are illustrative approximations based on
+   language model behavior for these sentence stems.
+   No live model call is made. All data is inline.
+   ──────────────────────────────────────────────────────── */
+let PROMPTS = [
+  {
+    id: "cat",
+    context: "Simple · high agreement expected",
+    stem: "The cat sat on the",
+    blank: "___",
+    modelTopK: [
+      { word: "mat",    prob: 0.28 },
+      { word: "floor",  prob: 0.19 },
+      { word: "chair",  prob: 0.14 },
+      { word: "ground", prob: 0.09 },
+      { word: "roof",   prob: 0.08 },
+      { word: "table",  prob: 0.06 },
+      { word: "stairs", prob: 0.04 }
+    ]
+  },
+  {
+    id: "doctor",
+    context: "Vague noun · reveals defaults",
+    stem: "The doctor walked into the room and",
+    blank: "___",
+    modelTopK: [
+      { word: "said",      prob: 0.31 },
+      { word: "looked",    prob: 0.18 },
+      { word: "smiled",    prob: 0.12 },
+      { word: "sat",       prob: 0.10 },
+      { word: "checked",   prob: 0.08 },
+      { word: "explained", prob: 0.07 },
+      { word: "nodded",    prob: 0.05 }
+    ]
+  },
+  {
+    id: "weather",
+    context: "News register · strong genre pull",
+    stem: "Temperatures are expected to reach record highs as the",
+    blank: "___",
+    modelTopK: [
+      { word: "heatwave",  prob: 0.34 },
+      { word: "storm",     prob: 0.17 },
+      { word: "season",    prob: 0.13 },
+      { word: "week",      prob: 0.10 },
+      { word: "drought",   prob: 0.08 },
+      { word: "summer",    prob: 0.07 },
+      { word: "city",      prob: 0.05 }
+    ]
+  },
+  {
+    id: "poem",
+    context: "Poetic register · high divergence expected",
+    stem: "The moon hung low like a",
+    blank: "___",
+    modelTopK: [
+      { word: "lantern",  prob: 0.16 },
+      { word: "lamp",     prob: 0.13 },
+      { word: "stone",    prob: 0.11 },
+      { word: "ghost",    prob: 0.09 },
+      { word: "pearl",    prob: 0.08 },
+      { word: "wound",    prob: 0.07 },
+      { word: "coin",     prob: 0.07 }
+    ]
+  },
+  {
+    id: "code",
+    context: "Code context · very high agreement",
+    stem: "function calculateTotal(price, quantity) {",
+    blank: "___",
+    modelTopK: [
+      { word: "return",   prob: 0.52 },
+      { word: "let",      prob: 0.18 },
+      { word: "const",    prob: 0.14 },
+      { word: "if",       prob: 0.06 },
+      { word: "var",      prob: 0.04 },
+      { word: "//",       prob: 0.03 },
+      { word: "total",    prob: 0.02 }
+    ]
+  },
+  {
+    id: "classroom",
+    context: "Instructional register · genre-loaded",
+    stem: "By the end of this lesson, students will be able to",
+    blank: "___",
+    modelTopK: [
+      { word: "identify",  prob: 0.29 },
+      { word: "explain",   prob: 0.22 },
+      { word: "describe",  prob: 0.17 },
+      { word: "analyze",   prob: 0.10 },
+      { word: "compare",   prob: 0.08 },
+      { word: "apply",     prob: 0.06 },
+      { word: "create",    prob: 0.04 }
+    ]
+  }
+];
+
+/* ── State ──────────────────────────────────────────────── */
+let activePromptId = null;
+let humanTally = {};
+
+/* ── DOM refs ───────────────────────────────────────────── */
+let promptListEl  = document.getElementById("promptList");
+let stemDisplayEl = document.getElementById("stemDisplay");
+let stemContextEl = document.getElementById("stemContext");
+let pasteAreaEl   = document.getElementById("pasteArea");
+let parseStatusEl = document.getElementById("parseStatus");
+let tallyBtnEl    = document.getElementById("tallyBtn");
+let clearBtnEl    = document.getElementById("clearBtn");
+let resultsGridEl = document.getElementById("resultsGrid");
+let humanBarsEl   = document.getElementById("humanBars");
+let modelBarsEl   = document.getElementById("modelBars");
+let compareNoteEl = document.getElementById("compareNote");
+
+/* ── Build prompt selector ──────────────────────────────── */
+function buildPromptList() {
+  PROMPTS.forEach(function(prompt) {
+    let btn = document.createElement("button");
+    btn.className = "prompt-btn";
+    btn.type = "button";
+    btn.dataset.id = prompt.id;
+    btn.innerHTML =
+      "<span style='display:block;font-weight:600;margin-bottom:2px;'>" +
+        truncate(prompt.stem, 52) + " ___</span>" +
+      "<span style='font-family:var(--font-mono);font-size:0.7rem;color:var(--faint);'>" +
+        prompt.context + "</span>";
+    btn.addEventListener("click", function() { selectPrompt(prompt.id); });
+    promptListEl.appendChild(btn);
+  });
+}
+
+function truncate(text, maxLen) {
+  if (text.length <= maxLen) { return text; }
+  return text.slice(0, maxLen) + "…";
+}
+
+/* ── Select a prompt ────────────────────────────────────── */
+function selectPrompt(id) {
+  activePromptId = id;
+
+  /* update active button */
+  let buttons = promptListEl.querySelectorAll(".prompt-btn");
+  buttons.forEach(function(b) {
+    b.classList.toggle("active", b.dataset.id === id);
+  });
+
+  /* update stem display */
+  let prompt = getPrompt(id);
+  if (!prompt) { return; }
+  stemContextEl.textContent = prompt.context;
+  stemDisplayEl.innerHTML =
+    escapeHtml(prompt.stem) +
+    " <span class='blank'></span>";
+
+  /* clear previous tally */
+  humanTally = {};
+  humanBarsEl.innerHTML = "<div class='empty-state'>Paste guesses and click Tally.</div>";
+  modelBarsEl.innerHTML = "";
+  resultsGridEl.style.display = "none";
+  compareNoteEl.style.display = "none";
+  parseStatusEl.textContent = "Prompt selected. Paste guesses below.";
+  parseStatusEl.className = "parse-status";
+
+  /* render model bars immediately so they're ready */
+  renderModelBars(prompt);
+}
+
+function getPrompt(id) {
+  let found = null;
+  PROMPTS.forEach(function(p) {
+    if (p.id === id) { found = p; }
+  });
+  return found;
+}
+
+/* ── Parse paste ────────────────────────────────────────── */
+/* Accepted formats:
+   1. "word"                         — one word per line
+   2. "Name: word"                   — name-colon-word (Zoom chat, manual)
+   3. "[HH:MM] Name: word"           — Zoom chat transcript line
+   4. "Name (hh:mm AM/PM): word"     — Teams chat
+   Multiple words on a line: takes the first token after the colon (or full line).
+*/
+function parsePaste(raw) {
+  let lines = raw.split("\n");
+  let words = [];
+
+  lines.forEach(function(line) {
+    line = line.trim();
+    if (line === "") { return; }
+
+    let word = "";
+
+    /* strip leading [HH:MM] timestamp */
+    line = line.replace(/^\[\d{1,2}:\d{2}(:\d{2})?\]\s*/, "");
+
+    /* strip "Name (time): " prefix */
+    line = line.replace(/^[^:]+\(\d{1,2}:\d{2}.*?\):\s*/, "");
+
+    /* strip "Name: " prefix */
+    let colonIdx = line.indexOf(":");
+    if (colonIdx !== -1) {
+      word = line.slice(colonIdx + 1).trim();
+    } else {
+      word = line.trim();
+    }
+
+    /* take only the first whitespace-separated token */
+    word = word.split(/\s+/)[0];
+
+    /* strip punctuation from the token */
+    word = word.replace(/[^a-zA-Z0-9'\-]/g, "");
+
+    if (word.length > 0 && word.length <= 40) {
+      words.push(word.toLowerCase());
+    }
+  });
+
+  return words;
+}
+
+function tallyWords(words) {
+  let counts = {};
+  words.forEach(function(w) {
+    if (counts[w] === undefined) {
+      counts[w] = 0;
+    }
+    counts[w] += 1;
+  });
+  return counts;
+}
+
+/* ── Render bar charts ──────────────────────────────────── */
+function renderHumanBars(counts, total) {
+  if (total === 0) {
+    humanBarsEl.innerHTML = "<div class='empty-state'>No guesses found. Check the paste format.</div>";
+    return;
+  }
+
+  /* sort by count descending, keep top 10 */
+  let entries = Object.keys(counts).map(function(w) {
+    return { word: w, count: counts[w] };
+  });
+  entries.sort(function(a, b) { return b.count - a.count; });
+  if (entries.length > 10) { entries = entries.slice(0, 10); }
+
+  let maxCount = entries[0].count;
+  let html = "";
+
+  entries.forEach(function(entry) {
+    let pct = Math.round((entry.count / total) * 100);
+    let barWidth = Math.round((entry.count / maxCount) * 100);
+    html +=
+      "<div class='bar-row'>" +
+        "<span class='bar-word'>" + escapeHtml(entry.word) + "</span>" +
+        "<div class='bar-track'><div class='bar-fill human' style='width:" + barWidth + "%'></div></div>" +
+        "<span class='bar-pct'>" + pct + "%</span>" +
+      "</div>";
+  });
+
+  humanBarsEl.innerHTML = html;
+}
+
+function renderModelBars(prompt) {
+  let topK = prompt.modelTopK;
+  let maxProb = topK[0].prob;
+  let html = "";
+
+  topK.forEach(function(item) {
+    let pct = Math.round(item.prob * 100);
+    let barWidth = Math.round((item.prob / maxProb) * 100);
+    html +=
+      "<div class='bar-row'>" +
+        "<span class='bar-word'>" + escapeHtml(item.word) + "</span>" +
+        "<div class='bar-track'><div class='bar-fill model' style='width:" + barWidth + "%'></div></div>" +
+        "<span class='bar-pct'>" + pct + "%</span>" +
+      "</div>";
+  });
+
+  modelBarsEl.innerHTML = html;
+}
+
+/* ── Tally handler ──────────────────────────────────────── */
+tallyBtnEl.addEventListener("click", function() {
+  if (!activePromptId) {
+    parseStatusEl.textContent = "← Choose a sentence stem first.";
+    parseStatusEl.className = "parse-status warn";
+    return;
+  }
+
+  let raw = pasteAreaEl.value;
+  if (raw.trim() === "") {
+    parseStatusEl.textContent = "Paste is empty — nothing to tally.";
+    parseStatusEl.className = "parse-status warn";
+    return;
+  }
+
+  let words = parsePaste(raw);
+  let total = words.length;
+
+  if (total === 0) {
+    parseStatusEl.textContent = 'No words found. Try one word per line, or "Name: word" format.';
+    parseStatusEl.className = "parse-status warn";
+    return;
+  }
+
+  humanTally = tallyWords(words);
+
+  let guessWord = "guesses";
+  if (total === 1) { guessWord = "guess"; }
+  let uniqueCount = Object.keys(humanTally).length;
+  let wordWord = "words";
+  if (uniqueCount === 1) { wordWord = "word"; }
+  parseStatusEl.textContent = total + " " + guessWord + " tallied, " + uniqueCount + " unique " + wordWord + ".";
+  parseStatusEl.className = "parse-status ok";
+
+  renderHumanBars(humanTally, total);
+
+  let prompt = getPrompt(activePromptId);
+  if (prompt) { renderModelBars(prompt); }
+
+  resultsGridEl.style.display = "grid";
+  compareNoteEl.style.display = "block";
+  resultsGridEl.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+/* ── Clear handler ──────────────────────────────────────── */
+clearBtnEl.addEventListener("click", function() {
+  pasteAreaEl.value = "";
+  humanTally = {};
+  humanBarsEl.innerHTML = "<div class='empty-state'>Paste guesses and click Tally.</div>";
+  resultsGridEl.style.display = "none";
+  compareNoteEl.style.display = "none";
+  parseStatusEl.textContent = "Cleared.";
+  parseStatusEl.className = "parse-status";
+});
+
+/* ── Utility ────────────────────────────────────────────── */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/* ── Self-tests ─────────────────────────────────────────── */
+function runTests() {
+  let pass = 0;
+  let fail = 0;
+
+  function assert(condition, msg) {
+    if (condition) {
+      pass += 1;
+    } else {
+      fail += 1;
+      console.warn("FAIL: " + msg);
+    }
+  }
+
+  /* parse plain word */
+  let result1 = parsePaste("cat\ndog\ncat");
+  assert(result1.length === 3, "parse: plain words");
+  assert(result1[0] === "cat", "parse: first word is cat");
+
+  /* parse Name: word */
+  let result2 = parsePaste("Alex: mat\nJan: floor\nSam: mat");
+  assert(result2.length === 3, "parse: name-colon format");
+  assert(result2[0] === "mat", "parse: name:word first");
+
+  /* parse Zoom [time] Name: word */
+  let result3 = parsePaste("[10:23] Alex: chair\n[10:24] Jan: mat");
+  assert(result3.length === 2, "parse: zoom timestamp format");
+  assert(result3[0] === "chair", "parse: zoom first word");
+
+  /* parse Teams "Name (hh:mm AM/PM): word" format */
+  let result4 = parsePaste("Sam (10:05 AM): predict\nLee (10:06 AM): understand");
+  assert(result4.length === 2, "parse: teams timestamp format");
+  assert(result4[0] === "predict", "parse: teams first word");
+
+  /* tally */
+  let counts = tallyWords(["cat", "dog", "cat", "cat"]);
+  assert(counts["cat"] === 3, "tally: cat count 3");
+  assert(counts["dog"] === 1, "tally: dog count 1");
+
+  /* prompts coverage */
+  assert(PROMPTS.length >= 5, "data: at least 5 prompts");
+  PROMPTS.forEach(function(p) {
+    assert(p.modelTopK.length >= 5, "data: prompt " + p.id + " has >= 5 top-k");
+    let totalProb = 0;
+    p.modelTopK.forEach(function(item) { totalProb += item.prob; });
+    assert(totalProb <= 1.01, "data: probs sum <= 1 for " + p.id);
+  });
+
+  if (fail === 0) {
+    console.log("All " + (pass) + " self-tests passed.");
+  } else {
+    console.warn(fail + " test(s) failed, " + pass + " passed.");
+  }
+}
+
+/* ── Init ───────────────────────────────────────────────── */
+buildPromptList();
+runTests();
+</script>
 </body>
 </html>

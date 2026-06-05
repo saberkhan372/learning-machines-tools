@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ELIZA Simulator &#8212; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/lm.css">
+  <link rel="stylesheet" href="../assets/home.css">
+  <link rel="stylesheet" href="../assets/sub.css">
+  <script src="../assets/theme.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tools</a>
+        <a href="session-text.html" class="hide-sm">Session 1</a>
+        <a href="../index.html#method" class="hide-sm">Method</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="../tools/eliza-simulator/">Launch tool <span class="arrow">&#8594;</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#tools">Tools</a><span class="sep">/</span>
+        <span>ELIZA Simulator</span>
+      </div>
+      <div class="tool-hero-grid">
+        <div class="tool-hero">
+          <div class="meta-row">
+            <span class="status ready">Launch ready</span>
+            <span class="chip">Session 1 &#183; Text</span>
+            <span class="chip">Interactive</span>
+          </div>
+          <h1>ELIZA Simulator</h1>
+          <p class="tool-lede">A rule-based chatbot made inspectable. It shows how pattern matching, templates, and conversational polish can feel meaningful without any language-model understanding &#8212; making the gap between visible mechanism and felt effect the thing to study.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="../tools/eliza-simulator/">Launch the tool <span class="arrow">&#8594;</span></a>
+            <a class="btn btn-ghost" href="../worksheets/text-experiment-board/">Open the worksheet</a>
+          </div>
+        </div>
+        <div class="preview">
+          <div class="preview-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url">tools/eliza-simulator/</span>
+          </div>
+          <div class="preview-body">
+            <iframe src="../tools/eliza-simulator/" title="ELIZA Simulator" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">A.</span><h2>What it makes visible</h2></div>
+      <div class="visible-grid">
+        <div class="vis-card">
+          <div class="vn">01</div>
+          <h3>Rule matching</h3>
+          <p>Every ELIZA response traces back to a pattern: a keyword, a template, and a fill-in. The rule that fired is right there on screen &#8212; before the response, not after.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">02</div>
+          <h3>Implicit patterns</h3>
+          <p>Even with the rules visible, the conversation can feel caring or knowing. That gap &#8212; between what the mechanism does and what the output implies &#8212; is the central thing to name.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">03</div>
+          <h3>LLM contrast</h3>
+          <p>ELIZA&#8217;s rules show what a modern language model hides. When you compare them side by side, the opacity of the LLM becomes visible by contrast, not by description.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">B.</span><h2>How to investigate it</h2></div>
+      <p class="sess-lede" style="margin:0 0 26px;">Don&#8217;t just chat with it &#8212; run it like an experiment. Predict what rule will fire, then check.</p>
+      <div class="invest">
+        <div class="invest-card">
+          <div class="ic-k">01 &#183; Predict</div>
+          <h4>Before you type</h4>
+          <p>Write down what you expect ELIZA to do with a specific input. Which keyword will it match? Which template will fire?</p>
+          <div class="eg">prompt: &#8220;I feel like nobody listens&#8221;</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">02 &#183; Change one thing</div>
+          <h4>Remove or change the keyword</h4>
+          <p>Add, remove, or rephrase the triggering keyword. Does the matched rule change? Does the response change?</p>
+          <div class="eg">&#8220;feel&#8221; &#8594; &#8220;think&#8221; &#183; same concern, different word</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">03 &#183; Compare evidence</div>
+          <h4>ELIZA vs. LLM</h4>
+          <p>Run the same input through ELIZA and a pre-generated LLM example. What does each response reveal about what the system understood?</p>
+          <div class="eg">identical input &#183; two very different mechanisms</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">04 &#183; Name the gap</div>
+          <h4>Not &#8220;ELIZA is fake&#8221;</h4>
+          <p>Name the specific gap: what does the visible rule not do that the LLM response appears to do? The LLM&#8217;s gap is just harder to see.</p>
+          <div class="eg">felt understanding &#183; vs. &#183; demonstrated understanding</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" style="border-top:1px solid var(--line-soft);">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">C.</span><h2>Debrief questions</h2></div>
+      <div class="prompts">
+        <div class="prompt">What did you notice when you could see the rule that fired?</div>
+        <div class="prompt">When did ELIZA feel meaningful even though the mechanism was visible?</div>
+        <div class="prompt">What does ELIZA make visible that a modern LLM hides?</div>
+        <div class="prompt">Where could the same gap appear in an AI product you use regularly?</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap doc-cols">
+      <div class="doc-group">
+        <h3>Pairs well with</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="tool-tokenizer.html"><span class="d-name">Tokenizer + Temperature</span><span class="d-desc">Probability vs. rule-matching</span></a>
+          <a class="doc-row" href="tool-prediction-game.html"><span class="d-name">Next-Token Prediction Game</span><span class="d-desc">Human prediction vs. model probability</span></a>
+          <a class="doc-row" href="../tools/concept-bridges/prediction-is-not-understanding/"><span class="d-name">Bridge &#183; Prediction &#8800; understanding</span><span class="d-desc">Concept explainer</span></a>
+        </div>
+      </div>
+      <div class="doc-group">
+        <h3>Use it in context</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="session-text.html"><span class="d-name">Session 1 &#183; Text</span><span class="d-desc">Rule-matching lab and LLM contrast activity</span></a>
+          <a class="doc-row" href="docs-facilitation.html"><span class="d-name">Session 1 Facilitation</span><span class="d-desc">Chat lab sequence and debrief script</span></a>
+          <a class="doc-row" href="../worksheets/text-experiment-board/"><span class="d-name">Text Experiment Board</span><span class="d-desc">Log your prediction-rule tests</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-text.html"><div class="pg-dir mono">&#8592; Back to session</div><div class="pg-title">Session 1 &#183; Text</div></a>
+        <a class="next" href="../tools/eliza-simulator/"><div class="pg-dir mono">Open it &#8594;</div><div class="pg-title">Launch the tool</div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <p class="mono">Single-file &#183; vanilla JavaScript &#183; no account &#183; no live model required.</p>
+    </div>
+  </footer>
+</body>
+</html>

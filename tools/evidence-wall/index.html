@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evidence Wall · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/lm.css">
+  <script src="../../assets/theme.js"></script>
+<style>
+  /* ── layout ── */
+  * { box-sizing: border-box; }
+  main { width: min(1280px, calc(100% - 32px)); margin: 0 auto; padding: 24px 0 64px; }
+
+  /* ── consent banner ── */
+  .consent-banner {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: color-mix(in oklab, var(--warm) 12%, var(--surface));
+    border: 1px solid color-mix(in oklab, var(--warm) 40%, var(--line));
+    border-radius: 12px; padding: 14px 18px; margin-bottom: 22px;
+  }
+  .consent-banner p { margin: 0; color: var(--ink-dim); font-size: 0.9rem; line-height: 1.5; }
+  .consent-banner b { color: var(--ink); }
+  .consent-dismiss {
+    background: transparent; border: 1px solid var(--line); border-radius: 7px;
+    color: var(--muted); font-size: 0.8rem; padding: 4px 10px; cursor: pointer;
+    white-space: nowrap; flex: none; margin-top: 2px;
+    font-family: var(--font-body); transition: color 0.14s, border-color 0.14s;
+  }
+  .consent-dismiss:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* ── wall header ── */
+  .wall-header {
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap; margin-bottom: 18px;
+  }
+  .wall-title { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin: 0; line-height: 1; }
+  .wall-tag {
+    font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent); margin: 0;
+  }
+  .wall-controls {
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap; margin-left: auto;
+  }
+  .tile-count {
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted);
+    padding: 0 4px;
+  }
+  .ctrl-btn {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+    color: var(--ink); font-family: var(--font-body); font-size: 0.86rem;
+    padding: 8px 14px; cursor: pointer;
+    transition: border-color 0.14s, background 0.14s, color 0.14s;
+  }
+  .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .ctrl-btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .ctrl-btn.primary:hover { background: var(--teal-dim); color: var(--on-accent); }
+
+  /* ── import notice ── */
+  .import-notice {
+    display: none; background: color-mix(in oklab, var(--accent) 10%, var(--surface));
+    border: 1px solid color-mix(in oklab, var(--accent) 30%, var(--line));
+    border-radius: 10px; padding: 12px 16px; margin-bottom: 18px;
+    font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-dim);
+  }
+
+  /* ── paste panel ── */
+  .paste-panel { margin-bottom: 22px; }
+  .paste-panel label {
+    display: block; font-family: var(--font-mono); font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px;
+  }
+  .paste-panel textarea {
+    width: 100%; min-height: 120px; resize: vertical;
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px;
+    color: var(--ink); font-family: var(--font-mono); font-size: 0.84rem;
+    padding: 12px 14px; line-height: 1.55;
+  }
+  .paste-panel textarea:focus { outline: none; border-color: var(--accent); }
+  .paste-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .paste-status { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+  .paste-status.ok   { color: var(--teal-dim); }
+  .paste-status.warn { color: var(--warm); }
+  .paste-help { font-size: 0.78rem; color: var(--faint); font-family: var(--font-mono); margin-top: 6px; }
+
+  /* ── tile grid ── */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    align-items: start;
+  }
+
+  /* ── single tile ── */
+  .tile {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 13px;
+    display: flex; flex-direction: column; overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .tile:hover { border-color: color-mix(in oklab, var(--accent) 50%, var(--line)); }
+  .tile--private { opacity: 0.55; }
+  .tile--private:hover { opacity: 0.8; }
+
+  .tile-content {
+    padding: 14px 16px; flex: 1; min-height: 88px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .tile-text {
+    margin: 0; color: var(--ink-dim); font-size: 0.9rem;
+    line-height: 1.55; word-break: break-word;
+  }
+  .tile-img {
+    width: 100%; max-height: 160px; object-fit: cover;
+    border-radius: 6px; display: block;
+  }
+
+  .tile-caption-wrap { padding: 8px 10px; border-bottom: 1px solid var(--line-soft); }
+  .tile-caption {
+    width: 100%; background: transparent; border: none; outline: none;
+    color: var(--ink); font-family: var(--font-body); font-size: 0.82rem;
+    padding: 2px 4px; border-radius: 4px;
+  }
+  .tile-caption:focus { background: var(--surface-2); }
+  .tile-caption::placeholder { color: var(--faint); }
+
+  .tile-meta {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 10px; flex-wrap: wrap;
+  }
+  .tile-name {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--faint);
+    flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    min-width: 0;
+  }
+
+  /* tag pill — click to cycle */
+  .tile-tag {
+    font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 3px 8px; border-radius: 999px;
+    border: 1px solid var(--line); cursor: pointer;
+    transition: background 0.12s, border-color 0.12s; flex: none;
+  }
+  .tag-text  { background: var(--t0); color: var(--t0t); border-color: transparent; }
+  .tag-image { background: var(--t2); color: var(--t2t); border-color: transparent; }
+  .tag-video { background: var(--t4); color: var(--t4t); border-color: transparent; }
+  .tag-cross { background: var(--t1); color: var(--t1t); border-color: transparent; }
+
+  /* visibility toggle */
+  .tile-vis {
+    font-family: var(--font-mono); font-size: 0.68rem; padding: 3px 7px;
+    border-radius: 999px; border: 1px solid var(--line);
+    cursor: pointer; flex: none; transition: background 0.12s;
+  }
+  .tile-vis.public  { color: var(--teal-dim); background: color-mix(in oklab, var(--teal) 12%, transparent); }
+  .tile-vis.private { color: var(--faint);    background: var(--surface-2); }
+
+  /* delete button */
+  .tile-del {
+    background: transparent; border: none; color: var(--faint);
+    font-size: 1rem; cursor: pointer; padding: 0 2px; line-height: 1; flex: none;
+    transition: color 0.12s;
+  }
+  .tile-del:hover { color: var(--rose, #f4728b); }
+
+  /* ── empty state (sibling of tile-grid, not inside it) ── */
+  .empty-state {
+    padding: 48px 0; text-align: center;
+    color: var(--faint); font-family: var(--font-mono); font-size: 0.86rem;
+  }
+  .empty-state p { margin: 0 0 6px; }
+
+  /* ── responsive ── */
+  @media (max-width: 600px) {
+    .wall-controls { margin-left: 0; width: 100%; }
+    .tile-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── print ── */
+  @media print {
+    .consent-banner, .paste-panel, .wall-controls, .tile-del,
+    .tile-vis, nav { display: none !important; }
+    main { width: 100%; padding: 0; }
+    .tile--private { display: none; }
+    .tile-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .tile { break-inside: avoid; box-shadow: none; }
+  }
+</style>
+<style id="lm-tool-nav-overrides">
+  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
+  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
+  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
+  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
+  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
+  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
+  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
+  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
+  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
+  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
+  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
+  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+    <div class="nav-links">
+      <a href="../../index.html#tools" class="hide-sm">Tools</a>
+      <a href="../../pages/session-showcase.html" class="hide-sm">Session 4</a>
+      <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&#8592; All tools</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ── Consent banner ── -->
+  <div class="consent-banner" id="consentBanner">
+    <p><b>Before sharing this wall:</b> confirm each participant has given affirmative consent for their submission to appear in a shared or public link. Toggle any tile to <b>Private</b> if unsure — private tiles are excluded from the share link automatically.</p>
+    <button class="consent-dismiss" id="consentDismiss" type="button">Got it</button>
+  </div>
+
+  <!-- ── Import notice (shown when wall is loaded from a hash) ── -->
+  <div class="import-notice" id="importNotice"></div>
+
+  <!-- ── Header ── -->
+  <div class="wall-header">
+    <div>
+      <p class="wall-tag">Session 4 · Cross-session · Paste-aggregation</p>
+      <h1 class="wall-title">Evidence Wall</h1>
+    </div>
+    <div class="wall-controls">
+      <span class="tile-count" id="tileCount">0 tiles</span>
+      <button class="ctrl-btn" id="togglePaste" type="button">Paste submissions &#9660;</button>
+      <button class="ctrl-btn" id="shareBtn" type="button">Share link</button>
+      <button class="ctrl-btn" id="printBtn" type="button">Print</button>
+      <button class="ctrl-btn" id="clearBtn" type="button">Clear</button>
+    </div>
+  </div>
+
+  <!-- ── Paste panel ── -->
+  <div class="paste-panel" id="pastePanel">
+    <label for="pasteArea">Paste Zoom chat or one submission per line</label>
+    <textarea id="pasteArea" placeholder="Jan: The prompt defaulted to a white male in his 30s.&#10;Alex: High temperature made the output incoherent after 3 sentences.&#10;Sam: ELIZA felt empathetic until I saw the rule it matched.&#10;&#10;&#8212; or just one observation per line &#8212;&#10;&#10;The diffusion viewer showed the subject at step 4.&#10;Default classroom had no windows and rows of desks."></textarea>
+    <p class="paste-help">Formats: plain text &middot; Name: submission &middot; [HH:MM] Name: submission &middot; Name (HH:MM AM/PM): submission</p>
+    <div class="paste-row">
+      <button class="ctrl-btn primary" id="buildBtn" type="button">Build wall &#8594;</button>
+      <span class="paste-status" id="pasteStatus"></span>
+    </div>
+  </div>
+
+  <!-- ── Empty state (outside grid so innerHTML= doesn't destroy it) ── -->
+  <div class="empty-state" id="emptyState">
+    <p>Paste participant submissions above and click <b>Build wall</b>.</p>
+    <p style="margin-top:8px;">Each line becomes a tile. Tiles are editable, taggable, and shareable.</p>
+  </div>
+
+  <!-- ── Tile grid ── -->
+  <div class="tile-grid" id="tileGrid"></div>
+
+</main>
+
+<script>
+/* ==========================================================
+   Evidence Wall
+   Teaching goal: turn individual observations into visible
+   collective evidence — patterns across the whole room.
+   Pattern: paste-aggregation + URL-hash state (SHARED-CONTRACT §5)
+   Code style: let, if/else, no ternaries (SHARED-CONTRACT §6)
+   ========================================================== */
+
+/* ── Constants ─────────────────────────────────────────────── */
+let TAG_CYCLE  = ["text", "image", "video", "cross"];
+let TAG_LABELS = { text: "Text", image: "Image", video: "Video", cross: "Cross" };
+
+/* Tags use the lm.css token chip classes (t0–t4) */
+let TAG_CLASSES = { text: "tag-text", image: "tag-image", video: "tag-video", cross: "tag-cross" };
+
+/* ── State ──────────────────────────────────────────────────── */
+let tiles    = [];
+let nextId   = 1;
+let pasteOpen = true;
+
+/* ── Tile factory ───────────────────────────────────────────── */
+function makeTile(name, content) {
+  let tile = {
+    id:         "t" + nextId,
+    name:       name,
+    content:    content,
+    caption:    "",
+    tag:        detectTag(content),
+    visibility: "public"
+  };
+  nextId += 1;
+  return tile;
+}
+
+/* ── Auto-detect modality tag from content ──────────────────── */
+/*
+   Heuristic: image URL extension → image tag.
+   Video-related words → video tag.
+   Otherwise default to text.
+   The facilitator can cycle through tags manually.
+*/
+function detectTag(content) {
+  let isImageUrl = /https?:\/\/\S+\.(jpg|jpeg|png|gif|webp|svg)(\?[^\s]*)?$/i.test(content.trim());
+  if (isImageUrl) { return "image"; }
+
+  let lower = content.toLowerCase();
+  let hasVideoWord = lower.indexOf("video") !== -1
+    || lower.indexOf("frame") !== -1
+    || lower.indexOf("drift") !== -1
+    || lower.indexOf("motion") !== -1;
+  if (hasVideoWord) { return "video"; }
+
+  return "text";
+}
+
+/* ── Parse paste ────────────────────────────────────────────── */
+/*
+   Accepted formats:
+   1. Plain text — one submission per line
+   2. "Name: submission"
+   3. "[HH:MM] Name: submission"  (Zoom transcript)
+   4. "Name (HH:MM AM/PM): submission"  (Teams)
+
+   Empty lines and Zoom system messages are skipped.
+*/
+function parsePaste(raw) {
+  let lines = raw.split("\n");
+  let results = [];
+
+  lines.forEach(function(line) {
+    line = line.trim();
+    if (line === "") { return; }
+
+    /* skip Zoom join/leave system messages */
+    if (line.indexOf("joined the meeting") !== -1) { return; }
+    if (line.indexOf("left the meeting")   !== -1) { return; }
+    /* skip bare timestamp lines */
+    if (/^\d{1,2}:\d{2}(:\d{2})?\s*(AM|PM)?$/i.test(line)) { return; }
+
+    let name    = "Anonymous";
+    let content = line;
+
+    /* strip Zoom "[HH:MM]" or "[HH:MM:SS]" prefix */
+    content = content.replace(/^\[\d{1,2}:\d{2}(:\d{2})?\]\s*/, "");
+
+    /* Teams format: "Name (HH:MM AM/PM): submission" */
+    let teamsMatch = content.match(/^([^(]{1,40})\(\d{1,2}:\d{2}[^)]*\):\s*([\s\S]*)/);
+    if (teamsMatch) {
+      name    = teamsMatch[1].trim();
+      content = teamsMatch[2].trim();
+      if (content !== "") { results.push({ name: name, content: content }); }
+      return;
+    }
+
+    /* "Name: submission" — colon must be within first 40 chars to avoid false splits */
+    let colonIdx = content.indexOf(":");
+    if (colonIdx > 0 && colonIdx <= 40) {
+      let leftSide = content.slice(0, colonIdx).trim();
+      /* left side must look like a name: no newlines, reasonable length */
+      if (leftSide.length > 0 && leftSide.length <= 40) {
+        name    = leftSide;
+        content = content.slice(colonIdx + 1).trim();
+      }
+    }
+
+    if (content !== "") {
+      results.push({ name: name, content: content });
+    }
+  });
+
+  return results;
+}
+
+/* ── Render helpers ─────────────────────────────────────────── */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function escapeAttr(str) {
+  return String(str).replace(/&/g, "&amp;").replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+}
+
+/* ── Render one tile ────────────────────────────────────────── */
+function renderTile(tile) {
+  /* content area: image thumbnail or text */
+  let isImageUrl = tile.tag === "image"
+    && /^https?:\/\//i.test(tile.content.trim());
+
+  let contentHtml = "";
+  if (isImageUrl) {
+    contentHtml = "<img class='tile-img' src='" + escapeAttr(tile.content.trim()) + "'"
+      + " alt='" + escapeAttr(tile.name + " submission") + "' loading='lazy'>";
+  } else {
+    contentHtml = "<p class='tile-text'>" + escapeHtml(tile.content) + "</p>";
+  }
+
+  /* visibility label and class */
+  let visLabel = "Public";
+  let visClass = "tile-vis public";
+  if (tile.visibility === "private") {
+    visLabel = "Private";
+    visClass = "tile-vis private";
+  }
+
+  /* private tiles are visually dimmed */
+  let tileClass = "tile";
+  if (tile.visibility === "private") { tileClass = "tile tile--private"; }
+
+  return "<div class='" + tileClass + "' data-id='" + escapeAttr(tile.id) + "'>"
+    + "<div class='tile-content'>" + contentHtml + "</div>"
+    + "<div class='tile-caption-wrap'>"
+    +   "<input class='tile-caption' type='text' placeholder='Add a caption&hellip;'"
+    +     " data-action='caption' aria-label='Caption for " + escapeAttr(tile.name) + " tile'>"
+    + "</div>"
+    + "<div class='tile-meta'>"
+    +   "<button class='tile-tag " + TAG_CLASSES[tile.tag] + "' data-action='tag'"
+    +     " title='Click to cycle tag' type='button'>" + TAG_LABELS[tile.tag] + "</button>"
+    +   "<span class='tile-name'>" + escapeHtml(tile.name) + "</span>"
+    +   "<button class='" + visClass + "' data-action='visibility' type='button'>" + visLabel + "</button>"
+    +   "<button class='tile-del' data-action='delete'"
+    +     " aria-label='Remove tile' type='button'>&times;</button>"
+    + "</div>"
+    + "</div>";
+}
+
+/* ── Render all tiles ───────────────────────────────────────── */
+function render() {
+  let grid       = document.getElementById("tileGrid");
+  let emptyState = document.getElementById("emptyState");
+  let countEl    = document.getElementById("tileCount");
+
+  /* save focused tile ID so caption inputs survive the innerHTML rebuild */
+  let focusId = null;
+  let focusedEl = document.activeElement;
+  if (focusedEl && focusedEl.classList.contains("tile-caption")) {
+    let tileEl = focusedEl.closest("[data-id]");
+    if (tileEl) { focusId = tileEl.getAttribute("data-id"); }
+  }
+
+  /* update count label */
+  let countText = tiles.length + " tiles";
+  if (tiles.length === 1) { countText = "1 tile"; }
+  countEl.textContent = countText;
+
+  if (tiles.length === 0) {
+    grid.innerHTML = "";
+    if (emptyState) { emptyState.style.display = "block"; }
+    return;
+  }
+
+  if (emptyState) { emptyState.style.display = "none"; }
+
+  let html = "";
+  tiles.forEach(function(tile) { html += renderTile(tile); });
+  grid.innerHTML = html;
+
+  /* restore caption values (innerHTML cleared them) */
+  tiles.forEach(function(tile) {
+    let input = grid.querySelector('[data-id="' + tile.id + '"] .tile-caption');
+    if (input) { input.value = tile.caption; }
+  });
+
+  /* restore focus and cursor position */
+  if (focusId) {
+    let input = grid.querySelector('[data-id="' + focusId + '"] .tile-caption');
+    if (input) {
+      input.focus();
+      let len = input.value.length;
+      input.setSelectionRange(len, len);
+    }
+  }
+}
+
+/* ── Find tile by id ────────────────────────────────────────── */
+function getTile(id) {
+  let found = null;
+  tiles.forEach(function(t) {
+    if (t.id === id) { found = t; }
+  });
+  return found;
+}
+
+/* ── Event delegation on the grid ──────────────────────────── */
+/*
+   Click events handle tag-cycle, visibility-toggle, and delete.
+   Input events handle caption editing without triggering a full re-render.
+*/
+function bindGrid() {
+  let grid = document.getElementById("tileGrid");
+
+  grid.addEventListener("click", function(e) {
+    let btn = e.target.closest("[data-action]");
+    if (!btn) { return; }
+
+    let tileEl = btn.closest("[data-id]");
+    if (!tileEl) { return; }
+
+    let id     = tileEl.getAttribute("data-id");
+    let action = btn.getAttribute("data-action");
+
+    /* delete tile */
+    if (action === "delete") {
+      tiles = tiles.filter(function(t) { return t.id !== id; });
+      render();
+      return;
+    }
+
+    let tile = getTile(id);
+    if (!tile) { return; }
+
+    /* cycle through tag types: text → image → video → cross → text */
+    if (action === "tag") {
+      let idx = TAG_CYCLE.indexOf(tile.tag);
+      let next = idx + 1;
+      if (next >= TAG_CYCLE.length) { next = 0; }
+      tile.tag = TAG_CYCLE[next];
+      render();
+      return;
+    }
+
+    /* toggle public / private */
+    if (action === "visibility") {
+      if (tile.visibility === "public") {
+        tile.visibility = "private";
+      } else {
+        tile.visibility = "public";
+      }
+      render();
+      return;
+    }
+  });
+
+  /* caption input: update tile data without re-rendering */
+  grid.addEventListener("input", function(e) {
+    if (!e.target.classList.contains("tile-caption")) { return; }
+    let tileEl = e.target.closest("[data-id]");
+    if (!tileEl) { return; }
+    let tile = getTile(tileEl.getAttribute("data-id"));
+    if (tile) { tile.caption = e.target.value; }
+  });
+}
+
+/* ── Build wall from paste ──────────────────────────────────── */
+function buildFromPaste() {
+  let raw    = document.getElementById("pasteArea").value;
+  let status = document.getElementById("pasteStatus");
+
+  if (raw.trim() === "") {
+    status.textContent = "Nothing to parse.";
+    status.className   = "paste-status warn";
+    return;
+  }
+
+  let parsed = parsePaste(raw);
+
+  if (parsed.length === 0) {
+    status.textContent = 'No submissions found. Try "Name: observation" or one line per submission.';
+    status.className   = "paste-status warn";
+    return;
+  }
+
+  parsed.forEach(function(item) {
+    tiles.push(makeTile(item.name, item.content));
+  });
+
+  let addedSuffix = "s";
+  if (parsed.length === 1) { addedSuffix = ""; }
+  let addedText = parsed.length + " tile" + addedSuffix + " added.";
+  status.textContent = addedText;
+  status.className   = "paste-status ok";
+
+  document.getElementById("pasteArea").value = "";
+  togglePastePanel(false);
+  render();
+}
+
+/* ── Toggle paste panel ─────────────────────────────────────── */
+function togglePastePanel(forceOpen) {
+  let panel = document.getElementById("pastePanel");
+  let btn   = document.getElementById("togglePaste");
+
+  /* forceOpen can be true (open), false (close), or undefined (toggle) */
+  if (forceOpen === true) {
+    pasteOpen = true;
+  } else if (forceOpen === false) {
+    pasteOpen = false;
+  } else {
+    if (pasteOpen) {
+      pasteOpen = false;
+    } else {
+      pasteOpen = true;
+    }
+  }
+
+  if (pasteOpen) {
+    panel.style.display = "block";
+    btn.innerHTML       = "Paste submissions &#9650;";
+  } else {
+    panel.style.display = "none";
+    btn.innerHTML       = "Paste submissions &#9660;";
+  }
+}
+
+/* ── URL-hash export ────────────────────────────────────────── */
+/*
+   Only public tiles are exported.
+   Encoding: JSON → encodeURIComponent → btoa (handles Unicode safely).
+   Private tiles are silently omitted — the facilitator controls what is shared.
+*/
+function exportHash() {
+  let publicTiles = tiles.filter(function(t) { return t.visibility === "public"; });
+  if (publicTiles.length === 0) { return null; }
+
+  let minimal = publicTiles.map(function(t) {
+    return { name: t.name, content: t.content, caption: t.caption, tag: t.tag };
+  });
+
+  let json    = JSON.stringify(minimal);
+  let encoded = btoa(encodeURIComponent(json));
+  return encoded;
+}
+
+/* ── URL-hash import ────────────────────────────────────────── */
+/*
+   On load, if a hash is present, try to decode and rebuild the wall.
+   Each imported tile starts as public (it was already shared).
+*/
+function importHash(hash) {
+  if (!hash || hash.length < 4) { return; }
+
+  let encoded = hash;
+  if (encoded.charAt(0) === "#") { encoded = encoded.slice(1); }
+
+  let imported = null;
+  try {
+    let json = decodeURIComponent(atob(encoded));
+    imported = JSON.parse(json);
+  } catch (err) {
+    /* hash is malformed or not a wall export — silently ignore */
+    return;
+  }
+
+  if (!Array.isArray(imported) || imported.length === 0) { return; }
+
+  imported.forEach(function(item) {
+    if (typeof item.content !== "string") { return; }
+    let tile     = makeTile(item.name || "Anonymous", item.content);
+    tile.caption = item.caption || "";
+    tile.tag     = item.tag || detectTag(item.content);
+    /* imported tiles are visible — they were intentionally shared */
+    tile.visibility = "public";
+    tiles.push(tile);
+  });
+
+  render();
+
+  let notice = document.getElementById("importNotice");
+  let importedSuffix = "s";
+  if (imported.length === 1) { importedSuffix = ""; }
+  let importedText = imported.length + " tile" + importedSuffix + " loaded from shared link.";
+  notice.textContent = importedText;
+  notice.style.display = "block";
+}
+
+/* ── Share link ─────────────────────────────────────────────── */
+function shareLink() {
+  let encoded = exportHash();
+  let btn     = document.getElementById("shareBtn");
+
+  if (!encoded) {
+    btn.textContent = "No public tiles";
+    setTimeout(function() { btn.textContent = "Share link"; }, 1800);
+    return;
+  }
+
+  let url = location.href.split("#")[0] + "#" + encoded;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(function() {
+      btn.textContent = "Link copied ✓";
+      setTimeout(function() { btn.textContent = "Share link"; }, 2200);
+    }).catch(function() {
+      fallbackCopyUrl(url, btn);
+    });
+    return;
+  }
+
+  fallbackCopyUrl(url, btn);
+}
+
+function fallbackCopyUrl(url, btn) {
+  let area = document.createElement("textarea");
+  area.value       = url;
+  area.style.position = "fixed";
+  area.style.left  = "-9999px";
+  document.body.appendChild(area);
+  area.select();
+  let copied = document.execCommand("copy");
+  area.remove();
+
+  if (copied) {
+    btn.textContent = "Link copied ✓";
+  } else {
+    btn.textContent = "Copy failed";
+  }
+  setTimeout(function() { btn.textContent = "Share link"; }, 2200);
+}
+
+/* ── Self-tests ─────────────────────────────────────────────── */
+function runTests() {
+  let pass = 0;
+  let fail = 0;
+
+  function assert(condition, msg) {
+    if (condition) {
+      pass += 1;
+    } else {
+      fail += 1;
+      console.warn("FAIL: " + msg);
+    }
+  }
+
+  /* plain text lines */
+  let r1 = parsePaste("The image defaulted to a white male.\nThe classroom had no windows.");
+  assert(r1.length === 2, "parse: 2 plain lines");
+  assert(r1[0].name === "Anonymous", "parse: plain name is Anonymous");
+
+  /* Name: content */
+  let r2 = parsePaste("Alex: The prompt left everyone out.\nJan: Temperature made it unstable.");
+  assert(r2.length === 2, "parse: name-colon format");
+  assert(r2[0].name === "Alex", "parse: name Alex");
+  assert(r2[1].name === "Jan", "parse: name Jan");
+
+  /* Zoom [time] format */
+  let r3 = parsePaste("[10:23] Sam: High temp broke identity.\n[10:24] Lee: Default was a suburb.");
+  assert(r3.length === 2, "parse: zoom timestamp");
+  assert(r3[0].name === "Sam", "parse: zoom name Sam");
+
+  /* Teams format */
+  let r4 = parsePaste("Sam (10:05 AM): prediction is not understanding");
+  assert(r4.length === 1, "parse: teams format");
+  assert(r4[0].name === "Sam", "parse: teams name");
+
+  /* skip system messages */
+  let r5 = parsePaste("Alex joined the meeting\nJan: real observation\nLee left the meeting");
+  assert(r5.length === 1, "parse: skip system lines");
+  assert(r5[0].name === "Jan", "parse: only Jan survives");
+
+  /* detectTag */
+  assert(detectTag("https://example.com/photo.jpg") === "image", "detectTag: image URL");
+  assert(detectTag("plain text claim")              === "text",  "detectTag: plain text");
+  assert(detectTag("video drift was visible")       === "video", "detectTag: video keyword");
+
+  /* tile factory */
+  let tile = makeTile("Alex", "The default was a suburb.");
+  assert(tile.name === "Alex",   "tile: name");
+  assert(tile.visibility === "public", "tile: defaults public");
+  assert(tile.tag === "text",    "tile: tag text");
+
+  /* hash export excludes private tiles */
+  let savedTiles = tiles;
+  tiles = [
+    makeTile("A", "public claim"),
+    makeTile("B", "private claim")
+  ];
+  tiles[1].visibility = "private";
+  let hash = exportHash();
+  assert(hash !== null, "export: hash not null");
+  let decoded = JSON.parse(decodeURIComponent(atob(hash)));
+  assert(decoded.length === 1,             "export: only 1 public tile");
+  assert(decoded[0].content === "public claim", "export: correct public content");
+
+  /* hash import round-trip */
+  tiles = [];
+  importHash(hash);
+  assert(tiles.length === 1, "import: round-trip tile count");
+  assert(tiles[0].content === "public claim", "import: round-trip content");
+
+  /* all-private → no hash */
+  tiles = [ makeTile("A", "private") ];
+  tiles[0].visibility = "private";
+  assert(exportHash() === null, "export: all-private yields null hash");
+
+  tiles = savedTiles;
+
+  if (fail === 0) {
+    console.log("All " + pass + " self-tests passed.");
+  } else {
+    console.warn(fail + " test(s) failed, " + pass + " passed.");
+  }
+}
+
+/* ── Init ───────────────────────────────────────────────────── */
+function init() {
+  /* paste panel toggle */
+  document.getElementById("togglePaste").addEventListener("click", function() {
+    togglePastePanel();
+  });
+
+  /* build wall */
+  document.getElementById("buildBtn").addEventListener("click", buildFromPaste);
+
+  /* Ctrl/Cmd + Enter in paste area also builds */
+  document.getElementById("pasteArea").addEventListener("keydown", function(e) {
+    let isCtrlEnter = e.key === "Enter" && (e.ctrlKey || e.metaKey);
+    if (isCtrlEnter) {
+      e.preventDefault();
+      buildFromPaste();
+    }
+  });
+
+  /* share link */
+  document.getElementById("shareBtn").addEventListener("click", shareLink);
+
+  /* print */
+  document.getElementById("printBtn").addEventListener("click", function() {
+    window.print();
+  });
+
+  /* clear */
+  document.getElementById("clearBtn").addEventListener("click", function() {
+    if (tiles.length === 0) { return; }
+    if (!confirm("Clear all tiles? Copy the share link first if you want to keep them.")) { return; }
+    tiles = [];
+    render();
+    togglePastePanel(true);
+    document.getElementById("pasteStatus").textContent = "";
+    document.getElementById("importNotice").style.display = "none";
+  });
+
+  /* dismiss consent banner */
+  document.getElementById("consentDismiss").addEventListener("click", function() {
+    document.getElementById("consentBanner").style.display = "none";
+  });
+
+  /* grid event delegation */
+  bindGrid();
+
+  /* import from URL hash if present */
+  if (location.hash && location.hash.length > 4) {
+    importHash(location.hash);
+    togglePastePanel(false);
+  }
+
+  render();
+  runTests();
+}
+
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>

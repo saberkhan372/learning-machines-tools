@@ -35,28 +35,31 @@ The tool principle is:
 
 ## Launch Roadmap
 
-### MVP Tools
+### Launch-Ready Tools (11)
 
-| Priority | Tool | Status | Purpose |
-| --- | --- | --- | --- |
-| 1 | Tokenizer + Temperature Visualizer | Launch ready | Make tokenization, probability, and sampling visible |
-| 2 | ELIZA Simulator | Launch ready | Make rule-based AI legible |
-| 3 | Diffusion Step-Through Viewer | Launch ready | Make denoising visible with canvas fallback and future image-sequence support |
-| 4 | Feature Extraction / Pixel Resolution Tool | Launch ready | Make image representation visible |
-| 5 | Temporal Telephone | Launch ready | Make temporal drift and anchoring visible |
+| Tool | Status | Session |
+| --- | --- | --- |
+| Tokenizer + Temperature Visualizer | Launch ready | 1 · Text |
+| ELIZA Simulator | Launch ready | 1 · Text |
+| Next-Token Prediction Game | Launch ready | 1 · Text |
+| Count the Next Token | Launch ready | 1 · Text |
+| Diffusion Step-Through Viewer | Launch ready | 2 · Image |
+| Feature Extraction / Pixel Resolution | Launch ready | 2 · Image |
+| Temporal Telephone | Launch ready | 3 · Video |
+| A/B/C Comparison Board | Launch ready | Cross |
+| Model Card Builder | Launch ready | Cross |
+| Access Tiers | Launch ready | Cross |
+| Evidence Wall | Launch ready | Cross |
 
 ### Second-Wave and Later Tools
 
-- Default Test Comparison Viewer
-- Video Failure Gallery Viewer
-- A/B/C Comparison Board - second-wave draft
-- Model Card Builder - second-wave draft
-- Concept Bridge pages - second-wave draft
-- Prompt Guidance Word-by-Word Reveal
-- Frame-by-Frame Coherence Viewer
-- Next-Token Prediction Game
-- Latent Space Explorer
-- Dataset Balance Simulator
+- Concept Bridge pages — second-wave draft
+- Default Test Comparison Viewer — coming later
+- Video Failure Gallery Viewer — coming later
+- Prompt Guidance Word-by-Word — coming later
+- Frame-by-Frame Coherence Viewer — coming later
+- Latent Space Explorer — coming later
+- Dataset Balance Simulator — coming later
 
 ## Tool Folders
 
@@ -64,30 +67,39 @@ Canonical folders are listed in the [tool directory](tools/).
 
 ### Session 1: Text
 
-- [`tools/tokenizer-temperature-visualizer/`](tools/tokenizer-temperature-visualizer/)
-- [`tools/eliza-simulator/`](tools/eliza-simulator/)
-- [`tools/next-token-prediction-game/`](tools/next-token-prediction-game/)
+- [`tools/tokenizer-temperature-visualizer/`](tools/tokenizer-temperature-visualizer/) — Launch ready
+- [`tools/eliza-simulator/`](tools/eliza-simulator/) — Launch ready
+- [`tools/next-token-prediction-game/`](tools/next-token-prediction-game/) — Launch ready
+- [`tools/count-the-next-token/`](tools/count-the-next-token/) — Launch ready
 
 ### Session 2: Images
 
-- [`tools/feature-extraction-pixel-resolution/`](tools/feature-extraction-pixel-resolution/)
-- [`tools/diffusion-step-through-viewer/`](tools/diffusion-step-through-viewer/)
-- [`tools/default-test-comparison-viewer/`](tools/default-test-comparison-viewer/)
-- [`tools/prompt-guidance-word-by-word/`](tools/prompt-guidance-word-by-word/)
-- [`tools/latent-space-explorer/`](tools/latent-space-explorer/)
-- [`tools/dataset-balance-simulator/`](tools/dataset-balance-simulator/)
+- [`tools/diffusion-step-through-viewer/`](tools/diffusion-step-through-viewer/) — Launch ready
+- [`tools/feature-extraction-pixel-resolution/`](tools/feature-extraction-pixel-resolution/) — Launch ready
+- [`tools/default-test-comparison-viewer/`](tools/default-test-comparison-viewer/) — Coming later
+- [`tools/prompt-guidance-word-by-word/`](tools/prompt-guidance-word-by-word/) — Coming later
+- [`tools/latent-space-explorer/`](tools/latent-space-explorer/) — Coming later
+- [`tools/dataset-balance-simulator/`](tools/dataset-balance-simulator/) — Coming later
 
 ### Session 3: Video
 
-- [`tools/temporal-telephone/`](tools/temporal-telephone/)
-- [`tools/video-failure-gallery-viewer/`](tools/video-failure-gallery-viewer/)
-- [`tools/frame-by-frame-coherence-viewer/`](tools/frame-by-frame-coherence-viewer/)
+- [`tools/temporal-telephone/`](tools/temporal-telephone/) — Launch ready
+- [`tools/video-failure-gallery-viewer/`](tools/video-failure-gallery-viewer/) — Coming later
+- [`tools/frame-by-frame-coherence-viewer/`](tools/frame-by-frame-coherence-viewer/) — Coming later
 
 ### Cross-Session
 
-- [`tools/abc-comparison-board/`](tools/abc-comparison-board/)
-- [`tools/model-card-builder/`](tools/model-card-builder/)
-- [`tools/concept-bridges/`](tools/concept-bridges/)
+- [`tools/abc-comparison-board/`](tools/abc-comparison-board/) — Launch ready
+- [`tools/model-card-builder/`](tools/model-card-builder/) — Launch ready
+- [`tools/access-tiers/`](tools/access-tiers/) — Launch ready
+- [`tools/evidence-wall/`](tools/evidence-wall/) — Launch ready
+- [`tools/concept-bridges/`](tools/concept-bridges/) — Second-wave draft
+
+### Prompt Packs
+
+- [`packs/text/`](packs/text/) — Session 1 frozen examples
+- [`packs/images/`](packs/images/) — Session 2 frozen examples
+- [`packs/video/`](packs/video/) — Session 3 frozen examples
 
 ## Planning Docs
 
@@ -95,6 +107,8 @@ Canonical folders are listed in the [tool directory](tools/).
 - [Build roadmap](docs/build-roadmap.html)
 - [Pilot checklist](docs/pilot-checklist.html)
 - [Pilot feedback form template](docs/pilot-feedback-form.html)
+- [Pre-session check-in](docs/pre-session-checkin.html)
+- [Human as Model (unplugged activity)](docs/unplugged-human-as-model.html)
 - [Session 1 facilitation notes](docs/session-1-facilitation.html)
 - [Session 2 facilitation notes](docs/session-2-facilitation.html)
 - [Session 3 facilitation notes](docs/session-3-facilitation.html)

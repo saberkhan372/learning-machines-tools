@@ -1,24 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark" data-font="lab">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Model Card Builder — Learning Machines</title>
-  <style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/lm.css">
+  <script src="../../assets/theme.js"></script>
+<style>
     :root {
-      --bg: #eef4f1;
-      --paper: #fffdf8;
-      --ink: #20201d;
-      --muted: #66706c;
-      --line: #c8d3cf;
-      --accent: #2364aa;
       --green: #3b7d59;
-      --amber: #9a641c;
-      --rose: #9a3e4a;
-      --shadow: 0 14px 34px rgba(28, 40, 38, 0.10);
+      --amber: #f6bd60;
+      --rose: #f4728b;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
+    body { margin: 0; }
     main { width: min(1160px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0 48px; }
     a { color: var(--accent); }
     h1, h2, h3, p { margin-top: 0; letter-spacing: 0; }
@@ -26,16 +24,16 @@
     p, li { color: var(--muted); line-height: 1.55; }
     label { color: var(--ink); font-size: 0.86rem; font-weight: 800; }
     input, textarea, button { font: inherit; }
-    input, textarea { width: 100%; border: 1px solid var(--line); border-radius: 6px; background: #fffdf8; color: var(--ink); padding: 10px 11px; }
+    input, textarea { width: 100%; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); padding: 10px 11px; }
     textarea { min-height: 96px; resize: vertical; line-height: 1.45; }
-    button { border: 1px solid var(--line); border-radius: 6px; background: #fffdf8; color: var(--ink); padding: 10px 11px; min-height: 42px; cursor: pointer; font-weight: 800; }
+    button { border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); padding: 10px 11px; min-height: 42px; cursor: pointer; font-weight: 800; }
     button.primary, button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
     button.danger { color: var(--rose); }
     button:disabled { cursor: wait; opacity: 0.7; }
     .topbar { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 18px; }
     .back-link { font-weight: 700; text-decoration: none; }
     .save-state { color: var(--muted); font-size: 0.92rem; }
-    .panel { border: 1px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: var(--shadow); }
+    .panel { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow-sm); }
     .hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr); gap: 18px; margin-bottom: 18px; }
     .intro, .controls, .section, .facilitator { padding: 18px; }
     .intro { padding: 24px; }
@@ -44,14 +42,14 @@
     .controls, .field, .template-list { display: grid; gap: 8px; }
     .controls { gap: 14px; }
     .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .notice { border-left: 4px solid var(--green); background: #f2fbf5; padding: 12px 14px; color: #315942; font-size: 0.92rem; line-height: 1.45; }
+    .notice { border-left: 4px solid var(--accent); background: var(--surface-2); padding: 12px 14px; color: var(--ink); font-size: 0.92rem; line-height: 1.45; }
     .section { margin-bottom: 18px; }
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
     .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
     .small textarea { min-height: 76px; }
     .test-status { color: var(--muted); font: 0.78rem ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; min-height: 18px; }
-    .toast { position: fixed; right: 18px; bottom: 18px; max-width: min(360px, calc(100% - 36px)); border-radius: 8px; background: var(--ink); color: #fff; padding: 12px 14px; box-shadow: var(--shadow); opacity: 0; transform: translateY(8px); transition: opacity 180ms ease, transform 180ms ease; pointer-events: none; }
+    .toast { position: fixed; right: 18px; bottom: 18px; max-width: min(360px, calc(100% - 36px)); border-radius: 8px; background: var(--ink); color: var(--bg); padding: 12px 14px; box-shadow: var(--shadow-sm); opacity: 0; transform: translateY(8px); transition: opacity 180ms ease, transform 180ms ease; pointer-events: none; }
     .toast.show { opacity: 1; transform: translateY(0); }
     @media (max-width: 980px) {
       .hero, .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
@@ -67,17 +65,39 @@
       .panel { box-shadow: none; break-inside: avoid; }
     }
   </style>
-</head>
+<style id="lm-tool-nav-overrides">
+  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
+  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
+  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
+  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
+  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
+  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
+  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
+  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
+  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
+  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
+  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
+  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
+</style></head>
 <body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+      </div>
+    </div>
+  </nav>
   <main>
     <div class="topbar">
-      <a class="back-link" href="../../">Back to tools</a>
       <span class="save-state" id="saveState">Autosave ready</span>
     </div>
 
     <section class="hero">
       <div class="intro panel">
-        <p class="eyebrow">Second-wave draft - Critical/no-AI pathway</p>
+        <p class="eyebrow">Launch ready - Critical/no-AI pathway</p>
         <h1>Model Card Builder</h1>
         <p>Document what a model or tool claims to do, what it actually did in your test, where it failed, what defaults appeared, and what responsible use would require.</p>
       </div>

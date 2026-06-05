@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Count the Next Token &#8212; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/lm.css">
+  <link rel="stylesheet" href="../assets/home.css">
+  <link rel="stylesheet" href="../assets/sub.css">
+  <script src="../assets/theme.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tools</a>
+        <a href="session-text.html" class="hide-sm">Session 1</a>
+        <a href="../index.html#method" class="hide-sm">Method</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="../tools/count-the-next-token/">Launch tool <span class="arrow">&#8594;</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#tools">Tools</a><span class="sep">/</span>
+        <span>Count the Next Token</span>
+      </div>
+      <div class="tool-hero-grid">
+        <div class="tool-hero">
+          <div class="meta-row">
+            <span class="status ready">Launch ready</span>
+            <span class="chip">Session 1 &#183; Text</span>
+            <span class="chip">Interactive</span>
+          </div>
+          <h1>Count the Next Token</h1>
+          <p class="tool-lede">Pick a context word, see the bigram table build, then follow the arithmetic: count &#8594; divide &#8594; probability &#8594; predict. The tool makes the full frequency-division chain inspectable &#8212; every token prediction follows this chain, whether the model is simple or very large.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="../tools/count-the-next-token/">Launch the tool <span class="arrow">&#8594;</span></a>
+            <a class="btn btn-ghost" href="../worksheets/text-experiment-board/">Open the worksheet</a>
+          </div>
+        </div>
+        <div class="preview">
+          <div class="preview-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url">tools/count-the-next-token/</span>
+          </div>
+          <div class="preview-body">
+            <iframe src="../tools/count-the-next-token/" title="Count the Next Token" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">A.</span><h2>What it makes visible</h2></div>
+      <div class="visible-grid">
+        <div class="vis-card">
+          <div class="vn">01</div>
+          <h3>Counting as the foundation</h3>
+          <p>Before any prediction, there is counting: how many times did each word follow this context word in training data? The bigram table makes that count visible before the probability appears.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">02</div>
+          <h3>Division as prediction</h3>
+          <p>The model doesn&#8217;t &#8220;know&#8221; the next word. It divides: count of this continuation divided by total count of all continuations. Probability is frequency division, made explicit.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">03</div>
+          <h3>The full arithmetic chain</h3>
+          <p>Count &#8594; divide &#8594; probability &#8594; sample. Every token prediction follows this chain. Count the Next Token exposes each step so the mechanism is inspectable &#8212; not just described.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">B.</span><h2>How to investigate it</h2></div>
+      <p class="sess-lede" style="margin:0 0 26px;">Follow the arithmetic. Don&#8217;t skip to the probability &#8212; trace the count that produced it.</p>
+      <div class="invest">
+        <div class="invest-card">
+          <div class="ic-k">01 &#183; Pick a context word</div>
+          <h4>Watch the table build</h4>
+          <p>Choose a common word and watch the bigram table build. How many continuations are possible? How evenly are they distributed?</p>
+          <div class="eg">context: &#8220;the&#8221; &#8594; many continuations</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">02 &#183; Follow the arithmetic</div>
+          <h4>Count &#247; total = probability</h4>
+          <p>Identify the most frequent continuation. Divide its count by the total count of all continuations. Does the probability match what you would predict?</p>
+          <div class="eg">&#8220;cat&#8221;: 3 of 12 total &#8594; 0.25</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">03 &#183; Change the context</div>
+          <h4>Specific vs. common words</h4>
+          <p>Run the same setup with a more specific context word. What happens to the distribution &#8212; does it sharpen or spread?</p>
+          <div class="eg">&#8220;the&#8221; (flat) vs. &#8220;Thursday&#8221; (peaked)</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">04 &#183; Name what changes</div>
+          <h4>Not &#8220;the probabilities shifted&#8221;</h4>
+          <p>Name the specific mechanism: does a rare word become likely because of a particular pattern in the training data? Name that pattern.</p>
+          <div class="eg">&#8220;Thursday&#8221; &#8594; &#8220;night&#8221; at 68% &#8212; sports broadcast schedules in training data</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" style="border-top:1px solid var(--line-soft);">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">C.</span><h2>Debrief questions</h2></div>
+      <div class="prompts">
+        <div class="prompt">What did you notice when you could see the counts instead of just the probabilities?</div>
+        <div class="prompt">Where did the arithmetic produce a result that surprised you?</div>
+        <div class="prompt">What would a very different training corpus do to this bigram table?</div>
+        <div class="prompt">When does frequency become a kind of knowledge, and when does it mislead?</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap doc-cols">
+      <div class="doc-group">
+        <h3>Pairs well with</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="tool-prediction-game.html"><span class="d-name">Next-Token Prediction Game</span><span class="d-desc">Human vs. model distributions</span></a>
+          <a class="doc-row" href="tool-tokenizer.html"><span class="d-name">Tokenizer + Temperature</span><span class="d-desc">Probability bars and sampling</span></a>
+          <a class="doc-row" href="../tools/concept-bridges/prediction-is-not-understanding/"><span class="d-name">Bridge &#183; Prediction &#8800; understanding</span><span class="d-desc">Concept explainer</span></a>
+        </div>
+      </div>
+      <div class="doc-group">
+        <h3>Use it in context</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="session-text.html"><span class="d-name">Session 1 &#183; Text</span><span class="d-desc">Bigram counting and arithmetic chain activity</span></a>
+          <a class="doc-row" href="docs-facilitation.html"><span class="d-name">Session 1 Facilitation</span><span class="d-desc">Counting lab and frequency-to-probability debrief</span></a>
+          <a class="doc-row" href="../worksheets/text-experiment-board/"><span class="d-name">Text Experiment Board</span><span class="d-desc">Log your bigram counts and distribution findings</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-text.html"><div class="pg-dir mono">&#8592; Back to session</div><div class="pg-title">Session 1 &#183; Text</div></a>
+        <a class="next" href="../tools/count-the-next-token/"><div class="pg-dir mono">Open it &#8594;</div><div class="pg-title">Launch the tool</div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <p class="mono">Single-file &#183; vanilla JavaScript &#183; no account &#183; no live model required.</p>
+    </div>
+  </footer>
+</body>
+</html>

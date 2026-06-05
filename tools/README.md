@@ -6,33 +6,37 @@ title: Tool Directory
 # Tool Directory
 
 Canonical tool folders for the Learning Machines camp.
+Status reflects the current build; `tools-data.js` is the single source of truth for the homepage tool browser.
 
-## Launch Tools
+## Launch-Ready Tools (11)
 
-| Tool | Folder | Status |
-| --- | --- | --- |
-| Tokenizer + Temperature Visualizer | `tokenizer-temperature-visualizer/` | Launch ready |
-| ELIZA Simulator | `eliza-simulator/` | Launch ready |
-| Diffusion Step-Through Viewer | `diffusion-step-through-viewer/` | Launch ready |
-| Feature Extraction / Pixel Resolution Tool | `feature-extraction-pixel-resolution/` | Launch ready |
-| Temporal Telephone | `temporal-telephone/` | Launch ready |
+| Tool | Folder | Session | Modality |
+| --- | --- | --- | --- |
+| Tokenizer + Temperature Visualizer | `tokenizer-temperature-visualizer/` | 1 | Text |
+| ELIZA Simulator | `eliza-simulator/` | 1 | Text |
+| Next-Token Prediction Game | `next-token-prediction-game/` | 1 | Text |
+| Count the Next Token | `count-the-next-token/` | 1 | Text |
+| Diffusion Step-Through Viewer | `diffusion-step-through-viewer/` | 2 | Image |
+| Feature Extraction / Pixel Resolution | `feature-extraction-pixel-resolution/` | 2 | Image |
+| Temporal Telephone | `temporal-telephone/` | 3 | Video |
+| A/B/C Comparison Board | `abc-comparison-board/` | Cross | Cross |
+| Model Card Builder | `model-card-builder/` | 4 | Cross |
+| Access Tiers | `access-tiers/` | Cross | Cross |
+| Evidence Wall | `evidence-wall/` | Cross | Cross |
 
-## Second-Wave Tools
-
-| Tool | Folder | Status |
-| --- | --- | --- |
-| Default Test Comparison Viewer | `default-test-comparison-viewer/` | Coming later |
-| Video Failure Gallery Viewer | `video-failure-gallery-viewer/` | Coming later |
-| A/B/C Comparison Board | `abc-comparison-board/` | Second-wave draft |
-| Model Card Builder | `model-card-builder/` | Second-wave draft |
-| Concept Bridge Pages | `concept-bridges/` | Second-wave draft |
-
-## Stretch Tools
+## Second-Wave Tools (draft)
 
 | Tool | Folder | Status |
 | --- | --- | --- |
-| Prompt Guidance Word-by-Word Reveal | `prompt-guidance-word-by-word/` | Coming later |
-| Frame-by-Frame Coherence Viewer | `frame-by-frame-coherence-viewer/` | Coming later |
-| Next-Token Prediction Game | `next-token-prediction-game/` | Coming later |
-| Latent Space Explorer | `latent-space-explorer/` | Coming later |
-| Dataset Balance Simulator | `dataset-balance-simulator/` | Coming later |
+| Concept Bridges | `concept-bridges/` | Second-wave draft |
+
+## Coming Later (stubs)
+
+| Tool | Folder |
+| --- | --- |
+| Default Test Comparison Viewer | `default-test-comparison-viewer/` |
+| Video Failure Gallery Viewer | `video-failure-gallery-viewer/` |
+| Prompt Guidance Word-by-Word | `prompt-guidance-word-by-word/` |
+| Frame-by-Frame Coherence Viewer | `frame-by-frame-coherence-viewer/` |
+| Latent Space Explorer | `latent-space-explorer/` |
+| Dataset Balance Simulator | `dataset-balance-simulator/` |

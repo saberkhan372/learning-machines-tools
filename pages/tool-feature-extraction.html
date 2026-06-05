@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feature Extraction / Pixel Resolution &#8212; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/lm.css">
+  <link rel="stylesheet" href="../assets/home.css">
+  <link rel="stylesheet" href="../assets/sub.css">
+  <script src="../assets/theme.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tools</a>
+        <a href="session-images.html" class="hide-sm">Session 2</a>
+        <a href="../index.html#method" class="hide-sm">Method</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="../tools/feature-extraction-pixel-resolution/">Launch tool <span class="arrow">&#8594;</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#tools">Tools</a><span class="sep">/</span>
+        <span>Feature Extraction</span>
+      </div>
+      <div class="tool-hero-grid">
+        <div class="tool-hero">
+          <div class="meta-row">
+            <span class="status ready">Launch ready</span>
+            <span class="chip">Session 2 &#183; Images</span>
+            <span class="chip">Interactive</span>
+          </div>
+          <h1>Feature Extraction / Pixel Resolution</h1>
+          <p class="tool-lede">Change detail level and representation mode to see what survives when an image becomes numbers. The tool makes recognition thresholds visible &#8212; you can watch the moment an image stops being identifiable and ask which cue carried it longest.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="../tools/feature-extraction-pixel-resolution/">Launch the tool <span class="arrow">&#8594;</span></a>
+            <a class="btn btn-ghost" href="../worksheets/image-default-test-board/">Open the worksheet</a>
+          </div>
+        </div>
+        <div class="preview">
+          <div class="preview-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url">tools/feature-extraction-pixel-resolution/</span>
+          </div>
+          <div class="preview-body">
+            <iframe src="../tools/feature-extraction-pixel-resolution/" title="Feature Extraction / Pixel Resolution" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">A.</span><h2>What it makes visible</h2></div>
+      <div class="visible-grid">
+        <div class="vis-card">
+          <div class="vn">01</div>
+          <h3>Images as numbers</h3>
+          <p>Before a model can see anything, an image is a grid of numbers. Feature Extraction makes that grid inspectable &#8212; you can see exactly what the model is working with at any level of detail.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">02</div>
+          <h3>Recognition thresholds</h3>
+          <p>Reduce detail until the image stops being recognizable. The last surviving cue tells you what the recognition system is relying on &#8212; often not what you would expect a human to use.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">03</div>
+          <h3>Which cues carry recognition</h3>
+          <p>Color, outline, texture, context, and spatial arrangement each carry different amounts of recognition information. This tool lets you test the hierarchy directly by watching what survives.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">B.</span><h2>How to investigate it</h2></div>
+      <p class="sess-lede" style="margin:0 0 26px;">Reduce detail one step at a time. Describe what you see at each level &#8212; not what you expect to be there.</p>
+      <div class="invest">
+        <div class="invest-card">
+          <div class="ic-k">01 &#183; Predict</div>
+          <h4>Before reducing detail</h4>
+          <p>Write down which cue you think will carry recognition longest: color, outline, texture, or spatial context. Then test your prediction.</p>
+          <div class="eg">prediction: &#8220;outline will survive longest&#8221;</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">02 &#183; Reduce systematically</div>
+          <h4>One level at a time</h4>
+          <p>Drop one level of detail at a time. At what level does recognition become uncertain? At what level does it fail completely?</p>
+          <div class="eg">level 5 &#8594; uncertain &#183; level 3 &#8594; unrecognizable</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">03 &#183; Compare image types</div>
+          <h4>Does the same cue survive?</h4>
+          <p>Run the same reduction on two different images. Does the same feature type survive longest, or does it depend on the subject?</p>
+          <div class="eg">face vs. object &#183; same reduction, different survival</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">04 &#183; Name the surviving signal</div>
+          <h4>Not &#8220;it&#8217;s blurry&#8221;</h4>
+          <p>Name the specific feature that still carries identity after everything else is gone. That feature is what the recognition system is relying on.</p>
+          <div class="eg">&#8220;color distribution alone was enough for this image&#8221;</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" style="border-top:1px solid var(--line-soft);">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">C.</span><h2>Debrief questions</h2></div>
+      <div class="prompts">
+        <div class="prompt">Which visual cue survived longest as resolution dropped?</div>
+        <div class="prompt">What disappeared first, and what lasted longer than you expected?</div>
+        <div class="prompt">What does the model rely on that a human reader might not notice?</div>
+        <div class="prompt">Where could a surviving-but-wrong signal cause a misidentification?</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap doc-cols">
+      <div class="doc-group">
+        <h3>Pairs well with</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="tool-diffusion.html"><span class="d-name">Diffusion Step-Through</span><span class="d-desc">How structure emerges from noise</span></a>
+          <a class="doc-row" href="../tools/concept-bridges/what-does-the-machine-see/"><span class="d-name">Bridge &#183; What does the machine see?</span><span class="d-desc">Pixels, features, representation</span></a>
+        </div>
+      </div>
+      <div class="doc-group">
+        <h3>Use it in context</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="session-images.html"><span class="d-name">Session 2 &#183; Images</span><span class="d-desc">Pixel reduction lab and recognition threshold activity</span></a>
+          <a class="doc-row" href="docs-session-2-facilitation.html"><span class="d-name">Session 2 Facilitation</span><span class="d-desc">Reduction sequence and surviving-signal debrief</span></a>
+          <a class="doc-row" href="../worksheets/image-default-test-board/"><span class="d-name">Image Default Test Board</span><span class="d-desc">Log which cues survived at each resolution</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-images.html"><div class="pg-dir mono">&#8592; Back to session</div><div class="pg-title">Session 2 &#183; Images</div></a>
+        <a class="next" href="../tools/feature-extraction-pixel-resolution/"><div class="pg-dir mono">Open it &#8594;</div><div class="pg-title">Launch the tool</div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <p class="mono">Single-file &#183; vanilla JavaScript &#183; no account &#183; no live model required.</p>
+    </div>
+  </footer>
+</body>
+</html>

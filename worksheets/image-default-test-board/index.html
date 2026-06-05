@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark" data-font="lab">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Image Default Test Board — Learning Machines</title>
-<style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/lm.css">
+<script src="../../assets/theme.js"></script><style>
   :root {
     --bg: #f5f3ee; --card: #ffffff; --border: #e2ddd5; --ink: #1c1917;
     --muted: #78716c; --accent: #2563eb; --accent-bg: #eff6ff;
@@ -49,11 +53,49 @@
     .section { box-shadow: none; border-color: #ccc; page-break-inside: avoid; }
     textarea { border: 1px solid #ccc !important; background: #fff !important; }
   }
+
+  .evidence-footer {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    max-width: 980px;
+    margin: 24px auto 60px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .evidence-footer label { display: grid; gap: 8px; color: var(--ink); font-size: .82rem; font-weight: 700; }
+  .evidence-footer textarea { min-height: 76px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); }
+  @media (max-width: 760px) { .evidence-footer { grid-template-columns: 1fr; margin-inline: 20px; } }
+
+  #lm-worksheet-nav-overrides.nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
+  #lm-worksheet-nav-overrides .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
+  #lm-worksheet-nav-overrides .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
+  #lm-worksheet-nav-overrides .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
+  #lm-worksheet-nav-overrides .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
+  #lm-worksheet-nav-overrides .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
+  #lm-worksheet-nav-overrides .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
+  #lm-worksheet-nav-overrides .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
+  #lm-worksheet-nav-overrides .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
+  #lm-worksheet-nav-overrides .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
+  #lm-worksheet-nav-overrides .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
+  @media (max-width: 720px) { #lm-worksheet-nav-overrides .hide-sm { display: none !important; } #lm-worksheet-nav-overrides .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
 </style>
 </head>
 <body>
+<nav class="nav" id="lm-worksheet-nav-overrides">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+    <div class="nav-links">
+      <a href="../../index.html#tools" class="hide-sm">Tools</a>
+      <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+      <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+    </div>
+  </div>
+</nav>
 <div class="wrap">
-  <a class="back" href="../../">← Back to tools</a>
   <header>
     <div class="eyebrow">Session 2 · Images</div>
     <h1>Image Default Test Board</h1>
@@ -77,12 +119,47 @@
         <tr><th style="width:20%">Prompt</th><th style="width:20%">Your prediction <em style="font-weight:400">(before generating)</em></th><th style="width:22%">What appeared?</th><th style="width:20%">What was assumed?</th><th>What could be changed?</th></tr>
       </thead>
       <tbody>
-        <tr><td><textarea data-key="dt1-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt1-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea data-key="dt1-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea data-key="dt1-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt1-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
-        <tr><td><textarea data-key="dt2-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt2-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea data-key="dt2-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea data-key="dt2-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt2-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
-        <tr><td><textarea data-key="dt3-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt3-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea data-key="dt3-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea data-key="dt3-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt3-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
-        <tr><td><textarea data-key="dt4-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea data-key="dt4-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea data-key="dt4-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea data-key="dt4-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea data-key="dt4-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Default Test 1 Prompt" data-key="dt1-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 1 Predict" data-key="dt1-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea aria-label="Default Test 1 Appeared" data-key="dt1-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Default Test 1 Assumed" data-key="dt1-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea aria-label="Default Test 1 Change" data-key="dt1-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Default Test 2 Prompt" data-key="dt2-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 2 Predict" data-key="dt2-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea aria-label="Default Test 2 Appeared" data-key="dt2-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Default Test 2 Assumed" data-key="dt2-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea aria-label="Default Test 2 Change" data-key="dt2-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Default Test 3 Prompt" data-key="dt3-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 3 Predict" data-key="dt3-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea aria-label="Default Test 3 Appeared" data-key="dt3-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Default Test 3 Assumed" data-key="dt3-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea aria-label="Default Test 3 Change" data-key="dt3-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Default Test 4 Prompt" data-key="dt4-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 4 Predict" data-key="dt4-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea aria-label="Default Test 4 Appeared" data-key="dt4-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Default Test 4 Assumed" data-key="dt4-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea aria-label="Default Test 4 Change" data-key="dt4-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Default Test Observation Grid -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Default Test Observation Grid</div>
+      <div class="section-desc">Quick observation capture — record the vague prompt, what actually appeared, and what the model silently assumed.</div>
+    </div>
+    <table>
+      <thead>
+        <tr><th style="width:33%">Vague prompt</th><th style="width:33%">What appeared?</th><th>What was assumed?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><textarea aria-label="Obs Grid 1 Prompt" data-key="og1-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 1 Appeared" data-key="og1-appeared" rows="2" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Obs Grid 1 Assumed" data-key="og1-assumed" rows="2" placeholder="What did the model fill in?"></textarea></td></tr>
+        <tr><td><textarea aria-label="Obs Grid 2 Prompt" data-key="og2-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 2 Appeared" data-key="og2-appeared" rows="2" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Obs Grid 2 Assumed" data-key="og2-assumed" rows="2" placeholder="What did the model fill in?"></textarea></td></tr>
+        <tr><td><textarea aria-label="Obs Grid 3 Prompt" data-key="og3-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 3 Appeared" data-key="og3-appeared" rows="2" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Obs Grid 3 Assumed" data-key="og3-assumed" rows="2" placeholder="What did the model fill in?"></textarea></td></tr>
+        <tr><td><textarea aria-label="Obs Grid 4 Prompt" data-key="og4-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 4 Appeared" data-key="og4-appeared" rows="2" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Obs Grid 4 Assumed" data-key="og4-assumed" rows="2" placeholder="What did the model fill in?"></textarea></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Revision -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Revision</div>
+      <div class="section-desc">Pick one default you want to resist. Try a revision, then note what changed and what stayed the same.</div>
+    </div>
+    <div class="reflect-item">
+      <div class="reflect-q">Revision tried</div>
+      <textarea aria-label="Revision tried" data-key="rev-tried" rows="3" placeholder="What prompt change or addition did you try?"></textarea>
+    </div>
+    <div class="reflect-item">
+      <div class="reflect-q">What changed / what stayed the same?</div>
+      <textarea aria-label="Revision result" data-key="rev-result" rows="3" placeholder="What shifted in the output? What default persisted even after your revision?"></textarea>
+    </div>
   </div>
 
   <!-- A/B/C Control -->
@@ -96,9 +173,9 @@
         <tr><th style="width:30px"></th><th style="width:18%">Purpose</th><th style="width:35%">Prompt</th><th>Observation</th></tr>
       </thead>
       <tbody>
-        <tr><td class="version-label">A</td><td><textarea data-key="abc-purpose-a" rows="3" placeholder="Basic prompt">Basic prompt</textarea></td><td><textarea data-key="abc-prompt-a" rows="3" placeholder="Your prompt…"></textarea></td><td><textarea data-key="abc-obs-a" rows="3" placeholder="What appeared?"></textarea></td></tr>
-        <tr><td class="version-label">B</td><td><textarea data-key="abc-purpose-b" rows="3" placeholder="More visual control">More visual control</textarea></td><td><textarea data-key="abc-prompt-b" rows="3" placeholder="Specify more…"></textarea></td><td><textarea data-key="abc-obs-b" rows="3" placeholder="What changed?"></textarea></td></tr>
-        <tr><td class="version-label">C</td><td><textarea data-key="abc-purpose-c" rows="3" placeholder="Address a default">Address a default</textarea></td><td><textarea data-key="abc-prompt-c" rows="3" placeholder="Correct something…"></textarea></td><td><textarea data-key="abc-obs-c" rows="3" placeholder="Did it work?"></textarea></td></tr>
+        <tr><td class="version-label">A</td><td><textarea aria-label="A B C Purpose A" data-key="abc-purpose-a" rows="3" placeholder="Basic prompt">Basic prompt</textarea></td><td><textarea aria-label="A B C Prompt A" data-key="abc-prompt-a" rows="3" placeholder="Your prompt…"></textarea></td><td><textarea aria-label="A B C Obs A" data-key="abc-obs-a" rows="3" placeholder="What appeared?"></textarea></td></tr>
+        <tr><td class="version-label">B</td><td><textarea aria-label="A B C Purpose B" data-key="abc-purpose-b" rows="3" placeholder="More visual control">More visual control</textarea></td><td><textarea aria-label="A B C Prompt B" data-key="abc-prompt-b" rows="3" placeholder="Specify more…"></textarea></td><td><textarea aria-label="A B C Obs B" data-key="abc-obs-b" rows="3" placeholder="What changed?"></textarea></td></tr>
+        <tr><td class="version-label">C</td><td><textarea aria-label="A B C Purpose C" data-key="abc-purpose-c" rows="3" placeholder="Address a default">Address a default</textarea></td><td><textarea aria-label="A B C Prompt C" data-key="abc-prompt-c" rows="3" placeholder="Correct something…"></textarea></td><td><textarea aria-label="A B C Obs C" data-key="abc-obs-c" rows="3" placeholder="Did it work?"></textarea></td></tr>
       </tbody>
     </table>
   </div>
@@ -107,20 +184,26 @@
   <div class="section">
     <div class="claim-box">
       <div class="claim-label">Evidence-based claim</div>
-      <textarea data-key="claim" rows="3" placeholder="When given [prompt], this model assumed [X], which I believe reflects [Y]…"></textarea>
+      <textarea aria-label="Claim" data-key="claim" rows="3" placeholder="When given [prompt], this model assumed [X], which I believe reflects [Y]…"></textarea>
     </div>
   </div>
 
   <!-- Reflection -->
   <div class="section">
     <div class="section-head"><div class="section-title">Reflection</div></div>
-    <div class="reflect-item"><div class="reflect-q">What did the model assume that you didn't specify?</div><textarea data-key="r1" rows="2"></textarea></div>
-    <div class="reflect-item"><div class="reflect-q">Which assumptions surprised you? Which did you predict?</div><textarea data-key="r2" rows="2"></textarea></div>
-    <div class="reflect-item"><div class="reflect-q">Where do these defaults come from — training data, curation, labeling, platform choices?</div><textarea data-key="r3" rows="2"></textarea></div>
-    <div class="reflect-item"><div class="reflect-q">Who benefits from the current defaults? Who doesn't?</div><textarea data-key="r4" rows="2"></textarea></div>
-    <div class="reflect-item"><div class="reflect-q">What ethical concern did this raise?</div><textarea data-key="r5" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">What did the model assume that you didn't specify?</div><textarea aria-label="Reflection 1" data-key="r1" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">Which assumptions surprised you? Which did you predict?</div><textarea aria-label="Reflection 2" data-key="r2" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">Where do these defaults come from — training data, curation, labeling, platform choices?</div><textarea aria-label="Reflection 3" data-key="r3" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">Who benefits from the current defaults? Who doesn't?</div><textarea aria-label="Reflection 4" data-key="r4" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">What ethical concern did this raise?</div><textarea aria-label="Reflection 5" data-key="r5" rows="2"></textarea></div>
   </div>
 </div>
+<footer class="evidence-footer">
+  <label>Human decision <textarea aria-label="Evidence footer human decision"></textarea></label>
+  <label>System factors <textarea aria-label="Evidence footer system factors"></textarea></label>
+  <label>Ethical concern <textarea aria-label="Evidence footer ethical concern"></textarea></label>
+  <label>Classroom adaptation <textarea aria-label="Evidence footer classroom adaptation"></textarea></label>
+</footer>
 <script>
 const KEY = 'lm-image-default-test';
 const status = document.getElementById('saveStatus');
