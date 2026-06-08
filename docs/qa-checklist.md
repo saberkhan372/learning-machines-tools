@@ -17,9 +17,9 @@ Use this before publishing or sharing the repo.
 - Open the Vocabulary Field Guide and confirm each glossary tool connection resolves.
 - Open every worksheet and project doc link.
 - Use each tool's "Back to tools" link.
-- Confirm launch-ready tools are labeled "Launch ready," concept bridges are labeled "Second-wave draft," and remaining stretch tools are labeled "Coming later."
+- Confirm every public tool card is labeled "Launch ready."
 - Confirm the Pilot Ready path links to the pilot checklist, feedback template, and three session scripts.
-- Confirm Markdown pages render as styled HTML instead of raw Markdown.
+- Confirm Markdown pages render as styled HTML on GitHub Pages. When browsing locally without Jekyll, confirm the corresponding `.md` source opens instead.
 - Confirm homepage credits name classroom origins without exposing private student work and link to the consent protocol.
 
 ## Tool QA
@@ -30,6 +30,8 @@ Use this before publishing or sharing the repo.
 - Feature Extraction / Pixel Resolution: switch image types, change detail level, switch Pixels/Edges/Features.
 - Default Test Comparison Viewer: switch vague prompts, compare A/B/C rows, review defaults, changes, and ethical questions, then copy or print a claim.
 - Prompt Guidance Word-by-Word: step through each prompt word, confirm the simulated image and change list update, and copy prediction notes.
+- Latent Space Explorer: switch datasets and lenses, select map points, confirm nearest neighbors update, and copy visibility/risk notes.
+- Dataset Balance Simulator: switch scenarios, move sliders, use balance/skew presets, confirm the default and likelihood bars update, and copy notes.
 - Temporal Telephone: confirm self-tests pass, draw frames, save, switch previous/anchor/both modes, play sequence, use the failure bridge, clear and reset.
 - Video Failure Gallery Viewer: switch clips, scrub frames, click failure labels, and copy the claim/evidence/classroom-question set.
 - Frame-by-Frame Coherence Viewer: scrub sample frames, toggle onion-skin and difference highlight, upload a small still-frame set, and copy drift notes.

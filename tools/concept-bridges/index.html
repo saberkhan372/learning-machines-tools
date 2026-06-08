@@ -11,20 +11,13 @@
   <script src="../../assets/theme.js"></script>
 <style>
     :root {
-      --bg: #eef4f1;
-      --paper: #fffdf8;
-      --ink: #20201d;
-      --muted: #66706c;
-      --line: #c8d3cf;
-      --accent: #2364aa;
       --green: #3b7d59;
-      --amber: #9a641c;
-      --rose: #9a3e4a;
-      --violet: #6d28d9;
-      --shadow: 0 14px 34px rgba(28, 40, 38, 0.10);
+      --amber: #f6bd60;
+      --rose: #f4728b;
+      --violet: #c084fc;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
+    body { margin: 0; color: var(--ink); background: var(--bg); }
     main { width: min(1120px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0 48px; }
     a { color: var(--accent); }
     h1, h2, h3, p { margin-top: 0; letter-spacing: 0; }
@@ -33,7 +26,7 @@
     .topbar { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 18px; }
     .back-link { font-weight: 700; text-decoration: none; }
     .status { color: var(--muted); font-size: 0.92rem; }
-    .panel { border: 1px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: var(--shadow); }
+    .panel { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow-sm); }
     .hero { padding: 24px; margin-bottom: 18px; }
     .eyebrow { margin-bottom: 8px; color: var(--amber); font-size: 0.82rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
     .hero p { max-width: 76ch; margin-bottom: 0; font-size: 1.03rem; }
@@ -50,7 +43,7 @@
     .bridge ul { padding-left: 20px; margin: 10px 0 0; }
     .use-with { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
     .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-    .links a { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; background: #fff; text-decoration: none; font-size: 0.84rem; font-weight: 700; }
+    .links a { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; background: var(--surface-2); text-decoration: none; font-size: 0.84rem; font-weight: 700; }
     .open-bridge {
       display: inline-flex;
       width: fit-content;
@@ -58,7 +51,7 @@
       border-radius: 7px;
       padding: 8px 12px;
       background: var(--ink);
-      color: #fffdf8;
+      color: var(--bg);
       font-size: 0.86rem;
       font-weight: 800;
       text-decoration: none;
@@ -80,21 +73,7 @@
       main { width: min(100% - 20px, 1120px); padding-top: 18px; }
       .topbar, .bridge-grid { display: grid; grid-template-columns: 1fr; }
     }
-  </style>
-<style id="lm-tool-nav-overrides">
-  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
-  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
-  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
-  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
-  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
-  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
-  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
-  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
-  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
-  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
-  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
-  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
-</style></head>
+  </style></head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
@@ -218,7 +197,7 @@
       <article class="bridge panel cutoff" style="grid-column: 1 / -1;">
         <span class="tag">Cross-session · Evaluation</span>
         <h2>Current Is Not Known</h2>
-        <p>A model is trained on data up to a cutoff date, then deployed into a world that keeps moving. It has no calendar and no way to know what has changed. It answers 2025 questions with 2022 patterns — with the same confidence it applies to everything else.</p>
+        <p>A model is trained on data up to a cutoff date, then deployed into a world that keeps moving. It has no calendar and no way to know what has changed. It answers 2026 questions with older patterns — with the same confidence it applies to everything else.</p>
         <ul>
           <li>Specific, dated claims degrade into confident undated assertions as they travel through training data.</li>
           <li>The gap between training cutoff and the moment you're asking is invisible to the model.</li>

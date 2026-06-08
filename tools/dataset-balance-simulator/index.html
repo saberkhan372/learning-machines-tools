@@ -3,49 +3,348 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dataset Balance Simulator</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Dataset Balance Simulator &middot; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/lm.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
   <script src="../../assets/theme.js"></script>
-<style>
-    body { margin: 0; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: var(--accent); }
-    .card { border: 1px solid var(--line); border-radius: 8px; padding: 22px; background: var(--surface); box-shadow: var(--shadow-sm); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; color: var(--ink); }
-    p, li { color: var(--muted); line-height: 1.55; }</style>
-<style id="lm-tool-nav-overrides">
-  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
-  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
-  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
-  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
-  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
-  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
-  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
-  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
-  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
-  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
-  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
-  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
-</style></head>
+  <style>
+    .slider-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .slider-row {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+    }
+
+    .slider-row label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .slider-row span {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .default-card {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-2);
+    }
+
+    .default-visual {
+      min-height: 230px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 72% 28%, color-mix(in oklab, var(--accent-2) 18%, transparent), transparent 28%),
+        var(--code-bg);
+      overflow: hidden;
+    }
+
+    .default-visual svg {
+      width: 100%;
+      min-height: 230px;
+    }
+
+    .prob-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .prob-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 44px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .prob-row b {
+      color: var(--ink);
+      font-size: 0.9rem;
+    }
+
+    .prob-track {
+      height: 12px;
+      border: 1px solid var(--line-soft);
+      border-radius: 999px;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+
+    .prob-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .prob-row span {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      text-align: right;
+    }
+  </style>
+</head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
         <a href="../../index.html#tools" class="hide-sm">Tools</a>
-        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+        <a href="../../pages/session-images.html" class="hide-sm">Session 2</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&larr; All tools</a>
       </div>
     </div>
   </nav>
-  <main>
-    <div class="card">
-      <h1>Dataset Balance Simulator</h1>
-      <p><strong>Coming later.</strong> This future tool will show how dataset composition can shape model defaults, confidence, and errors.</p>
-    </div>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Session 2 &middot; Images &middot; Dataset defaults</p>
+      <h1 class="tool-title">Dataset Balance Simulator</h1>
+      <p class="tool-dek">Adjust a simplified dataset mix and watch how the simulated default shifts. The point is not that real datasets are this simple; the point is that training data composition can shape what a model treats as likely.</p>
+      <div class="tool-idea">Big idea: data balance shapes defaults, confidence, and errors.</div>
+    </header>
+
+    <section class="tool-grid-3">
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Scenario</p>
+            <div class="choice-list" id="scenarioList"></div>
+          </div>
+          <div>
+            <p class="mini-label">Dataset mix</p>
+            <div class="slider-list" id="sliders"></div>
+          </div>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="balanceBtn">Balance groups</button>
+            <button class="tool-button secondary" type="button" id="skewBtn">Skew dataset</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Simulated default</p>
+            <h2 id="defaultTitle"></h2>
+            <p id="defaultDesc" style="margin:0;color:var(--muted);"></p>
+          </div>
+          <div class="default-card">
+            <div class="default-visual" id="defaultVisual"></div>
+            <div>
+              <p class="mini-label">Output likelihood</p>
+              <div class="prob-list" id="probList"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <h2>Interpret carefully</h2>
+          <ul class="evidence-list">
+            <li>This is a teaching simulation, not a real training pipeline.</li>
+            <li>Dataset balance is not the only cause of model behavior.</li>
+            <li>Labels, collection context, platform design, and prompting also matter.</li>
+            <li>Do not reduce identity or culture to sliders in real classroom discussion.</li>
+          </ul>
+          <div class="claim-grid">
+            <label>What changed when the dataset changed?
+              <textarea class="note-box" id="changeNote">When the dataset changed, I noticed...</textarea>
+            </label>
+            <label>What ethical question does this raise?
+              <textarea class="note-box" id="ethicsNote">This raises a question about...</textarea>
+            </label>
+          </div>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy notes</button>
+            <button class="tool-button secondary" type="button" onclick="window.print()">Print</button>
+          </div>
+        </div>
+      </aside>
+    </section>
   </main>
+
+  <script>
+    const SCENARIOS = {
+      teacher: {
+        title: "Prompt: a teacher",
+        desc: "A vague role prompt lets the dataset mix pull the default classroom image.",
+        groups: [
+          { id: "classroom", label: "Traditional classroom", icon: "B", color: "#5eead4" },
+          { id: "lab", label: "Hands-on lab", icon: "L", color: "#f6bd60" },
+          { id: "outdoor", label: "Community / outdoor", icon: "G", color: "#c084fc" }
+        ]
+      },
+      scientist: {
+        title: "Prompt: a scientist",
+        desc: "Different data mixes change whether science appears as lab work, field work, or community research.",
+        groups: [
+          { id: "whitecoat", label: "White-coat lab", icon: "C", color: "#5eead4" },
+          { id: "field", label: "Field research", icon: "F", color: "#f6bd60" },
+          { id: "community", label: "Community science", icon: "P", color: "#c084fc" }
+        ]
+      },
+      city: {
+        title: "Prompt: a city",
+        desc: "A city default can move between glossy skyline, lived neighborhood, and climate-stressed infrastructure.",
+        groups: [
+          { id: "skyline", label: "Glossy skyline", icon: "S", color: "#5eead4" },
+          { id: "neighborhood", label: "Lived neighborhood", icon: "N", color: "#f6bd60" },
+          { id: "climate", label: "Climate stress", icon: "W", color: "#c084fc" }
+        ]
+      }
+    };
+
+    let activeScenario = "teacher";
+    let values = [70, 20, 10];
+
+    function scenario() {
+      return SCENARIOS[activeScenario];
+    }
+
+    function normalized() {
+      const total = values.reduce(function (sum, value) { return sum + value; }, 0) || 1;
+      return values.map(function (value) { return Math.round(value / total * 100); });
+    }
+
+    function strongestIndex() {
+      let best = 0;
+      values.forEach(function (value, index) {
+        if (value > values[best]) best = index;
+      });
+      return best;
+    }
+
+    function renderScenarioChoices() {
+      const list = document.getElementById("scenarioList");
+      list.innerHTML = "";
+      Object.keys(SCENARIOS).forEach(function (key) {
+        const item = SCENARIOS[key];
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "choice-button";
+        button.innerHTML = "<strong>" + item.title + "</strong><span>" + item.desc + "</span>";
+        button.addEventListener("click", function () {
+          activeScenario = key;
+          values = [70, 20, 10];
+          render();
+        });
+        list.appendChild(button);
+      });
+    }
+
+    function renderSliders() {
+      const wrap = document.getElementById("sliders");
+      const groups = scenario().groups;
+      wrap.innerHTML = "";
+      groups.forEach(function (group, index) {
+        const row = document.createElement("div");
+        row.className = "slider-row";
+        row.innerHTML = '<label for="slider-' + index + '">' + group.label + '<span>' + values[index] + '</span></label><input id="slider-' + index + '" type="range" min="0" max="100" value="' + values[index] + '">';
+        row.querySelector("input").addEventListener("input", function (event) {
+          values[index] = Number(event.target.value);
+          render();
+        });
+        wrap.appendChild(row);
+      });
+    }
+
+    function visualSvg() {
+      const groups = scenario().groups;
+      const strongest = strongestIndex();
+      const group = groups[strongest];
+      const pct = normalized()[strongest];
+      return '<svg viewBox="0 0 420 260" role="img" aria-label="Simulated default output">' +
+        '<rect width="420" height="260" fill="#10131a"/>' +
+        '<circle cx="318" cy="62" r="48" fill="' + group.color + '" opacity=".22"/>' +
+        '<rect x="42" y="48" width="154" height="98" rx="10" fill="#171b24" stroke="' + group.color + '" stroke-width="3"/>' +
+        '<text x="66" y="104" fill="#e8e6df" font-family="monospace" font-size="18">' + group.label.split(" ")[0] + '</text>' +
+        '<circle cx="270" cy="86" r="25" fill="#d9a06f"/>' +
+        '<rect x="244" y="116" width="56" height="78" rx="18" fill="' + group.color + '"/>' +
+        '<circle cx="128" cy="188" r="16" fill="#8f5c3a"/>' +
+        '<circle cx="174" cy="188" r="16" fill="#f0c7a5"/>' +
+        '<circle cx="82" cy="188" r="16" fill="#d9a06f"/>' +
+        '<path d="M232 142 C198 156 178 170 154 198" fill="none" stroke="#e8e6df" stroke-width="7" stroke-linecap="round" opacity=".7"/>' +
+        '<text x="18" y="236" fill="#9197a3" font-family="monospace" font-size="13">strongest group: ' + pct + '%</text>' +
+        '</svg>';
+    }
+
+    function renderProbList() {
+      const groups = scenario().groups;
+      const pct = normalized();
+      document.getElementById("probList").innerHTML = groups.map(function (group, index) {
+        return '<div class="prob-row"><b>' + group.label + '</b><div class="prob-track"><i class="prob-fill" style="width:' + pct[index] + '%;"></i></div><span>' + pct[index] + '%</span></div>';
+      }).join("");
+    }
+
+    function render() {
+      const groups = scenario().groups;
+      const strongest = groups[strongestIndex()];
+      document.getElementById("defaultTitle").textContent = scenario().title;
+      document.getElementById("defaultDesc").textContent = "Current simulated default leans toward: " + strongest.label + ".";
+      document.getElementById("defaultVisual").innerHTML = visualSvg();
+      renderScenarioChoices();
+      renderSliders();
+      renderProbList();
+      Array.from(document.querySelectorAll("#scenarioList button")).forEach(function (button, index) {
+        const key = Object.keys(SCENARIOS)[index];
+        button.classList.toggle("active", key === activeScenario);
+      });
+    }
+
+    document.getElementById("balanceBtn").addEventListener("click", function () {
+      values = [34, 33, 33];
+      render();
+    });
+
+    document.getElementById("skewBtn").addEventListener("click", function () {
+      values = [82, 12, 6];
+      render();
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", function () {
+      const groups = scenario().groups;
+      const pct = normalized();
+      const mix = groups.map(function (group, index) { return group.label + ": " + pct[index] + "%"; }).join(", ");
+      const text = [
+        "Dataset Balance Simulator",
+        scenario().title,
+        "Dataset mix: " + mix,
+        "Simulated default: " + groups[strongestIndex()].label,
+        "What changed: " + document.getElementById("changeNote").value,
+        "Ethical question: " + document.getElementById("ethicsNote").value
+      ].join("\n");
+      navigator.clipboard.writeText(text);
+    });
+
+    render();
+  </script>
 </body>
 </html>

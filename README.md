@@ -35,7 +35,7 @@ The tool principle is:
 
 ## Launch Roadmap
 
-### Launch-Ready Tools (17)
+### Launch-Ready Tools (20)
 
 | Tool | Status | Session |
 | --- | --- | --- |
@@ -47,21 +47,18 @@ The tool principle is:
 | Feature Extraction / Pixel Resolution | Launch ready | 2 · Image |
 | Default Test Comparison Viewer | Launch ready | 2 · Image |
 | Prompt Guidance Word-by-Word | Launch ready | 2 · Image |
+| Latent Space Explorer | Launch ready | 2 · Image |
+| Dataset Balance Simulator | Launch ready | 2 · Image |
 | Temporal Telephone | Launch ready | 3 · Video |
 | Video Failure Gallery Viewer | Launch ready | 3 · Video |
 | Frame-by-Frame Coherence Viewer | Launch ready | 3 · Video |
 | A/B/C Comparison Board | Launch ready | Cross |
+| Concept Bridges | Launch ready | Cross |
 | Model Card Builder | Launch ready | Cross |
 | Classroom Activity Builder | Launch ready | Studio |
 | Confidence Is Not Truth Explorer | Launch ready | Cross |
 | Access Tiers | Launch ready | Cross |
 | Evidence Wall | Launch ready | Cross |
-
-### Second-Wave and Later Tools
-
-- Concept Bridge pages — second-wave draft
-- Latent Space Explorer — coming later
-- Dataset Balance Simulator — coming later
 
 ## Tool Folders
 
@@ -80,8 +77,8 @@ Canonical folders are listed in the [tool directory](tools/).
 - [`tools/feature-extraction-pixel-resolution/`](tools/feature-extraction-pixel-resolution/) — Launch ready
 - [`tools/default-test-comparison-viewer/`](tools/default-test-comparison-viewer/) — Launch ready
 - [`tools/prompt-guidance-word-by-word/`](tools/prompt-guidance-word-by-word/) — Launch ready
-- [`tools/latent-space-explorer/`](tools/latent-space-explorer/) — Coming later
-- [`tools/dataset-balance-simulator/`](tools/dataset-balance-simulator/) — Coming later
+- [`tools/latent-space-explorer/`](tools/latent-space-explorer/) — Launch ready
+- [`tools/dataset-balance-simulator/`](tools/dataset-balance-simulator/) — Launch ready
 
 ### Session 3: Video
 
@@ -97,7 +94,7 @@ Canonical folders are listed in the [tool directory](tools/).
 - [`tools/confidence-is-not-truth-explorer/`](tools/confidence-is-not-truth-explorer/) — Launch ready
 - [`tools/access-tiers/`](tools/access-tiers/) — Launch ready
 - [`tools/evidence-wall/`](tools/evidence-wall/) — Launch ready
-- [`tools/concept-bridges/`](tools/concept-bridges/) — Second-wave draft
+- [`tools/concept-bridges/`](tools/concept-bridges/) — Launch ready
 
 ### Prompt Packs
 
@@ -139,4 +136,4 @@ The repo is ready for a small live pilot. Start from the published homepage, use
 
 ## Local Use
 
-Open `index.html` in a browser. Each tool is a static page under `tools/`. Launch-critical tools do not require accounts, API keys, npm, a build step, or live model access.
+Open `index.html` in a browser for the static tools and participant pages. Markdown-backed docs under `docs/` render as `.html` on GitHub Pages; when browsing locally without Jekyll, open the corresponding `.md` file instead. Each tool is a static page under `tools/`. Launch-critical tools do not require accounts, API keys, npm, a build step, or live model access.

@@ -11,20 +11,14 @@
   <script src="../../assets/theme.js"></script>
 <style>
   :root {
-    --bg: #f5f3ee;
-    --panel: rgba(255,255,255,0.94);
-    --ink: #1c2028;
-    --mid: #555d6e;
-    --muted: #7f8694;
-    --line: #d9dce3;
-    --accent: #2563eb;
+    --panel: var(--surface);
+    --mid: var(--muted);
     --accent-soft: #dbeafe;
     --accent-dark: #1d4ed8;
-    --warm: #fef9ef;
-    --warm-border: #e8d8ae;
+    --warm: var(--surface-2);
+    --warm-border: var(--line);
     --generated-bg: #ecfdf5;
     --generated-border: #a7f3d0;
-    --shadow: 0 8px 30px rgba(28,32,40,0.08);
     --radius: 14px;
     --tc0: #dbeafe; --tc0t: #1e40af;
     --tc1: #fce7f3; --tc1t: #9d174d;
@@ -39,7 +33,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--font-body);
     background: var(--bg);
     color: var(--ink);
     line-height: 1.5;
@@ -94,7 +88,7 @@
   }
 
   .mode-tab {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.88rem;
     font-weight: 700;
     padding: 9px 20px;
@@ -109,7 +103,7 @@
   .mode-tab:last-child  { border-radius: 0 var(--radius) var(--radius) 0; border-left: 0; }
 
   .mode-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .mode-tab:not(.active):hover { color: var(--ink); background: #f0f1f4; }
+  .mode-tab:not(.active):hover { color: var(--ink); background: var(--surface-2); }
 
   /* ── PANELS ── */
   .panel-wrap { display: none; }
@@ -144,11 +138,11 @@
     width: 100%;
     min-height: 80px;
     padding: 12px;
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface);
     color: var(--ink);
     resize: vertical;
     line-height: 1.6;
@@ -164,13 +158,13 @@
   .example-btns { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
 
   .example-btn {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.76rem;
     font-weight: 600;
     padding: 4px 10px;
     border-radius: 20px;
     border: 1px solid var(--line);
-    background: #fff;
+    background: var(--surface);
     color: var(--mid);
     cursor: pointer;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
@@ -181,7 +175,7 @@
   .token-display { display: flex; flex-wrap: wrap; gap: 5px; min-height: 40px; }
 
   .token-chip {
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-mono);
     font-size: 0.84rem;
     font-weight: 500;
     padding: 4px 8px;
@@ -280,13 +274,13 @@
 
   .gen-select {
     width: 100%;
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.9rem;
     font-weight: 500;
     padding: 9px 12px;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface);
     color: var(--ink);
     cursor: pointer;
     appearance: none;
@@ -304,7 +298,7 @@
     border-radius: 999px;
     background: var(--accent-soft);
     color: var(--accent-dark);
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-mono);
     font-weight: 700;
     font-size: 0.88rem;
     text-align: center;
@@ -325,7 +319,7 @@
     -webkit-appearance: none;
     width: 18px; height: 18px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--surface);
     border: 2px solid var(--accent);
     box-shadow: 0 1px 4px rgba(0,0,0,0.12);
     cursor: pointer;
@@ -337,7 +331,7 @@
   .temp-slider::-moz-range-thumb {
     width: 18px; height: 18px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--surface);
     border: 2px solid var(--accent);
     cursor: pointer;
   }
@@ -357,20 +351,20 @@
   .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
 
   .mode-btn {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 700;
     padding: 8px;
     border-radius: 8px;
     border: 1px solid var(--line);
-    background: #f7f8fa;
+    background: var(--surface-2);
     color: var(--mid);
     cursor: pointer;
     transition: all 0.15s;
   }
 
   .mode-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-dark); }
-  .mode-btn:not(.active):hover { background: #eef0f4; }
+  .mode-btn:not(.active):hover { background: var(--surface-2); }
 
   .mode-note { font-size: 0.78rem; color: var(--muted); margin-top: 6px; line-height: 1.45; }
 
@@ -378,7 +372,7 @@
   .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 12px; }
 
   .btn {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--font-body);
     font-weight: 700;
     font-size: 0.88rem;
     padding: 10px 12px;
@@ -397,16 +391,16 @@
   .btn-dark { background: var(--ink); color: #fff; }
   .btn-dark:hover:not(:disabled) { box-shadow: 0 4px 12px rgba(28,32,40,0.2); }
 
-  .btn-ghost { background: #eef0f4; color: var(--ink); }
+  .btn-ghost { background: var(--surface-2); color: var(--ink); }
   .btn-ghost:hover:not(:disabled) { background: #dfe2e8; }
 
   /* Stat chips */
   .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
 
-  .stat-chip { background: #f7f8fa; border: 1px solid var(--line); border-radius: 8px; padding: 8px 6px; text-align: center; }
+  .stat-chip { background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 6px; text-align: center; }
 
   .stat-chip .num {
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-mono);
     font-weight: 700;
     font-size: 1.05rem;
     color: var(--ink);
@@ -426,7 +420,7 @@
     margin-top: 10px;
     padding: 6px 10px;
     border-radius: 8px;
-    background: #f7f8fa;
+    background: var(--surface-2);
     border: 1px solid var(--line);
     font-size: 0.78rem;
     color: var(--muted);
@@ -440,7 +434,7 @@
     width: 100%;
     height: 460px;
     border-radius: 10px;
-    background: #fff;
+    background: var(--surface);
     border: 1px solid var(--line);
   }
 
@@ -465,13 +459,13 @@
   .stream-tokens { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
 
   .stream-tok {
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-mono);
     font-size: 0.82rem;
     font-weight: 500;
     padding: 4px 7px;
     border: 1px solid var(--line);
     border-radius: 7px;
-    background: #fff;
+    background: var(--surface);
     white-space: pre;
   }
 
@@ -567,20 +561,6 @@
     .reflection-grid { grid-template-columns: 1fr; }
     #chartCanvas { height: 380px; }
   }
-</style>
-<style id="lm-tool-nav-overrides">
-  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
-  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
-  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
-  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
-  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
-  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
-  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
-  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
-  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
-  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
-  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
-  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
 </style></head>
 <body>
   <nav class="nav">

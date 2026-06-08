@@ -233,14 +233,14 @@ Final   →  A runs integration wiring (§6 of spec)
 - `tools/model-card-builder/index.html`
 
 **Changes:**
-1. Both currently use old cream-palette `:root` overrides — strip the overriding color tokens (`--cream`, `--paper`, `--ink`, `--muted`, `--line`, `--accent`, `--shadow`) so they inherit from `lm.css`. Keep tool-specific tokens that don't conflict.
-2. Replace `body { background: var(--cream) }` etc. with nothing (lm.css handles it).
+1. Keep both tools inheriting core color, type, line, and shadow tokens from `lm.css`. Tool-specific semantic colors are fine when they do not override global tokens.
+2. Keep page backgrounds on shared tokens such as `var(--bg)`, `var(--surface)`, and `var(--surface-2)`.
 3. Fix any input/textarea/button base styles that hardcode `#fffdf8` — replace with `var(--surface)` and `var(--ink)`.
-4. Update the in-tool status labels from "Draft" / "Second-wave" to "Launch ready" (match `lm.css` `.status.ready` chip pattern).
+4. Update any in-tool nonlaunch status labels to "Launch ready" (match `lm.css` `.status.ready` chip pattern).
 5. Run acceptance bar: zero console errors, responsive 360/768/1280, keyboard-operable.
 
 **Also update:**
-- `assets/tools-data.js` — change both tools' `status` from `"draft"` / `"statusLabel": "Second-wave draft"` to `"ready"` / `"Launch ready"`.
+- `assets/tools-data.js` — make sure both tools use `status: "ready"` and `statusLabel: "Launch ready"`.
 
 **Done when:** both tools render correctly in dark/paper/light themes; status chips on the homepage show "Launch ready"; acceptance bar passes.
 

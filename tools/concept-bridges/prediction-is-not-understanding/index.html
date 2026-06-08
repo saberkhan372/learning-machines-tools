@@ -12,22 +12,22 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: system-ui, -apple-system, sans-serif;
-  background: #f5f3ee;
-  color: #1c2028;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
   line-height: 1.55;
   padding: 24px 20px 60px;
 }
 .wrap { max-width: 680px; margin: 0 auto; }
-.back { font-size: 13px; color: #7f8694; margin-bottom: 20px; display: flex; gap: 16px; }
+.back { font-size: 13px; color: var(--muted); margin-bottom: 20px; display: flex; gap: 16px; }
 .back a { color: inherit; text-decoration: none; }
-.back a:hover { color: #1c2028; }
+.back a:hover { color: var(--ink); }
 .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
 .badge {
   font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
   padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em;
 }
-.badge.bridge { background: #fef9ef; color: #b45f3a; border: 1.5px solid #d9ccb8; }
+.badge.bridge { background: var(--surface-2); color: #b45f3a; border: 1.5px solid var(--line); }
 .badge.session { background: #e8f2ec; color: #225f42; border: 1.5px solid #b3d9c5; }
 h1 {
   font-size: clamp(1.6rem, 5vw, 2.4rem);
@@ -35,7 +35,7 @@ h1 {
   letter-spacing: -0.02em; margin-bottom: 14px;
 }
 .lead {
-  font-size: 0.96rem; color: #3a3530;
+  font-size: 0.96rem; color: var(--muted);
   border-left: 3px solid #d9ccb8;
   padding-left: 14px;
   margin-bottom: 28px;
@@ -45,27 +45,27 @@ h1 {
 /* Test tabs */
 .test-label {
   font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.07em; color: #7f8694; margin-bottom: 10px;
+  letter-spacing: 0.07em; color: var(--muted); margin-bottom: 10px;
 }
 .test-tabs { display: flex; gap: 0; flex-wrap: wrap; }
 .ttab {
   font-family: inherit; font-size: 0.82rem; font-weight: 700;
   padding: 8px 16px;
-  border: 1.5px solid #d9ccb8; border-bottom: none;
-  background: #ece6dc; color: #7f8694;
+  border: 1.5px solid var(--line); border-bottom: none;
+  background: #ece6dc; color: var(--muted);
   cursor: pointer;
   border-radius: 8px 8px 0 0;
   margin-right: 4px; margin-bottom: 0;
   transition: background 0.12s;
   white-space: nowrap;
 }
-.ttab.active { background: #fff; color: #1c2028; }
+.ttab.active { background: var(--surface); color: var(--ink); }
 .ttab:hover:not(.active) { background: #dfd8cc; }
 
 /* Test card */
 .test-card {
-  background: #fff;
-  border: 1.5px solid #d9ccb8;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
   border-radius: 0 10px 10px 10px;
   padding: 22px;
   display: none;
@@ -80,7 +80,7 @@ h1 {
   font-size: 0.9rem; line-height: 1.5;
 }
 .bubble.user {
-  background: #1c2028; color: #fffaf1;
+  background: var(--ink); color: var(--bg);
   align-self: flex-end;
   border-radius: 12px 12px 3px 12px;
 }
@@ -92,12 +92,12 @@ h1 {
 }
 .bubble-label {
   font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.06em; color: #7f8694; margin-bottom: 4px;
+  letter-spacing: 0.06em; color: var(--muted); margin-bottom: 4px;
 }
 
 /* Under the hood */
 .under-hood {
-  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  background: var(--surface-2); border: 1.5px solid var(--line);
   border-radius: 8px; padding: 13px 15px;
   margin-bottom: 12px;
 }
@@ -121,19 +121,19 @@ h1 {
 
 /* What understanding would require */
 .requires {
-  background: #fff; border: 1.5px solid #d9ccb8;
+  background: var(--surface); border: 1.5px solid var(--line);
   border-radius: 8px; padding: 13px 15px;
   margin-bottom: 12px;
 }
 .req-label {
   font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.06em; color: #7f8694; margin-bottom: 6px;
+  letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px;
 }
 .requires p { font-size: 0.86rem; color: #3a3530; line-height: 1.55; }
 
 /* Key line */
 .key-line {
-  background: #1c2028; color: #fffaf1;
+  background: var(--ink); color: var(--bg);
   border-radius: 10px; padding: 20px 22px;
   margin-bottom: 20px;
   font-size: 1.05rem; font-weight: 700; line-height: 1.45;
@@ -146,7 +146,7 @@ h1 {
 
 /* Nuance */
 .nuance {
-  background: #fef9ef; border: 1.5px solid #d9ccb8;
+  background: var(--surface-2); border: 1.5px solid var(--line);
   border-radius: 8px; padding: 14px 16px;
   font-size: 0.86rem; color: #5a4010; line-height: 1.6;
   margin-bottom: 24px;
@@ -155,7 +155,7 @@ h1 {
 
 /* Connect */
 .connect {
-  background: #eff6ff; border: 1.5px solid #93c5fd;
+  background: color-mix(in oklab, var(--accent) 12%, var(--surface)); border: 1.5px solid #93c5fd;
   border-radius: 10px; padding: 16px 18px;
   display: flex; flex-direction: column; gap: 10px;
 }
@@ -167,25 +167,11 @@ h1 {
 .connect-links { display: flex; gap: 8px; flex-wrap: wrap; }
 .connect-links a {
   display: inline-block; padding: 9px 14px;
-  background: #2563eb; color: #fff;
+  background: var(--accent); color: #fff;
   border-radius: 7px; font-size: 0.84rem; font-weight: 700;
   text-decoration: none;
 }
 .connect-links a:hover { background: #1d4ed8; }
-</style>
-<style id="lm-tool-nav-overrides">
-  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
-  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
-  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
-  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
-  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
-  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
-  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
-  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
-  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
-  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
-  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
-  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
 </style></head>
 <body>
   <nav class="nav">

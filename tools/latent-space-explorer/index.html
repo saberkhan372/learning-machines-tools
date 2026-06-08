@@ -3,49 +3,393 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Latent Space Explorer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Latent Space Explorer &middot; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/lm.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
   <script src="../../assets/theme.js"></script>
-<style>
-    body { margin: 0; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: var(--accent); }
-    .card { border: 1px solid var(--line); border-radius: 8px; padding: 22px; background: var(--surface); box-shadow: var(--shadow-sm); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; color: var(--ink); }
-    p, li { color: var(--muted); line-height: 1.55; }</style>
-<style id="lm-tool-nav-overrides">
-  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
-  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
-  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
-  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
-  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
-  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
-  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
-  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
-  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
-  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
-  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
-  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
-</style></head>
+  <style>
+    .latent-map {
+      min-height: 430px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 24% 32%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 24%),
+        radial-gradient(circle at 70% 70%, color-mix(in oklab, var(--accent-2) 17%, transparent), transparent 26%),
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+        var(--code-bg);
+      background-size: auto, auto, 26px 26px, 26px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .axis-label {
+      position: absolute;
+      z-index: 1;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .map-point {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-size: 1rem;
+      transform: translate(-50%, -50%);
+    }
+
+    .map-point:hover,
+    .map-point:focus-visible,
+    .map-point.active {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .map-point.near {
+      border-color: var(--accent-2);
+      background: color-mix(in oklab, var(--accent-2) 12%, var(--surface));
+    }
+
+    .map-point.active {
+      background: color-mix(in oklab, var(--accent) 16%, var(--surface));
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 16%, transparent);
+    }
+
+    .neighbor-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .neighbor {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+    }
+
+    .neighbor .icon {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .neighbor b {
+      color: var(--ink);
+    }
+
+    .neighbor span {
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .distance {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+    }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .legend-card {
+      padding: 10px;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+    }
+
+    .legend-card b {
+      color: var(--ink);
+    }
+
+    .legend-card p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 720px) {
+      .latent-map {
+        min-height: 340px;
+      }
+
+      .legend-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
         <a href="../../index.html#tools" class="hide-sm">Tools</a>
-        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+        <a href="../../pages/session-images.html" class="hide-sm">Session 2</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&larr; All tools</a>
       </div>
     </div>
   </nav>
-  <main>
-    <div class="card">
-      <h1>Latent Space Explorer</h1>
-      <p><strong>Coming later.</strong> This future tool will show how examples can be arranged by similarity, style, or learned features rather than human categories alone.</p>
-    </div>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Session 2 &middot; Images &middot; Representation</p>
+      <h1 class="tool-title">Latent Space Explorer</h1>
+      <p class="tool-dek">Explore how examples can be arranged by learned similarity rather than by the categories a human would choose first. Change the lens, select a point, and inspect which examples become nearest neighbors.</p>
+      <div class="tool-idea">Big idea: similarity is designed and learned. A map is useful, but it is not neutral.</div>
+    </header>
+
+    <section class="tool-grid-3">
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Dataset</p>
+            <div class="choice-list" id="datasetList"></div>
+          </div>
+          <div>
+            <p class="mini-label">Similarity lens</p>
+            <div class="chip-row" id="lensList"></div>
+          </div>
+          <div class="legend-grid">
+            <div class="legend-card"><b>Position</b><p>Where an example lands under the current lens.</p></div>
+            <div class="legend-card"><b>Neighbor</b><p>Nearby examples according to this simplified model.</p></div>
+            <div class="legend-card"><b>Distance</b><p>Smaller means more similar in this view.</p></div>
+            <div class="legend-card"><b>Warning</b><p>The map is a teaching model, not a literal model brain.</p></div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Map</p>
+            <h2 id="mapTitle">Similarity map</h2>
+            <p id="mapDesc" style="margin:0;color:var(--muted);"></p>
+          </div>
+          <div class="latent-map" id="map" aria-label="Latent space teaching map">
+            <span class="axis-label" id="xLow" style="left:18px;bottom:14px;"></span>
+            <span class="axis-label" id="xHigh" style="right:18px;bottom:14px;"></span>
+            <span class="axis-label" id="yLow" style="left:18px;top:16px;"></span>
+            <span class="axis-label" id="yHigh" style="right:18px;top:16px;"></span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Selected example</p>
+            <h2 id="selectedName"></h2>
+            <p id="selectedDesc" style="margin:0;color:var(--muted);"></p>
+          </div>
+          <div>
+            <p class="mini-label">Nearest neighbors</p>
+            <div class="neighbor-list" id="neighbors"></div>
+          </div>
+          <div class="claim-grid">
+            <label>What does this map make visible?
+              <textarea class="note-box" id="visibleNote">This map makes visible...</textarea>
+            </label>
+            <label>What could this map hide or distort?
+              <textarea class="note-box" id="riskNote">This map could hide...</textarea>
+            </label>
+          </div>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy notes</button>
+            <button class="tool-button secondary" type="button" onclick="window.print()">Print</button>
+          </div>
+        </div>
+      </aside>
+    </section>
   </main>
+
+  <script>
+    const DATASETS = {
+      classrooms: {
+        label: "Learning spaces",
+        desc: "Same broad category, different visual and cultural cues.",
+        items: [
+          { id: "lab", icon: "L", name: "Science lab", desc: "Tables, glassware, bright indoor tools.", visual: [80, 35], concept: [76, 30], style: [72, 45] },
+          { id: "library", icon: "B", name: "Library table", desc: "Books, quiet collaboration, public learning.", visual: [62, 48], concept: [58, 44], style: [52, 52] },
+          { id: "garden", icon: "G", name: "School garden", desc: "Outdoor plants, soil, local measurement.", visual: [28, 70], concept: [52, 78], style: [36, 66] },
+          { id: "studio", icon: "S", name: "Art studio", desc: "Materials, mess, making, critique.", visual: [42, 38], concept: [34, 42], style: [70, 70] },
+          { id: "online", icon: "O", name: "Online class", desc: "Screens, tiles, remote participation.", visual: [78, 78], concept: [80, 66], style: [62, 26] },
+          { id: "circle", icon: "C", name: "Discussion circle", desc: "Chairs, faces, conversation, facilitation.", visual: [36, 52], concept: [32, 34], style: [44, 42] }
+        ]
+      },
+      cities: {
+        label: "City images",
+        desc: "Notice how style, material, and meaning produce different neighborhoods.",
+        items: [
+          { id: "future", icon: "F", name: "Futuristic skyline", desc: "Glass towers, glow, product-like futurism.", visual: [82, 32], concept: [72, 28], style: [86, 25] },
+          { id: "old", icon: "O", name: "Old street", desc: "Stone, narrow roads, historical texture.", visual: [26, 66], concept: [28, 42], style: [32, 70] },
+          { id: "flood", icon: "W", name: "Flooded city", desc: "Water, reflections, disruption, climate risk.", visual: [54, 74], concept: [70, 78], style: [58, 58] },
+          { id: "market", icon: "M", name: "Street market", desc: "People, signs, food, commerce, density.", visual: [38, 42], concept: [36, 62], style: [44, 62] },
+          { id: "suburb", icon: "S", name: "Suburban block", desc: "Homes, roads, cars, quieter pattern.", visual: [58, 36], concept: [46, 36], style: [28, 34] },
+          { id: "transit", icon: "T", name: "Transit hub", desc: "Movement, platforms, signs, crowds.", visual: [74, 58], concept: [66, 58], style: [68, 42] }
+        ]
+      }
+    };
+
+    const LENSES = {
+      visual: { label: "Visual features", x0: "simple", x1: "dense", y0: "cool", y1: "warm", desc: "Clusters are based on visible cues like color, shape, texture, and density." },
+      concept: { label: "Concept features", x0: "individual", x1: "system", y0: "stable", y1: "change", desc: "Clusters are based on meaning: activity, social context, risk, and purpose." },
+      style: { label: "Style features", x0: "documentary", x1: "cinematic", y0: "plain", y1: "dramatic", desc: "Clusters are based on genre, polish, mood, and visual style." }
+    };
+
+    let activeDataset = "classrooms";
+    let activeLens = "visual";
+    let activeItem = DATASETS[activeDataset].items[0].id;
+
+    function distance(a, b) {
+      const av = a[activeLens];
+      const bv = b[activeLens];
+      const dx = av[0] - bv[0];
+      const dy = av[1] - bv[1];
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function currentItems() {
+      return DATASETS[activeDataset].items;
+    }
+
+    function selected() {
+      return currentItems().find(function (item) { return item.id === activeItem; });
+    }
+
+    function renderChoices() {
+      const datasetList = document.getElementById("datasetList");
+      datasetList.innerHTML = "";
+      Object.keys(DATASETS).forEach(function (key) {
+        const data = DATASETS[key];
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "choice-button";
+        button.innerHTML = "<strong>" + data.label + "</strong><span>" + data.desc + "</span>";
+        button.addEventListener("click", function () {
+          activeDataset = key;
+          activeItem = DATASETS[key].items[0].id;
+          render();
+        });
+        datasetList.appendChild(button);
+      });
+
+      const lensList = document.getElementById("lensList");
+      lensList.innerHTML = "";
+      Object.keys(LENSES).forEach(function (key) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "chip-button";
+        button.textContent = LENSES[key].label;
+        button.addEventListener("click", function () {
+          activeLens = key;
+          render();
+        });
+        lensList.appendChild(button);
+      });
+    }
+
+    function renderMap() {
+      const map = document.getElementById("map");
+      map.querySelectorAll(".map-point").forEach(function (node) { node.remove(); });
+      const nearIds = nearest().map(function (item) { return item.id; });
+      currentItems().forEach(function (item) {
+        const xy = item[activeLens];
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "map-point";
+        button.textContent = item.icon;
+        button.style.left = xy[0] + "%";
+        button.style.top = xy[1] + "%";
+        button.setAttribute("aria-label", item.name);
+        button.classList.toggle("active", item.id === activeItem);
+        button.classList.toggle("near", nearIds.includes(item.id));
+        button.addEventListener("click", function () {
+          activeItem = item.id;
+          render();
+        });
+        map.appendChild(button);
+      });
+    }
+
+    function nearest() {
+      const base = selected();
+      return currentItems()
+        .filter(function (item) { return item.id !== base.id; })
+        .map(function (item) {
+          return Object.assign({}, item, { d: distance(base, item) });
+        })
+        .sort(function (a, b) { return a.d - b.d; })
+        .slice(0, 3);
+    }
+
+    function render() {
+      const data = DATASETS[activeDataset];
+      const lens = LENSES[activeLens];
+      const item = selected();
+      document.getElementById("mapTitle").textContent = data.label + " | " + lens.label;
+      document.getElementById("mapDesc").textContent = lens.desc;
+      document.getElementById("xLow").textContent = lens.x0;
+      document.getElementById("xHigh").textContent = lens.x1;
+      document.getElementById("yLow").textContent = lens.y0;
+      document.getElementById("yHigh").textContent = lens.y1;
+      document.getElementById("selectedName").textContent = item.name;
+      document.getElementById("selectedDesc").textContent = item.desc;
+      document.getElementById("neighbors").innerHTML = nearest().map(function (n) {
+        return '<div class="neighbor"><span class="icon">' + n.icon + '</span><div><b>' + n.name + '</b><br><span>' + n.desc + '</span></div><span class="distance">' + Math.round(n.d) + '</span></div>';
+      }).join("");
+
+      Array.from(document.querySelectorAll("#datasetList button")).forEach(function (button, index) {
+        const key = Object.keys(DATASETS)[index];
+        button.classList.toggle("active", key === activeDataset);
+      });
+      Array.from(document.querySelectorAll("#lensList button")).forEach(function (button, index) {
+        const key = Object.keys(LENSES)[index];
+        button.classList.toggle("active", key === activeLens);
+      });
+      renderMap();
+    }
+
+    document.getElementById("copyBtn").addEventListener("click", function () {
+      const text = [
+        "Latent Space Explorer",
+        "Dataset: " + DATASETS[activeDataset].label,
+        "Lens: " + LENSES[activeLens].label,
+        "Selected: " + selected().name,
+        "Nearest neighbors: " + nearest().map(function (n) { return n.name; }).join(", "),
+        "What this map makes visible: " + document.getElementById("visibleNote").value,
+        "What this map could hide: " + document.getElementById("riskNote").value
+      ].join("\n");
+      navigator.clipboard.writeText(text);
+    });
+
+    renderChoices();
+    render();
+  </script>
 </body>
 </html>

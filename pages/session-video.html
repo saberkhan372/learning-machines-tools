@@ -1,87 +1,538 @@
 <!doctype html>
 <html lang="en" data-theme="dark" data-font="lab">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Session 3 · Video — Learning Machines</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/lm.css">
-  <link rel="stylesheet" href="../assets/home.css">
-  <link rel="stylesheet" href="../assets/sub.css">
-  <script src="../assets/theme.js"></script>
-</head>
-<body>
-  <nav class="nav">
-    <div class="wrap nav-inner">
-      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
-      <div class="nav-links">
-        <a href="../index.html#tools" class="hide-sm">Tools</a>
-        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
-        <a href="../index.html#method" class="hide-sm">Method</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="docs-session-3-facilitation.html">Facilitation guide <span class="arrow">→</span></a>
-      </div>
-    </div>
-  </nav>
-
-  <header class="sub-hero">
-    <div class="wrap">
-      <div class="crumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#sessions">Sessions</a><span class="sep">/</span><span>Video</span></div>
-      <div class="sess-hero-grid">
-        <div class="sess-num">03<span class="of">of 03</span></div>
-        <div>
-          <p class="sess-kicker">Machines that move</p>
-          <h1 class="sess-title">Video</h1>
-          <p class="sess-q">When the model adds time, <span class="accent">what starts to drift?</span></p>
-          <p class="sess-lede">Video turns image generation into a temporal coherence problem. Identity, physics, camera language, and background continuity become visible by failing across frames.</p>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Session 3 · Video — Learning Machines</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/lm.css">
+    <link rel="stylesheet" href="../assets/home.css">
+    <link rel="stylesheet" href="../assets/sub.css">
+    <script src="../assets/theme.js"></script>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="wrap nav-inner">
+        <a class="brand" href="../index.html">
+          <span class="mark">
+          </span>
+          Learning Machines
+        </a>
+        <div class="nav-links">
+          <a href="../index.html#tools" class="hide-sm">
+            Tools
+          </a>
+          <a href="../index.html#sessions" class="hide-sm">
+            Sessions
+          </a>
+          <a href="../index.html#method" class="hide-sm">
+            Method
+          </a>
+          <a class="btn btn-ghost btn-sm nav-cta" href="docs-session-3-facilitation.html">
+            Facilitation guide
+            <span class="arrow">
+              →
+            </span>
+          </a>
         </div>
       </div>
-    </div>
-  </header>
-
-  <section class="section-tight"><div class="wrap"><div class="section-head-sm"><span class="num">A.</span><h2>What we make visible</h2></div><div class="throughline">
-    <div class="through-step"><div class="ts-n">01</div><h4>Frames</h4><p>Video is a sequence where each frame has to relate to what came before.</p></div>
-    <div class="through-step"><div class="ts-n">02</div><h4>Drift</h4><p>Small changes accumulate when a system lacks a stable anchor.</p></div>
-    <div class="through-step"><div class="ts-n">03</div><h4>Coherence</h4><p>The same subject, setting, and physics have to persist over time.</p></div>
-    <div class="through-step"><div class="ts-n">04</div><h4>Failure evidence</h4><p>Hands, faces, objects, backgrounds, and camera position reveal what the model is modeling.</p></div>
-  </div></div></section>
-
-  <section class="section-tight"><div class="wrap"><div class="section-head-sm"><span class="num">B.</span><h2>Choose a pathway</h2></div>
-    <nav class="pathway-picker" aria-label="Choose your pathway"><a href="#use">Use</a><a href="#observe">Observe / Critique</a><a href="#teach">Teach / Design</a><a href="#build">Build / Code</a><a href="#critical">Critical / No-AI</a></nav>
-    <div class="pathway-grid">
-      <section class="pathway-card" id="use"><div class="pc-k">Use</div><h3>Run a video test</h3><p>Generate or compare A/B/C motion prompts and document what broke across time.</p></section>
-      <section class="pathway-card" id="observe"><div class="pc-k">Observe / Critique</div><h3>Label failures</h3><p>Analyze pre-generated clips or still sequences for drift, physics breaks, and camera jumps.</p></section>
-      <section class="pathway-card" id="teach"><div class="pc-k">Teach / Design</div><h3>Adapt Temporal Telephone</h3><p>Use drawing, whiteboards, or still frames to teach coherence without direct video generation.</p></section>
-      <section class="pathway-card" id="build"><div class="pc-k">Build / Code</div><h3>Make drift inspectable</h3><p>Prototype a frame viewer, overlay, or annotation tool for temporal failure modes.</p></section>
-      <section class="pathway-card" id="critical"><div class="pc-k">Critical / No-AI</div><h3>Ask what should count</h3><p>Critique video as evidence, consent object, classroom artifact, or synthetic record.</p></section>
-    </div>
-  </div></section>
-
-  <section class="section-tight"><div class="wrap"><div class="section-head-sm"><span class="num">C.</span><h2>Tools for this session</h2></div><div class="tool-grid">
-    <a class="tool-card" href="tool-temporal-telephone.html"><div class="tool-top"><div class="motif motif-video"></div><span class="status ready">Launch ready</span></div><div class="tool-meta mono">Session 3 · Video</div><h3>Temporal Telephone</h3><p>Pass a drawing through a sequence and compare previous-frame drift to anchored reference.</p><div class="tool-tags"><span class="chip">Time</span><span class="chip">Drift</span><span class="chip">Anchor</span></div><span class="tool-cta mono">open tool →</span></a>
-    <a class="tool-card" href="../tools/video-failure-gallery-viewer/"><div class="tool-top"><div class="motif motif-video"></div><span class="status ready">Launch ready</span></div><div class="tool-meta mono">Session 3 · Video</div><h3>Video Failure Gallery Viewer</h3><p>Scrub curated examples, label failure modes, and write an evidence-based claim.</p><div class="tool-tags"><span class="chip">Failure</span><span class="chip">Frames</span><span class="chip">Coherence</span></div><span class="tool-cta mono">open tool →</span></a>
-    <a class="tool-card" href="../tools/frame-by-frame-coherence-viewer/"><div class="tool-top"><div class="motif motif-video"></div><span class="status ready">Launch ready</span></div><div class="tool-meta mono">Session 3 · Video</div><h3>Frame-by-Frame Coherence Viewer</h3><p>Use onion-skin and difference views to inspect what changed, drifted, or broke.</p><div class="tool-tags"><span class="chip">Overlay</span><span class="chip">Motion</span><span class="chip">Continuity</span></div><span class="tool-cta mono">open tool →</span></a>
-  </div></div></section>
-
-  <section class="section"><div class="wrap-narrow"><div class="section-head-sm"><span class="num">D.</span><h2>Run of show · 60–90 min</h2></div><div class="ros">
-    <div class="ros-row"><div class="ros-time">0-10</div><div><p class="ros-seg">Welcome and framing</p><p class="ros-body">Name the problem: video claims persistence across frames.</p></div></div>
-    <div class="ros-row"><div class="ros-time">10-25</div><div><p class="ros-seg">Drawing telephone</p><p class="ros-body">Run a fast human chain to make drift and anchoring tangible.</p></div></div>
-    <div class="ros-row"><div class="ros-time">25-60</div><div><p class="ros-seg">Temporal Telephone</p><p class="ros-body">Compare previous-only and anchored drawing runs, then play back the sequence.</p></div></div>
-    <div class="ros-row"><div class="ros-time">60-80</div><div><p class="ros-seg">Video Test Report</p><p class="ros-body">Document failure categories and write one evidence-based claim.</p></div></div>
-    <div class="ros-row"><div class="ros-time">80-90</div><div><p class="ros-seg">Project bridge</p><p class="ros-body">Choose a final project pathway and name what evidence you will bring.</p></div></div>
-  </div></div></section>
-
-  <section class="section-tight" style="border-top:1px solid var(--line-soft);"><div class="wrap"><div class="section-head-sm"><span class="num">E.</span><h2>Discussion prompts</h2></div><div class="prompts">
-    <div class="prompt">What changed first: identity, proportion, background, or style?</div>
-    <div class="prompt">Did the anchor prevent drift, or only slow it?</div>
-    <div class="prompt">Which failure mode matters most in your teaching or creative context?</div>
-    <div class="prompt">What would you need to trust generated video as evidence?</div>
-  </div></div></section>
-
-  <section class="section-tight"><div class="wrap doc-cols"><div class="doc-group"><h3>Worksheet</h3><div class="doc-list"><a class="doc-row" href="../worksheets/video-test-report/"><span class="d-name">Video Test Report</span><span class="d-desc">Failure modes and A/B/C prompts</span></a><a class="doc-row" href="../tools/concept-bridges/time-makes-failure-visible/"><span class="d-name">Bridge · Time makes failure visible</span><span class="d-desc">Why drift is evidence</span></a><a class="doc-row" href="../packs/video/"><span class="d-name">Video Prompt Pack</span><span class="d-desc">Frozen examples with frame strips</span></a></div></div><div class="doc-group"><h3>Low-AI / No-AI pathway</h3><div class="callout"><p>Participants can complete the session with Temporal Telephone, curated clips, or an unplugged drawing sequence. Direct video generation is optional. <a href="no-ai-pathway.html" style="color:var(--accent);">Open the full No-AI pathway.</a></p></div></div></div></section>
-
-  <section class="section-tight"><div class="wrap"><div class="pager"><a href="docs-session-3-facilitation.html"><div class="pg-dir mono">&#8592; Facilitation script</div><div class="pg-title">Session 3 Script</div></a><a href="session-images.html"><div class="pg-dir mono">Previous session</div><div class="pg-title">02 &#183; Images</div></a><a class="next" href="session-showcase.html"><div class="pg-dir mono">Optional studio &#8594;</div><div class="pg-title">Make, Teach, Investigate, Explain, or Critique</div></a></div></div></section>
-  <footer class="footer"><div class="wrap"><div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div><p class="mono">Session 3 of 3 · Text, Images, Video · optional studio follows.</p></div></footer>
-</body>
+    </nav>
+    <header class="sub-hero">
+      <div class="wrap">
+        <div class="crumb">
+          <a href="../index.html">
+            Home
+          </a>
+          <span class="sep">
+            /
+          </span>
+          <a href="../index.html#sessions">
+            Sessions
+          </a>
+          <span class="sep">
+            /
+          </span>
+          <span>
+            Video
+          </span>
+        </div>
+        <div class="sess-hero-grid">
+          <div class="sess-num">
+            03
+            <span class="of">
+              of 03
+            </span>
+          </div>
+          <div>
+            <p class="sess-kicker">
+              Machines that move
+            </p>
+            <h1 class="sess-title">
+              Video
+            </h1>
+            <p class="sess-q">
+              When the model adds time,
+              <span class="accent">
+                what starts to drift?
+              </span>
+            </p>
+            <p class="sess-lede">
+              Video turns image generation into a temporal coherence problem. Identity, physics, camera language, and background continuity become visible by failing across frames.
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="section-tight">
+      <div class="wrap">
+        <div class="section-head-sm">
+          <span class="num">
+            A.
+          </span>
+          <h2>
+            What we make visible
+          </h2>
+        </div>
+        <div class="throughline">
+          <div class="through-step">
+            <div class="ts-n">
+              01
+            </div>
+            <h4>
+              Frames
+            </h4>
+            <p>
+              Video is a sequence where each frame has to relate to what came before.
+            </p>
+          </div>
+          <div class="through-step">
+            <div class="ts-n">
+              02
+            </div>
+            <h4>
+              Drift
+            </h4>
+            <p>
+              Small changes accumulate when a system lacks a stable anchor.
+            </p>
+          </div>
+          <div class="through-step">
+            <div class="ts-n">
+              03
+            </div>
+            <h4>
+              Coherence
+            </h4>
+            <p>
+              The same subject, setting, and physics have to persist over time.
+            </p>
+          </div>
+          <div class="through-step">
+            <div class="ts-n">
+              04
+            </div>
+            <h4>
+              Failure evidence
+            </h4>
+            <p>
+              Hands, faces, objects, backgrounds, and camera position reveal what the model is modeling.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-tight">
+      <div class="wrap">
+        <div class="section-head-sm">
+          <span class="num">
+            B.
+          </span>
+          <h2>
+            Choose a pathway
+          </h2>
+        </div>
+        <nav class="pathway-picker" aria-label="Choose your pathway">
+          <a href="#use">
+            Use
+          </a>
+          <a href="#observe">
+            Observe / Critique
+          </a>
+          <a href="#teach">
+            Teach / Design
+          </a>
+          <a href="#build">
+            Build / Code
+          </a>
+          <a href="#critical">
+            Critical / No-AI
+          </a>
+        </nav>
+        <div class="pathway-grid">
+          <section class="pathway-card" id="use">
+            <div class="pc-k">
+              Use
+            </div>
+            <h3>
+              Run a video test
+            </h3>
+            <p>
+              Generate or compare A/B/C motion prompts and document what broke across time.
+            </p>
+          </section>
+          <section class="pathway-card" id="observe">
+            <div class="pc-k">
+              Observe / Critique
+            </div>
+            <h3>
+              Label failures
+            </h3>
+            <p>
+              Analyze pre-generated clips or still sequences for drift, physics breaks, and camera jumps.
+            </p>
+          </section>
+          <section class="pathway-card" id="teach">
+            <div class="pc-k">
+              Teach / Design
+            </div>
+            <h3>
+              Adapt Temporal Telephone
+            </h3>
+            <p>
+              Use drawing, whiteboards, or still frames to teach coherence without direct video generation.
+            </p>
+          </section>
+          <section class="pathway-card" id="build">
+            <div class="pc-k">
+              Build / Code
+            </div>
+            <h3>
+              Make drift inspectable
+            </h3>
+            <p>
+              Prototype a frame viewer, overlay, or annotation tool for temporal failure modes.
+            </p>
+          </section>
+          <section class="pathway-card" id="critical">
+            <div class="pc-k">
+              Critical / No-AI
+            </div>
+            <h3>
+              Ask what should count
+            </h3>
+            <p>
+              Critique video as evidence, consent object, classroom artifact, or synthetic record.
+            </p>
+          </section>
+        </div>
+      </div>
+    </section>
+    <section class="section-tight">
+      <div class="wrap">
+        <div class="section-head-sm">
+          <span class="num">
+            C.
+          </span>
+          <h2>
+            Tools for this session
+          </h2>
+        </div>
+        <div class="tool-grid">
+          <a class="tool-card" href="tool-temporal-telephone.html">
+            <div class="tool-top">
+              <div class="motif motif-video">
+              </div>
+              <span class="status ready">
+                Launch ready
+              </span>
+            </div>
+            <div class="tool-meta mono">
+              Session 3 · Video
+            </div>
+            <h3>
+              Temporal Telephone
+            </h3>
+            <p>
+              Pass a drawing through a sequence and compare previous-frame drift to anchored reference.
+            </p>
+            <div class="tool-tags">
+              <span class="chip">
+                Time
+              </span>
+              <span class="chip">
+                Drift
+              </span>
+              <span class="chip">
+                Anchor
+              </span>
+            </div>
+            <span class="tool-cta mono">
+              open tool →
+            </span>
+          </a>
+          <a class="tool-card" href="../tools/video-failure-gallery-viewer/">
+            <div class="tool-top">
+              <div class="motif motif-video">
+              </div>
+              <span class="status ready">
+                Launch ready
+              </span>
+            </div>
+            <div class="tool-meta mono">
+              Session 3 · Video
+            </div>
+            <h3>
+              Video Failure Gallery Viewer
+            </h3>
+            <p>
+              Scrub curated examples, label failure modes, and write an evidence-based claim.
+            </p>
+            <div class="tool-tags">
+              <span class="chip">
+                Failure
+              </span>
+              <span class="chip">
+                Frames
+              </span>
+              <span class="chip">
+                Coherence
+              </span>
+            </div>
+            <span class="tool-cta mono">
+              open tool →
+            </span>
+          </a>
+          <a class="tool-card" href="../tools/frame-by-frame-coherence-viewer/">
+            <div class="tool-top">
+              <div class="motif motif-video">
+              </div>
+              <span class="status ready">
+                Launch ready
+              </span>
+            </div>
+            <div class="tool-meta mono">
+              Session 3 · Video
+            </div>
+            <h3>
+              Frame-by-Frame Coherence Viewer
+            </h3>
+            <p>
+              Use onion-skin and difference views to inspect what changed, drifted, or broke.
+            </p>
+            <div class="tool-tags">
+              <span class="chip">
+                Overlay
+              </span>
+              <span class="chip">
+                Motion
+              </span>
+              <span class="chip">
+                Continuity
+              </span>
+            </div>
+            <span class="tool-cta mono">
+              open tool →
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap-narrow">
+        <div class="section-head-sm">
+          <span class="num">
+            D.
+          </span>
+          <h2>
+            Run of show · 60–90 min
+          </h2>
+        </div>
+        <div class="ros">
+          <div class="ros-row">
+            <div class="ros-time">
+              0-10
+            </div>
+            <div>
+              <p class="ros-seg">
+                Welcome and framing
+              </p>
+              <p class="ros-body">
+                Name the problem: video claims persistence across frames.
+              </p>
+            </div>
+          </div>
+          <div class="ros-row">
+            <div class="ros-time">
+              10-25
+            </div>
+            <div>
+              <p class="ros-seg">
+                Drawing telephone
+              </p>
+              <p class="ros-body">
+                Run a fast human chain to make drift and anchoring tangible.
+              </p>
+            </div>
+          </div>
+          <div class="ros-row">
+            <div class="ros-time">
+              25-60
+            </div>
+            <div>
+              <p class="ros-seg">
+                Temporal Telephone
+              </p>
+              <p class="ros-body">
+                Compare previous-only and anchored drawing runs, then play back the sequence.
+              </p>
+            </div>
+          </div>
+          <div class="ros-row">
+            <div class="ros-time">
+              60-80
+            </div>
+            <div>
+              <p class="ros-seg">
+                Video Test Report
+              </p>
+              <p class="ros-body">
+                Document failure categories and write one evidence-based claim.
+              </p>
+            </div>
+          </div>
+          <div class="ros-row">
+            <div class="ros-time">
+              80-90
+            </div>
+            <div>
+              <p class="ros-seg">
+                Project bridge
+              </p>
+              <p class="ros-body">
+                Choose a final project pathway and name what evidence you will bring.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-tight" style="border-top:1px solid var(--line-soft);">
+      <div class="wrap">
+        <div class="section-head-sm">
+          <span class="num">
+            E.
+          </span>
+          <h2>
+            Discussion prompts
+          </h2>
+        </div>
+        <div class="prompts">
+          <div class="prompt">
+            What changed first: identity, proportion, background, or style?
+          </div>
+          <div class="prompt">
+            Did the anchor prevent drift, or only slow it?
+          </div>
+          <div class="prompt">
+            Which failure mode matters most in your teaching or creative context?
+          </div>
+          <div class="prompt">
+            What would you need to trust generated video as evidence?
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-tight">
+      <div class="wrap doc-cols">
+        <div class="doc-group">
+          <h3>
+            Worksheet
+          </h3>
+          <div class="doc-list">
+            <a class="doc-row" href="../worksheets/video-test-report/">
+              <span class="d-name">
+                Video Test Report
+              </span>
+              <span class="d-desc">
+                Failure modes and A/B/C prompts
+              </span>
+            </a>
+            <a class="doc-row" href="../tools/concept-bridges/time-makes-failure-visible/">
+              <span class="d-name">
+                Bridge · Time makes failure visible
+              </span>
+              <span class="d-desc">
+                Why drift is evidence
+              </span>
+            </a>
+            <a class="doc-row" href="../packs/video/">
+              <span class="d-name">
+                Video Prompt Pack
+              </span>
+              <span class="d-desc">
+                Frozen examples with frame strips
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="doc-group">
+          <h3>
+            Low-AI / No-AI pathway
+          </h3>
+          <div class="callout">
+            <p>
+              Participants can complete the session with Temporal Telephone, curated clips, or an unplugged drawing sequence. Direct video generation is optional.
+              <a href="no-ai-pathway.html" style="color:var(--accent);">
+                Open the full No-AI pathway.
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-tight">
+      <div class="wrap">
+        <div class="pager">
+          <a href="docs-session-3-facilitation.html">
+            <div class="pg-dir mono">
+              &#8592; Facilitation script
+            </div>
+            <div class="pg-title">
+              Session 3 Script
+            </div>
+          </a>
+          <a href="session-images.html">
+            <div class="pg-dir mono">
+              Previous session
+            </div>
+            <div class="pg-title">
+              02 &#183; Images
+            </div>
+          </a>
+          <a class="next" href="session-showcase.html">
+            <div class="pg-dir mono">
+              Optional studio &#8594;
+            </div>
+            <div class="pg-title">
+              Make, Teach, Investigate, Explain, or Critique
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="wrap">
+        <div class="brand" style="margin-bottom:14px;">
+          <span class="mark">
+          </span>
+          Learning Machines
+        </div>
+        <p class="mono">
+          Session 3 of 3 · Text, Images, Video · optional studio follows.
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>

@@ -98,23 +98,23 @@ Launch sequences:
 3. abstract prompt
 Optional next step: add a carefully framed Default Test sequence after collecting or generating appropriate assets.
 
-## Second-Wave Tools
+## Tool Status and Next Passes
 
-Build these after the launch MVP, using pilot evidence before turning examples into public galleries.
+Use pilot evidence before turning simulated examples into public galleries or adding heavier interactive features.
 
 | Tool | Current Direction |
 | --- | --- |
 | A/B/C Comparison Board | Launch-ready; use it to collect structured pilot evidence across text, image, and video |
 | Model Card Builder | Launch-ready; use for the critical/no-AI pathway and optional studio showcase preparation |
 | Classroom Activity Builder | Launch-ready; use it to turn camp concepts into printable teacher-facing activities |
-| Concept Bridge Pages | Second-wave draft; use during debriefs, recaps, and classroom adaptation |
+| Concept Bridge Pages | Launch-ready; use during debriefs, recaps, showcase prep, and classroom adaptation |
 | Default Test Comparison Viewer | Launch-ready static comparison viewer; future pass can replace simulated scenes with reviewed participant examples |
 | Failure Gallery Viewer | Launch-ready static gallery; future pass can add real curated clips and screenshots |
 | Prompt Guidance Word-by-Word Reveal | Launch-ready bridge activity; future pass can swap in generated image assets |
 | Frame-by-Frame Coherence Viewer | Launch-ready frame overlay tool with sample frames and upload support |
 | Next-Token Prediction Game | Launch-ready Zoom paste version |
-| Latent Space Explorer | Needs a careful visual metaphor and dataset |
-| Dataset Balance Simulator | Better once age/audience needs are clearer |
+| Latent Space Explorer | Launch-ready; uses a lens-based map metaphor to discuss learned similarity and representation limits |
+| Dataset Balance Simulator | Launch-ready; uses simplified sliders and presets to discuss data composition, defaults, and caution |
 
 ## Timeline
 

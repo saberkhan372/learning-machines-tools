@@ -13,7 +13,6 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --cream: var(--bg);
       --card: var(--surface);
       --border: var(--line);
       --text: var(--ink);
@@ -35,8 +34,8 @@
     }
 
     body {
-      font-family: 'DM Sans', system-ui, sans-serif;
-      background: var(--cream);
+      font-family: var(--font-body);
+      background: var(--bg);
       color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
@@ -140,7 +139,7 @@
       border-bottom-right-radius: 4px;
     }
     .message.eliza .message-bubble {
-      background: var(--cream);
+      background: var(--surface-2);
       border: 1px solid var(--border);
       border-bottom-left-radius: 4px;
     }
@@ -167,7 +166,7 @@
       padding: 9px 12px;
       font-family: inherit;
       font-size: 0.9rem;
-      background: var(--cream);
+      background: var(--surface-2);
       color: var(--text);
       transition: border-color .15s;
     }
@@ -187,7 +186,7 @@
     .btn:hover { opacity: 0.88; }
     .btn-primary { background: var(--blue); color: #fff; }
     .btn-ghost {
-      background: var(--cream);
+      background: var(--surface-2);
       border: 1.5px solid var(--border);
       color: var(--muted);
     }
@@ -264,7 +263,7 @@
     }
 
     .step-label {
-      background: var(--cream);
+      background: var(--surface-2);
       border-bottom: 1px solid var(--border);
       padding: 5px 10px;
       font-size: 0.72rem;
@@ -280,11 +279,11 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      background: var(--cream);
+      background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: 4px;
       padding: 2px 6px;
-      font-family: 'DM Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.78rem;
       margin: 2px;
     }
@@ -304,11 +303,11 @@
       background: var(--surface-2);
       border-radius: 3px;
       padding: 1px 3px;
-      font-family: 'DM Mono', monospace;
+      font-family: var(--font-mono);
     }
 
     .pattern-text {
-      font-family: 'DM Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.8rem;
       color: var(--purple);
       background: var(--purple-light);
@@ -318,7 +317,7 @@
     }
 
     .template-text {
-      font-family: 'DM Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.8rem;
       color: var(--green);
       background: var(--green-light);
@@ -339,7 +338,7 @@
       font-size: 0.82rem;
     }
     .capture-name {
-      font-family: 'DM Mono', monospace;
+      font-family: var(--font-mono);
       color: var(--green);
       font-size: 0.78rem;
       white-space: nowrap;
@@ -422,7 +421,7 @@
     }
 
     .compare-prompt {
-      background: var(--cream);
+      background: var(--surface-2);
       border-bottom: 1px solid var(--border);
       padding: 12px 16px;
       font-size: 0.875rem;
@@ -485,7 +484,7 @@
       border-radius: 4px;
       padding: 2px 7px;
       font-size: 0.72rem;
-      font-family: 'DM Mono', monospace;
+      font-family: var(--font-mono);
       font-weight: 500;
     }
 
@@ -530,7 +529,7 @@
       font-size: 0.75rem;
       color: var(--muted);
       margin-top: 10px;
-      font-family: 'DM Mono', monospace;
+      font-family: var(--font-mono);
     }
 
     /* ── Footer ── */
@@ -543,21 +542,7 @@
     }
 
     [hidden] { display: none !important; }
-  </style>
-<style id="lm-tool-nav-overrides">
-  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
-  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
-  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
-  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
-  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
-  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
-  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
-  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
-  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
-  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
-  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
-  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
-</style></head>
+  </style></head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">

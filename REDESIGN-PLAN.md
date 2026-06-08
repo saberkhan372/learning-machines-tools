@@ -259,8 +259,8 @@ After implementation, verify:
 | `.card` | Surface + border + border-radius:16px |
 | `.chip` | Mono label pill |
 | `.status.ready` | Green dot + "Launch ready" |
-| `.status.draft` | Warm dot + "Second-wave draft" |
-| `.status.future` | Faint dot + "Coming later" |
+| `.status.draft` | Legacy warm-dot nonlaunch chip |
+| `.status.future` | Legacy faint-dot roadmap chip |
 | `.tok.c0`–`.tok.c5` | Colored token chips (6-color rotating palette) |
 | `.mono` | IBM Plex Mono font class |
 | `.eyebrow` | Mono uppercase label with leading line |

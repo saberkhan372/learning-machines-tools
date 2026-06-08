@@ -102,8 +102,8 @@ For `tools/` and `worksheets/` (depth `../../`):
 | `.card` | Surface + border + 16px border-radius |
 | `.chip` | Mono label pill |
 | `.status.ready` | Green dot + "Launch ready" chip |
-| `.status.draft` | Warm dot + "Second-wave draft" chip |
-| `.status.future` | Faint dot + "Coming later" chip |
+| `.status.draft` | Legacy warm-dot nonlaunch chip |
+| `.status.future` | Legacy faint-dot roadmap chip |
 | `.eyebrow` | Mono uppercase label with leading rule |
 | `.mono` | IBM Plex Mono font class |
 | `.tok.c0`–`.tok.c5` | 6-color rotating token chips |
