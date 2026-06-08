@@ -214,11 +214,11 @@ Share one thing from your Video Test Report:
 
 ---
 
-## SLIDE 17 — Bridge to Session 4
+## SLIDE 17 — Bridge to Optional Studio
 
 In Sessions 1–3 we investigated.
 
-In Session 4, you show what you found.
+In Optional Studio, you show what you found.
 
 **Start thinking now about your final project.**
 
@@ -233,7 +233,7 @@ Choose one pathway:
 
 ## SLIDE 18 — ASSIGNMENT OPTIONS
 
-Before Session 4, bring something to share:
+Before Optional Studio, bring something to share:
 
 **Light:** Annotate 3–5 frames from an AI video with failure mode labels. Add a one-sentence claim.
 
@@ -245,9 +245,9 @@ All work is optional. Curated examples are always available.
 
 ---
 
-## SLIDE 19 — See You in Session 4
+## SLIDE 19 — See You in Optional Studio
 
-**Session 4: Showcase**
+**Optional Studio: Showcase**
 *What did we learn by making, testing, critiquing, or teaching these systems?*
 
 No new tools. No new concepts.

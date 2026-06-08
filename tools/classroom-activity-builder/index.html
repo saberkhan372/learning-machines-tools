@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Classroom Activity Builder &middot; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/lm.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/theme.js"></script>
+  <style>
+    .builder-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.4fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .field select,
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--ink);
+      font: 0.95rem/1.4 var(--font-body);
+      padding: 10px 11px;
+    }
+
+    .field textarea {
+      min-height: 78px;
+      resize: vertical;
+    }
+
+    .field select:focus,
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .activity-sheet {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .sheet-head {
+      padding: 22px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+
+    .sheet-title {
+      margin: 0;
+      font-size: clamp(1.7rem, 4vw, 3rem);
+    }
+
+    .sheet-meta {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .sheet-body {
+      display: grid;
+      gap: 14px;
+      padding: 20px;
+    }
+
+    .activity-section {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .activity-section h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: 0;
+    }
+
+    .activity-section p,
+    .activity-section li {
+      margin: 0;
+      color: var(--ink-dim);
+    }
+
+    .activity-section ul,
+    .activity-section ol {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .evidence-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+    }
+
+    .evidence-table th,
+    .evidence-table td {
+      padding: 10px;
+      border: 1px solid var(--line-soft);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .evidence-table th {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .print-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 960px) {
+      .builder-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      .nav,
+      .tool-hero,
+      .lab-panel,
+      .button-row {
+        display: none !important;
+      }
+
+      .tool-shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .builder-grid {
+        display: block;
+      }
+
+      .activity-sheet {
+        border: 0;
+        box-shadow: none;
+        color: #111;
+      }
+
+      .sheet-head,
+      .activity-section {
+        background: #fff;
+      }
+
+      .sheet-meta,
+      .activity-section p,
+      .activity-section li {
+        color: #333;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../../pages/session-showcase.html" class="hide-sm">Optional Studio</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&larr; All tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Optional studio &middot; Teach / Design</p>
+      <h1 class="tool-title">Classroom Activity Builder</h1>
+      <p class="tool-dek">Choose the teaching context, AI concept, pathway, tool, no-AI option, evidence artifact, and reflection question. The builder assembles a printable activity skeleton teachers can adapt.</p>
+      <div class="tool-idea">Big idea: classroom transfer is a first-class camp outcome.</div>
+    </header>
+
+    <section class="builder-grid">
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Activity ingredients</p>
+            <h2>Choose what matters</h2>
+            <p style="margin:0;color:var(--muted);">The output is a structured draft, not a finished lesson. Edit it for your students, school norms, and consent context.</p>
+          </div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="gradeBand">Grade band</label>
+              <select id="gradeBand"></select>
+            </div>
+            <div class="field">
+              <label for="subject">Subject</label>
+              <select id="subject"></select>
+            </div>
+            <div class="field">
+              <label for="concept">AI concept</label>
+              <select id="concept"></select>
+            </div>
+            <div class="field">
+              <label for="pathway">Participation pathway</label>
+              <select id="pathway"></select>
+            </div>
+            <div class="field">
+              <label for="toolChoice">Tool</label>
+              <select id="toolChoice"></select>
+            </div>
+            <div class="field">
+              <label for="noAiOption">No-AI option</label>
+              <select id="noAiOption"></select>
+            </div>
+            <div class="field">
+              <label for="artifact">Evidence artifact</label>
+              <select id="artifact"></select>
+            </div>
+            <div class="field">
+              <label for="reflection">Reflection question</label>
+              <select id="reflection"></select>
+            </div>
+            <div class="field">
+              <label for="customContext">Optional local context</label>
+              <textarea id="customContext" placeholder="Example: 45-minute advisory, no student accounts, printed packets only."></textarea>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button class="tool-button" type="button" id="buildBtn">Build activity</button>
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy Markdown</button>
+            <button class="tool-button secondary" type="button" onclick="window.print()">Print</button>
+          </div>
+          <p class="print-note">Tip: use browser print to save as PDF.</p>
+        </div>
+      </aside>
+
+      <section class="activity-sheet" id="activitySheet" aria-live="polite">
+        <div class="sheet-head">
+          <h2 class="sheet-title" id="activityTitle"></h2>
+          <p class="sheet-meta" id="activityMeta"></p>
+        </div>
+        <div class="sheet-body" id="sheetBody"></div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const OPTIONS = {
+      gradeBand: ["Upper elementary", "Middle school", "High school", "Adult workshop", "Teacher PD"],
+      subject: ["English / Language Arts", "Social studies", "Science", "Math", "Art / Design", "Computer science", "Advisory / Digital citizenship"],
+      concept: ["Next-token prediction", "Confidence is not truth", "Defaults are not neutral", "Prompt constraints", "Image diffusion", "Temporal coherence", "Access and equity"],
+      pathway: ["Observe / Critique", "Teach / Design", "Critical / No-AI", "Use", "Build / Code"],
+      toolChoice: [
+        "Next-Token Prediction Game",
+        "Default Test Comparison Viewer",
+        "Prompt Guidance Word-by-Word",
+        "Video Failure Gallery Viewer",
+        "Frame-by-Frame Coherence Viewer",
+        "Confidence Is Not Truth Explorer",
+        "Access Tiers",
+        "A/B/C Comparison Board"
+      ],
+      noAiOption: [
+        "Analyze pre-generated examples",
+        "Run an unplugged simulation",
+        "Compare frozen outputs",
+        "Build a critique",
+        "Create a consent checklist",
+        "Design a classroom protocol"
+      ],
+      artifact: [
+        "Annotated evidence table",
+        "Claim + evidence paragraph",
+        "A/B/C comparison board",
+        "Consent checklist",
+        "Model card",
+        "Exit ticket set",
+        "Gallery walk notes"
+      ],
+      reflection: [
+        "What did the machine appear to assume?",
+        "What evidence supports your claim?",
+        "What would a human need to verify?",
+        "Who is helped, excluded, or put at risk?",
+        "What changed when one variable changed?",
+        "What would you teach differently after seeing this?"
+      ]
+    };
+
+    const CONCEPT_GOALS = {
+      "Next-token prediction": "Students will explain that a language model produces likely continuations based on context rather than choosing the single best or truest word.",
+      "Confidence is not truth": "Students will distinguish fluent, confident wording from correctness and name what evidence is needed before trusting an answer.",
+      "Defaults are not neutral": "Students will identify what a vague prompt leaves unspecified and describe how model defaults can reflect data, culture, platform design, and ambiguity.",
+      "Prompt constraints": "Students will explain how each added prompt detail narrows possible outputs while leaving other assumptions for the system to fill in.",
+      "Image diffusion": "Students will describe generation as an iterative movement from noise toward prompt-consistent structure.",
+      "Temporal coherence": "Students will use frame-level evidence to identify drift, identity change, object inconsistency, or physics breaks over time.",
+      "Access and equity": "Students will compare paid, free, and no-AI participation options and name who gains or loses access under each condition."
+    };
+
+    const TOOL_MATERIALS = {
+      "Next-Token Prediction Game": "sentence stems, projected tool or printed distributions, sticky notes or chat guesses",
+      "Default Test Comparison Viewer": "vague prompt examples, comparison table, annotation notes",
+      "Prompt Guidance Word-by-Word": "prompt sequence, prediction notes, simulated image steps",
+      "Video Failure Gallery Viewer": "curated clip examples, failure-mode labels, claim template",
+      "Frame-by-Frame Coherence Viewer": "still-frame sequence, onion-skin or difference view, drift notes",
+      "Confidence Is Not Truth Explorer": "simulated confident answers, evidence reveal cards, verification checklist",
+      "Access Tiers": "task scenario, paid/free/no-AI comparison, access reflection",
+      "A/B/C Comparison Board": "baseline, changed variable, stress test, claim-and-evidence board"
+    };
+
+    const TOOL_INVESTIGATIONS = {
+      "Next-Token Prediction Game": "Students predict the next word, compare class guesses with the provided distribution, and discuss why context shifts probability.",
+      "Default Test Comparison Viewer": "Students compare a vague prompt, a specific prompt, and a critical revision, then name what appeared by default.",
+      "Prompt Guidance Word-by-Word": "Students reveal the prompt one word at a time, predict what will change, and compare predictions to the simulated output.",
+      "Video Failure Gallery Viewer": "Students scrub a short example, choose a failure-mode label, and write a claim that cites a specific frame.",
+      "Frame-by-Frame Coherence Viewer": "Students compare consecutive frames, use overlay or difference view, and decide whether the change is intended motion or drift.",
+      "Confidence Is Not Truth Explorer": "Students read a confident answer, decide what sounds trustworthy, reveal the evidence, and revise their trust judgment.",
+      "Access Tiers": "Students compare the same learning task across access tiers and document what is excluded, delayed, or made safer.",
+      "A/B/C Comparison Board": "Students document a baseline, one changed variable, and a stress test before writing a defensible claim."
+    };
+
+    const PATHWAY_NOTES = {
+      "Observe / Critique": "Students do not need to generate new content. They analyze provided examples and make evidence-based claims.",
+      "Teach / Design": "Students adapt the investigation into a classroom-ready activity, worksheet, or facilitation plan.",
+      "Critical / No-AI": "Students can complete the activity without using generative AI directly by using frozen examples, unplugged simulation, critique, or consent design.",
+      "Use": "Students may use the tool directly, but they still need to predict, document evidence, and reflect on limits.",
+      "Build / Code": "Students can prototype a small explainer, interface, or data display that makes the mechanism visible."
+    };
+
+    const selects = {};
+
+    function fillSelect(id, values) {
+      const select = document.getElementById(id);
+      values.forEach(function (value) {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+      });
+      selects[id] = select;
+      select.addEventListener("change", buildActivity);
+    }
+
+    function getValues() {
+      return {
+        gradeBand: selects.gradeBand.value,
+        subject: selects.subject.value,
+        concept: selects.concept.value,
+        pathway: selects.pathway.value,
+        tool: selects.toolChoice.value,
+        noAi: selects.noAiOption.value,
+        artifact: selects.artifact.value,
+        reflection: selects.reflection.value,
+        context: document.getElementById("customContext").value.trim()
+      };
+    }
+
+    function section(title, html) {
+      return '<section class="activity-section"><h3>' + title + '</h3>' + html + '</section>';
+    }
+
+    function buildTitle(values) {
+      const concept = values.concept.replace(" is not ", " vs. ");
+      return concept + " in " + values.subject;
+    }
+
+    function buildRows(values) {
+      return [
+        section("Learning goal", "<p>" + CONCEPT_GOALS[values.concept] + "</p>"),
+        section("Materials", "<ul><li>" + TOOL_MATERIALS[values.tool] + "</li><li>" + values.artifact + "</li><li>Timer, board space, and a place to collect reflection notes</li></ul>"),
+        section("Warm-up", "<p>Ask students to make a quick prediction before seeing the example or tool state: what do they expect will happen, appear, change, or fail?</p>"),
+        section("Investigation", "<ol><li>" + TOOL_INVESTIGATIONS[values.tool] + "</li><li>Students work through the " + values.pathway + " pathway.</li><li>Pause once to ask what evidence would make the claim stronger.</li></ol>"),
+        section("Evidence table", '<div class="table-wrap"><table class="evidence-table"><thead><tr><th>Prompt / input</th><th>What appeared</th><th>What changed</th><th>Evidence</th><th>Claim</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>'),
+        section("Ethics question", "<p>" + values.reflection + "</p>"),
+        section("No-AI pathway", "<p>" + values.noAi + ": " + PATHWAY_NOTES[values.pathway] + "</p>"),
+        section("Exit ticket", "<p>One thing I can now explain about " + values.concept.toLowerCase() + " is _____. The evidence I would point to is _____. One question I still have is _____.</p>")
+      ];
+    }
+
+    function buildActivity() {
+      const values = getValues();
+      const title = buildTitle(values);
+      document.getElementById("activityTitle").textContent = title;
+      let meta = values.gradeBand + " | " + values.subject + " | " + values.pathway + " | " + values.tool;
+      if (values.context) {
+        meta += " | Context: " + values.context;
+      }
+      document.getElementById("activityMeta").textContent = meta;
+      document.getElementById("sheetBody").innerHTML = buildRows(values).join("");
+    }
+
+    function markdownActivity() {
+      const values = getValues();
+      const title = buildTitle(values);
+      return [
+        "# " + title,
+        "",
+        "**Grade band:** " + values.gradeBand,
+        "**Subject:** " + values.subject,
+        "**AI concept:** " + values.concept,
+        "**Participation pathway:** " + values.pathway,
+        "**Tool:** " + values.tool,
+        values.context ? "**Local context:** " + values.context : "",
+        "",
+        "## Learning goal",
+        CONCEPT_GOALS[values.concept],
+        "",
+        "## Materials",
+        "- " + TOOL_MATERIALS[values.tool],
+        "- " + values.artifact,
+        "- Timer, board space, and a place to collect reflection notes",
+        "",
+        "## Warm-up",
+        "Ask students to make a quick prediction before seeing the example or tool state.",
+        "",
+        "## Investigation",
+        "1. " + TOOL_INVESTIGATIONS[values.tool],
+        "2. Students work through the " + values.pathway + " pathway.",
+        "3. Pause once to ask what evidence would make the claim stronger.",
+        "",
+        "## Evidence table",
+        "| Prompt / input | What appeared | What changed | Evidence | Claim |",
+        "| --- | --- | --- | --- | --- |",
+        "|  |  |  |  |  |",
+        "|  |  |  |  |  |",
+        "",
+        "## Ethics question",
+        values.reflection,
+        "",
+        "## No-AI pathway",
+        values.noAi + ": " + PATHWAY_NOTES[values.pathway],
+        "",
+        "## Exit ticket",
+        "One thing I can now explain about " + values.concept.toLowerCase() + " is _____. The evidence I would point to is _____. One question I still have is _____."
+      ].filter(Boolean).join("\n");
+    }
+
+    Object.keys(OPTIONS).forEach(function (id) {
+      fillSelect(id === "toolChoice" ? "toolChoice" : id, OPTIONS[id]);
+    });
+
+    document.getElementById("customContext").addEventListener("input", buildActivity);
+    document.getElementById("buildBtn").addEventListener("click", buildActivity);
+    document.getElementById("copyBtn").addEventListener("click", function () {
+      navigator.clipboard.writeText(markdownActivity());
+    });
+
+    buildActivity();
+  </script>
+</body>
+</html>

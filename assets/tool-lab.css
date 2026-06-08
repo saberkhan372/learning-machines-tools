@@ -1,0 +1,458 @@
+/* Shared Learning Machines styles for compact participant tools. */
+.tool-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 56px;
+}
+
+.tool-hero {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.tool-kicker {
+  margin: 0;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tool-title {
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(2.1rem, 6vw, 4.6rem);
+  line-height: 0.96;
+}
+
+.tool-dek {
+  max-width: 840px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.tool-idea {
+  width: fit-content;
+  max-width: 100%;
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--warm);
+  font-weight: 800;
+  box-shadow: var(--shadow-sm);
+}
+
+.tool-grid-2,
+.tool-grid-3 {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+
+.tool-grid-2 {
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.35fr);
+}
+
+.tool-grid-3 {
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.35fr) minmax(250px, 0.9fr);
+}
+
+.lab-panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.lab-pad {
+  padding: 18px;
+}
+
+.lab-panel h2,
+.lab-panel h3 {
+  margin: 0 0 10px;
+  letter-spacing: 0;
+}
+
+.lab-panel p {
+  color: var(--muted);
+}
+
+.mini-label {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.small-muted {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.choice-list {
+  display: grid;
+  gap: 9px;
+}
+
+.choice-button,
+.chip-button,
+.tool-button {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.choice-button {
+  width: 100%;
+  padding: 12px;
+  background: var(--surface-2);
+  color: var(--ink);
+  text-align: left;
+}
+
+.choice-button:hover,
+.choice-button:focus-visible,
+.choice-button.active {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.choice-button.active {
+  background: color-mix(in oklab, var(--accent) 14%, var(--surface));
+}
+
+.choice-button strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.choice-button span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip-button {
+  padding: 8px 10px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.chip-button.active {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 14%, var(--surface));
+  color: var(--ink);
+}
+
+.tool-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 13px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 800;
+}
+
+.tool-button.secondary {
+  background: transparent;
+  color: var(--ink);
+}
+
+.tool-button:focus-visible,
+.chip-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+  text-align: left;
+}
+
+.comparison-table th {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.version-mark {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 800;
+}
+
+.output-card,
+.frame-card,
+.scene-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.output-visual,
+.frame-visual,
+.scene-visual {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(94,234,212,0.12), rgba(192,132,252,0.12)),
+    var(--code-bg);
+}
+
+.output-caption,
+.frame-caption,
+.scene-caption {
+  padding: 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.evidence-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.evidence-list li {
+  padding: 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--ink-dim);
+}
+
+.note-box {
+  width: 100%;
+  min-height: 92px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font: 0.92rem/1.45 var(--font-body);
+  padding: 11px;
+}
+
+.note-box:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.stack {
+  display: grid;
+  gap: 14px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.frame-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+  gap: 8px;
+}
+
+.frame-thumb {
+  min-height: 64px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.frame-thumb.active {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--accent) 42%, transparent);
+}
+
+.frame-thumb svg,
+.scene-visual svg,
+.output-visual svg,
+.frame-visual svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.scrub-range {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.overlay-stage {
+  display: grid;
+  min-height: 360px;
+  place-items: center;
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    var(--code-bg);
+  background-size: 24px 24px;
+  overflow: hidden;
+}
+
+.overlay-frame {
+  position: absolute;
+  inset: 24px;
+  display: grid;
+  place-items: center;
+}
+
+.overlay-frame img,
+.overlay-frame svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.overlay-current {
+  opacity: 1;
+}
+
+.overlay-previous {
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.overlay-stage.onion .overlay-previous {
+  opacity: 0.48;
+}
+
+.overlay-stage.diff .overlay-current {
+  mix-blend-mode: difference;
+  filter: contrast(1.25) saturate(1.3);
+}
+
+.claim-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.claim-grid label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.meter-row {
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin: 9px 0;
+}
+
+.meter-track {
+  height: 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+@media (max-width: 980px) {
+  .tool-grid-2,
+  .tool-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .tool-shell {
+    width: min(100% - 24px, 1180px);
+    padding-top: 22px;
+  }
+
+  .overlay-stage {
+    min-height: 260px;
+  }
+
+  .meter-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  .nav,
+  .button-row,
+  .choice-list,
+  .chip-row,
+  input[type="file"],
+  input[type="range"] {
+    display: none !important;
+  }
+
+  .tool-shell {
+    width: 100%;
+    padding: 0;
+  }
+
+  .lab-panel,
+  .output-card,
+  .frame-card,
+  .scene-card {
+    box-shadow: none;
+  }
+}

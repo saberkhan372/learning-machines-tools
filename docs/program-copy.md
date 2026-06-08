@@ -11,7 +11,7 @@ Use these descriptions across channels. Keep the core line: *"Participants will 
 
 ## Social Post (short — fits one tweet or Instagram caption)
 
-> How do AI systems write, imagine, and move? Learning Machines is a free, beginner-friendly creative AI camp that investigates text, image, and video generation — not to use AI better, but to understand what it's actually doing. Four sessions. No coding required. Educators, artists, students, and curious learners welcome.
+> How do AI systems write, imagine, and move? Learning Machines is a free, beginner-friendly creative AI camp that investigates text, image, and video generation — not to use AI better, but to understand what it's actually doing. Three core sessions + optional studio. No coding required. Educators, artists, students, and curious learners welcome.
 
 **Thread extension (optional):**
 
@@ -20,7 +20,7 @@ Use these descriptions across channels. Keep the core line: *"Participants will 
 > Session 1 — Text: tokens, probability, and why fluency isn't understanding.
 > Session 2 — Images: diffusion, defaults, and what appears when prompts are vague.
 > Session 3 — Video: drift, coherence, and why generating motion is harder than generating a frame.
-> Session 4 — Showcase: you show what you made, found, or critiqued.
+> Optional Studio — Showcase: you show what you made, found, or critiqued.
 >
 > Low-AI and no-AI pathways exist for every activity. Opting out of direct AI use never means opting out of the camp.
 
@@ -33,9 +33,9 @@ Use these descriptions across channels. Keep the core line: *"Participants will 
 
 How do generative AI systems create text, images, and video — and what are they actually doing when they do it?
 
-In this four-session camp, participants investigate language models, image generation, and video generation through hands-on experiments, interactive tools, and structured reflection. Each session asks the same question: *what is the machine actually doing?* Participants test prompts, compare outputs, investigate model defaults and failures, and document evidence-based claims.
+In this camp, participants investigate language models, image generation, and video generation through three core sessions of hands-on experiments, interactive tools, and structured reflection. An optional studio supports final artifacts, classroom adaptation, model-behavior investigations, explainers, and critique. Each session asks the same question: *what is the machine actually doing?* Participants test prompts, compare outputs, investigate model defaults and failures, and document evidence-based claims.
 
-The fourth session is a showcase where participants share a creative artifact, classroom activity, or model-behavior investigation.
+The optional studio is a showcase and work period where participants can share a creative artifact, classroom activity, model-behavior investigation, explainer, or critical no-AI project.
 
 No coding or machine learning background required. Low-AI and no-AI participation pathways are available for every activity.
 
@@ -47,7 +47,7 @@ No coding or machine learning background required. Low-AI and no-AI participatio
 
 **Subject:** Learning Machines: Text, Images, Video — registration open
 
-We're running a new camp this summer: **Learning Machines: Text, Images, Video**, a four-session creative AI investigation for educators, artists, students, and curious learners.
+We're running a new camp this summer: **Learning Machines: Text, Images, Video**, a creative AI investigation for educators, artists, students, and curious learners, framed as three core sessions plus optional studio.
 
 This is not a prompt-engineering workshop. It's an investigation into how generative systems actually work — what they predict, what they assume, what they fail at, and what they leave to human judgment.
 
@@ -56,7 +56,7 @@ This is not a prompt-engineering workshop. It's an investigation into how genera
 - **Session 1 — Text:** Tokenization, probability distributions, temperature, and why fluent text isn't the same as understanding.
 - **Session 2 — Images:** Diffusion, feature extraction, and Default Tests — what appears when you give a model a vague prompt.
 - **Session 3 — Video:** Temporal drift, coherence failure, and why generating motion is fundamentally harder than generating a single image.
-- **Session 4 — Showcase:** Participants share a creative artifact, classroom activity, model-behavior investigation, or critical no-AI project.
+- **Optional Studio — Showcase:** Participants share a creative artifact, classroom activity, model-behavior investigation, or critical no-AI project.
 
 Every session has low-AI and no-AI participation pathways. You don't have to use any tool you're not comfortable with.
 
@@ -79,7 +79,7 @@ Questions? Reply to this email.
 
 ---
 
-**Learning Machines: Text, Images, Video** is a beginner-friendly creative AI camp for educators, artists, students, and curious learners. Across three hands-on sessions and one showcase, participants investigate how generative AI systems create text, images, and video.
+**Learning Machines: Text, Images, Video** is a beginner-friendly creative AI camp for educators, artists, students, and curious learners. Across three core sessions plus optional studio, participants investigate how generative AI systems create text, images, and video.
 
 Each session asks the same question:
 
@@ -104,7 +104,7 @@ The same basic logic — prediction from learned patterns — produces different
 | 1 | Text | How do language models generate text that feels meaningful? |
 | 2 | Images | What is an image model actually working with when it sees or generates? |
 | 3 | Video | What changes when generation has to work across time? |
-| 4 | Showcase | What did we learn by making, testing, critiquing, or teaching these systems? |
+| Optional Studio | Make, Teach, Investigate, Explain, or Critique | What did we learn by making, testing, critiquing, explaining, or teaching these systems? |
 
 ---
 
@@ -136,7 +136,7 @@ Every activity has five pathways. Opting out of direct AI use never means opting
 
 #### Final Project Pathways
 
-Participants choose one for the Session 4 showcase:
+Participants choose one for the optional studio showcase:
 
 | Pathway | Final Artifact |
 | --- | --- |

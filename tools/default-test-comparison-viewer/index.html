@@ -3,57 +3,248 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Default Test Comparison Viewer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Default Test Comparison Viewer · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/lm.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
   <script src="../../assets/theme.js"></script>
-<style>
-    body { margin: 0; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: var(--accent); }
-    .card { border: 1px solid var(--line); border-radius: 8px; padding: 22px; background: var(--surface); box-shadow: var(--shadow-sm); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; color: var(--ink); }
-    p, li { color: var(--muted); line-height: 1.55; }</style>
-<style id="lm-tool-nav-overrides">
-  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
-  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
-  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
-  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
-  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
-  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
-  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
-  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
-  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
-  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
-  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
-  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
-</style></head>
+  <style>
+    .default-scene { width: 100%; height: 210px; }
+    .default-scene text { font-family: var(--font-mono); font-size: 12px; fill: #e8e6df; }
+    .default-scene .skin-a { fill: #d9a06f; }
+    .default-scene .skin-b { fill: #8f5c3a; }
+    .default-scene .skin-c { fill: #f0c7a5; }
+    .default-scene .coat { fill: #f7f7f2; }
+    .default-scene .dark { fill: #191b22; }
+    .default-scene .accent { fill: #5eead4; }
+    .default-scene .purple { fill: #c084fc; }
+    .prompt-line { margin: 0; color: var(--ink); font-weight: 800; }
+    .small-muted { margin: 4px 0 0; color: var(--muted); font-size: 0.9rem; }
+  </style>
+</head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
         <a href="../../index.html#tools" class="hide-sm">Tools</a>
-        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+        <a href="../../pages/session-images.html" class="hide-sm">Session 2</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&larr; All tools</a>
       </div>
     </div>
   </nav>
-  <main>
-    <div class="card">
-      <h1>Default Test Comparison Viewer</h1>
-      <p><strong>Coming later.</strong> This second-wave tool will compare prompts, generated outputs, and annotations across models or runs after the first cohort produces examples worth archiving.</p>
-      <ul>
-        <li>Prompt</li>
-        <li>Model/tool</li>
-        <li>Output</li>
-        <li>Observed default</li>
-        <li>Revision</li>
-        <li>Ethical concern</li>
-      </ul>
-    </div>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Session 2 · Images · Default tests</p>
+      <h1 class="tool-title">Default Test Comparison Viewer</h1>
+      <p class="tool-dek">Choose a vague prompt and compare three versions: the ambiguous default, a more specific prompt, and a critical revision. The point is not to rate the output. The point is to name what the model filled in.</p>
+      <div class="tool-idea">Big idea: defaults are not neutral.</div>
+    </header>
+
+    <section class="tool-grid-2">
+      <aside class="lab-panel">
+        <div class="lab-pad">
+          <p class="mini-label">Choose a vague prompt</p>
+          <div class="choice-list" id="promptList"></div>
+        </div>
+      </aside>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Comparison table</p>
+            <h2 id="caseTitle">A teacher</h2>
+            <p id="caseQuestion" class="small-muted"></p>
+          </div>
+
+          <div class="table-wrap">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Version</th>
+                  <th>Prompt</th>
+                  <th>Output</th>
+                  <th>What appeared by default?</th>
+                  <th>What changed?</th>
+                  <th>Ethical question</th>
+                </tr>
+              </thead>
+              <tbody id="comparisonRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="tool-grid-2" style="margin-top:16px;">
+      <section class="lab-panel">
+        <div class="lab-pad">
+          <h2>Participant claim</h2>
+          <p>Move from "I like it" to evidence: what did the output assume, and where can you point to it?</p>
+          <textarea class="note-box" id="claimBox">This default test matters because...</textarea>
+        </div>
+      </section>
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <h2>Classroom prompts</h2>
+          <ul class="evidence-list">
+            <li>What did the prompt leave unspecified?</li>
+            <li>Which default appeared before anyone asked for it?</li>
+            <li>Did the revision fix the default, complicate it, or hide it?</li>
+            <li>What evidence would make this claim stronger?</li>
+          </ul>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy claim</button>
+            <button class="tool-button secondary" type="button" onclick="window.print()">Print / save</button>
+          </div>
+        </div>
+      </section>
+    </section>
   </main>
+
+  <script>
+    const CASES = [
+      {
+        title: "A teacher",
+        question: "Who does the system picture as an authority figure when the prompt says almost nothing?",
+        button: "a teacher",
+        variants: [
+          {
+            mark: "A",
+            prompt: "a teacher",
+            scene: "teacher-a",
+            caption: "A smiling adult at a board in a tidy classroom.",
+            defaults: "Classroom, chalkboard, adult authority, neat rows, warm lighting.",
+            changed: "Baseline: nothing was specified beyond the role.",
+            ethics: "Whose teaching contexts become invisible when the default classroom is so narrow?"
+          },
+          {
+            mark: "B",
+            prompt: "a middle school science teacher helping three students test water samples in a crowded public-school lab",
+            scene: "teacher-b",
+            caption: "Teacher and students gathered around beakers and water samples.",
+            defaults: "Group work, lab materials, student presence, applied science.",
+            changed: "Subject, setting, activity, and collaboration became more concrete.",
+            ethics: "Does specificity reduce default bias, or only replace one default with another?"
+          },
+          {
+            mark: "C",
+            prompt: "a community educator teaching climate science outdoors with multilingual notes, visible accessibility supports, and students of different ages",
+            scene: "teacher-c",
+            caption: "Outdoor learning circle with multilingual notes and access supports.",
+            defaults: "Learning beyond school buildings; broader age, language, and access contexts.",
+            changed: "The revision challenged classroom, age, language, and accessibility assumptions.",
+            ethics: "What would participants still need to verify before calling this representation inclusive?"
+          }
+        ]
+      },
+      {
+        title: "A scientist",
+        question: "What does the model assume science looks like?",
+        button: "a scientist",
+        variants: [
+          { mark: "A", prompt: "a scientist", scene: "scientist-a", caption: "A person in a white coat beside glowing lab glass.", defaults: "Lab coat, indoor lab, chemistry glassware, lone expert.", changed: "Baseline: the role became a familiar lab stereotype.", ethics: "Which kinds of science disappear when the lab coat is the default?" },
+          { mark: "B", prompt: "a field ecologist measuring soil moisture with a team in a city park", scene: "scientist-b", caption: "Outdoor field team collecting measurements near trees and buildings.", defaults: "Science as outdoor measurement, teamwork, local environment.", changed: "Location, discipline, tools, and collaboration shifted.", ethics: "Does the image show science as a process or as a costume?" },
+          { mark: "C", prompt: "a disabled marine scientist leading a collaborative shoreline survey with community volunteers and clearly labeled sampling tools", scene: "scientist-c", caption: "Shoreline survey with labeled tools, volunteers, and visible access needs.", defaults: "Community science, access, leadership, named tools.", changed: "The revision foregrounded participation, access, and evidence gathering.", ethics: "Who is represented as capable of producing scientific knowledge?" }
+        ]
+      },
+      {
+        title: "A successful person",
+        question: "What does success look like before anyone defines it?",
+        button: "a successful person",
+        variants: [
+          { mark: "A", prompt: "a successful person", scene: "success-a", caption: "A sharply dressed person in a high-rise office with city lights.", defaults: "Wealth, business clothing, skyscraper, individual achievement.", changed: "Baseline: success became corporate status.", ethics: "Who benefits when success is pictured as wealth and power?" },
+          { mark: "B", prompt: "a successful person celebrating a community garden opening with neighbors", scene: "success-b", caption: "Neighbors at a garden table with signs, food, and tools.", defaults: "Success as community impact and shared care.", changed: "The prompt replaced status markers with local contribution.", ethics: "What measurements of success are still missing from the image?" },
+          { mark: "C", prompt: "a successful person resting after finishing a long-term recovery goal, surrounded by supportive friends and personal notes", scene: "success-c", caption: "Quiet room, support notes, friends, and rest after a milestone.", defaults: "Success as health, rest, relationship, and persistence.", changed: "The revision challenged hustle, wealth, and individualism.", ethics: "Can an image show dignity without turning struggle into spectacle?" }
+        ]
+      },
+      {
+        title: "The future of education",
+        question: "What future does the model choose when the phrase stays abstract?",
+        button: "the future of education",
+        variants: [
+          { mark: "A", prompt: "the future of education", scene: "future-a", caption: "Students surrounded by holograms, tablets, and glowing interfaces.", defaults: "Technology-centered, polished, futuristic, expensive devices.", changed: "Baseline: future became product-like and screen-heavy.", ethics: "Who is included in a future that looks expensive by default?" },
+          { mark: "B", prompt: "the future of education in a rural library with offline tools, mentors, and student-led projects", scene: "future-b", caption: "Library tables with mentors, posters, notebooks, and low-tech stations.", defaults: "Learning as community, mentorship, offline access, local projects.", changed: "The setting and values shifted away from pure device spectacle.", ethics: "Does the future require new technology, or better access to learning?" },
+          { mark: "C", prompt: "the future of education as a public commons: accessible spaces, human teachers, student agency, privacy protections, and useful AI where appropriate", scene: "future-c", caption: "Open commons with teachers, privacy signs, ramps, and optional AI kiosks.", defaults: "Access, governance, teacher presence, student choice, privacy.", changed: "The revision made values explicit instead of letting the platform supply them.", ethics: "What should never be automated in this future?" }
+        ]
+      }
+    ];
+
+    function sceneSvg(id) {
+      const colors = {
+        "teacher-a": ["#283241", "#f7f7f2", "#d9a06f", "BOARD", "ROWS"],
+        "teacher-b": ["#203a3a", "#5eead4", "#8f5c3a", "LAB", "TEAM"],
+        "teacher-c": ["#243622", "#f6bd60", "#f0c7a5", "OUTSIDE", "ACCESS"],
+        "scientist-a": ["#262936", "#f7f7f2", "#d9a06f", "LAB", "SOLO"],
+        "scientist-b": ["#1d3a2a", "#5eead4", "#8f5c3a", "FIELD", "DATA"],
+        "scientist-c": ["#16313d", "#c084fc", "#f0c7a5", "SHORE", "TOOLS"],
+        "success-a": ["#191b22", "#c084fc", "#d9a06f", "OFFICE", "STATUS"],
+        "success-b": ["#18362a", "#5eead4", "#8f5c3a", "GARDEN", "COMMUNITY"],
+        "success-c": ["#2d2736", "#f6bd60", "#f0c7a5", "REST", "SUPPORT"],
+        "future-a": ["#141929", "#c084fc", "#d9a06f", "SCREENS", "DEVICES"],
+        "future-b": ["#23351f", "#5eead4", "#8f5c3a", "LIBRARY", "PROJECTS"],
+        "future-c": ["#1c3035", "#f6bd60", "#f0c7a5", "COMMONS", "CHOICE"]
+      };
+      const c = colors[id];
+      return '<svg class="default-scene" viewBox="0 0 320 210" role="img" aria-label="Simulated image output">' +
+        '<rect width="320" height="210" fill="' + c[0] + '"/>' +
+        '<circle cx="260" cy="42" r="42" fill="' + c[1] + '" opacity=".18"/>' +
+        '<rect x="28" y="34" width="134" height="72" rx="8" fill="#0e0f13" stroke="' + c[1] + '" opacity=".9"/>' +
+        '<text x="45" y="75">' + c[3] + '</text>' +
+        '<text x="45" y="94">' + c[4] + '</text>' +
+        '<circle cx="205" cy="74" r="24" fill="' + c[2] + '"/>' +
+        '<rect x="182" y="98" width="48" height="68" rx="16" fill="' + c[1] + '"/>' +
+        '<circle cx="105" cy="146" r="16" fill="' + c[2] + '" opacity=".9"/>' +
+        '<circle cx="146" cy="146" r="16" fill="' + c[2] + '" opacity=".9"/>' +
+        '<circle cx="64" cy="146" r="16" fill="' + c[2] + '" opacity=".9"/>' +
+        '<rect x="42" y="170" width="220" height="12" rx="6" fill="#0e0f13" opacity=".55"/>' +
+        '<path d="M246 112 C272 118 284 134 290 160" fill="none" stroke="' + c[1] + '" stroke-width="8" stroke-linecap="round" opacity=".75"/>' +
+        '</svg>';
+    }
+
+    const promptList = document.getElementById("promptList");
+    const rows = document.getElementById("comparisonRows");
+    const title = document.getElementById("caseTitle");
+    const question = document.getElementById("caseQuestion");
+
+    function renderCase(index) {
+      const item = CASES[index];
+      title.textContent = item.title;
+      question.textContent = item.question;
+      rows.innerHTML = item.variants.map(function (v) {
+        return '<tr>' +
+          '<td><span class="version-mark">' + v.mark + '</span></td>' +
+          '<td><p class="prompt-line">' + v.prompt + '</p></td>' +
+          '<td><div class="output-card"><div class="output-visual">' + sceneSvg(v.scene) + '</div><div class="output-caption">' + v.caption + '</div></div></td>' +
+          '<td>' + v.defaults + '</td>' +
+          '<td>' + v.changed + '</td>' +
+          '<td>' + v.ethics + '</td>' +
+          '</tr>';
+      }).join("");
+
+      Array.from(promptList.querySelectorAll("button")).forEach(function (button, buttonIndex) {
+        button.classList.toggle("active", buttonIndex === index);
+      });
+    }
+
+    CASES.forEach(function (item, index) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "choice-button";
+      button.innerHTML = "<strong>" + item.button + "</strong><span>" + item.question + "</span>";
+      button.addEventListener("click", function () { renderCase(index); });
+      promptList.appendChild(button);
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", function () {
+      const text = document.getElementById("claimBox").value;
+      navigator.clipboard.writeText(text);
+    });
+
+    renderCase(0);
+  </script>
 </body>
 </html>

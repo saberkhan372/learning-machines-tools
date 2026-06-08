@@ -7,12 +7,12 @@ title: Learning Machines Tools
 
 A CC Fest creative AI / machine learning camp tool ecosystem.
 
-This repo holds single-file, browser-based tools and workshop materials for a four-session camp:
+This repo holds single-file, browser-based tools and workshop materials for a camp framed as **three core sessions + optional studio**:
 
-1. **Machines That Write** - text, tokens, prediction, temperature, and the illusion of meaning
-2. **Machines That Imagine** - pixels, features, diffusion, prompts, and visual defaults
-3. **Machines That Move** - time, drift, coherence, anchoring, and video failure
-4. **Human in the Loop** - showcase, classroom adaptation, critique, and reflection
+- **Session 1: Machines That Write** - text, tokens, prediction, temperature, and the illusion of meaning
+- **Session 2: Machines That Imagine** - pixels, features, diffusion, prompts, and visual defaults
+- **Session 3: Machines That Move** - time, drift, coherence, anchoring, and video failure
+- **Optional Studio: Make, Teach, Investigate, Explain, or Critique** - final artifacts, classroom adaptation, model-behavior investigations, explainers, and reflective critique
 
 The repeated question is:
 
@@ -35,7 +35,7 @@ The tool principle is:
 
 ## Launch Roadmap
 
-### Launch-Ready Tools (11)
+### Launch-Ready Tools (17)
 
 | Tool | Status | Session |
 | --- | --- | --- |
@@ -45,19 +45,21 @@ The tool principle is:
 | Count the Next Token | Launch ready | 1 · Text |
 | Diffusion Step-Through Viewer | Launch ready | 2 · Image |
 | Feature Extraction / Pixel Resolution | Launch ready | 2 · Image |
+| Default Test Comparison Viewer | Launch ready | 2 · Image |
+| Prompt Guidance Word-by-Word | Launch ready | 2 · Image |
 | Temporal Telephone | Launch ready | 3 · Video |
+| Video Failure Gallery Viewer | Launch ready | 3 · Video |
+| Frame-by-Frame Coherence Viewer | Launch ready | 3 · Video |
 | A/B/C Comparison Board | Launch ready | Cross |
 | Model Card Builder | Launch ready | Cross |
+| Classroom Activity Builder | Launch ready | Studio |
+| Confidence Is Not Truth Explorer | Launch ready | Cross |
 | Access Tiers | Launch ready | Cross |
 | Evidence Wall | Launch ready | Cross |
 
 ### Second-Wave and Later Tools
 
 - Concept Bridge pages — second-wave draft
-- Default Test Comparison Viewer — coming later
-- Video Failure Gallery Viewer — coming later
-- Prompt Guidance Word-by-Word — coming later
-- Frame-by-Frame Coherence Viewer — coming later
 - Latent Space Explorer — coming later
 - Dataset Balance Simulator — coming later
 
@@ -76,21 +78,23 @@ Canonical folders are listed in the [tool directory](tools/).
 
 - [`tools/diffusion-step-through-viewer/`](tools/diffusion-step-through-viewer/) — Launch ready
 - [`tools/feature-extraction-pixel-resolution/`](tools/feature-extraction-pixel-resolution/) — Launch ready
-- [`tools/default-test-comparison-viewer/`](tools/default-test-comparison-viewer/) — Coming later
-- [`tools/prompt-guidance-word-by-word/`](tools/prompt-guidance-word-by-word/) — Coming later
+- [`tools/default-test-comparison-viewer/`](tools/default-test-comparison-viewer/) — Launch ready
+- [`tools/prompt-guidance-word-by-word/`](tools/prompt-guidance-word-by-word/) — Launch ready
 - [`tools/latent-space-explorer/`](tools/latent-space-explorer/) — Coming later
 - [`tools/dataset-balance-simulator/`](tools/dataset-balance-simulator/) — Coming later
 
 ### Session 3: Video
 
 - [`tools/temporal-telephone/`](tools/temporal-telephone/) — Launch ready
-- [`tools/video-failure-gallery-viewer/`](tools/video-failure-gallery-viewer/) — Coming later
-- [`tools/frame-by-frame-coherence-viewer/`](tools/frame-by-frame-coherence-viewer/) — Coming later
+- [`tools/video-failure-gallery-viewer/`](tools/video-failure-gallery-viewer/) — Launch ready
+- [`tools/frame-by-frame-coherence-viewer/`](tools/frame-by-frame-coherence-viewer/) — Launch ready
 
 ### Cross-Session
 
 - [`tools/abc-comparison-board/`](tools/abc-comparison-board/) — Launch ready
 - [`tools/model-card-builder/`](tools/model-card-builder/) — Launch ready
+- [`tools/classroom-activity-builder/`](tools/classroom-activity-builder/) — Launch ready
+- [`tools/confidence-is-not-truth-explorer/`](tools/confidence-is-not-truth-explorer/) — Launch ready
 - [`tools/access-tiers/`](tools/access-tiers/) — Launch ready
 - [`tools/evidence-wall/`](tools/evidence-wall/) — Launch ready
 - [`tools/concept-bridges/`](tools/concept-bridges/) — Second-wave draft
@@ -108,6 +112,8 @@ Canonical folders are listed in the [tool directory](tools/).
 - [Pilot checklist](docs/pilot-checklist.html)
 - [Pilot feedback form template](docs/pilot-feedback-form.html)
 - [Pre-session check-in](docs/pre-session-checkin.html)
+- [Vocabulary Field Guide](pages/vocabulary-field-guide.html)
+- [No-AI pathway](pages/no-ai-pathway.html)
 - [Human as Model (unplugged activity)](docs/unplugged-human-as-model.html)
 - [Session 1 facilitation notes](docs/session-1-facilitation.html)
 - [Session 2 facilitation notes](docs/session-2-facilitation.html)
@@ -123,6 +129,7 @@ The repo is ready for a small live pilot. Start from the published homepage, use
 1. Human learning comes first.
 2. AI use is optional, visible, and discussable.
 3. No one has to use a tool they object to.
+   See the [No-AI pathway](pages/no-ai-pathway.html) for a full route through the camp without direct generation.
 4. AI outputs are not neutral.
 5. We name labor, consent, data, and bias concerns.
 6. We avoid casual imitation of living artists by name.

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Participate Without Using Generative AI Directly &mdash; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/lm.css">
+  <link rel="stylesheet" href="../assets/home.css">
+  <link rel="stylesheet" href="../assets/sub.css">
+  <script src="../assets/theme.js"></script>
+  <style>
+    .principle-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .principle {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .principle b {
+      color: var(--accent);
+    }
+
+    .pathway-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .pathway-detail {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 18px;
+      min-height: 180px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    .pathway-detail .tag {
+      width: fit-content;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .pathway-detail h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: 0;
+    }
+
+    .pathway-detail p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .tool-lane {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tool-lane .doc-row {
+      min-height: 92px;
+      align-items: start;
+    }
+
+    .sample-plan {
+      display: grid;
+      gap: 10px;
+      counter-reset: plan;
+    }
+
+    .sample-plan li {
+      list-style: none;
+      counter-increment: plan;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--muted);
+    }
+
+    .sample-plan li::before {
+      content: counter(plan, decimal-leading-zero);
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    @media (max-width: 900px) {
+      .principle-strip,
+      .tool-lane {
+        grid-template-columns: 1fr;
+      }
+
+      .pathway-detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="../index.html#docs" class="hide-sm">Materials</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../index.html">Back home</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#method">Participation</a><span class="sep">/</span>
+        <span>No-AI pathway</span>
+      </div>
+      <div class="sess-hero-grid">
+        <div class="sess-num">No<span class="of">AI</span></div>
+        <div>
+          <p class="sess-kicker">Critical / No-AI pathway</p>
+          <h1 class="sess-title">How to Participate Without Using Generative AI Directly</h1>
+          <p class="sess-q">You can investigate AI systems <span class="accent">without generating new AI content.</span></p>
+          <p class="sess-lede">This pathway is not a fallback or a consolation prize. It is a full participation route for people who object to direct tool use, lack access, need a lower-risk classroom option, or want to focus on evidence, consent, policy, and critique.</p>
+        </div>
+      </div>
+      <div class="principle-strip">
+        <div class="principle"><b>AI use is optional.</b><br>Direct generation is never required for participation.</div>
+        <div class="principle"><b>Refusal is valid.</b><br>No one has to use a tool they object to.</div>
+        <div class="principle"><b>Evidence still matters.</b><br>No-AI work still predicts, compares, documents, and explains.</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">A.</span><h2>What You Can Do Instead</h2></div>
+      <div class="pathway-detail-grid">
+        <article class="pathway-detail">
+          <span class="tag">Observe</span>
+          <h3>Analyze pre-generated examples</h3>
+          <p>Use curated screenshots, frame strips, prompt packs, or facilitator-provided outputs. Your job is to name defaults, assumptions, failure modes, and evidence without producing anything new.</p>
+        </article>
+        <article class="pathway-detail">
+          <span class="tag">Simulate</span>
+          <h3>Run unplugged simulations</h3>
+          <p>Act out prediction, pattern matching, diffusion, temporal drift, or model-card review with people, paper, cards, whiteboards, or classroom materials.</p>
+        </article>
+        <article class="pathway-detail">
+          <span class="tag">Critique</span>
+          <h3>Build a critique</h3>
+          <p>Write an evidence-based critique of a system, output, policy, dataset, interface, classroom use case, access tier, or consent risk.</p>
+        </article>
+        <article class="pathway-detail">
+          <span class="tag">Teach</span>
+          <h3>Make a classroom activity</h3>
+          <p>Turn one camp idea into a lesson, worksheet, discussion protocol, gallery walk, unplugged game, or assessment that works without student logins or generation.</p>
+        </article>
+        <article class="pathway-detail">
+          <span class="tag">Consent</span>
+          <h3>Create a consent checklist</h3>
+          <p>Define what can be recorded, prompted, screenshotted, named, archived, or shared. Make consent visible before anyone is asked to participate publicly.</p>
+        </article>
+        <article class="pathway-detail">
+          <span class="tag">Compare</span>
+          <h3>Compare outputs without producing new ones</h3>
+          <p>Use frozen examples to compare vague prompts, revised prompts, model defaults, confident claims, video failure modes, and access differences.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" style="border-top:1px solid var(--line-soft);">
+    <div class="wrap">
+      <div class="section-head-sm"><span class="num">B.</span><h2>Tools That Do Not Require Direct Generation</h2></div>
+      <p class="sess-lede" style="margin:0 0 24px;">These tools simulate mechanisms, compare frozen examples, or help document claims. They do not require accounts, API keys, or live model calls.</p>
+      <div class="tool-lane doc-list">
+        <a class="doc-row" href="../tools/next-token-prediction-game/"><span class="d-name">Next-Token Prediction Game</span><span class="d-desc">Use human guesses and precomputed model probabilities.</span></a>
+        <a class="doc-row" href="../tools/count-the-next-token/"><span class="d-name">Count the Next Token</span><span class="d-desc">Build probability from counts instead of querying a model.</span></a>
+        <a class="doc-row" href="../tools/eliza-simulator/"><span class="d-name">ELIZA Simulator</span><span class="d-desc">Inspect rule matching and chatbot effect without generative AI.</span></a>
+        <a class="doc-row" href="../tools/default-test-comparison-viewer/"><span class="d-name">Default Test Comparison Viewer</span><span class="d-desc">Analyze prebuilt prompt/output comparisons.</span></a>
+        <a class="doc-row" href="../tools/prompt-guidance-word-by-word/"><span class="d-name">Prompt Guidance Word-by-Word</span><span class="d-desc">Study how words constrain simulated image outputs.</span></a>
+        <a class="doc-row" href="../tools/video-failure-gallery-viewer/"><span class="d-name">Video Failure Gallery Viewer</span><span class="d-desc">Label curated failure modes and write evidence claims.</span></a>
+        <a class="doc-row" href="../tools/frame-by-frame-coherence-viewer/"><span class="d-name">Frame-by-Frame Coherence Viewer</span><span class="d-desc">Compare still frames with onion-skin and difference views.</span></a>
+        <a class="doc-row" href="../tools/confidence-is-not-truth-explorer/"><span class="d-name">Confidence Is Not Truth Explorer</span><span class="d-desc">Separate confident phrasing from checked evidence.</span></a>
+        <a class="doc-row" href="../tools/access-tiers/"><span class="d-name">Access Tiers</span><span class="d-desc">Compare paid, free, and unplugged classroom options.</span></a>
+        <a class="doc-row" href="../tools/classroom-activity-builder/"><span class="d-name">Classroom Activity Builder</span><span class="d-desc">Create a printable no-AI or low-AI classroom skeleton.</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap-narrow">
+      <div class="section-head-sm"><span class="num">C.</span><h2>A Simple No-AI Session Plan</h2></div>
+      <ol class="sample-plan">
+        <li><div><b>Choose one question.</b><br>For example: what does the model assume, what breaks over time, or when does confidence exceed evidence?</div></li>
+        <li><div><b>Pick frozen evidence.</b><br>Use prompt packs, screenshots, pre-generated images, frame strips, or simulated tool outputs.</div></li>
+        <li><div><b>Predict before looking closely.</b><br>Write what you expect the default, failure, or answer to be.</div></li>
+        <li><div><b>Annotate what appears.</b><br>Name the visible evidence: wording, image detail, missing context, unstable object, or unsupported claim.</div></li>
+        <li><div><b>Write a claim.</b><br>Use the frame: "This matters because..." and "The evidence is..."</div></li>
+        <li><div><b>Turn it into a shareable artifact.</b><br>Create a critique, checklist, classroom activity, model card, poster, or facilitation plan.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-tight" style="border-top:1px solid var(--line-soft);">
+    <div class="wrap doc-cols">
+      <div class="doc-group">
+        <h3>Materials</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="../worksheets/ai-use-consent-checklist/"><span class="d-name">AI Use + Consent Checklist</span><span class="d-desc">Norms, permissions, and public sharing boundaries</span></a>
+          <a class="doc-row" href="../docs/unplugged-human-as-model.html"><span class="d-name">Human as Model</span><span class="d-desc">Unplugged prediction and model-card activity</span></a>
+          <a class="doc-row" href="../docs/pre-session-checkin.html"><span class="d-name">Pre-session Check-in</span><span class="d-desc">Access, comfort, pathway, and consent questions</span></a>
+        </div>
+      </div>
+      <div class="doc-group">
+        <h3>Facilitator language</h3>
+        <div class="callout">
+          <p>Say this early and plainly: "You can complete this camp without generating new AI content. You can analyze examples, run simulations, build a critique, make a classroom activity, or create a consent checklist. That work has equal standing."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="../index.html#method"><div class="pg-dir mono">&larr; Back to method</div><div class="pg-title">Investigation protocol</div></a>
+        <a href="../worksheets/ai-use-consent-checklist/"><div class="pg-dir mono">Open worksheet</div><div class="pg-title">AI Use + Consent</div></a>
+        <a class="next" href="session-showcase.html"><div class="pg-dir mono">Optional studio &rarr;</div><div class="pg-title">Make, Teach, Investigate, Explain, or Critique</div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <p class="mono">No-AI pathway &middot; analyze, simulate, critique, teach, check consent, and compare evidence.</p>
+    </div>
+  </footer>
+</body>
+</html>

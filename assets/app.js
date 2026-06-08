@@ -22,7 +22,11 @@
   var MOD_LABEL = { text: "Text", image: "Image", video: "Video", cross: "Cross-session" };
 
   function card(t) {
-    var ses = t.session === "cross" ? "All sessions" : "Session " + t.session;
+    var ses = t.session === "cross"
+      ? "All sessions"
+      : t.session === "studio"
+        ? "Optional studio"
+        : "Session " + t.session;
     var tags = t.tags.map(function (x) { return '<span class="chip">' + x + "</span>"; }).join("");
     var cta = t.status === "future"
       ? '<span class="tool-cta muted mono">in development →</span>'

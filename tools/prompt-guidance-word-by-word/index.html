@@ -3,50 +3,238 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prompt Guidance Word-by-Word Reveal</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Prompt Guidance Word-by-Word · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/lm.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
   <script src="../../assets/theme.js"></script>
-<style>
-    body { margin: 0; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: var(--accent); }
-    .card { border: 1px solid var(--line); border-radius: 8px; padding: 22px; background: var(--surface); box-shadow: var(--shadow-sm); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; color: var(--ink); }
-    p, li { color: var(--muted); line-height: 1.55; }</style>
-<style id="lm-tool-nav-overrides">
-  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
-  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
-  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
-  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
-  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
-  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
-  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
-  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
-  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
-  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
-  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
-  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
-</style></head>
+  <style>
+    .prompt-display {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--code-bg);
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 4vw, 2.5rem);
+      line-height: 1.08;
+    }
+
+    .word {
+      display: inline-block;
+      margin: 4px 6px 4px 0;
+      padding: 3px 8px;
+      border-radius: 8px;
+      background: color-mix(in oklab, var(--accent) 14%, var(--surface));
+    }
+
+    .prompt-scene { width: 100%; min-height: 330px; }
+    .prediction-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    @media (max-width: 720px) { .prediction-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
         <a href="../../index.html#tools" class="hide-sm">Tools</a>
-        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+        <a href="../../pages/session-images.html" class="hide-sm">Session 2</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&larr; All tools</a>
       </div>
     </div>
   </nav>
-  <main>
-    <div class="card">
-      <h1>Prompt Guidance Word-by-Word Reveal</h1>
-      <p><strong>Coming later.</strong> This stretch tool will reveal prompt words one at a time so participants can notice how each word constrains the possible image.</p>
-      <p>Example sequence: tower -> flooded -> city -> golden -> reflections -> birds -> silence.</p>
-    </div>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Session 2 · Images · Prompt constraints</p>
+      <h1 class="tool-title">Prompt Guidance Word-by-Word</h1>
+      <p class="tool-dek">Reveal a prompt one word at a time. Before seeing the generated output, predict what the next word will change: subject, mood, style, or the assumptions your own imagination filled in.</p>
+      <div class="tool-idea">Big idea: prompts are constraints, not magic commands.</div>
+    </header>
+
+    <section class="tool-grid-3">
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Prompt sequence</p>
+            <div class="choice-list" id="stepList"></div>
+          </div>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="prevBtn">Previous</button>
+            <button class="tool-button" type="button" id="nextBtn">Next word</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Current prompt</p>
+            <div class="prompt-display" id="promptDisplay"></div>
+          </div>
+          <div class="scene-card">
+            <div class="scene-visual" id="sceneStage"></div>
+            <div class="scene-caption" id="sceneCaption"></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <h2>Predict before comparing</h2>
+          <div class="prediction-grid">
+            <label>Subject
+              <textarea class="note-box" id="subjectNote">I think the subject will...</textarea>
+            </label>
+            <label>Mood
+              <textarea class="note-box" id="moodNote">I think the mood will...</textarea>
+            </label>
+            <label>Style
+              <textarea class="note-box" id="styleNote">I think the style will...</textarea>
+            </label>
+            <label>My imagination filled in
+              <textarea class="note-box" id="imaginationNote">Before seeing the image, I pictured...</textarea>
+            </label>
+          </div>
+          <div>
+            <p class="mini-label">What changed in the output?</p>
+            <ul class="evidence-list" id="changeList"></ul>
+          </div>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy notes</button>
+            <button class="tool-button secondary" type="button" onclick="window.print()">Print / save</button>
+          </div>
+        </div>
+      </aside>
+    </section>
   </main>
+
+  <script>
+    const STEPS = [
+      {
+        words: ["tower"],
+        caption: "A tower appears, but the world around it is mostly supplied by the model.",
+        changes: ["Subject is broad: any tower could satisfy it.", "Mood is not specified.", "Style defaults to polished fantasy architecture."]
+      },
+      {
+        words: ["flooded", "tower"],
+        caption: "Water enters the scene and changes the stakes.",
+        changes: ["The tower is now in a disaster or fantasy setting.", "Reflections and debris become likely.", "The prompt still does not name time, place, or people."]
+      },
+      {
+        words: ["flooded", "city", "tower"],
+        caption: "The tower gets a surrounding city, adding scale and context.",
+        changes: ["Background becomes urban.", "The image now needs streets, buildings, and a horizon.", "The model fills in a city type without being asked."]
+      },
+      {
+        words: ["flooded", "golden", "city", "tower"],
+        caption: "Golden shifts the palette and makes the scene feel more mythic.",
+        changes: ["Mood becomes warmer and more grand.", "The city may become wealthy, ancient, or fantasy-coded.", "Color starts guiding style as much as subject."]
+      },
+      {
+        words: ["flooded", "golden", "city", "tower", "with", "reflections"],
+        caption: "Reflections make the water surface important and more cinematic.",
+        changes: ["Water becomes a visual mirror.", "Composition gets more symmetrical.", "The scene may look calmer even though it is flooded."]
+      },
+      {
+        words: ["flooded", "golden", "city", "tower", "with", "reflections", "and", "birds"],
+        caption: "Birds add motion, scale, and a hint of life.",
+        changes: ["The sky becomes active.", "Birds provide scale and direction.", "The prompt still leaves cause, people, and ethics unspecified."]
+      }
+    ];
+
+    let activeStep = 0;
+
+    function sceneSvg(step) {
+      const water = 118 - step * 6;
+      const gold = step >= 3 ? "#f6bd60" : "#8da2b8";
+      const sky = step >= 3 ? "#2e2534" : "#172032";
+      const hasCity = step >= 2;
+      const hasReflections = step >= 4;
+      const hasBirds = step >= 5;
+      let buildings = "";
+      if (hasCity) {
+        buildings = '<rect x="24" y="106" width="38" height="84" fill="#232a35"/><rect x="72" y="84" width="44" height="106" fill="#263241"/><rect x="246" y="92" width="42" height="98" fill="#232a35"/><rect x="300" y="116" width="34" height="74" fill="#263241"/>';
+      }
+      let reflections = "";
+      if (hasReflections) {
+        reflections = '<path d="M130 174 C164 164 196 164 230 174" stroke="' + gold + '" stroke-width="7" opacity=".42"/><path d="M100 196 C154 184 222 184 274 196" stroke="' + gold + '" stroke-width="4" opacity=".32"/>';
+      }
+      let birds = "";
+      if (hasBirds) {
+        birds = '<path d="M254 50 q10 -9 20 0 q10 -9 20 0" fill="none" stroke="#e8e6df" stroke-width="3" stroke-linecap="round"/><path d="M300 72 q8 -7 16 0 q8 -7 16 0" fill="none" stroke="#e8e6df" stroke-width="2.5" stroke-linecap="round"/>';
+      }
+      return '<svg class="prompt-scene" viewBox="0 0 360 330" role="img" aria-label="Simulated generated image">' +
+        '<rect width="360" height="330" fill="' + sky + '"/>' +
+        '<circle cx="286" cy="58" r="48" fill="' + gold + '" opacity=".22"/>' +
+        buildings +
+        '<rect x="142" y="58" width="76" height="160" rx="9" fill="' + gold + '" opacity=".88"/>' +
+        '<path d="M132 66 L180 22 L228 66 Z" fill="' + gold + '"/>' +
+        '<rect x="166" y="100" width="28" height="44" rx="14" fill="#10131a" opacity=".75"/>' +
+        '<rect x="0" y="' + water + '" width="360" height="' + (330 - water) + '" fill="#0f5060" opacity=".74"/>' +
+        '<path d="M0 ' + (water + 18) + ' C70 ' + (water + 4) + ' 112 ' + (water + 30) + ' 180 ' + (water + 16) + ' C252 ' + water + ' 300 ' + (water + 24) + ' 360 ' + (water + 10) + '" fill="none" stroke="#5eead4" stroke-width="5" opacity=".45"/>' +
+        reflections + birds +
+        '<text x="18" y="306" fill="#9197a3" font-family="monospace" font-size="13">step ' + (step + 1) + ' / 6</text>' +
+        '</svg>';
+    }
+
+    function renderSteps() {
+      const list = document.getElementById("stepList");
+      list.innerHTML = "";
+      STEPS.forEach(function (step, index) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "choice-button";
+        button.innerHTML = "<strong>Step " + (index + 1) + "</strong><span>" + step.words.join(" ") + "</span>";
+        button.addEventListener("click", function () {
+          activeStep = index;
+          render();
+        });
+        list.appendChild(button);
+      });
+    }
+
+    function render() {
+      const step = STEPS[activeStep];
+      document.getElementById("promptDisplay").innerHTML = step.words.map(function (word) {
+        return '<span class="word">' + word + '</span>';
+      }).join(" ");
+      document.getElementById("sceneStage").innerHTML = sceneSvg(activeStep);
+      document.getElementById("sceneCaption").textContent = step.caption;
+      document.getElementById("changeList").innerHTML = step.changes.map(function (item) {
+        return "<li>" + item + "</li>";
+      }).join("");
+      Array.from(document.querySelectorAll("#stepList button")).forEach(function (button, index) {
+        button.classList.toggle("active", index === activeStep);
+      });
+    }
+
+    document.getElementById("prevBtn").addEventListener("click", function () {
+      activeStep = Math.max(0, activeStep - 1);
+      render();
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", function () {
+      activeStep = Math.min(STEPS.length - 1, activeStep + 1);
+      render();
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", function () {
+      const lines = [
+        "Prompt: " + STEPS[activeStep].words.join(" "),
+        "Subject: " + document.getElementById("subjectNote").value,
+        "Mood: " + document.getElementById("moodNote").value,
+        "Style: " + document.getElementById("styleNote").value,
+        "My imagination filled in: " + document.getElementById("imaginationNote").value
+      ];
+      navigator.clipboard.writeText(lines.join("\n"));
+    });
+
+    renderSteps();
+    render();
+  </script>
 </body>
 </html>

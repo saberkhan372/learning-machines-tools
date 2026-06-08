@@ -160,7 +160,7 @@ Ask 3–4 participants to share one failure they documented — the prompt, the 
 
 > *[Close with something like:]*
 >
-> We have now seen all three modalities. Text generates fluent but unpredictable sequences. Images make assumptions visible. Video reveals what breaks when you add time. In Session 4 we bring that together — what did you actually learn, and how do you share it?
+> We have now seen all three modalities. Text generates fluent but unpredictable sequences. Images make assumptions visible. Video reveals what breaks when you add time. In Optional Studio we bring that together — what did you actually learn, and how do you share it?
 
 ---
 
@@ -168,7 +168,7 @@ Ask 3–4 participants to share one failure they documented — the prompt, the 
 
 > *[Scripted — read this slowly, because it is the pivot point of the camp]*
 
-For Session 4 you will bring a project. The project is not about producing something impressive. It is about documenting something true — something you found, investigated, or made that shows what you understand about how these systems work.
+For Optional Studio you will bring a project. The project is not about producing something impressive. It is about documenting something true — something you found, investigated, or made that shows what you understand about how these systems work.
 
 Five pathways — pick the one that fits your practice:
 
@@ -186,7 +186,7 @@ All pathways require two things:
 
 The showcase is not a performance. It is a share-out. You have 8–10 minutes. You do not need slides.
 
-**Before Session 4:**
+**Before Optional Studio:**
 - Choose your pathway
 - Have your draft ready to show or describe
 - Bring one question you still have that the camp didn't answer

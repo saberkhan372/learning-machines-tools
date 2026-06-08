@@ -5,7 +5,7 @@ title: Pilot Agenda
 
 # Pilot Agenda — 60–90 Minutes
 
-A condensed single-session pilot using only launch-ready tools. Use this to test the core investigation protocol, gather evidence, and identify launch blockers before the full four-session run.
+A condensed single-session pilot using only launch-ready tools. Use this to test the core investigation protocol, gather evidence, and identify launch blockers before the full run of three core sessions plus optional studio.
 
 ---
 
@@ -174,7 +174,7 @@ Announce what comes next in the full camp:
 - Session 1 goes deeper on text: tokenization, temperature, probability
 - Session 2 goes deeper on images: full diffusion, feature extraction, Default Test board
 - Session 3 adds video: temporal drift, coherence, failure modes
-- Session 4 is the showcase
+- The optional studio is the showcase
 
 Invite participants to fill out the post-session feedback form.
 
@@ -200,7 +200,7 @@ Invite participants to fill out the post-session feedback form.
 - Which activity was most useful?
 - Which activity was least useful?
 - What would you change?
-- Would you attend the full four-session camp?
+- Would you attend the full camp with three core sessions plus optional studio?
 - What would have made this a better pilot?
 
 ---

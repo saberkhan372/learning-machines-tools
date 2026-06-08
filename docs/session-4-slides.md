@@ -1,9 +1,9 @@
 ---
 layout: page
-title: Session 4 Slide Outline
+title: Optional Studio Slide Outline
 ---
 
-# Session 4 — Showcase: Slide Outline
+# Optional Studio — Showcase: Slide Outline
 
 **Learning Machines: Text, Images, Video**
 Slide-ready structure for presentation or screen share. Speaker notes in *italics*.
@@ -12,7 +12,7 @@ Slide-ready structure for presentation or screen share. Speaker notes in *italic
 
 ## SLIDE 1 — Title
 
-**Session 4: Showcase**
+**Optional Studio: Showcase**
 *What did we learn about generative AI by making with it?*
 
 Learning Machines: Text, Images, Video — CC Fest
@@ -198,7 +198,7 @@ The repeated question — **what is the machine actually doing?** — does not h
 
 - Session recordings and notes → Notion workspace (within 48 hours)
 - Cohort summary → reviewed before publishing
-- Second-wave tools → your input shapes what we build next
+- Tool updates → your input shapes what gets refined or built next
 - If your project is ready to share publicly → let us know how you want to be credited
 
 The A/B/C Comparison Board is live as a pilot evidence tool — use it to document any investigation you want to continue after the camp.

@@ -9,7 +9,7 @@ title: Guest Speaker and Showcase Plan
 
 ## Guest Speaker Overview
 
-Guest speakers appear in Session 4 as an optional addition after participant presentations. The goal is not to add celebrity — it is to extend the investigation. A good guest speaker for this camp answers the same question participants spent three sessions on, from a different position:
+Guest speakers appear in Optional Studio as an optional addition after participant presentations. The goal is not to add celebrity — it is to extend the investigation. A good guest speaker for this camp answers the same question participants spent three sessions on, from a different position:
 
 > *"What is the machine actually doing — and what does that mean for your work?"*
 
@@ -25,7 +25,7 @@ Use this or adapt it when reaching out to potential speakers:
 
 *I'm running Learning Machines: Text, Images, Video, a free creative AI camp for educators, artists, students, and curious learners. We spend three sessions investigating how language models, image models, and video models actually work — not how to use them better, but what they're doing mechanically and what they assume.*
 
-*We're looking for a 15–20 minute guest slot in our Session 4 showcase. The format is loose: you share something from your practice that connects to the camp's core question — "what is the machine actually doing?" — then take 5–10 minutes of questions from participants.*
+*We're looking for a 15–20 minute guest slot in our optional studio showcase. The format is loose: you share something from your practice that connects to the camp's core question — "what is the machine actually doing?" — then take 5–10 minutes of questions from participants.*
 
 *Participants are educators, artists, and researchers who have spent three sessions running controlled prompt experiments, analyzing model defaults, and investigating video failure modes. They're not looking for hype or warning. They're looking for someone who is thinking carefully about the same questions they are.*
 
@@ -101,7 +101,7 @@ Someone whose labor is in the training or operational pipeline — data labeling
 
 ---
 
-## Session 4 Showcase Protocol
+## Optional Studio Showcase Protocol
 
 ### Before the Session
 

@@ -7,7 +7,7 @@ title: Learning Machines Project Brief
 
 ## Project Identity
 
-**Learning Machines: Text, Images, Video** is a four-session CC Fest creative AI / machine learning camp for educators, artists, students, and curious learners.
+**Learning Machines: Text, Images, Video** is a CC Fest creative AI / machine learning camp for educators, artists, students, and curious learners, framed as **three core sessions + optional studio**.
 
 The camp is not a prompt engineering workshop. It is an investigation into how generative systems work across three modalities:
 
@@ -16,7 +16,7 @@ The camp is not a prompt engineering workshop. It is an investigation into how g
 | 1 | Text | How do language models generate text that feels meaningful, and what are they actually doing? | Text Experiment Board |
 | 2 | Images | How do image models turn words into pictures, and what defaults appear when prompts are vague? | Image Generation Evidence Board |
 | 3 | Video | Why is video generation harder than image generation, and what does that tell us about how models work? | Video Test Report |
-| 4 | Showcase | What did we learn about generative AI by making with it? | Final project |
+| Optional Studio | Make, Teach, Investigate, Explain, or Critique | What did we learn about generative AI by making, testing, teaching, explaining, or critiquing it? | Final artifact, classroom adaptation, model-behavior investigation, explainer, or critique |
 
 The intellectual spine:
 
@@ -80,15 +80,14 @@ Participants should leave with a repeatable investigation protocol:
 
 ## Launch MVP Surface
 
-The first-cohort repo is organized around five launch tools:
+The first-cohort repo is organized around launch-ready browser tools across text, images, video, and optional studio work:
 
-- Tokenizer + Temperature Visualizer
-- ELIZA Simulator
-- Diffusion Step-Through Viewer
-- Feature Extraction / Pixel Resolution
-- Temporal Telephone
+- Session 1 tools for tokens, next-token prediction, probability, temperature, and ELIZA-style pattern matching
+- Session 2 tools for pixels, features, diffusion, visual defaults, and prompt guidance
+- Session 3 tools for temporal drift, video failure modes, and frame-by-frame coherence
+- Cross-session and studio tools for evidence boards, model cards, access audits, confidence checking, and recap walls
 
-Second-wave and stretch tools remain visible as future directions, but the launch cohort does not depend on them.
+Remaining stretch tools stay visible as future directions, but the launch cohort does not depend on them.
 
 Each content session has a concise facilitation note in `docs/`, plus a worksheet that supports direct AI use, observation/critique, teaching/design, build/code, and critical/no-AI pathways.
 
@@ -126,8 +125,8 @@ All pathways require evidence of iteration and reflection on what the model did,
 
 Full description:
 
-> Learning Machines: Text, Images, Video is a beginner-friendly creative AI workshop for educators, artists, students, and curious learners. Across three hands-on sessions, we explore how generative AI systems create text, images, and video. Participants experiment with prompts, compare outputs, investigate model defaults and failures, and reflect on the role of human judgment in AI-assisted creativity. The fourth session is a showcase where participants share a creative artifact, classroom activity, or model-behavior investigation based on what they learned. No coding or machine learning background required.
+> Learning Machines: Text, Images, Video is a beginner-friendly creative AI workshop for educators, artists, students, and curious learners. Across three core sessions, we explore how generative AI systems create text, images, and video. Participants experiment with prompts, compare outputs, investigate model defaults and failures, and reflect on the role of human judgment in AI-assisted creativity. An optional studio supports final artifacts, classroom activities, model-behavior investigations, explainers, and critiques based on what participants learned. No coding or machine learning background required.
 
 Short description:
 
-> How do AI systems write, imagine, and generate motion? In this four-session creative AI camp, we explore text generation, image generation, and video generation through hands-on experiments and reflective making. Participants test prompts, compare outputs, investigate defaults and failures, and create a final project or classroom activity to share in a closing showcase. Beginner-friendly. No coding required. Great for educators, artists, students, and curious learners.
+> How do AI systems write, imagine, and generate motion? In this creative AI camp with three core sessions and optional studio, we explore text generation, image generation, and video generation through hands-on experiments and reflective making. Participants test prompts, compare outputs, investigate defaults and failures, and may create a final project, classroom activity, explainer, or critique to share in a closing studio. Beginner-friendly. No coding required. Great for educators, artists, students, and curious learners.

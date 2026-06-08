@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-font="lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Confidence Is Not Truth Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/lm.css">
+  <script src="../../assets/theme.js"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --paper: var(--surface);
+      --accent-soft: color-mix(in oklab, var(--accent) 16%, transparent);
+      --critical: var(--warm);
+      --good: var(--teal-dim);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    header {
+      padding: 32px 0 18px;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 0;
+      display: grid;
+      gap: 18px;
+    }
+
+    .crumb {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      color: var(--accent);
+      font-size: 0.92rem;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: var(--display-weight);
+      letter-spacing: var(--display-tracking);
+      margin: 0;
+      max-width: 820px;
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 0.98;
+    }
+
+    .dek {
+      max-width: 820px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .big-idea {
+      width: fit-content;
+      max-width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--critical);
+      font-weight: 800;
+      box-shadow: var(--shadow-sm);
+    }
+
+    main {
+      padding: 8px 0 46px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.84fr) minmax(0, 1.7fr) minmax(260px, 0.95fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .panel-pad {
+      padding: 18px;
+    }
+
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 1.05rem;
+    }
+
+    h3 {
+      font-size: 1.35rem;
+    }
+
+    .case-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .case-button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--ink);
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+    }
+
+    .case-button:hover,
+    .case-button:focus-visible {
+      border-color: var(--accent);
+      background: var(--surface);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .case-button.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .case-button strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .case-button span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .answer-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .confidence {
+      display: grid;
+      gap: 8px;
+      min-width: min(280px, 100%);
+    }
+
+    .confidence-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .meter {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 180ms ease;
+    }
+
+    .answer-body {
+      display: grid;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .prompt-label {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .fake-answer {
+      margin: 0;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      font-size: 1rem;
+    }
+
+    .media-box {
+      display: none;
+      min-height: 220px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .media-box.active {
+      display: grid;
+    }
+
+    .media-box svg {
+      width: 100%;
+      max-width: 540px;
+      height: auto;
+      display: block;
+    }
+
+    .prediction-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .choice-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .choice-group p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .choices {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .choice {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      padding: 8px 11px;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .choice.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--ink);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button,
+    .button {
+      border: 0;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--on-accent);
+      padding: 10px 13px;
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    button.secondary,
+    .button.secondary {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+    }
+
+    button:focus-visible,
+    .button:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid rgba(23, 111, 143, 0.28);
+      outline-offset: 2px;
+    }
+
+    .evidence {
+      display: none;
+      border-radius: 8px;
+      border: 1px solid color-mix(in oklab, var(--accent) 42%, var(--line));
+      background: color-mix(in oklab, var(--accent) 10%, var(--surface));
+      padding: 14px;
+    }
+
+    .evidence.visible {
+      display: block;
+    }
+
+    .evidence strong {
+      color: var(--good);
+    }
+
+    .evidence p {
+      margin: 8px 0 0;
+      color: var(--ink-dim);
+    }
+
+    .compare {
+      overflow: auto;
+      border-top: 1px solid var(--line);
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .status {
+      display: inline-flex;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      font-size: 0.82rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status.no {
+      background: color-mix(in oklab, var(--warm) 16%, transparent);
+      color: var(--critical);
+    }
+
+    .status.yes {
+      background: color-mix(in oklab, var(--accent) 14%, transparent);
+      color: var(--good);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 96px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px;
+      color: var(--ink);
+      background: var(--surface-2);
+      font: inherit;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .note-list {
+      display: grid;
+      gap: 10px;
+      max-height: 360px;
+      overflow: auto;
+    }
+
+    .note {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px;
+      background: var(--surface-2);
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .empty {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer-panel {
+      margin-top: 18px;
+    }
+
+    .question-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .question-card {
+      min-height: 116px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--surface);
+    }
+
+    .question-card strong {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .question-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .question-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 620px) {
+      .wrap {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .prediction-grid,
+      .question-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .answer-head {
+        align-items: stretch;
+      }
+
+      button,
+      .button {
+        width: 100%;
+      }
+    }
+
+    @media print {
+      header,
+      .case-list,
+      .actions,
+      .footer-panel {
+        box-shadow: none;
+      }
+
+      button,
+      .button,
+      .choice,
+      .case-button {
+        display: none;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .panel {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../../index.html#method" class="hide-sm">Method</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <div class="wrap hero">
+      <a class="crumb mono" href="../concept-bridges/confidence-is-not-truth/">Pair with concept bridge →</a>
+      <div class="big-idea">Big idea: Fluency, confidence, and correctness are different things.</div>
+      <h1>Confidence Is Not Truth Explorer</h1>
+      <p class="dek">Compare simulated model answers that sound polished with the evidence needed to decide whether they are actually correct. No live AI dependency, just classroom-ready cases for careful reading.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap layout">
+      <aside class="panel panel-pad">
+        <h2>Choose a case</h2>
+        <div class="case-list" id="caseList"></div>
+      </aside>
+
+      <section class="panel" aria-live="polite">
+        <div class="answer-head">
+          <div>
+            <span class="pill" id="caseType">Case</span>
+            <h3 id="caseTitle">Case title</h3>
+          </div>
+          <div class="confidence">
+            <div class="confidence-row">
+              <span>Displayed confidence</span>
+              <span id="confidenceValue">0%</span>
+            </div>
+            <div class="meter" aria-hidden="true">
+              <div class="meter-fill" id="confidenceFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="answer-body">
+          <div>
+            <p class="prompt-label">Prompt</p>
+            <p class="fake-answer" id="promptText"></p>
+          </div>
+
+          <div class="media-box" id="mediaBox"></div>
+
+          <div>
+            <p class="prompt-label">Simulated model answer</p>
+            <p class="fake-answer" id="answerText"></p>
+          </div>
+
+          <div class="prediction-grid">
+            <div class="choice-group">
+              <p>Does it sound confident?</p>
+              <div class="choices" id="confidenceChoices">
+                <button class="choice" type="button" data-kind="confidence" data-value="Yes">Yes</button>
+                <button class="choice" type="button" data-kind="confidence" data-value="Somewhat">Somewhat</button>
+                <button class="choice" type="button" data-kind="confidence" data-value="No">No</button>
+              </div>
+            </div>
+            <div class="choice-group">
+              <p>Do you think it is actually correct?</p>
+              <div class="choices" id="correctChoices">
+                <button class="choice" type="button" data-kind="correct" data-value="Yes">Yes</button>
+                <button class="choice" type="button" data-kind="correct" data-value="Unsure">Unsure</button>
+                <button class="choice" type="button" data-kind="correct" data-value="No">No</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="button" id="revealButton">Reveal evidence</button>
+            <button class="secondary" type="button" id="saveButton">Save observation</button>
+            <button class="secondary" type="button" id="sampleButton">Use starter note</button>
+          </div>
+
+          <div class="evidence" id="evidenceBox">
+            <strong>Evidence check</strong>
+            <p id="evidenceText"></p>
+          </div>
+        </div>
+
+        <div class="compare">
+          <table>
+            <thead>
+              <tr>
+                <th>Output</th>
+                <th>Sounds confident?</th>
+                <th>Actually correct?</th>
+                <th>Evidence?</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <aside class="panel panel-pad stack">
+        <div>
+          <h2>Write a claim</h2>
+          <p class="empty">Use the reveal as evidence, not as the answer itself.</p>
+        </div>
+        <label>
+          <p class="prompt-label">This answer sounds confident because...</p>
+          <textarea id="confidenceNote" placeholder="Name the wording, tone, citation style, or precision that makes it feel trustworthy."></textarea>
+        </label>
+        <label>
+          <p class="prompt-label">The evidence shows...</p>
+          <textarea id="evidenceNote" placeholder="Point to the correction, source problem, hidden math step, or image detail."></textarea>
+        </label>
+        <label>
+          <p class="prompt-label">A classroom question this opens is...</p>
+          <textarea id="classroomNote" placeholder="Turn the case into a discussion question for students or participants."></textarea>
+        </label>
+        <div class="actions">
+          <button class="secondary" type="button" id="exportButton">Export JSON</button>
+          <button class="secondary" type="button" id="printButton">Print</button>
+        </div>
+        <div>
+          <h2>Observation log</h2>
+          <div class="note-list" id="noteList">
+            <p class="empty">Saved observations will appear here.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="wrap panel panel-pad footer-panel">
+      <h2>Discussion prompts</h2>
+      <div class="question-grid">
+        <div class="question-card">
+          <strong>Fluency</strong>
+          <p>What features make the answer feel polished before anyone checks it?</p>
+        </div>
+        <div class="question-card">
+          <strong>Confidence</strong>
+          <p>What does the meter claim, and what does it leave out?</p>
+        </div>
+        <div class="question-card">
+          <strong>Correctness</strong>
+          <p>Which specific part is true, false, unsupported, or incomplete?</p>
+        </div>
+        <div class="question-card">
+          <strong>Evidence</strong>
+          <p>What would a student need to verify before using the answer?</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const imageScene = `
+      <svg viewBox="0 0 640 320" role="img" aria-label="A classroom table with notebooks, a laptop, a water bottle, and a red cup">
+        <rect width="640" height="320" fill="#f7f1e6"></rect>
+        <rect x="0" y="228" width="640" height="92" fill="#dfcfb7"></rect>
+        <rect x="70" y="86" width="500" height="178" rx="18" fill="#f7f0dc" stroke="#9f8f67" stroke-width="4"></rect>
+        <rect x="116" y="116" width="126" height="82" rx="8" fill="#ffffff" stroke="#8793a3" stroke-width="3"></rect>
+        <line x1="132" y1="139" x2="222" y2="139" stroke="#8793a3" stroke-width="4"></line>
+        <line x1="132" y1="161" x2="210" y2="161" stroke="#8793a3" stroke-width="4"></line>
+        <rect x="286" y="106" width="142" height="92" rx="8" fill="#3f3a31"></rect>
+        <rect x="300" y="120" width="114" height="58" rx="4" fill="#e8d5b7"></rect>
+        <rect x="306" y="207" width="104" height="10" rx="5" fill="#3f3a31"></rect>
+        <rect x="462" y="118" width="34" height="92" rx="12" fill="#5aa078"></rect>
+        <rect x="468" y="98" width="22" height="28" rx="6" fill="#78bd96"></rect>
+        <path d="M510 175 h54 l-8 62 h-38 z" fill="#d8463a" stroke="#9f2f27" stroke-width="4"></path>
+        <rect x="94" y="214" width="138" height="20" rx="10" fill="#d7bd72"></rect>
+        <circle cx="242" cy="104" r="10" fill="#f4b942"></circle>
+        <circle cx="454" cy="232" r="8" fill="#f4b942"></circle>
+      </svg>
+    `;
+
+    const cases = [
+      {
+        id: "citation",
+        type: "Made-up citation",
+        title: "The polished source that does not exist",
+        confidence: 94,
+        prompt: "Give me a research citation showing that middle school students learn better when AI tools are used every day.",
+        answer: "A 2021 study by Ramirez and Cho in the Journal of Applied Classroom Intelligence found that daily AI use increased middle school retention by 38 percent across 42 schools. The authors conclude that AI should be used as a standard daily learning aid.",
+        sounds: "Yes",
+        correct: "No",
+        evidence: "The citation is fabricated for this activity. It gives authors, a journal title, a date, a percentage, and a confident policy conclusion, but none of those details count as evidence unless the source can be found and checked.",
+        starter: "This answer feels trustworthy because it uses author names, a journal title, a year, and a precise percentage. The evidence problem is that those details are not verified sources.",
+        classroom: "How can we teach students to pause when an answer includes a citation that looks real?"
+      },
+      {
+        id: "history",
+        type: "Plausible but false claim",
+        title: "The history answer with one overreach",
+        confidence: 88,
+        prompt: "Explain why Ada Lovelace is called the first computer programmer.",
+        answer: "Ada Lovelace is called the first computer programmer because she built the first electronic computer in 1843 and wrote the software that ran on it. Her work proved that machines could process symbols, images, and music.",
+        sounds: "Yes",
+        correct: "No",
+        evidence: "The answer mixes a real idea with a false claim. Lovelace wrote notes about Charles Babbage's Analytical Engine and described an algorithm for it. She did not build an electronic computer in 1843.",
+        starter: "This answer starts with a familiar true topic, then slides into a false detail. The confident explanation hides the point where the claim becomes too strong.",
+        classroom: "What makes a partly true answer harder to catch than an obviously wrong answer?"
+      },
+      {
+        id: "math",
+        type: "Hidden math error",
+        title: "The explanation that skips a distribution step",
+        confidence: 91,
+        prompt: "Solve 2(x + 3) = 14 and explain each step.",
+        answer: "Start by distributing the 2: 2x + 3 = 14. Then subtract 3 from both sides to get 2x = 11. Divide by 2, so x = 5.5. Therefore, the solution is x = 5.5.",
+        sounds: "Yes",
+        correct: "No",
+        evidence: "The first algebra step is wrong. Distributing 2 across x + 3 gives 2x + 6, not 2x + 3. The correct solution is 2x + 6 = 14, then 2x = 8, so x = 4.",
+        starter: "The answer sounds correct because the steps are orderly. The evidence is in the first line, where the 2 was not distributed to both terms.",
+        classroom: "How can students verify each step instead of trusting the shape of an explanation?"
+      },
+      {
+        id: "image",
+        type: "Image description miss",
+        title: "The caption that overlooks the visible detail",
+        confidence: 86,
+        prompt: "Describe the classroom image in one accurate paragraph.",
+        answer: "The image shows a neat classroom work table with notebooks, a laptop, a green water bottle, and a blue backpack resting on the chair. Everything appears organized and ready for a group project.",
+        sounds: "Somewhat",
+        correct: "No",
+        evidence: "The image includes notebooks, a laptop, a green water bottle, and a red cup. There is no blue backpack visible. The answer also adds a tidy interpretation that is not directly supported by the image.",
+        starter: "The answer names some real objects, which makes the miss easier to overlook. The unsupported detail is the blue backpack, and the interpretation goes beyond the visible evidence.",
+        classroom: "What is the difference between describing what is visible and guessing what the scene means?",
+        media: imageScene
+      }
+    ];
+
+    const state = {
+      currentId: cases[0].id,
+      predictions: {},
+      revealed: false,
+      notes: []
+    };
+
+    const els = {
+      caseList: document.getElementById("caseList"),
+      caseType: document.getElementById("caseType"),
+      caseTitle: document.getElementById("caseTitle"),
+      confidenceValue: document.getElementById("confidenceValue"),
+      confidenceFill: document.getElementById("confidenceFill"),
+      promptText: document.getElementById("promptText"),
+      answerText: document.getElementById("answerText"),
+      mediaBox: document.getElementById("mediaBox"),
+      evidenceBox: document.getElementById("evidenceBox"),
+      evidenceText: document.getElementById("evidenceText"),
+      comparisonRows: document.getElementById("comparisonRows"),
+      noteList: document.getElementById("noteList"),
+      confidenceNote: document.getElementById("confidenceNote"),
+      evidenceNote: document.getElementById("evidenceNote"),
+      classroomNote: document.getElementById("classroomNote")
+    };
+
+    function currentCase() {
+      return cases.find((item) => item.id === state.currentId);
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (character) => {
+        const entities = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        };
+        return entities[character];
+      });
+    }
+
+    function renderCases() {
+      els.caseList.innerHTML = cases.map((item) => `
+        <button class="case-button ${item.id === state.currentId ? "active" : ""}" type="button" data-case="${item.id}">
+          <strong>${escapeHtml(item.title)}</strong>
+          <span>${escapeHtml(item.type)}</span>
+        </button>
+      `).join("");
+    }
+
+    function renderCurrent() {
+      const item = currentCase();
+      state.revealed = false;
+      els.caseType.textContent = item.type;
+      els.caseTitle.textContent = item.title;
+      els.confidenceValue.textContent = `${item.confidence}%`;
+      els.confidenceFill.style.width = `${item.confidence}%`;
+      els.promptText.textContent = item.prompt;
+      els.answerText.textContent = item.answer;
+      els.evidenceText.textContent = item.evidence;
+      els.evidenceBox.classList.remove("visible");
+      els.mediaBox.innerHTML = item.media || "";
+      els.mediaBox.classList.toggle("active", Boolean(item.media));
+      document.querySelectorAll(".choice").forEach((button) => button.classList.remove("active"));
+
+      const predicted = state.predictions[item.id] || {};
+      document.querySelectorAll(".choice").forEach((button) => {
+        if (predicted[button.dataset.kind] === button.dataset.value) {
+          button.classList.add("active");
+        }
+      });
+
+      renderCases();
+      renderComparison();
+    }
+
+    function renderComparison() {
+      els.comparisonRows.innerHTML = cases.map((item) => {
+        const revealed = item.id === state.currentId && state.revealed;
+        const output = item.answer.length > 155 ? `${item.answer.slice(0, 155)}...` : item.answer;
+        return `
+          <tr>
+            <td>${escapeHtml(output)}</td>
+            <td><span class="status yes">${escapeHtml(item.sounds)}</span></td>
+            <td><span class="status ${revealed ? "no" : ""}">${escapeHtml(revealed ? item.correct : "Hidden")}</span></td>
+            <td>${escapeHtml(revealed ? item.evidence : "Reveal evidence to complete this row.")}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderNotes() {
+      if (state.notes.length === 0) {
+        els.noteList.innerHTML = '<p class="empty">Saved observations will appear here.</p>';
+        return;
+      }
+
+      els.noteList.innerHTML = state.notes.map((note) => `
+        <div class="note">
+          <strong>${escapeHtml(note.caseTitle)}</strong>
+          <p><b>Sounds confident:</b> ${escapeHtml(note.predictedConfidence || "Not marked")} | <b>Actually correct:</b> ${escapeHtml(note.predictedCorrect || "Not marked")}</p>
+          <p><b>Claim:</b> ${escapeHtml(note.confidenceNote || "No confidence claim written.")}</p>
+          <p><b>Evidence:</b> ${escapeHtml(note.evidenceNote || "No evidence note written.")}</p>
+          <p><b>Classroom:</b> ${escapeHtml(note.classroomNote || "No classroom question written.")}</p>
+        </div>
+      `).join("");
+    }
+
+    function setChoice(button) {
+      const item = currentCase();
+      const kind = button.dataset.kind;
+      state.predictions[item.id] = state.predictions[item.id] || {};
+      state.predictions[item.id][kind] = button.dataset.value;
+
+      document.querySelectorAll(`.choice[data-kind="${kind}"]`).forEach((choice) => {
+        choice.classList.toggle("active", choice === button);
+      });
+    }
+
+    function saveObservation() {
+      const item = currentCase();
+      const predicted = state.predictions[item.id] || {};
+      state.notes.unshift({
+        caseId: item.id,
+        caseTitle: item.title,
+        displayedConfidence: item.confidence,
+        predictedConfidence: predicted.confidence || "",
+        predictedCorrect: predicted.correct || "",
+        actualCorrect: item.correct,
+        evidence: item.evidence,
+        confidenceNote: els.confidenceNote.value.trim(),
+        evidenceNote: els.evidenceNote.value.trim(),
+        classroomNote: els.classroomNote.value.trim(),
+        savedAt: new Date().toISOString()
+      });
+      renderNotes();
+    }
+
+    function useStarterNote() {
+      const item = currentCase();
+      els.confidenceNote.value = item.starter;
+      els.evidenceNote.value = item.evidence;
+      els.classroomNote.value = item.classroom;
+    }
+
+    function exportJson() {
+      const payload = {
+        tool: "Confidence Is Not Truth Explorer",
+        exportedAt: new Date().toISOString(),
+        bigIdea: "Fluency, confidence, and correctness are different things.",
+        notes: state.notes
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "confidence-is-not-truth-observations.json";
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    els.caseList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-case]");
+      if (!button) return;
+      state.currentId = button.dataset.case;
+      renderCurrent();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (event.target.matches(".choice")) {
+        setChoice(event.target);
+      }
+    });
+
+    document.getElementById("revealButton").addEventListener("click", () => {
+      state.revealed = true;
+      els.evidenceBox.classList.add("visible");
+      renderComparison();
+    });
+
+    document.getElementById("saveButton").addEventListener("click", saveObservation);
+    document.getElementById("sampleButton").addEventListener("click", useStarterNote);
+    document.getElementById("exportButton").addEventListener("click", exportJson);
+    document.getElementById("printButton").addEventListener("click", () => window.print());
+
+    renderCurrent();
+    renderNotes();
+  </script>
+</body>
+</html>

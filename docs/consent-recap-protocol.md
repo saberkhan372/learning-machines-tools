@@ -97,7 +97,7 @@ Every AI-assisted recap must be reviewed by a human before publication. The revi
 ## 5. Public Sharing of Prompts, Outputs, and Projects
 
 **Participant projects:**
-Participants may share their projects in the Session 4 showcase. Each participant specifies at the end of Session 4:
+Participants may share their projects in the optional studio showcase. Each participant specifies at the end of Optional Studio:
 - A one-sentence project description (in their own words)
 - How they want to be credited (display name, role, or anonymous)
 - Whether the project may be linked, described, or shown publicly
@@ -134,7 +134,7 @@ Participants may contact the facilitator at any time to:
 
 ## 7. End-of-Camp Consent Review
 
-At the end of Session 4, facilitator collects from each participant:
+At the end of Optional Studio, facilitator collects from each participant:
 
 | Question | Options |
 |---|---|

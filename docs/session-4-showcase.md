@@ -1,4 +1,4 @@
-# Session 4: Showcase
+# Optional Studio: Showcase
 ## What did we learn about generative AI by making with it?
 
 **Learning Machines: Text, Images, Video — CC Fest**
@@ -8,7 +8,7 @@
 
 ## What We'll Do
 
-Session 4 is the showcase. There are no tools and no new concepts. Participants share what they built, found, or made across the three sessions. We close with a collective reflection and a short closing ritual.
+The optional studio is the showcase. There are no tools and no new concepts. Participants share what they built, found, or made across the three sessions. We close with a collective reflection and a short closing ritual.
 
 By the end of this session participants will have:
 - Presented their final project in 8–10 minutes
@@ -33,7 +33,7 @@ By the end of this session participants will have:
 
 > *[Scripted framing]*
 
-Welcome to Session 4. This is the session where the camp becomes yours.
+Welcome to the optional studio. This is the session where the camp becomes yours.
 
 Over the last three sessions we asked the same question in three different registers: what is the machine actually doing? We saw it predict tokens, draw defaults, drift across frames. We named what was human, what was machine, and what was assumed by the system.
 
@@ -137,7 +137,7 @@ A few things coming out of today:
 - Session recordings and notes will be in the Notion workspace
 - A cohort summary recap will go out to participants (reviewed before publishing)
 - If your project is ready to share publicly, let us know how you want to be credited
-- Second-wave tools are coming — you will have input on which ones we build next
+- Tool updates will keep coming — your evidence shapes what gets refined or built next
 
 Thank you for investigating with us.
 

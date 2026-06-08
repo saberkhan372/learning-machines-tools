@@ -3,49 +3,274 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Frame-by-Frame Coherence Viewer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Frame-by-Frame Coherence Viewer · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/lm.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
   <script src="../../assets/theme.js"></script>
-<style>
-    body { margin: 0; }
-    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0; }
-    a { color: var(--accent); }
-    .card { border: 1px solid var(--line); border-radius: 8px; padding: 22px; background: var(--surface); box-shadow: var(--shadow-sm); }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0; color: var(--ink); }
-    p, li { color: var(--muted); line-height: 1.55; }</style>
-<style id="lm-tool-nav-overrides">
-  .nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
-  .nav .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
-  .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
-  .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
-  .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 6px !important; display: grid !important; place-items: center !important; }
-  .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
-  .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
-  .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 8px !important; text-decoration: none !important; }
-  .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
-  .nav .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
-  .nav .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 8px !important; }
-  @media (max-width: 720px) { .nav .hide-sm { display: none !important; } .nav .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
-</style></head>
+  <style>
+    .coherence-svg { width: 100%; height: 100%; }
+    .upload-box {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: var(--surface-2);
+    }
+    .upload-box input { color: var(--muted); }
+    .mode-readout {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+    }
+  </style>
+</head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
         <a href="../../index.html#tools" class="hide-sm">Tools</a>
-        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+        <a href="../../pages/session-video.html" class="hide-sm">Session 3</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&larr; All tools</a>
       </div>
     </div>
   </nav>
-  <main>
-    <div class="card">
-      <h1>Frame-by-Frame Coherence Viewer</h1>
-      <p><strong>Coming later.</strong> This stretch tool will overlay consecutive video frames to inspect what changed, drifted, or broke over time.</p>
-    </div>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Session 3 · Video · Temporal coherence</p>
+      <h1 class="tool-title">Frame-by-Frame Coherence Viewer</h1>
+      <p class="tool-dek">Load a sample sequence or upload 4-8 still frames from a generated video. Compare neighboring frames with onion-skin and difference views, then decide whether the change is intended motion or unwanted drift.</p>
+      <div class="tool-idea">Big idea: "the video drifted" becomes stronger when you can point to the exact frame.</div>
+    </header>
+
+    <section class="tool-grid-3">
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Frames</p>
+            <div class="upload-box">
+              <strong>Optional upload</strong>
+              <span style="color:var(--muted);font-size:0.92rem;">Choose 4-8 still frames. They stay in your browser.</span>
+              <input id="uploadInput" type="file" accept="image/*" multiple>
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="sampleBtn">Reload sample</button>
+            <button class="tool-button secondary" type="button" id="prevBtn">Previous</button>
+            <button class="tool-button" type="button" id="nextBtn">Next frame</button>
+          </div>
+          <input class="scrub-range" id="frameRange" type="range" min="0" max="5" value="0">
+          <div class="frame-strip" id="frameStrip"></div>
+        </div>
+      </aside>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Frame compare</p>
+            <h2 id="frameTitle">Frame 1</h2>
+            <p id="frameCaption" style="margin:0;color:var(--muted);"></p>
+          </div>
+          <div class="overlay-stage" id="stage">
+            <div class="overlay-frame overlay-previous" id="previousFrame"></div>
+            <div class="overlay-frame overlay-current" id="currentFrame"></div>
+          </div>
+          <div class="chip-row">
+            <button class="chip-button" type="button" id="onionBtn">Onion-skin overlay</button>
+            <button class="chip-button" type="button" id="diffBtn">Difference highlight</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <h2>What changed?</h2>
+          <div class="mode-readout">
+            <strong id="changeHeadline">Subject is stable.</strong>
+            <span id="changeDetail" style="color:var(--muted);"></span>
+          </div>
+          <div class="claim-grid">
+            <label>What changed?
+              <textarea class="note-box" id="changedNote">Between these frames, I notice...</textarea>
+            </label>
+            <label>Intended motion or unwanted drift?
+              <textarea class="note-box" id="intentNote">I think this is...</textarea>
+            </label>
+            <label>Evidence I can point to
+              <textarea class="note-box" id="evidenceNote">The evidence is...</textarea>
+            </label>
+          </div>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy notes</button>
+            <button class="tool-button secondary" type="button" onclick="window.print()">Print / save</button>
+          </div>
+        </div>
+      </aside>
+    </section>
   </main>
+
+  <script>
+    const SAMPLE_CAPTIONS = [
+      "Frame 1: character, red scarf, blue bag, and doorway are established.",
+      "Frame 2: the character moves right; scarf and bag are still mostly stable.",
+      "Frame 3: the bag strap jumps position and the doorway shifts.",
+      "Frame 4: scarf length changes while the walking pose continues.",
+      "Frame 5: the face and bag color drift; background lines slide.",
+      "Frame 6: the action continues, but identity and props have mutated."
+    ];
+
+    const SAMPLE_CHANGES = [
+      ["Baseline frame", "Use this as the anchor for later comparison."],
+      ["Mostly intended motion", "The body moves right while major identity markers persist."],
+      ["Prop drift", "The bag strap and doorway geometry do not follow the same motion."],
+      ["Local detail drift", "The scarf changes length instead of simply moving."],
+      ["Identity and object drift", "Face shape, bag color, and background alignment all shift."],
+      ["Accumulated drift", "The clip remains visually fluent, but continuity has weakened."]
+    ];
+
+    let frames = [];
+    let activeFrame = 0;
+    let onion = false;
+    let diff = false;
+
+    function sampleSvg(index) {
+      const x = 105 + index * 22;
+      const scarf = 48 + (index > 2 ? index * 6 : 0);
+      const bagColor = index > 3 ? "#c084fc" : "#5eead4";
+      const face = index > 3 ? "#f0c7a5" : "#d9a06f";
+      const doorShift = index > 1 ? index * 7 : 0;
+      return '<svg class="coherence-svg" viewBox="0 0 420 300" role="img" aria-label="Simulated generated video frame">' +
+        '<rect width="420" height="300" fill="#10131a"/>' +
+        '<rect x="' + (250 + doorShift) + '" y="64" width="92" height="176" rx="8" fill="#18202b" stroke="#2a2e39" stroke-width="4"/>' +
+        '<path d="M0 242 H420" stroke="#2a2e39" stroke-width="4"/>' +
+        '<path d="M20 86 H390 M20 132 H390 M20 178 H390" stroke="#21242d" stroke-width="2"/>' +
+        '<circle cx="' + x + '" cy="94" r="' + (22 + (index > 3 ? 4 : 0)) + '" fill="' + face + '"/>' +
+        '<rect x="' + (x - 24) + '" y="118" width="50" height="78" rx="17" fill="#f6bd60"/>' +
+        '<path d="M' + (x - 24) + ' 126 C' + (x - 58) + ' 130 ' + (x - scarf) + ' 150 ' + (x - scarf - 12) + ' 178" fill="none" stroke="#ef4444" stroke-width="13" stroke-linecap="round"/>' +
+        '<rect x="' + (x + 34) + '" y="' + (140 + index * 2) + '" width="34" height="48" rx="9" fill="' + bagColor + '"/>' +
+        '<path d="M' + (x + 32) + ' 134 C' + (x + 54 + index * 2) + ' 142 ' + (x + 70) + ' 156 ' + (x + 69) + ' 178" fill="none" stroke="#e8e6df" stroke-width="5" opacity=".75"/>' +
+        '<path d="M' + (x - 8) + ' 194 L' + (x - 24 + index * 3) + ' 236 M' + (x + 18) + ' 194 L' + (x + 50 - index * 2) + ' 236" stroke="#8da2b8" stroke-width="10" stroke-linecap="round"/>' +
+        '<text x="18" y="278" fill="#9197a3" font-family="monospace" font-size="13">sample frame ' + (index + 1) + ' / 6</text>' +
+        '</svg>';
+    }
+
+    function loadSample() {
+      frames = [];
+      for (let i = 0; i < 6; i += 1) {
+        frames.push({ type: "svg", html: sampleSvg(i), caption: SAMPLE_CAPTIONS[i], change: SAMPLE_CHANGES[i] });
+      }
+      activeFrame = 0;
+      render();
+    }
+
+    function frameMarkup(frame) {
+      if (!frame) return "";
+      if (frame.type === "img") {
+        return '<img src="' + frame.src + '" alt="Uploaded frame">';
+      }
+      return frame.html;
+    }
+
+    function renderStrip() {
+      const strip = document.getElementById("frameStrip");
+      strip.innerHTML = "";
+      frames.forEach(function (frame, index) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "frame-thumb";
+        button.innerHTML = frameMarkup(frame);
+        button.addEventListener("click", function () {
+          activeFrame = index;
+          render();
+        });
+        strip.appendChild(button);
+      });
+    }
+
+    function render() {
+      const current = frames[activeFrame];
+      const previous = frames[Math.max(0, activeFrame - 1)];
+      document.getElementById("currentFrame").innerHTML = frameMarkup(current);
+      document.getElementById("previousFrame").innerHTML = frameMarkup(previous);
+      document.getElementById("frameTitle").textContent = "Frame " + (activeFrame + 1) + " of " + frames.length;
+      document.getElementById("frameCaption").textContent = current.caption || "Uploaded frame.";
+      document.getElementById("changeHeadline").textContent = current.change ? current.change[0] : "Compare with the previous frame.";
+      document.getElementById("changeDetail").textContent = current.change ? current.change[1] : "Use overlay or difference mode to decide whether the change is motion or drift.";
+      const stage = document.getElementById("stage");
+      stage.classList.toggle("onion", onion);
+      stage.classList.toggle("diff", diff);
+      document.getElementById("onionBtn").classList.toggle("active", onion);
+      document.getElementById("diffBtn").classList.toggle("active", diff);
+      const range = document.getElementById("frameRange");
+      range.max = Math.max(0, frames.length - 1);
+      range.value = activeFrame;
+      renderStrip();
+      Array.from(document.querySelectorAll(".frame-thumb")).forEach(function (button, index) {
+        button.classList.toggle("active", index === activeFrame);
+      });
+    }
+
+    document.getElementById("prevBtn").addEventListener("click", function () {
+      activeFrame = Math.max(0, activeFrame - 1);
+      render();
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", function () {
+      activeFrame = Math.min(frames.length - 1, activeFrame + 1);
+      render();
+    });
+
+    document.getElementById("sampleBtn").addEventListener("click", loadSample);
+
+    document.getElementById("frameRange").addEventListener("input", function (event) {
+      activeFrame = Number(event.target.value);
+      render();
+    });
+
+    document.getElementById("onionBtn").addEventListener("click", function () {
+      onion = !onion;
+      render();
+    });
+
+    document.getElementById("diffBtn").addEventListener("click", function () {
+      diff = !diff;
+      render();
+    });
+
+    document.getElementById("uploadInput").addEventListener("change", function (event) {
+      const files = Array.from(event.target.files).slice(0, 8);
+      if (!files.length) return;
+      frames = files.map(function (file, index) {
+        return {
+          type: "img",
+          src: URL.createObjectURL(file),
+          caption: "Uploaded frame " + (index + 1) + ".",
+          change: ["Participant upload", "Use the overlay controls to inspect what changed from the previous frame."]
+        };
+      });
+      activeFrame = 0;
+      render();
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", function () {
+      const lines = [
+        document.getElementById("frameTitle").textContent,
+        "What changed: " + document.getElementById("changedNote").value,
+        "Intended motion or drift: " + document.getElementById("intentNote").value,
+        "Evidence: " + document.getElementById("evidenceNote").value
+      ];
+      navigator.clipboard.writeText(lines.join("\n"));
+    });
+
+    loadSample();
+  </script>
 </body>
 </html>

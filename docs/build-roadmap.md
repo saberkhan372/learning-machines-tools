@@ -104,14 +104,15 @@ Build these after the launch MVP, using pilot evidence before turning examples i
 
 | Tool | Current Direction |
 | --- | --- |
-| A/B/C Comparison Board | Second-wave draft; use it to collect structured pilot evidence across text, image, and video |
-| Model Card Builder | Second-wave draft; use for the critical/no-AI pathway and Session 4 showcase preparation |
+| A/B/C Comparison Board | Launch-ready; use it to collect structured pilot evidence across text, image, and video |
+| Model Card Builder | Launch-ready; use for the critical/no-AI pathway and optional studio showcase preparation |
+| Classroom Activity Builder | Launch-ready; use it to turn camp concepts into printable teacher-facing activities |
 | Concept Bridge Pages | Second-wave draft; use during debriefs, recaps, and classroom adaptation |
-| Default Test Comparison Viewer | Keep parked until there are reviewed participant examples |
-| Failure Gallery Viewer | Keep parked until there are curated video clips and failure labels |
-| Prompt Guidance Word-by-Word Reveal | Useful after the diffusion activity language stabilizes |
-| Frame-by-Frame Coherence Viewer | Needs curated video/image sequences |
-| Next-Token Prediction Game | Zoom version is enough for pilot |
+| Default Test Comparison Viewer | Launch-ready static comparison viewer; future pass can replace simulated scenes with reviewed participant examples |
+| Failure Gallery Viewer | Launch-ready static gallery; future pass can add real curated clips and screenshots |
+| Prompt Guidance Word-by-Word Reveal | Launch-ready bridge activity; future pass can swap in generated image assets |
+| Frame-by-Frame Coherence Viewer | Launch-ready frame overlay tool with sample frames and upload support |
+| Next-Token Prediction Game | Launch-ready Zoom paste version |
 | Latent Space Explorer | Needs a careful visual metaphor and dataset |
 | Dataset Balance Simulator | Better once age/audience needs are clearer |
 
@@ -121,7 +122,7 @@ Build these after the launch MVP, using pilot evidence before turning examples i
 | --- | --- |
 | May-June 2026 | Complete launch tools, polish existing tools, build worksheets and consent materials |
 | June 2026 | Finalize dates, confirm guest speakers, open registration, promote to Coding Camp alumni |
-| July-August 2026 | Run four-session workshop, record sessions, produce recaps |
+| July-August 2026 | Run three core sessions plus optional studio, record sessions, produce recaps |
 | September 2026 | Connect participants to CC Fest 10th Anniversary event |
 | October-November 2026 | Build second-wave tools from cohort feedback and prepare Fall 2026 Coding Camp connection |
 
