@@ -84,7 +84,7 @@ Replace the current `index.html` with the new homepage. Copy from the design bun
 | Docs hrefs (`docs/...`) | `docs/...` (these are `.md` files — see note) |
 | `pages/docs-facilitation.html` | `pages/docs-facilitation.html` ✓ |
 
-**Note on `docs/` links:** The existing repo uses `.md` files in `docs/`. The design links to `.html` versions (e.g. `docs/pilot-checklist.html`). For now, point these to the `.md` files or leave the href as-is — the docs pages are out of scope for this redesign sprint. Add `<!-- TODO: create docs HTML page -->` inline comments.
+**Note on `docs/` links:** The repo keeps source files as Markdown under `docs/`, and GitHub Pages renders those pages at matching `.html` URLs. Local file browsing should use the `.md` source unless a local Jekyll server is running.
 
 **TWEAK_DEFAULTS:** In the inline `<script type="text/babel">` block near the bottom of `index.html`, the `TWEAK_DEFAULTS.theme` is `"light"` in the design bundle. Change this to `"dark"` to match the intended dark-first default (the `html` element has `data-theme="dark"` and the intent is dark by default).
 

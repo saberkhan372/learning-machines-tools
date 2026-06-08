@@ -277,7 +277,11 @@ h1 { color: var(--ink); }
 <div class="bridge-card">
   <strong>If you did Color by Prompt — this is what was happening inside the model.</strong>
   <p style="margin-top:8px;">In Color by Prompt, you revealed one word at a time and revised your drawing as more of the prompt became visible. Each new word changed the whole direction — you weren't replacing your previous drawing, you were <em>refining</em> it toward what the prompt described.</p>
-  <p style="margin-top:6px;">Diffusion works the same way. The model doesn't draw from scratch — it starts with random noise and refines it over 20 steps, guided by the prompt. At each step, it asks: "Given this prompt and what the image looks like now, which pixels should move?" Color structure appears first because low-frequency information (broad color, rough composition) is easier to resolve than fine detail (texture, edges, faces).</p>
+  <p style="margin-top:6px;">
+    Diffusion works the same way. The model doesn't draw from scratch — it starts with random noise and refines it over 20 steps, guided by the prompt.
+    At each step, it asks: "Given this prompt and what the image looks like now, which pixels should move?" Color structure appears first because
+    low-frequency information (broad color, rough composition) is easier to resolve than fine detail (texture, edges, faces).
+  </p>
   <div class="bridge-activity">
     <strong>The gap between what you specified and what appeared:</strong> In Color by Prompt, when the prompt didn't say what color to use, you made a choice. The model does the same — it fills every unspecified gap with defaults from training data. That's how "a doctor" becomes a specific age, gender, skin tone, and setting without anyone asking for those things.
   </div>

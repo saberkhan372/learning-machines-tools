@@ -408,7 +408,14 @@
         section("Materials", "<ul><li>" + TOOL_MATERIALS[values.tool] + "</li><li>" + values.artifact + "</li><li>Timer, board space, and a place to collect reflection notes</li></ul>"),
         section("Warm-up", "<p>Ask students to make a quick prediction before seeing the example or tool state: what do they expect will happen, appear, change, or fail?</p>"),
         section("Investigation", "<ol><li>" + TOOL_INVESTIGATIONS[values.tool] + "</li><li>Students work through the " + values.pathway + " pathway.</li><li>Pause once to ask what evidence would make the claim stronger.</li></ol>"),
-        section("Evidence table", '<div class="table-wrap"><table class="evidence-table"><thead><tr><th>Prompt / input</th><th>What appeared</th><th>What changed</th><th>Evidence</th><th>Claim</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>'),
+        section(
+          "Evidence table",
+          '<div class="table-wrap"><table class="evidence-table"><thead><tr>' +
+          '<th>Prompt / input</th><th>What appeared</th><th>What changed</th><th>Evidence</th><th>Claim</th>' +
+          '</tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td></tr>' +
+          '<tr><td></td><td></td><td></td><td></td><td></td></tr>' +
+          '<tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>'
+        ),
         section("Ethics question", "<p>" + values.reflection + "</p>"),
         section("No-AI pathway", "<p>" + values.noAi + ": " + PATHWAY_NOTES[values.pathway] + "</p>"),
         section("Exit ticket", "<p>One thing I can now explain about " + values.concept.toLowerCase() + " is _____. The evidence I would point to is _____. One question I still have is _____.</p>")
