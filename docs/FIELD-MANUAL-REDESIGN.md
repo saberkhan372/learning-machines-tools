@@ -5,10 +5,9 @@ title: Field Manual Redesign — Rollout Plan
 
 # Field Manual Redesign — Rollout Plan
 
-> **STATUS: IN PROGRESS.** Phase 1 (shared assets + tokenizer worked example)
-> and Phase 2 (all 19 remaining tools + 6 concept-bridge pages) shipped
-> 2026-06-10 — **the entire tool fleet is now on Field Manual.** Phases 3–5
-> (homepage, subpages, worksheets/adoption) are planned below. During the
+> **STATUS: IN PROGRESS.** Phases 1–3 shipped 2026-06-10: the shared assets,
+> **the entire tool fleet** (20 tools + 6 concept-bridge pages), and **the
+> homepage**. Phases 4–5 (subpages, worksheets/adoption) are planned below. During the
 > rollout the site intentionally runs two design systems side by side — see
 > "Coexistence" — so each phase can ship independently without breaking
 > unmigrated pages.
@@ -122,14 +121,25 @@ tools use heterogeneous markup (`tool-hero`, plain `header`, none) — they
 restyle correctly through the token shim, so the unification is cosmetic and
 safer done tool-by-tool than scripted.
 
-### Phase 3 — Homepage
+### Phase 3 — Homepage ✅ 2026-06-10
 
-- [ ] Rebuild `index.html` on `field.css` + `field-home.css` + `field-app.js`
+- [x] Rebuilt `index.html` on `field.css` + `field-home.css` + `field-app.js`
       from the bundle's `Learning Machines.html` prototype
-- [ ] Preserve what the current homepage already does right: `tools-data.js`
-      drives the catalog (as ruled index rows), counts fill at runtime, the
-      equity line stays in the hero, the tweaks panel stays gated behind
-      `?tweaks=1` (re-pointed at tone/type/ink)
+- [x] Preserved everything the old homepage did right: `tools-data.js` drives
+      the ruled index (20 canonical tool links), counts fill at runtime
+      (`data-tool-total` + live filter count), the equity line sits bold in
+      the hero lede, and the tweaks panel stays gated behind `?tweaks=1`
+      (re-pointed at tone/type/ink)
+- [x] Carried over the full materials inventory (5 worksheets, 10 facilitation
+      docs incl. the session link sheet, 3 prompt packs), correct session-row
+      links, "3+ / 20 / 3 / 5" ledger, and the colophon credits
+- [x] `field-app.js` fixes: no stamp for baseline "ready" status, "Studio"
+      session label, stale-proof tool totals
+- [x] Prototype bug fixed: the Fig. 02 pixel grid overflowed its fixed-height
+      plate at narrow widths — capped at 360px / two rows so all three plates
+      keep equal print rhythm
+- [x] Verified: filters, search, counts, session links, zero failed requests,
+      zero React/Babel on the participant path, tweaks panel works opt-in
 
 ### Phase 4 — Subpages
 

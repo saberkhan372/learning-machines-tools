@@ -97,6 +97,8 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
   grid-template-columns: repeat(8, 1fr);
   gap: 4px;
   width: 100%;
+  /* cap cell size so two rows always fit the fixed 96px plate-art */
+  max-width: 360px;
 }
 .px-grid i {
   display: block;

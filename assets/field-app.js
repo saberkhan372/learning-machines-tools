@@ -8,19 +8,30 @@
 
   function rowHTML(t, i) {
     var no = String(i + 1).padStart(2, "0");
-    var sess = t.session === "cross" ? "All" : "S" + t.session;
+    var sess = t.session === "cross" ? "All"
+      : t.session === "studio" ? "Studio"
+      : "S" + t.session;
+    /* "ready" is the baseline \u2014 only statuses that differ get a stamp */
+    var stamp = t.status === "ready"
+      ? ""
+      : '<span class="stamp ' + t.status + '">' + t.statusLabel + "</span>";
     return (
       '<a class="ix-row" data-mod="' + t.modality + '" data-status="' + t.status + '" href="' + t.href + '">' +
         '<span class="ix-no mono">' + no + '</span>' +
         '<span class="ix-name">' + t.name + '</span>' +
         '<span class="ix-blurb">' + t.blurb + '</span>' +
         '<span class="ix-mod"><i class="modsq"></i>' + MOD_LABEL[t.modality] + ' \u00b7 ' + sess + '</span>' +
-        '<span class="ix-stamp-cell"><span class="stamp ' + t.status + '">' + t.statusLabel + '</span></span>' +
+        '<span class="ix-stamp-cell">' + stamp + '</span>' +
       '</a>'
     );
   }
 
   grid.innerHTML = window.LM_TOOLS.map(rowHTML).join("");
+
+  /* keep ledger stats in sync with the catalog so they can't go stale */
+  document.querySelectorAll("[data-tool-total]").forEach(function (n) {
+    n.textContent = window.LM_TOOLS.length;
+  });
 
   var rows = Array.prototype.slice.call(grid.querySelectorAll(".ix-row"));
   var countEl = document.querySelector("[data-count]");

@@ -178,3 +178,30 @@ the six concept-bridge pages migrated in one scripted pass (25 files).
 - Masthead unification (`.tool-mast` + numbered eyebrow) deferred to a
   tool-by-tool polish pass — headers use heterogeneous markup and already
   restyle correctly through the token shim.
+
+---
+
+## Field Manual design language — Phase 3 — 2026-06-10
+
+**The homepage is now on Field Manual**, rebuilt from the handoff prototype
+(`Learning Machines.html`) with all repo content carried over.
+
+- Structure per the design: question hero with three "Fig." plates (sequential
+  / spatial / spatiotemporal), ledger strip, § 01 session rows, § 02 ruled
+  tool index with filters + search, § 03 method loop, § 04 pathways,
+  § 05 materials, colophon.
+- Preserved from the old homepage: `tools-data.js` drives the index (20
+  canonical links), runtime counts (`data-tool-total` + live filter count),
+  the simulation-first equity line bold in the hero lede, the full materials
+  inventory (5 worksheets, 10 facilitation docs incl. the session link sheet,
+  3 prompt packs), and the `?tweaks=1` gate for the React tweaks panel — now
+  driving tone / type-voice / ink instead of theme / font / hero.
+- `field-app.js` hardening: baseline "ready" tools render no stamp (only
+  non-ready statuses do), `session: "studio"` labels as "Studio", and tool
+  totals fill from data so they can't go stale.
+- Prototype bug fixed: the Fig. 02 pixel grid (24 cells, fixed 96px plate)
+  overflowed its caption at narrow widths — capped at 360px with two rows of
+  eight so the three plates keep equal print rhythm at every width.
+- Verified in-browser: filters (video → 3), search ("zoom" → 2), counts,
+  session links, zero failed requests, zero React/Babel on the participant
+  path, tweaks panel mounts and opens on the author path.
