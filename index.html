@@ -36,7 +36,7 @@
       <div class="hero-copy">
         <p class="eyebrow">CC Fest · Creative AI / ML Camp</p>
         <h1>What is the <span class="accent">machine</span> actually <span class="accent2">doing</span>?</h1>
-        <p class="hero-lede">A browser-based tool ecosystem for taking generative systems apart — how they <b>write</b>, <b>imagine</b>, and <b>move</b>. Built for creative learning, classroom adaptation, and critical reflection.</p>
+        <p class="hero-lede">A browser-based tool ecosystem for taking generative systems apart — how they <b>write</b>, <b>imagine</b>, and <b>move</b>. Built for creative learning, classroom adaptation, and critical reflection. Almost every tool is a simulation: <b>no accounts, no subscriptions, no live AI required</b> for the core teaching moments.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#tools">Browse the tools <span class="arrow">→</span></a>
           <a class="btn btn-ghost" href="tools/concept-bridges/">Start with a concept bridge</a>
@@ -55,9 +55,8 @@
     <div class="wrap">
       <div class="stats reveal">
         <div class="stat"><div class="stat-num">3<span class="unit">+</span></div><div class="stat-lbl">Core sessions + studio</div></div>
-        <div class="stat"><div class="stat-num">20<span class="unit">.</span></div><div class="stat-lbl">Launch-ready tools</div></div>
-        <div class="stat"><div class="stat-num">20<span class="unit">.</span></div><div class="stat-lbl">Tools in the ecosystem</div></div>
-        <div class="stat"><div class="stat-num">3<span class="unit">.</span></div><div class="stat-lbl">Modalities investigated</div></div>
+        <div class="stat"><div class="stat-num" data-tool-total>20</div><div class="stat-lbl">Launch-ready tools</div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Modalities investigated</div></div>
       </div>
     </div>
   </section>
@@ -140,7 +139,7 @@
           <h2>The tool ecosystem</h2>
           <p>Single-file, browser-based, no accounts. Each one makes a different invisible mechanism visible. Filter by modality or search.</p>
         </div>
-        <span class="count mono" data-count>15 / 15 tools</span>
+        <span class="count mono" data-count>20 / 20 tools</span>
       </div>
       <div class="browser-controls reveal" data-filters>
         <div class="filters">
@@ -216,6 +215,7 @@
         <div class="doc-group reveal">
           <h3>Facilitation &amp; planning</h3>
           <div class="doc-list">
+            <a class="doc-row" href="pages/session-links.html"><span class="d-name">Session Link Sheet</span><span class="d-desc">One canonical link per tool, per session</span></a>
             <a class="doc-row" href="pages/docs-facilitation.html"><span class="d-name">Session 1 Facilitation</span><span class="d-desc">Text, prediction, ELIZA</span></a>
             <a class="doc-row" href="pages/vocabulary-field-guide.html"><span class="d-name">Vocabulary Field Guide</span><span class="d-desc">Plain-language glossary with tool links</span></a>
             <a class="doc-row" href="docs/unplugged-human-as-model.html"><span class="d-name">Human as Model (unplugged)</span><span class="d-desc">Role-play · no software needed</span></a>
@@ -274,10 +274,17 @@
   <script src="assets/hero.js"></script>
   <script src="assets/app.js?v=4"></script>
 
-  <!-- Tweaks (React mount, panel only) -->
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <!-- Tweaks (React mount, panel only) — author scaffold, loads only with ?tweaks=1.
+       Without Babel the text/babel scripts below are inert: never fetched, never run.
+       document.write during parse keeps the load order identical to static tags,
+       so Babel's DOMContentLoaded auto-transform works unchanged. -->
+  <script>
+    if (new URLSearchParams(location.search).has("tweaks")) {
+      document.write('<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"><\/script>');
+      document.write('<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"><\/script>');
+      document.write('<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"><\/script>');
+    }
+  </script>
   <script type="text/babel" src="assets/tweaks-panel.jsx"></script>
   <div id="tweaks-root"></div>
   <script type="text/babel">

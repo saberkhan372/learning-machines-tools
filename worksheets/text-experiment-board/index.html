@@ -216,10 +216,10 @@
 
 </div>
 <footer class="evidence-footer">
-  <label>Human decision <textarea></textarea></label>
-  <label>System factors <textarea></textarea></label>
-  <label>Ethical concern <textarea></textarea></label>
-  <label>Classroom adaptation <textarea></textarea></label>
+  <label>Human decision <textarea data-key="ev-human" aria-label="Evidence footer human decision"></textarea></label>
+  <label>System factors <textarea data-key="ev-system" aria-label="Evidence footer system factors"></textarea></label>
+  <label>Ethical concern <textarea data-key="ev-ethics" aria-label="Evidence footer ethical concern"></textarea></label>
+  <label>Classroom adaptation <textarea data-key="ev-classroom" aria-label="Evidence footer classroom adaptation"></textarea></label>
 </footer>
 <script>
 const KEY = 'lm-text-experiment';
@@ -264,5 +264,6 @@ document.getElementById('clearBtn').addEventListener('click', () => {
 
 load();
 </script>
+<script src="../../assets/worksheet-export.js"></script>
 </body>
 </html>

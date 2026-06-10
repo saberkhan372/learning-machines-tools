@@ -32,10 +32,14 @@
       ? '<span class="tool-cta muted mono">in development →</span>'
       : '<span class="tool-cta mono">open tool →</span>';
     var collab = t.collab ? '<span class="chip collab-chip">Collaborative</span>' : "";
+    /* "ready" is the baseline — a badge every card carries says nothing,
+       so only surface statuses that differ from it */
+    var badge = t.status === "ready"
+      ? ""
+      : '<span class="status ' + t.status + '">' + t.statusLabel + "</span>";
     return '<a class="tool-card reveal" href="' + t.href + '" data-mod="' + t.modality +
       '" data-status="' + t.status + '">' +
-      '<div class="tool-top">' + motif(t.modality) +
-        '<span class="status ' + t.status + '">' + t.statusLabel + "</span></div>" +
+      '<div class="tool-top">' + motif(t.modality) + badge + "</div>" +
       '<div class="tool-meta mono">' + ses + ' · ' + MOD_LABEL[t.modality] + "</div>" +
       "<h3>" + t.name + "</h3>" +
       "<p>" + t.blurb + "</p>" +
@@ -47,6 +51,11 @@
   var filterRow = document.querySelector("[data-filters]");
   var countEl = document.querySelector("[data-count]");
   var state = { mod: "all", q: "" };
+
+  /* keep hero stats in sync with the catalog so they can't go stale */
+  document.querySelectorAll("[data-tool-total]").forEach(function (n) {
+    n.textContent = window.LM_TOOLS.length;
+  });
 
   function matches(t) {
     if (state.mod !== "all" && t.modality !== state.mod) return false;

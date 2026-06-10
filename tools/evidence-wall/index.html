@@ -315,22 +315,48 @@ function detectTag(content) {
    2. "Name: submission"
    3. "[HH:MM] Name: submission"  (Zoom transcript)
    4. "Name (HH:MM AM/PM): submission"  (Teams)
+   5. "HH:MM:SS From Name to Everyone:" header with the submission on
+      the following indented line(s)  (Zoom saved/copied chat)
 
-   Empty lines and Zoom system messages are skipped.
+   Empty lines, Zoom system messages, and reaction/reply metadata are skipped.
 */
 function parsePaste(raw) {
   let lines = raw.split("\n");
   let results = [];
+  /* name from a Zoom saved-chat header; applies to following message
+     lines until the next header or a blank line */
+  let pendingName = null;
 
   lines.forEach(function(line) {
     line = line.trim();
-    if (line === "") { return; }
+    if (line === "") { pendingName = null; return; }
 
     /* skip Zoom join/leave system messages */
     if (line.indexOf("joined the meeting") !== -1) { return; }
     if (line.indexOf("left the meeting")   !== -1) { return; }
     /* skip bare timestamp lines */
     if (/^\d{1,2}:\d{2}(:\d{2})?\s*(AM|PM)?$/i.test(line)) { return; }
+    /* skip Zoom reaction / reply metadata */
+    if (/^(Reacted to |Removed a |Replying to )/.test(line)) { return; }
+
+    /* Zoom saved-chat header: "14:32:05 From Sandra Soto to Everyone:" —
+       capture the name; the submission is on the following line(s).
+       Older Zoom puts it on the same line after the colon. */
+    let zoomHeader = line.match(/^\d{1,2}:\d{2}(?::\d{2})?\s+From\s+(.+?)(?:\s+[Tt]o\s+.+?)?:\s*(.*)$/);
+    if (zoomHeader) {
+      pendingName = zoomHeader[1].trim();
+      let rest = zoomHeader[2].trim();
+      if (rest !== "") {
+        results.push({ name: pendingName, content: rest });
+      }
+      return;
+    }
+
+    /* message line under a Zoom header */
+    if (pendingName !== null) {
+      results.push({ name: pendingName, content: line });
+      return;
+    }
 
     let name    = "Anonymous";
     let content = line;
@@ -744,6 +770,21 @@ function runTests() {
   let r5 = parsePaste("Alex joined the meeting\nJan: real observation\nLee left the meeting");
   assert(r5.length === 1, "parse: skip system lines");
   assert(r5[0].name === "Jan", "parse: only Jan survives");
+
+  /* Zoom saved-chat format: header + indented message, name attributed */
+  let zoomSaved =
+    "14:32:05 From Sandra Soto to Everyone:\n" +
+    "\tThe default was a suburb.\n" +
+    "14:33:01 From Lee to Everyone:\n" +
+    "\tReacted to \"The default...\" with \u{1F44D}\n" +
+    "14:34:12 From Greg K to Everyone:\n" +
+    "\tHigh temperature broke identity.\n" +
+    "\tIt drifted by frame three.";
+  let r6 = parsePaste(zoomSaved);
+  assert(r6.length === 3, "parse: zoom saved-chat tile count");
+  assert(r6[0].name === "Sandra Soto", "parse: zoom saved-chat name");
+  assert(r6[0].content === "The default was a suburb.", "parse: zoom saved-chat content");
+  assert(r6[2].name === "Greg K", "parse: zoom multi-line keeps name");
 
   /* detectTag */
   assert(detectTag("https://example.com/photo.jpg") === "image", "detectTag: image URL");

@@ -377,7 +377,10 @@ function getPrompt(id) {
    2. "Name: word"                   — name-colon-word (Zoom chat, manual)
    3. "[HH:MM] Name: word"           — Zoom chat transcript line
    4. "Name (hh:mm AM/PM): word"     — Teams chat
+   5. "HH:MM:SS From Name to Everyone:" header with the word on the
+      next (indented) line — Zoom saved/copied chat
    Multiple words on a line: takes the first token after the colon (or full line).
+   Zoom join/leave and reaction lines are skipped.
 */
 function parsePaste(raw) {
   let lines = raw.split("\n");
@@ -386,6 +389,20 @@ function parsePaste(raw) {
   lines.forEach(function(line) {
     line = line.trim();
     if (line === "") { return; }
+
+    /* skip Zoom join/leave system messages and reaction/reply metadata */
+    if (line.indexOf("joined the meeting") !== -1) { return; }
+    if (line.indexOf("left the meeting")   !== -1) { return; }
+    if (/^(Reacted to |Removed a |Replying to )/.test(line)) { return; }
+
+    /* Zoom saved-chat header: "14:32:05 From Sandra Soto to Everyone:" —
+       the guess usually sits on the next (indented) line, which parses as
+       a bare word; older Zoom puts it on the same line after the colon */
+    let zoomHeader = line.match(/^\d{1,2}:\d{2}(?::\d{2})?\s+From\s+.+?(?:\s+[Tt]o\s+.+?)?:\s*(.*)$/);
+    if (zoomHeader) {
+      line = zoomHeader[1].trim();
+      if (line === "") { return; }
+    }
 
     let word = "";
 
@@ -575,6 +592,21 @@ function runTests() {
   let result4 = parsePaste("Sam (10:05 AM): predict\nLee (10:06 AM): understand");
   assert(result4.length === 2, "parse: teams timestamp format");
   assert(result4[0] === "predict", "parse: teams first word");
+
+  /* parse Zoom saved-chat format: header line + indented message */
+  let zoomChat =
+    "14:32:05 From Sandra Soto to Everyone:\n" +
+    "\tmat\n" +
+    "14:32:10 From Greg K to Everyone:\n" +
+    "\tfloor\n" +
+    "14:32:14 From Lee to Everyone:\n" +
+    "\tReacted to \"mat\" with \u{1F44D}\n" +
+    "14:32:20 From Pat : chair";
+  let result5 = parsePaste(zoomChat);
+  assert(result5.length === 3, "parse: zoom saved-chat format");
+  assert(result5[0] === "mat", "parse: zoom saved-chat first word");
+  assert(result5[1] === "floor", "parse: zoom saved-chat second word");
+  assert(result5[2] === "chair", "parse: zoom same-line message");
 
   /* tally */
   let counts = tallyWords(["cat", "dog", "cat", "cat"]);
