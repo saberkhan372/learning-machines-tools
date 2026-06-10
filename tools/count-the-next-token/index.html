@@ -1,14 +1,15 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="text">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Count the Next Token · Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/lm.css">
-  <script src="../../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <script src="../../assets/field-theme.js"></script>
 <style>
   * { box-sizing: border-box; }
   main { width: min(1000px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 64px; }
@@ -24,11 +25,11 @@
   .layout { display: grid; grid-template-columns: 280px 1fr; gap: 18px; align-items: start; }
 
   /* context picker */
-  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 2px; padding: 20px; }
   .panel-label { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase;
     letter-spacing: 0.1em; color: var(--muted); margin: 0 0 12px; }
   .context-btn { display: block; width: 100%; text-align: left; background: var(--surface-2);
-    border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-bottom: 6px;
+    border: 1px solid var(--line); border-radius: 2px; padding: 10px 12px; margin-bottom: 6px;
     cursor: pointer; font-family: var(--font-body); font-size: 0.88rem; color: var(--ink);
     transition: border-color 0.14s; }
   .context-btn:hover { border-color: var(--accent); }
@@ -40,11 +41,11 @@
   .step-area { display: flex; flex-direction: column; gap: 16px; }
 
   /* step card */
-  .step-card { border: 1px solid var(--line); border-radius: 12px;
+  .step-card { border: 1px solid var(--line); border-radius: 2px;
     background: var(--surface); overflow: hidden; }
   .step-head { display: flex; align-items: center; gap: 12px; padding: 14px 18px;
     border-bottom: 1px solid var(--line); background: var(--surface-2); }
-  .step-num { width: 28px; height: 28px; border-radius: 7px; border: 1.5px solid var(--accent);
+  .step-num { width: 28px; height: 28px; border-radius: 2px; border: 1.5px solid var(--accent);
     color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600;
     display: grid; place-items: center; flex: none; }
   .step-title { font-family: var(--font-display); font-weight: 600; font-size: 1rem; }
@@ -98,14 +99,14 @@
 
   /* callout */
   .callout { padding: 14px 18px; border: 1px solid var(--line);
-    border-left: 3px solid var(--accent-2); border-radius: 0 10px 10px 0;
+    border-left: 3px solid var(--accent-2); border-radius: 0 2px 2px 0;
     background: var(--surface); font-size: 0.9rem; color: var(--ink-dim); }
   .callout b { color: var(--ink); }
 
   /* corpus preview */
   .corpus-lines { display: flex; flex-direction: column; gap: 4px; }
   .corpus-line { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);
-    padding: 4px 8px; border-radius: 5px; background: var(--surface-2); }
+    padding: 4px 8px; border-radius: 2px; background: var(--surface-2); }
   .corpus-line .match { color: var(--accent); font-weight: 600; }
 
   .empty-msg { color: var(--faint); font-family: var(--font-mono);
@@ -121,10 +122,10 @@
   <div class="wrap nav-inner">
     <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
     <div class="nav-links">
-      <a href="../../index.html#tools" class="hide-sm">Tools</a>
-      <a href="../../pages/session-text.html" class="hide-sm">Session 1</a>
-      <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
-    </div>
+        <a href="../../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../../pages/session-text.html" class="hide-sm">Session 1</a>
+        <a class="btn btn-sm" href="../../pages/tool-count-next-token.html">Tool notes</a>
+      </div>
   </div>
 </nav>
 

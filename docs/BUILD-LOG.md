@@ -148,3 +148,33 @@ off `data-tone/type/ink` (`field-theme.js`); unmigrated pages keep
 `data-theme/font` (`theme.js`). Different localStorage namespaces, no
 collisions. SHARED-CONTRACT governs unmigrated pages until Phase 5 flips the
 canonical system.
+
+---
+
+## Field Manual design language — Phase 2 — 2026-06-10
+
+**The whole tool fleet is now on Field Manual**: the remaining 19 tools plus
+the six concept-bridge pages migrated in one scripted pass (25 files).
+
+- Scripted per-file swaps: `data-tone/type/ink/mod` attributes (modality from
+  `tools-data.js`; bridge pages carry their session's ink), Newsreader/Archivo/
+  Plex Mono fonts, `field.css` + `field-tool.css` + `field-theme.js` links,
+  Field nav chrome (Tool index · session link · Tool notes where a landing
+  page exists), and literal `border-radius` values ≥3px squared to 2px while
+  keeping functional pills and circles.
+- The fleet was cleaner than expected: zero `:root` token overrides anywhere
+  (the tokenizer had been the only violator) and box-shadows already rode
+  `var(--shadow*)`, which the shim zeroes.
+- **Shim extended** after a token audit found 15 legacy `lm.css` tokens the
+  tools consume that `field.css` doesn't define: `--on-accent`, `--faint`,
+  `--code-bg`, `--grid-line`, `--shadow-sm`, plus semantic colors remapped
+  into the print palette (`--warm` → rust, `--teal/--teal-dim` → green,
+  `--purple` → violet, tag palette `--t0…--t5` → modality tints). After the
+  extension, zero `var()` references resolve undefined across the fleet.
+- Verified in-browser: all 25 files render white-tone Archivo with the correct
+  modality ink; all 9 self-test suites pass; Evidence Wall exercised
+  end-to-end (real Zoom-format paste → tiles attributed by name) in the new
+  system.
+- Masthead unification (`.tool-mast` + numbered eyebrow) deferred to a
+  tool-by-tool polish pass — headers use heterogeneous markup and already
+  restyle correctly through the token shim.

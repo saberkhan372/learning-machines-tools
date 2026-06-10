@@ -3,8 +3,9 @@
 > **TRANSITION NOTE (2026-06-10):** a second-generation "Field Manual" design
 > language is rolling out — see `docs/FIELD-MANUAL-REDESIGN.md` for tokens,
 > the per-tool migration recipe, and phase status. This document remains
-> accurate for **unmigrated** pages (everything still on `lm.css`/`theme.js`).
-> Migrated pages (currently: the Tokenizer tool) use `assets/field.css` +
+> accurate for **unmigrated** pages (everything still on `lm.css`/`theme.js`:
+> the homepage, `pages/`, docs pages, worksheets, and packs). **All 20 tools
+> and the six concept-bridge pages are migrated** and use `assets/field.css` +
 > `assets/field-tool.css` + `assets/field-theme.js` instead. Build new tools
 > on Field directly.
 

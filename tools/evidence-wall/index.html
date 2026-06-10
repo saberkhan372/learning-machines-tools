@@ -1,14 +1,15 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Evidence Wall · Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/lm.css">
-  <script src="../../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <script src="../../assets/field-theme.js"></script>
 <style>
   /* ── layout ── */
   * { box-sizing: border-box; }
@@ -19,12 +20,12 @@
     display: flex; align-items: flex-start; gap: 14px;
     background: color-mix(in oklab, var(--warm) 12%, var(--surface));
     border: 1px solid color-mix(in oklab, var(--warm) 40%, var(--line));
-    border-radius: 12px; padding: 14px 18px; margin-bottom: 22px;
+    border-radius: 2px; padding: 14px 18px; margin-bottom: 22px;
   }
   .consent-banner p { margin: 0; color: var(--ink-dim); font-size: 0.9rem; line-height: 1.5; }
   .consent-banner b { color: var(--ink); }
   .consent-dismiss {
-    background: transparent; border: 1px solid var(--line); border-radius: 7px;
+    background: transparent; border: 1px solid var(--line); border-radius: 2px;
     color: var(--muted); font-size: 0.8rem; padding: 4px 10px; cursor: pointer;
     white-space: nowrap; flex: none; margin-top: 2px;
     font-family: var(--font-body); transition: color 0.14s, border-color 0.14s;
@@ -50,7 +51,7 @@
     padding: 0 4px;
   }
   .ctrl-btn {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 2px;
     color: var(--ink); font-family: var(--font-body); font-size: 0.86rem;
     padding: 8px 14px; cursor: pointer;
     transition: border-color 0.14s, background 0.14s, color 0.14s;
@@ -63,7 +64,7 @@
   .import-notice {
     display: none; background: color-mix(in oklab, var(--accent) 10%, var(--surface));
     border: 1px solid color-mix(in oklab, var(--accent) 30%, var(--line));
-    border-radius: 10px; padding: 12px 16px; margin-bottom: 18px;
+    border-radius: 2px; padding: 12px 16px; margin-bottom: 18px;
     font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-dim);
   }
 
@@ -75,7 +76,7 @@
   }
   .paste-panel textarea {
     width: 100%; min-height: 120px; resize: vertical;
-    background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px;
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: 2px;
     color: var(--ink); font-family: var(--font-mono); font-size: 0.84rem;
     padding: 12px 14px; line-height: 1.55;
   }
@@ -96,7 +97,7 @@
 
   /* ── single tile ── */
   .tile {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 13px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 2px;
     display: flex; flex-direction: column; overflow: hidden;
     transition: border-color 0.15s, box-shadow 0.15s;
   }
@@ -114,14 +115,14 @@
   }
   .tile-img {
     width: 100%; max-height: 160px; object-fit: cover;
-    border-radius: 6px; display: block;
+    border-radius: 2px; display: block;
   }
 
   .tile-caption-wrap { padding: 8px 10px; border-bottom: 1px solid var(--line-soft); }
   .tile-caption {
     width: 100%; background: transparent; border: none; outline: none;
     color: var(--ink); font-family: var(--font-body); font-size: 0.82rem;
-    padding: 2px 4px; border-radius: 4px;
+    padding: 2px 4px; border-radius: 2px;
   }
   .tile-caption:focus { background: var(--surface-2); }
   .tile-caption::placeholder { color: var(--faint); }
@@ -194,10 +195,10 @@
   <div class="wrap nav-inner">
     <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
     <div class="nav-links">
-      <a href="../../index.html#tools" class="hide-sm">Tools</a>
-      <a href="../../pages/session-showcase.html" class="hide-sm">Optional Studio</a>
-      <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&#8592; All tools</a>
-    </div>
+        <a href="../../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../../pages/tool-evidence-wall.html">Tool notes</a>
+      </div>
   </div>
 </nav>
 

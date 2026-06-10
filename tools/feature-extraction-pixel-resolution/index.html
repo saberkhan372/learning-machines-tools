@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="image">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What Does the Machine See? — Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/lm.css">
-  <script src="../../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <script src="../../assets/field-theme.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -31,7 +32,7 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink
 .image-picker { width: 100%; max-width: 860px; display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
 .img-pill {
   font-size: 12px; font-weight: 600; padding: 5px 14px;
-  border-radius: 20px; border: 2px solid var(--line);
+  border-radius: 2px; border: 2px solid var(--line);
   background: var(--surface); color: var(--muted); cursor: pointer; transition: all 0.12s;
 }
 .img-pill:hover { border-color: var(--muted); color: var(--ink); }
@@ -43,7 +44,7 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
 }
 .canvas-box {
-  border: 3px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface);
+  border: 3px solid var(--line); border-radius: 2px; overflow: hidden; background: var(--surface);
 }
 .canvas-box-label {
   font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;
@@ -63,7 +64,7 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink
 .mode-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px; }
 .mode-pill {
   font-size: 12px; font-weight: 600; padding: 5px 14px;
-  border-radius: 20px; border: 2px solid var(--line);
+  border-radius: 2px; border: 2px solid var(--line);
   background: var(--surface); color: var(--muted); cursor: pointer; transition: all 0.12s;
 }
 .mode-pill:hover { border-color: var(--muted); color: var(--ink); }
@@ -81,11 +82,11 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink
 }
 .info-chip {
   font-size: 12px; font-weight: 700; padding: 5px 12px;
-  border-radius: 6px; background: var(--surface-2); color: var(--ink); white-space: nowrap;
+  border-radius: 2px; background: var(--surface-2); color: var(--ink); white-space: nowrap;
 }
 .info-note { font-size: 12px; color: var(--muted); }
 .recog-chip {
-  font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 6px;
+  font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 2px;
   white-space: nowrap; margin-left: auto;
 }
 .recog-hard   { background: rgba(220,38,38,0.14); color: #f87171; }
@@ -99,7 +100,7 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink
 }
 .pixel-panel-wrap {
   flex: 0 0 auto;
-  background: var(--surface); border: 1.5px solid var(--line); border-radius: 10px; padding: 12px;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: 2px; padding: 12px;
   transition: opacity 0.2s;
 }
 .pixel-panel-wrap.hidden { opacity: 0; pointer-events: none; }
@@ -110,18 +111,18 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink
 .pv-grid { display: flex; flex-direction: column; gap: 4px; }
 .pv-row { display: flex; gap: 4px; }
 .pv-cell {
-  width: 52px; padding: 4px 2px; border-radius: 5px;
+  width: 52px; padding: 4px 2px; border-radius: 2px;
   display: flex; flex-direction: column; align-items: center; gap: 2px;
   border: 1px solid rgba(255,255,255,0.08); background: var(--surface-2);
 }
-.pv-swatch { width: 38px; height: 18px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.16); }
+.pv-swatch { width: 38px; height: 18px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.16); }
 .pv-num { font-size: 8px; font-family: monospace; font-weight: 700; }
 .pv-r { color: #f87171; } .pv-g { color: #86efac; } .pv-b { color: #60a5fa; }
 
 /* Mode note / teaching card */
 .mode-note {
   flex: 1; background: var(--surface); border: 1.5px solid var(--line);
-  border-radius: 10px; padding: 14px; font-size: 13px; color: var(--muted); line-height: 1.55;
+  border-radius: 2px; padding: 14px; font-size: 13px; color: var(--muted); line-height: 1.55;
 }
 .mode-note strong {
   color: var(--ink); display: block; margin-bottom: 8px;
@@ -132,7 +133,7 @@ h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink
 .reflection-card {
   width: 100%; max-width: 860px; margin-top: 10px; margin-bottom: 14px;
   padding: 14px 16px; background: var(--surface);
-  border: 1.5px solid var(--line); border-radius: 10px;
+  border: 1.5px solid var(--line); border-radius: 2px;
   font-size: 13px; color: var(--muted); line-height: 1.6;
 }
 .reflection-card strong {
@@ -183,9 +184,9 @@ h1 { color: var(--ink); }
     <div class="wrap nav-inner">
       <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../../index.html#tools" class="hide-sm">Tools</a>
-        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+        <a href="../../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../../pages/session-images.html" class="hide-sm">Session 2</a>
+        <a class="btn btn-sm" href="../../pages/tool-feature-extraction.html">Tool notes</a>
       </div>
     </div>
   </nav>

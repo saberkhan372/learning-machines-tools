@@ -24,6 +24,7 @@
   --line-soft: var(--rule-soft);
   --ink-dim: var(--ink-soft);
   --shadow: none;
+  --shadow-sm: none;
 
   /* accent: overridden by data-mod below */
   --accent: var(--ink);
@@ -32,6 +33,27 @@
   /* derived accent shades tools commonly hardcode */
   --accent-soft: color-mix(in oklab, var(--accent) 11%, var(--bg));
   --accent-dark: color-mix(in oklab, var(--accent) 85%, var(--ink));
+
+  /* extended legacy map — semantic lm.css tokens the tools consume,
+     translated into the print palette (states ride the modality inks) */
+  --on-accent: var(--bg);
+  --faint: var(--muted);
+  --code-bg: var(--surface-2);
+  --grid-line: var(--rule-soft);
+  --warm: var(--m-image);      /* warm / warning → printed rust */
+  --teal: var(--m-video);      /* success / ok → printed green */
+  --teal-dim: var(--m-video);
+  --purple: var(--m-cross);
+  --purple-dim: var(--m-cross);
+
+  /* tag & token chip palette → modality tints (t0 text · t1 cross ·
+     t2 image · t3/t4 video · t5 image, matching tool tag classes) */
+  --t0: var(--m-text-tint);  --t0t: var(--m-text);
+  --t1: var(--m-cross-tint); --t1t: var(--m-cross);
+  --t2: var(--m-image-tint); --t2t: var(--m-image);
+  --t3: var(--m-video-tint); --t3t: var(--m-video);
+  --t4: var(--m-video-tint); --t4t: var(--m-video);
+  --t5: var(--m-image-tint); --t5t: var(--m-image);
 }
 
 html[data-mod="text"]  { --accent: var(--m-text); }

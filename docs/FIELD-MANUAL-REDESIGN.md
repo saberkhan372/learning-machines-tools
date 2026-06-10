@@ -6,9 +6,12 @@ title: Field Manual Redesign — Rollout Plan
 # Field Manual Redesign — Rollout Plan
 
 > **STATUS: IN PROGRESS.** Phase 1 (shared assets + tokenizer worked example)
-> shipped 2026-06-10. Phases 2–5 are planned below. During the rollout the site
-> intentionally runs two design systems side by side — see "Coexistence" —
-> so each phase can ship independently without breaking unmigrated pages.
+> and Phase 2 (all 19 remaining tools + 6 concept-bridge pages) shipped
+> 2026-06-10 — **the entire tool fleet is now on Field Manual.** Phases 3–5
+> (homepage, subpages, worksheets/adoption) are planned below. During the
+> rollout the site intentionally runs two design systems side by side — see
+> "Coexistence" — so each phase can ship independently without breaking
+> unmigrated pages.
 
 ## What this is
 
@@ -88,22 +91,36 @@ From the `field-tool.css` header — each tool needs only this:
 - [x] Verified: both tabs work, 7/7 self-tests pass, no console errors, no
       failed requests, Field chrome renders (white tone, Archivo, text-blue ink)
 
-### Phase 2 — Remaining 19 tools
+### Phase 2 — Remaining 19 tools ✅ 2026-06-10
 
-Apply the recipe per tool, in session order so each Saturday's tools flip
-together. `data-mod` per tool follows `tools-data.js` modality.
+Recipe applied per tool (scripted head/attr/link/nav swaps + literal radii
+squared to 2px, keeping functional pills/circles). `data-mod` per tool follows
+`tools-data.js` modality; the six bridge pages carry their own session's ink.
 
-- [ ] Session 1 (text): eliza-simulator, next-token-prediction-game,
+- [x] Session 1 (text): eliza-simulator, next-token-prediction-game,
       count-the-next-token
-- [ ] Session 2 (image): diffusion-step-through-viewer,
+- [x] Session 2 (image): diffusion-step-through-viewer,
       feature-extraction-pixel-resolution, default-test-comparison-viewer,
       prompt-guidance-word-by-word, latent-space-explorer,
       dataset-balance-simulator
-- [ ] Session 3 (video): temporal-telephone, video-failure-gallery-viewer,
+- [x] Session 3 (video): temporal-telephone, video-failure-gallery-viewer,
       frame-by-frame-coherence-viewer
-- [ ] Cross/studio: abc-comparison-board, model-card-builder,
+- [x] Cross/studio: abc-comparison-board, model-card-builder,
       classroom-activity-builder, confidence-is-not-truth-explorer,
       access-tiers, evidence-wall, concept-bridges (index + six bridge pages)
+- [x] Shim extended: `--shadow-sm` plus the semantic legacy tokens the fleet
+      consumes (`--on-accent`, `--faint`, `--code-bg`, `--grid-line`, `--warm`
+      → printed rust, `--teal` → printed green, tag palette `--t0…--t5` →
+      modality tints) — audited so zero `var()` references resolve undefined
+- [x] Verified: all 25 files render white/Archivo with the correct modality
+      ink; all 9 self-test suites pass; Evidence Wall exercised end-to-end
+      (Zoom paste → attributed tiles) in the new system
+
+**Deferred to a polish pass:** unifying tool mastheads onto `.tool-mast` with
+the numbered eyebrow ("Tool NN · Session N · Modality"). Headers across the 19
+tools use heterogeneous markup (`tool-hero`, plain `header`, none) — they
+restyle correctly through the token shim, so the unification is cosmetic and
+safer done tool-by-tool than scripted.
 
 ### Phase 3 — Homepage
 

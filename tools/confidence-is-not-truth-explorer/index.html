@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Confidence Is Not Truth Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/lm.css">
-  <script src="../../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <script src="../../assets/field-theme.js"></script>
   <style>
     :root {
       color-scheme: dark;
@@ -79,7 +80,7 @@
       max-width: 100%;
       padding: 10px 14px;
       border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: 2px;
       background: var(--surface);
       color: var(--critical);
       font-weight: 800;
@@ -99,7 +100,7 @@
 
     .panel {
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 2px;
       background: var(--surface);
       box-shadow: var(--shadow-sm);
       overflow: hidden;
@@ -132,7 +133,7 @@
 
     .case-button {
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 2px;
       background: var(--surface-2);
       color: var(--ink);
       padding: 12px;
@@ -238,7 +239,7 @@
     .fake-answer {
       margin: 0;
       padding: 16px;
-      border-radius: 8px;
+      border-radius: 2px;
       border: 1px solid var(--line);
       background: var(--surface-2);
       font-size: 1rem;
@@ -248,7 +249,7 @@
       display: none;
       min-height: 220px;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 2px;
       background: var(--surface-2);
       place-items: center;
       overflow: hidden;
@@ -316,7 +317,7 @@
     button,
     .button {
       border: 0;
-      border-radius: 10px;
+      border-radius: 2px;
       background: var(--accent);
       color: var(--on-accent);
       padding: 10px 13px;
@@ -342,7 +343,7 @@
 
     .evidence {
       display: none;
-      border-radius: 8px;
+      border-radius: 2px;
       border: 1px solid color-mix(in oklab, var(--accent) 42%, var(--line));
       background: color-mix(in oklab, var(--accent) 10%, var(--surface));
       padding: 14px;
@@ -414,7 +415,7 @@
       min-height: 96px;
       resize: vertical;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 2px;
       padding: 11px;
       color: var(--ink);
       background: var(--surface-2);
@@ -435,7 +436,7 @@
 
     .note {
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 2px;
       padding: 11px;
       background: var(--surface-2);
     }
@@ -470,7 +471,7 @@
     .question-card {
       min-height: 116px;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 2px;
       padding: 14px;
       background: var(--surface);
     }
@@ -546,9 +547,9 @@
     <div class="wrap nav-inner">
       <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../../index.html#tools" class="hide-sm">Tools</a>
-        <a href="../../index.html#method" class="hide-sm">Method</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+        <a href="../../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../../pages/tool-confidence-truth.html">Tool notes</a>
       </div>
     </div>
   </nav>

@@ -1,20 +1,21 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="image">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Latent Space Explorer &middot; Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/lm.css">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
   <link rel="stylesheet" href="../../assets/tool-lab.css">
-  <script src="../../assets/theme.js"></script>
+  <script src="../../assets/field-theme.js"></script>
   <style>
     .latent-map {
       min-height: 430px;
       border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: 2px;
       background:
         radial-gradient(circle at 24% 32%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 24%),
         radial-gradient(circle at 70% 70%, color-mix(in oklab, var(--accent-2) 17%, transparent), transparent 26%),
@@ -41,7 +42,7 @@
       width: 34px;
       height: 34px;
       border: 1px solid var(--line);
-      border-radius: 10px;
+      border-radius: 2px;
       background: var(--surface);
       box-shadow: var(--shadow-sm);
       cursor: pointer;
@@ -81,7 +82,7 @@
       align-items: center;
       padding: 10px;
       border: 1px solid var(--line-soft);
-      border-radius: 8px;
+      border-radius: 2px;
       background: var(--surface-2);
     }
 
@@ -91,7 +92,7 @@
       display: grid;
       place-items: center;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 2px;
       background: var(--surface);
     }
 
@@ -119,7 +120,7 @@
     .legend-card {
       padding: 10px;
       border: 1px solid var(--line-soft);
-      border-radius: 8px;
+      border-radius: 2px;
       background: var(--surface-2);
     }
 
@@ -149,9 +150,8 @@
     <div class="wrap nav-inner">
       <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../../index.html#tools" class="hide-sm">Tool index</a>
         <a href="../../pages/session-images.html" class="hide-sm">Session 2</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">&larr; All tools</a>
       </div>
     </div>
   </nav>

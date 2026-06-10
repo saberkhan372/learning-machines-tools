@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Confidence Is Not Truth — Concept Bridge</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../../assets/lm.css">
-  <script src="../../../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/field.css">
+  <link rel="stylesheet" href="../../../assets/field-tool.css">
+  <script src="../../../assets/field-theme.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -50,7 +51,7 @@ h1 {
   border: 1.5px solid var(--line); border-bottom: none;
   background: #ece6dc; color: var(--muted);
   cursor: pointer;
-  border-radius: 8px 8px 0 0;
+  border-radius: 2px 2px 0 0;
   margin-right: 4px;
   transition: background 0.12s;
 }
@@ -61,7 +62,7 @@ h1 {
 .scenario-card {
   background: var(--surface);
   border: 1.5px solid var(--line);
-  border-radius: 0 10px 10px 10px;
+  border-radius: 0 2px 2px 2px;
   padding: 22px;
   display: none;
   margin-bottom: 24px;
@@ -71,7 +72,7 @@ h1 {
 .prompt-box {
   background: var(--surface-2);
   border: 1px solid #d9ccb8;
-  border-radius: 7px;
+  border-radius: 2px;
   padding: 13px 16px;
   font-size: 1rem;
   margin-bottom: 22px;
@@ -95,15 +96,15 @@ h1 {
   color: #555d6e;
 }
 .bar-row.top .bar-token { font-weight: 700; color: var(--ink); }
-.bar-track { flex: 1; height: 22px; background: #eae5dd; border-radius: 4px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 4px; background: #93c5fd; }
+.bar-track { flex: 1; height: 22px; background: #eae5dd; border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 2px; background: #93c5fd; }
 .bar-row.top .bar-fill { background: var(--accent); }
 .bar-pct { width: 38px; font-size: 0.84rem; font-weight: 700; text-align: right; color: var(--muted); }
 .bar-row.top .bar-pct { color: var(--ink); }
 
 /* Verdict */
 .verdict {
-  border-radius: 8px; padding: 13px 16px;
+  border-radius: 2px; padding: 13px 16px;
   font-size: 0.88rem; line-height: 1.6;
   border: 1.5px solid;
 }
@@ -122,7 +123,7 @@ h1 {
 /* Key line */
 .key-line {
   background: var(--ink); color: var(--bg);
-  border-radius: 10px; padding: 20px 22px;
+  border-radius: 2px; padding: 20px 22px;
   margin-bottom: 20px;
   font-size: 1.05rem; font-weight: 700; line-height: 1.45;
 }
@@ -135,7 +136,7 @@ h1 {
 /* Nuance */
 .nuance {
   background: var(--surface-2); border: 1.5px solid var(--line);
-  border-radius: 8px; padding: 14px 16px;
+  border-radius: 2px; padding: 14px 16px;
   font-size: 0.86rem; color: #5a4010; line-height: 1.6;
   margin-bottom: 24px;
 }
@@ -144,7 +145,7 @@ h1 {
 /* Connect card */
 .connect {
   background: color-mix(in oklab, var(--accent) 12%, var(--surface)); border: 1.5px solid #93c5fd;
-  border-radius: 10px; padding: 16px 18px;
+  border-radius: 2px; padding: 16px 18px;
   display: flex; flex-direction: column; gap: 10px;
 }
 .connect-label {
@@ -155,7 +156,7 @@ h1 {
 .connect a {
   display: inline-block; padding: 9px 14px;
   background: var(--accent); color: #fff;
-  border-radius: 7px; font-size: 0.84rem; font-weight: 700;
+  border-radius: 2px; font-size: 0.84rem; font-weight: 700;
   text-decoration: none; width: fit-content;
 }
 .connect a:hover { background: #1d4ed8; }
@@ -165,9 +166,8 @@ h1 {
     <div class="wrap nav-inner">
       <a class="brand" href="../../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../../../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../../../index.html#tools" class="hide-sm">Tool index</a>
         <a href="../../../index.html#sessions" class="hide-sm">Sessions</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../../index.html">← All tools</a>
       </div>
     </div>
   </nav>
