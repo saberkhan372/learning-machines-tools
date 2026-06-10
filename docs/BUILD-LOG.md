@@ -205,3 +205,34 @@ the six concept-bridge pages migrated in one scripted pass (25 files).
 - Verified in-browser: filters (video → 3), search ("zoom" → 2), counts,
   session links, zero failed requests, zero React/Babel on the participant
   path, tweaks panel mounts and opens on the author path.
+
+---
+
+## Field Manual design language — Phase 4 — 2026-06-10
+
+**All subpages are now on Field Manual** — 28 pages: 4 session pages, 12 tool
+landing pages, 4 facilitation docs pages, the link sheet, vocabulary guide,
+no-AI pathway, pre-session check-in, unplugged activity, and 3 prompt packs.
+
+- Bundle exemplars installed with repo-correct links (`tool-tokenizer.html`
+  with the live iframe preview; `docs-facilitation.html` with the run-of-show
+  synced to the prediction-game paste move).
+- 11 tool landing pages script-transformed onto the tool-detail template; the
+  v1→Field deltas were systematic (sec-rules, Fig. numbers, stamps, preview
+  frames, modality inks per tool).
+- `session-text` / `session-images` rebuilt on the session template with
+  current content; `session-video` / `session-showcase` kept their richer
+  card content via a documented v1 compat layer in `field-sub.css`
+  (tool-card / pathway markup in the Field idiom) — converting them to
+  ix-rows is noted as deferred polish.
+- Bespoke self-styled pages migrated via the token shim, keeping their own
+  layouts; literal radii squared; redundant "Launch ready" card stamps
+  removed (ready is the baseline).
+- Audited fleet-wide: every class on every page is styled somewhere, every
+  internal link resolves, and all 28 pages verify white-tone/Archivo
+  in-browser.
+
+With Phases 1–4 complete the participant-facing site is fully in the new
+language. Remaining for Phase 5: worksheets + pack template, retiring
+`lm.css`/`theme.js`/`home.css`/`sub.css` from served pages, and flipping
+SHARED-CONTRACT / DESIGN-SYSTEM to Field as canonical.

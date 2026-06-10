@@ -5,9 +5,11 @@ title: Field Manual Redesign — Rollout Plan
 
 # Field Manual Redesign — Rollout Plan
 
-> **STATUS: IN PROGRESS.** Phases 1–3 shipped 2026-06-10: the shared assets,
-> **the entire tool fleet** (20 tools + 6 concept-bridge pages), and **the
-> homepage**. Phases 4–5 (subpages, worksheets/adoption) are planned below. During the
+> **STATUS: IN PROGRESS.** Phases 1–4 shipped 2026-06-10: the shared assets,
+> **the entire tool fleet** (20 tools + 6 concept-bridge pages), **the
+> homepage**, and **all subpages** (sessions, tool landing pages, docs pages,
+> link sheet, guides, packs). Phase 5 (worksheets, lm.css retirement,
+> contract flip) is planned below. During the
 > rollout the site intentionally runs two design systems side by side — see
 > "Coexistence" — so each phase can ship independently without breaking
 > unmigrated pages.
@@ -141,12 +143,30 @@ safer done tool-by-tool than scripted.
 - [x] Verified: filters, search, counts, session links, zero failed requests,
       zero React/Babel on the participant path, tweaks panel works opt-in
 
-### Phase 4 — Subpages
+### Phase 4 — Subpages ✅ 2026-06-10
 
-- [ ] Session pages ×4, tool landing pages, docs pages, session link sheet,
-      no-AI pathway, vocabulary field guide — on `field-sub.css`, following the
-      bundle's three templates (session / tool-detail / docs)
-- [ ] Tool landing pages get the live scaled-iframe preview from the prototype
+- [x] Bundle exemplars installed with repo-correct links: `tool-tokenizer.html`
+      (with the live iframe preview) and `docs-facilitation.html` (run-of-show
+      synced with the prediction-game paste move)
+- [x] 11 remaining tool landing pages script-transformed onto the tool-detail
+      template (sec-rules, Fig. numbers, modality inks, preview frames)
+- [x] Session pages: `session-text` and `session-images` rebuilt on the session
+      template with current content (ix-row tool lists, updated run-of-shows,
+      facilitator prompts); `session-video` and `session-showcase` are
+      content-rich (538/673 lines) so they migrated via a documented **v1
+      compat layer** appended to `field-sub.css` (tool-card / pathway markup
+      rendered in the Field idiom) rather than lossy template surgery
+- [x] Docs pages ×3 (sessions 2–4 facilitation) transformed; chips/stamps
+      replace the v1 mono glyphs
+- [x] Bespoke self-styled pages (vocab guide, no-AI pathway, link sheet,
+      pre-session check-in, unplugged activity, 3 prompt packs) migrated via
+      the token shim, keeping their own layouts
+- [x] Fleet-wide audits: every class on every page styled, every internal
+      link resolves, all 28 migrated pages verify white-tone/Archivo in-browser
+
+**Deferred polish:** move `session-video` / `session-showcase` tool cards to
+ix-rows and retire the v1 compat block in `field-sub.css`; `packs/_template.html`
+(dev reference, not user-facing) still carries v1 markup.
 
 ### Phase 5 — Worksheets, packs, and adoption
 

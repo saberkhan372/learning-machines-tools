@@ -1,80 +1,83 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Evidence Wall &#8212; Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/lm.css">
-  <link rel="stylesheet" href="../assets/home.css">
-  <link rel="stylesheet" href="../assets/sub.css">
-  <script src="../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-tool.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
 </head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
         <a href="session-showcase.html" class="hide-sm">Optional Studio</a>
         <a href="../index.html#method" class="hide-sm">Method</a>
-        <a class="btn btn-primary btn-sm nav-cta" href="../tools/evidence-wall/">Launch tool <span class="arrow">&#8594;</span></a>
+        <a class="btn btn-primary btn-sm" href="../tools/evidence-wall/">Launch tool &#8594;</a>
       </div>
     </div>
   </nav>
 
-  <header class="sub-hero">
+  <header class="sub-hero" data-mod="cross">
     <div class="wrap">
       <div class="crumb">
         <a href="../index.html">Home</a><span class="sep">/</span>
-        <a href="../index.html#tools">Tools</a><span class="sep">/</span>
+        <a href="../index.html#tools">Tool index</a><span class="sep">/</span>
         <span>Evidence Wall</span>
       </div>
       <div class="tool-hero-grid">
         <div class="tool-hero">
           <div class="meta-row">
-            <span class="status ready">Launch ready</span>
+            <span class="stamp ready">Launch ready</span>
             <span class="chip">Optional Studio</span>
             <span class="chip">Collaborative</span>
           </div>
           <h1>Evidence Wall</h1>
           <p class="tool-lede">Aggregate observations from across the core sessions and optional studio into a shared, inspectable wall. The tool makes collective evidence visible &#8212; you can see where the whole room landed, which claims have evidence, and which ones rest only on impression.</p>
           <div class="actions">
-            <a class="btn btn-primary" href="../tools/evidence-wall/">Launch the tool <span class="arrow">&#8594;</span></a>
-            <a class="btn btn-ghost" href="../worksheets/model-investigation-journal/">Open the worksheet</a>
+            <a class="btn btn-primary" href="../tools/evidence-wall/">Launch the tool &#8594;</a>
+            <a class="btn" href="../worksheets/model-investigation-journal/">Open the worksheet</a>
           </div>
         </div>
         <div class="preview">
           <div class="preview-bar">
-            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="modsq cross"></span>
             <span class="url">tools/evidence-wall/</span>
           </div>
           <div class="preview-body">
-            <iframe src="../tools/evidence-wall/" title="Evidence Wall" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+            <div class="preview-frame">
+              <iframe src="../tools/evidence-wall/" title="Evidence Wall preview" tabindex="-1"></iframe>
+            </div>
+            <p class="preview-note mono">Live preview · launch for the interactive version</p>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <section class="section-tight">
+  <section class="section-tight" style="--mink: var(--m-cross);">
     <div class="wrap">
-      <div class="section-head-sm"><span class="num">A.</span><h2>What it makes visible</h2></div>
+      <div class="sec-rule"><span class="sec-no">§ A · What it makes visible</span><span class="sec-note">what the screen literally shows</span></div>
       <div class="visible-grid">
         <div class="vis-card">
-          <div class="vn">01</div>
+          <div class="vn">Fig. 01</div>
           <h3>The wall as it fills</h3>
           <p>Each observation lands as a card with its source tool, a category tag, and the claim. As cards accumulate, the distribution of tags &#8212; how many &#8220;defaults,&#8221; how many &#8220;failures&#8221; &#8212; becomes visible at a glance.</p>
         </div>
         <div class="vis-card">
-          <div class="vn">02</div>
+          <div class="vn">Fig. 02</div>
           <h3>Tag as a commitment</h3>
           <p>Every card requires a category before it lands: default, failure, assumption, pattern, or question. Choosing the category forces a claim about what kind of observation this is &#8212; not just what you noticed.</p>
         </div>
         <div class="vis-card">
-          <div class="vn">03</div>
+          <div class="vn">Fig. 03</div>
           <h3>Pattern vs. single instance</h3>
           <p>The same default appearing on three cards from different tools is evidence. One card with the same default is an observation. The wall makes that distinction legible by showing all the cards at once.</p>
         </div>
@@ -82,9 +85,9 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" style="--mink: var(--m-cross);">
     <div class="wrap">
-      <div class="section-head-sm"><span class="num">B.</span><h2>How to investigate it</h2></div>
+      <div class="sec-rule"><span class="sec-no">§ B · How to investigate it</span><span class="sec-note">run it like an experiment, not a toy</span></div>
       <p class="sess-lede" style="margin:0 0 26px;">Add your observations from each session. Name what you have evidence for &#8212; and what you only suspect.</p>
       <div class="invest">
         <div class="invest-card">
@@ -117,7 +120,7 @@
 
   <section class="section-tight" style="border-top:1px solid var(--line-soft);">
     <div class="wrap">
-      <div class="section-head-sm"><span class="num">C.</span><h2>Debrief questions</h2></div>
+      <div class="sec-rule"><span class="sec-no">§ C · Debrief questions</span><span class="sec-note">after the investigation</span></div>
       <div class="prompts">
         <div class="prompt">Which observation surprised the most people in the room?</div>
         <div class="prompt">Where do individual observations cluster into a pattern, and where do they diverge?</div>

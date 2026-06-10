@@ -499,3 +499,36 @@
   .pager { flex-direction: column; }
   .pager a.next { border-left: 0; border-top: 1px solid var(--rule); text-align: left; padding-left: 2px; }
 }
+
+/* ============================================================
+   v1 compat — session pages still carrying tool-card / pathway
+   markup render in the Field idiom (square, hairline, mono).
+   Remove once session-video / session-showcase move to ix-rows.
+   ============================================================ */
+.section-head-sm { border-top: 1px solid var(--ink); padding-top: 14px; margin-bottom: clamp(24px, 4vw, 40px); display: flex; align-items: baseline; gap: 12px; }
+.section-head-sm .num { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+.section-head-sm h2 { font-size: clamp(22px, 3vw, 30px); }
+h1 .accent, h2 .accent, .accent { color: var(--mink, var(--accent, var(--ink))); }
+
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.tool-card { display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--rule); background: var(--surface); padding: 16px; text-decoration: none; }
+.tool-card:hover { border-color: var(--ink); }
+.tool-card h3 { font-size: 17px; }
+.tool-card p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+.tool-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.tool-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.tool-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tool-tags .chip { font-size: 10.5px; }
+.collab-chip { color: var(--m-cross); border-color: var(--m-cross); }
+.tool-cta { margin-top: auto; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink); }
+.tool-card:hover .tool-cta { text-decoration: underline; text-underline-offset: 4px; }
+.motif { display: none; }
+
+.pathway-picker { display: flex; flex-wrap: wrap; gap: 8px; }
+.pathway-picker a { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--rule); padding: 8px 14px; }
+.pathway-picker a:hover { border-color: var(--ink); background: var(--surface); }
+.pathway-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+.pathway-card { border: 1px solid var(--rule); background: var(--surface); padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.pathway-card h3, .pathway-card h4 { font-size: 16px; }
+.pathway-card p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+.pc-k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }

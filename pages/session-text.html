@@ -1,32 +1,31 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Session 1 · Text — Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/lm.css">
-  <link rel="stylesheet" href="../assets/home.css">
-  <link rel="stylesheet" href="../assets/sub.css">
-  <script src="../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
 </head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
         <a href="../index.html#sessions" class="hide-sm">Sessions</a>
-        <a href="../index.html#method" class="hide-sm">Method</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="docs-facilitation.html">Facilitation guide <span class="arrow">→</span></a>
+        <a href="session-links.html" class="hide-sm">Link sheet</a>
+        <a class="btn btn-sm" href="docs-facilitation.html">Facilitation guide</a>
       </div>
     </div>
   </nav>
 
   <!-- HERO -->
-  <header class="sub-hero">
+  <header class="sub-hero" data-mod="text">
     <div class="wrap">
       <div class="crumb">
         <a href="../index.html">Home</a><span class="sep">/</span>
@@ -34,21 +33,21 @@
         <span>Text</span>
       </div>
       <div class="sess-hero-grid">
-        <div class="sess-num">01<span class="of">of 03</span></div>
+        <div class="sess-num">01<span class="of">of 04</span></div>
         <div>
-          <p class="sess-kicker">Machines that write</p>
+          <p class="sess-kicker"><i class="modsq"></i>Machines that write</p>
           <h1 class="sess-title">Text</h1>
-          <p class="sess-q">When a language model writes, <span class="accent">what is it actually doing?</span></p>
-          <p class="sess-lede">Tokens, prediction, temperature, and the gap between fluent output and understanding. We start unplugged — guessing the next word ourselves — then open the machine and watch it do the same thing, visibly.</p>
+          <p class="sess-q">When a language model writes, <span class="q-accent">what is it actually doing?</span></p>
+          <p class="sess-lede">Tokens, prediction, temperature, and the gap between fluent output and understanding. We start unplugged — guessing the next word ourselves and tallying the room's distribution — then open the machine and watch it do the same thing, visibly.</p>
         </div>
       </div>
     </div>
   </header>
 
   <!-- THROUGHLINE -->
-  <section class="section-tight">
+  <section class="section-tight" style="--mink: var(--m-text);">
     <div class="wrap">
-      <div class="section-head-sm"><span class="num">A.</span><h2>What we make visible</h2></div>
+      <div class="sec-rule"><span class="sec-no">§ A · What we make visible</span><span class="sec-note">four mechanisms, one session</span></div>
       <div class="throughline">
         <div class="through-step"><div class="ts-n">01</div><h4>Tokens</h4><p>Text is chopped into pieces a model can count — often not where a human would cut.</p></div>
         <div class="through-step"><div class="ts-n">02</div><h4>Prediction</h4><p>The model only ever guesses the next token from what came before.</p></div>
@@ -58,87 +57,46 @@
     </div>
   </section>
 
-  <!-- PATHWAYS -->
-  <section class="section-tight">
-    <div class="wrap">
-      <div class="section-head-sm"><span class="num">B.</span><h2>Choose a pathway</h2></div>
-      <nav class="pathway-picker" aria-label="Choose your pathway">
-        <a href="#use">Use</a>
-        <a href="#observe">Observe / Critique</a>
-        <a href="#teach">Teach / Design</a>
-        <a href="#build">Build / Code</a>
-        <a href="#critical">Critical / No-AI</a>
-      </nav>
-      <div class="pathway-grid">
-        <section class="pathway-card" id="use"><div class="pc-k">Use</div><h3>Prompt and compare</h3><p>Use a text model directly, then document what changed across prompt versions.</p></section>
-        <section class="pathway-card" id="observe"><div class="pc-k">Observe / Critique</div><h3>Analyze examples</h3><p>Work from ELIZA and pre-generated LLM examples without logging into any live AI tool.</p></section>
-        <section class="pathway-card" id="teach"><div class="pc-k">Teach / Design</div><h3>Adapt the activity</h3><p>Turn next-token prediction or ELIZA inspection into a classroom-ready exercise.</p></section>
-        <section class="pathway-card" id="build"><div class="pc-k">Build / Code</div><h3>Make a mechanism visible</h3><p>Sketch or prototype a small explainer for tokens, probability, or rule matching.</p></section>
-        <section class="pathway-card" id="critical"><div class="pc-k">Critical / No-AI</div><h3>Question the frame</h3><p>Create a critique, consent note, or unplugged protocol that preserves refusal as participation.</p></section>
-      </div>
-    </div>
-  </section>
-
   <!-- TOOLS -->
   <section class="section-tight">
     <div class="wrap">
-      <div class="section-head-sm"><span class="num">C.</span><h2>Tools for this session</h2></div>
-      <div class="tool-grid">
-        <a class="tool-card" href="../tools/tokenizer-temperature-visualizer/">
-          <div class="tool-top">
-            <div class="motif motif-text"><span class="tok c0">to</span><span class="tok c4">ken</span><span class="tok c2">ize</span><span class="tok c1">·d</span></div>
-            <span class="status ready">Launch ready</span>
-          </div>
-          <div class="tool-meta mono">Session 1 · Text</div>
-          <h3>Tokenizer + Temperature Visualizer</h3>
-          <p>Watch text break into tokens, see next-token probabilities, and feel how temperature reshapes sampling.</p>
-          <div class="tool-tags"><span class="chip">Tokens</span><span class="chip">Probability</span><span class="chip">Temperature</span></div>
-          <span class="tool-cta mono">open tool →</span>
+      <div class="sec-rule"><span class="sec-no">§ B · Tools for this session</span><span class="sec-note">browser-based · no accounts</span></div>
+      <div class="tool-list">
+        <a class="ix-row" data-mod="text" href="../tools/next-token-prediction-game/">
+          <span class="ix-no mono">01</span>
+          <span class="ix-name">Next-Token Prediction Game</span>
+          <span class="ix-blurb">Paste the Zoom chat block of guesses and see the room's distribution beside precomputed model top-k.</span>
+          <span class="ix-stamp-cell"></span>
         </a>
-        <a class="tool-card" href="../tools/eliza-simulator/">
-          <div class="tool-top">
-            <div class="motif motif-text"><span class="tok c1">if</span><span class="tok c3">→</span><span class="tok c5">then</span></div>
-            <span class="status ready">Launch ready</span>
-          </div>
-          <div class="tool-meta mono">Session 1 · Text</div>
-          <h3>ELIZA Simulator</h3>
-          <p>Contrast visible rule-matching with opaque LLM behaviour, so mechanism and effect pull apart.</p>
-          <div class="tool-tags"><span class="chip">Rules</span><span class="chip">Pattern matching</span><span class="chip">Trust</span></div>
-          <span class="tool-cta mono">open tool →</span>
+        <a class="ix-row" data-mod="text" href="../tools/tokenizer-temperature-visualizer/">
+          <span class="ix-no mono">02</span>
+          <span class="ix-name">Tokenizer + Temperature Visualizer</span>
+          <span class="ix-blurb">Watch text break into tokens, see next-token probabilities, and feel how temperature reshapes sampling.</span>
+          <span class="ix-stamp-cell"></span>
         </a>
-        <a class="tool-card" href="../tools/next-token-prediction-game/">
-          <div class="tool-top">
-            <div class="motif motif-text"><span class="tok c2">the</span><span class="tok c0">cat</span><span class="tok c4">sat</span><span class="tok c1">?</span></div>
-            <span class="status ready">Launch ready</span>
-          </div>
-          <div class="tool-meta mono">Session 1 · Text</div>
-          <h3>Next-Token Prediction Game</h3>
-          <p>Paste a Zoom chat block of next-word guesses and see the room's distribution beside model top-k probabilities.</p>
-          <div class="tool-tags"><span class="chip">Prediction</span><span class="chip">Paste-aggregation</span><span class="chip">Distribution</span></div>
-          <span class="tool-cta mono">open tool →</span>
+        <a class="ix-row" data-mod="text" href="../tools/eliza-simulator/">
+          <span class="ix-no mono">03</span>
+          <span class="ix-name">ELIZA Simulator</span>
+          <span class="ix-blurb">Contrast visible rule-matching with opaque LLM behaviour, so mechanism and effect pull apart.</span>
+          <span class="ix-stamp-cell"></span>
         </a>
-        <a class="tool-card" href="../tools/count-the-next-token/">
-          <div class="tool-top">
-            <div class="motif motif-text"><span class="tok c3">÷</span><span class="tok c0">p</span><span class="tok c2">=</span></div>
-            <span class="status ready">Launch ready</span>
-          </div>
-          <div class="tool-meta mono">Session 1 · Text</div>
-          <h3>Count the Next Token</h3>
-          <p>Pick a context word, see the bigram table build, then follow the arithmetic: count → divide → probability → predict.</p>
-          <div class="tool-tags"><span class="chip">Counting</span><span class="chip">Probability</span><span class="chip">Arithmetic</span></div>
-          <span class="tool-cta mono">open tool →</span>
+        <a class="ix-row" data-mod="text" href="../tools/count-the-next-token/">
+          <span class="ix-no mono">04</span>
+          <span class="ix-name">Count the Next Token</span>
+          <span class="ix-blurb">Pick a context word, watch the bigram table build, then follow the arithmetic: count → divide → predict.</span>
+          <span class="ix-stamp-cell"></span>
         </a>
       </div>
     </div>
   </section>
 
   <!-- RUN OF SHOW -->
-  <section class="section">
-    <div class="wrap-narrow">
-      <div class="section-head-sm"><span class="num">D.</span><h2>Run of show · 60–90 min</h2></div>
+  <section class="section" style="--mink: var(--m-text);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ C · Run of show</span><span class="sec-note">60–90 minutes</span></div>
       <div class="ros">
         <div class="ros-row"><div class="ros-time">0–5</div><div><p class="ros-seg">Welcome &amp; norms</p><p class="ros-body">Name the question. Remind everyone direct AI use is optional — each person chooses a <b>participation pathway</b>.</p></div></div>
-        <div class="ros-row"><div class="ros-time">5–15</div><div><p class="ros-seg">Unplugged prediction game</p><p class="ros-body">Show a sentence stem, collect likely next words. Notice how <b>context, genre, and expectation</b> shape guesses.</p></div></div>
+        <div class="ros-row"><div class="ros-time">5–15</div><div><p class="ros-seg">Unplugged prediction game</p><p class="ros-body">Show a sentence stem, collect guesses in Zoom chat, then <b>paste the chat block into the Prediction Game</b> — the room's distribution appears beside the model's top-k.</p></div></div>
         <div class="ros-row"><div class="ros-time">15–35</div><div><p class="ros-seg">Tokenizer + Temperature</p><p class="ros-body">Show token chunks, then run one prompt at low and high temperature. Watch <b>probability bars</b> and greedy vs. sampled output.</p></div></div>
         <div class="ros-row"><div class="ros-time">35–55</div><div><p class="ros-seg">ELIZA vs. LLM</p><p class="ros-body">Inspect the matched rule, pattern, and template. Compare <b>visible rule-matching</b> with pre-generated LLM examples.</p></div></div>
         <div class="ros-row"><div class="ros-time">55–75</div><div><p class="ros-seg">Investigation</p><p class="ros-body">Complete one <b>Text Experiment Board</b> section: a default test, a prompt variation, or an ELIZA comparison.</p></div></div>
@@ -147,15 +105,15 @@
     </div>
   </section>
 
-  <!-- FACILITATOR PROMPTS -->
-  <section class="section-tight" style="border-top:1px solid var(--line-soft);">
+  <!-- PROMPTS -->
+  <section class="section-tight">
     <div class="wrap">
-      <div class="section-head-sm"><span class="num">E.</span><h2>Discussion prompts</h2></div>
+      <div class="sec-rule"><span class="sec-no">§ D · Discussion prompts</span><span class="sec-note">for the debrief</span></div>
       <div class="prompts">
         <div class="prompt">What made your next-word guess feel obvious?</div>
+        <div class="prompt">Where does the room's distribution agree with the model's — and where does it differ?</div>
         <div class="prompt">What does the tokenizer split that you wouldn't split as a human reader?</div>
-        <div class="prompt">At low temperature, what becomes more predictable?</div>
-        <div class="prompt">At high temperature, what becomes more surprising — or unstable?</div>
+        <div class="prompt">At low temperature, what becomes more predictable? At high, more unstable?</div>
         <div class="prompt">What does ELIZA make visible that a modern LLM hides?</div>
         <div class="prompt">Where could fluency be mistaken for understanding?</div>
       </div>
@@ -164,26 +122,23 @@
 
   <!-- WORKSHEET + LOW-AI -->
   <section class="section-tight">
-    <div class="wrap doc-cols">
-      <div class="doc-group">
-        <h3>Worksheet</h3>
-        <div class="doc-list">
-          <a class="doc-row" href="../worksheets/text-experiment-board/"><span class="d-name">Text Experiment Board</span><span class="d-desc">Prompt versions &amp; observations</span></a>
-          <a class="doc-row" href="../worksheets/ai-use-consent-checklist/"><span class="d-name">AI Use + Consent</span><span class="d-desc">Norms &amp; pathways</span></a>
-          <a class="doc-row" href="../tools/concept-bridges/prediction-is-not-understanding/"><span class="d-name">Bridge · Prediction ≠ understanding</span><span class="d-desc">Build intuition first</span></a>
-          <a class="doc-row" href="../docs/unplugged-human-as-model.html"><span class="d-name">Human as Model (unplugged)</span><span class="d-desc">Role-play · no software needed</span></a>
-          <a class="doc-row" href="../packs/text/"><span class="d-name">Text Prompt Pack</span><span class="d-desc">Frozen examples with annotations</span></a>
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ E · Materials</span><span class="sec-note">worksheet &amp; pathways</span></div>
+      <div class="doc-cols">
+        <div class="doc-group">
+          <h3>Worksheet</h3>
+          <div class="doc-list">
+            <a class="doc-row" href="../worksheets/text-experiment-board/"><span class="d-name">Text Experiment Board</span><span class="d-desc">Prompt versions &amp; observations</span></a>
+            <a class="doc-row" href="../worksheets/ai-use-consent-checklist/"><span class="d-name">AI Use + Consent</span><span class="d-desc">Norms &amp; pathways</span></a>
+            <a class="doc-row" href="../packs/text/"><span class="d-name">Text Prompt Pack</span><span class="d-desc">Frozen examples &amp; annotations</span></a>
+            <a class="doc-row" href="../tools/concept-bridges/prediction-is-not-understanding/"><span class="d-name">Bridge · Prediction ≠ understanding</span><span class="d-desc">Build intuition first</span></a>
+          </div>
         </div>
-      </div>
-      <div class="doc-group">
-        <h3>Low-AI / No-AI pathway</h3>
-        <div class="callout">
-          <p>
-            Participants can complete the whole session without any live AI tool — using only the visualizer, ELIZA, pre-generated examples, and the
-            <a href="../docs/unplugged-human-as-model.html" style="color:var(--accent);">Human as Model role-play</a>.
-            Opting out of direct AI use never means opting out of the camp.
-            <a href="no-ai-pathway.html" style="color:var(--accent);">Open the full No-AI pathway.</a>
-          </p>
+        <div class="doc-group">
+          <h3>Low-AI / No-AI pathway</h3>
+          <div class="callout">
+            <p>Participants can complete the whole session with only the visualizer, ELIZA, and pre-generated comparison examples — no logging into or prompting a live LLM. <b>Opting out of direct AI use never means opting out of the camp.</b></p>
+          </div>
         </div>
       </div>
     </div>
@@ -193,16 +148,16 @@
   <section class="section-tight">
     <div class="wrap">
       <div class="pager">
-        <a href="docs-facilitation.html"><div class="pg-dir mono">← Facilitation script</div><div class="pg-title">Session 1 Pilot Script</div></a>
-        <a class="next" href="session-images.html"><div class="pg-dir mono">Next session →</div><div class="pg-title">02 · Images</div></a>
+        <a href="docs-facilitation.html"><span class="pg-dir mono">← Facilitation script</span><span class="pg-title">Session 1 Pilot Script</span></a>
+        <a class="next" href="session-images.html"><span class="pg-dir mono">Next session →</span><span class="pg-title">02 · Images</span></a>
       </div>
     </div>
   </section>
 
   <footer class="footer">
     <div class="wrap">
-      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
-      <p class="mono">Session 1 of 3 · Text, Images, Video · optional studio after core sessions.</p>
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <p class="colophon">Session 1 of 4 · Text, Images, Video, Showcase.</p>
     </div>
   </footer>
 </body>

@@ -1,31 +1,31 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Session 2 · Images — Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/lm.css">
-  <link rel="stylesheet" href="../assets/home.css">
-  <link rel="stylesheet" href="../assets/sub.css">
-  <script src="../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
 </head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
         <a href="../index.html#sessions" class="hide-sm">Sessions</a>
-        <a href="../index.html#method" class="hide-sm">Method</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="docs-session-2-facilitation.html">Facilitation guide <span class="arrow">→</span></a>
+        <a href="session-links.html" class="hide-sm">Link sheet</a>
+        <a class="btn btn-sm" href="docs-session-2-facilitation.html">Facilitation guide</a>
       </div>
     </div>
   </nav>
 
-  <header class="sub-hero">
+  <!-- HERO -->
+  <header class="sub-hero" data-mod="image">
     <div class="wrap">
       <div class="crumb">
         <a href="../index.html">Home</a><span class="sep">/</span>
@@ -33,160 +33,143 @@
         <span>Images</span>
       </div>
       <div class="sess-hero-grid">
-        <div class="sess-num">02<span class="of">of 03</span></div>
+        <div class="sess-num">02<span class="of">of 04</span></div>
         <div>
-          <p class="sess-kicker">Machines that imagine</p>
+          <p class="sess-kicker"><i class="modsq"></i>Machines that imagine</p>
           <h1 class="sess-title">Images</h1>
-          <p class="sess-q">When an image model fills in a prompt, <span class="accent">what does it assume?</span></p>
-          <p class="sess-lede">Pixels, features, diffusion, and defaults. We start by predicting what a vague prompt might draw, then inspect how images become grids, regions, noise, and evidence.</p>
+          <p class="sess-q">When an image model draws, <span class="q-accent">what is it actually working with?</span></p>
+          <p class="sess-lede">Pixels, features, diffusion, prompt guidance, and visual defaults. We watch images resolve out of noise step by step, then give the model a vague prompt and study what it fills in without being asked.</p>
         </div>
       </div>
     </div>
   </header>
 
-  <section class="section-tight">
+  <!-- THROUGHLINE -->
+  <section class="section-tight" style="--mink: var(--m-image);">
     <div class="wrap">
-      <div class="section-head-sm"><span class="num">A.</span><h2>What we make visible</h2></div>
+      <div class="sec-rule"><span class="sec-no">§ A · What we make visible</span><span class="sec-note">four mechanisms, one session</span></div>
       <div class="throughline">
-        <div class="through-step"><div class="ts-n">01</div><h4>Pixels</h4><p>Images become number grids before they become anything a model can process.</p></div>
-        <div class="through-step"><div class="ts-n">02</div><h4>Features</h4><p>Edges, regions, color, and texture become signals that support recognition.</p></div>
-        <div class="through-step"><div class="ts-n">03</div><h4>Diffusion</h4><p>Generation starts from noise and iteratively moves toward prompt-consistent structure.</p></div>
-        <div class="through-step"><div class="ts-n">04</div><h4>Defaults</h4><p>When prompts are vague, assumptions about bodies, settings, and style get drawn.</p></div>
+        <div class="through-step"><div class="ts-n">01</div><h4>Pixels &amp; features</h4><p>An image is numbers first. Recognition returns cue by cue — colour, outline, texture, context.</p></div>
+        <div class="through-step"><div class="ts-n">02</div><h4>Diffusion</h4><p>The image is refined from pure noise toward a prompt-guided result, step by visible step.</p></div>
+        <div class="through-step"><div class="ts-n">03</div><h4>Prompt guidance</h4><p>Each added word steers the denoising — and each omitted word leaves a gap the model fills.</p></div>
+        <div class="through-step"><div class="ts-n">04</div><h4>Defaults</h4><p>Vague prompts reveal what the training data assumes a doctor, classroom, or home looks like.</p></div>
       </div>
     </div>
   </section>
 
+  <!-- TOOLS -->
   <section class="section-tight">
     <div class="wrap">
-      <div class="section-head-sm"><span class="num">B.</span><h2>Choose a pathway</h2></div>
-      <nav class="pathway-picker" aria-label="Choose your pathway">
-        <a href="#use">Use</a>
-        <a href="#observe">Observe / Critique</a>
-        <a href="#teach">Teach / Design</a>
-        <a href="#build">Build / Code</a>
-        <a href="#critical">Critical / No-AI</a>
-      </nav>
-      <div class="pathway-grid">
-        <section class="pathway-card" id="use"><div class="pc-k">Use</div><h3>Run a Default Test</h3><p>Generate from vague image prompts and record what appeared, shifted, or resisted revision.</p></section>
-        <section class="pathway-card" id="observe"><div class="pc-k">Observe / Critique</div><h3>Annotate examples</h3><p>Use pre-generated images or tool sequences to identify assumptions without making new outputs.</p></section>
-        <section class="pathway-card" id="teach"><div class="pc-k">Teach / Design</div><h3>Adapt the protocol</h3><p>Turn Default Tests into a classroom or studio critique structure.</p></section>
-        <section class="pathway-card" id="build"><div class="pc-k">Build / Code</div><h3>Make representation visible</h3><p>Prototype an explainer for pixels, edge detection, denoising, or visual defaults.</p></section>
-        <section class="pathway-card" id="critical"><div class="pc-k">Critical / No-AI</div><h3>Question the archive</h3><p>Investigate who is represented, mislabeled, copied, or missing from the image system.</p></section>
+      <div class="sec-rule"><span class="sec-no">§ B · Tools for this session</span><span class="sec-note">browser-based · no accounts</span></div>
+      <div class="tool-list">
+        <a class="ix-row" data-mod="image" href="../tools/feature-extraction-pixel-resolution/">
+          <span class="ix-no mono">01</span>
+          <span class="ix-name">Feature Extraction / Pixel Resolution</span>
+          <span class="ix-blurb">Reduce detail until recognition breaks, and identify which visual cues return first.</span>
+          <span class="ix-stamp-cell"></span>
+        </a>
+        <a class="ix-row" data-mod="image" href="../tools/diffusion-step-through-viewer/">
+          <span class="ix-no mono">02</span>
+          <span class="ix-name">Diffusion Step-Through Viewer</span>
+          <span class="ix-blurb">Move slowly from pure noise to final image and read the prompt guidance at every stage.</span>
+          <span class="ix-stamp-cell"></span>
+        </a>
+        <a class="ix-row" data-mod="image" href="../tools/default-test-comparison-viewer/">
+          <span class="ix-no mono">03</span>
+          <span class="ix-name">Default Test Comparison Viewer</span>
+          <span class="ix-blurb">Compare vague prompts, specific prompts, and critical revisions to see what appeared by default.</span>
+          <span class="ix-stamp-cell"></span>
+        </a>
+        <a class="ix-row" data-mod="image" href="../tools/prompt-guidance-word-by-word/">
+          <span class="ix-no mono">04</span>
+          <span class="ix-name">Prompt Guidance Word-by-Word</span>
+          <span class="ix-blurb">Step through a prompt one word at a time and watch the simulated image and change list update.</span>
+          <span class="ix-stamp-cell"></span>
+        </a>
+        <a class="ix-row" data-mod="image" href="../tools/latent-space-explorer/">
+          <span class="ix-no mono">05</span>
+          <span class="ix-name">Latent Space Explorer</span>
+          <span class="ix-blurb">Switch datasets and lenses to discuss learned similarity — and the limits of representation.</span>
+          <span class="ix-stamp-cell"></span>
+        </a>
+        <a class="ix-row" data-mod="image" href="../tools/dataset-balance-simulator/">
+          <span class="ix-no mono">06</span>
+          <span class="ix-name">Dataset Balance Simulator</span>
+          <span class="ix-blurb">Move composition sliders and watch how data balance reshapes defaults and likelihoods.</span>
+          <span class="ix-stamp-cell"></span>
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="section-tight">
+  <!-- RUN OF SHOW -->
+  <section class="section" style="--mink: var(--m-image);">
     <div class="wrap">
-      <div class="section-head-sm"><span class="num">C.</span><h2>Tools for this session</h2></div>
-      <div class="tool-grid">
-        <a class="tool-card" href="../tools/feature-extraction-pixel-resolution/">
-          <div class="tool-top"><div class="motif motif-image"></div><span class="status ready">Launch ready</span></div>
-          <div class="tool-meta mono">Session 2 · Images</div>
-          <h3>Feature Extraction / Pixel Resolution</h3>
-          <p>Change detail level and representation mode to see what survives when an image becomes numbers.</p>
-          <div class="tool-tags"><span class="chip">Pixels</span><span class="chip">Edges</span><span class="chip">Features</span></div>
-          <span class="tool-cta mono">open tool →</span>
-        </a>
-        <a class="tool-card" href="../tools/diffusion-step-through-viewer/">
-          <div class="tool-top"><div class="motif motif-image"></div><span class="status ready">Launch ready</span></div>
-          <div class="tool-meta mono">Session 2 · Images</div>
-          <h3>Diffusion Step-Through Viewer</h3>
-          <p>Step from pure noise to final image and notice when composition, subject, and detail emerge.</p>
-          <div class="tool-tags"><span class="chip">Noise</span><span class="chip">Denoising</span><span class="chip">Defaults</span></div>
-          <span class="tool-cta mono">open tool →</span>
-        </a>
-        <a class="tool-card" href="../tools/default-test-comparison-viewer/">
-          <div class="tool-top"><div class="motif motif-image"></div><span class="status ready">Launch ready</span></div>
-          <div class="tool-meta mono">Session 2 · Images</div>
-          <h3>Default Test Comparison Viewer</h3>
-          <p>Compare vague prompts, specific prompts, and critical revisions to name visible defaults.</p>
-          <div class="tool-tags"><span class="chip">Defaults</span><span class="chip">Comparison</span><span class="chip">Annotation</span></div>
-          <span class="tool-cta mono">open tool →</span>
-        </a>
-        <a class="tool-card" href="../tools/prompt-guidance-word-by-word/">
-          <div class="tool-top"><div class="motif motif-image"></div><span class="status ready">Launch ready</span></div>
-          <div class="tool-meta mono">Session 2 · Images</div>
-          <h3>Prompt Guidance Word-by-Word</h3>
-          <p>Reveal a prompt one word at a time and compare what each word constrains.</p>
-          <div class="tool-tags"><span class="chip">Prompt</span><span class="chip">Guidance</span><span class="chip">Revision</span></div>
-          <span class="tool-cta mono">open tool →</span>
-        </a>
-        <a class="tool-card" href="../tools/latent-space-explorer/">
-          <div class="tool-top"><div class="motif motif-image"></div><span class="status ready">Launch ready</span></div>
-          <div class="tool-meta mono">Session 2 · Images</div>
-          <h3>Latent Space Explorer</h3>
-          <p>Switch similarity lenses, select examples, and compare nearest neighbors in a simplified representation map.</p>
-          <div class="tool-tags"><span class="chip">Latent space</span><span class="chip">Similarity</span><span class="chip">Features</span></div>
-          <span class="tool-cta mono">open tool →</span>
-        </a>
-        <a class="tool-card" href="../tools/dataset-balance-simulator/">
-          <div class="tool-top"><div class="motif motif-image"></div><span class="status ready">Launch ready</span></div>
-          <div class="tool-meta mono">Session 2 · Images</div>
-          <h3>Dataset Balance Simulator</h3>
-          <p>Adjust a simplified dataset mix and notice how defaults, confidence, and ethical questions shift.</p>
-          <div class="tool-tags"><span class="chip">Data</span><span class="chip">Balance</span><span class="chip">Bias</span></div>
-          <span class="tool-cta mono">open tool →</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap-narrow">
-      <div class="section-head-sm"><span class="num">D.</span><h2>Run of show · 60–90 min</h2></div>
+      <div class="sec-rule"><span class="sec-no">§ C · Run of show</span><span class="sec-note">90 minutes</span></div>
       <div class="ros">
-        <div class="ros-row"><div class="ros-time">0-10</div><div><p class="ros-seg">Welcome and framing</p><p class="ros-body">Name the Default Test: an underspecified prompt reveals what the model fills in.</p></div></div>
-        <div class="ros-row"><div class="ros-time">10-20</div><div><p class="ros-seg">Unplugged prediction</p><p class="ros-body">Ask what people picture for "a doctor examining a patient" before seeing any output.</p></div></div>
-        <div class="ros-row"><div class="ros-time">20-45</div><div><p class="ros-seg">Pixels and features</p><p class="ros-body">Use the feature tool to connect recognition to numeric representation.</p></div></div>
-        <div class="ros-row"><div class="ros-time">45-70</div><div><p class="ros-seg">Diffusion steps</p><p class="ros-body">Move through denoising sequences and pause on the Default Test example.</p></div></div>
-        <div class="ros-row"><div class="ros-time">70-85</div><div><p class="ros-seg">Image Default Test Board</p><p class="ros-body">Record prompts, predictions, outputs, assumptions, and revisions.</p></div></div>
-        <div class="ros-row"><div class="ros-time">85-90</div><div><p class="ros-seg">Share one claim</p><p class="ros-body">Move from verdicts to evidence: what specifically appeared, and under what prompt?</p></div></div>
+        <div class="ros-row"><div class="ros-time">0–5</div><div><p class="ros-seg">Welcome &amp; bridge</p><p class="ros-body">Session 1 → Session 2: text becomes tokens; images become <b>pixels, features, and learned patterns</b>. Choose a pathway.</p></div></div>
+        <div class="ros-row"><div class="ros-time">5–25</div><div><p class="ros-seg">Feature / pixel activity</p><p class="ros-body">Switch image types and reduce detail until recognition becomes difficult. Which cues return first — <b>colour, outline, texture, context, location</b>?</p></div></div>
+        <div class="ros-row"><div class="ros-time">25–45</div><div><p class="ros-seg">Diffusion step-through</p><p class="ros-body">Move slowly from noise to final image. Describe what appears at each stage: <b>composition, subject, edges, texture, detail</b>.</p></div></div>
+        <div class="ros-row"><div class="ros-time">45–70</div><div><p class="ros-seg">Default Test</p><p class="ros-body">A vague prompt — "a doctor," "a classroom," "a beautiful home." Generate, observe, or critique outputs and fill the <b>Image Default Test Board</b>.</p></div></div>
+        <div class="ros-row"><div class="ros-time">70–90</div><div><p class="ros-seg">Debrief</p><p class="ros-body">What did the system fill in without being asked — and where might those defaults come from? Share one default and one <b>responsible revision</b>; chat shares can be pasted into the Evidence Wall.</p></div></div>
       </div>
     </div>
   </section>
 
-  <section class="section-tight" style="border-top:1px solid var(--line-soft);">
-    <div class="wrap">
-      <div class="section-head-sm"><span class="num">E.</span><h2>Discussion prompts</h2></div>
-      <div class="prompts">
-        <div class="prompt">What did the model assume that the prompt never specified?</div>
-        <div class="prompt">Which visual cue survived longest as resolution dropped?</div>
-        <div class="prompt">At what diffusion step did the subject become recognizable?</div>
-        <div class="prompt">Does prompting fix a default, or only work around it?</div>
-        <div class="prompt">Who benefits from the default image? Who is excluded?</div>
-        <div class="prompt">What evidence would make your claim stronger?</div>
-      </div>
-    </div>
-  </section>
-
+  <!-- PROMPTS -->
   <section class="section-tight">
-    <div class="wrap doc-cols">
-      <div class="doc-group">
-        <h3>Worksheet</h3>
-        <div class="doc-list">
-          <a class="doc-row" href="../worksheets/image-default-test-board/"><span class="d-name">Image Default Test Board</span><span class="d-desc">Predictions, assumptions, revisions</span></a>
-          <a class="doc-row" href="../tools/concept-bridges/what-does-the-machine-see/"><span class="d-name">Bridge · What does the machine see?</span><span class="d-desc">Pixels, features, representation</span></a>
-          <a class="doc-row" href="../packs/images/"><span class="d-name">Image Prompt Pack</span><span class="d-desc">Frozen examples with annotations</span></a>
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ D · Discussion prompts</span><span class="sec-note">for the debrief</span></div>
+      <div class="prompts">
+        <div class="prompt">When did the image become recognizable?</div>
+        <div class="prompt">Which visual cue did the most work?</div>
+        <div class="prompt">What does the feature view preserve, and what does it erase?</div>
+        <div class="prompt">At what diffusion step does the subject become guessable?</div>
+        <div class="prompt">What did the prompt leave unspecified?</div>
+        <div class="prompt">Which defaults are technical, and which are social?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKSHEET + LOW-AI -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ E · Materials</span><span class="sec-note">worksheet &amp; pathways</span></div>
+      <div class="doc-cols">
+        <div class="doc-group">
+          <h3>Worksheet</h3>
+          <div class="doc-list">
+            <a class="doc-row" href="../worksheets/image-default-test-board/"><span class="d-name">Image Default Test Board</span><span class="d-desc">Defaults, assumptions, revisions</span></a>
+            <a class="doc-row" href="../packs/images/"><span class="d-name">Image Prompt Pack</span><span class="d-desc">Frozen examples with alt text</span></a>
+            <a class="doc-row" href="../tools/concept-bridges/what-does-the-machine-see/"><span class="d-name">Bridge · What does the machine see?</span><span class="d-desc">Pixels, features, representation</span></a>
+            <a class="doc-row" href="../tools/concept-bridges/default-is-a-design-decision/"><span class="d-name">Bridge · Default is a design decision</span><span class="d-desc">Where defaults come from</span></a>
+          </div>
+        </div>
+        <div class="doc-group">
+          <h3>Low-AI / No-AI pathway</h3>
+          <div class="callout">
+            <p>Every activity works with the simulated viewers and the pre-generated Image Prompt Pack — no image generator account needed. Critique and teaching-design pathways use the same evidence. <b>Opting out of direct AI use never means opting out of the camp.</b></p>
+          </div>
         </div>
       </div>
-      <div class="doc-group">
-        <h3>Low-AI / No-AI pathway</h3>
-        <div class="callout"><p>Participants can analyze pre-generated examples, use the pixel/diffusion tools, or design a classroom protocol without generating images directly. <a href="no-ai-pathway.html" style="color:var(--accent);">Open the full No-AI pathway.</a></p></div>
-      </div>
     </div>
   </section>
 
+  <!-- PAGER -->
   <section class="section-tight">
     <div class="wrap">
       <div class="pager">
-        <a href="docs-session-2-facilitation.html"><div class="pg-dir mono">&#8592; Facilitation script</div><div class="pg-title">Session 2 Script</div></a>
-        <a href="session-text.html"><div class="pg-dir mono">Previous session</div><div class="pg-title">01 &#183; Text</div></a>
-        <a class="next" href="session-video.html"><div class="pg-dir mono">Next session &#8594;</div><div class="pg-title">03 &#183; Video</div></a>
+        <a href="session-text.html"><span class="pg-dir mono">← Previous session</span><span class="pg-title">01 · Text</span></a>
+        <a class="next" href="session-video.html"><span class="pg-dir mono">Next session →</span><span class="pg-title">03 · Video</span></a>
       </div>
     </div>
   </section>
 
-  <footer class="footer"><div class="wrap"><div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div><p class="mono">Session 2 of 3 · Text, Images, Video · optional studio after core sessions.</p></div></footer>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <p class="colophon">Session 2 of 4 · Text, Images, Video, Showcase.</p>
+    </div>
+  </footer>
 </body>
 </html>

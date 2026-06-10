@@ -1,48 +1,47 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Session 1 Facilitation — Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/lm.css">
-  <link rel="stylesheet" href="../assets/home.css">
-  <link rel="stylesheet" href="../assets/sub.css">
-  <script src="../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
 </head>
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../index.html#tools" class="hide-sm">Tools</a>
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
         <a href="session-text.html" class="hide-sm">Session 1</a>
-        <a href="../index.html#docs" class="hide-sm">Docs</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="tool-tokenizer.html">Open a tool <span class="arrow">→</span></a>
+        <a href="../index.html#materials" class="hide-sm">Materials</a>
+        <a class="btn btn-sm" href="tool-tokenizer.html">Open a tool</a>
       </div>
     </div>
   </nav>
 
-  <header class="sub-hero">
-    <div class="wrap-narrow">
+  <header class="sub-hero" data-mod="text" data-screen-label="Docs hero">
+    <div class="wrap">
       <div class="crumb">
         <a href="../index.html">Home</a><span class="sep">/</span>
-        <a href="../index.html#docs">Docs</a><span class="sep">/</span>
+        <a href="../index.html#materials">Materials</a><span class="sep">/</span>
         <span>Session 1 Facilitation</span>
       </div>
-      <p class="sess-kicker">Pilot script</p>
-      <h1 class="sess-title" style="font-size:clamp(2.2rem,5vw,3.6rem);">Session 1: Text</h1>
+      <p class="sess-kicker"><i class="modsq"></i>Pilot script</p>
+      <h1 class="sess-title" style="font-size: clamp(36px, 5vw, 60px);">Session 1: Text</h1>
       <div class="doc-meta">
-        <span class="mono">◷ 60–90 min</span>
-        <span class="mono">▤ Facilitation guide</span>
-        <span class="mono">✦ Pilot ready</span>
+        <span class="chip">60–90 min</span>
+        <span class="chip">Facilitation guide</span>
+        <span class="stamp ready">Pilot ready</span>
       </div>
     </div>
   </header>
 
-  <main class="section-tight">
+  <main class="section-tight" data-screen-label="Facilitation doc">
     <div class="wrap docs-layout">
       <!-- TOC -->
       <aside class="toc">
@@ -61,9 +60,9 @@
 
       <!-- BODY -->
       <article class="prose">
-        <p style="font-size:1.15rem;color:var(--ink-dim);">Use this script for a 60–90 minute pilot focused on text generation, tokenization, probability, and the difference between fluent output and understanding.</p>
+        <p class="lede">Use this script for a 60–90 minute pilot focused on text generation, tokenization, probability, and the difference between fluent output and understanding.</p>
 
-        <div class="callout" id="core">
+        <div class="callout" id="core" style="margin-top: 18px;">
           <p><b>Core question.</b> When a language model writes, what is it actually doing?</p>
         </div>
 
@@ -74,6 +73,7 @@
           <li><a href="../worksheets/text-experiment-board/">Text Experiment Board</a></li>
           <li>Optional: A/B/C Comparison Board for pilot evidence</li>
           <li><a href="../worksheets/ai-use-consent-checklist/">AI Use + Consent Checklist</a></li>
+          <li>Next-Token Prediction Game (paste the Zoom chat block of guesses)</li>
           <li>Optional: 3–5 pre-written sentence stems for the prediction game</li>
         </ul>
 
@@ -82,7 +82,7 @@
           <thead><tr><th>Time</th><th>Segment</th><th>Facilitator move</th><th>Participant action</th></tr></thead>
           <tbody>
             <tr><td>0–5</td><td>Welcome &amp; norms</td><td>Name the question. Remind everyone direct AI use is optional.</td><td>Choose a participation pathway.</td></tr>
-            <tr><td>5–15</td><td>Unplugged prediction</td><td>Show a sentence stem; collect several plausible next words.</td><td>Predict next words; notice how context shapes guesses.</td></tr>
+            <tr><td>5–15</td><td>Unplugged prediction</td><td>Show a sentence stem; collect guesses in Zoom chat, then paste the chat block into the Next-Token Prediction Game to tally the room beside the model's top-k.</td><td>Predict next words; compare the room's distribution with the model's and notice how context shapes guesses.</td></tr>
             <tr><td>15–35</td><td>Tokenizer + Temperature</td><td>Show token chunks, then run one prompt at low and high temperature.</td><td>Notice token boundaries, probability bars, greedy vs. sampled.</td></tr>
             <tr><td>35–55</td><td>ELIZA vs. LLM</td><td>Inspect matched rule, pattern, and response template.</td><td>Compare visible rule-matching with pre-generated LLM examples.</td></tr>
             <tr><td>55–75</td><td>Investigation</td><td>Assign one Text Experiment Board section.</td><td>Run or analyse a default test, prompt variation, or comparison.</td></tr>
@@ -129,18 +129,18 @@
   </main>
 
   <section class="section-tight">
-    <div class="wrap-narrow">
+    <div class="wrap">
       <div class="pager">
-        <a href="session-text.html"><div class="pg-dir mono">← Session overview</div><div class="pg-title">Session 1 · Text</div></a>
-        <a class="next" href="tool-tokenizer.html"><div class="pg-dir mono">Start here →</div><div class="pg-title">Tokenizer Visualizer</div></a>
+        <a href="session-text.html"><span class="pg-dir mono">← Session overview</span><span class="pg-title">Session 1 · Text</span></a>
+        <a class="next" href="tool-tokenizer.html"><span class="pg-dir mono">Start here →</span><span class="pg-title">Tokenizer Visualizer</span></a>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="wrap-narrow">
-      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
-      <p class="mono">Static workshop materials · Learning Machines: Text, Images, Video.</p>
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <p class="colophon">Static workshop materials · Learning Machines: Text, Images, Video.</p>
     </div>
   </footer>
 

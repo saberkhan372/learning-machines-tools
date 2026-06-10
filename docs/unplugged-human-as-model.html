@@ -1,15 +1,16 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Human as Model — Unplugged Activity · Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/lm.css">
-  <link rel="stylesheet" href="../assets/sub.css">
-  <script src="../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-tool.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
 </head>
 <body>
 <nav class="nav">
@@ -17,8 +18,8 @@
     <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
     <div class="nav-links">
       <a href="../pages/session-text.html" class="hide-sm">Session 1</a>
-      <a href="../index.html#docs" class="hide-sm">Docs</a>
-      <a class="btn btn-ghost btn-sm nav-cta" href="../index.html">← Home</a>
+      <a href="../index.html#materials" class="hide-sm">Materials</a>
+      <a class="btn btn-sm" href="../index.html">← Home</a>
     </div>
   </div>
 </nav>
@@ -27,7 +28,7 @@
   <div class="wrap-narrow">
     <div class="crumb">
       <a href="../index.html">Home</a><span class="sep">/</span>
-      <a href="../index.html#docs">Docs</a><span class="sep">/</span>
+      <a href="../index.html#materials">Materials</a><span class="sep">/</span>
       <span>Human as Model</span>
     </div>
     <p class="sess-kicker">Unplugged activity · No software required</p>
@@ -54,17 +55,17 @@
     <h2 id="roles">The three roles</h2>
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 28px;">
-      <div style="padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--surface);">
+      <div style="padding:18px;border:1px solid var(--line);border-radius:2px;background:var(--surface);">
         <div style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:10px;">Role A</div>
         <h3 style="font-size:1.05rem;margin:0 0 8px;">The Prompter</h3>
         <p style="margin:0;color:var(--muted);font-size:0.9rem;">Writes a sentence stem on a card or whiteboard. Keeps it short. Does not reveal what continuation they expect.</p>
       </div>
-      <div style="padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--surface);">
+      <div style="padding:18px;border:1px solid var(--line);border-radius:2px;background:var(--surface);">
         <div style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-2);margin-bottom:10px;">Role B</div>
         <h3 style="font-size:1.05rem;margin:0 0 8px;">The Model</h3>
         <p style="margin:0;color:var(--muted);font-size:0.9rem;">Must say only the single most likely next word — no full sentences, no intent, no creativity. Just the statistically probable next token.</p>
       </div>
-      <div style="padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--surface);">
+      <div style="padding:18px;border:1px solid var(--line);border-radius:2px;background:var(--surface);">
         <div style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;">Role C</div>
         <h3 style="font-size:1.05rem;margin:0 0 8px;">The Observer</h3>
         <p style="margin:0;color:var(--muted);font-size:0.9rem;">Watches without intervening. Notes what the Model's choice reveals about genre, register, assumptions, and defaults. Shares findings in the debrief.</p>
@@ -142,19 +143,19 @@
     <!-- CONNECTION TO TOOLS -->
     <h2 id="connection">Connection to the tools</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 28px;">
-      <a class="doc-row" href="../tools/tokenizer-temperature-visualizer/" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;text-decoration:none;transition:background 0.14s;">
+      <a class="doc-row" href="../tools/tokenizer-temperature-visualizer/" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:2px;text-decoration:none;transition:background 0.14s;">
         <span style="font-weight:600;font-size:0.94rem;">Tokenizer + Temperature</span>
         <span style="color:var(--muted);font-size:0.82rem;">See the probability bars</span>
       </a>
-      <a class="doc-row" href="../tools/next-token-prediction-game/" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;text-decoration:none;transition:background 0.14s;">
+      <a class="doc-row" href="../tools/next-token-prediction-game/" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:2px;text-decoration:none;transition:background 0.14s;">
         <span style="font-weight:600;font-size:0.94rem;">Prediction Game</span>
         <span style="color:var(--muted);font-size:0.82rem;">Compare room vs. model</span>
       </a>
-      <a class="doc-row" href="../tools/count-the-next-token/" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;text-decoration:none;transition:background 0.14s;">
+      <a class="doc-row" href="../tools/count-the-next-token/" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:2px;text-decoration:none;transition:background 0.14s;">
         <span style="font-weight:600;font-size:0.94rem;">Count the Next Token</span>
         <span style="color:var(--muted);font-size:0.82rem;">See the arithmetic</span>
       </a>
-      <a class="doc-row" href="../tools/eliza-simulator/" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;text-decoration:none;transition:background 0.14s;">
+      <a class="doc-row" href="../tools/eliza-simulator/" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:2px;text-decoration:none;transition:background 0.14s;">
         <span style="font-weight:600;font-size:0.94rem;">ELIZA Simulator</span>
         <span style="color:var(--muted);font-size:0.82rem;">Rules vs. probabilities</span>
       </a>
