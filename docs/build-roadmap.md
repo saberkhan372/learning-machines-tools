@@ -132,8 +132,6 @@ Use pilot evidence before turning simulated examples into public galleries or ad
 
 ## Open Questions
 
-- Four consecutive Saturdays, or a break between sessions?
-- Same 9-11 AM PT slot as Coding Camp?
 - Open registration or capped cohort?
 - Which guest speakers for language, image generation, video, and community connection?
 - What pre-generated output sets are needed for participants without model access?
@@ -141,4 +139,6 @@ Use pilot evidence before turning simulated examples into public galleries or ad
 
 ## Answered Questions
 
+- ~~Four consecutive Saturdays, or a break between sessions?~~ Three Saturdays — July 11, 18, 25, 2026 — with the optional studio date confirmed with the cohort. Public listing: <https://ccfest.rocks/ccfest-camp>; site logistics page: `pages/camp-2026.html`.
+- ~~Same 9-11 AM PT slot as Coding Camp?~~ Yes — 9–11 AM PT (16:00–18:00 UTC).
 - ~~Should worksheets stay as Markdown, become printable PDFs, or become interactive boards?~~ They became interactive boards with localStorage persistence, print, and Copy-as-Markdown; the Markdown versions remain as printable mirrors.

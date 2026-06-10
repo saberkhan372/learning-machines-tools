@@ -278,3 +278,26 @@ The two items deferred during Phases 2 and 4:
   mod cell; the v1 compat block in `field-sub.css` slimmed to the section
   heads and pathway picker/cards those pages still use. No `tool-card`
   markup remains anywhere.
+
+---
+
+## Camp 2026 logistics page — 2026-06-10
+
+The "biggest gap" from the cohort review — a logistics page — built from the
+public listing at <https://ccfest.rocks/ccfest-camp>: `pages/camp-2026.html`.
+
+- **Dates as session rows**: July 11 (Text), July 18 (Images), July 25
+  (Video), optional studio with date confirmed with the cohort; interest-form
+  deadline (July 4) in a ruled deadline box with the registration link.
+- **Timezone table** for where the cohort actually is: Honolulu 6–8 am
+  through Tokyo/Kyoto 1–3 am Sunday, with 9–11 am PT (16:00–18:00 UTC) as
+  the anchor row.
+- **"Before Session 1" on-ramp**: two steps — choose a participation pathway
+  (No-AI pathway + consent checklist) and open one tool ahead of Saturday.
+- **Recordings & the async route**: the Consent and Recap Protocol's policy
+  stated plainly (recorded for async access, registered participants only,
+  never used to train models), with the per-session recording + worksheet +
+  prompt-pack route presented as a full path, not a consolation.
+- Wired into the homepage hero eyebrow ("Summer 2026 — July 11 / 18 / 25"),
+  the Materials list, and the README; the roadmap's two schedule questions
+  moved to Answered.

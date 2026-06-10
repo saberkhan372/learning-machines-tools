@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Summer Camp 2026 · Dates &amp; Logistics — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-home.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    .tz-table { width: 100%; border-collapse: collapse; }
+    .tz-table th { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 8px 12px 8px 2px; border-bottom: 1px solid var(--ink); }
+    .tz-table td { padding: 10px 12px 10px 2px; border-bottom: 1px solid var(--rule); font-size: 14.5px; }
+    .tz-table td.t { font-family: var(--font-mono); font-size: 13px; white-space: nowrap; }
+    .tz-table tr.home td { font-weight: 600; }
+    .tz-note { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 10px; }
+    .onramp { counter-reset: step; display: grid; gap: 12px; }
+    .onramp .step { display: grid; grid-template-columns: 40px 1fr; gap: 14px; border: 1px solid var(--rule); background: var(--surface); padding: 16px; align-items: start; }
+    .onramp .step::before { counter-increment: step; content: counter(step, decimal-leading-zero); font-family: var(--font-mono); font-size: 13px; color: var(--mink, var(--ink)); border: 1px solid var(--rule); width: 36px; height: 36px; display: grid; place-items: center; }
+    .onramp h4 { margin-bottom: 4px; }
+    .onramp p { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+    .deadline { border: 1px solid var(--ink); background: var(--surface); padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; margin-top: 18px; }
+    .deadline b { font-weight: 600; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="session-links.html" class="hide-sm">Link sheet</a>
+        <a class="btn btn-primary btn-sm" href="https://ccfest.rocks/ccfest-camp">Register →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="sub-hero" data-mod="cross">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#sessions">Sessions</a><span class="sep">/</span>
+        <span>Camp 2026</span>
+      </div>
+      <p class="sess-kicker"><i class="modsq"></i>CC Fest · Free &amp; virtual · Zoom</p>
+      <h1 class="sess-title" style="font-size: clamp(36px, 5vw, 60px);">Summer Camp 2026</h1>
+      <p class="sess-lede" style="max-width: 64ch;">Three Saturday sessions exploring how generative AI systems create text, images, and video — through unplugged activities, real tools, structured experiments, and reflection. An investigation, not a tutorial. No coding or machine learning background required.</p>
+      <div class="deadline">Interest form due <b>Saturday, July 4</b> → <a href="https://ccfest.rocks/ccfest-camp">register at ccfest.rocks</a></div>
+    </div>
+  </header>
+
+  <!-- DATES -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ A · Dates</span><span class="sec-note">three Saturdays · 9–11 am PT</span></div>
+      <div class="sessions">
+        <a class="session-row" data-mod="text" href="session-text.html">
+          <span class="s-no mono"><i class="modsq"></i>01</span>
+          <h3>July 11</h3>
+          <span class="s-meta">
+            <span class="s-kicker">Text · Machines that write</span>
+            <p class="s-blurb">Tokens, prediction, temperature, and the illusion of meaning.</p>
+          </span>
+          <span class="s-go">Session page →</span>
+        </a>
+        <a class="session-row" data-mod="image" href="session-images.html">
+          <span class="s-no mono"><i class="modsq"></i>02</span>
+          <h3>July 18</h3>
+          <span class="s-meta">
+            <span class="s-kicker">Images · Machines that imagine</span>
+            <p class="s-blurb">Pixels, features, diffusion, prompts, and visual defaults.</p>
+          </span>
+          <span class="s-go">Session page →</span>
+        </a>
+        <a class="session-row" data-mod="video" href="session-video.html">
+          <span class="s-no mono"><i class="modsq"></i>03</span>
+          <h3>July 25</h3>
+          <span class="s-meta">
+            <span class="s-kicker">Video · Machines that move</span>
+            <p class="s-blurb">Time, drift, coherence, anchoring, and video failure.</p>
+          </span>
+          <span class="s-go">Session page →</span>
+        </a>
+        <a class="session-row" data-mod="cross" href="session-showcase.html">
+          <span class="s-no mono"><i class="modsq"></i>04</span>
+          <h3>Optional studio</h3>
+          <span class="s-meta">
+            <span class="s-kicker">Showcase · date confirmed with the cohort</span>
+            <p class="s-blurb">Share what you made, found, taught, or critiqued.</p>
+          </span>
+          <span class="s-go">Session page →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMEZONES -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ B · Your timezone</span><span class="sec-note">9–11 am PT = 16:00–18:00 UTC</span></div>
+      <table class="tz-table">
+        <thead><tr><th>Where you are</th><th>Session time</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Honolulu</td><td class="t">6:00 – 8:00 am</td><td class="t">Saturday</td></tr>
+          <tr class="home"><td>Los Angeles · Pacific</td><td class="t">9:00 – 11:00 am</td><td class="t">Saturday</td></tr>
+          <tr><td>New York · Caracas</td><td class="t">12:00 – 2:00 pm</td><td class="t">Saturday</td></tr>
+          <tr><td>Buenos Aires · São Paulo</td><td class="t">1:00 – 3:00 pm</td><td class="t">Saturday</td></tr>
+          <tr><td>Canary Islands</td><td class="t">5:00 – 7:00 pm</td><td class="t">Saturday</td></tr>
+          <tr><td>Rome · Berlin</td><td class="t">6:00 – 8:00 pm</td><td class="t">Saturday</td></tr>
+          <tr><td>Tokyo · Kyoto</td><td class="t">1:00 – 3:00 am</td><td class="t">Sunday</td></tr>
+        </tbody>
+      </table>
+      <p class="tz-note">If the live time doesn't work where you are, the async route below is a full path through the camp — not a consolation.</p>
+    </div>
+  </section>
+
+  <!-- BEFORE SESSION 1 -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ C · Before Session 1</span><span class="sec-note">two things, ~15 minutes</span></div>
+      <div class="onramp">
+        <div class="step">
+          <div>
+            <h4>Choose how you want to participate</h4>
+            <p>Read the <a href="no-ai-pathway.html">No-AI pathway</a> and skim the <a href="../worksheets/ai-use-consent-checklist/">AI Use + Consent Checklist</a>. Every activity has five ways in — using a tool directly is only one of them, and opting out of direct AI use never means opting out of the camp.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h4>Open one tool so Saturday isn't your first click</h4>
+            <p>Try the <a href="../tools/tokenizer-temperature-visualizer/">Tokenizer + Temperature Visualizer</a> for five minutes. Everything is browser-based — no accounts, no installs — and the <a href="session-links.html">session link sheet</a> has every link we'll paste into Zoom chat.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECORDINGS + ASYNC -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ D · Recordings &amp; catching up</span><span class="sec-note">miss a Saturday, stay in the camp</span></div>
+      <div class="doc-cols">
+        <div class="doc-group">
+          <h3>Recording policy</h3>
+          <div class="callout">
+            <p>Every session is recorded for asynchronous access. Recordings are shared <b>with registered participants only</b> unless you explicitly consent to broader sharing. You may turn your camera or microphone off at any time without explanation, and you can choose how (or whether) you're named in public recaps. The full policy is the <a href="../docs/consent-recap-protocol.html">Consent and Recap Protocol</a> — recordings are never used to train AI models.</p>
+          </div>
+        </div>
+        <div class="doc-group">
+          <h3>The async route, per session</h3>
+          <div class="doc-list">
+            <a class="doc-row" href="session-text.html"><span class="d-name">Recording + Text Experiment Board + Text Prompt Pack</span><span class="d-desc">Session 1</span></a>
+            <a class="doc-row" href="session-images.html"><span class="d-name">Recording + Image Default Test + Image Prompt Pack</span><span class="d-desc">Session 2</span></a>
+            <a class="doc-row" href="session-video.html"><span class="d-name">Recording + Video Test Report + Video Prompt Pack</span><span class="d-desc">Session 3</span></a>
+          </div>
+          <p class="tz-note">Watch the recording, run the worksheet against the prompt pack's frozen examples, and bring one observation to the next session — or to the recap thread.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="../index.html"><span class="pg-dir mono">← Home</span><span class="pg-title">Learning Machines</span></a>
+        <a class="next" href="session-text.html"><span class="pg-dir mono">Start here →</span><span class="pg-title">Session 1 · Text</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <p class="colophon">Free · virtual · CC Fest community · interest form due July 4, 2026.</p>
+    </div>
+  </footer>
+</body>
+</html>
