@@ -115,11 +115,11 @@ squared to 2px, keeping functional pills/circles). `data-mod` per tool follows
       ink; all 9 self-test suites pass; Evidence Wall exercised end-to-end
       (Zoom paste → attributed tiles) in the new system
 
-**Deferred to a polish pass:** unifying tool mastheads onto `.tool-mast` with
-the numbered eyebrow ("Tool NN · Session N · Modality"). Headers across the 19
-tools use heterogeneous markup (`tool-hero`, plain `header`, none) — they
-restyle correctly through the token shim, so the unification is cosmetic and
-safer done tool-by-tool than scripted.
+**Polish pass (done 2026-06-10):** every tool now carries the numbered
+wayfinding line ("Tool NN · Session · Modality") — prepended to existing
+kickers/tags where the tool already self-identified, inserted as a fresh
+`.eyebrow` after the header open tag elsewhere. Numbering follows
+`tools-data.js` order; the tokenizer keeps the canonical `.tool-mast` form.
 
 ### Phase 3 — Homepage ✅ 2026-06-10
 
@@ -162,9 +162,10 @@ safer done tool-by-tool than scripted.
 - [x] Fleet-wide audits: every class on every page styled, every internal
       link resolves, all 28 migrated pages verify white-tone/Archivo in-browser
 
-**Deferred polish:** move `session-video` / `session-showcase` tool cards to
-ix-rows and retire the v1 compat block in `field-sub.css`; `packs/_template.html`
-(dev reference, not user-facing) still carries v1 markup.
+**Polish pass (done 2026-06-10):** `session-video` / `session-showcase` tool
+cards converted to numbered ix-rows (metadata in the mod cell); the v1 compat
+block in `field-sub.css` slimmed to what those pages still use (section heads,
+pathway picker/cards).
 
 ### Phase 5 — Worksheets, packs, and adoption ✅ 2026-06-10
 

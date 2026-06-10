@@ -303,7 +303,8 @@
         document.getElementById("board").innerHTML = versions.map(function (version) {
           const key = version[0];
           return `<article class="column panel" data-version="${key}">
-            <header><h2>${version[1]}</h2><p>${version[2]}</p></header>
+            <header>
+    <p class="eyebrow"><i class="modsq" style="background:var(--accent);"></i>Tool 08 · All sessions · Cross</p><h2>${version[1]}</h2><p>${version[2]}</p></header>
             <div class="column-body">
               ${versionFields.map(function (field) {
                 return `<div class="field ${field[3] ? "short" : ""}">

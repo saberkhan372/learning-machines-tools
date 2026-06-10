@@ -258,3 +258,23 @@ SHARED-CONTRACT / DESIGN-SYSTEM to Field as canonical.
   (vis-card / invest-card / doc-row) carry over unchanged.
 - Final QA: a 61-page in-browser harness confirms every page renders the
   Field system with no broken stylesheets.
+
+---
+
+## Field Manual design language — polish pass — 2026-06-10
+
+The two items deferred during Phases 2 and 4:
+
+- **Numbered tool wayfinding fleet-wide.** Every tool now shows
+  "Tool NN · Session · Modality" (numbering per `tools-data.js` order) —
+  prepended to existing kickers/tags where tools already self-identified
+  (8 tool-hero kickers, the Evidence Wall tag, the prediction game panel
+  kicker, count-the-next-token's tag, the model-card and concept-bridges
+  eyebrows) and inserted as a fresh `.eyebrow` on the seven tools whose
+  headers had no label. Verified in-browser on a sample of each insertion
+  type.
+- **Compat retirement.** `session-video` and `session-showcase` tool cards
+  converted to numbered ix-rows with their session/pathway metadata in the
+  mod cell; the v1 compat block in `field-sub.css` slimmed to the section
+  heads and pathway picker/cards those pages still use. No `tool-card`
+  markup remains anywhere.
