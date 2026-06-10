@@ -12,7 +12,7 @@ Eleven single-file HTML interactive tools in `tools/*/index.html`. Each tool was
 
 ## Phase 1–7 — Visual redesign
 
-*Full plan in `REDESIGN-PLAN.md`.*
+*Full plan archived at `docs/archive/REDESIGN-PLAN.md`.*
 
 Introduced `assets/` with a shared design system (`lm.css`, `home.css`, `sub.css`, `theme.js`, `hero.js`, `app.js`, `tools-data.js`, `tweaks-panel.jsx`). Key decisions:
 
@@ -67,17 +67,51 @@ Created:
 
 ---
 
-## Remaining work (from AGENTS.md)
+## AGENTS.md task plan — final status (verified 2026-06-10)
 
 | Item | Status |
 |---|---|
-| A-T0: `docs/SHARED-CONTRACT.md` | Not yet created |
-| A-T1: Pathway pickers + session pages 2–4 | `session-images/video/showcase.html` exist but pathway pickers not verified |
-| A-T2: Worksheet nav chrome + evidence footer | Status unknown |
-| A-T3: Promote abc-board + model-card-builder | Status unknown |
-| A-T4: next-token-prediction-game build-out | Status unknown |
-| A-T5: count-the-next-token new tool | `tool-count-next-token.html` detail page exists; tool status unknown |
-| A-T6: human-as-model unplugged card | Status unknown |
-| B-T1 through B-T6 | Status unknown |
-| Stub page enrichment | Not started |
-| Smoke-test script | Not started |
+| A-T0: `docs/SHARED-CONTRACT.md` | Done — complete, live contract |
+| A-T1: Pathway pickers + session pages 2–4 | Done — all four session pages exist |
+| A-T2: Worksheet nav chrome + evidence footer | Done — all 5 worksheets |
+| A-T3: Promote abc-board + model-card-builder | Done — both `status: "ready"` |
+| A-T4: next-token-prediction-game build-out | Done — Zoom paste version with self-tests |
+| A-T5: count-the-next-token new tool | Done |
+| A-T6: human-as-model unplugged card | Done — `docs/unplugged-human-as-model.html` |
+| B-T1: evidence-wall | Done — consent banner, URL-hash export |
+| B-T2: pack viewer + 3 packs | Done — `packs/text`, `packs/images`, `packs/video` |
+| B-T3: access-tiers | Done |
+| B-T4: note-predictor (optional) | Skipped — not built |
+| B-T5: frame-by-frame-coherence-viewer (optional) | Done |
+| B-T6: pre-session-checkin | Done |
+
+---
+
+## Launch prep — 2026-06-10
+
+Pre-camp hardening pass driven by an external review of the site against the
+registered cohort:
+
+- **Zoom parser fix** — both `parsePaste()` functions (Next-Token Prediction
+  Game, Evidence Wall) now handle Zoom's real saved/copied chat format
+  (`HH:MM:SS From Name to Everyone:` header + indented message), the older
+  same-line variant, DMs, and multi-line messages, and skip reaction/reply
+  metadata. Evidence Wall attributes messages to the name captured from the
+  header. Self-tests extended with real-format fixtures.
+- **Canonical tool links** — session pages and the catalog now link every tool
+  directly at `tools/<slug>/`; landing pages remain the facilitator-context
+  route. New `pages/session-links.html` lists each session's links in
+  run-of-show order with per-session copy buttons.
+- **Worksheet export** — shared `assets/worksheet-export.js` adds Copy-as-Markdown
+  to all five worksheets; evidence-footer fields gained `data-key` so they now
+  persist to localStorage (previously silently unsaved).
+- **Homepage cleanup** — React/ReactDOM/Babel dev builds gated behind
+  `?tweaks=1` (participants load zero of it); duplicate hero stat removed; tool
+  counts fill from `tools-data.js` at runtime; universal "Launch ready" badge
+  suppressed (only non-ready statuses render a badge); simulation-first equity
+  claim moved into the hero lede.
+- **Docs pass** — QA checklist updated to match (badge rule, fonts caveat, five
+  missing tool entries, worksheet QA); session scripts now call for the
+  prediction game in the Session 1 unplugged block and the Evidence Wall in
+  debriefs and the showcase reflection; session docs link the interactive
+  worksheets; SHARED-CONTRACT marked complete with current footer markup.

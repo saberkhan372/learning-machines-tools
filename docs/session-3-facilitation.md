@@ -27,7 +27,7 @@ Core question: what changes when generation has to work across time?
 | 50-70 min | Failure analysis | Use curated clips, still frames, or optional generated video examples. Name failure modes precisely. | Mark identity drift, physics breaks, camera inconsistency, style drift, or temporal jumps. |
 | 70-90 min | Video Test Report | Ask participants to complete one A/B/C or failure-analysis section. | Share one coherence claim and one responsible-use boundary. |
 
-Optional pilot evidence move: use the A/B/C Comparison Board to document a hypothesis, one changed variable, a baseline motion prompt, one continuity anchor, and a stronger anchor or stress test. Keep real-person likeness and consent concerns visible before exporting.
+Optional pilot evidence move: use the A/B/C Comparison Board to document a hypothesis, one changed variable, a baseline motion prompt, one continuity anchor, and a stronger anchor or stress test. Keep real-person likeness and consent concerns visible before exporting. Debrief shares collected in chat can also be pasted into the Evidence Wall to put the round's observations on one screen (the consent banner applies before anything is shown or exported).
 
 ## Facilitator Prompts
 

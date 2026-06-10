@@ -54,7 +54,7 @@ The tool principle is:
 | Frame-by-Frame Coherence Viewer | Launch ready | 3 · Video |
 | A/B/C Comparison Board | Launch ready | Cross |
 | Concept Bridges | Launch ready | Cross |
-| Model Card Builder | Launch ready | Cross |
+| Model Card Builder | Launch ready | Studio |
 | Classroom Activity Builder | Launch ready | Studio |
 | Confidence Is Not Truth Explorer | Launch ready | Cross |
 | Access Tiers | Launch ready | Cross |
@@ -86,7 +86,7 @@ Canonical folders are listed in the [tool directory](tools/).
 - [`tools/video-failure-gallery-viewer/`](tools/video-failure-gallery-viewer/) — Launch ready
 - [`tools/frame-by-frame-coherence-viewer/`](tools/frame-by-frame-coherence-viewer/) — Launch ready
 
-### Cross-Session
+### Cross-Session & Studio
 
 - [`tools/abc-comparison-board/`](tools/abc-comparison-board/) — Launch ready
 - [`tools/model-card-builder/`](tools/model-card-builder/) — Launch ready
@@ -104,6 +104,8 @@ Canonical folders are listed in the [tool directory](tools/).
 
 ## Planning Docs
 
+- [Session link sheet](pages/session-links.html) — one canonical link per tool, per session
+- [Consent and recap protocol](docs/consent-recap-protocol.html)
 - [Project brief](docs/project-brief.html)
 - [Build roadmap](docs/build-roadmap.html)
 - [Pilot checklist](docs/pilot-checklist.html)
@@ -115,6 +117,7 @@ Canonical folders are listed in the [tool directory](tools/).
 - [Session 1 facilitation notes](docs/session-1-facilitation.html)
 - [Session 2 facilitation notes](docs/session-2-facilitation.html)
 - [Session 3 facilitation notes](docs/session-3-facilitation.html)
+- [Session 4 showcase script](docs/session-4-showcase.html)
 - [Launch QA checklist](docs/qa-checklist.html)
 
 ## Pilot Readiness

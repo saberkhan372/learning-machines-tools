@@ -16,8 +16,8 @@ By the end of this session you will be able to:
 - Distinguish ELIZA-style pattern matching from LLM-style prediction
 - Run a controlled A/B/C prompt experiment and make a claim based on evidence
 
-**Tools:** [Tokenizer + Temperature Visualizer](https://saberkhan372.github.io/learning-machines-tools/tools/tokenizer-temperature-visualizer/) · [ELIZA Simulator](https://saberkhan372.github.io/learning-machines-tools/tools/eliza-simulator/)
-**Worksheet:** [Text Experiment Board](../worksheets/text-experiment-board.md)
+**Tools:** [Next-Token Prediction Game](https://saberkhan372.github.io/learning-machines-tools/tools/next-token-prediction-game/) · [Tokenizer + Temperature Visualizer](https://saberkhan372.github.io/learning-machines-tools/tools/tokenizer-temperature-visualizer/) · [ELIZA Simulator](https://saberkhan372.github.io/learning-machines-tools/tools/eliza-simulator/)
+**Worksheet:** [Text Experiment Board](../worksheets/text-experiment-board/) ([printable Markdown](../worksheets/text-experiment-board.md))
 
 ---
 
@@ -62,9 +62,13 @@ Ask everyone to finish this sentence without overthinking it:
 
 > *"The coffee was hot, so she —"*
 
-Collect 5–6 responses in chat. Then ask:
+Collect responses in chat. Then copy the chat block and paste it into the
+[Next-Token Prediction Game](https://saberkhan372.github.io/learning-machines-tools/tools/next-token-prediction-game/)
+— it tallies the room's guesses into a live distribution and shows it beside a
+precomputed model top-k for the same kind of stem. Then ask:
 
 - What word did most people choose? Why?
+- Where does the room's distribution agree with the model's? Where does it differ?
 - What if I said this instead: *"The coffee was hot, so the programmer —"*
 - How did the added word change your prediction?
 
@@ -141,7 +145,7 @@ This tool shows what happens when a language model actually picks the next token
 
 ## Structured Investigation: Text Experiment Board (1:20–1:40)
 
-**Worksheet:** [Text Experiment Board](../worksheets/text-experiment-board.md)
+**Worksheet:** [Text Experiment Board](../worksheets/text-experiment-board/) ([printable Markdown](../worksheets/text-experiment-board.md))
 
 This is individual work time. Participants choose an LLM tool (ChatGPT, Claude, Gemini, etc.) and run a controlled prompt experiment, or they analyze pre-generated examples if they prefer not to use a tool directly.
 

@@ -11,25 +11,27 @@ Core question: when a language model writes, what is it actually doing?
 
 ## Materials
 
+- Next-Token Prediction Game (paste the Zoom chat block of guesses)
 - Tokenizer + Temperature Visualizer
 - ELIZA Simulator
 - Text Experiment Board
 - Optional: A/B/C Comparison Board for pilot evidence
 - AI Use + Consent Checklist
 - Optional: 3-5 pre-written sentence stems for the prediction game
+- Session link sheet (`pages/session-links.html`) — the canonical URLs to paste into chat
 
 ## Run of Show
 
 | Time | Segment | Facilitator Move | Participant Action |
 | --- | --- | --- | --- |
 | 0-5 min | Welcome and norms | Name the question: "What is the machine actually doing?" Remind everyone that direct AI use is optional. | Choose a participation pathway: use, observe, teach/design, build/code, or critical/no-AI. |
-| 5-15 min | Unplugged prediction game | Show a sentence stem and ask for likely next words. Collect several plausible answers. | Predict next words and notice how context, genre, culture, and expectation shape guesses. |
+| 5-15 min | Unplugged prediction game | Show a sentence stem and collect next-word guesses in Zoom chat. Copy the chat block and paste it into the Next-Token Prediction Game to tally the room's distribution beside the model's top-k. | Predict next words, then compare the room's distribution with the model's and notice how context, genre, culture, and expectation shape guesses. |
 | 15-35 min | Tokenizer + Temperature | Open the visualizer. Show token chunks, then run the same prompt at low and high temperature. | Notice token boundaries, probability bars, and changes between greedy and sampled output. |
 | 35-55 min | ELIZA vs. LLM | Open ELIZA. Try examples and inspect the matched rule, pattern, and response template. | Compare visible rule matching with the pre-generated LLM comparison examples. |
 | 55-75 min | Investigation | Ask participants to complete one Text Experiment Board section. | Run or analyze a text default test, prompt variation, or ELIZA comparison. |
 | 75-90 min | Debrief | Use the reflection frame: human, machine, system, ethics, pedagogy. | Share one evidence-based claim and one question. |
 
-Optional pilot evidence move: after the investigation, ask one group to enter its baseline, temperature change, and greedy/sample comparison in the A/B/C Comparison Board, then export Markdown for facilitator notes.
+Optional pilot evidence move: after the investigation, ask one group to enter its baseline, temperature change, and greedy/sample comparison in the A/B/C Comparison Board, then export Markdown for facilitator notes. Debrief claims shared in chat can also be pasted into the Evidence Wall (the consent banner applies before anything is shown on screen).
 
 ## Facilitator Prompts
 

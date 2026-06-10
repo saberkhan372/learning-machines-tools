@@ -14,7 +14,7 @@ The camp is not a prompt engineering workshop. It is an investigation into how g
 | Session | Focus | Core Question | Artifact |
 | --- | --- | --- | --- |
 | 1 | Text | How do language models generate text that feels meaningful, and what are they actually doing? | Text Experiment Board |
-| 2 | Images | How do image models turn words into pictures, and what defaults appear when prompts are vague? | Image Generation Evidence Board |
+| 2 | Images | How do image models turn words into pictures, and what defaults appear when prompts are vague? | Image Default Test Board |
 | 3 | Video | Why is video generation harder than image generation, and what does that tell us about how models work? | Video Test Report |
 | Optional Studio | Make, Teach, Investigate, Explain, or Critique | What did we learn about generative AI by making, testing, teaching, explaining, or critiquing it? | Final artifact, classroom adaptation, model-behavior investigation, explainer, or critique |
 

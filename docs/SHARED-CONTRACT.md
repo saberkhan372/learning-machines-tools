@@ -1,9 +1,9 @@
 # Learning Machines — Shared Contract
 
-> **STATUS: STUB — Agent A must complete this before any parallel work begins (A-T0).**
+> **STATUS: COMPLETE — this is the live contract for all tool and page work.** Last updated 2026-06-09.
 >
-> Both agents read this file to resolve "how do I…" questions.
-> If something is not covered here, raise it to Agent A before inventing a local answer.
+> Agents and contributors read this file to resolve "how do I…" questions.
+> If something is not covered here, raise it before inventing a local answer.
 
 ---
 
@@ -23,7 +23,7 @@ Do **not** copy tokens from any individual tool's `<style>` block — those cont
 <script src="../../assets/theme.js"></script>
 ```
 
-Adjust depth: `../../` for `tools/<slug>/` and `worksheets/<slug>/`; `../` for `docs/` and `packs/<name>/` is **wrong** — packs also need `../../`.
+Adjust depth: `../../` for `tools/<slug>/`, `worksheets/<slug>/`, and `packs/<name>/`; `../` for `docs/` and `pages/`.
 
 ### `<html>` attributes
 
@@ -117,17 +117,28 @@ Each `href` must anchor to a matching section with `id="use"`, `id="observe"`, e
 ## 4. Worksheet evidence footer
 
 Add to all 5 `worksheets/*/index.html` pages. Must be byte-identical across all five.
+The `data-key` attributes make the fields persist through each worksheet's existing
+`[data-key]` localStorage save logic and appear in the Markdown export.
 
 ```html
 <footer class="evidence-footer">
-  <label>Human decision <textarea></textarea></label>
-  <label>System factors <textarea></textarea></label>
-  <label>Ethical concern <textarea></textarea></label>
-  <label>Classroom adaptation <textarea></textarea></label>
+  <label>Human decision <textarea data-key="ev-human" aria-label="Evidence footer human decision"></textarea></label>
+  <label>System factors <textarea data-key="ev-system" aria-label="Evidence footer system factors"></textarea></label>
+  <label>Ethical concern <textarea data-key="ev-ethics" aria-label="Evidence footer ethical concern"></textarea></label>
+  <label>Classroom adaptation <textarea data-key="ev-classroom" aria-label="Evidence footer classroom adaptation"></textarea></label>
 </footer>
 ```
 
 Style in the worksheet's own `<style>` block using `lm.css` tokens.
+
+Every worksheet also links the shared export script before `</body>`:
+
+```html
+<script src="../../assets/worksheet-export.js"></script>
+```
+
+It injects a "Copy as Markdown" button into the `.controls` row and exports all
+`[data-key]` fields (textareas, checkboxes, radios) plus the evidence footer.
 
 ---
 

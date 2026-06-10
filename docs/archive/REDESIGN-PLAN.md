@@ -1,5 +1,12 @@
 # Learning Machines Redesign — Implementation Plan
 
+> **ARCHIVED — historical record (moved to `docs/archive/` 2026-06-10).**
+> This plan was fully executed: Phases 1–7 plus the stretch goals all shipped
+> (see `docs/BUILD-LOG.md`). Counts and paths below reflect the repo as it was
+> when the plan was written — e.g. 15 tool entries (now 20) and a design bundle
+> on a development machine that no longer exists. Kept as an artifact of how
+> the site was built.
+
 > **For:** Claude Code / Codex agents executing this redesign
 > **Design source:** `https://api.anthropic.com/v1/design/h/7xHPbVrz4h3k_Cld_PHTRQ` (extracted to the design bundle at `C:\Users\mrkha\.claude\projects\C--Users-mrkha-Documents-coding-learningmachines\7f4cf85d-c29a-4df4-a11b-3a37df5b78f5\design-bundle\learning-machines\project\`)
 > **Target repo:** `C:\Users\mrkha\Documents\coding\learningmachines\learning-machines-tools\`

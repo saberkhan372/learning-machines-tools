@@ -17,7 +17,7 @@ By the end of this session you will be able to:
 - Run a controlled Default Test and name what the model assumed
 
 **Tools:** [Feature Extraction / Pixel Resolution](https://saberkhan372.github.io/learning-machines-tools/tools/feature-extraction-pixel-resolution/) · [Diffusion Step-Through Viewer](https://saberkhan372.github.io/learning-machines-tools/tools/diffusion-step-through-viewer/)
-**Worksheet:** [Image Default Test Board](../worksheets/image-default-test-board.md)
+**Worksheet:** [Image Default Test Board](../worksheets/image-default-test-board/) ([printable Markdown](../worksheets/image-default-test-board.md))
 
 ---
 
@@ -153,7 +153,7 @@ Now we look at how an image model generates from a prompt. Diffusion models work
 
 ## Structured Investigation: Image Default Test Board (1:15–1:40)
 
-**Worksheet:** [Image Default Test Board](../worksheets/image-default-test-board.md)
+**Worksheet:** [Image Default Test Board](../worksheets/image-default-test-board/) ([printable Markdown](../worksheets/image-default-test-board.md))
 
 Participants run a Default Test using an image model (Midjourney, DALL-E, Stable Diffusion, Adobe Firefly, etc.) or analyze pre-generated examples.
 

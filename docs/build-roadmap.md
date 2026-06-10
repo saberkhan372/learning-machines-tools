@@ -17,7 +17,7 @@ The first repo goal is to create a static, GitHub Pages-ready tool ecosystem wit
 
 | Priority | Item | Current Repo Status | Needed Next |
 | --- | --- | --- | --- |
-| 1 | Worksheets + AI Use / Consent Checklist | Launch ready Markdown | Optional printable/PDF versions later |
+| 1 | Worksheets + AI Use / Consent Checklist | Launch ready interactive boards (localStorage persistence, Print / Save as PDF, Copy as Markdown); printable Markdown mirrors kept | Manual browser QA before session |
 | 2 | Tokenizer + Temperature Visualizer | Launch ready | Manual browser QA before session |
 | 3 | ELIZA Simulator | Launch ready | Manual browser QA before session |
 | 4 | Diffusion Step-Through Viewer | Launch ready | Add pre-generated PNG sequences later if curated assets become available |
@@ -112,7 +112,11 @@ Use pilot evidence before turning simulated examples into public galleries or ad
 | Failure Gallery Viewer | Launch-ready static gallery; future pass can add real curated clips and screenshots |
 | Prompt Guidance Word-by-Word Reveal | Launch-ready bridge activity; future pass can swap in generated image assets |
 | Frame-by-Frame Coherence Viewer | Launch-ready frame overlay tool with sample frames and upload support |
-| Next-Token Prediction Game | Launch-ready Zoom paste version |
+| Next-Token Prediction Game | Launch-ready Zoom paste version; parser handles Zoom's saved/copied chat format |
+| Count the Next Token | Launch-ready; makes the count → divide → predict arithmetic of a bigram model fully visible |
+| Evidence Wall | Launch-ready Zoom paste aggregation with consent banner and URL-hash sharing |
+| Access Tiers | Launch-ready; compares the same task across paid, free, and unplugged access |
+| Confidence Is Not Truth Explorer | Launch-ready; participants rate confidence vs. correctness, then reveal evidence |
 | Latent Space Explorer | Launch-ready; uses a lens-based map metaphor to discuss learned similarity and representation limits |
 | Dataset Balance Simulator | Launch-ready; uses simplified sliders and presets to discuss data composition, defaults, and caution |
 
@@ -133,5 +137,8 @@ Use pilot evidence before turning simulated examples into public galleries or ad
 - Open registration or capped cohort?
 - Which guest speakers for language, image generation, video, and community connection?
 - What pre-generated output sets are needed for participants without model access?
-- Should worksheets stay as Markdown, become printable PDFs, or become interactive boards?
 - Which pre-generated diffusion image sequences should replace or supplement the canvas fallback?
+
+## Answered Questions
+
+- ~~Should worksheets stay as Markdown, become printable PDFs, or become interactive boards?~~ They became interactive boards with localStorage persistence, print, and Copy-as-Markdown; the Markdown versions remain as printable mirrors.

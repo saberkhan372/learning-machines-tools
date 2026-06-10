@@ -1,6 +1,18 @@
 # Learning Machines — Agent Build Plan
 
-**Based on:** `learning-machines-DESIGN.md` (the task specification)
+> **STATUS: EXECUTED (historical).** Every task in this plan shipped except the
+> optional note-predictor (B-T4, skipped) — final status table in
+> `docs/BUILD-LOG.md`. The two-agent workflow it describes is kept as a record
+> of how the site was built.
+>
+> **For current work, the live references are:**
+> - `docs/SHARED-CONTRACT.md` — design tokens, nav chrome, multiplayer patterns, acceptance bar
+> - `docs/DESIGN-SYSTEM.md` — CSS variables, component classes, copy standards
+> - `docs/qa-checklist.md` — pre-publish QA run-through
+>
+> The conventions in §1–§2 below remain accurate; task tickets (§3–§9) are done.
+
+**Based on:** `learning-machines-DESIGN.md` (the original task specification, not kept in this repo)
 **Reconciled with:** completed redesign (`assets/lm.css` design system, Phase 1–7)
 
 **Agent A = Claude Code (Integrator)** — touches existing files, aggregators, session pages
@@ -24,7 +36,7 @@ The visual redesign is complete and verified:
 | Session 1 page | `pages/session-text.html` |
 | Tokenizer tool detail page | `pages/tool-tokenizer.html` |
 | Facilitation doc page | `pages/docs-facilitation.html` |
-| Nav chrome on all 21 tools | `tools/*/index.html` (lm.css + theme.js linked, new nav) |
+| Nav chrome on all 20 tools | `tools/*/index.html` (lm.css + theme.js linked, new nav) |
 
 ---
 

@@ -17,7 +17,8 @@ Use this before publishing or sharing the repo.
 - Open the Vocabulary Field Guide and confirm each glossary tool connection resolves.
 - Open every worksheet and project doc link.
 - Use each tool's "Back to tools" link.
-- Confirm every public tool card is labeled "Launch ready."
+- Open the Session Link Sheet (`pages/session-links.html`), confirm every link resolves, and confirm each "Copy links" button copies a paste-ready block with absolute URLs.
+- Confirm tool cards carry no status badge ("ready" is the baseline; only non-ready statuses such as "in development" render a badge).
 - Confirm the Pilot Ready path links to the pilot checklist, feedback template, and three session scripts.
 - Confirm Markdown pages render as styled HTML on GitHub Pages. When browsing locally without Jekyll, confirm the corresponding `.md` source opens instead.
 - Confirm homepage credits name classroom origins without exposing private student work and link to the consent protocol.
@@ -26,6 +27,11 @@ Use this before publishing or sharing the repo.
 
 - Tokenizer + Temperature Visualizer: run self-tests, try token examples, step next token, run auto, reset, switch greedy/sample.
 - ELIZA Simulator: run self-tests, click example prompts, inspect matched rule, review comparison examples.
+- Next-Token Prediction Game: run self-tests, then paste a chat block saved from a real Zoom call (header + indented-message format); confirm guesses tally without timestamp fragments and the room's distribution renders beside the model top-k.
+- Count the Next Token: pick a context word, watch the bigram table build, and follow the count → divide → predict arithmetic to a generated word.
+- Evidence Wall: paste a saved real-Zoom chat block; confirm tiles attribute to participant names (not "14" or "Anonymous"), the consent banner is visible, and the URL-hash export reproduces the wall.
+- Confidence Is Not Truth Explorer: rate confidence and correctness on several claims, reveal evidence, and confirm the gap between the two is made visible.
+- Access Tiers: compare the same task across paid, free, and unplugged tiers; edit the exclusion panel and print it.
 - Diffusion Step-Through Viewer: confirm self-tests pass, switch sequences, move slider from 0 to final, read prompt, annotation, facilitator, and reflection cards.
 - Feature Extraction / Pixel Resolution: switch image types, change detail level, switch Pixels/Edges/Features.
 - Default Test Comparison Viewer: switch vague prompts, compare A/B/C rows, review defaults, changes, and ethical questions, then copy or print a claim.
@@ -48,10 +54,16 @@ Use this before publishing or sharing the repo.
 - Confirm text does not overlap controls.
 - Confirm canvas tools remain usable or clearly stacked.
 
+## Worksheet QA
+
+- For each of the five worksheets: fill a field, reload the page, and confirm the entry was restored from localStorage.
+- Use Copy as Markdown and confirm the pasted block includes filled fields, checkbox states, and the evidence footer.
+- Use Print / Save as PDF and confirm controls are hidden in the print layout.
+
 ## Offline QA
 
 - Confirm no launch tool requires an account, API key, npm install, build step, or live model.
-- Confirm launch tools do not depend on external scripts, fonts, or images.
+- Confirm launch tools load no external scripts and need no external images. Google Fonts is the one allowed external request; confirm tools remain fully usable when `fonts.googleapis.com` is blocked (system-ui fallback).
 
 ## Facilitation QA
 

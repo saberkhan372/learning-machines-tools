@@ -28,6 +28,10 @@
 
 <!-- Agent B: append your entries below this line -->
 
+> **QUEUE CLEAR (2026-06-10):** every entry below has been integrated — wired
+> into `tools-data.js`, `index.html`, and the session pages as described. The
+> queue stays open for future tool work.
+
 ## Text Prompt Pack
 
 - **Path:** packs/text/index.html

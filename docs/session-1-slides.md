@@ -71,7 +71,7 @@ You choose how to participate. Every pathway is valid.
 
 Type your answer in chat.
 
-*Speaker note: Collect 5–6 responses. Ask: what word did most people choose? Why? This is exactly what a language model does — at scale, for every token, using patterns from billions of sentences.*
+*Speaker note: Collect the responses, copy the chat block, and paste it into the Next-Token Prediction Game (https://saberkhan372.github.io/learning-machines-tools/tools/next-token-prediction-game/). It tallies the room's distribution and shows it beside a precomputed model top-k. Ask: what word did most people choose? Why? Where do we agree with the model? This is exactly what a language model does — at scale, for every token, using patterns from billions of sentences.*
 
 ---
 

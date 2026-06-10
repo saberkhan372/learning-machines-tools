@@ -8,7 +8,7 @@
 
 ## What We'll Do
 
-The optional studio is the showcase. There are no tools and no new concepts. Participants share what they built, found, or made across the three sessions. We close with a collective reflection and a short closing ritual.
+The optional studio is the showcase. There are no new concepts. Participants share what they built, found, or made across the three sessions. We close with a collective reflection — collected on the [Evidence Wall](https://saberkhan372.github.io/learning-machines-tools/tools/evidence-wall/) — and a short closing ritual.
 
 By the end of this session participants will have:
 - Presented their final project in 8–10 minutes
@@ -101,7 +101,7 @@ Go around the group. Each person completes one sentence:
 
 > *"I am taking back ___."*
 
-No follow-up, no elaboration. The facilitator writes these in the shared notes or Notion workspace.
+No follow-up, no elaboration. Ask everyone to also type their sentence into Zoom chat, then paste the chat block into the [Evidence Wall](https://saberkhan372.github.io/learning-machines-tools/tools/evidence-wall/) — the round becomes a tiled wall on screen, attributed by name. The consent banner applies: mark tiles private before exporting or screenshotting anything for the recap.
 
 ### Round 2: One question you are still holding (5 min)
 
@@ -109,7 +109,7 @@ Same structure. Each person completes:
 
 > *"I am still wondering ___."*
 
-These questions become the shared open archive of the cohort.
+Collect these in chat and paste them into the same Evidence Wall. These questions become the shared open archive of the cohort — the wall's share link reproduces it for the recap (public tiles only).
 
 ### Round 3: What the machine can't do (10 min)
 
@@ -152,7 +152,7 @@ At the end of the session, facilitator collects:
 - Permission to link or describe the project in the camp recap
 - Any follow-up interest (continued collaboration, second cohort, tool feedback)
 
-Use the [AI Use + Consent Checklist](../worksheets/ai-use-consent-checklist.md) to confirm consent before publishing anything.
+Use the [AI Use + Consent Checklist](../worksheets/ai-use-consent-checklist/) to confirm consent before publishing anything.
 
 ---
 

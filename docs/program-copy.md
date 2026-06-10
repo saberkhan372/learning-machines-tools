@@ -161,7 +161,7 @@ Ethics is structural, not topical. It appears in every session, every tool, and 
 
 #### Tools
 
-All tools are single-file HTML, offline-friendly, and hosted on GitHub Pages. No accounts required.
+All tools are single-file HTML, offline-friendly, and hosted on GitHub Pages. No accounts required. The ecosystem includes twenty launch-ready tools; highlights include:
 
 - **Tokenizer + Temperature Visualizer** — makes tokenization, probability, and temperature visible (Session 1)
 - **ELIZA Simulator** — makes rule-based AI legible and contrasts it with LLM prediction (Session 1)

@@ -28,7 +28,7 @@ Core question: when a model sees or generates an image, what is it actually work
 | 45-70 min | Default Test | Introduce a vague prompt such as "a doctor," "a classroom," or "a beautiful home." | Generate, observe, or critique outputs and fill the Image Default Test Board. |
 | 70-90 min | Debrief | Ask what the system filled in without being asked and where those defaults may come from. | Share one observed default and one responsible revision. |
 
-Optional pilot evidence move: use the A/B/C Comparison Board to compare a vague prompt, one added detail, and a responsible revision. Export only examples that have been reviewed for consent and attribution.
+Optional pilot evidence move: use the A/B/C Comparison Board to compare a vague prompt, one added detail, and a responsible revision. Export only examples that have been reviewed for consent and attribution. Debrief shares collected in chat can also be pasted into the Evidence Wall to put the round's observations on one screen (the consent banner applies before anything is shown or exported).
 
 ## Facilitator Prompts
 
