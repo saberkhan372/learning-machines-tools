@@ -9,7 +9,12 @@
 
 ## 1. Design token source of truth
 
-**Canonical file:** `assets/lm.css`
+> **Field Manual rollout (2026-06-10):** pages migrated to the second-generation
+> design system follow `docs/FIELD-MANUAL-REDESIGN.md` (tokens in
+> `assets/field.css`, tool shim in `assets/field-tool.css`) instead of this
+> section. This section governs unmigrated pages until the rollout completes.
+
+**Canonical file (unmigrated pages):** `assets/lm.css`
 
 Do **not** copy tokens from any individual tool's `<style>` block — those contain tool-specific overrides, not the canonical values.
 

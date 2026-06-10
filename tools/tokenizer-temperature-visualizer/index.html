@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="text">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tokenizer + Temperature Visualizer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/lm.css">
-  <script src="../../assets/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <script src="../../assets/field-theme.js"></script>
 <style>
   :root {
     --panel: var(--surface);
     --mid: var(--muted);
-    --accent-soft: #dbeafe;
-    --accent-dark: #1d4ed8;
     --warm: var(--surface-2);
     --warm-border: var(--line);
     --generated-bg: #ecfdf5;
     --generated-border: #a7f3d0;
-    --radius: 14px;
+    --radius: 2px;
     --tc0: #dbeafe; --tc0t: #1e40af;
     --tc1: #fce7f3; --tc1t: #9d174d;
     --tc2: #dcfce7; --tc2t: #166534;
@@ -67,17 +66,7 @@
     padding: 0 24px;
   }
 
-  .notice-inner {
-    background: var(--warm);
-    border: 1px solid var(--warm-border);
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 0.88rem;
-    color: #6b5311;
-    max-width: 780px;
-  }
-
-  .notice-inner strong { color: #4a3808; }
+  .notice-inner { max-width: 780px; }
 
   /* ── MODE TABS ── */
   .mode-tabs {
@@ -102,7 +91,7 @@
   .mode-tab:first-child { border-radius: var(--radius) 0 0 var(--radius); }
   .mode-tab:last-child  { border-radius: 0 var(--radius) var(--radius) 0; border-left: 0; }
 
-  .mode-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .mode-tab.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
   .mode-tab:not(.active):hover { color: var(--ink); background: var(--surface-2); }
 
   /* ── PANELS ── */
@@ -196,7 +185,7 @@
     left: 50%;
     transform: translateX(-50%);
     background: var(--ink);
-    color: #fff;
+    color: var(--bg);
     font-size: 0.66rem;
     font-weight: 500;
     padding: 3px 7px;
@@ -385,11 +374,11 @@
   .btn:active { transform: scale(0.97); }
   .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-  .btn-accent { background: var(--accent); color: #fff; }
-  .btn-accent:hover:not(:disabled) { background: var(--accent-dark); box-shadow: 0 4px 12px rgba(37,99,235,0.25); }
+  .btn-accent { background: var(--accent); color: var(--bg); }
+  .btn-accent:hover:not(:disabled) { background: var(--accent-dark); }
 
-  .btn-dark { background: var(--ink); color: #fff; }
-  .btn-dark:hover:not(:disabled) { box-shadow: 0 4px 12px rgba(28,32,40,0.2); }
+  .btn-dark { background: var(--ink); color: var(--bg); }
+  .btn-dark:hover:not(:disabled) { opacity: 0.85; }
 
   .btn-ghost { background: var(--surface-2); color: var(--ink); }
   .btn-ghost:hover:not(:disabled) { background: #dfe2e8; }
@@ -567,20 +556,21 @@
     <div class="wrap nav-inner">
       <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../../index.html#tools" class="hide-sm">Tools</a>
-        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
-        <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
+        <a href="../../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../../pages/session-text.html" class="hide-sm">Session 1</a>
+        <a class="btn btn-sm" href="../../pages/tool-tokenizer.html">Tool notes</a>
       </div>
     </div>
   </nav>
 
-<div class="site-header">
+<div class="tool-mast site-header">
+  <p class="eyebrow"><i class="modsq"></i>Tool 01 · Session 1 · Text · Teaching model</p>
   <h1>Tokenizer + Temperature Visualizer</h1>
-  <p class="subtitle">How language models break text into tokens and sample what comes next — Session 1</p>
+  <p class="subtitle">How language models break text into tokens and sample what comes next.</p>
 </div>
 
-<div class="notice-wrap">
-  <div class="notice-inner">
+<div class="tool-notice notice-wrap">
+  <div class="tool-notice-inner notice-inner">
     <strong>Teaching model.</strong> This visualizer uses curated examples, not a live LLM. Distributions are hand-authored so the mechanism stays visible, reliable, and discussable in a classroom.
   </div>
 </div>

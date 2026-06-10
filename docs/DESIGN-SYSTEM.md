@@ -1,6 +1,14 @@
 # Learning Machines — Design System Reference
 
-Quick lookup for agents and contributors. The canonical source is `assets/lm.css`.
+> **TRANSITION NOTE (2026-06-10):** a second-generation "Field Manual" design
+> language is rolling out — see `docs/FIELD-MANUAL-REDESIGN.md` for tokens,
+> the per-tool migration recipe, and phase status. This document remains
+> accurate for **unmigrated** pages (everything still on `lm.css`/`theme.js`).
+> Migrated pages (currently: the Tokenizer tool) use `assets/field.css` +
+> `assets/field-tool.css` + `assets/field-theme.js` instead. Build new tools
+> on Field directly.
+
+Quick lookup for agents and contributors. The canonical source for unmigrated pages is `assets/lm.css`.
 
 ---
 

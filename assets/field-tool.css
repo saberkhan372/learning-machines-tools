@@ -1,0 +1,78 @@
+/* ============================================================
+   Learning Machines — Field Manual tool shim
+   Drop-in adapter for the interactive tools in tools/*.
+   Load AFTER field.css. Maps the legacy lm.css token names
+   (which every tool's inline styles consume) onto Field tokens,
+   so tool internals restyle themselves without a rewrite.
+
+   Migration per tool:
+   1. <html lang="en" data-tone="white" data-type="signage"
+            data-ink="full" data-mod="text|image|video|cross">
+   2. Swap font link to Newsreader + Archivo + IBM Plex Mono.
+   3. Replace lm.css/theme.js links with:
+        ../../assets/field.css
+        ../../assets/field-tool.css
+        ../../assets/field-theme.js
+   4. In the tool's own :root{}: set --radius: 2px, drop box-shadows.
+   5. Swap the nav block for the standard Field nav chrome.
+   ============================================================ */
+
+:root {
+  /* legacy lm.css surface tokens → field tokens */
+  --bg-2: var(--bg);
+  --line: var(--rule);
+  --line-soft: var(--rule-soft);
+  --ink-dim: var(--ink-soft);
+  --shadow: none;
+
+  /* accent: overridden by data-mod below */
+  --accent: var(--ink);
+  --accent-2: var(--m-cross);
+
+  /* derived accent shades tools commonly hardcode */
+  --accent-soft: color-mix(in oklab, var(--accent) 11%, var(--bg));
+  --accent-dark: color-mix(in oklab, var(--accent) 85%, var(--ink));
+}
+
+html[data-mod="text"]  { --accent: var(--m-text); }
+html[data-mod="image"] { --accent: var(--m-image); }
+html[data-mod="video"] { --accent: var(--m-video); }
+html[data-mod="cross"] { --accent: var(--m-cross); }
+
+/* standard tool masthead (used when migrating .site-header markup) */
+.tool-mast {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(22px, 3.5vw, 36px) 24px 0;
+}
+.tool-mast .eyebrow { margin-bottom: 12px; }
+.tool-mast .eyebrow .modsq { background: var(--accent); }
+.tool-mast h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  max-width: 22ch;
+}
+.tool-mast .subtitle {
+  margin-top: 10px;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.55;
+  max-width: 62ch;
+}
+
+/* standard teaching-model notice */
+.tool-notice {
+  max-width: 1280px;
+  margin: 16px auto 0;
+  padding: 0 24px;
+}
+.tool-notice-inner {
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 780px;
+}
+.tool-notice-inner strong { color: var(--ink); font-weight: 600; }

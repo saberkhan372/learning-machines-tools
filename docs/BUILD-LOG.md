@@ -115,3 +115,36 @@ registered cohort:
   prediction game in the Session 1 unplugged block and the Evidence Wall in
   debriefs and the showcase reflection; session docs link the interactive
   worksheets; SHARED-CONTRACT marked complete with current footer markup.
+
+---
+
+## Field Manual design language — Phase 1 — 2026-06-10
+
+Second-generation design language from a Claude Design handoff ("Design
+Language Refresh"): a **field manual / curriculum print** system — warm
+paper/white tones, hairline rules, square corners, Newsreader/Archivo/IBM Plex
+Mono, four modality inks as wayfinding — replacing the v1 dark "lab" theme
+over a phased rollout. Full plan: `docs/FIELD-MANUAL-REDESIGN.md`.
+
+Shipped in this phase:
+
+- Six shared assets copied from the handoff bundle into `assets/`:
+  `field.css` (core tokens + components), `field-tool.css` (drop-in shim that
+  remaps legacy `lm.css` token names so tool internals restyle without a
+  rewrite; migration recipe in its header), `field-theme.js` (tone/type/ink
+  loader), plus `field-home.css`, `field-sub.css`, `field-app.js` staged for
+  Phases 3–4.
+- **Tokenizer + Temperature Visualizer migrated** as the worked example —
+  the handoff's own scope. Head swap to Field assets and fonts, `data-mod="text"`
+  modality ink, `--radius: 2px`, hardcoded blues/shadows/`#fff` removed
+  (this clears the pre-redesign `:root` values AGENTS.md had flagged), Field
+  nav chrome with repo-correct links, `.tool-mast` masthead + `.tool-notice`
+  teaching-model disclosure.
+- Verified in-browser: both tabs work, 7/7 self-tests pass, zero console
+  errors, zero failed requests.
+
+**Key decision:** the two systems coexist during rollout. Migrated pages key
+off `data-tone/type/ink` (`field-theme.js`); unmigrated pages keep
+`data-theme/font` (`theme.js`). Different localStorage namespaces, no
+collisions. SHARED-CONTRACT governs unmigrated pages until Phase 5 flips the
+canonical system.
