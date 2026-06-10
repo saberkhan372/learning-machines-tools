@@ -5,14 +5,12 @@ title: Field Manual Redesign — Rollout Plan
 
 # Field Manual Redesign — Rollout Plan
 
-> **STATUS: IN PROGRESS.** Phases 1–4 shipped 2026-06-10: the shared assets,
-> **the entire tool fleet** (20 tools + 6 concept-bridge pages), **the
-> homepage**, and **all subpages** (sessions, tool landing pages, docs pages,
-> link sheet, guides, packs). Phase 5 (worksheets, lm.css retirement,
-> contract flip) is planned below. During the
-> rollout the site intentionally runs two design systems side by side — see
-> "Coexistence" — so each phase can ship independently without breaking
-> unmigrated pages.
+> **STATUS: COMPLETE.** All five phases shipped 2026-06-10. Every served page
+> — homepage, 4 session pages, 12 tool landing pages, all docs pages, the 20
+> tools + 6 concept bridges, 5 worksheets, and 3 prompt packs — is on the
+> Field Manual system. The v1 dark-lab assets are archived in
+> `assets/archive/`; `docs/SHARED-CONTRACT.md` and `docs/DESIGN-SYSTEM.md`
+> now document Field as canonical. This file remains as the rollout record.
 
 ## What this is
 
@@ -168,13 +166,19 @@ safer done tool-by-tool than scripted.
 ix-rows and retire the v1 compat block in `field-sub.css`; `packs/_template.html`
 (dev reference, not user-facing) still carries v1 markup.
 
-### Phase 5 — Worksheets, packs, and adoption
+### Phase 5 — Worksheets, packs, and adoption ✅ 2026-06-10
 
-- [ ] Worksheets + prompt packs migrate last (print styles need care)
-- [ ] Flip canonical: update `docs/SHARED-CONTRACT.md` and
-      `docs/DESIGN-SYSTEM.md` so Field tokens are the documented source of
-      truth; retire `lm.css`/`theme.js` from served pages; archive v1 assets
-- [ ] Full `docs/qa-checklist.md` pass across tones
+- [x] 5 worksheets + `packs/_template.html` migrated via the token shim;
+      localStorage persistence, Copy-as-Markdown, and print all verified intact
+- [x] v1 assets archived to `assets/archive/` (`lm.css`, `theme.js`,
+      `home.css`, `sub.css`, `app.js`, `hero.js`) after confirming zero live
+      references; `tool-lab.css` stays (var-driven, resolves through the shim)
+- [x] `docs/SHARED-CONTRACT.md` flipped: Field head block, html attributes,
+      token table, Field nav chrome, tone-based acceptance bar
+- [x] `docs/DESIGN-SYSTEM.md` rewritten for Field (tones, inks, type voices,
+      stylesheet roles, class reference, copy standards carried over)
+- [x] Full-site QA harness: **all 61 pages** verify Field rendering with no
+      broken stylesheets; worksheet functionality re-verified end-to-end
 
 ## Coexistence during rollout
 

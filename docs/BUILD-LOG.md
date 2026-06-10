@@ -236,3 +236,25 @@ With Phases 1–4 complete the participant-facing site is fully in the new
 language. Remaining for Phase 5: worksheets + pack template, retiring
 `lm.css`/`theme.js`/`home.css`/`sub.css` from served pages, and flipping
 SHARED-CONTRACT / DESIGN-SYSTEM to Field as canonical.
+
+---
+
+## Field Manual design language — Phase 5 (complete) — 2026-06-10
+
+**The rollout is finished.** Every served page is on Field Manual.
+
+- The 5 worksheets and `packs/_template.html` migrated via the token shim;
+  localStorage persistence, Copy-as-Markdown, and print verified intact
+  afterward.
+- v1 assets archived to `assets/archive/` (`lm.css`, `theme.js`, `home.css`,
+  `sub.css`, `app.js`, `hero.js`) after a zero-reference check.
+  `tool-lab.css` remains live — fully var-driven, it resolves through the
+  Field shim.
+- `docs/SHARED-CONTRACT.md` flipped to Field: head block, html attributes
+  (`data-tone/type/ink` + `data-mod`), Field token table with the
+  legacy-name note, Field nav chrome, tone-based acceptance bar.
+- `docs/DESIGN-SYSTEM.md` rewritten for Field: tone tables, modality inks,
+  type voices, stylesheet roles, class reference; the v1 copy standards
+  (vis-card / invest-card / doc-row) carry over unchanged.
+- Final QA: a 61-page in-browser harness confirms every page renders the
+  Field system with no broken stylesheets.

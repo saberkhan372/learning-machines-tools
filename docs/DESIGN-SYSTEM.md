@@ -1,156 +1,139 @@
 # Learning Machines — Design System Reference
 
-> **TRANSITION NOTE (2026-06-10):** a second-generation "Field Manual" design
-> language is rolling out — see `docs/FIELD-MANUAL-REDESIGN.md` for tokens,
-> the per-tool migration recipe, and phase status. This document remains
-> accurate for **unmigrated** pages (everything still on `lm.css`/`theme.js`:
-> the homepage, `pages/`, docs pages, worksheets, and packs). **All 20 tools
-> and the six concept-bridge pages are migrated** and use `assets/field.css` +
-> `assets/field-tool.css` + `assets/field-theme.js` instead. Build new tools
-> on Field directly.
+> **Field Manual system (canonical as of 2026-06-10).** The full rollout
+> record, migration recipe, and provenance live in
+> `docs/FIELD-MANUAL-REDESIGN.md`. The v1 dark-lab system (`lm.css` and
+> friends) is archived in `assets/archive/`; legacy token names still resolve
+> through the `assets/field-tool.css` shim so old inline styles don't break.
 
-Quick lookup for agents and contributors. The canonical source for unmigrated pages is `assets/lm.css`.
+Quick lookup for agents and contributors. The canonical source is `assets/field.css`.
 
 ---
 
 ## HTML conventions
 
-Every page (tools, pages, worksheets) must have:
+Every page must have:
 
 ```html
-<html lang="en" data-theme="dark" data-font="lab">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full">
 ```
 
-`assets/theme.js` overrides these from `localStorage` on load — always run it in `<head>`.
+Tools and worksheets add `data-mod="text|image|video|cross"` for the modality
+ink. `assets/field-theme.js` overrides tone/type/ink from `localStorage` on
+load — always run it in `<head>`.
 
 ---
 
-## Dark theme CSS custom properties
+## Tones (`html[data-tone]`)
 
-Defined in `assets/lm.css` under `:root, html[data-theme="dark"]`.
-
-| Token | Dark | Paper | Light |
+| Token | paper | white (default) | slate |
 |---|---|---|---|
-| `--bg` | `#0e0f13` | `#f3ecdd` | `#ffffff` |
-| `--bg-2` | `#121319` | `#f7f0e3` | `#f9fafb` |
-| `--surface` | `#16181f` | `#fffaf1` | `#ffffff` |
-| `--surface-2` | `#1c1f28` | `#f5edde` | `#f3f4f6` |
-| `--line` | `#2a2e39` | `#ddd0bb` | `#e4e7ec` |
-| `--line-soft` | `#21242d` | `#e8dccc` | `#eef0f3` |
-| `--ink` | `#e8e6df` | `#20201d` | `#111418` |
-| `--ink-dim` | `#c6c5bd` | `#3a3830` | `#3a3d45` |
-| `--muted` | `#9197a3` | `#6f675b` | `#5b6573` |
-| `--accent` | `#5eead4` | `#0f766e` | `#0d9488` |
-| `--accent-2` | `#c084fc` | `#7c3aed` | `#7c3aed` |
+| `--bg` | `#f2ebdc` | `#fcfcfa` | `#1a1b1e` |
+| `--surface` | `#f9f4e7` | `#ffffff` | `#202125` |
+| `--surface-2` | `#ece4d2` | `#f1f1ec` | `#28292e` |
+| `--ink` | `#23201a` | `#191a1c` | `#e9e6dd` |
+| `--ink-soft` | `#454034` | `#3c3e42` | `#c9c6bc` |
+| `--muted` | `#6e6757` | `#67696e` | `#94917f` |
+| `--rule` | `#cfc2a6` | `#d4d4cc` | `#45443d` |
+| `--rule-soft` | `#ddd2ba` | `#e4e4dd` | `#34332e` |
+
+## Modality inks
+
+| Token | Hue | Used for |
+|---|---|---|
+| `--m-text` | printed blue | Session 1 / text tools |
+| `--m-image` | printed rust | Session 2 / image tools |
+| `--m-video` | printed green | Session 3 / video tools |
+| `--m-cross` | printed violet | Cross-session & studio |
+
+Each has a `-tint` variant for backgrounds. `html[data-ink="subtle"]`
+collapses all four to ink. On tools, `--accent` derives from `data-mod`
+via `field-tool.css`.
 
 **Rules for tool inline styles:**
-- Do NOT override `--bg`, `--ink`, `--accent`, `--muted`, or `--line` in a tool's `:root{}`.
-- Do NOT set `body { background: ... }` or `body { color: ... }` — `lm.css` handles those.
-- Do NOT re-declare font families. Use `var(--font-display)`, `var(--font-body)`, `var(--font-mono)`.
+- Do NOT override `--bg`, `--ink`, `--accent`, `--muted`, `--rule`/`--line` in a tool's `:root{}`.
+- Do NOT set `body { background/color/font-family }` — `field.css` handles those.
+- Square corners: `--radius: 2px`; no box-shadows (the shim zeroes `--shadow*`).
 - You MAY define tool-specific tokens that don't clash (e.g. `--grid-cell-size`).
 
 ---
 
-## Font pairings
+## Type voices (`html[data-type]`)
 
-| `data-font` | `--font-display` | `--font-body` | `--font-mono` |
+| `data-type` | `--font-display` | `--font-body` | `--font-mono` |
 |---|---|---|---|
-| `lab` (default) | Space Grotesk 600 | DM Sans | IBM Plex Mono |
-| `editorial` | Instrument Serif 400 | DM Sans | IBM Plex Mono |
-| `plain` | Hanken Grotesk 700 | Hanken Grotesk | IBM Plex Mono |
+| `field` | Newsreader 500 (serif) | Archivo | IBM Plex Mono |
+| `signage` (default) | Archivo 700 | Archivo | IBM Plex Mono |
 
-Google Fonts link (put in every `<head>`, before `lm.css`):
+Google Fonts link (put in every `<head>`, before `field.css`):
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 ```
 
 ---
 
-## Asset depth by file location
+## Stylesheet roles & asset depth
 
-| File location | Asset path prefix | Home link |
+| File | Role |
+|---|---|
+| `assets/field.css` | Core: tokens, base, nav, buttons, stamps, plates, index rows, doc lists, footer |
+| `assets/field-tool.css` | Tool/worksheet shim: legacy token map, modality accent, `.tool-mast`, `.tool-notice` |
+| `assets/field-sub.css` | Subpage templates: session, tool-detail, docs (+ v1 compat block) |
+| `assets/field-home.css` | Homepage: hero plates, ledger, catalog |
+| `assets/field-theme.js` | Tone/type/ink loader (localStorage keys `lm-tone`, `lm-type`, `lm-ink`) |
+| `assets/field-app.js` | Homepage tool index: rows, filters, search, counts |
+
+| File location | Asset prefix | Home link |
 |---|---|---|
-| `tools/<slug>/index.html` | `../../assets/` | `../../index.html` |
-| `worksheets/<slug>/index.html` | `../../assets/` | `../../index.html` |
-| `pages/*.html` | `../assets/` | `../index.html` |
-| `docs/*.html` | `../assets/` | `../index.html` |
+| `tools/<slug>/`, `worksheets/<slug>/`, `packs/<name>/` | `../../assets/` | `../../index.html` |
+| `tools/concept-bridges/<slug>/` | `../../../assets/` | `../../../index.html` |
+| `pages/`, `docs/` | `../assets/` | `../index.html` |
 
 ---
 
-## Standard nav chrome
-
-For `tools/` and `worksheets/` (depth `../../`):
-
-```html
-<nav class="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
-    <div class="nav-links">
-      <a href="../../index.html#tools" class="hide-sm">Tools</a>
-      <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
-      <a class="btn btn-ghost btn-sm nav-cta" href="../../index.html">← All tools</a>
-    </div>
-  </div>
-</nav>
-```
-
----
-
-## Key CSS classes (lm.css + sub.css)
+## Key CSS classes
 
 | Class | Purpose |
 |---|---|
-| `.wrap` | `min(1200px, 100%-48px)` centered container |
-| `.section` | `clamp(48px,8vw,96px)` vertical padding |
-| `.section-tight` | Smaller vertical padding |
-| `.reveal` → `.reveal.in` | Scroll-reveal (JS adds `.in`) |
-| `.btn.btn-primary` | Teal filled button |
-| `.btn.btn-ghost` | Bordered ghost button |
-| `.btn.btn-sm` | Small variant |
-| `.card` | Surface + border + 16px border-radius |
-| `.chip` | Mono label pill |
-| `.status.ready` | Green dot + "Launch ready" chip |
-| `.status.draft` | Legacy warm-dot nonlaunch chip |
-| `.status.future` | Legacy faint-dot roadmap chip |
-| `.eyebrow` | Mono uppercase label with leading rule |
-| `.mono` | IBM Plex Mono font class |
-| `.tok.c0`–`.tok.c5` | 6-color rotating token chips |
+| `.wrap` | `min(1160px, 100% - 48px)` centered container |
+| `.section` / `.section-tight` | Vertical rhythm |
+| `.sec-rule` + `.sec-no` + `.sec-note` | Ruled § section heads |
+| `.eyebrow` | Mono uppercase label |
+| `.btn` / `.btn-primary` / `.btn-sm` | Mono uppercase buttons, square |
+| `.stamp` (`.ready` `.draft` `.future`) | Bordered mono status stamps — ready is the baseline and renders **no** stamp on catalog rows |
+| `.modsq` (`.text` `.image` `.video` `.cross`) | 9px modality squares |
+| `.plate` + `.plate-cap` + `.plate-claim` | "Fig." figure plates |
+| `.ix-row` (`.ix-no` `.ix-name` `.ix-blurb` `.ix-mod`) | Ruled index rows (catalog + session tool lists) |
+| `.doc-row` / `.doc-list` / `.doc-cols` | Ruled document lists |
+| `.sub-hero` + `.crumb` + `.sess-*` | Subpage heroes |
+| `.throughline` / `.ros` / `.prompts` | Session-page patterns |
+| `.vis-card` / `.invest-card` | Tool-detail "Fig." panels + investigation cards |
+| `.tool-mast` / `.tool-notice` | Tool masthead + teaching-model disclosure |
 
 ---
 
-## Tool detail page structure (pages/tool-*.html)
+## Copy standards (unchanged from v1)
 
-Sections in order:
+### vis-card copy
+Body text must describe what the tool screen literally shows — not what the
+concept is in the abstract. Reference the specific UI element, count, label,
+or visual pattern.
 
-1. `<nav class="nav">` — site nav
-2. `<header class="sub-hero">` — `.crumb` + `.tool-hero-grid` (hero + iframe preview)
-3. Section A `.section-tight` — `.visible-grid` of `.vis-card` — "What it makes visible" (3 cards)
-4. Section B `.section` — `.invest` of `.invest-card` — "How to investigate it" (4 cards)
-5. Section C `.section-tight` — `.prompts` of `.prompt` — "Debrief questions" (4 items)
-6. `.section-tight` — `.doc-cols` with two `.doc-group` / `.doc-list` / `.doc-row` groups
-7. `.section-tight` — `.pager` (prev/next)
-8. `<footer class="footer">`
+### invest-card `eg`
+The `.eg` field must contain a concrete data example from the tool: a token
+name with a percentage, a frame number with a failure category, a specific
+prompt string. Not a meta-description.
 
-### vis-card copy standard
-Body text must describe what the tool screen literally shows — not what the concept is in the abstract. Reference the specific UI element, count, label, or visual pattern.
-
-### invest-card `eg` standard
-The `.eg` field must contain a concrete data example from the tool: a token name with a percentage, a frame number with a failure category, a specific prompt string. Not a meta-description.
-
-### doc-row "Use it in context" standard
-Each of the three doc-rows (session, facilitation, worksheet) must name the specific activity content for that tool — not a generic phrase that would apply to any tool on the site.
+### doc-row "Use it in context"
+Each doc-row must name the specific activity content for that tool — not a
+generic phrase that would apply to any tool on the site.
 
 ---
 
-## Semantic color tints for dark mode
+## Semantic colors
 
-Do not use `var(--surface)` for cards that need to communicate a semantic category (error, warning, info). Use rgba tints:
-
-| Category | Background | Text color |
-|---|---|---|
-| Red / error | `rgba(220,38,38,0.12)` | `#fca5a5` |
-| Amber / warning | `rgba(245,158,11,0.12)` | `#fcd34d` |
-| Blue / info | `rgba(37,99,235,0.12)` | `#93c5fd` |
-| Green / success | `rgba(22,163,74,0.12)` | `#6ee7b7` |
-| Purple | `rgba(124,58,237,0.12)` | `#c4b5fd` |
+States ride the modality inks (mapped in `field-tool.css`): success/ok →
+`--m-video` green, warm/warning → `--m-image` rust, cross-purpose accents →
+`--m-cross` violet. Tag/chip palettes use the `-tint` variants. Avoid
+introducing new hues — the four inks are the palette.
