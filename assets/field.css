@@ -361,3 +361,14 @@ b, strong { font-weight: 600; }
   .doc-row { flex-direction: column; gap: 3px; }
   .doc-row .d-desc { text-align: left; }
 }
+
+/* ---------------- small screens (≤560px) ---------------- */
+@media (max-width: 560px) {
+  .sec-rule { flex-wrap: wrap; gap: 4px 24px; }
+  .sec-rule .sec-no { white-space: normal; flex: 0 1 auto; }
+  .sec-rule .sec-note { text-align: left; }
+  .nav-inner { gap: 12px; }
+  .nav-links { gap: 12px; }
+  .brand { font-size: 14px; }
+  .nav-links .btn { padding: 7px 10px; font-size: 11px; letter-spacing: 0.02em; }
+}

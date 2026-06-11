@@ -482,7 +482,7 @@
   .vis-card { border-left: 0; }
   .vis-card + .vis-card { border-top: 1px solid var(--rule); }
   .invest { grid-template-columns: 1fr 1fr; }
-  .docs-layout { grid-template-columns: 1fr; }
+  .docs-layout { grid-template-columns: minmax(0, 1fr); }
   .toc { position: static; border-top: 0; padding-top: 0; border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
   .toc nav { flex-direction: row; flex-wrap: wrap; gap: 2px 14px; }
   .toc a { border-left: 0; padding-left: 0; }
@@ -510,7 +510,12 @@
 .section-head-sm h2 { font-size: clamp(22px, 3vw, 30px); }
 h1 .accent, h2 .accent, .accent { color: var(--mink, var(--accent, var(--ink))); }
 
-.tool-list .ix-row { grid-template-columns: 48px minmax(0, 1.5fr) minmax(0, 2fr) 170px; }
+@media (min-width: 961px) {
+  .tool-list .ix-row { grid-template-columns: 48px minmax(0, 1.5fr) minmax(0, 2fr) 170px; }
+}
+@media (max-width: 960px) {
+  .tool-list .ix-mod { grid-column: 2 / -1; white-space: normal; }
+}
 
 .pathway-picker { display: flex; flex-wrap: wrap; gap: 8px; }
 .pathway-picker a { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--rule); padding: 8px 14px; }
@@ -520,3 +525,9 @@ h1 .accent, h2 .accent, .accent { color: var(--mink, var(--accent, var(--ink)));
 .pathway-card h3, .pathway-card h4 { font-size: 16px; }
 .pathway-card p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
 .pc-k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+/* docs tables scroll within the page instead of widening it */
+@media (max-width: 760px) {
+  .prose table { display: block; overflow-x: auto; max-width: 100%; }
+  .section-head-sm { flex-wrap: wrap; }
+}
