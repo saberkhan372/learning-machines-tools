@@ -124,17 +124,20 @@ html[data-mod="cross"] { --accent: var(--m-cross); }
 
 /* subtle sampled-color wash for migrated tools and worksheet-style pages */
 .tool-shell,
-body > .wrap > header:first-child {
+body > .wrap > header:first-child,
+body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):not(.sub-hero) {
   position: relative;
   isolation: isolate;
 }
 .tool-shell > *,
-body > .wrap > header:first-child > * {
+body > .wrap > header:first-child > *,
+body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):not(.sub-hero) > * {
   position: relative;
   z-index: 1;
 }
 .tool-shell::before,
-body > .wrap > header:first-child::before {
+body > .wrap > header:first-child::before,
+body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):not(.sub-hero)::before {
   content: "";
   position: absolute;
   inset: 0 0 auto;
@@ -154,7 +157,8 @@ body > .wrap > header:first-child::before {
 @media (prefers-reduced-motion: no-preference) {
   .tool-mast::before,
   .tool-shell::before,
-  body > .wrap > header:first-child::before {
+  body > .wrap > header:first-child::before,
+  body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):not(.sub-hero)::before {
     animation: subtle-tool-wash 20s ease-in-out infinite alternate;
   }
   @keyframes subtle-tool-wash {
@@ -165,7 +169,8 @@ body > .wrap > header:first-child::before {
 @media (prefers-reduced-motion: reduce), print {
   .tool-mast::before,
   .tool-shell::before,
-  body > .wrap > header:first-child::before {
+  body > .wrap > header:first-child::before,
+  body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):not(.sub-hero)::before {
     animation: none !important;
   }
 }
