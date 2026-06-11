@@ -94,15 +94,6 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
     radial-gradient(84px 18px at 78% 34%, transparent 40%, var(--poster-lime) 42% 50%, transparent 52%);
   transform: rotate(-4deg);
 }
-.spine .plate[data-mod="text"] {
-  --m-text: var(--poster-periwinkle);
-}
-.spine .plate[data-mod="image"] {
-  --m-image: var(--poster-peach);
-}
-.spine .plate[data-mod="video"] {
-  --m-video: var(--poster-cyan);
-}
 @media (prefers-reduced-motion: no-preference) {
   .spine .plate::before { animation: plate-color-drift 15s ease-in-out infinite alternate; }
   .spine .plate::after { animation: plate-register-drift 13s ease-in-out infinite alternate; }
