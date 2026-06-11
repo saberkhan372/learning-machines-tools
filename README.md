@@ -105,6 +105,7 @@ Canonical folders are listed in the [tool directory](tools/).
 ## Planning Docs
 
 - [Camp 2026 dates & logistics](pages/camp-2026.html) — Saturdays July 11/18/25, timezones, recordings, on-ramp
+- [Camp Poster 2026](pages/camp-poster.html) — five poster boards (print + social), tweakable color worlds
 - [Session link sheet](pages/session-links.html) — one canonical link per tool, per session
 - [Consent and recap protocol](docs/consent-recap-protocol.html)
 - [Field Manual redesign rollout plan](docs/FIELD-MANUAL-REDESIGN.html)

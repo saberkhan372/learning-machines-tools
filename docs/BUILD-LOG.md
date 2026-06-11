@@ -301,6 +301,39 @@ applied as soft washes and registration strokes behind heroes and mastheads.
 
 ---
 
+## Camp Poster 2026 — 2026-06-11
+
+Implemented from a second Claude Design handoff ("Camp Poster"):
+`pages/camp-poster.html`, a five-board poster system with live tweaks.
+
+- **Boards**: three print concepts at Letter 8.5×11 (A signage type with the
+  "fig. 0" tokenized camp name, B three-session bands with probability-bar /
+  denoising-grid / drifting-frame motifs, C field diagram leading with the
+  "fig. 1" prediction chain and the camp question) plus Instagram square and
+  9:16 story. All five pull the real camp details: July 11/18/25, Saturdays
+  9–11 am PT, free · virtual, register at ccfest.rocks, interest form due
+  July 4.
+- **Color worlds**: Spectrum (default) washes every board in the datamosh
+  palette with ghost-echo titles — print boards static with per-board hue
+  shifts (0°/40°/300°/0°/210°), social boards in motion (wash hue-cycle +
+  drift, animated ghost echoes). Field flips back to the quiet manual look.
+- **Controls**: world, motion, tone (paper/white/slate), ink energy
+  (printed/bright), title ink, type voice (signage/field serif), and three
+  subline wordings — all live, all ported faithfully from the prototype's
+  tweaks.
+- **Port decision**: the prototype was React + Babel (design-canvas
+  environment); rebuilt as one self-contained vanilla page per the repo
+  contract — palette math (`posterInks`/`posterVars`) and deterministic
+  motif generators ported verbatim, boards render at true design size and
+  scale to fit, `prefers-reduced-motion` freezes everything.
+- Verified in-browser: 5 boards, exactly 2 animated washes (social only),
+  all seven controls exercised (Field hides washes/ghosts, slate/serif/
+  subline/motion-off with correct static hue-shift fallback), fits 360px.
+- Known caveat carried from the design: token IDs and probability numbers
+  are illustrative. Print-ready PDF / GIF exports remain a manual next step.
+
+---
+
 ## Camp 2026 logistics page — 2026-06-10
 
 The "biggest gap" from the cohort review — a logistics page — built from the
