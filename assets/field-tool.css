@@ -66,6 +66,29 @@ html[data-mod="cross"] { --accent: var(--m-cross); }
   max-width: 1280px;
   margin: 0 auto;
   padding: clamp(22px, 3.5vw, 36px) 24px 0;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  clip-path: inset(0);
+}
+.tool-mast::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.10;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(34% 60% at 8% 22%, var(--poster-lime) 0 12%, transparent 46%),
+    radial-gradient(34% 56% at 86% 12%, var(--poster-violet) 0 10%, transparent 48%),
+    linear-gradient(106deg, var(--poster-coral), transparent 30%, var(--poster-cyan) 58%, transparent 78%, var(--poster-sky));
+  background-size: 145% 145%, 135% 135%, 180% 180%;
+  background-position: 0% 24%, 100% 4%, 0% 50%;
+}
+.tool-mast > * {
+  position: relative;
+  z-index: 1;
 }
 .tool-mast .eyebrow { margin-bottom: 12px; }
 .tool-mast .eyebrow .modsq { background: var(--accent); }
@@ -98,3 +121,51 @@ html[data-mod="cross"] { --accent: var(--m-cross); }
   max-width: 780px;
 }
 .tool-notice-inner strong { color: var(--ink); font-weight: 600; }
+
+/* subtle sampled-color wash for migrated tools and worksheet-style pages */
+.tool-shell,
+body > .wrap > header:first-child {
+  position: relative;
+  isolation: isolate;
+}
+.tool-shell > *,
+body > .wrap > header:first-child > * {
+  position: relative;
+  z-index: 1;
+}
+.tool-shell::before,
+body > .wrap > header:first-child::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: min(360px, 42vh);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(42% 42% at 10% 18%, var(--poster-lime) 0 10%, transparent 46%),
+    radial-gradient(38% 38% at 86% 18%, var(--poster-violet) 0 10%, transparent 48%),
+    radial-gradient(44% 42% at 70% 84%, var(--poster-cyan) 0 12%, transparent 54%),
+    linear-gradient(118deg, var(--poster-coral), transparent 30%, var(--poster-mint) 58%, transparent 78%, var(--poster-sky));
+  background-size: 150% 150%, 140% 140%, 160% 160%, 190% 190%;
+  background-position: 0% 20%, 100% 4%, 76% 88%, 0% 50%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tool-mast::before,
+  .tool-shell::before,
+  body > .wrap > header:first-child::before {
+    animation: subtle-tool-wash 20s ease-in-out infinite alternate;
+  }
+  @keyframes subtle-tool-wash {
+    0% { background-position: 0% 20%, 100% 4%, 76% 88%, 0% 50%; }
+    100% { background-position: 10% 24%, 90% 12%, 66% 94%, 36% 52%; }
+  }
+}
+@media (prefers-reduced-motion: reduce), print {
+  .tool-mast::before,
+  .tool-shell::before,
+  body > .wrap > header:first-child::before {
+    animation: none !important;
+  }
+}

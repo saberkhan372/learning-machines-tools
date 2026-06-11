@@ -136,4 +136,39 @@ generic phrase that would apply to any tool on the site.
 States ride the modality inks (mapped in `field-tool.css`): success/ok →
 `--m-video` green, warm/warning → `--m-image` rust, cross-purpose accents →
 `--m-cross` violet. Tag/chip palettes use the `-tint` variants. Avoid
-introducing new hues — the four inks are the palette.
+introducing new hues for **semantic** purposes — the four inks carry meaning.
+
+---
+
+## Poster accent layer (atmospheric, non-semantic)
+
+A decorative color/motion layer sampled from a compressed-GIF reference
+palette (source material in the untracked `samples/` directory). It carries
+**no meaning** — it is atmosphere behind heroes and mastheads; the four
+modality inks remain the only semantic colors.
+
+**Tokens** (`field.css`): sixteen `--poster-*` hues (sky, periwinkle, cyan,
+mint, lime, acid, violet, lavender, orchid, hot-pink, coral, rose-clay, sun,
+peach, green, muted-teal), plus tone-aware controls — `--poster-wash-opacity`
+(paper 0.42 / white 0.34 / slate 0.24), `--poster-stroke-opacity`, and
+`--poster-blend` (`multiply` on light tones, `screen` on slate).
+
+**Classes**:
+
+| Class | Effect | Where used |
+|---|---|---|
+| `.poster-wash` | Soft multi-radial color wash (`::before`) | Homepage hero + 4 session heroes |
+| `.poster-register` | Faint registration strokes/rings (`::after`) | Same |
+| `.poster-drift` | Slow drift animation on both layers | Same |
+| `.poster-static` | Escape hatch — forces `animation: none` | As needed |
+
+**Automatic quiet variants** (no classes needed): `.sub-hero:not(.poster-wash)`
+gets a much fainter wash (0.11/0.07) on all other subpages
+(`field-sub.css`); tool mastheads/shells get a soft top wash
+(`field-tool.css`).
+
+**Rules**: washes render in `::before`/`::after` at `z-index: 0` with content
+lifted above — never put text in the pseudo-elements. All animation is
+declared inside `@media (prefers-reduced-motion: no-preference)` and
+force-disabled under `reduce` (and `print` for tools). Don't raise the
+opacities — body text must stay AA-readable over the wash in every tone.

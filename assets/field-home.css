@@ -4,6 +4,12 @@
 
 /* ---------------- hero ---------------- */
 .hero { padding-block: clamp(48px, 7vw, 88px) clamp(40px, 5vw, 64px); }
+.hero.poster-wash::before {
+  opacity: 0.30;
+}
+.hero.poster-register::after {
+  opacity: 0.18;
+}
 .hero h1 {
   font-size: clamp(44px, 7vw, 88px);
   max-width: 14ch;
@@ -55,6 +61,69 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
   height: 96px;
   display: flex;
   align-items: center;
+}
+.spine .plate {
+  position: relative;
+  overflow: hidden;
+}
+.spine .plate > * {
+  position: relative;
+  z-index: 1;
+}
+.spine .plate::before {
+  content: "";
+  position: absolute;
+  inset: -36%;
+  opacity: 0.18;
+  pointer-events: none;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(circle at 20% 28%, var(--poster-hot-pink) 0 8%, transparent 22%),
+    radial-gradient(circle at 80% 22%, var(--poster-lime) 0 10%, transparent 28%),
+    linear-gradient(115deg, var(--poster-coral), transparent 30%, var(--poster-cyan) 58%, transparent 72%, var(--poster-violet));
+}
+.spine .plate::after {
+  content: "";
+  position: absolute;
+  inset: -16%;
+  opacity: 0.16;
+  pointer-events: none;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(76px 18px at 16% 64%, transparent 40%, var(--poster-hot-pink) 42% 50%, transparent 52%),
+    radial-gradient(84px 18px at 78% 34%, transparent 40%, var(--poster-lime) 42% 50%, transparent 52%);
+  transform: rotate(-4deg);
+}
+.spine .plate[data-mod="text"] {
+  --m-text: var(--poster-periwinkle);
+}
+.spine .plate[data-mod="image"] {
+  --m-image: var(--poster-peach);
+}
+.spine .plate[data-mod="video"] {
+  --m-video: var(--poster-cyan);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .spine .plate::before { animation: plate-color-drift 15s ease-in-out infinite alternate; }
+  .spine .plate::after { animation: plate-register-drift 13s ease-in-out infinite alternate; }
+  .spine .plate:nth-child(2)::before,
+  .spine .plate:nth-child(2)::after { animation-delay: -3s; }
+  .spine .plate:nth-child(3)::before,
+  .spine .plate:nth-child(3)::after { animation-delay: -6s; }
+  @keyframes plate-color-drift {
+    0% { transform: translate3d(-2%, -1%, 0) rotate(-1deg); }
+    100% { transform: translate3d(2%, 1%, 0) rotate(1deg); }
+  }
+  @keyframes plate-register-drift {
+    0% { transform: translate3d(-3px, 1px, 0) rotate(-4deg); }
+    100% { transform: translate3d(4px, -2px, 0) rotate(-1deg); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spine .plate::before,
+  .spine .plate::after {
+    animation: none !important;
+  }
 }
 
 /* plate 1 — sequential: token squares appearing left to right */

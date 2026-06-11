@@ -30,6 +30,80 @@
 .sub-hero[data-mod="image"] { --mink: var(--m-image); --mtint: var(--m-image-tint); }
 .sub-hero[data-mod="video"] { --mink: var(--m-video); --mtint: var(--m-video-tint); }
 .sub-hero[data-mod="cross"] { --mink: var(--m-cross); --mtint: var(--m-cross-tint); }
+.sub-hero:not(.poster-wash) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  clip-path: inset(0);
+  background:
+    linear-gradient(90deg, var(--mtint, transparent), transparent 62%),
+    var(--bg);
+}
+.sub-hero:not(.poster-wash) > .wrap,
+.sub-hero:not(.poster-wash) > .wrap-narrow {
+  position: relative;
+  z-index: 1;
+}
+.sub-hero:not(.poster-wash)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.11;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(34% 38% at 8% 30%, var(--poster-lime) 0 14%, transparent 48%),
+    radial-gradient(32% 36% at 88% 22%, var(--poster-violet) 0 12%, transparent 50%),
+    radial-gradient(38% 42% at 78% 82%, var(--poster-cyan) 0 16%, transparent 54%),
+    linear-gradient(112deg, var(--poster-coral), transparent 28%, var(--poster-mint) 56%, transparent 76%, var(--poster-sky));
+  background-size: 145% 145%, 140% 140%, 150% 150%, 185% 185%;
+  background-position: 0% 18%, 100% 10%, 80% 88%, 0% 50%;
+}
+.sub-hero:not(.poster-wash)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(96px 18px at 18% 70%, transparent 42%, var(--poster-hot-pink) 44% 50%, transparent 53%),
+    radial-gradient(86px 16px at 78% 30%, transparent 42%, var(--poster-lime) 44% 50%, transparent 53%),
+    repeating-linear-gradient(88deg, transparent 0 104px, color-mix(in oklab, var(--poster-sky) 66%, transparent) 105px 108px, transparent 109px 178px);
+  background-size: 130% 130%, 125% 125%, 160% 160%;
+  background-position: 0% 80%, 100% 20%, 0% 0%;
+}
+.sub-hero.poster-wash::before {
+  opacity: 0.26;
+}
+.sub-hero.poster-register::after {
+  opacity: 0.15;
+}
+.sub-hero.poster-wash {
+  background:
+    linear-gradient(90deg, var(--mtint, transparent), transparent 58%),
+    var(--bg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sub-hero:not(.poster-wash)::before { animation: subtle-subhero-wash 18s ease-in-out infinite alternate; }
+  .sub-hero:not(.poster-wash)::after { animation: subtle-subhero-register 16s ease-in-out infinite alternate; }
+  @keyframes subtle-subhero-wash {
+    0% { background-position: 0% 18%, 100% 10%, 80% 88%, 0% 50%; }
+    100% { background-position: 8% 22%, 92% 16%, 72% 94%, 34% 52%; }
+  }
+  @keyframes subtle-subhero-register {
+    0% { background-position: 0% 80%, 100% 20%, 0% 0%; }
+    100% { background-position: 8% 76%, 92% 24%, 10% 0%; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sub-hero:not(.poster-wash)::before,
+  .sub-hero:not(.poster-wash)::after {
+    animation: none !important;
+  }
+}
 
 .sess-hero-grid {
   display: grid;
@@ -512,6 +586,7 @@ h1 .accent, h2 .accent, .accent { color: var(--mink, var(--accent, var(--ink)));
 
 @media (min-width: 961px) {
   .tool-list .ix-row { grid-template-columns: 48px minmax(0, 1.5fr) minmax(0, 2fr) 170px; }
+  .tool-list .ix-mod { white-space: normal; }
 }
 @media (max-width: 960px) {
   .tool-list .ix-mod { grid-column: 2 / -1; white-space: normal; }

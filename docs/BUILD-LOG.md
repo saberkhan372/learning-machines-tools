@@ -281,6 +281,26 @@ The two items deferred during Phases 2 and 4:
 
 ---
 
+## Poster accent layer — 2026-06-11
+
+A decorative color/motion layer (built by a second agent, verified before
+merge): sixteen `--poster-*` hues sampled from a compressed-GIF reference,
+applied as soft washes and registration strokes behind heroes and mastheads.
+
+- Bold treatment (`.poster-wash` / `.poster-register` / `.poster-drift`) on
+  the homepage hero and the four session heroes; automatic quiet variants on
+  every other sub-hero (`field-sub.css`) and tool masthead (`field-tool.css`).
+- Tone-aware: `multiply` blend on paper/white, `screen` at lower opacity on
+  slate. All motion gated inside `prefers-reduced-motion: no-preference`
+  with explicit `reduce` (and `print`) disables.
+- Verified: page wiring is five one-line class edits; 18-page 360px sweep
+  clean; slate tone live-checked; zero console errors. The layer is
+  documented as **non-semantic** in DESIGN-SYSTEM.md — the four modality
+  inks remain the only colors that carry meaning.
+- `samples/` (palette/video sampling source, 5.5MB) added to `.gitignore`.
+
+---
+
 ## Camp 2026 logistics page — 2026-06-10
 
 The "biggest gap" from the cohort review — a logistics page — built from the
