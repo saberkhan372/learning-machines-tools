@@ -114,6 +114,8 @@ Canonical folders are listed in the [tool directory](tools/).
 - [Pilot feedback form template](docs/pilot-feedback-form.html)
 - [Pre-session check-in](docs/pre-session-checkin.html)
 - [Vocabulary Field Guide](pages/vocabulary-field-guide.html)
+- [Further Reading](pages/further-reading.html) — critical & intersectional texts, fiction, philosophy
+- [Adapting for Younger Learners](pages/younger-learners.html) — ages 6–12, per-session notes
 - [No-AI pathway](pages/no-ai-pathway.html)
 - [Human as Model (unplugged activity)](docs/unplugged-human-as-model.html)
 - [Session 1 facilitation notes](docs/session-1-facilitation.html)

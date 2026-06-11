@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Further Reading — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    .read-list { display: grid; gap: 0; border-top: 1px solid var(--rule); }
+    .read { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr); gap: 6px 24px; padding: 16px 2px; border-bottom: 1px solid var(--rule); }
+    .read .r-title { font-weight: 600; font-size: 15.5px; line-height: 1.35; }
+    .read .r-title em { font-style: italic; }
+    .read .r-meta { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+    .read .r-meta .free { color: var(--mink, var(--ink)); }
+    .read .r-note { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+    .read .r-note a { color: inherit; }
+    .frame-note { border: 1px solid var(--rule); background: var(--surface); padding: 16px 18px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; max-width: 70ch; }
+    .frame-note b { color: var(--ink); }
+    @media (max-width: 720px) { .read { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="vocabulary-field-guide.html" class="hide-sm">Vocabulary</a>
+        <a class="btn btn-sm" href="../index.html#materials">All materials</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="sub-hero" data-mod="cross">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#materials">Materials</a><span class="sep">/</span>
+        <span>Further reading</span>
+      </div>
+      <p class="sess-kicker"><i class="modsq"></i>Annotated · critical &amp; intersectional · not a technical bibliography</p>
+      <h1 class="sess-title" style="font-size: clamp(36px, 5vw, 60px);">Further reading</h1>
+      <p class="sess-lede" style="max-width: 66ch;">The camp's tools show you the mechanism. These readings ask what the mechanism is doing in the world — who builds it, whose labor and data it runs on, who pays when it fails, and what it does to how we see each other. Deliberately heavier on critique, fiction, and philosophy than on engineering: that part the tools already cover.</p>
+    </div>
+  </header>
+
+  <!-- START HERE -->
+  <section class="section-tight" style="--mink: var(--m-text);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ A · Start with these three</span><span class="sec-note">short, free where marked, and aimed at Session 1</span></div>
+      <div class="read-list">
+        <div class="read">
+          <div><div class="r-title">"On the Dangers of Stochastic Parrots" — Emily M. Bender, Timnit Gebru, Angelina McMillan-Major &amp; Margaret Mitchell</div><div class="r-meta">Paper · 2021 · <span class="free">free online</span></div></div>
+          <p class="r-note">The paper behind the camp's central move: a language model is a fluent predictor, not an understander — and scale has costs in data, labor, and environment. Pairs directly with the <a href="../tools/concept-bridges/prediction-is-not-understanding/">Prediction ≠ understanding bridge</a> and the Tokenizer.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title">"ChatGPT Is a Blurry JPEG of the Web" — Ted Chiang</div><div class="r-meta">Essay · The New Yorker · 2023</div></div>
+          <p class="r-note">The best single metaphor for what Session 1 demonstrates: lossy compression of the training text, returned with confident fluency. Short enough to assign between Saturdays.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Computer Power and Human Reason</em> — Joseph Weizenbaum</div><div class="r-meta">Book · 1976</div></div>
+          <p class="r-note">Written by ELIZA's own creator after watching people confide in his pattern-matcher. The original argument that the question is not what computers <em>can</em> do but what we <em>ought</em> to delegate to them. The camp's <a href="../tools/eliza-simulator/">ELIZA Simulator</a> is this book made playable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POWER -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ B · Power, data, labor</span><span class="sec-note">who builds it, who pays</span></div>
+      <div class="read-list">
+        <div class="read">
+          <div><div class="r-title"><em>Algorithms of Oppression</em> — Safiya Umoja Noble</div><div class="r-meta">Book · 2018</div></div>
+          <p class="r-note">How "neutral" ranking and retrieval encode racism and sexism — the search-engine ancestor of every default the camp's <a href="../tools/default-test-comparison-viewer/">Default Test</a> surfaces.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Race After Technology</em> — Ruha Benjamin</div><div class="r-meta">Book · 2019</div></div>
+          <p class="r-note">Names the "New Jim Code": discrimination that hides inside technical neutrality. The sharpest companion to the <a href="../tools/concept-bridges/default-is-a-design-decision/">Default is a design decision</a> bridge.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Atlas of AI</em> — Kate Crawford</div><div class="r-meta">Book · 2021</div></div>
+          <p class="r-note">AI as an extractive industry — lithium, labor, data, classification power. The wide-angle lens behind the camp's <a href="../tools/access-tiers/">Access Tiers</a> conversation.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Weapons of Math Destruction</em> — Cathy O'Neil</div><div class="r-meta">Book · 2016</div></div>
+          <p class="r-note">The pre-generative classic on opaque models scoring teachers, loans, and sentences. Useful precisely because none of it is about chatbots — the pattern precedes the hype.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Automating Inequality</em> — Virginia Eubanks</div><div class="r-meta">Book · 2018</div></div>
+          <p class="r-note">Three case studies of automated decision systems aimed at poor families. For the "what does the human decide next?" half of the camp's loop, this is the stakes.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Ghost Work</em> — Mary L. Gray &amp; Siddharth Suri</div><div class="r-meta">Book · 2019</div></div>
+          <p class="r-note">The invisible human labor — labeling, filtering, moderating — inside every "automated" system. Answers the cohort's labor questions with reporting, not vibes.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Empire of AI</em> — Karen Hao</div><div class="r-meta">Book · 2025</div></div>
+          <p class="r-note">Reported from inside the frontier labs and from the data-labor economies they depend on. The most current map of who profits and who is extracted from.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Resisting AI</em> — Dan McQuillan</div><div class="r-meta">Book · 2022</div></div>
+          <p class="r-note">For the opposed-but-curious pathway specifically: an argument that refusal and restructuring are legitimate technical positions, not failures to adapt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEEING -->
+  <section class="section-tight" style="--mink: var(--m-image);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ C · Seeing machines</span><span class="sec-note">for Sessions 2 &amp; 3</span></div>
+      <div class="read-list">
+        <div class="read">
+          <div><div class="r-title">"Excavating AI" — Kate Crawford &amp; Trevor Paglen</div><div class="r-meta">Essay · 2019 · <span class="free">free online</span></div></div>
+          <p class="r-note">What's actually inside image training sets — the categories, the politics, the people photographed without consent. Read it the week of Session 2, after the <a href="../tools/dataset-balance-simulator/">Dataset Balance Simulator</a>.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Ways of Seeing</em> — John Berger</div><div class="r-meta">Book · 1972</div></div>
+          <p class="r-note">Not about AI at all — about how images carry assumptions about gender, class, and power. Fifty years later it reads like a manual for interrogating image-model defaults.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Unmasking AI</em> — Joy Buolamwini</div><div class="r-meta">Book · 2023</div></div>
+          <p class="r-note">From the Gender Shades audits to the "coded gaze": what face-analysis systems fail to see, and what it took to make the failures count. A model-behavior investigation, book-length.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FICTION & PHILOSOPHY -->
+  <section class="section-tight" style="--mink: var(--m-video);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ D · Fiction &amp; philosophy</span><span class="sec-note">the questions, in other registers</span></div>
+      <div class="read-list">
+        <div class="read">
+          <div><div class="r-title">"Computing Machinery and Intelligence" — Alan Turing</div><div class="r-meta">Paper · 1950 · <span class="free">free online</span></div></div>
+          <p class="r-note">The imitation game, in Turing's own surprisingly readable prose — including the objections he anticipated. Better than every summary of it.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>Klara and the Sun</em> — Kazuo Ishiguro</div><div class="r-meta">Novel · 2021</div></div>
+          <p class="r-note">An artificial friend narrates what she sees — and what she can't. The most precise fiction we have about machine perception, personification, and the gendered warmth we project onto assistants. Pairs with ELIZA and <a href="../tools/concept-bridges/what-does-the-machine-see/">What does the machine see?</a></p>
+        </div>
+        <div class="read">
+          <div><div class="r-title">"The Lifecycle of Software Objects" — Ted Chiang</div><div class="r-meta">Novella · 2010 · collected in <em>Exhalation</em></div></div>
+          <p class="r-note">What would it actually take to raise a digital being — in time, care, and labor? The slow, unglamorous counter-story to instant intelligence.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>All Systems Red</em> — Martha Wells</div><div class="r-meta">Novella · 2017</div></div>
+          <p class="r-note">Murderbot would rather watch its shows than be personified, thank you. A short, funny on-ramp to personhood questions — and an easy recommendation for students.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATORS -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ E · For educators</span><span class="sec-note">the classroom angle</span></div>
+      <div class="read-list">
+        <div class="read">
+          <div><div class="r-title"><em>Teaching Machines</em> — Audrey Watters</div><div class="r-meta">Book · 2021</div></div>
+          <p class="r-note">A century of attempts to automate teaching, and why they keep promising the same things. Inoculation for the next edtech pitch you sit through.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><em>More Than a Glitch</em> — Meredith Broussard</div><div class="r-meta">Book · 2023</div></div>
+          <p class="r-note">Why bias in technical systems is structural, not a bug to patch — written to be teachable, with classroom-ready examples across race, gender, and ability.</p>
+        </div>
+      </div>
+      <div style="margin-top: 28px;">
+        <div class="frame-note">
+          <b>How to use this list:</b> none of it is required. One reading per week, chosen by interest, is plenty — bring one sentence you underlined to the next session's debrief, or post it to the Evidence Wall. The free essays are linked from the recap threads; the books are in most library systems.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="vocabulary-field-guide.html"><span class="pg-dir mono">← Companion</span><span class="pg-title">Vocabulary Field Guide</span></a>
+        <a class="next" href="../index.html#materials"><span class="pg-dir mono">All materials →</span><span class="pg-title">Worksheets, guides &amp; packs</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <p class="colophon">Curated for the Summer 2026 cohort · critique, fiction, and philosophy first — the tools cover the mechanics.</p>
+    </div>
+  </footer>
+</body>
+</html>

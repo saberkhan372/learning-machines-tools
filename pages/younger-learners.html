@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adapting for Younger Learners — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    .adapt { border: 1px solid var(--rule); border-top: 2px solid var(--mink, var(--ink)); background: var(--surface); padding: 18px 20px; display: grid; gap: 10px; }
+    .adapt h3 { font-size: 17px; }
+    .adapt .a-k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mink, var(--muted)); }
+    .adapt p, .adapt li { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+    .adapt ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+    .adapt .say { border-left: 3px solid var(--mink, var(--rule)); padding: 8px 12px; background: var(--surface-2); font-size: 13.5px; color: var(--ink); }
+    .adapt .say b { font-weight: 600; }
+    .adapt-grid { display: grid; gap: 14px; }
+    .principles { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+    .principle { border: 1px solid var(--rule); background: var(--surface); padding: 16px; }
+    .principle h4 { font-size: 15px; margin-bottom: 6px; }
+    .principle p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="no-ai-pathway.html" class="hide-sm">No-AI pathway</a>
+        <a class="btn btn-sm" href="../tools/classroom-activity-builder/">Activity builder</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="sub-hero" data-mod="cross">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#materials">Materials</a><span class="sep">/</span>
+        <span>Younger learners</span>
+      </div>
+      <p class="sess-kicker"><i class="modsq"></i>Ages ~6–12 · grades K–8 · teacher-facing</p>
+      <h1 class="sess-title" style="font-size: clamp(34px, 5vw, 56px);">Adapting for younger learners</h1>
+      <p class="sess-lede" style="max-width: 66ch;">Every session's core move — predict, change one thing, compare, name what the machine did — already works with children; most of these activities began life in a K–12 classroom. What changes is the language, the pacing, and one hard rule: <b>children never need accounts or live AI tools.</b> The simulations carry the whole investigation.</p>
+    </div>
+  </header>
+
+  <!-- PRINCIPLES -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ A · Five ground rules</span><span class="sec-note">across all sessions</span></div>
+      <div class="principles">
+        <div class="principle"><h4>Unplugged first, always</h4><p>Children do the activity with their own bodies and crayons before any screen appears. The tool then confirms what they already experienced.</p></div>
+        <div class="principle"><h4>Simulations only</h4><p>Every camp tool is account-free and generates nothing live — classroom-safe by construction. Children observe and investigate; any live generation happens on the teacher's screen, if at all.</p></div>
+        <div class="principle"><h4>"Guesses, not knowing"</h4><p>Replace mechanism vocabulary with verbs kids can test: the computer <em>guesses</em> the next word, <em>fills in</em> the picture, <em>forgets</em> between frames. Never "the computer thinks" or "knows."</p></div>
+        <div class="principle"><h4>Name it precisely — kid version</h4><p>The naming rule survives intact: not "it was weird," but "it always drew ___" or "it changed ___ when I ___." Sentence stems on the board do the work.</p></div>
+        <div class="principle"><h4>It's a thing people made</h4><p>The recurring frame for bias and authorship: a person chose the pictures it learned from, a person decides what to do with its guess — and the kids are the people who check it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SESSION 1 -->
+  <section class="section-tight" style="--mink: var(--m-text);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ B · Session 1 · Text</span><span class="sec-note">guessing games they already know</span></div>
+      <div class="adapt-grid">
+        <div class="adapt">
+          <span class="a-k">Next-word prediction · ages 6+</span>
+          <h3>The fill-in-the-blank chorus</h3>
+          <ul>
+            <li>Read a sentence aloud and stop — <em>"The dog chased the ___"</em>. Collect shouted guesses; tally them on the board. That tally <b>is</b> the probability distribution; older students can compare it to the <a href="../tools/next-token-prediction-game/">Prediction Game</a> on the teacher's screen.</li>
+            <li>Change one word — <em>"The hungry dog chased the ___"</em> — and tally again. What moved? That's the whole mechanism.</li>
+          </ul>
+          <div class="say"><b>Say:</b> "The computer plays this game for every single word — and it never finds out if it was right."</div>
+        </div>
+        <div class="adapt">
+          <span class="a-k">Count the Next Token · ages 8+ · math tie-in</span>
+          <h3>Counting is the whole trick</h3>
+          <ul>
+            <li><a href="../tools/count-the-next-token/">Count the Next Token</a> is a fractions lesson in disguise: count the times each word follows "the," divide, predict. Grades 3–5 can do the arithmetic on paper from a one-page class corpus (their own sentences).</li>
+            <li>ELIZA becomes a card game: one child holds "if you say <em>mom</em>, ask about family" rule cards and answers only by rule. The class guesses the rules — then meets the <a href="../tools/eliza-simulator/">simulator</a> that does the same.</li>
+          </ul>
+          <div class="say"><b>Say:</b> "It's not magic — it's counting. You just did everything the computer does."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SESSION 2 -->
+  <section class="section-tight" style="--mink: var(--m-image);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ C · Session 2 · Images</span><span class="sec-note">draw first, then look</span></div>
+      <div class="adapt-grid">
+        <div class="adapt">
+          <span class="a-k">Feature extraction · ages 6+</span>
+          <h3>The blurry guessing game</h3>
+          <ul>
+            <li><a href="../tools/feature-extraction-pixel-resolution/">Feature Extraction</a> on the projector is an instant whole-class game: start at the blockiest setting and add detail until someone names the picture. Which clue gave it away — color, shape, or where things were?</li>
+            <li>Diffusion as an analogy kids own: a photo "developing," or squinting at fog until a shape appears. Step the <a href="../tools/diffusion-step-through-viewer/">viewer</a> slowly and have them call out the moment the subject appears.</li>
+          </ul>
+        </div>
+        <div class="adapt">
+          <span class="a-k">Defaults &amp; bias · ages 8+ · the authorship conversation</span>
+          <h3>Draw a doctor — before the machine does</h3>
+          <ul>
+            <li>The Default Test, child-safe order: <b>kids draw first.</b> "Draw a doctor. Draw a family. Draw a beautiful home." Put the class's drawings up — they will differ wonderfully.</li>
+            <li>Then show the machine's defaults in the <a href="../tools/default-test-comparison-viewer/">comparison viewer</a> and ask the question that matters: <em>"The class drew thirty different doctors. Why does the machine keep drawing the same one?"</em></li>
+            <li>That's the bias conversation at age eight — no lecture needed: it learned from pictures people chose, and the pictures left people out. End with the fix: "what would you tell it so your doctor shows up?"</li>
+          </ul>
+          <div class="say"><b>Say:</b> "The machine isn't mean — it copies what it was shown. People picked what to show it. People can pick better."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SESSION 3 -->
+  <section class="section-tight" style="--mink: var(--m-video);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ D · Session 3 · Video</span><span class="sec-note">it's literally the telephone game</span></div>
+      <div class="adapt-grid">
+        <div class="adapt">
+          <span class="a-k">Temporal Telephone · ages 6+ · works as-is</span>
+          <h3>Telephone, with drawings</h3>
+          <ul>
+            <li><a href="../tools/temporal-telephone/">Temporal Telephone</a> is already a children's game — that's the point. Paper version: each child copies only the previous child's drawing; post the chain and find where the cat became a bear. That's <b>drift</b>, and they discovered it.</li>
+            <li>Run round two with the original taped to the wall (the <b>anchor</b>). The chain stays truer — and they've discovered why video models need reference frames.</li>
+            <li>Flipbooks make the frames idea physical for the youngest: a movie is just drawings that mostly agree with each other.</li>
+          </ul>
+          <div class="say"><b>Say:</b> "The machine plays telephone with itself a hundred times a second — and it forgets just like we do."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSENT & SHARING -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ E · Authorship &amp; consent, child-sized</span><span class="sec-note">the ethics spine, in their words</span></div>
+      <div class="adapt-grid">
+        <div class="adapt">
+          <span class="a-k">Every session · 5 minutes</span>
+          <h3>Whose picture is it?</h3>
+          <ul>
+            <li>Three questions children can hold from age six: <em>Who made this — you, the machine, or both? Did everyone in the picture say yes to being in it? Do you want your name on it when we hang it up?</em></li>
+            <li>Practice consent on their own work first: nothing goes on the classroom wall (or in the class share) without the maker saying yes — same rule the camp uses for adults in the <a href="../docs/consent-recap-protocol.html">Consent Protocol</a>.</li>
+            <li>The <a href="../tools/classroom-activity-builder/">Classroom Activity Builder</a> has grade bands and a no-AI option for turning any of these into a printable lesson skeleton.</li>
+          </ul>
+          <div class="say"><b>Say:</b> "Machines don't ask permission. People do. That's a thing people are better at."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="no-ai-pathway.html"><span class="pg-dir mono">← Related</span><span class="pg-title">No-AI Pathway</span></a>
+        <a class="next" href="../tools/classroom-activity-builder/"><span class="pg-dir mono">Build a lesson →</span><span class="pg-title">Classroom Activity Builder</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <p class="colophon">Teacher-facing · the camp tools are simulations: no accounts, no live AI, classroom-safe by construction.</p>
+    </div>
+  </footer>
+</body>
+</html>

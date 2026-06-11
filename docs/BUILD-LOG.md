@@ -301,3 +301,34 @@ public listing at <https://ccfest.rocks/ccfest-camp>: `pages/camp-2026.html`.
 - Wired into the homepage hero eyebrow ("Summer 2026 — July 11 / 18 / 25"),
   the Materials list, and the README; the roadmap's two schedule questions
   moved to Answered.
+
+---
+
+## Further Reading + Younger Learners pages — 2026-06-10
+
+The last two content requests from the cohort review, both in the Field system:
+
+- **`pages/further-reading.html`** — the annotated reading list a registrant
+  asked for: deliberately critical/intersectional rather than technical, with
+  fiction and philosophy as first-class entries. ~16 works in five ruled
+  sections (start-here trio incl. Stochastic Parrots and Weizenbaum; power/
+  data/labor incl. Noble, Benjamin, Crawford, Hao, and McQuillan for the
+  opposed-but-curious pathway; seeing-machines for Sessions 2–3 incl.
+  Berger and "Excavating AI"; fiction & philosophy incl. Turing, Ishiguro's
+  Klara, and Chiang; educator titles incl. Watters and Broussard). Every
+  annotation ties the work to a session, tool, or concept bridge; free-online
+  items are marked; a closing note sets expectations (nothing required, one
+  reading a week, bring a sentence to the debrief).
+- **`pages/younger-learners.html`** — per-session adaptation notes for the
+  ages-6–12 teachers in the cohort: five ground rules (unplugged first,
+  simulations only, "guesses not knowing" language, the naming rule in
+  sentence stems, "it's a thing people made"), then per-session activity
+  translations — the fill-in-the-blank chorus and counting-as-the-whole-trick
+  for Session 1, the blurry guessing game and the draw-a-doctor-first
+  authorship/bias conversation for Session 2, paper Temporal Telephone with
+  anchors for Session 3 — plus child-sized consent questions ("whose picture
+  is it?") mirroring the adult Consent Protocol. Each card ends with a
+  scripted "Say:" line.
+- Both wired into the homepage Materials list (reading list beside the
+  Vocabulary Field Guide, as the review suggested), the README, and all four
+  session pages' materials sections.
