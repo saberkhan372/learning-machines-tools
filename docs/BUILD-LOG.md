@@ -332,3 +332,29 @@ The last two content requests from the cohort review, both in the Field system:
 - Both wired into the homepage Materials list (reading list beside the
   Vocabulary Field Guide, as the review suggested), the README, and all four
   session pages' materials sections.
+
+---
+
+## Hands-On resources page — 2026-06-10
+
+**`pages/hands-on.html`** — the Build/Code pathway's external-resources page:
+where to train and run *real* models once the camp's deliberate simulations
+have done their job. Opens by scoping the live-model question honestly (in
+sessions we won't set up accounts or hosting; Count the Next Token already
+answers "training from scratch" in miniature), then three ruled sections:
+
+- **Train one in the browser** — Teachable Machine (framed as the Dataset
+  Balance Simulator with real stakes), Machine Learning for Kids (Scratch,
+  teacher-managed — the next step from the younger-learners page), AI for
+  Oceans, and Quick, Draw! with its inspectable dataset.
+- **Creative code** — ml5.js + the p5.js Web Editor (the CC Fest home turf),
+  TensorFlow Playground (the one link about watching learning itself —
+  overfitting made visible), and Wekinator for the artists.
+- **Run models on your own machine** — Ollama, LM Studio, and Hugging Face
+  (Spaces to try models, datasets to read in the "Excavating AI" spirit,
+  model cards to check against the Model Card Builder).
+
+Every entry carries free/account/local metadata and ties back to a camp tool;
+closes by re-stating the method: predict, change one thing, name what it did.
+Wired into homepage Materials, README, the Further Reading pager, and the
+younger-learners page.

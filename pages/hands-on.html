@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hands-On: Play with Real Models — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    .res-list { display: grid; gap: 0; border-top: 1px solid var(--rule); }
+    .res { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: 6px 24px; padding: 16px 2px; border-bottom: 1px solid var(--rule); }
+    .res .r-title { font-weight: 600; font-size: 15.5px; line-height: 1.35; }
+    .res .r-title a { color: inherit; text-decoration: none; }
+    .res .r-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .res .r-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+    .res .r-meta b { color: var(--mink, var(--ink)); font-weight: 600; }
+    .res .r-note { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+    .res .r-note a { color: inherit; }
+    .scope { border: 1px solid var(--ink); background: var(--surface); padding: 16px 20px; max-width: 72ch; }
+    .scope p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
+    .scope b { color: var(--ink); }
+    .scope .mono-line { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    @media (max-width: 720px) { .res { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="further-reading.html" class="hide-sm">Further reading</a>
+        <a href="younger-learners.html" class="hide-sm">Younger learners</a>
+        <a class="btn btn-sm" href="../index.html#materials">All materials</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="sub-hero" data-mod="cross">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#materials">Materials</a><span class="sep">/</span>
+        <span>Hands-on</span>
+      </div>
+      <p class="sess-kicker"><i class="modsq"></i>Build / Code pathway · train, tinker, run</p>
+      <h1 class="sess-title" style="font-size: clamp(34px, 5vw, 56px);">Play with real models</h1>
+      <p class="sess-lede" style="max-width: 66ch;">The camp's own tools are <b>simulations on purpose</b> — frozen examples and hand-authored distributions, so the mechanism stays visible and nothing depends on an account or a server. When you're ready to train or run a <em>real</em> model, these are the places to go. Bring the same loop: predict, change one thing, compare, name what it did.</p>
+    </div>
+  </header>
+
+  <!-- SCOPE -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ A · What the camp does and doesn't do</span><span class="sec-note">scoping the live-model question honestly</span></div>
+      <div class="scope">
+        <p class="mono-line">For everyone who asked about local models and building from scratch</p>
+        <p>In sessions we <b>won't</b> set up accounts, install software, or host models — the core teaching moments never depend on live AI, and that's a feature (reliability, cost, consent). What we <b>will</b> do: <a href="../tools/count-the-next-token/">Count the Next Token</a> already builds a tiny language model from scratch, visibly, with arithmetic — that's the "how does training work" answer in miniature. Everything below is for going further <b>on your own machine, on your own terms</b>, between sessions or after the camp. Most of it is free; the listings say what each one needs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAIN IN THE BROWSER -->
+  <section class="section-tight" style="--mink: var(--m-image);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ B · Train one in the browser</span><span class="sec-note">no code · training data → behavior, felt directly</span></div>
+      <div class="res-list">
+        <div class="res">
+          <div><div class="r-title"><a href="https://teachablemachine.withgoogle.com/">Teachable Machine</a> — Google</div><div class="r-meta"><b>free · browser · no account to train</b> · image / sound / pose</div></div>
+          <p class="r-note">The single best follow-up to this camp: train an image, sound, or pose classifier on your own examples in two minutes, then break it. Class A is you with glasses, Class B without — now test a friend. It's the <a href="../tools/dataset-balance-simulator/">Dataset Balance Simulator</a> with real stakes: skewed examples in, skewed behavior out, and <em>you</em> chose the examples. Training runs in your browser; your webcam images don't need to leave the machine.</p>
+        </div>
+        <div class="res">
+          <div><div class="r-title"><a href="https://machinelearningforkids.co.uk/">Machine Learning for Kids</a> — Dale Lane</div><div class="r-meta"><b>free · browser · teacher-managed accounts</b> · Scratch integration</div></div>
+          <p class="r-note">Train text, image, and number classifiers and then <em>use them inside Scratch projects</em> — a label-it-yourself game becomes a working program. Built for classrooms, with teacher-administered access and ready-made lesson worksheets. The natural next step from the <a href="younger-learners.html">younger-learners adaptations</a>.</p>
+        </div>
+        <div class="res">
+          <div><div class="r-title"><a href="https://code.org/oceans">AI for Oceans</a> — Code.org</div><div class="r-meta"><b>free · browser · no account</b> · ~1 hour · grades 3+</div></div>
+          <p class="r-note">Label fish vs. trash to train a classifier, then watch it inherit your labeling choices — bias as a first-hand experience for elementary students, with the ethics discussion built in.</p>
+        </div>
+        <div class="res">
+          <div><div class="r-title"><a href="https://quickdraw.withgoogle.com/">Quick, Draw!</a> — Google</div><div class="r-meta"><b>free · browser · no account</b> · game + open dataset</div></div>
+          <p class="r-note">The machine guesses your doodle as you draw — pure <a href="../tools/concept-bridges/what-does-the-machine-see/">what-does-the-machine-see</a> energy. Then open <a href="https://quickdraw.withgoogle.com/data">the dataset</a> and inspect millions of other people's drawings: why does it expect <em>that</em> shape for "shoe"? Because that's what it was shown.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATIVE CODE -->
+  <section class="section-tight" style="--mink: var(--m-text);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ C · Creative code</span><span class="sec-note">the CC Fest home turf</span></div>
+      <div class="res-list">
+        <div class="res">
+          <div><div class="r-title"><a href="https://ml5js.org/">ml5.js</a></div><div class="r-meta"><b>free · open source · browser</b> · pairs with p5.js</div></div>
+          <p class="r-note">Friendly machine learning for the p5.js world this community already lives in: image classification, body and hand pose, sound, and Teachable Machine model imports — a sketch that responds to your gestures is an afternoon, not a semester. Start in the <a href="https://editor.p5js.org/">p5.js Web Editor</a> with the ml5 examples; this is the Build/Code pathway's natural home.</p>
+        </div>
+        <div class="res">
+          <div><div class="r-title"><a href="https://playground.tensorflow.org/">TensorFlow Playground</a></div><div class="r-meta"><b>free · browser · no account</b> · watch a network learn, live</div></div>
+          <p class="r-note">A tiny neural network you can watch train: add neurons, change the data, and see the decision boundary bend in real time. The one link on this page about <em>learning itself</em> — what "training" looks like while it happens. Overfitting becomes something you can see: give it too much capacity and watch it memorize the noise.</p>
+        </div>
+        <div class="res">
+          <div><div class="r-title"><a href="http://www.wekinator.org/">Wekinator</a> — Rebecca Fiebrink</div><div class="r-meta"><b>free · open source · desktop install</b> · for artists &amp; musicians</div></div>
+          <p class="r-note">The classic creative-ML instrument: demonstrate a few gesture-to-output examples and play the mapping live — webcam to synth, motion to visuals. For the artists in the cohort who want training to feel like rehearsing rather than programming.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RUN YOUR OWN -->
+  <section class="section-tight" style="--mink: var(--m-video);">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ D · Run models on your own machine</span><span class="sec-note">local · private · no subscription</span></div>
+      <div class="res-list">
+        <div class="res">
+          <div><div class="r-title"><a href="https://ollama.com/">Ollama</a></div><div class="r-meta"><b>free · local install</b> · command line · open-weight LLMs</div></div>
+          <p class="r-note">Run open-weight language models (Llama, Mistral, Gemma families and more) entirely on your own computer — one install, one command, no account, nothing sent anywhere. The honest answer to "do I have to pay someone to use this?": small models run fine on a recent laptop; what you trade is capability for ownership. Re-run the camp's Session 1 experiments against a local model and compare.</p>
+        </div>
+        <div class="res">
+          <div><div class="r-title"><a href="https://lmstudio.ai/">LM Studio</a></div><div class="r-meta"><b>free for personal use · local install</b> · point-and-click</div></div>
+          <p class="r-note">The same local-model idea with a friendly desktop interface instead of a terminal — browse models, download, chat, and inspect token-by-token output. The gentler on-ramp if the command line is a barrier.</p>
+        </div>
+        <div class="res">
+          <div><div class="r-title"><a href="https://huggingface.co/">Hugging Face</a></div><div class="r-meta"><b>free tier · browser</b> · account for some features · the open-model commons</div></div>
+          <p class="r-note">Where open models, datasets, and demos actually live. Two camp-relevant uses: try models in the browser via Spaces without installing anything, and — in the spirit of "Excavating AI" — <em>read datasets directly</em>: browse what's actually inside the training data everyone argues about, and check a model's card against the camp's <a href="../tools/model-card-builder/">Model Card Builder</a>.</p>
+        </div>
+      </div>
+      <div style="margin-top: 28px;">
+        <div class="scope">
+          <p class="mono-line">One rule carries over</p>
+          <p>Whatever you open from this page, run it like the camp runs everything: <b>predict before you press the button, change one variable, and name what the machine did</b> — a default, a failure, or a pattern. The tools change; the method is the take-home.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="further-reading.html"><span class="pg-dir mono">← Companion</span><span class="pg-title">Further Reading</span></a>
+        <a class="next" href="../index.html#materials"><span class="pg-dir mono">All materials →</span><span class="pg-title">Worksheets, guides &amp; packs</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <p class="colophon">External tools change faster than camp materials — listings checked June 2026; the method outlives the links.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -115,6 +115,7 @@ Canonical folders are listed in the [tool directory](tools/).
 - [Pre-session check-in](docs/pre-session-checkin.html)
 - [Vocabulary Field Guide](pages/vocabulary-field-guide.html)
 - [Further Reading](pages/further-reading.html) — critical & intersectional texts, fiction, philosophy
+- [Hands-On: Play with Real Models](pages/hands-on.html) — Teachable Machine, ml5.js, TensorFlow Playground, Ollama, Hugging Face
 - [Adapting for Younger Learners](pages/younger-learners.html) — ages 6–12, per-session notes
 - [No-AI pathway](pages/no-ai-pathway.html)
 - [Human as Model (unplugged activity)](docs/unplugged-human-as-model.html)
