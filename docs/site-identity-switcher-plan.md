@@ -5,7 +5,11 @@ title: Site Identity Switcher Plan
 
 # Site Identity Switcher Plan
 
-Status: **planning reference / not yet implemented**
+Status: **implemented 2026-06-12** — P0 plumbing, all three identities, and a
+9-route × 3-identity mobile sweep (0 overflow, 0 console errors) shipped in
+one pass. The loader injects `field-identity.css` itself, so no per-page
+stylesheet links were needed (deviation from P0 as written below). Remaining:
+the full 65-route sweep per identity and AA contrast spot-checks (P4).
 Date: 2026-06-12
 
 Make the three bold poster skins — **EE terminal phosphor**, **FF spectrum

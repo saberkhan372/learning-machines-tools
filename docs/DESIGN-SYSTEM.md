@@ -234,6 +234,27 @@ Implementation rules: inherit Field tokens, preserve square-corner discipline,
 keep semantic color tied to modality inks, and declare any motion inside
 `prefers-reduced-motion: no-preference` with complete static fallbacks.
 
+### Site identities (user-selectable skins)
+
+Implemented per [`docs/site-identity-switcher-plan.md`](site-identity-switcher-plan.html).
+`assets/field-theme.js` persists `lm-identity` (`field` default · `terminal` ·
+`spectrum` · `acid`), sets `html[data-identity]` before paint, injects
+`assets/field-identity.css` plus the display fonts (VT323 / Rubik Glitch /
+Anton) on every page, and renders the fixed "Skin ▾" menu (suppress with
+`data-no-identity-menu` on `<html>`).
+
+Rules:
+
+- Identity remaps the core tone/font tokens and a small set of shared
+  components inside `@media screen`; print always renders the field manual,
+  and `worksheet-print` routes stay field on screen too.
+- Identity beats tone; while non-field, the route `data-skin` accent layer
+  and poster washes are muted (skin tokens re-map to identity tokens) so only
+  one voice speaks.
+- Identities restyle chrome and display type aggressively, body text
+  conservatively. New components need either an identity treatment in
+  `field-identity.css` or token-only styling (which inherits for free).
+
 The shared P1 skin pass also styles common lower-page structures through
 `html[data-skin]`: section rules, nav marks, `.ix-row`, `.doc-row`,
 `.throughline`, `.ros-row`, `.prompt`, `.visible-grid`, `.invest-card`,
