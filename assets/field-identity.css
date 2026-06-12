@@ -65,7 +65,9 @@
 
 /* ---------------- shared non-field behavior ---------------- */
 html:not([data-identity="field"]):not([data-skin="worksheet-print"]) {
-  /* mute the route-skin accent layer and poster washes: one voice at a time */
+  /* mute the route-skin layer (surfaces, glow, washes) — but don't erase it:
+     skin accents remap to the modality inks below so session semantics stay
+     legible inside every identity */
   --skin-accent: var(--ink);
   --skin-accent-2: var(--ink-soft);
   --skin-muted: var(--muted);
@@ -77,6 +79,26 @@ html:not([data-identity="field"]):not([data-skin="worksheet-print"]) {
   --skin-grid: color-mix(in oklab, var(--ink) 12%, transparent);
   --poster-wash-opacity: 0;
   --poster-stroke-opacity: 0;
+}
+/* keep modality cues alive: each skin family rides its modality ink, which
+   every identity defines in identity-compatible hues */
+html:not([data-identity="field"])[data-skin="text-terminal"],
+html:not([data-identity="field"])[data-skin="counting-signal"] {
+  --skin-accent: var(--m-text);
+  --skin-grid: color-mix(in oklab, var(--m-text) 16%, transparent);
+}
+html:not([data-identity="field"])[data-skin="image-spectrum"],
+html:not([data-identity="field"])[data-skin="latent-nebula"] {
+  --skin-accent: var(--m-image);
+  --skin-grid: color-mix(in oklab, var(--m-image) 16%, transparent);
+}
+html:not([data-identity="field"])[data-skin="video-slitscan"] {
+  --skin-accent: var(--m-video);
+  --skin-grid: color-mix(in oklab, var(--m-video) 16%, transparent);
+}
+html:not([data-identity="field"])[data-skin="studio-synthesis"] {
+  --skin-accent: var(--m-cross);
+  --skin-grid: color-mix(in oklab, var(--m-cross) 16%, transparent);
 }
 /* some heroes set literal wash opacities; force them off for the identities
    that bring their own atmosphere */

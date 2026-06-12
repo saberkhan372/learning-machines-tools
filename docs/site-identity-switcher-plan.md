@@ -5,11 +5,14 @@ title: Site Identity Switcher Plan
 
 # Site Identity Switcher Plan
 
-Status: **implemented 2026-06-12** — P0 plumbing, all three identities, and a
-9-route × 3-identity mobile sweep (0 overflow, 0 console errors) shipped in
-one pass. The loader injects `field-identity.css` itself, so no per-page
-stylesheet links were needed (deviation from P0 as written below). Remaining:
-the full 65-route sweep per identity and AA contrast spot-checks (P4).
+Status: **implemented 2026-06-12; revised same day after review** — P0
+plumbing, all three identities, and a 9-route × 3-identity mobile sweep
+(0 overflow, 0 console errors) shipped in one pass. Review feedback folded
+in: the menu-vs-tweaks-panel contradiction is resolved (one vanilla control
+everywhere, React panel untouched), `data-skin` now mutes rather than zeroes
+(modality cues survive via accent remap), and the font/stylesheet loading
+decisions are recorded explicitly under P0. Remaining: the full 65-route
+sweep per identity and AA contrast spot-checks (P4).
 Date: 2026-06-12
 
 Make the three bold poster skins — **EE terminal phosphor**, **FF spectrum
@@ -57,29 +60,37 @@ Reference implementations: the three standalone demos
      vs. pill stamps. Scoped per identity to the existing shared classes
      (`.nav`, `.sub-hero`, `.ix-row`, `.doc-row`, `.btn`, `.stamp`,
      `.prompt`, `.callout`, `.vis-card`, `.invest-card`, `.tool-mast`).
-   - *Guard rails*: print and `worksheet-print` routes force the field
-     identity; reduced-motion disables scanline flicker, wash drift, and
-     pulse animations (the demos already model these fallbacks).
+   - *Guard rails*, enforced both ways: every identity block lives inside
+     `@media screen` so print always renders Field surfaces, **and**
+     `html[data-skin="worksheet-print"]` is excluded from identity remaps so
+     worksheet screen previews match their print output; reduced-motion
+     disables scanline flicker, wash drift, and pulse animations (the demos
+     already model these fallbacks).
 
 3. **Identity menu** — vanilla JS (no React/Babel; the homepage tweaks panel
    predates that rule and should not be extended), rendered by
-   `field-theme.js` itself so it appears on **every** page: a small mono
-   "Skin: Field ▾" control in the footer or nav that cycles/sets the four
-   identities and dispatches the existing `tweakchange` event. The homepage
-   tweaks panel gains the same option for discoverability.
+   `field-theme.js` itself so it appears on **every** page — including the
+   homepage, where it lives outside and independent of the React tweaks
+   panel. A small mono "Skin ▾" control that sets the identity and re-applies
+   through the same code path as `tweakchange`. Suppress per-page with
+   `data-no-identity-menu` on `<html>`.
 
 ### Interaction rules with existing axes
 
 - **Identity beats tone.** `terminal` is inherently dark, `acid` inherently
-  yellow; while a non-field identity is active, the tone control is ignored
-  (and visually disabled in the menu). Returning to `field` restores the
-  user's tone.
+  yellow; while a non-field identity is active, identity token remaps win the
+  cascade over `data-tone`. The user's `lm-tone` stays untouched in
+  `localStorage` and `data-tone` stays present on `<html>`, so returning to
+  `field` restores their tone exactly.
 - **Identity respects modality inks.** The four semantic inks stay; each
   identity may re-tint them (phosphor-compatible variants for terminal) but
   never collapses their meaning.
-- **`data-skin` accents mute under non-field identities** to avoid two accent
-  systems fighting: `html:not([data-identity="field"])` zeroes the skin
-  accent layer.
+- **`data-skin` mutes — but is not erased — under non-field identities.**
+  Skin surfaces, glow, and poster washes turn off so only one atmosphere
+  speaks, but each skin family's `--skin-accent` remaps to its modality ink
+  (text/counting → `--m-text`, image/latent → `--m-image`, video →
+  `--m-video`, studio → `--m-cross`), so session semantics stay visible
+  inside every identity.
 
 ## Per-identity scope of work
 
@@ -92,9 +103,18 @@ Reference implementations: the three standalone demos
 ## Implementation phases
 
 1. **P0 — plumbing (small, no visual change).** Extend `field-theme.js`
-   (`lm-identity`, apply, menu injection), add empty `field-identity.css`,
-   add the stylesheet link to all pages (mechanical sweep, same as the
-   `data-skin` rollout). Menu shows but only "Field" works.
+   (`lm-identity`, apply, menu injection). **Decision:** the loader injects
+   the `field-identity.css` link itself, deriving the path from its own
+   `script.src` — explicit per-page `<link>` tags were considered (simpler,
+   less magical) but rejected because pages sit at three different depths and
+   any future page would silently miss the feature; injection guarantees
+   coverage everywhere `field-theme.js` already loads. **Fonts decision:** the
+   loader also injects one Google Fonts link for VT323 / Rubik Glitch / Anton
+   on every page unconditionally — these families are not in the shared
+   per-page font URL, and browsers only download font binaries when a
+   rendered element uses the family, so field-identity visitors pay one small
+   CSS fetch and no font bytes, while identity switches render without a
+   fallback flash.
 2. **P1 — terminal identity.** Token remap + overlays + dark-ground audits of
    the image/video tools. Ship behind the menu; field stays default.
 3. **P2 — spectrum identity.** Token remap + zine components. Mostly token

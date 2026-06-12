@@ -38,10 +38,11 @@
     var id = get("identity");
     if (IDENTITIES.indexOf(id) === -1) id = "field";
     el.setAttribute("data-identity", id);
-    /* identity stylesheet ships on every page; display fonts only load once
-       a non-field identity is (or was) chosen */
+    /* identity stylesheet + display fonts ship on every page. The fonts link
+       is cheap for field-identity visitors: browsers fetch font binaries only
+       when a rendered element actually uses the family. */
     ensureLink("lm-identity-css", base + "field-identity.css");
-    if (id !== "field") ensureLink("lm-identity-fonts", FONTS_HREF);
+    ensureLink("lm-identity-fonts", FONTS_HREF);
     refreshMenu();
   }
 
