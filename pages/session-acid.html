@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en" data-skin="text-terminal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Session 1 · Text — Acid skin · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --acid:oklch(0.93 0.21 110); --acid-deep:oklch(0.88 0.2 112);
+      --ink:#141312; --paper:#f4f1e6;
+      --hot:oklch(0.62 0.26 350); --blue:oklch(0.5 0.2 250); --grn:oklch(0.58 0.18 150);
+    }
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{margin:0; background:var(--acid); color:var(--ink);
+      font-family:"Archivo",system-ui,sans-serif; font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+    .wrap{max-width:1140px; margin:0 auto; padding:0 32px;}
+    a{color:inherit;}
+    .mono{font-family:"IBM Plex Mono",monospace;}
+    .anton{font-family:"Anton",sans-serif; font-weight:400; letter-spacing:0.005em;}
+
+    /* nav */
+    nav.bar{position:sticky; top:0; z-index:120; background:var(--acid); border-bottom:3px solid var(--ink);}
+    .bar-in{display:flex; align-items:center; justify-content:space-between; height:60px;}
+    .brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink); font-family:"Anton",sans-serif; font-size:22px; letter-spacing:0.01em; text-transform:uppercase;}
+    .brand .mk{width:16px; height:16px; background:var(--hot); border:2.5px solid var(--ink);}
+    .nav-links{display:flex; align-items:center; gap:20px;}
+    .nav-links a{font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; text-decoration:none; color:var(--ink);}
+    .nav-links a:hover{color:var(--hot);}
+    .btn-sm, .nav-links a.btn-sm{border:2.5px solid var(--ink); padding:8px 14px; background:var(--ink); color:var(--acid); box-shadow:3px 3px 0 var(--ink);}
+    .btn-sm:hover, .nav-links a.btn-sm:hover{background:var(--hot); color:#fff; transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink);}
+    @media(max-width:760px){.hide-sm{display:none;}}
+
+    /* hero */
+    header.hero{border-bottom:3px solid var(--ink); padding:30px 0 0;}
+    .crumb{font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink); margin-bottom:24px;}
+    .crumb a{text-decoration:none;} .crumb a:hover{color:var(--hot);}
+    .crumb .sep{opacity:0.4; margin:0 8px;}
+    .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:end; padding-bottom:38px;}
+    .sess-no{font-family:"IBM Plex Mono",monospace; font-size:15px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;}
+    .sess-no .of{color:var(--hot);}
+    .kicker{display:inline-flex; align-items:center; gap:9px; font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; padding:6px 12px; border:2.5px solid var(--ink); background:var(--paper); margin-bottom:18px;}
+    .kicker .sq{width:12px; height:12px; background:var(--blue);}
+    h1.title{font-family:"Anton",sans-serif; font-weight:400; font-size:clamp(96px,20vw,240px); line-height:0.82; margin:0; text-transform:uppercase;}
+    h1.title .x{color:var(--hot);}
+    .q{font-family:"Anton",sans-serif; font-size:clamp(26px,3.4vw,42px); line-height:1.04; text-transform:uppercase; margin:22px 0 0; max-width:18ch;}
+    .q .acc{color:var(--hot);}
+    .lede{font-size:17px; line-height:1.68; max-width:50ch; margin:18px 0 0;}
+    .lede b{font-weight:700;}
+
+    /* net panel */
+    .netpanel{border:3px solid var(--ink); background:var(--paper); padding:0;}
+    .netpanel .cap{display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:2.5px solid var(--ink); font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em;}
+    .netpanel .cap .hot{color:var(--hot);}
+    .netpanel svg{display:block; width:100%; height:auto;}
+    .netlabels{display:flex; justify-content:space-between; padding:8px 14px 12px; font-family:"IBM Plex Mono",monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink);}
+    .netline{opacity:0.2;}
+    .netnode.anim{animation:pulse 2.8s ease-in-out infinite; animation-delay:var(--d,0s);}
+    @keyframes pulse{0%,100%{opacity:0.35;}18%{opacity:1;}40%{opacity:0.35;}}
+    @media(prefers-reduced-motion:reduce){.netnode.anim{animation:none; opacity:1;}}
+
+    /* section scaffold */
+    section{padding:52px 0; border-bottom:3px solid var(--ink);}
+    .sec-rule{display:flex; justify-content:space-between; align-items:baseline; gap:18px; flex-wrap:wrap; margin-bottom:30px;}
+    .sec-no{font-family:"IBM Plex Mono",monospace; font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; background:var(--ink); color:var(--acid); padding:6px 12px;}
+    .sec-note{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink); letter-spacing:0.03em;}
+    h2.big{font-family:"Anton",sans-serif; font-weight:400; font-size:clamp(34px,5vw,58px); line-height:0.94; text-transform:uppercase; margin:0 0 8px;}
+
+    /* throughline */
+    .through{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:3px solid var(--ink); background:var(--ink);}
+    .tstep{background:var(--acid); padding:22px 20px 26px;}
+    .tstep .n{font-family:"Anton",sans-serif; font-size:54px; line-height:0.9; color:var(--hot);}
+    .tstep h4{font-family:"Anton",sans-serif; font-weight:400; font-size:24px; text-transform:uppercase; margin:8px 0 8px;}
+    .tstep p{margin:0; font-size:14px; line-height:1.55;}
+
+    /* tools list */
+    .tool-list{display:flex; flex-direction:column; border:3px solid var(--ink);}
+    .ix-row{display:grid; grid-template-columns:62px 1.1fr 1.6fr auto; gap:20px; align-items:center; padding:20px 22px; text-decoration:none; color:var(--ink); border-bottom:2.5px solid var(--ink); background:var(--paper); transition:background .12s;}
+    .ix-row:last-child{border-bottom:none;}
+    .ix-row:hover{background:var(--acid-deep);}
+    .ix-no{font-family:"Anton",sans-serif; font-size:34px; color:var(--hot);}
+    .ix-name{font-family:"Anton",sans-serif; font-size:22px; text-transform:uppercase; line-height:1;}
+    .ix-blurb{font-size:14px; line-height:1.5;}
+    .stamp{font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; padding:5px 10px; border:2px solid var(--ink); white-space:nowrap;}
+    .stamp.ready{background:var(--grn); color:#fff; border-color:var(--ink);}
+    .stamp.future{background:transparent; color:var(--ink);}
+
+    /* run of show */
+    .ros{display:flex; flex-direction:column; gap:0; border-left:3px solid var(--ink);}
+    .ros-row{display:grid; grid-template-columns:88px 1fr; gap:22px; padding:18px 0 18px 22px; border-bottom:1.5px solid rgba(20,19,18,0.18);}
+    .ros-row:last-child{border-bottom:none;}
+    .ros-time{font-family:"Anton",sans-serif; font-size:26px; color:var(--blue);}
+    .ros-seg{font-family:"Anton",sans-serif; font-size:21px; text-transform:uppercase; margin:0 0 4px;}
+    .ros-body{margin:0; font-size:14.5px; line-height:1.55;}
+    .ros-body b{font-weight:700;}
+
+    /* prompts */
+    .prompts{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+    .prompt{border:2.5px solid var(--ink); background:var(--paper); padding:16px 18px; font-size:15.5px; line-height:1.5; box-shadow:3px 3px 0 var(--ink);}
+    .prompt::before{content:"Q"; font-family:"Anton",sans-serif; color:var(--hot); margin-right:9px; font-size:18px;}
+
+    /* materials */
+    .cols{display:grid; grid-template-columns:1fr 1fr; gap:26px;}
+    .col h3{font-family:"Anton",sans-serif; font-weight:400; font-size:24px; text-transform:uppercase; margin:0 0 14px;}
+    .rows{display:flex; flex-direction:column; border-top:2.5px solid var(--ink);}
+    .drow{display:flex; align-items:baseline; gap:14px; padding:13px 4px; border-bottom:2px solid rgba(20,19,18,0.18); text-decoration:none; color:var(--ink); transition:padding .12s, color .12s;}
+    .drow:hover{padding-left:12px; color:var(--hot);}
+    .drow .nm{font-weight:700; font-size:15.5px;}
+    .drow .ds{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:rgba(20,19,18,0.6); margin-left:auto; text-align:right;}
+    .callout{border:3px solid var(--ink); background:var(--ink); color:var(--acid); padding:22px 24px;}
+    .callout p{margin:0; font-size:15.5px; line-height:1.6;} .callout b{color:#fff;}
+
+    /* pager + footer */
+    .pager{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+    .pg{border:3px solid var(--ink); background:var(--paper); padding:18px 22px; text-decoration:none; display:flex; flex-direction:column; gap:5px; box-shadow:4px 4px 0 var(--ink); transition:transform .12s;}
+    .pg:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--ink);}
+    .pg.next{text-align:right;}
+    .pg-dir{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; text-transform:uppercase; color:rgba(20,19,18,0.6);}
+    .pg-title{font-family:"Anton",sans-serif; font-size:22px; text-transform:uppercase;}
+    footer{background:var(--ink); color:var(--acid); padding:40px 0 56px;}
+    footer .brand{color:var(--acid); margin-bottom:12px;}
+    footer .brand .mk{background:var(--hot);}
+    footer p{font-family:"IBM Plex Mono",monospace; font-size:13px; color:rgba(214,240,120,0.7); margin:0; max-width:70ch;}
+    .skin-note{margin-top:16px; font-size:12px; color:var(--hot);}
+
+    @media(max-width:860px){
+      .hero-grid{grid-template-columns:1fr; gap:28px;}
+      .through{grid-template-columns:1fr 1fr;}
+      .ix-row{grid-template-columns:48px 1fr; gap:12px;}
+      .ix-blurb,.ix-row .stamp{grid-column:2;}
+    }
+    @media(max-width:600px){
+      .through{grid-template-columns:1fr;} .prompts,.cols,.pager{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="bar">
+    <div class="wrap bar-in">
+      <a class="brand" href="../index.html"><span class="mk"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="../index.html#method" class="hide-sm">Method</a>
+        <a class="btn-sm" href="docs-facilitation.html">Facilitation guide</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" data-screen-label="Session hero">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#sessions">Sessions</a><span class="sep">/</span>
+        <span>Text</span>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <div class="sess-no">Session 01 <span class="of">/ of 04</span></div>
+          <span class="kicker"><span class="sq"></span>Machines that write</span>
+          <h1 class="title">Te<span class="x">x</span>t</h1>
+          <p class="q">When a language model writes, <span class="acc">what is it actually doing?</span></p>
+          <p class="lede">Tokens, prediction, temperature, and the gap between fluent output and understanding. We start unplugged — guessing the next word ourselves — then open the machine and watch it do the same thing, visibly.</p>
+        </div>
+        <div class="netpanel">
+          <div class="cap"><span>forward pass · text</span><span class="hot">live</span></div>
+          <svg viewBox="0 0 480 300" id="net" aria-hidden="true"></svg>
+          <div class="netlabels"><span>input</span><span>hidden</span><span>hidden</span><span>next token</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section data-screen-label="What we make visible">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ A · what we make visible</span><span class="sec-note">four mechanisms, one session</span></div>
+      <h2 class="big">Four mechanisms,<br>one investigation.</h2>
+      <div class="through" style="margin-top:24px;">
+        <div class="tstep"><div class="n">01</div><h4>Tokens</h4><p>Text is chopped into pieces a model can count — often not where a human would cut.</p></div>
+        <div class="tstep"><div class="n">02</div><h4>Prediction</h4><p>The model only ever guesses the next token from what came before.</p></div>
+        <div class="tstep"><div class="n">03</div><h4>Temperature</h4><p>One dial slides output from predictable to surprising — and unstable.</p></div>
+        <div class="tstep"><div class="n">04</div><h4>The illusion</h4><p>Fluency is easy to mistake for understanding. ELIZA shows why.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Session tools">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ B · tools for this session</span><span class="sec-note">browser-based · no accounts</span></div>
+      <div class="tool-list">
+        <a class="ix-row" href="tool-tokenizer.html">
+          <span class="ix-no">01</span>
+          <span class="ix-name">Tokenizer + Temperature Visualizer</span>
+          <span class="ix-blurb">Watch text break into tokens, see next-token probabilities, and feel how temperature reshapes sampling.</span>
+          <span class="stamp ready">Launch ready</span>
+        </a>
+        <a class="ix-row" href="../tools/eliza-simulator/">
+          <span class="ix-no">02</span>
+          <span class="ix-name">ELIZA Simulator</span>
+          <span class="ix-blurb">Contrast visible rule-matching with opaque LLM behaviour, so mechanism and effect pull apart.</span>
+          <span class="stamp ready">Launch ready</span>
+        </a>
+        <a class="ix-row" href="../tools/next-token-prediction-game/">
+          <span class="ix-no">03</span>
+          <span class="ix-name">Next-Token Prediction Game</span>
+          <span class="ix-blurb">A standalone prediction game for testing genre, context, and likely continuations.</span>
+          <span class="stamp ready">Launch ready</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Run of show">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ C · run of show</span><span class="sec-note">60–90 minutes</span></div>
+      <div class="ros">
+        <div class="ros-row"><div class="ros-time">0–5</div><div><p class="ros-seg">Welcome &amp; norms</p><p class="ros-body">Name the question. Remind everyone direct AI use is optional — each person chooses a <b>participation pathway</b>.</p></div></div>
+        <div class="ros-row"><div class="ros-time">5–15</div><div><p class="ros-seg">Unplugged prediction game</p><p class="ros-body">Show a sentence stem, collect likely next words. Notice how <b>context, genre, and expectation</b> shape guesses.</p></div></div>
+        <div class="ros-row"><div class="ros-time">15–35</div><div><p class="ros-seg">Tokenizer + Temperature</p><p class="ros-body">Show token chunks, then run one prompt at low and high temperature. Watch <b>probability bars</b> and greedy vs. sampled output.</p></div></div>
+        <div class="ros-row"><div class="ros-time">35–55</div><div><p class="ros-seg">ELIZA vs. LLM</p><p class="ros-body">Inspect the matched rule, pattern, and template. Compare <b>visible rule-matching</b> with pre-generated LLM examples.</p></div></div>
+        <div class="ros-row"><div class="ros-time">55–75</div><div><p class="ros-seg">Investigation</p><p class="ros-body">Complete one <b>Text Experiment Board</b> section: a default test, a prompt variation, or an ELIZA comparison.</p></div></div>
+        <div class="ros-row"><div class="ros-time">75–90</div><div><p class="ros-seg">Debrief</p><p class="ros-body">Reflection frame — <b>human, machine, system, ethics, pedagogy</b>. Share one evidence-based claim and one question.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Discussion prompts">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ D · discussion prompts</span><span class="sec-note">for the debrief</span></div>
+      <div class="prompts">
+        <div class="prompt">What made your next-word guess feel obvious?</div>
+        <div class="prompt">What does the tokenizer split that you wouldn't split as a human reader?</div>
+        <div class="prompt">At low temperature, what becomes more predictable?</div>
+        <div class="prompt">At high temperature, what becomes more surprising — or unstable?</div>
+        <div class="prompt">What does ELIZA make visible that a modern LLM hides?</div>
+        <div class="prompt">Where could fluency be mistaken for understanding?</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Worksheets">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ E · materials</span><span class="sec-note">worksheet &amp; pathways</span></div>
+      <div class="cols">
+        <div class="col">
+          <h3>Worksheet</h3>
+          <div class="rows">
+            <a class="drow" href="../worksheets/text-experiment-board/"><span class="nm">Text Experiment Board</span><span class="ds">prompt versions &amp; observations</span></a>
+            <a class="drow" href="../worksheets/ai-use-consent-checklist/"><span class="nm">AI Use + Consent</span><span class="ds">norms &amp; pathways</span></a>
+            <a class="drow" href="../tools/concept-bridges/prediction-is-not-understanding/"><span class="nm">Bridge · Prediction ≠ understanding</span><span class="ds">build intuition first</span></a>
+          </div>
+        </div>
+        <div class="col">
+          <h3>Low-AI / No-AI pathway</h3>
+          <div class="callout">
+            <p>Participants can complete the whole session with only the visualizer, ELIZA, and pre-generated comparison examples — no logging into or prompting a live LLM. <b>Opting out of direct AI use never means opting out of the camp.</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Pager" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="pager">
+        <a class="pg" href="docs-facilitation.html"><span class="pg-dir">← Facilitation script</span><span class="pg-title">Session 1 Pilot Script</span></a>
+        <a class="pg next" href="../index.html#sessions"><span class="pg-dir">Next session →</span><span class="pg-title">02 · Images</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <a class="brand" href="../index.html"><span class="mk"></span>Learning Machines</a>
+      <p>Session 1 of 4 · Text, Images, Video, Human in the loop.</p>
+      <p class="skin-note">// skin: GG · forward pass → acid brutalist · applied to the session page type</p>
+    </div>
+  </footer>
+
+  <script>
+    // forward-pass network
+    (function(){
+      var svg = document.getElementById('net'); if(!svg) return;
+      var NS="http://www.w3.org/2000/svg", W=480,H=300,pad=34;
+      var layers=[4,6,6,4], cols=['#141312','oklch(0.62 0.26 350)','oklch(0.5 0.2 250)','oklch(0.62 0.26 350)'];
+      var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+      var xs=layers.map(function(_,i){return pad + i*(W-2*pad)/(layers.length-1);});
+      var pts=layers.map(function(n,li){var a=[];for(var i=0;i<n;i++)a.push({x:xs[li], y:pad + (i+0.5)*(H-2*pad)/n});return a;});
+      function ln(a,b,d){var l=document.createElementNS(NS,'line');l.setAttribute('x1',a.x);l.setAttribute('y1',a.y);l.setAttribute('x2',b.x);l.setAttribute('y2',b.y);l.setAttribute('stroke','#141312');l.setAttribute('stroke-width','1');l.setAttribute('class','netline');svg.appendChild(l);}
+      for(var li=0;li<layers.length-1;li++)pts[li].forEach(function(a){pts[li+1].forEach(function(b){ln(a,b);});});
+      pts.forEach(function(layer,li){layer.forEach(function(p,ni){
+        var c=document.createElementNS(NS,'circle');c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r','9');
+        c.setAttribute('fill',cols[li]);c.setAttribute('stroke','#141312');c.setAttribute('stroke-width','2');
+        if(!reduce){c.setAttribute('class','netnode anim');c.style.setProperty('--d',(li*0.5+ni*0.08)+'s');}
+        svg.appendChild(c);
+      });});
+    })();
+  </script>
+</body>
+</html>

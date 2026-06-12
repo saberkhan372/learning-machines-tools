@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en" data-skin="text-terminal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Tokenizer + Temperature — Terminal skin · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#070d09; --panel:#0b140d; --line:#13251a;
+      --grn:#46ff7d; --dim:rgba(70,255,125,0.5); --faint:rgba(70,255,125,0.28);
+      --amber:#ffcf6b; --cyan:#5cf2ff; --pink:#ff7de0;
+    }
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0; background:var(--bg); color:var(--grn);
+      font-family:"IBM Plex Mono",monospace; font-size:16px; line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    /* global phosphor scanlines + flicker */
+    body::before{
+      content:""; position:fixed; inset:0; z-index:200; pointer-events:none;
+      background:repeating-linear-gradient(0deg, rgba(0,0,0,0.26) 0px, rgba(0,0,0,0.26) 2px, transparent 2px, transparent 5px);
+    }
+    body::after{
+      content:""; position:fixed; inset:0; z-index:199; pointer-events:none;
+      background:radial-gradient(120% 90% at 50% 0%, transparent 60%, rgba(0,0,0,0.55) 100%);
+    }
+    .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+    a{color:inherit;}
+    .glow{text-shadow:0 0 10px currentColor, 0 0 34px rgba(70,255,125,0.25);}
+    .mono{font-family:"IBM Plex Mono",monospace;}
+    .vt{font-family:"VT323",monospace;}
+    .dim{color:var(--dim);}
+    .cursor{display:inline-block; width:0.5em; height:1.05em; background:var(--grn);
+      vertical-align:-0.13em; margin-left:6px; box-shadow:0 0 10px var(--grn); animation:blink 1.05s steps(1) infinite;}
+    @keyframes blink{50%{opacity:0;}}
+    @media (prefers-reduced-motion:reduce){.cursor{animation:none;}}
+
+    /* ---- nav ---- */
+    nav.bar{position:sticky; top:0; z-index:120; background:rgba(7,13,9,0.92);
+      backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+    .bar-in{display:flex; align-items:center; justify-content:space-between; height:54px;}
+    .brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--grn);
+      font-family:"VT323",monospace; font-size:26px; letter-spacing:0.02em;}
+    .brand .dot{width:11px; height:11px; background:var(--grn); box-shadow:0 0 12px var(--grn); display:inline-block;}
+    .nav-links{display:flex; align-items:center; gap:22px;}
+    .nav-links a{font-size:13px; letter-spacing:0.04em; text-decoration:none; color:var(--dim);}
+    .nav-links a:hover{color:var(--grn); text-shadow:0 0 10px var(--grn);}
+    .launch, .nav-links a.launch{border:1px solid var(--grn); color:var(--grn); padding:7px 14px; font-size:13px;
+      text-decoration:none; transition:background .15s;}
+    .launch:hover, .nav-links a.launch:hover{background:var(--grn); color:var(--bg); box-shadow:0 0 16px rgba(70,255,125,0.5);}
+    @media(max-width:720px){.hide-sm{display:none;}}
+
+    /* ---- hero ---- */
+    header.hero{padding:34px 0 18px;}
+    .crumb{font-size:13px; color:var(--dim); margin-bottom:26px;}
+    .crumb a{text-decoration:none; color:var(--dim);}
+    .crumb a:hover{color:var(--grn);}
+    .crumb .pmpt{color:var(--grn);}
+    .boot{color:var(--dim); font-size:14.5px; line-height:1.9; margin:0 0 8px;}
+    .boot .ok{color:var(--grn);}
+    .meta-row{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 18px;}
+    .tag{font-size:12px; letter-spacing:0.06em; padding:4px 10px; border:1px solid var(--faint); color:var(--dim);}
+    .tag.live{border-color:var(--grn); color:var(--grn); box-shadow:inset 0 0 0 1px rgba(70,255,125,0.12);}
+    .tag.live::before{content:"●"; margin-right:7px; animation:blink 1.4s steps(1) infinite;}
+    h1.title{font-family:"VT323",monospace; font-weight:400; line-height:0.92;
+      font-size:clamp(54px,9vw,118px); margin:6px 0 0; letter-spacing:0.01em;}
+    .lede{font-size:17px; line-height:1.7; color:var(--grn); max-width:62ch; margin:20px 0 0;}
+    .lede b{color:var(--cyan); font-weight:600; text-shadow:0 0 12px rgba(92,242,255,0.3);}
+    .actions{display:flex; flex-wrap:wrap; gap:14px; margin:26px 0 8px;}
+    .btn{font-size:14px; text-decoration:none; padding:11px 18px; border:1px solid var(--grn); color:var(--grn); transition:all .15s;}
+    .btn:hover{background:var(--grn); color:var(--bg); box-shadow:0 0 18px rgba(70,255,125,0.5);}
+    .btn.ghost{border-color:var(--faint); color:var(--dim);}
+    .btn.ghost:hover{border-color:var(--grn); color:var(--grn); background:transparent; box-shadow:none;}
+
+    /* ---- terminal window (preview) ---- */
+    .term-win{margin:40px 0 8px; border:1px solid var(--line); background:var(--panel);
+      box-shadow:0 0 0 1px rgba(70,255,125,0.06), 0 24px 60px -30px rgba(70,255,125,0.25);}
+    .term-top{display:flex; align-items:center; gap:8px; padding:10px 14px; border-bottom:1px solid var(--line); background:#0a120c;}
+    .term-top .led{width:10px; height:10px; border-radius:50%; border:1px solid var(--faint);}
+    .term-top .led.g{background:var(--grn); border-color:var(--grn); box-shadow:0 0 8px var(--grn);}
+    .term-top .path{margin-left:10px; font-size:13px; color:var(--dim);}
+    .term-body{padding:0;}
+    .preview-frame{position:relative; aspect-ratio:16/9.4; background:#05080610; overflow:hidden;
+      border-bottom:1px solid var(--line);}
+    .preview-frame iframe{position:absolute; top:0; left:0; width:100%; height:100%; border:0; filter:saturate(0.85);}
+    .term-note{padding:11px 16px; font-size:12.5px; color:var(--dim); display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+
+    /* ---- section scaffold ---- */
+    section{padding:54px 0;}
+    section + section{border-top:1px solid var(--line);}
+    .sec-rule{display:flex; justify-content:space-between; align-items:baseline; gap:18px;
+      border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:34px; flex-wrap:wrap;}
+    .sec-no{font-size:14px; letter-spacing:0.05em; color:var(--grn);}
+    .sec-no b{color:var(--grn);}
+    .sec-note{font-size:12.5px; color:var(--dim); letter-spacing:0.04em;}
+
+    /* visible cards */
+    .vis-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+    .vis{border:1px solid var(--line); background:var(--panel); padding:22px 20px 24px; position:relative; transition:border-color .15s, box-shadow .15s;}
+    .vis:hover{border-color:var(--faint); box-shadow:0 0 0 1px rgba(70,255,125,0.08), 0 0 30px -10px rgba(70,255,125,0.3);}
+    .vis .fig{font-size:12.5px; letter-spacing:0.08em; color:var(--dim); margin-bottom:14px;}
+    .vis h3{font-family:"VT323",monospace; font-weight:400; font-size:32px; margin:0 0 8px; line-height:1; color:var(--grn);}
+    .vis p{margin:0; font-size:14.5px; line-height:1.65; color:var(--dim);}
+    .vis .barart{display:flex; gap:3px; align-items:flex-end; height:34px; margin-bottom:16px;}
+    .vis .barart i{flex:1; background:var(--grn); opacity:0.32;}
+
+    /* investigate steps */
+    .steps{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+    .step{border:1px solid var(--line); background:var(--panel); padding:20px 22px;}
+    .step .k{font-size:12.5px; letter-spacing:0.06em; color:var(--amber); margin-bottom:12px;}
+    .step h4{font-family:"VT323",monospace; font-weight:400; font-size:27px; line-height:1.05; margin:0 0 8px; color:var(--grn);}
+    .step p{margin:0 0 14px; font-size:14.5px; line-height:1.6; color:var(--dim);}
+    .step .eg{font-size:13px; color:var(--grn); border-left:2px solid var(--faint); padding:7px 0 7px 12px; background:rgba(70,255,125,0.04);}
+    .step .eg::before{content:"$ "; color:var(--dim);}
+
+    /* prompts */
+    .prompts{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+    .prompt{border:1px solid var(--line); background:var(--panel); padding:16px 18px; font-size:15px; line-height:1.55; color:var(--grn);}
+    .prompt::before{content:"> "; color:var(--dim);}
+
+    /* related */
+    .cols{display:grid; grid-template-columns:1fr 1fr; gap:30px;}
+    .col h3{font-family:"VT323",monospace; font-weight:400; font-size:26px; margin:0 0 14px; color:var(--dim); letter-spacing:0.02em;}
+    .rows{display:flex; flex-direction:column; border-top:1px solid var(--line);}
+    .row{display:flex; align-items:baseline; gap:14px; padding:13px 4px; border-bottom:1px solid var(--line); text-decoration:none; color:var(--grn); transition:background .12s, padding .12s;}
+    .row:hover{background:rgba(70,255,125,0.05); padding-left:12px;}
+    .row .nm{font-size:15px;}
+    .row .ds{font-size:13px; color:var(--dim); margin-left:auto; text-align:right;}
+    .row::before{content:"→"; color:var(--faint); font-size:13px;}
+
+    /* pager */
+    .pager{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+    .pg{border:1px solid var(--line); background:var(--panel); padding:18px 22px; text-decoration:none; display:flex; flex-direction:column; gap:6px; transition:border-color .15s, box-shadow .15s;}
+    .pg:hover{border-color:var(--faint); box-shadow:0 0 24px -12px rgba(70,255,125,0.4);}
+    .pg.next{text-align:right;}
+    .pg-dir{font-size:12.5px; color:var(--dim); letter-spacing:0.04em;}
+    .pg-title{font-family:"VT323",monospace; font-size:26px; color:var(--grn); line-height:1;}
+
+    footer{border-top:1px solid var(--line); padding:40px 0 56px; margin-top:10px;}
+    footer .brand{margin-bottom:12px;}
+    footer p{font-size:13px; color:var(--dim); margin:0; max-width:70ch;}
+    .skin-note{margin-top:18px; font-size:12.5px; color:var(--faint); letter-spacing:0.03em;}
+
+    @media(max-width:760px){
+      .vis-grid{grid-template-columns:1fr;}
+      .steps,.prompts,.cols,.pager{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="bar">
+    <div class="wrap bar-in">
+      <a class="brand" href="../index.html"><span class="dot"></span>learning_machines</a>
+      <div class="nav-links">
+        <a href="../index.html#tools" class="hide-sm">tool_index</a>
+        <a href="session-text.html" class="hide-sm">session_01</a>
+        <a href="../index.html#method" class="hide-sm">method</a>
+        <a class="launch" href="../tools/tokenizer-temperature-visualizer/index.html">launch tool →</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" data-screen-label="Tool hero">
+    <div class="wrap">
+      <div class="crumb">
+        <span class="pmpt">~</span> /
+        <a href="../index.html">home</a> /
+        <a href="../index.html#tools">tools</a> /
+        <span class="pmpt">tokenizer-temperature</span>
+      </div>
+
+      <p class="boot mono">visualizer@text:~$ run tokenizer-temperature --inspect</p>
+      <p class="boot mono">loading token boundaries ............ <span class="ok">ok</span></p>
+      <p class="boot mono">loading next-token probabilities .... <span class="ok">ok</span></p>
+      <p class="boot mono">loading temperature sampler ......... <span class="ok">ok</span></p>
+
+      <div class="meta-row">
+        <span class="tag live">launch ready</span>
+        <span class="tag">session_01 · text</span>
+        <span class="tag">interactive</span>
+      </div>
+
+      <h1 class="title glow">Tokenizer<br>+ Temperature<span class="cursor"></span></h1>
+
+      <p class="lede">The core text tool. It pulls apart three things that usually hide inside a single fluent sentence: how text becomes <b>tokens</b>, how the next token is <b>predicted</b>, and how <b>temperature</b> reshapes what gets sampled.</p>
+
+      <div class="actions">
+        <a class="btn" href="../tools/tokenizer-temperature-visualizer/index.html">launch the tool →</a>
+        <a class="btn ghost" href="../worksheets/text-experiment-board/">open worksheet</a>
+      </div>
+
+      <div class="term-win">
+        <div class="term-top">
+          <span class="led g"></span><span class="led"></span><span class="led"></span>
+          <span class="path mono">tools/tokenizer-temperature-visualizer/ — live</span>
+        </div>
+        <div class="term-body">
+          <div class="preview-frame">
+            <iframe src="../tools/tokenizer-temperature-visualizer/index.html" title="Tokenizer + Temperature Visualizer preview" tabindex="-1" loading="lazy"></iframe>
+          </div>
+          <div class="term-note">
+            <span>// embedded preview · phosphor filtered</span>
+            <span>launch for the full interactive build →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section data-screen-label="What it makes visible">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ A · what it makes visible</span><span class="sec-note">three hidden mechanisms</span></div>
+      <div class="vis-grid">
+        <div class="vis">
+          <div class="barart"><i style="height:40%"></i><i style="height:90%"></i><i style="height:55%"></i><i style="height:30%"></i><i style="height:70%"></i><i style="height:18%"></i></div>
+          <div class="fig mono">fig.01 — boundaries</div>
+          <h3>Token boundaries</h3>
+          <p>Type any text and watch it split into the chunks a model counts — frequently mid-word, and rarely where you'd expect.</p>
+        </div>
+        <div class="vis">
+          <div class="barart"><i style="height:95%"></i><i style="height:62%"></i><i style="height:44%"></i><i style="height:28%"></i><i style="height:20%"></i><i style="height:12%"></i></div>
+          <div class="fig mono">fig.02 — probability</div>
+          <h3>Next-token odds</h3>
+          <p>For each step, see the ranked candidates and their probabilities — the guess underneath every "sentence."</p>
+        </div>
+        <div class="vis">
+          <div class="barart"><i style="height:50%"></i><i style="height:54%"></i><i style="height:47%"></i><i style="height:58%"></i><i style="height:44%"></i><i style="height:60%"></i></div>
+          <div class="fig mono">fig.03 — sampling</div>
+          <h3>Temperature</h3>
+          <p>Slide from greedy to high temperature and watch the same prompt move from predictable to surprising to unstable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="How to investigate">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ B · how to investigate it</span><span class="sec-note">run it like an experiment, not a toy</span></div>
+      <div class="steps">
+        <div class="step">
+          <div class="k mono">01 · predict</div>
+          <h4>Before you touch the slider</h4>
+          <p>Write down what you think high temperature will do to this exact prompt.</p>
+          <div class="eg mono">prompt: "The museum was completely ___"</div>
+        </div>
+        <div class="step">
+          <div class="k mono">02 · change one thing</div>
+          <h4>Move only the temperature</h4>
+          <p>Keep the prompt identical. Run it at 0.2, then 0.9. Change nothing else.</p>
+          <div class="eg mono">temp 0.2 → temp 0.9 · same prompt</div>
+        </div>
+        <div class="step">
+          <div class="k mono">03 · compare evidence</div>
+          <h4>Greedy vs. sampled</h4>
+          <p>What changed in the output? What stayed the same about the mechanism underneath?</p>
+          <div class="eg mono">"empty" 71% → empty / silent / flooded</div>
+        </div>
+        <div class="step">
+          <div class="k mono">04 · name it</div>
+          <h4>Not "it got weird"</h4>
+          <p>Name the behaviour precisely: a default, a failure, or a pattern — then decide what a human does next.</p>
+          <div class="eg mono">default · the model's safest continuation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Debrief questions">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ C · debrief questions</span><span class="sec-note">after the investigation</span></div>
+      <div class="prompts">
+        <div class="prompt">What does the tokenizer split that you wouldn't split as a reader?</div>
+        <div class="prompt">At low temperature, what becomes more predictable?</div>
+        <div class="prompt">Where did probability get confused with truth?</div>
+        <div class="prompt">When did fluency start to feel like understanding?</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Related materials">
+    <div class="wrap">
+      <div class="sec-rule"><span class="sec-no">§ D · related</span><span class="sec-note">pairs well with · use in context</span></div>
+      <div class="cols">
+        <div class="col">
+          <h3>pairs well with</h3>
+          <div class="rows">
+            <a class="row" href="../tools/eliza-simulator/"><span class="nm">ELIZA Simulator</span><span class="ds">visible rules vs. opaque LLM</span></a>
+            <a class="row" href="../tools/concept-bridges/prediction-is-not-understanding/"><span class="nm">Bridge · Prediction ≠ understanding</span><span class="ds">concept explainer</span></a>
+            <a class="row" href="../tools/concept-bridges/confidence-is-not-truth/"><span class="nm">Bridge · Confidence ≠ truth</span><span class="ds">concept explainer</span></a>
+          </div>
+        </div>
+        <div class="col">
+          <h3>use it in context</h3>
+          <div class="rows">
+            <a class="row" href="session-text.html"><span class="nm">Session 1 · Text</span><span class="ds">where this tool sits</span></a>
+            <a class="row" href="docs-facilitation.html"><span class="nm">Session 1 Facilitation</span><span class="ds">timing &amp; moves</span></a>
+            <a class="row" href="../worksheets/text-experiment-board/"><span class="nm">Text Experiment Board</span><span class="ds">capture your evidence</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Pager">
+    <div class="wrap">
+      <div class="pager">
+        <a class="pg" href="session-text.html"><span class="pg-dir mono">← back to session</span><span class="pg-title">Session 1 · Text</span></a>
+        <a class="pg next" href="../tools/tokenizer-temperature-visualizer/index.html"><span class="pg-dir mono">open it →</span><span class="pg-title">launch the tool</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <a class="brand" href="../index.html"><span class="dot"></span>learning_machines</a>
+      <p>Single-file · vanilla JavaScript · no account · no live model required for core teaching moments.</p>
+      <p class="skin-note mono">// skin: EE · attention → terminal phosphor · applied to the tool page type</p>
+    </div>
+  </footer>
+</body>
+</html>
