@@ -203,8 +203,20 @@ html[data-skin="worksheet-print"] {
 /* ---------------- base ---------------- */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
@@ -258,6 +270,8 @@ b, strong { font-weight: 600; }
 }
 .sec-rule .sec-no {
   flex: none;
+  margin: 0;
+  line-height: 1.2;
   white-space: nowrap;
   font-family: var(--font-mono);
   font-size: 12px;

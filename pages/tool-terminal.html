@@ -13,6 +13,8 @@
       --bg:#070d09; --panel:#0b140d; --line:#13251a;
       --grn:#46ff7d; --dim:rgba(70,255,125,0.5); --faint:rgba(70,255,125,0.28);
       --amber:#ffcf6b; --cyan:#5cf2ff; --pink:#ff7de0;
+      --surface:var(--panel); --surface-2:#09110b; --ink:var(--grn);
+      --rule:var(--line); --font-mono:"IBM Plex Mono",monospace;
     }
     *{box-sizing:border-box;}
     html{scroll-behavior:smooth;}
@@ -152,15 +154,16 @@
       .steps,.prompts,.cols,.pager{grid-template-columns:1fr;}
     }
   </style>
+  <script src="../assets/field-theme.js"></script>
 </head>
 <body>
   <nav class="bar">
     <div class="wrap bar-in">
       <a class="brand" href="../index.html"><span class="dot"></span>learning_machines</a>
       <div class="nav-links">
-        <a href="../index.html#tools" class="hide-sm">tool_index</a>
-        <a href="session-text.html" class="hide-sm">session_01</a>
-        <a href="../index.html#method" class="hide-sm">method</a>
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="../index.html#method" class="hide-sm">Method</a>
         <a class="launch" href="../tools/tokenizer-temperature-visualizer/index.html">launch tool →</a>
       </div>
     </div>
@@ -215,7 +218,7 @@
 
   <section data-screen-label="What it makes visible">
     <div class="wrap">
-      <div class="sec-rule"><span class="sec-no">§ A · what it makes visible</span><span class="sec-note">three hidden mechanisms</span></div>
+      <div class="sec-rule"><h2 class="sec-no">§ A · what it makes visible</h2><span class="sec-note">three hidden mechanisms</span></div>
       <div class="vis-grid">
         <div class="vis">
           <div class="barart"><i style="height:40%"></i><i style="height:90%"></i><i style="height:55%"></i><i style="height:30%"></i><i style="height:70%"></i><i style="height:18%"></i></div>
@@ -241,7 +244,7 @@
 
   <section data-screen-label="How to investigate">
     <div class="wrap">
-      <div class="sec-rule"><span class="sec-no">§ B · how to investigate it</span><span class="sec-note">run it like an experiment, not a toy</span></div>
+      <div class="sec-rule"><h2 class="sec-no">§ B · how to investigate it</h2><span class="sec-note">run it like an experiment, not a toy</span></div>
       <div class="steps">
         <div class="step">
           <div class="k mono">01 · predict</div>
@@ -273,7 +276,7 @@
 
   <section data-screen-label="Debrief questions">
     <div class="wrap">
-      <div class="sec-rule"><span class="sec-no">§ C · debrief questions</span><span class="sec-note">after the investigation</span></div>
+      <div class="sec-rule"><h2 class="sec-no">§ C · debrief questions</h2><span class="sec-note">after the investigation</span></div>
       <div class="prompts">
         <div class="prompt">What does the tokenizer split that you wouldn't split as a reader?</div>
         <div class="prompt">At low temperature, what becomes more predictable?</div>
@@ -285,7 +288,7 @@
 
   <section data-screen-label="Related materials">
     <div class="wrap">
-      <div class="sec-rule"><span class="sec-no">§ D · related</span><span class="sec-note">pairs well with · use in context</span></div>
+      <div class="sec-rule"><h2 class="sec-no">§ D · related</h2><span class="sec-note">pairs well with · use in context</span></div>
       <div class="cols">
         <div class="col">
           <h3>pairs well with</h3>

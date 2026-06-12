@@ -1,7 +1,7 @@
 /* Learning Machines — Field Manual theme loader.
    Applies persisted tone/type/ink/identity before paint; reacts to Tweaks.
    Also injects assets/field-identity.css + the identity display fonts and
-   renders the site-wide "Skin" menu (see docs/site-identity-switcher-plan.md). */
+   renders the site-wide "Look" menu (see docs/site-identity-switcher-plan.md). */
 (function () {
   var KEYS = { tone: "lm-tone", type: "lm-type", ink: "lm-ink", identity: "lm-identity" };
   var DEFAULTS = { tone: "white", type: "signage", ink: "full", identity: "field" };
@@ -57,7 +57,7 @@
     refreshMenu();
   }
 
-  /* ---- site-wide skin menu ---- */
+  /* ---- site-wide look menu ---- */
   var menuRoot = null;
   function buildMenu() {
     if (menuRoot || !document.body || document.documentElement.hasAttribute("data-no-identity-menu")) return;
@@ -71,7 +71,7 @@
     var list = document.createElement("div");
     list.className = "lm-skin-list";
     list.setAttribute("role", "listbox");
-    list.setAttribute("aria-label", "Site skin");
+    list.setAttribute("aria-label", "Site look");
     IDENTITIES.forEach(function (id) {
       var opt = document.createElement("button");
       opt.type = "button";
@@ -108,7 +108,7 @@
   function refreshMenu() {
     if (!menuRoot) return;
     var id = get("identity");
-    menuRoot.querySelector(".lm-skin-toggle").textContent = "Skin: " + (LABELS[id] || id);
+    menuRoot.querySelector(".lm-skin-toggle").textContent = "Look: " + (LABELS[id] || id);
     [].forEach.call(menuRoot.querySelectorAll(".lm-skin-opt"), function (opt) {
       opt.setAttribute("aria-selected", opt.dataset.identity === id ? "true" : "false");
     });

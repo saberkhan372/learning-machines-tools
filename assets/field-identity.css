@@ -5,7 +5,7 @@
    chrome and display type aggressively, body text conservatively.
    Plan + rules: docs/site-identity-switcher-plan.md */
 
-/* ---------------- skin menu (all identities) ---------------- */
+/* ---------------- look menu (all identities) ---------------- */
 .lm-skin-menu {
   position: fixed;
   right: 16px;

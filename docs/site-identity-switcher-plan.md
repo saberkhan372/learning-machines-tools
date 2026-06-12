@@ -76,7 +76,7 @@ Reference implementations: the three standalone demos
    - *Guard rails*, enforced both ways: identity blocks live inside
      `@media screen` so print always renders Field surfaces, **and**
      `html[data-skin="worksheet-print"]` gets a restrained screen-only
-     treatment so worksheets visibly respond to the skin menu without harming
+     treatment so worksheets visibly respond to the Look menu without harming
      PDF/print output; reduced-motion disables scanline flicker, wash drift,
      and pulse animations (the demos already model these fallbacks).
 
@@ -84,7 +84,7 @@ Reference implementations: the three standalone demos
    predates that rule and should not be extended), rendered by
    `field-theme.js` itself so it appears on **every** page — including the
    homepage, where it lives outside and independent of the React tweaks
-   panel. A small mono "Skin ▾" control that sets the identity and re-applies
+   panel. A small mono "Look ▾" control that sets the identity and re-applies
    through the same code path as `tweakchange`. Suppress per-page with
    `data-no-identity-menu` on `<html>`.
 

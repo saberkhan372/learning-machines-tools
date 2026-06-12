@@ -33,9 +33,9 @@
     <div class="wrap nav-inner">
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="../index.html#tools" class="hide-sm">Tool index</a>
-        <a href="further-reading.html" class="hide-sm">Further reading</a>
-        <a href="younger-learners.html" class="hide-sm">Younger learners</a>
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="materials.html" class="hide-sm">Materials</a>
         <a class="btn btn-sm" href="../index.html#materials">All materials</a>
       </div>
     </div>
@@ -55,10 +55,25 @@
     </div>
   </header>
 
+  <!-- ON THIS PAGE -->
+  <section class="reader-nav" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <aside class="toc" aria-label="Hands-on sections">
+        <div class="toc-label">On this page</div>
+        <nav>
+          <a href="#scope">Scope</a>
+          <a href="#browser-training">Train in the browser</a>
+          <a href="#creative-code">Creative code</a>
+          <a href="#local-models">Run local models</a>
+        </nav>
+      </aside>
+    </div>
+  </section>
+
   <!-- SCOPE -->
   <section class="section-tight" style="--mink: var(--m-cross);">
     <div class="wrap">
-      <div class="sec-rule"><span class="sec-no">§ A · What the camp does and doesn't do</span><span class="sec-note">scoping the live-model question honestly</span></div>
+      <div class="sec-rule"><h2 class="sec-no" id="scope">§ A · What the camp does and doesn't do</h2><span class="sec-note">scoping the live-model question honestly</span></div>
       <div class="scope">
         <p class="mono-line">For everyone who asked about local models and building from scratch</p>
         <p>In sessions we <b>won't</b> set up accounts, install software, or host models — the core teaching moments never depend on live AI, and that's a feature (reliability, cost, consent). What we <b>will</b> do: <a href="../tools/count-the-next-token/">Count the Next Token</a> already builds a tiny language model from scratch, visibly, with arithmetic — that's the "how does training work" answer in miniature. Everything below is for going further <b>on your own machine, on your own terms</b>, between sessions or after the camp. Most of it is free; the listings say what each one needs.</p>
@@ -69,7 +84,7 @@
   <!-- TRAIN IN THE BROWSER -->
   <section class="section-tight" style="--mink: var(--m-image);">
     <div class="wrap">
-      <div class="sec-rule"><span class="sec-no">§ B · Train one in the browser</span><span class="sec-note">no code · training data → behavior, felt directly</span></div>
+      <div class="sec-rule"><h2 class="sec-no" id="browser-training">§ B · Train one in the browser</h2><span class="sec-note">no code · training data → behavior, felt directly</span></div>
       <div class="res-list">
         <div class="res">
           <div><div class="r-title"><a href="https://teachablemachine.withgoogle.com/">Teachable Machine</a> — Google</div><div class="r-meta"><b>free · browser · no account to train</b> · image / sound / pose</div></div>
@@ -94,7 +109,7 @@
   <!-- CREATIVE CODE -->
   <section class="section-tight" style="--mink: var(--m-text);">
     <div class="wrap">
-      <div class="sec-rule"><span class="sec-no">§ C · Creative code</span><span class="sec-note">the CC Fest home turf</span></div>
+      <div class="sec-rule"><h2 class="sec-no" id="creative-code">§ C · Creative code</h2><span class="sec-note">the CC Fest home turf</span></div>
       <div class="res-list">
         <div class="res">
           <div><div class="r-title"><a href="https://ml5js.org/">ml5.js</a></div><div class="r-meta"><b>free · open source · browser</b> · pairs with p5.js</div></div>
@@ -115,7 +130,7 @@
   <!-- RUN YOUR OWN -->
   <section class="section-tight" style="--mink: var(--m-video);">
     <div class="wrap">
-      <div class="sec-rule"><span class="sec-no">§ D · Run models on your own machine</span><span class="sec-note">local · private · no subscription</span></div>
+      <div class="sec-rule"><h2 class="sec-no" id="local-models">§ D · Run models on your own machine</h2><span class="sec-note">local · private · no subscription</span></div>
       <div class="res-list">
         <div class="res">
           <div><div class="r-title"><a href="https://ollama.com/">Ollama</a></div><div class="r-meta"><b>free · local install</b> · command line · open-weight LLMs</div></div>

@@ -3,6 +3,12 @@
 (function () {
   var grid = document.querySelector("[data-tool-index]");
   if (!grid || !window.LM_TOOLS) return;
+  var hrefPrefix = grid.getAttribute("data-tool-prefix") || "";
+  var limit = parseInt(grid.getAttribute("data-tool-limit") || "", 10);
+  var tools = window.LM_TOOLS;
+  if (Number.isFinite(limit) && limit > 0) {
+    tools = tools.slice(0, limit);
+  }
 
   var MOD_LABEL = { text: "Text", image: "Images", video: "Video", cross: "Cross" };
 
@@ -16,7 +22,7 @@
       ? ""
       : '<span class="stamp ' + t.status + '">' + t.statusLabel + "</span>";
     return (
-      '<a class="ix-row" data-mod="' + t.modality + '" data-status="' + t.status + '" href="' + t.href + '">' +
+      '<a class="ix-row" data-mod="' + t.modality + '" data-status="' + t.status + '" href="' + hrefPrefix + t.href + '">' +
         '<span class="ix-no mono">' + no + '</span>' +
         '<span class="ix-name">' + t.name + '</span>' +
         '<span class="ix-blurb">' + t.blurb + '</span>' +
@@ -26,7 +32,7 @@
     );
   }
 
-  grid.innerHTML = window.LM_TOOLS.map(rowHTML).join("");
+  grid.innerHTML = tools.map(rowHTML).join("");
 
   /* keep ledger stats in sync with the catalog so they can't go stale */
   document.querySelectorAll("[data-tool-total]").forEach(function (n) {
@@ -51,12 +57,12 @@
 
   function applyFilters() {
     var shown = 0;
-    window.LM_TOOLS.forEach(function (t, i) {
+    tools.forEach(function (t, i) {
       var on = matches(t);
       rows[i].style.display = on ? "" : "none";
       if (on) shown++;
     });
-    if (countEl) countEl.textContent = shown + " / " + window.LM_TOOLS.length + " tools";
+    if (countEl) countEl.textContent = shown + " / " + tools.length + " tools";
     if (!emptyEl) {
       emptyEl = document.createElement("div");
       emptyEl.className = "ix-empty mono";

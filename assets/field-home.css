@@ -242,6 +242,91 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
   color: var(--muted);
 }
 
+/* ---------------- start here ---------------- */
+.start-here {
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--m-text) 7%, transparent), transparent 45%, color-mix(in oklab, var(--m-video) 7%, transparent)),
+    var(--bg);
+}
+.start-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.start-card {
+  --start-ink: var(--m-cross);
+  --start-tint: var(--m-cross-tint);
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-height: 220px;
+  border: 1px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.start-card[data-mod="text"] { --start-ink: var(--m-text); --start-tint: var(--m-text-tint); }
+.start-card[data-mod="video"] { --start-ink: var(--m-video); --start-tint: var(--m-video-tint); }
+.start-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 7px;
+  background: var(--start-ink);
+}
+.start-card::after {
+  content: "";
+  position: absolute;
+  right: -36px;
+  top: 48px;
+  width: 150px;
+  height: 34px;
+  border: 1px solid var(--start-ink);
+  background: var(--start-tint);
+  transform: rotate(-4deg);
+  opacity: 0.45;
+  pointer-events: none;
+}
+.start-card:hover {
+  background: color-mix(in oklab, var(--start-ink) 8%, var(--surface));
+}
+.start-k {
+  color: var(--start-ink);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.start-card h3 {
+  font-size: clamp(23px, 2.8vw, 34px);
+  max-width: 10ch;
+  position: relative;
+  z-index: 1;
+}
+.start-card p {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.55;
+  max-width: 34ch;
+  position: relative;
+  z-index: 1;
+}
+.start-go {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.start-card:hover .start-go {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 /* ---------------- sessions ---------------- */
 .arc-head { max-width: 60ch; margin-bottom: clamp(28px, 4vw, 40px); }
 .arc-head h2 { font-size: clamp(30px, 4vw, 46px); }
@@ -558,6 +643,8 @@ html[data-skin="home-sampler"] .session-row[data-skin-row="studio-synthesis"]::a
   .pathways { grid-template-columns: 1fr; }
   .path { border-left: 0; border-top: 1px solid var(--rule); }
   .path:first-child { border-top: 0; }
+  .start-grid { grid-template-columns: 1fr; }
+  .start-card { min-height: 0; }
   .credits { grid-template-columns: 1fr; }
   .doc-cols { grid-template-columns: 1fr; }
   .home-session-signal .risk-token-wall,

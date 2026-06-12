@@ -43,6 +43,20 @@ Every public HTML route should have exactly one `data-skin`. Markdown pages that
 render through `_layouts/page.html` can remain quiet unless they need a custom
 skin hook.
 
+### Navigation contract
+
+Every top navigation uses a stable pair first, then contextual links:
+
+1. `Tool index` points to the homepage tool index.
+2. `Sessions` points to the homepage sessions arc.
+3. The third slot is the page-family home or context (`Method`, `Materials`,
+   `Session 1`, `Tool notes`, etc.).
+4. The final slot, when present, is the page action (`Launch tool`,
+   `Register`, `Print`, `Back home`).
+
+Use the exact labels `Tool index` and `Sessions`; avoid the shorter `Tools`
+label in nav chrome.
+
 ---
 
 ## Tones (`html[data-tone]`)
@@ -240,7 +254,7 @@ Implemented per [`docs/site-identity-switcher-plan.md`](site-identity-switcher-p
 `assets/field-theme.js` persists `lm-identity` (`field` default · `terminal` ·
 `spectrum` · `acid`), sets `html[data-identity]` before paint, injects
 `assets/field-identity.css` plus the display fonts (VT323 / Rubik Glitch /
-Anton) on every page, and renders the fixed "Skin ▾" menu (suppress with
+Anton) on every page, and renders the fixed "Look ▾" menu (suppress with
 `data-no-identity-menu` on `<html>`).
 
 Rules:
@@ -248,7 +262,7 @@ Rules:
 - Identity remaps the core tone/font tokens and a small set of shared
   components inside `@media screen`; print always renders the field manual.
   `worksheet-print` routes get restrained screen-only identity treatments so
-  the Skin menu visibly works while printable output stays clean.
+  the Look menu visibly works while printable output stays clean.
 - Identity beats tone; while non-field, the route `data-skin` accent layer
   and poster washes are muted (skin tokens re-map to identity tokens) so only
   one voice speaks.

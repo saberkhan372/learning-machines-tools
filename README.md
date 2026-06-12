@@ -62,7 +62,10 @@ The tool principle is:
 
 ## Tool Folders
 
-Canonical folders are listed in the [tool directory](tools/).
+Use the published [tool index](pages/tools.html) for the filterable catalog, or
+the source [tool directory](tools/) for canonical folders. The full public
+materials directory lives at [pages/materials.html](pages/materials.html); the
+homepage keeps only a short preview.
 
 ### Session 1: Text
 
@@ -122,7 +125,8 @@ Canonical folders are listed in the [tool directory](tools/).
 - [Further Reading](pages/further-reading.html) — critical & intersectional texts, fiction, philosophy
 - [Hands-On: Play with Real Models](pages/hands-on.html) — Teachable Machine, ml5.js, TensorFlow Playground, Ollama, Hugging Face
 - [Adapting for Younger Learners](pages/younger-learners.html) — ages 6–12, per-session notes
-- [No-AI pathway](pages/no-ai-pathway.html)
+- [No-AI pathway](pages/no-ai-pathway.html) — participant-facing route without direct generation
+- [No-AI pathway facilitation](pages/no-ai-pathway-facilitation.html) — facilitator language, tool list, and session plan
 - [Human as Model (unplugged activity)](docs/unplugged-human-as-model.html)
 - [Session 1 facilitation notes](docs/session-1-facilitation.html)
 - [Session 2 facilitation notes](docs/session-2-facilitation.html)
@@ -139,7 +143,7 @@ The repo is ready for a small live pilot. Start from the published homepage, use
 1. Human learning comes first.
 2. AI use is optional, visible, and discussable.
 3. No one has to use a tool they object to.
-   See the [No-AI pathway](pages/no-ai-pathway.html) for a full route through the camp without direct generation.
+   See the [No-AI pathway](pages/no-ai-pathway.html) for the participant route, and [No-AI pathway facilitation](pages/no-ai-pathway-facilitation.html) for implementation notes.
 4. AI outputs are not neutral.
 5. We name labor, consent, data, and bias concerns.
 6. We avoid casual imitation of living artists by name.

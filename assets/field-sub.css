@@ -601,6 +601,30 @@ html[data-skin] .toc a.active {
   border-left-color: color-mix(in oklab, var(--skin-accent) 72%, var(--ink));
 }
 
+.reader-nav {
+  padding-top: clamp(22px, 3vw, 34px);
+  padding-bottom: clamp(18px, 3vw, 30px);
+  border-bottom: 1px solid var(--rule);
+}
+.reader-nav .toc {
+  position: static;
+  top: auto;
+  max-width: none;
+}
+.reader-nav .toc nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.reader-nav .toc a {
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  padding: 8px 10px;
+}
+.reader-nav .toc a:hover {
+  background: color-mix(in oklab, var(--mink, var(--ink)) 8%, var(--surface));
+}
+
 .doc-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 
 /* ---------------- prose ---------------- */
@@ -716,6 +740,20 @@ html[data-skin] .doc-table th {
   .toc { position: static; border-top: 0; padding-top: 0; border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
   .toc nav { flex-direction: row; flex-wrap: wrap; gap: 2px 14px; }
   .toc a { border-left: 0; padding-left: 0; }
+  .reader-nav .toc {
+    border-top: 1px solid var(--ink);
+    border-bottom: 0;
+    padding-top: 12px;
+    padding-bottom: 0;
+  }
+  .reader-nav .toc nav { gap: 8px; }
+  .reader-nav .toc a {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    border: 1px solid var(--rule);
+    padding: 8px 10px;
+  }
   .tool-list .ix-row { grid-template-columns: 40px minmax(0, 1fr) 110px; }
   .tool-list .ix-blurb { display: none; }
 }
