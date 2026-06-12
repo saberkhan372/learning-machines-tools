@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-skin="docs-field">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Subpages, Remixed — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=VT323&family=Rubik+Glitch&family=Anton&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+  /* ===== subpage skin contact sheet (ported from the subpages-remixed handoff prototype) =====
+     EE terminal / FF spectrum / GG acid are poster-study identity skins, not
+     semantic state colors. Swatch hues are intentionally literal to the
+     prototype and scoped to .remix-* so they never leak into Field tokens. */
+
+  .remix-legend { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 0; }
+  .remix-leg { font-family: var(--font-mono); font-size: 12px; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink-soft); }
+  .remix-leg .sw { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 8px; vertical-align: 0; }
+
+  .remix-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 20px 0 60px; }
+  .remix-card { border: 1px solid var(--rule); border-radius: var(--radius, 2px); overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; background: var(--surface); }
+  .remix-card:hover .go { text-decoration: underline; }
+  .remix-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .remix-card { transition: transform .15s; }
+    .remix-card:hover { transform: translateY(-4px); }
+  }
+
+  .remix-swatch { height: 230px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; }
+  .remix-swatch .tag { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; align-self: flex-start; padding: 5px 10px; }
+  .remix-swatch .big { margin: 0; line-height: 0.9; }
+  .remix-swatch .meta { font-family: var(--font-mono); font-size: 12px; position: relative; z-index: 1; }
+  .remix-body { padding: 20px 22px 24px; }
+  .remix-body .type { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+  .remix-body h3 { font-size: 20px; margin: 0 0 8px; line-height: 1.15; }
+  .remix-body p { font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 16px; }
+  .remix-body .go { font-family: var(--font-mono); font-size: 13px; color: var(--ink); font-weight: 500; }
+
+  /* EE terminal phosphor */
+  .sw-term { background: #070d09; }
+  .sw-term::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.26) 0 2px, transparent 2px 5px); }
+  .sw-term .tag { background: transparent; border: 1px solid rgba(70,255,125,0.5); color: #46ff7d; }
+  .sw-term .big { font-family: "VT323", monospace; font-size: 62px; color: #46ff7d; text-shadow: 0 0 12px rgba(70,255,125,0.5); position: relative; z-index: 1; }
+  .sw-term .meta { color: rgba(70,255,125,0.6); }
+
+  /* FF spectrum diffusion */
+  .sw-spec { background: #f2ebdc; }
+  .sw-spec::before { content: ""; position: absolute; inset: -20%; background: radial-gradient(45% 45% at 18% 22%, oklch(0.78 0.21 350 / 0.7), transparent 66%), radial-gradient(46% 50% at 86% 18%, oklch(0.82 0.15 230 / 0.6), transparent 68%), radial-gradient(52% 50% at 76% 86%, oklch(0.88 0.2 130 / 0.6), transparent 68%); filter: blur(2px); }
+  .sw-spec .tag { background: #211823; color: #f2ebdc; transform: rotate(-3deg); box-shadow: 3px 4px 0 rgba(33,24,35,0.8); position: relative; z-index: 1; }
+  .sw-spec .big { font-family: "Rubik Glitch", system-ui, cursive; font-size: 50px; color: #211823; transform: rotate(-1.5deg); position: relative; z-index: 1; }
+  .sw-spec .meta { font-weight: 600; color: #4a3d49; }
+
+  /* GG acid brutalist */
+  .sw-acid { background: oklch(0.93 0.21 110); }
+  .sw-acid .tag { background: #141312; color: oklch(0.93 0.21 110); }
+  .sw-acid .big { font-family: "Anton", sans-serif; font-size: 80px; text-transform: uppercase; color: #141312; line-height: 0.8; }
+  .sw-acid .big .x { color: oklch(0.62 0.26 350); }
+  .sw-acid .meta { font-weight: 600; color: #141312; }
+
+  .remix-note { border-top: 1px solid var(--rule); padding: 30px 0 70px; display: flex; gap: 14px; align-items: flex-start; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .remix-note .k { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); white-space: nowrap; padding-top: 1px; }
+  .remix-note a { color: var(--ink); }
+  .remix-note p { margin: 0; }
+
+  @media (max-width: 900px) { .remix-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../index.html#materials" class="hide-sm">Materials</a>
+        <a href="camp-poster.html" class="hide-sm">Poster Lab</a>
+        <a class="btn btn-primary btn-sm hide-sm" href="https://ccfest.rocks/ccfest-camp">Register →</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero" data-mod="cross">
+    <div class="wrap">
+      <div class="crumb"><a href="../index.html">Home</a> / <a href="camp-poster.html">Poster Lab</a> / Subpages, Remixed</div>
+      <p class="eyebrow">Round 7 · the machine, remixed</p>
+      <h1>The subpages, <em>remixed.</em></h1>
+      <p class="lede">The three bold poster skins — <b>EE attention/terminal</b>, <b>FF diffusion/spectrum</b>, and <b>GG forward-pass/acid</b> — pulled off the poster and applied to the three subpage <em>types</em> that run the site. Same content, same structure; three very different ways the field manual can speak.</p>
+      <div class="remix-legend">
+        <span class="remix-leg"><span class="sw" style="background:#46ff7d"></span>EE · terminal phosphor → Tool</span>
+        <span class="remix-leg"><span class="sw" style="background:oklch(0.66 0.2 350)"></span>FF · spectrum diffusion → Doc</span>
+        <span class="remix-leg"><span class="sw" style="background:oklch(0.85 0.2 110)"></span>GG · acid brutalist → Session</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="remix-grid">
+      <a class="remix-card" href="tool-tokenizer.html">
+        <div class="remix-swatch sw-term" aria-hidden="true">
+          <span class="tag">EE · terminal</span>
+          <div>
+            <p class="big">tok_</p>
+            <p class="meta" style="margin:10px 0 0">$ run tokenizer --inspect</p>
+          </div>
+        </div>
+        <div class="remix-body">
+          <p class="type">Tool page type</p>
+          <h3>Tokenizer + Temperature</h3>
+          <p>A computational tool wearing a command line: phosphor green, scanlines, boot logs, a live preview framed as a terminal window. Lives in the site as the <code>text-terminal</code> skin.</p>
+          <span class="go">Open the tool page →</span>
+        </div>
+      </a>
+
+      <a class="remix-card" href="docs-facilitation.html">
+        <div class="remix-swatch sw-spec" aria-hidden="true">
+          <span class="tag">FF · spectrum</span>
+          <div>
+            <p class="big">Read.</p>
+            <p class="meta" style="margin:12px 0 0">denoising → resolved</p>
+          </div>
+        </div>
+        <div class="remix-body">
+          <p class="type">Doc page type</p>
+          <h3>Session 1 Facilitation</h3>
+          <p>A long-read facilitation script as a warm zine: cream paper, spectrum wash, glitch headers, sticker tags, a strip that denoises into clarity. Lives in the site as the <code>image-spectrum</code> skin family.</p>
+          <span class="go">Open the doc page →</span>
+        </div>
+      </a>
+
+      <a class="remix-card" href="session-text.html">
+        <div class="remix-swatch sw-acid" aria-hidden="true">
+          <span class="tag">GG · acid</span>
+          <div>
+            <p class="big">TE<span class="x">X</span>T</p>
+            <p class="meta" style="margin:8px 0 0">forward pass · live</p>
+          </div>
+        </div>
+        <div class="remix-body">
+          <p class="type">Session page type</p>
+          <h3>Session 1 · Text</h3>
+          <p>The loud opener: acid field, giant Anton headlines, hot-pink and blue accents, hard black bars, and a live forward-pass network.</p>
+          <span class="go">Open the session page →</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="remix-note">
+      <span class="k">Mapping</span>
+      <p>Each skin is matched to the page type it flatters — a tool earns the terminal, a long read earns the editorial zine, a session opener earns the poster. The mapping isn't fixed; any skin can wrap any type. The production versions ride the <a href="../docs/riskier-identity-audit.html">riskier identity</a> <code>data-skin</code> layer rather than one-off page styling; this sheet is the proofing reference for how far each skin can be pushed.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <p class="colophon">Skin swatches render the handoff prototype palette at card size · production pages inherit Field Manual tokens · reduced-motion disables the hover lift.</p>
+    </div>
+  </footer>
+</body>
+</html>
