@@ -112,6 +112,7 @@ Canonical folders are listed in the [tool directory](tools/).
 - [Riskier Identity Page Audit](docs/riskier-identity-audit.html) — page-by-page visual QA and next-pass plan
 - [Advanced Concept Extensions](docs/advanced-concept-extensions.html) — proposed next-wave tools for VAE, CFG, temporal attention, training, and optical flow
 - [Site Identity Switcher Plan](docs/site-identity-switcher-plan.html) — proposal to make the EE/FF/GG skins user-selectable site-wide
+- [Site Usability Audit](docs/site-usability-audit.html) — design, language, and structure audit with prioritized recommendations
 - [Project brief](docs/project-brief.html)
 - [Build roadmap](docs/build-roadmap.html)
 - [Pilot checklist](docs/pilot-checklist.html)
