@@ -54,6 +54,14 @@ Use this before publishing or sharing the repo.
 - Confirm text does not overlap controls.
 - Confirm canvas tools remain usable or clearly stacked.
 
+## Visual Identity QA
+
+- Confirm riskier identity changes follow the [Riskier Identity Page Audit](riskier-identity-audit.html).
+- Confirm prompt packs are visually centered at desktop, tablet, and narrow mobile widths.
+- Confirm lower sections on campaign-facing pages carry visible color, shape, or motif accents without reducing readability.
+- Confirm motion is disabled or replaced with a complete static state under `prefers-reduced-motion`.
+- Confirm no glitch treatment appears on body text, navigation, or long instructional copy.
+
 ## Worksheet QA
 
 - For each of the five worksheets: fill a field, reload the page, and confirm the entry was restored from localStorage.

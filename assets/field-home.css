@@ -253,6 +253,13 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
   color: var(--muted);
 }
 .sessions { border-top: 1px solid var(--ink); }
+.home-session-signal {
+  margin: 0 0 clamp(22px, 4vw, 34px);
+}
+.home-session-signal .risk-token-wall,
+.home-tools-signal .risk-token-wall {
+  justify-content: flex-end;
+}
 .session-row {
   display: grid;
   grid-template-columns: 72px 200px 1fr auto;
@@ -262,6 +269,7 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
   border-bottom: 1px solid var(--rule);
   text-decoration: none;
   position: relative;
+  overflow: hidden;
 }
 .session-row::before {
   content: "";
@@ -273,10 +281,38 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
   z-index: -1;
 }
 .session-row:hover::before { width: 100%; }
+.session-row::after {
+  content: "";
+  position: absolute;
+  right: 12%;
+  top: 50%;
+  width: 150px;
+  height: 28px;
+  border: 1px solid var(--mink);
+  opacity: 0.12;
+  transform: translateY(-50%) rotate(-3deg);
+  pointer-events: none;
+}
 .session-row[data-mod="text"]  { --mink: var(--m-text);  --mtint: var(--m-text-tint); }
 .session-row[data-mod="image"] { --mink: var(--m-image); --mtint: var(--m-image-tint); }
 .session-row[data-mod="video"] { --mink: var(--m-video); --mtint: var(--m-video-tint); }
 .session-row[data-mod="cross"] { --mink: var(--m-cross); --mtint: var(--m-cross-tint); }
+.session-row[data-skin-row="text-terminal"] {
+  --skin-row-a: #69ff99;
+  --skin-row-b: #06120d;
+}
+.session-row[data-skin-row="image-spectrum"] {
+  --skin-row-a: #21baf2;
+  --skin-row-b: #ffb1d6;
+}
+.session-row[data-skin-row="video-slitscan"] {
+  --skin-row-a: #23a5d2;
+  --skin-row-b: #b33b86;
+}
+.session-row[data-skin-row="studio-synthesis"] {
+  --skin-row-a: var(--poster-hot-pink);
+  --skin-row-b: var(--poster-lime);
+}
 .session-row .s-no {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -313,6 +349,30 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
   white-space: nowrap;
 }
 .session-row:hover .s-go { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+html[data-skin="home-sampler"] .session-row::after {
+  border-color: var(--skin-row-a, var(--mink));
+  opacity: 0.22;
+  box-shadow: 10px 8px 0 color-mix(in oklab, var(--skin-row-b, var(--mink)) 24%, transparent);
+}
+html[data-skin="home-sampler"] .session-row[data-skin-row="text-terminal"]::after {
+  background:
+    repeating-linear-gradient(0deg, rgba(105, 255, 153, 0.18) 0 1px, transparent 1px 5px),
+    #06120d;
+}
+html[data-skin="home-sampler"] .session-row[data-skin-row="image-spectrum"]::after {
+  background:
+    linear-gradient(112deg, #69d08f, #b9d7ff 30%, #ffb1d6 62%, #d7c4ff);
+}
+html[data-skin="home-sampler"] .session-row[data-skin-row="video-slitscan"]::after {
+  background:
+    linear-gradient(90deg, transparent 0 12%, var(--skin-row-a) 12% 17%, transparent 17% 34%, var(--skin-row-b) 34% 39%, transparent 39%),
+    #11151b;
+}
+html[data-skin="home-sampler"] .session-row[data-skin-row="studio-synthesis"]::after {
+  background:
+    linear-gradient(90deg, var(--skin-row-a), transparent 32%, var(--skin-row-b)),
+    repeating-linear-gradient(90deg, transparent 0 18px, rgba(0, 0, 0, 0.18) 18px 19px);
+}
 
 /* ---------------- tool index ---------------- */
 .browser-head {
@@ -321,6 +381,13 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
   justify-content: space-between;
   gap: 24px;
   margin-bottom: 22px;
+}
+.home-tools-signal {
+  margin: 0 0 20px;
+}
+.home-tools-signal .risk-grid {
+  max-width: 320px;
+  margin-left: auto;
 }
 .browser-head h2 { font-size: clamp(30px, 4vw, 46px); }
 .browser-head p { color: var(--ink-soft); max-width: 52ch; margin-top: 12px; font-size: 15px; }
@@ -493,6 +560,13 @@ html[data-type="signage"] .plate-claim { font-weight: 600; }
   .path:first-child { border-top: 0; }
   .credits { grid-template-columns: 1fr; }
   .doc-cols { grid-template-columns: 1fr; }
+  .home-session-signal .risk-token-wall,
+  .home-tools-signal .risk-token-wall {
+    justify-content: flex-start;
+  }
+  .home-tools-signal .risk-grid {
+    margin-left: 0;
+  }
 }
 @media (max-width: 700px) {
   .spine { grid-template-columns: 1fr; }

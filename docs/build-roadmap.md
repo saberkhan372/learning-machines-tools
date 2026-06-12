@@ -13,6 +13,10 @@ Target launch: **Summer 2026**
 
 The first repo goal is to create a static, GitHub Pages-ready tool ecosystem with no build step and no live model dependency for core teaching moments.
 
+Parallel visual polish track: first pass implemented to expand the riskier
+poster identity below the hero and across quieter page families, guided by the
+[Riskier Identity Page Audit](riskier-identity-audit.html).
+
 ## Launch MVP
 
 | Priority | Item | Current Repo Status | Needed Next |
@@ -27,6 +31,28 @@ The first repo goal is to create a static, GitHub Pages-ready tool ecosystem wit
 | 8 | Pilot checklist + feedback template | Ready for pilot | Convert to form only if needed |
 
 Canonical tool folders now exist for every launch, second-wave, and stretch tool. See [`../tools/README.html`](../tools/README.html).
+
+## Riskier Identity Expansion Pass
+
+Source of truth: [Riskier Identity Page Audit](riskier-identity-audit.html).
+
+This pass happens before broad page-by-page styling work. It expands the
+D/G/N poster identity beyond the homepage hero into lower sections, prompt
+packs, concept bridges, sessions, and selected tool interiors while keeping the
+Field Manual system as the base.
+
+Priority order:
+
+1. Shared primitives and prompt-pack centering.
+2. Prompt packs with modality-specific motifs.
+3. Concept bridge index and individual bridge pages.
+4. Homepage lower sections and session pages.
+5. Individual tools, starting with `count-the-next-token`.
+
+Acceptance for this pass: no new runtime dependencies, reduced-motion fallbacks
+for motion, legible paper/white/slate tones, prompt packs centered at phone,
+tablet, and desktop widths, and follow-up screenshot QA once browser approval is
+available.
 
 ## Critical Path
 

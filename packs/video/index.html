@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="video">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="video" data-skin="video-slitscan">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="../../assets/field-sub.css">
   <script src="../../assets/field-theme.js"></script>
   <style>
-    .pack-grid { display: grid; gap: 22px; margin: 28px 0 52px; }
+    .pack-grid.wrap { width: min(980px, calc(100% - 48px)); margin: clamp(28px, 4vw, 44px) auto clamp(56px, 7vw, 84px); }
+    .pack-grid { display: grid; gap: clamp(18px, 3vw, 28px); }
     .prompt-family { border: 1px solid var(--line); border-radius: 2px; background: var(--surface); padding: clamp(18px, 3vw, 28px); }
     .prompt-text, .caption-block { border: 1px solid var(--line); border-radius: 2px; padding: 16px; background: var(--surface-2); color: var(--ink); }
     .prompt-text, .caption-block { font-family: var(--font-mono); white-space: pre-wrap; overflow-x: auto; }
@@ -41,7 +42,7 @@
     </div>
   </nav>
 
-  <header class="sub-hero">
+  <header class="sub-hero poster-wash poster-register poster-drift" data-mod="video">
     <div class="wrap">
       <div class="crumb"><a href="../../index.html">Home</a><span class="sep">/</span><span>Video pack</span></div>
       <p class="sess-kicker">Session 3 · Video</p>
@@ -51,8 +52,14 @@
   </header>
 
   <main class="wrap pack-grid">
-    <section class="prompt-family">
+    <section class="prompt-family risk-card" data-mod="video">
       <h2>Object permanence</h2>
+      <div class="risk-frame-strip pack-motif pack-frame-motif is-live" aria-hidden="true">
+        <span><i class="risk-frame-dot"></i></span>
+        <span><i class="risk-frame-dot"></i></span>
+        <span><i class="risk-frame-dot"></i></span>
+        <span><i class="risk-frame-dot"></i></span>
+      </div>
       <div class="prompt-text">A red mug slides across a wooden table, passes behind a notebook, and reappears unchanged.</div>
       <!-- PLACEHOLDER: four-frame strip showing mug before, hidden, reappearing, and final position -->
       <div class="frame-strip" aria-label="Placeholder four-frame strip showing a mug moving behind a notebook">
@@ -74,8 +81,14 @@ The mug reappears on the other side.</pre>
       <label class="notes">Your notes <textarea></textarea></label>
     </section>
 
-    <section class="prompt-family">
+    <section class="prompt-family risk-card" data-mod="video">
       <h2>Human motion</h2>
+      <div class="risk-frame-strip pack-motif pack-frame-motif is-live" aria-hidden="true">
+        <span><i class="risk-frame-dot"></i></span>
+        <span><i class="risk-frame-dot"></i></span>
+        <span><i class="risk-frame-dot"></i></span>
+        <span><i class="risk-frame-dot"></i></span>
+      </div>
       <div class="prompt-text">A teacher writes the word "prediction" on a whiteboard, turns to the class, and asks a question.</div>
       <!-- PLACEHOLDER: five-frame strip showing writing, turning, and addressing class -->
       <div class="frame-strip" aria-label="Placeholder frame strip of a teacher writing prediction on a board and turning to a class">
@@ -97,8 +110,14 @@ The teacher gestures while asking a question.</pre>
       <label class="notes">Your notes <textarea></textarea></label>
     </section>
 
-    <section class="prompt-family">
+    <section class="prompt-family risk-card" data-mod="video">
       <h2>Cause and effect</h2>
+      <div class="risk-frame-strip pack-motif pack-frame-motif is-live" aria-hidden="true">
+        <span><i class="risk-frame-dot"></i></span>
+        <span><i class="risk-frame-dot"></i></span>
+        <span><i class="risk-frame-dot"></i></span>
+        <span><i class="risk-frame-dot"></i></span>
+      </div>
       <div class="prompt-text">A paper airplane hits a stack of index cards, and only the top card falls.</div>
       <!-- PLACEHOLDER: three-frame strip showing airplane approach, impact, and one card falling -->
       <div class="frame-strip" aria-label="Placeholder frame strip of a paper airplane hitting index cards">

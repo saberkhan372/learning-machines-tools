@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="text">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="text" data-skin="counting-signal">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,28 +13,64 @@
   <script src="../../assets/field-theme.js"></script>
 <style>
   * { box-sizing: border-box; }
-  main { width: min(1000px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 64px; }
+  main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 64px; }
+  .count-tool-shell { padding-inline: clamp(0px, 1vw, 8px); }
 
   /* header strip */
-  .tool-header { margin-bottom: 28px; }
+  .tool-header {
+    margin-bottom: 24px;
+    border: 1px solid var(--ink);
+    background: var(--surface);
+    padding: clamp(18px, 3vw, 28px);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .tool-header::before {
+    content: "";
+    position: absolute;
+    inset: -28%;
+    z-index: 0;
+    opacity: 0.18;
+    pointer-events: none;
+    mix-blend-mode: var(--poster-blend);
+    background:
+      radial-gradient(circle at 16% 24%, var(--poster-lime), transparent 24%),
+      radial-gradient(circle at 80% 18%, var(--poster-cyan), transparent 24%),
+      radial-gradient(circle at 74% 78%, var(--poster-hot-pink), transparent 28%),
+      linear-gradient(112deg, var(--poster-coral), transparent 34%, var(--poster-violet));
+  }
+  .tool-header > * { position: relative; z-index: 1; }
   .tool-header .tag { font-family: var(--font-mono); font-size: 0.72rem;
     text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin: 0 0 10px; }
-  .tool-header h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin: 0 0 10px; line-height: 1.05; }
+  .tool-header h1 { font-size: clamp(2.2rem, 5vw, 4rem); margin: 0 0 10px; line-height: 1.05; }
   .tool-header p { color: var(--muted); max-width: 62ch; margin: 0; line-height: 1.55; }
+  .count-token-wall {
+    margin-top: 18px;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
 
   /* two-col layout */
-  .layout { display: grid; grid-template-columns: 280px 1fr; gap: 18px; align-items: start; }
+  .layout { display: grid; grid-template-columns: 300px 1fr; gap: 18px; align-items: start; }
 
   /* context picker */
-  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 2px; padding: 20px; }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
   .panel-label { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase;
     letter-spacing: 0.1em; color: var(--muted); margin: 0 0 12px; }
   .context-btn { display: block; width: 100%; text-align: left; background: var(--surface-2);
     border: 1px solid var(--line); border-radius: 2px; padding: 10px 12px; margin-bottom: 6px;
     cursor: pointer; font-family: var(--font-body); font-size: 0.88rem; color: var(--ink);
-    transition: border-color 0.14s; }
-  .context-btn:hover { border-color: var(--accent); }
-  .context-btn.active { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+    transition: border-color 0.14s, background 0.14s, transform 0.14s; }
+  .context-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .context-btn.active { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent); background: var(--accent-soft); }
   .context-word { font-weight: 700; display: block; }
   .context-hint { font-size: 0.74rem; color: var(--muted); font-family: var(--font-mono); }
 
@@ -42,10 +78,24 @@
   .step-area { display: flex; flex-direction: column; gap: 16px; }
 
   /* step card */
-  .step-card { border: 1px solid var(--line); border-radius: 2px;
-    background: var(--surface); overflow: hidden; }
+  .step-card { border: 1px solid var(--ink); border-radius: 2px;
+    background: var(--surface); overflow: hidden; position: relative; isolation: isolate; }
+  .step-card::before {
+    content: "";
+    position: absolute;
+    inset: -24%;
+    z-index: 0;
+    opacity: 0.08;
+    pointer-events: none;
+    mix-blend-mode: var(--poster-blend);
+    background:
+      radial-gradient(circle at 16% 20%, var(--poster-lime), transparent 24%),
+      radial-gradient(circle at 82% 22%, var(--poster-cyan), transparent 22%),
+      linear-gradient(118deg, transparent, var(--poster-hot-pink), transparent 60%);
+  }
+  .step-card > * { position: relative; z-index: 1; }
   .step-head { display: flex; align-items: center; gap: 12px; padding: 14px 18px;
-    border-bottom: 1px solid var(--line); background: var(--surface-2); }
+    border-bottom: 1px solid var(--ink); background: var(--surface-2); }
   .step-num { width: 28px; height: 28px; border-radius: 2px; border: 1.5px solid var(--accent);
     color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600;
     display: grid; place-items: center; flex: none; }
@@ -64,9 +114,9 @@
     color: var(--ink); }
   .freq-table td:nth-child(2) { color: var(--muted); font-size: 0.82rem;
     font-family: var(--font-mono); }
-  .count-bar { height: 8px; background: var(--surface-2); border-radius: 999px;
+  .count-bar { height: 11px; background: var(--surface-2); border-radius: 2px;
     border: 1px solid var(--line-soft); overflow: hidden; min-width: 60px; }
-  .count-fill { height: 100%; border-radius: 999px;
+  .count-fill { height: 100%; border-radius: 2px;
     background: linear-gradient(90deg, var(--accent), var(--accent-2));
     transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
   .highlight-row td { background: color-mix(in oklab, var(--accent) 8%, transparent); }
@@ -88,9 +138,9 @@
     align-items: center; gap: 10px; margin-bottom: 10px; }
   .pred-word { font-family: var(--font-mono); font-size: 0.86rem; color: var(--ink);
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .pred-track { height: 10px; background: var(--surface-2); border-radius: 999px;
+  .pred-track { height: 12px; background: var(--surface-2); border-radius: 2px;
     border: 1px solid var(--line-soft); overflow: hidden; }
-  .pred-fill { height: 100%; border-radius: 999px;
+  .pred-fill { height: 100%; border-radius: 2px;
     background: linear-gradient(90deg, var(--accent), var(--accent-2));
     transition: width 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
   .pred-pct { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);
@@ -116,6 +166,13 @@
   @media (max-width: 780px) {
     .layout { grid-template-columns: 1fr; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    .context-btn,
+    .count-fill,
+    .pred-fill {
+      transition: none !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -130,16 +187,23 @@
   </div>
 </nav>
 
-<main>
+<main class="count-tool-shell risk-section risk-drift" data-mod="text">
   <div class="tool-header">
     <p class="tag">Tool 16 · Session 1 · Text · Count → Probability → Prediction</p>
     <h1>Count the Next Token</h1>
     <p>Language models predict the next word by counting — how often does word B follow word A in training text? Pick a context word, watch the bigram frequency table build, then follow the arithmetic from raw count to probability to prediction. No guessing. The machine is doing division.</p>
+    <div class="risk-token-wall count-token-wall is-live" aria-label="Count to probability token strip">
+      <span class="risk-token">context</span>
+      <span class="risk-token">count</span>
+      <span class="risk-token">divide</span>
+      <span class="risk-token hot">probability</span>
+      <span class="risk-token ghost">predict</span>
+    </div>
   </div>
 
   <div class="layout">
     <!-- ── Context picker ── -->
-    <div class="panel">
+    <div class="panel risk-card" data-mod="text">
       <div class="panel-label">Choose a context word</div>
       <div id="contextList"></div>
       <div style="margin-top:16px;">
@@ -153,7 +217,7 @@
 
     <!-- ── Steps ── -->
     <div class="step-area" id="stepArea">
-      <div class="panel" style="color:var(--muted);font-family:var(--font-mono);font-size:0.86rem;padding:24px;">
+      <div class="panel risk-card" data-mod="text" style="color:var(--muted);font-family:var(--font-mono);font-size:0.86rem;padding:24px;">
         ← Pick a context word to begin.
       </div>
     </div>
@@ -468,16 +532,22 @@ function renderSteps(entry, lookupWord, topEntries, total, contextCount, maxCoun
 
   stepAreaEl.innerHTML = html;
 
-  /* Animate bars after paint */
-  requestAnimationFrame(function() {
+  /* Animate bars after paint unless the visitor asked for reduced motion. */
+  let reduceMotion = false;
+  if (window.matchMedia) {
+    reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+  if (!reduceMotion) {
     requestAnimationFrame(function() {
-      stepAreaEl.querySelectorAll(".count-fill, .pred-fill").forEach(function(el) {
-        let w = el.style.width;
-        el.style.width = "0%";
-        requestAnimationFrame(function() { el.style.width = w; });
+      requestAnimationFrame(function() {
+        stepAreaEl.querySelectorAll(".count-fill, .pred-fill").forEach(function(el) {
+          let w = el.style.width;
+          el.style.width = "0%";
+          requestAnimationFrame(function() { el.style.width = w; });
+        });
       });
     });
-  });
+  }
 }
 
 /* ── Helpers ────────────────────────────────────────────── */

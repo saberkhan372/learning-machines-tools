@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-skin="image-spectrum">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,7 +46,7 @@
   </header>
 
   <!-- THROUGHLINE -->
-  <section class="section-tight" style="--mink: var(--m-image);">
+  <section class="section-tight risk-section risk-drift" style="--mink: var(--m-image);" data-mod="image">
     <div class="wrap">
       <div class="sec-rule"><span class="sec-no">§ A · What we make visible</span><span class="sec-note">four mechanisms, one session</span></div>
       <div class="throughline">
@@ -55,11 +55,19 @@
         <div class="through-step"><div class="ts-n">03</div><h4>Prompt guidance</h4><p>Each added word steers the denoising — and each omitted word leaves a gap the model fills.</p></div>
         <div class="through-step"><div class="ts-n">04</div><h4>Defaults</h4><p>Vague prompts reveal what the training data assumes a doctor, classroom, or home looks like.</p></div>
       </div>
+      <div class="session-risk-motif risk-card" data-mod="image" aria-label="Image noise grid motif">
+        <div class="plate-cap"><span class="fig">Fig. 02B — Denoising field</span><span>noise → cues → default</span></div>
+        <div class="risk-grid is-live">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- TOOLS -->
-  <section class="section-tight">
+  <section class="section-tight risk-section" data-mod="image">
     <div class="wrap">
       <div class="sec-rule"><span class="sec-no">§ B · Tools for this session</span><span class="sec-note">browser-based · no accounts</span></div>
       <div class="tool-list">

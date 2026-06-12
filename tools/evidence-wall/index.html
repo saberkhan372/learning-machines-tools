@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="studio-synthesis">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -205,15 +205,6 @@
 
 <main>
 
-  <!-- ── Consent banner ── -->
-  <div class="consent-banner" id="consentBanner">
-    <p><b>Before sharing this wall:</b> confirm each participant has given affirmative consent for their submission to appear in a shared or public link. Toggle any tile to <b>Private</b> if unsure — private tiles are excluded from the share link automatically.</p>
-    <button class="consent-dismiss" id="consentDismiss" type="button">Got it</button>
-  </div>
-
-  <!-- ── Import notice (shown when wall is loaded from a hash) ── -->
-  <div class="import-notice" id="importNotice"></div>
-
   <!-- ── Header ── -->
   <div class="wall-header">
     <div>
@@ -228,6 +219,15 @@
       <button class="ctrl-btn" id="clearBtn" type="button">Clear</button>
     </div>
   </div>
+
+  <!-- ── Consent banner ── -->
+  <div class="consent-banner" id="consentBanner">
+    <p><b>Before sharing this wall:</b> confirm each participant has given affirmative consent for their submission to appear in a shared or public link. Toggle any tile to <b>Private</b> if unsure — private tiles are excluded from the share link automatically.</p>
+    <button class="consent-dismiss" id="consentDismiss" type="button">Got it</button>
+  </div>
+
+  <!-- ── Import notice (shown when wall is loaded from a hash) ── -->
+  <div class="import-notice" id="importNotice"></div>
 
   <!-- ── Paste panel ── -->
   <div class="paste-panel" id="pastePanel">

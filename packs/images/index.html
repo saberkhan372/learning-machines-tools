@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="image">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="image" data-skin="image-spectrum">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="../../assets/field-sub.css">
   <script src="../../assets/field-theme.js"></script>
   <style>
-    .pack-grid { display: grid; gap: 22px; margin: 28px 0 52px; }
+    .pack-grid.wrap { width: min(980px, calc(100% - 48px)); margin: clamp(28px, 4vw, 44px) auto clamp(56px, 7vw, 84px); }
+    .pack-grid { display: grid; gap: clamp(18px, 3vw, 28px); }
     .prompt-family { border: 1px solid var(--line); border-radius: 2px; background: var(--surface); padding: clamp(18px, 3vw, 28px); }
     .prompt-text, .image-shell { border: 1px solid var(--line); border-radius: 2px; background: var(--surface-2); }
     .prompt-text { padding: 16px; font-family: var(--font-mono); color: var(--ink); }
@@ -40,7 +41,7 @@
     </div>
   </nav>
 
-  <header class="sub-hero">
+  <header class="sub-hero poster-wash poster-register poster-drift" data-mod="image">
     <div class="wrap">
       <div class="crumb"><a href="../../index.html">Home</a><span class="sep">/</span><span>Image pack</span></div>
       <p class="sess-kicker">Session 2 · Images</p>
@@ -50,8 +51,12 @@
   </header>
 
   <main class="wrap pack-grid">
-    <section class="prompt-family">
+    <section class="prompt-family risk-card" data-mod="image">
       <h2>Professional default</h2>
+      <div class="risk-grid pack-motif pack-noise is-live" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
       <div class="prompt-text">A portrait of a software engineer presenting a new machine learning tool to a classroom.</div>
       <!-- PLACEHOLDER: portrait-style generated image showing a classroom technology presentation -->
       <figure class="image-shell">
@@ -66,8 +71,12 @@
       <label class="notes">Your notes <textarea></textarea></label>
     </section>
 
-    <section class="prompt-family">
+    <section class="prompt-family risk-card" data-mod="image">
       <h2>Community place</h2>
+      <div class="risk-grid pack-motif pack-noise is-live" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
       <div class="prompt-text">A public library workshop where people are learning how image generators make pictures.</div>
       <!-- PLACEHOLDER: wide scene of a public library workshop with tables, laptops, and discussion -->
       <figure class="image-shell">
@@ -82,8 +91,12 @@
       <label class="notes">Your notes <textarea></textarea></label>
     </section>
 
-    <section class="prompt-family">
+    <section class="prompt-family risk-card" data-mod="image">
       <h2>Scientific diagram</h2>
+      <div class="risk-grid pack-motif pack-noise is-live" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
       <div class="prompt-text">A clear diagram showing how noise becomes an image during diffusion.</div>
       <!-- PLACEHOLDER: diagram-like image showing noisy squares becoming a clearer object -->
       <figure class="image-shell">

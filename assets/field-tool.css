@@ -154,6 +154,17 @@ body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):not(.sub-hero)::b
   background-size: 150% 150%, 140% 140%, 160% 160%, 190% 190%;
   background-position: 0% 20%, 100% 4%, 76% 88%, 0% 50%;
 }
+html[data-skin] .tool-mast::before,
+html[data-skin] .tool-shell::before,
+html[data-skin] body > .wrap > header:first-child::before,
+html[data-skin] body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):not(.sub-hero)::before {
+  opacity: 0.14;
+  background:
+    radial-gradient(42% 42% at 10% 18%, var(--skin-accent) 0 10%, transparent 46%),
+    radial-gradient(38% 38% at 86% 18%, var(--skin-accent-2) 0 10%, transparent 48%),
+    radial-gradient(44% 42% at 70% 84%, var(--poster-cyan) 0 12%, transparent 54%),
+    linear-gradient(118deg, var(--poster-coral), transparent 30%, var(--poster-mint) 58%, transparent 78%, var(--poster-sky));
+}
 @media (prefers-reduced-motion: no-preference) {
   .tool-mast::before,
   .tool-shell::before,
@@ -172,5 +183,304 @@ body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):not(.sub-hero)::b
   body > .wrap > header:first-child::before,
   body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):not(.sub-hero)::before {
     animation: none !important;
+  }
+}
+
+/* Concept bridge refresh: overrides older inline bridge palettes */
+body.concept-bridge-body,
+body.bridge-index-body {
+  padding: 0 0 60px;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: clip;
+}
+html:has(body.concept-bridge-body),
+html:has(body.bridge-index-body) {
+  overflow-x: clip;
+}
+body.concept-bridge-body > .wrap.concept-bridge-page {
+  width: min(940px, calc(100vw - 48px));
+  max-width: none;
+  margin-inline: auto;
+  padding-top: clamp(32px, 5vw, 64px);
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  contain: paint;
+}
+body.concept-bridge-body > .wrap.concept-bridge-page::before {
+  content: "";
+  position: absolute;
+  inset: 0 -14% auto;
+  height: 320px;
+  z-index: -1;
+  opacity: 0.18;
+  pointer-events: none;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(34% 46% at 12% 16%, var(--poster-lime) 0 12%, transparent 48%),
+    radial-gradient(32% 42% at 88% 12%, var(--poster-violet) 0 12%, transparent 48%),
+    linear-gradient(112deg, var(--poster-coral), transparent 30%, var(--poster-cyan) 58%, transparent 78%, var(--poster-sky));
+}
+.concept-bridge-page .back {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.concept-bridge-page .badges {
+  margin-bottom: 16px;
+}
+.concept-bridge-page .badge {
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.concept-bridge-page .badge.bridge {
+  background: var(--surface);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.concept-bridge-page .badge.session {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid color-mix(in oklab, var(--accent) 38%, var(--rule));
+}
+.concept-bridge-page h1 {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: clamp(40px, 6vw, 72px);
+  max-width: 13ch;
+}
+.concept-bridge-page .lead {
+  border: 1px solid var(--ink);
+  border-left: 4px solid var(--accent);
+  background:
+    linear-gradient(90deg, var(--accent-soft), transparent 72%),
+    var(--surface);
+  color: var(--ink-soft);
+  padding: 18px 20px;
+  margin: 22px 0 34px;
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.55;
+}
+.concept-bridge-page .test-label,
+.concept-bridge-page .bubble-label,
+.concept-bridge-page .uh-label,
+.concept-bridge-page .req-label,
+.concept-bridge-page .connect-label,
+.concept-bridge-page .kl-label {
+  font-family: var(--font-mono);
+  letter-spacing: 0.09em;
+  color: var(--accent);
+}
+.concept-bridge-page .test-tabs {
+  gap: 6px;
+  min-width: 0;
+}
+.concept-bridge-page .ttab {
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--surface-2);
+  color: var(--muted);
+  min-width: 0;
+  white-space: normal;
+}
+.concept-bridge-page .ttab.active {
+  border-color: var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+}
+.concept-bridge-page .test-card,
+.concept-bridge-page .requires,
+.concept-bridge-page .under-hood,
+.concept-bridge-page .verdict,
+.concept-bridge-page .nuance,
+.concept-bridge-page .connect,
+.concept-bridge-page .key-line {
+  border-radius: 2px;
+  box-shadow: none;
+}
+.concept-bridge-page .test-card {
+  border: 1px solid var(--ink);
+  background:
+    linear-gradient(135deg, var(--accent-soft), transparent 56%),
+    var(--surface);
+  padding: clamp(18px, 3vw, 28px);
+}
+.concept-bridge-page .requires {
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}
+.concept-bridge-page .requires p {
+  color: var(--ink-soft);
+}
+.concept-bridge-page .under-hood,
+.concept-bridge-page .nuance {
+  border: 1px solid var(--rule);
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--poster-sun) 18%, transparent), transparent 68%),
+    var(--surface-2);
+}
+.concept-bridge-page .under-hood p,
+.concept-bridge-page .nuance,
+.concept-bridge-page .nuance strong {
+  color: var(--ink-soft);
+}
+.concept-bridge-page .verdict {
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, var(--rule));
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.concept-bridge-page .verdict strong {
+  color: var(--accent);
+}
+.concept-bridge-page .bubble.user {
+  background: var(--ink);
+  color: var(--bg);
+}
+.concept-bridge-page .bubble.model {
+  background: color-mix(in oklab, var(--accent) 12%, var(--surface));
+  color: var(--ink);
+  border: 1px solid color-mix(in oklab, var(--accent) 38%, var(--rule));
+}
+.concept-bridge-page .key-line {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--ink);
+}
+.concept-bridge-page .key-line::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  opacity: 0.18;
+  pointer-events: none;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(circle at 18% 28%, var(--poster-lime), transparent 24%),
+    radial-gradient(circle at 78% 18%, var(--poster-cyan), transparent 24%),
+    radial-gradient(circle at 74% 76%, var(--poster-hot-pink), transparent 28%);
+}
+.concept-bridge-page .key-line > * {
+  position: relative;
+  z-index: 1;
+}
+.concept-bridge-page .connect {
+  border: 1px solid var(--ink);
+  background:
+    linear-gradient(135deg, var(--accent-soft), transparent 62%),
+    var(--surface);
+}
+.concept-bridge-page .connect p {
+  color: var(--ink-soft);
+}
+.concept-bridge-page .connect-links a {
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--bg);
+}
+.concept-bridge-page .connect-links a:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.bridge-index {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 48px) 0 60px;
+}
+.bridge-index .hero.panel {
+  border: 1px solid var(--ink);
+  background:
+    linear-gradient(110deg, var(--m-cross-tint), transparent 62%),
+    var(--surface);
+}
+.bridge-index .bridge-grid {
+  gap: 16px;
+}
+.bridge-index .bridge.panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  background: var(--surface);
+}
+.bridge-index .bridge.panel::before {
+  content: "";
+  position: absolute;
+  inset: -24%;
+  z-index: 0;
+  opacity: 0.13;
+  pointer-events: none;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(circle at 18% 20%, var(--poster-lime), transparent 24%),
+    radial-gradient(circle at 78% 20%, var(--poster-cyan), transparent 24%),
+    linear-gradient(120deg, var(--poster-coral), transparent 36%, var(--poster-violet));
+}
+.bridge-index .bridge.panel > * {
+  position: relative;
+  z-index: 1;
+}
+.bridge-index .bridge .tag {
+  border-radius: 2px;
+  border: 1px solid var(--mink, var(--accent));
+  background: color-mix(in oklab, var(--mink, var(--accent)) 12%, transparent);
+  color: var(--mink, var(--accent));
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+}
+.bridge-index .prediction { --mink: var(--m-text); }
+.bridge-index .seeing,
+.bridge-index .defaults { --mink: var(--m-image); }
+.bridge-index .time { --mink: var(--m-video); }
+.bridge-index .confidence,
+.bridge-index .cutoff { --mink: var(--m-cross); }
+.bridge-index .links a {
+  border-radius: 2px;
+  color: var(--ink);
+}
+.bridge-index .open-bridge {
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--bg);
+}
+.bridge-index .open-bridge:hover {
+  background: transparent;
+  color: var(--ink);
+}
+@media (max-width: 760px) {
+  body.concept-bridge-body > .wrap.concept-bridge-page,
+  .bridge-index {
+    width: min(calc(100vw - 28px), 1120px);
+  }
+  body.concept-bridge-body > .wrap.concept-bridge-page::before {
+    inset-inline: 0;
+  }
+  .concept-bridge-page h1 {
+    max-width: 100%;
+  }
+  .concept-bridge-page .bubble {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .concept-bridge-page .test-card,
+  .concept-bridge-page .requires,
+  .concept-bridge-page .under-hood,
+  .concept-bridge-page .verdict,
+  .concept-bridge-page .nuance,
+  .concept-bridge-page .connect,
+  .concept-bridge-page .key-line {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .concept-bridge-page .key-line::before {
+    inset: 0;
   }
 }

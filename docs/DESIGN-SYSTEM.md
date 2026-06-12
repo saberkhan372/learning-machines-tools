@@ -22,6 +22,27 @@ Tools and worksheets add `data-mod="text|image|video|cross"` for the modality
 ink. `assets/field-theme.js` overrides tone/type/ink from `localStorage` on
 load — always run it in `<head>`.
 
+Route families also carry `data-skin` so the riskier campaign layer can follow
+users from session pages into tool notes, tools, packs, worksheets, and docs.
+The skin is intentionally separate from `data-mod`: modality says what the
+content is about; skin says which visual world should frame it.
+
+| `data-skin` | Use |
+|---|---|
+| `home-sampler` | Homepage and broad campaign index moments |
+| `text-terminal` | Session 1 text, tokenization, ELIZA, text facilitation, text packs |
+| `counting-signal` | Next-token counting, probability, pasted distributions |
+| `image-spectrum` | Session 2 image/default/diffusion pages and tools |
+| `latent-nebula` | Latent-space and compression mechanics |
+| `video-slitscan` | Session 3 video, frame, drift, and temporal coherence pages |
+| `studio-synthesis` | Session 4, evidence, model cards, comparison, cross-session studio tools |
+| `docs-field` | Logistics, access, reading, reference, and quieter support pages |
+| `worksheet-print` | Worksheets and print-first artifacts |
+
+Every public HTML route should have exactly one `data-skin`. Markdown pages that
+render through `_layouts/page.html` can remain quiet unless they need a custom
+skin hook.
+
 ---
 
 ## Tones (`html[data-tone]`)
@@ -189,3 +210,26 @@ They are identity/teaching motifs, not semantic state colors. All motion has
 static reduced-motion fallbacks. Use them on campaign-facing pages, Session 1
 temperature explanations, and the poster proofing page; avoid applying glitch
 treatments to ordinary body text or navigation.
+
+### Riskier expansion primitives
+
+The first expansion pass is tracked in
+[`docs/riskier-identity-audit.md`](riskier-identity-audit.html). It extends the
+campaign identity into quieter lower-page sections and page families before
+one-off page styling begins.
+
+Reusable primitives:
+
+| Class | Purpose |
+|---|---|
+| `.risk-section` | Lower-page section with stronger poster wash and registration shapes |
+| `.risk-card` | Card/panel with controlled color wash, rule lines, and modality accent |
+| `.risk-band` | Full-width or constrained color band for session/tool transitions |
+| `.risk-grid` | Noisy pixel/grid field for image and data-default sections |
+| `.risk-frame-strip` | Video-style frame sequence / onion-skin strip |
+| `.risk-token-wall` | Text/tokenized phrase wall for text pages and prompt packs |
+| `.risk-signal-panel` | Campaign panel for cross-session evidence, showcase, and tool index moments |
+
+Implementation rules: inherit Field tokens, preserve square-corner discipline,
+keep semantic color tied to modality inks, and declare any motion inside
+`prefers-reduced-motion: no-preference` with complete static fallbacks.

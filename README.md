@@ -109,6 +109,8 @@ Canonical folders are listed in the [tool directory](tools/).
 - [Session link sheet](pages/session-links.html) — one canonical link per tool, per session
 - [Consent and recap protocol](docs/consent-recap-protocol.html)
 - [Field Manual redesign rollout plan](docs/FIELD-MANUAL-REDESIGN.html)
+- [Riskier Identity Page Audit](docs/riskier-identity-audit.html) — page-by-page visual QA and next-pass plan
+- [Advanced Concept Extensions](docs/advanced-concept-extensions.html) — proposed next-wave tools for VAE, CFG, temporal attention, training, and optical flow
 - [Project brief](docs/project-brief.html)
 - [Build roadmap](docs/build-roadmap.html)
 - [Pilot checklist](docs/pilot-checklist.html)

@@ -109,6 +109,97 @@ html[data-ink="subtle"] {
   --m-cross-tint: transparent;
 }
 
+/* ---------------- session skin tokens ---------------- */
+html[data-skin] {
+  --skin-bg: var(--bg);
+  --skin-ink: var(--ink);
+  --skin-soft: var(--ink-soft);
+  --skin-muted: var(--muted);
+  --skin-accent: var(--m-cross);
+  --skin-accent-2: var(--poster-cyan);
+  --skin-panel: var(--surface);
+  --skin-grid: color-mix(in oklab, var(--skin-accent) 22%, transparent);
+  --skin-glow: 0 0 0 transparent;
+}
+html[data-skin="home-sampler"],
+html[data-skin="docs-field"] {
+  --skin-accent: var(--m-cross);
+  --skin-accent-2: var(--poster-cyan);
+  --skin-grid: color-mix(in oklab, var(--skin-accent) 18%, transparent);
+}
+html[data-skin="text-terminal"] {
+  --skin-bg: #04110b;
+  --skin-ink: #69ff99;
+  --skin-soft: #b5ffd0;
+  --skin-muted: #4cb56f;
+  --skin-accent: #2dff78;
+  --skin-accent-2: #1ea65a;
+  --skin-panel: #071a10;
+  --skin-grid: rgba(105, 255, 153, 0.16);
+  --skin-glow: 0 0 18px rgba(105, 255, 153, 0.34);
+}
+html[data-skin="counting-signal"] {
+  --skin-bg: #14100e;
+  --skin-ink: #fff6e6;
+  --skin-soft: #d6c8b4;
+  --skin-muted: #69ff99;
+  --skin-accent: #69ff99;
+  --skin-accent-2: #4a8bc2;
+  --skin-panel: #1b1512;
+  --skin-grid: rgba(105, 255, 153, 0.18);
+  --skin-glow: 0 0 18px rgba(105, 255, 153, 0.26);
+}
+html[data-skin="image-spectrum"] {
+  --skin-bg: #f5e6ff;
+  --skin-ink: #1a1122;
+  --skin-soft: #40324a;
+  --skin-muted: #6e5e76;
+  --skin-accent: #21baf2;
+  --skin-accent-2: #f362c8;
+  --skin-panel: #fff3ff;
+  --skin-grid: rgba(33, 186, 242, 0.22);
+  --skin-glow: 0 0 24px rgba(122, 216, 206, 0.42);
+}
+html[data-skin="latent-nebula"] {
+  --skin-bg: #090e1d;
+  --skin-ink: #f7f2ff;
+  --skin-soft: #d1c3df;
+  --skin-muted: #f19cff;
+  --skin-accent: #f19cff;
+  --skin-accent-2: #00a7ff;
+  --skin-panel: #10172a;
+  --skin-grid: rgba(241, 156, 255, 0.16);
+  --skin-glow: 0 0 26px rgba(0, 167, 255, 0.34);
+}
+html[data-skin="video-slitscan"] {
+  --skin-bg: #11151b;
+  --skin-ink: #f4f1e8;
+  --skin-soft: #c7c4bd;
+  --skin-muted: #7eea9a;
+  --skin-accent: #23a5d2;
+  --skin-accent-2: #b33b86;
+  --skin-panel: #151a20;
+  --skin-grid: rgba(35, 165, 210, 0.18);
+  --skin-glow: 0 0 20px rgba(35, 165, 210, 0.28);
+}
+html[data-skin="studio-synthesis"] {
+  --skin-bg: #18131d;
+  --skin-ink: #f7f1e6;
+  --skin-soft: #d8cfe2;
+  --skin-muted: #d98cff;
+  --skin-accent: var(--poster-hot-pink);
+  --skin-accent-2: var(--poster-lime);
+  --skin-panel: #211827;
+  --skin-grid: rgba(243, 98, 152, 0.18);
+  --skin-glow: 0 0 22px rgba(243, 98, 152, 0.28);
+}
+html[data-skin="worksheet-print"] {
+  --skin-accent: var(--m-cross);
+  --skin-accent-2: var(--poster-lime);
+  --skin-panel: var(--surface);
+  --skin-grid: color-mix(in oklab, var(--skin-accent) 12%, transparent);
+}
+
 /* ---------------- base ---------------- */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -555,6 +646,547 @@ html[data-tone="slate"] .risk-glitch::after {
   .self-write-panel.is-live .sw-caret {
     animation: none !important;
   }
+}
+
+/* Riskier shared primitives for lower-page campaign energy */
+.risk-section,
+.risk-card,
+.risk-band,
+.risk-signal-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  clip-path: inset(0);
+}
+.risk-section[data-mod="text"],
+.risk-card[data-mod="text"],
+.risk-band[data-mod="text"],
+.risk-signal-panel[data-mod="text"] {
+  --mink: var(--m-text);
+  --mtint: var(--m-text-tint);
+}
+.risk-section[data-mod="image"],
+.risk-card[data-mod="image"],
+.risk-band[data-mod="image"],
+.risk-signal-panel[data-mod="image"] {
+  --mink: var(--m-image);
+  --mtint: var(--m-image-tint);
+}
+.risk-section[data-mod="video"],
+.risk-card[data-mod="video"],
+.risk-band[data-mod="video"],
+.risk-signal-panel[data-mod="video"] {
+  --mink: var(--m-video);
+  --mtint: var(--m-video-tint);
+}
+.risk-section[data-mod="cross"],
+.risk-card[data-mod="cross"],
+.risk-band[data-mod="cross"],
+.risk-signal-panel[data-mod="cross"] {
+  --mink: var(--m-cross);
+  --mtint: var(--m-cross-tint);
+}
+.risk-section > *,
+.risk-card > *,
+.risk-band > *,
+.risk-signal-panel > * {
+  position: relative;
+  z-index: 1;
+}
+.risk-section::before,
+.risk-card::before,
+.risk-band::before,
+.risk-signal-panel::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(34% 34% at 10% 20%, var(--poster-lime) 0 16%, transparent 50%),
+    radial-gradient(30% 34% at 84% 20%, var(--poster-violet) 0 15%, transparent 52%),
+    radial-gradient(36% 38% at 78% 78%, var(--poster-cyan) 0 19%, transparent 56%),
+    linear-gradient(112deg, var(--poster-coral), transparent 28%, var(--poster-mint) 54%, transparent 76%, var(--poster-sky));
+  background-size: 140% 140%, 132% 132%, 150% 150%, 190% 190%;
+  background-position: 0% 18%, 100% 12%, 82% 88%, 0% 50%;
+}
+.risk-section::after,
+.risk-card::after,
+.risk-band::after,
+.risk-signal-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(92px 18px at 12% 28%, transparent 42%, var(--poster-hot-pink) 44% 52%, transparent 54%),
+    radial-gradient(86px 18px at 78% 32%, transparent 42%, var(--poster-lime) 44% 52%, transparent 54%),
+    linear-gradient(88deg, transparent 0 18%, color-mix(in oklab, var(--mink, var(--ink)) 56%, transparent) 18.4% 19.2%, transparent 19.6% 100%),
+    repeating-linear-gradient(90deg, transparent 0 82px, color-mix(in oklab, var(--poster-sky) 62%, transparent) 83px 86px, transparent 87px 142px);
+  background-size: 130% 130%, 124% 124%, 150% 150%, 170% 170%;
+  background-position: 0% 20%, 100% 24%, 0% 0%, 0% 0%;
+}
+.risk-section {
+  background:
+    linear-gradient(90deg, var(--mtint, transparent), transparent 62%),
+    var(--bg);
+}
+.risk-card,
+.risk-band,
+.risk-signal-panel {
+  border: 1px solid var(--ink);
+  background:
+    linear-gradient(135deg, var(--mtint, transparent), transparent 58%),
+    var(--surface);
+}
+.risk-card {
+  padding: clamp(16px, 2.5vw, 24px);
+}
+.risk-band {
+  padding: clamp(14px, 2vw, 20px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: clamp(16px, 3vw, 28px);
+  align-items: center;
+}
+.risk-band .risk-k {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mink, var(--muted));
+  margin-bottom: 8px;
+}
+.risk-band h3,
+.risk-signal-panel h3 {
+  font-size: clamp(22px, 3vw, 34px);
+}
+.risk-band p,
+.risk-signal-panel p {
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.risk-signal-panel {
+  padding: clamp(18px, 3vw, 28px);
+}
+.risk-token-wall {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  align-items: center;
+}
+.risk-token {
+  --token-ink: var(--mink, var(--m-text));
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  border: 1px solid var(--token-ink);
+  background: color-mix(in oklab, var(--token-ink) 12%, transparent);
+  color: var(--token-ink);
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+}
+.risk-token:nth-child(2n) { --token-ink: var(--m-image); }
+.risk-token:nth-child(3n) { --token-ink: var(--m-video); }
+.risk-token:nth-child(4n) { --token-ink: var(--m-cross); }
+.risk-token.hot { --token-ink: var(--poster-hot-pink); }
+.risk-token.ghost {
+  background: transparent;
+  border-style: dashed;
+  color: var(--muted);
+}
+.risk-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 4px;
+}
+.risk-grid i,
+.risk-grid span {
+  display: block;
+  min-height: 22px;
+  aspect-ratio: 1;
+  background: var(--mink, var(--m-image));
+  border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+}
+.risk-grid i:nth-child(3n),
+.risk-grid span:nth-child(3n) {
+  background: var(--poster-cyan);
+  opacity: 0.54;
+}
+.risk-grid i:nth-child(4n),
+.risk-grid span:nth-child(4n) {
+  background: var(--poster-coral);
+  opacity: 0.44;
+}
+.risk-grid i:nth-child(5n),
+.risk-grid span:nth-child(5n) {
+  background: transparent;
+  border-style: dashed;
+}
+.risk-frame-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.risk-frame,
+.risk-frame-strip > span,
+.risk-frame-strip > div {
+  min-height: 74px;
+  border: 1px solid var(--mink, var(--m-video));
+  background:
+    linear-gradient(135deg, var(--mtint, transparent), transparent 62%),
+    var(--surface);
+  position: relative;
+  overflow: hidden;
+}
+.risk-frame::before,
+.risk-frame-strip > span::before,
+.risk-frame-strip > div::before {
+  content: "";
+  position: absolute;
+  inset: 18% 16%;
+  border: 1px solid color-mix(in oklab, var(--mink, var(--m-video)) 70%, transparent);
+  transform: translateX(var(--drift, 0));
+}
+.risk-frame-strip > :nth-child(2) { --drift: 8%; opacity: 0.78; }
+.risk-frame-strip > :nth-child(3) { --drift: 16%; opacity: 0.62; }
+.risk-frame-strip > :nth-child(4) { --drift: 24%; opacity: 0.48; }
+.risk-frame-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--mink, var(--m-video));
+  right: 18%;
+  bottom: 24%;
+  transform: rotate(18deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .risk-drift::before {
+    animation: risk-primitive-wash 18s ease-in-out infinite alternate;
+  }
+  .risk-drift::after {
+    animation: risk-primitive-register 15s ease-in-out infinite alternate;
+  }
+  .risk-token-wall.is-live .risk-token {
+    animation: risk-token-step 5.8s ease-in-out infinite;
+  }
+  .risk-token-wall.is-live .risk-token:nth-child(2n) { animation-delay: 0.12s; }
+  .risk-token-wall.is-live .risk-token:nth-child(3n) { animation-delay: 0.24s; }
+  .risk-token-wall.is-live .risk-token:nth-child(4n) { animation-delay: 0.36s; }
+  .risk-grid.is-live i,
+  .risk-grid.is-live span {
+    animation: risk-grid-resolve 6.2s ease-in-out infinite;
+  }
+  .risk-grid.is-live i:nth-child(2n),
+  .risk-grid.is-live span:nth-child(2n) {
+    animation-delay: 0.5s;
+  }
+  .risk-grid.is-live i:nth-child(3n),
+  .risk-grid.is-live span:nth-child(3n) {
+    animation-delay: 1s;
+  }
+  .risk-frame-strip.is-live > * {
+    animation: risk-frame-drift 6.8s ease-in-out infinite alternate;
+  }
+  .risk-frame-strip.is-live > :nth-child(2) { animation-delay: -1s; }
+  .risk-frame-strip.is-live > :nth-child(3) { animation-delay: -2s; }
+  .risk-frame-strip.is-live > :nth-child(4) { animation-delay: -3s; }
+  @keyframes risk-primitive-wash {
+    0% { background-position: 0% 18%, 100% 12%, 82% 88%, 0% 50%; }
+    100% { background-position: 10% 24%, 90% 18%, 72% 94%, 38% 52%; }
+  }
+  @keyframes risk-primitive-register {
+    0% { background-position: 0% 20%, 100% 24%, 0% 0%, 0% 0%; }
+    100% { background-position: 8% 24%, 92% 18%, 8% 2%, 14% 0%; }
+  }
+  @keyframes risk-token-step {
+    0%, 100% { transform: translateY(0); filter: none; }
+    24% { transform: translateY(-2px); filter: saturate(1.3); }
+    42% { transform: translateY(0); filter: none; }
+  }
+  @keyframes risk-grid-resolve {
+    0%, 100% { filter: none; transform: scale(1); }
+    48% { filter: saturate(1.35) contrast(1.08); transform: scale(0.94); }
+  }
+  @keyframes risk-frame-drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(4px); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .risk-drift::before,
+  .risk-drift::after,
+  .risk-token-wall.is-live .risk-token,
+  .risk-grid.is-live i,
+  .risk-grid.is-live span,
+  .risk-frame-strip.is-live > * {
+    animation: none !important;
+  }
+}
+@media (max-width: 760px) {
+  .risk-band {
+    grid-template-columns: 1fr;
+  }
+  .risk-frame-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------------- session skin behavior ---------------- */
+html[data-skin] .sub-hero.poster-wash {
+  color: var(--skin-ink);
+  background:
+    linear-gradient(112deg, color-mix(in oklab, var(--skin-accent) 22%, transparent), transparent 42%, color-mix(in oklab, var(--skin-accent-2) 18%, transparent)),
+    var(--skin-bg);
+}
+html[data-skin] .sub-hero:not(.poster-wash) {
+  border-bottom-color: color-mix(in oklab, var(--skin-accent) 58%, var(--ink));
+  background:
+    linear-gradient(112deg, color-mix(in oklab, var(--skin-accent) 14%, transparent), transparent 42%, color-mix(in oklab, var(--skin-accent-2) 10%, transparent)),
+    var(--bg);
+}
+html[data-skin] .sub-hero:not(.poster-wash)::before {
+  opacity: 0.16;
+  background:
+    radial-gradient(34% 36% at 12% 22%, var(--skin-accent) 0 14%, transparent 52%),
+    radial-gradient(30% 38% at 86% 22%, var(--skin-accent-2) 0 12%, transparent 52%),
+    linear-gradient(118deg, var(--poster-coral), transparent 28%, var(--poster-cyan) 56%, transparent 74%, var(--poster-violet));
+}
+html[data-skin] .sub-hero:not(.poster-wash)::after {
+  opacity: 0.12;
+  background:
+    radial-gradient(96px 18px at 18% 70%, transparent 42%, var(--skin-accent-2) 44% 52%, transparent 54%),
+    radial-gradient(86px 18px at 78% 30%, transparent 42%, var(--skin-accent) 44% 52%, transparent 54%),
+    repeating-linear-gradient(90deg, transparent 0 92px, color-mix(in oklab, var(--skin-accent) 50%, transparent) 93px 96px, transparent 97px 156px);
+}
+html[data-skin] .sub-hero.poster-wash .crumb,
+html[data-skin] .sub-hero.poster-wash .crumb a,
+html[data-skin] .sub-hero:not(.poster-wash) .crumb,
+html[data-skin] .sub-hero:not(.poster-wash) .crumb a,
+html[data-skin] .sub-hero.poster-wash .sess-kicker,
+html[data-skin] .sub-hero.poster-wash .sess-num .of {
+  color: color-mix(in oklab, var(--skin-soft) 74%, transparent);
+}
+html[data-skin] .sub-hero.poster-wash .sess-title,
+html[data-skin] .sub-hero.poster-wash .sess-num,
+html[data-skin] .sub-hero.poster-wash .sess-q,
+html[data-skin] .sub-hero.poster-wash .q-accent,
+html[data-skin] .sub-hero.poster-wash .accent {
+  color: var(--skin-ink);
+}
+html[data-skin] .sub-hero.poster-wash .sess-lede {
+  color: var(--skin-soft);
+}
+html[data-skin] .sub-hero.poster-wash .modsq {
+  background: var(--skin-accent);
+}
+html[data-skin] .sub-hero:not(.poster-wash) .modsq,
+html[data-skin] .sub-hero:not(.poster-wash) .accent,
+html[data-skin] .sub-hero:not(.poster-wash) .chip {
+  border-color: color-mix(in oklab, var(--skin-accent) 42%, var(--rule));
+  color: var(--skin-accent);
+}
+html[data-skin] .sub-hero:not(.poster-wash) .modsq {
+  background: var(--skin-accent);
+}
+html[data-skin] .sub-hero.poster-wash::before {
+  opacity: 0.34;
+  background:
+    radial-gradient(34% 36% at 12% 22%, var(--skin-accent) 0 18%, transparent 52%),
+    radial-gradient(30% 38% at 86% 22%, var(--skin-accent-2) 0 15%, transparent 52%),
+    linear-gradient(118deg, var(--poster-coral), transparent 28%, var(--poster-cyan) 56%, transparent 74%, var(--poster-violet));
+}
+html[data-skin] .sub-hero.poster-register::after {
+  opacity: 0.28;
+  background:
+    radial-gradient(96px 18px at 18% 70%, transparent 42%, var(--skin-accent-2) 44% 52%, transparent 54%),
+    radial-gradient(86px 18px at 78% 30%, transparent 42%, var(--skin-accent) 44% 52%, transparent 54%),
+    repeating-linear-gradient(90deg, transparent 0 92px, color-mix(in oklab, var(--skin-accent) 62%, transparent) 93px 96px, transparent 97px 156px);
+}
+html[data-skin="text-terminal"] .sub-hero.poster-wash,
+html[data-skin="counting-signal"] .sub-hero.poster-wash,
+html[data-skin="latent-nebula"] .sub-hero.poster-wash,
+html[data-skin="video-slitscan"] .sub-hero.poster-wash,
+html[data-skin="studio-synthesis"] .sub-hero.poster-wash {
+  border-bottom-color: var(--skin-accent);
+}
+html[data-skin="text-terminal"] .sub-hero.poster-wash::after,
+html[data-skin="counting-signal"] .sub-hero.poster-wash::after,
+html[data-skin="text-terminal"] .risk-section::after,
+html[data-skin="text-terminal"] .risk-card::after,
+html[data-skin="text-terminal"] .risk-band::after {
+  background:
+    repeating-linear-gradient(0deg, rgba(105, 255, 153, 0.08) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, transparent 0 88px, rgba(105, 255, 153, 0.16) 89px 91px, transparent 92px 156px);
+}
+html[data-skin="text-terminal"] .risk-card,
+html[data-skin="counting-signal"] .risk-card,
+html[data-skin="latent-nebula"] .risk-card,
+html[data-skin="text-terminal"] .risk-band,
+html[data-skin="counting-signal"] .risk-band,
+html[data-skin="latent-nebula"] .risk-band,
+html[data-skin="text-terminal"] .temperature-ladder,
+html[data-skin="text-terminal"] .self-write-panel {
+  background: var(--skin-panel);
+  color: var(--skin-ink);
+  border-color: var(--skin-accent);
+  box-shadow: var(--skin-glow);
+}
+html[data-skin="text-terminal"] .risk-token,
+html[data-skin="text-terminal"] .temp-output,
+html[data-skin="text-terminal"] .ts-n {
+  text-shadow: var(--skin-glow);
+}
+html[data-skin="image-spectrum"] .risk-section::before,
+html[data-skin="latent-nebula"] .risk-section::before,
+html[data-skin="image-spectrum"] .risk-card::before,
+html[data-skin="latent-nebula"] .risk-card::before,
+html[data-skin="image-spectrum"] .risk-band::before {
+  opacity: 0.30;
+  background:
+    linear-gradient(112deg, #69d08f, #b9d7ff 28%, #ffb1d6 58%, #d7c4ff 82%, #f2d68f),
+    radial-gradient(circle at 44% 42%, var(--poster-cyan), transparent 28%);
+}
+html[data-skin="image-spectrum"] .risk-grid i,
+html[data-skin="image-spectrum"] .risk-grid span {
+  border-radius: 5px;
+  border-color: transparent;
+  box-shadow: var(--skin-glow);
+}
+html[data-skin="video-slitscan"] .sess-title,
+html[data-skin="video-slitscan"] .plate-claim {
+  text-shadow:
+    -0.045em 0 var(--skin-accent),
+    0.045em 0 var(--skin-accent-2);
+}
+html[data-skin="video-slitscan"] .risk-frame-strip > *,
+html[data-skin="video-slitscan"] .risk-card {
+  background: var(--skin-panel);
+  border-color: color-mix(in oklab, var(--skin-accent) 70%, var(--rule));
+  box-shadow: var(--skin-glow);
+}
+html[data-skin="video-slitscan"] .risk-frame-strip > *::after {
+  content: "t" counter(frame);
+  counter-increment: frame;
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--skin-muted);
+}
+html[data-skin="video-slitscan"] .risk-frame-strip {
+  counter-reset: frame -1;
+}
+html[data-skin="studio-synthesis"] .risk-signal-panel,
+html[data-skin="studio-synthesis"] .risk-card,
+html[data-skin="studio-synthesis"] .risk-band {
+  background:
+    linear-gradient(135deg, rgba(243, 98, 152, 0.14), transparent 42%, rgba(171, 242, 121, 0.12)),
+    var(--surface);
+}
+html[data-skin="studio-synthesis"] .risk-signal-panel {
+  box-shadow: var(--skin-glow);
+}
+html[data-skin="counting-signal"] .risk-signal-panel,
+html[data-skin="latent-nebula"] .risk-signal-panel {
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--skin-accent) 16%, transparent), transparent 42%, color-mix(in oklab, var(--skin-accent-2) 13%, transparent)),
+    var(--skin-panel);
+  color: var(--skin-ink);
+  border-color: var(--skin-accent);
+  box-shadow: var(--skin-glow);
+}
+html[data-skin] .risk-section::before,
+html[data-skin] .risk-card::before,
+html[data-skin] .risk-band::before,
+html[data-skin] .risk-signal-panel::before {
+  opacity: 0.13;
+  background:
+    radial-gradient(34% 34% at 10% 20%, var(--skin-accent) 0 15%, transparent 50%),
+    radial-gradient(30% 34% at 84% 20%, var(--skin-accent-2) 0 15%, transparent 52%),
+    radial-gradient(36% 38% at 78% 78%, var(--poster-cyan) 0 18%, transparent 56%),
+    linear-gradient(112deg, var(--poster-coral), transparent 28%, var(--poster-mint) 54%, transparent 76%, var(--poster-sky));
+}
+html[data-skin] .risk-section::after,
+html[data-skin] .risk-card::after,
+html[data-skin] .risk-band::after,
+html[data-skin] .risk-signal-panel::after {
+  opacity: 0.09;
+}
+html[data-skin="image-spectrum"] .risk-section::before,
+html[data-skin="image-spectrum"] .risk-card::before,
+html[data-skin="image-spectrum"] .risk-band::before {
+  opacity: 0.22;
+  background:
+    linear-gradient(112deg, #69d08f, #b9d7ff 28%, #ffb1d6 58%, #d7c4ff 82%, #f2d68f),
+    radial-gradient(circle at 44% 42%, var(--poster-cyan), transparent 28%);
+}
+html[data-skin] .session-risk-motif.risk-card,
+html[data-skin] .session-risk-motif.risk-signal-panel {
+  max-width: min(760px, 100%);
+}
+html[data-skin="image-spectrum"] .session-risk-motif.risk-card {
+  max-width: min(680px, 100%);
+}
+html[data-skin="image-spectrum"] .session-risk-motif .risk-grid {
+  max-width: 330px;
+}
+html[data-skin="text-terminal"] .session-temp-note {
+  max-width: min(760px, 100%);
+}
+html[data-skin="text-terminal"] .temperature-ladder {
+  background:
+    linear-gradient(90deg, rgba(45, 255, 120, 0.08), transparent 70%),
+    var(--skin-panel);
+  border-color: var(--skin-accent);
+}
+html[data-skin="text-terminal"] .temperature-ladder .temp-label {
+  color: color-mix(in oklab, var(--skin-soft) 68%, transparent);
+}
+html[data-skin="text-terminal"] .temp-row.low .temp-output {
+  color: var(--skin-soft);
+}
+html[data-skin="text-terminal"] .temp-row.mid .temp-output,
+html[data-skin="text-terminal"] .temp-row.hot .temp-output {
+  color: var(--skin-ink);
+}
+html[data-skin="text-terminal"] .temp-row.hot {
+  background: rgba(45, 255, 120, 0.10);
+  border-left-color: var(--skin-accent);
+}
+html[data-skin="text-terminal"] .temp-row.hot .temp-label {
+  color: var(--skin-ink);
+}
+html[data-skin="text-terminal"] .temp-row.warm .temp-output {
+  color: #ff8a3d;
+}
+html[data-skin="text-terminal"] .temp-row.wild .temp-output {
+  color: #d98cff;
+}
+html[data-skin="text-terminal"] .temp-caption {
+  font-size: 12.5px;
+  color: color-mix(in oklab, var(--ink-soft) 84%, var(--skin-accent));
+  max-width: 62ch;
+}
+html[data-skin="text-terminal"] .risk-card .plate-cap,
+html[data-skin="text-terminal"] .risk-card .plate-cap .fig {
+  color: color-mix(in oklab, var(--skin-soft) 78%, transparent);
+}
+html[data-skin="text-terminal"] .risk-card .plate-cap .fig {
+  color: var(--skin-ink);
+}
+html[data-skin="text-terminal"] .risk-token.ghost {
+  color: color-mix(in oklab, var(--skin-soft) 58%, transparent);
 }
 
 /* ---------------- figure plates ---------------- */
