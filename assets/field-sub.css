@@ -257,6 +257,12 @@
   border: 1px solid var(--ink);
   background: var(--surface);
 }
+html[data-skin] .throughline {
+  border-color: color-mix(in oklab, var(--skin-accent) 58%, var(--ink));
+  background:
+    linear-gradient(112deg, color-mix(in oklab, var(--skin-accent) 8%, transparent), transparent 52%, color-mix(in oklab, var(--skin-accent-2) 6%, transparent)),
+    var(--surface);
+}
 .through-step {
   padding: 18px 18px 22px;
   border-left: 1px solid var(--rule);
@@ -265,11 +271,17 @@
   gap: 8px;
 }
 .through-step:first-child { border-left: 0; }
+html[data-skin] .through-step {
+  border-left-color: color-mix(in oklab, var(--skin-accent) 28%, var(--rule));
+}
 .through-step .ts-n {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.1em;
   color: var(--mink, var(--muted));
+}
+html[data-skin] .through-step .ts-n {
+  color: color-mix(in oklab, var(--skin-accent) 78%, var(--muted));
 }
 .through-step h4 { font-size: 15px; }
 .through-step p { font-size: 13px; color: var(--ink-soft); }
@@ -305,15 +317,25 @@
 /* ---------------- session tool list ---------------- */
 .tool-list { border-top: 1px solid var(--ink); }
 .tool-list .ix-row { grid-template-columns: 48px minmax(0, 1.5fr) minmax(0, 2fr) 120px; }
+html[data-skin] .tool-list {
+  border-top-color: color-mix(in oklab, var(--skin-accent) 58%, var(--ink));
+}
 
 /* ---------------- run of show ---------------- */
 .ros { border-top: 1px solid var(--ink); }
+html[data-skin] .ros {
+  border-top-color: color-mix(in oklab, var(--skin-accent) 58%, var(--ink));
+}
 .ros-row {
   display: grid;
   grid-template-columns: 96px 1fr;
   gap: 20px;
   padding: 16px 2px;
   border-bottom: 1px solid var(--rule);
+}
+html[data-skin] .ros-row:hover {
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--skin-accent) 7%, transparent), transparent 54%);
 }
 .ros-time {
   font-family: var(--font-mono);
@@ -330,6 +352,9 @@
 .prompts {
   border-top: 1px solid var(--ink);
   counter-reset: prompt;
+}
+html[data-skin] .prompts {
+  border-top-color: color-mix(in oklab, var(--skin-accent) 58%, var(--ink));
 }
 .prompt {
   counter-increment: prompt;
@@ -353,6 +378,13 @@
   letter-spacing: 0.1em;
   color: var(--muted);
 }
+html[data-skin] .prompt::before {
+  color: color-mix(in oklab, var(--skin-accent) 74%, var(--muted));
+}
+html[data-skin] .prompt:hover {
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--skin-accent) 8%, transparent), transparent 56%);
+}
 
 /* ---------------- vis / invest cards ---------------- */
 .visible-grid {
@@ -360,6 +392,12 @@
   grid-template-columns: repeat(3, 1fr);
   border: 1px solid var(--ink);
   background: var(--surface);
+}
+html[data-skin] .visible-grid {
+  border-color: color-mix(in oklab, var(--skin-accent) 58%, var(--ink));
+  background:
+    linear-gradient(112deg, color-mix(in oklab, var(--skin-accent) 8%, transparent), transparent 60%),
+    var(--surface);
 }
 .vis-card {
   padding: 20px 18px 24px;
@@ -369,6 +407,9 @@
   gap: 9px;
 }
 .vis-card:first-child { border-left: 0; }
+html[data-skin] .vis-card {
+  border-left-color: color-mix(in oklab, var(--skin-accent) 24%, var(--rule));
+}
 .vis-card .vn {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -390,6 +431,14 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+html[data-skin] .invest-card,
+html[data-skin] .pathway-card,
+html[data-skin] .callout {
+  border-color: color-mix(in oklab, var(--skin-accent) 30%, var(--rule));
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--skin-accent) 6%, transparent), transparent 58%),
+    var(--surface);
 }
 .invest-card .ic-k {
   font-family: var(--font-mono);
@@ -426,6 +475,9 @@
   color: var(--ink-soft);
 }
 .callout b { color: var(--ink); }
+html[data-skin] .callout {
+  border-left: 4px solid color-mix(in oklab, var(--skin-accent) 72%, var(--ink));
+}
 
 /* ---------------- prompt pack shell ---------------- */
 .pack-grid.wrap {
@@ -442,6 +494,9 @@
 }
 .prompt-family.risk-card {
   padding: clamp(18px, 3vw, 30px);
+}
+html[data-skin] .prompt-family.risk-card {
+  border-color: color-mix(in oklab, var(--skin-accent) 55%, var(--ink));
 }
 .prompt-family h2 {
   margin: 0 0 12px;
@@ -515,6 +570,9 @@
   border-top: 1px solid var(--ink);
   padding-top: 12px;
 }
+html[data-skin] .toc {
+  border-top-color: color-mix(in oklab, var(--skin-accent) 58%, var(--ink));
+}
 .toc-label {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -535,6 +593,13 @@
 }
 .toc a:hover { color: var(--ink); }
 .toc a.active { color: var(--ink); border-left-color: var(--ink); }
+html[data-skin] .toc a.active,
+html[data-skin] .toc a:hover {
+  color: color-mix(in oklab, var(--skin-accent) 72%, var(--ink));
+}
+html[data-skin] .toc a.active {
+  border-left-color: color-mix(in oklab, var(--skin-accent) 72%, var(--ink));
+}
 
 .doc-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 
@@ -546,6 +611,9 @@
   margin: clamp(36px, 5vw, 52px) 0 14px;
   border-top: 1px solid var(--ink);
   padding-top: 14px;
+}
+html[data-skin] .prose h2 {
+  border-top-color: color-mix(in oklab, var(--skin-accent) 58%, var(--ink));
 }
 .prose p { font-size: 14.5px; line-height: 1.65; color: var(--ink-soft); margin: 10px 0; }
 .prose ul { margin: 12px 0; padding-left: 0; list-style: none; }
@@ -565,12 +633,21 @@
   width: 7px; height: 7px;
   background: var(--ink);
 }
+html[data-skin] .prose li::before {
+  background: color-mix(in oklab, var(--skin-accent) 74%, var(--ink));
+}
 .prose a { color: var(--ink); text-underline-offset: 3px; }
 .prose blockquote {
   margin: 18px 0;
   border: 1px solid var(--ink);
   background: var(--surface);
   padding: 18px 20px;
+}
+html[data-skin] .prose blockquote {
+  border-color: color-mix(in oklab, var(--skin-accent) 52%, var(--ink));
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--skin-accent) 8%, transparent), transparent 64%),
+    var(--surface);
 }
 .prose blockquote p {
   font-family: var(--font-display);
@@ -588,6 +665,13 @@
   margin: 16px 0;
   border: 1px solid var(--ink);
   background: var(--surface);
+}
+html[data-skin] .doc-table {
+  border-color: color-mix(in oklab, var(--skin-accent) 50%, var(--ink));
+}
+html[data-skin] .doc-table th {
+  color: color-mix(in oklab, var(--skin-accent) 72%, var(--muted));
+  border-bottom-color: color-mix(in oklab, var(--skin-accent) 45%, var(--ink));
 }
 .doc-table th {
   font-family: var(--font-mono);

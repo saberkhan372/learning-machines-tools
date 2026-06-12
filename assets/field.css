@@ -272,6 +272,16 @@ b, strong { font-weight: 600; }
   color: var(--muted);
   text-align: right;
 }
+html[data-skin] .sec-rule {
+  border-top-color: color-mix(in oklab, var(--skin-accent) 62%, var(--ink));
+}
+html[data-skin] .sec-rule .sec-no,
+html[data-skin] .eyebrow {
+  color: color-mix(in oklab, var(--skin-accent) 82%, var(--ink));
+}
+html[data-skin] .sec-rule .sec-note {
+  color: color-mix(in oklab, var(--skin-muted) 72%, var(--muted));
+}
 
 /* ---------------- nav ---------------- */
 .nav {
@@ -315,6 +325,15 @@ b, strong { font-weight: 600; }
   color: var(--ink-soft);
 }
 .nav-links a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+html[data-skin] .nav {
+  border-bottom-color: color-mix(in oklab, var(--skin-accent) 44%, var(--ink));
+}
+html[data-skin] .brand .mark {
+  background: color-mix(in oklab, var(--skin-accent) 72%, var(--ink));
+}
+html[data-skin] .nav-links a:hover {
+  color: color-mix(in oklab, var(--skin-accent) 72%, var(--ink));
+}
 
 /* ---------------- buttons ---------------- */
 .btn {
@@ -1226,6 +1245,38 @@ html[data-skin="text-terminal"] .risk-token.ghost {
 .ix-row[data-mod="video"] { --mink: var(--m-video); --mtint: var(--m-video-tint); }
 .ix-row[data-mod="cross"] { --mink: var(--m-cross); --mtint: var(--m-cross-tint); }
 .ix-row:hover { background: var(--mtint, var(--surface)); }
+html[data-skin] .ix-row {
+  overflow: hidden;
+  isolation: isolate;
+}
+html[data-skin] .ix-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--mink, var(--skin-accent)) 18%, transparent), transparent);
+  pointer-events: none;
+  transition: width 160ms ease;
+}
+html[data-skin] .ix-row:hover::before {
+  width: min(360px, 42%);
+}
+html[data-skin] .ix-row > * {
+  position: relative;
+  z-index: 1;
+}
+html[data-skin] .ix-row:hover {
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--mink, var(--skin-accent)) 9%, transparent), transparent 58%),
+    var(--surface);
+}
+html[data-skin] .ix-no {
+  color: color-mix(in oklab, var(--mink, var(--skin-accent)) 64%, var(--muted));
+}
+html[data-skin] .ix-name {
+  text-decoration-color: color-mix(in oklab, var(--mink, var(--skin-accent)) 58%, transparent);
+}
 .ix-no {
   font-size: 11.5px;
   color: var(--muted);
@@ -1282,6 +1333,36 @@ html[data-skin="text-terminal"] .risk-token.ghost {
   text-align: right;
 }
 .doc-row:hover .d-name { text-decoration: underline; text-underline-offset: 3px; }
+html[data-skin] .doc-list {
+  border-top-color: color-mix(in oklab, var(--skin-accent) 50%, var(--rule));
+}
+html[data-skin] .doc-row {
+  position: relative;
+  overflow: hidden;
+}
+html[data-skin] .doc-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: color-mix(in oklab, var(--skin-accent) 54%, transparent);
+  opacity: 0;
+}
+html[data-skin] .doc-row:hover {
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--skin-accent) 9%, transparent), transparent 52%),
+    var(--surface);
+}
+html[data-skin] .doc-row:hover::before {
+  opacity: 1;
+}
+html[data-skin] .doc-row > * {
+  position: relative;
+  z-index: 1;
+}
+html[data-skin] .doc-row .d-desc {
+  color: color-mix(in oklab, var(--skin-muted) 68%, var(--muted));
+}
 
 /* ---------------- footer ---------------- */
 .footer {

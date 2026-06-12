@@ -5,7 +5,7 @@ title: Full Page Design Audit
 
 # Full Page Design Audit
 
-Status: **audit complete; P0 implementation pass complete**  
+Status: **audit complete; P0 and shared P1 implementation passes complete**
 Date: **2026-06-12**  
 Scope: **65 public HTML routes** plus the shared templates that shape docs and
 pack pages.
@@ -39,6 +39,21 @@ Changes made:
   itself before the warning text.
 - Tightened mobile hero rhythm on session/docs pages and moved the Confidence
   Explorer title ahead of its big-idea callout.
+
+## Shared P1 Skin Pass
+
+Completed after the P0 pass:
+
+- Carried skin accents into section rules, navigation marks, index rows, doc
+  rows, throughline cards, run-of-show rows, prompts, visible/investigation
+  cards, callouts, prose blocks, docs tables, and prompt-pack cards.
+- Pushed skin accent variables into migrated tool apps so panels, cards,
+  controls, focus states, and primary buttons respond to the route skin.
+- Kept `docs-field` and `worksheet-print` quieter so reference and print pages
+  remain readable.
+- Re-ran the 65-route browser sweep at mobile and desktop after the shared P1
+  CSS changes: 0 overflow, 0 missing skin hooks, 0 late H1 warnings over the
+  audit threshold, 0 console errors.
 
 ## Automated QA Sweep
 

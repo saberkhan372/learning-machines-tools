@@ -233,3 +233,11 @@ Reusable primitives:
 Implementation rules: inherit Field tokens, preserve square-corner discipline,
 keep semantic color tied to modality inks, and declare any motion inside
 `prefers-reduced-motion: no-preference` with complete static fallbacks.
+
+The shared P1 skin pass also styles common lower-page structures through
+`html[data-skin]`: section rules, nav marks, `.ix-row`, `.doc-row`,
+`.throughline`, `.ros-row`, `.prompt`, `.visible-grid`, `.invest-card`,
+`.callout`, prose blocks, docs tables, prompt-pack cards, and migrated tool
+panels/cards. Prefer these shared hooks before adding page-specific CSS.
+Reference and print pages should stay restrained through `docs-field` and
+`worksheet-print`.

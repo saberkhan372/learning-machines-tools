@@ -60,6 +60,28 @@ html[data-mod="text"]  { --accent: var(--m-text); }
 html[data-mod="image"] { --accent: var(--m-image); }
 html[data-mod="video"] { --accent: var(--m-video); }
 html[data-mod="cross"] { --accent: var(--m-cross); }
+html[data-skin]:not([data-skin="docs-field"]):not([data-skin="worksheet-print"]) {
+  --accent: var(--skin-accent);
+  --accent-2: var(--skin-accent-2);
+  --accent-soft: color-mix(in oklab, var(--skin-accent) 13%, var(--bg));
+  --accent-dark: color-mix(in oklab, var(--skin-accent) 84%, var(--ink));
+}
+html[data-skin="worksheet-print"][data-mod="text"] {
+  --skin-accent: var(--m-text);
+  --skin-accent-2: var(--poster-cyan);
+}
+html[data-skin="worksheet-print"][data-mod="image"] {
+  --skin-accent: var(--m-image);
+  --skin-accent-2: var(--poster-hot-pink);
+}
+html[data-skin="worksheet-print"][data-mod="video"] {
+  --skin-accent: var(--m-video);
+  --skin-accent-2: var(--poster-cyan);
+}
+html[data-skin="worksheet-print"][data-mod="cross"] {
+  --skin-accent: var(--m-cross);
+  --skin-accent-2: var(--poster-lime);
+}
 
 /* standard tool masthead (used when migrating .site-header markup) */
 .tool-mast {
@@ -102,6 +124,25 @@ html[data-mod="cross"] { --accent: var(--m-cross); }
   font-size: 15px;
   line-height: 1.55;
   max-width: 62ch;
+}
+html[data-skin] .tool-mast {
+  border-bottom: 1px solid color-mix(in oklab, var(--skin-accent) 42%, transparent);
+  padding-bottom: clamp(18px, 3vw, 28px);
+}
+html[data-skin] .tool-mast h1,
+html[data-skin] body > .wrap > header:first-child h1,
+html[data-skin] body > nav.nav + main h1,
+html[data-skin] body > nav.nav + .wrap h1 {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--skin-accent) 30%, transparent);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
+}
+html[data-skin="text-terminal"] .tool-mast h1,
+html[data-skin="counting-signal"] .tool-mast h1,
+html[data-skin="video-slitscan"] .tool-mast h1,
+html[data-skin="latent-nebula"] .tool-mast h1 {
+  text-shadow: var(--skin-glow);
 }
 
 /* standard teaching-model notice */
@@ -164,6 +205,60 @@ html[data-skin] body > nav.nav + *:not(.wrap):not(.tool-mast):not(.tool-shell):n
     radial-gradient(38% 38% at 86% 18%, var(--skin-accent-2) 0 10%, transparent 48%),
     radial-gradient(44% 42% at 70% 84%, var(--poster-cyan) 0 12%, transparent 54%),
     linear-gradient(118deg, var(--poster-coral), transparent 30%, var(--poster-mint) 58%, transparent 78%, var(--poster-sky));
+}
+html[data-skin] .tool-shell,
+html[data-skin] body > nav.nav + main,
+html[data-skin] body > nav.nav + .wrap {
+  border-top-color: color-mix(in oklab, var(--skin-accent) 38%, var(--rule));
+}
+html[data-skin] .panel,
+html[data-skin] .card,
+html[data-skin] .control-card,
+html[data-skin] .controls,
+html[data-skin] .output-card,
+html[data-skin] .result-card,
+html[data-skin] .tier-card,
+html[data-skin] .prompt-card,
+html[data-skin] .example-card,
+html[data-skin] .case-button,
+html[data-skin] .choice,
+html[data-skin] .tile,
+html[data-skin] .paste-panel textarea,
+html[data-skin] .consent-banner,
+html[data-skin] .import-notice {
+  border-color: color-mix(in oklab, var(--skin-accent) 30%, var(--rule));
+}
+html[data-skin] .panel,
+html[data-skin] .card,
+html[data-skin] .control-card,
+html[data-skin] .output-card,
+html[data-skin] .result-card,
+html[data-skin] .tier-card,
+html[data-skin] .prompt-card,
+html[data-skin] .example-card,
+html[data-skin] .tile {
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--skin-accent) 5%, transparent), transparent 56%),
+    var(--surface);
+}
+html[data-skin] button:focus-visible,
+html[data-skin] a:focus-visible,
+html[data-skin] textarea:focus-visible,
+html[data-skin] input:focus-visible,
+html[data-skin] select:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--skin-accent) 80%, var(--ink));
+  outline-offset: 3px;
+}
+html[data-skin] .ctrl-btn.primary,
+html[data-skin] .btn-primary {
+  background: color-mix(in oklab, var(--skin-accent) 84%, var(--ink));
+  border-color: color-mix(in oklab, var(--skin-accent) 84%, var(--ink));
+}
+html[data-skin] .ctrl-btn:hover,
+html[data-skin] .choice:hover,
+html[data-skin] .case-button:hover {
+  border-color: color-mix(in oklab, var(--skin-accent) 72%, var(--ink));
+  color: color-mix(in oklab, var(--skin-accent) 72%, var(--ink));
 }
 @media (prefers-reduced-motion: no-preference) {
   .tool-mast::before,
