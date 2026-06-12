@@ -88,7 +88,83 @@
     from { text-shadow: 0.038em 0.028em 0 oklch(0.72 0.24 350 / 0.55), -0.038em -0.024em 0 oklch(0.8 0.16 230 / 0.55); }
     to { text-shadow: -0.045em 0.032em 0 oklch(0.85 0.21 125 / 0.6), 0.045em -0.028em 0 oklch(0.74 0.18 305 / 0.55); }
   }
-  @media (prefers-reduced-motion: reduce) { .wash.animate, .ghost.animate { animation: none; } }
+
+  /* riskier identity boards */
+  .poster-glitch { position: relative; display: inline-block; isolation: isolate; line-height: 0.94; }
+  .poster-glitch .gbase { position: relative; z-index: 2; display: inline-block; }
+  .poster-glitch .gslice {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    clip-path: inset(var(--ctop) 0 var(--cbot) 0);
+    transform: translateX(var(--dx));
+    opacity: 0.78;
+    mix-blend-mode: multiply;
+  }
+  .poster.spectrum .poster-glitch .gslice { mix-blend-mode: normal; }
+  .poster.moving .poster-glitch .gslice { animation: sliceSlip 2.8s ease-in-out infinite alternate; animation-delay: var(--gd); }
+  @keyframes sliceSlip {
+    from { transform: translateX(var(--dx)); }
+    to { transform: translateX(calc(var(--dx) * -0.65)); }
+  }
+
+  .poster-temp-stack { display: flex; flex-direction: column; gap: 26px; }
+  .poster-temp-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 18px; align-items: baseline; }
+  .poster-temp-row .tlabel {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--pmuted);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .poster-temp-row.hot { background: var(--ivideo-tint); margin: -8px -14px; padding: 8px 14px; }
+  .poster-temp-row.hot .tlabel { color: var(--ivideo); font-weight: 600; }
+
+  .selfwrite-title { display: flex; align-items: flex-start; flex-wrap: wrap; min-height: 138px; }
+  .selfwrite-token { display: inline-flex; flex-direction: column; align-items: center; }
+  .selfwrite-token .display { white-space: pre; }
+  .selfwrite-token .prob { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--pmuted); }
+  .selfwrite-body { font-size: 27px; line-height: 1.5; color: var(--psoft); max-width: 40ch; margin: 0; min-height: 4.5em; }
+  .selfwrite-body .word { display: inline-block; }
+  .selfwrite-cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1em;
+    margin-left: 4px;
+    background: var(--itext);
+    vertical-align: -0.13em;
+  }
+  .poster.moving .selfwrite-token,
+  .poster.moving .selfwrite-body .word {
+    opacity: 0.2;
+    animation: posterWriteReveal 8.4s linear infinite;
+    animation-delay: var(--wd, 0s);
+    animation-fill-mode: both;
+  }
+  .poster.moving .selfwrite-cursor { animation: posterCursor 1s steps(1) infinite; }
+  @keyframes posterWriteReveal {
+    0%, 8% { opacity: 0.2; transform: translateY(5px); }
+    12%, 82% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0.2; transform: translateY(0); }
+  }
+  @keyframes posterCursor { 50% { opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wash.animate, .ghost.animate,
+    .poster.moving .poster-glitch .gslice,
+    .poster.moving .selfwrite-token,
+    .poster.moving .selfwrite-body .word,
+    .poster.moving .selfwrite-cursor {
+      animation: none;
+    }
+    .poster.moving .selfwrite-token,
+    .poster.moving .selfwrite-body .word {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
 
   /* ===== page chrome: boards + controls ===== */
   .controls-bar { position: sticky; top: 60px; z-index: 30; background: var(--bg); border-bottom: 1px solid var(--rule); padding: 12px 0; }
@@ -107,6 +183,29 @@
   .board-label { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; display: flex; justify-content: space-between; }
   .stage { position: relative; width: 100%; border: 1px solid var(--rule); overflow: hidden; background: var(--surface-2); }
   .stage .art { position: absolute; top: 0; left: 0; transform-origin: top left; }
+  @media (max-width: 560px) {
+    .sub-hero .wrap,
+    main .wrap,
+    .footer .wrap,
+    .controls-inner {
+      width: min(342px, calc(100% - 48px));
+      max-width: 342px;
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+    .sub-hero .sess-kicker,
+    .sub-hero .sess-lede {
+      max-width: calc(100vw - 48px) !important;
+      overflow-wrap: anywhere;
+    }
+    .controls-inner { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .ctl { align-items: flex-start; flex-wrap: wrap; }
+    .ctl .lbl { width: 72px; padding-top: 7px; }
+    .seg { flex-wrap: wrap; }
+    .ctl select { max-width: calc(100vw - 144px); }
+    .board { flex-basis: 100%; min-width: 0; max-width: none; }
+    .board-label { gap: 10px; }
+  }
   </style>
 </head>
 <body>
@@ -116,7 +215,7 @@
       <div class="nav-links">
         <a href="../index.html#materials" class="hide-sm">Materials</a>
         <a href="camp-2026.html" class="hide-sm">Camp 2026</a>
-        <a class="btn btn-primary btn-sm" href="https://ccfest.rocks/ccfest-camp">Register →</a>
+        <a class="btn btn-primary btn-sm hide-sm" href="https://ccfest.rocks/ccfest-camp">Register →</a>
       </div>
     </div>
   </nav>
@@ -128,9 +227,9 @@
         <a href="../index.html#materials">Materials</a><span class="sep">/</span>
         <span>Camp poster</span>
       </div>
-      <p class="sess-kicker"><i class="modsq"></i>Promotion · print &amp; social · five boards</p>
+      <p class="sess-kicker"><i class="modsq"></i>Promotion · print, riskier identity &amp; social · eight boards</p>
       <h1 class="sess-title" style="font-size: clamp(34px, 5vw, 56px);">Camp Poster 2026</h1>
-      <p class="sess-lede" style="max-width: 64ch;">Three print concepts (Letter 8.5×11) and two social formats, all pulling the real camp details. The <b>Spectrum</b> world washes them in the datamosh palette — print boards stay static, social boards move. Flip to <b>Field</b> for the quiet manual look. Screenshot a board at full scale, or print this page for proofs.</p>
+      <p class="sess-lede" style="max-width: 66ch;">Three print concepts (Letter 8.5×11), three riskier identity boards, and two social formats, all pulling the real camp details. The <b>Spectrum</b> world washes them in the datamosh palette — print boards stay static, social and selected identity boards move. Flip to <b>Field</b> for the quiet manual look. Screenshot a board at full scale, or print this page for proofs.</p>
     </div>
   </header>
 
@@ -151,7 +250,10 @@
       <div class="sec-rule"><span class="sec-no">§ A · Print — Letter 8.5×11</span><span class="sec-note">three concepts · same details, different lead</span></div>
       <div class="board-row" id="print-row"></div>
 
-      <div class="sec-rule" style="margin-top: 48px;"><span class="sec-no">§ B · Social</span><span class="sec-note">square (Instagram) + story (9:16) — these move</span></div>
+      <div class="sec-rule" style="margin-top: 48px;"><span class="sec-no">§ B · Riskier identity</span><span class="sec-note">dropped keyframe · temperature ladder · writes itself</span></div>
+      <div class="board-row" id="riskier-row"></div>
+
+      <div class="sec-rule" style="margin-top: 48px;"><span class="sec-no">§ C · Social</span><span class="sec-note">square (Instagram) + story (9:16) — these move</span></div>
       <div class="board-row" id="social-row"></div>
     </div>
   </main>
@@ -287,7 +389,22 @@
       + "</div>";
   }
 
-  /* ---- the five boards ---- */
+  function glitchTitle(html, fontSize, color) {
+    var slices = [
+      { top: 6, h: 12, dx: "-0.16em", c: "oklch(0.68 0.26 350)", d: "0s" },
+      { top: 27, h: 8, dx: "0.12em", c: "oklch(0.78 0.16 230)", d: "-0.6s" },
+      { top: 47, h: 11, dx: "-0.09em", c: "oklch(0.85 0.23 125)", d: "-1.1s" },
+      { top: 71, h: 9, dx: "0.15em", c: "oklch(0.7 0.19 305)", d: "-1.5s" }
+    ];
+    var out = '<span class="poster-glitch display" style="font-size:' + fontSize + "px;color:" + color + ';">'
+      + '<span class="gbase">' + html + "</span>";
+    slices.forEach(function (s) {
+      out += '<span class="gslice" aria-hidden="true" style="--ctop:' + s.top + "%;--cbot:" + (100 - s.top - s.h) + "%;--dx:" + s.dx + ";--gd:" + s.d + ";color:" + s.c + ';">' + html + "</span>";
+    });
+    return out + "</span>";
+  }
+
+  /* ---- boards ---- */
   function boardSignage() {
     return '<div class="poster pticks" data-shift="0" style="padding:56px 60px 52px; display:flex; flex-direction:column;">'
       + '<div class="wash"></div>'
@@ -365,6 +482,78 @@
       + '<div style="flex:1;"></div>' + infoFooter() + "</div>";
   }
 
+  function boardDroppedKeyframe() {
+    return '<div class="poster pticks risk-motion-board" data-shift="0" style="padding:56px 60px 52px; display:flex; flex-direction:column;">'
+      + '<div class="wash"></div>'
+      + '<div style="display:flex; justify-content:space-between; align-items:baseline;">'
+      + '<span class="eyebrow">CC Fest · Creative AI Camp</span><span class="eyebrow" style="color:var(--pink);">Summer 2026</span></div>'
+      + '<div class="rule-strong" style="margin:16px 0 0;"></div>'
+      + '<div style="flex:1;"></div>'
+      + glitchTitle("Learning<br>Machines", 164, "var(--pink)")
+      + '<p class="mono" style="font-size:19px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--pink); margin:44px 0 0;">Text · Images · Video — what is the machine actually doing?</p>'
+      + '<p class="p-subline" style="font-size:21px; line-height:1.45; color:var(--psoft); max-width:44ch; margin:16px 0 0;"></p>'
+      + '<div style="flex:1.2;"></div>'
+      + '<div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:2px solid var(--pink); padding-top:18px;">'
+      + '<span class="mono" style="font-size:17px; font-weight:600; line-height:1.55;">July 11 · 18 · 25<br>Saturdays 9–11 am PT</span>'
+      + '<span class="mono" style="font-size:15.5px; color:var(--pmuted); text-align:right; line-height:1.65; white-space:nowrap;">free · virtual · beginner-friendly<br>register → ccfest.rocks · form due July 4</span></div></div>';
+  }
+
+  function boardTemperature() {
+    var rows = [
+      { t: "T = 0.1", s: "Learning Machines", c: "var(--pink)", cls: "" },
+      { t: "T = 0.5", s: "Learning Machnies", c: "var(--itext)", cls: "" },
+      { t: "T = 0.9", s: "Learnig Mashines", c: "var(--ivideo)", cls: " hot" },
+      { t: "T = 1.3", s: "Laerning Machines", c: "var(--iimage)", cls: "" },
+      { t: "T = 1.7", s: "L3arning M4chines", c: "var(--icross)", cls: "" },
+      { t: "T = 2.0", s: "Lrn1ng_M%ch!n3s", c: "oklch(0.62 0.26 350)", cls: "" }
+    ];
+    var html = '<div class="poster" data-shift="90" style="padding:54px 60px 52px; display:flex; flex-direction:column;">'
+      + '<div class="wash"></div>'
+      + '<div style="display:flex; justify-content:space-between; align-items:baseline;">'
+      + '<span class="eyebrow">CC Fest · Creative AI Camp · Summer 2026</span><span class="eyebrow" style="color:var(--pink);">sampling, temperature rising</span></div>'
+      + '<div class="rule-strong" style="margin:16px 0 48px;"></div>'
+      + '<div class="poster-temp-stack">';
+    rows.forEach(function (r) {
+      html += '<div class="poster-temp-row' + r.cls + '"><span class="tlabel">' + r.t + '</span>'
+        + '<span class="display" style="font-size:64px;color:' + r.c + ';white-space:nowrap;">' + r.s + "</span></div>";
+    });
+    html += "</div>"
+      + '<p class="diag-cap" style="margin:26px 0 0;">fig. 4 — the same model, sampled at rising temperature. too cold is boring; too hot is noise. we will be working around T = 0.9.</p>'
+      + '<div style="flex:1;"></div>'
+      + '<p style="font-size:22px; line-height:1.45; color:var(--psoft); max-width:46ch; margin:0;"><span class="p-subline-inline"></span> <b style="color:var(--pink);">Text · Images · Video.</b></p>'
+      + '<div style="height:40px;"></div>' + infoFooter() + "</div>";
+    return html;
+  }
+
+  function boardSelfWriting() {
+    var title = [
+      { t: "Learn", p: ".41", ink: "--itext", d: "0s" },
+      { t: "ing", p: ".87", ink: "--iimage", d: "0.18s" },
+      { t: " Mach", p: ".34", ink: "--ivideo", d: "0.36s" },
+      { t: "ines", p: ".92", ink: "--icross", d: "0.54s" }
+    ];
+    var body = "a free creative AI camp - text, images, video - for educators, artists, students &amp; curious learners.".split(" ");
+    var html = '<div class="poster risk-motion-board" data-shift="180" style="padding:54px 60px 52px; display:flex; flex-direction:column;">'
+      + '<div class="wash"></div>'
+      + '<div style="display:flex; justify-content:space-between; align-items:baseline;">'
+      + '<span class="eyebrow">CC Fest · Summer 2026</span><span class="eyebrow" style="color:var(--itext);">generating... · done loop · temp 0.9</span></div>'
+      + '<div class="rule-strong" style="margin:16px 0 56px;"></div>'
+      + '<div class="selfwrite-title">';
+    title.forEach(function (tok) {
+      html += '<span class="selfwrite-token" style="--wd:' + tok.d + ';"><span class="display" style="font-size:124px;color:var(' + tok.ink + ');">' + tok.t + '</span><span class="prob">p=' + tok.p + "</span></span>";
+    });
+    html += "</div>"
+      + '<div style="height:40px;"></div>'
+      + '<p class="selfwrite-body">';
+    body.forEach(function (word, i) {
+      html += '<span class="word" style="--wd:' + (0.9 + i * 0.13).toFixed(2) + 's;">' + word + " </span>";
+    });
+    html += '<span class="selfwrite-cursor" aria-hidden="true"></span></p>'
+      + '<p class="diag-cap" style="margin:26px 0 0; color:var(--itext);">fig. 7 — this poster, generating itself one token at a time. each word: a guess with a probability attached.</p>'
+      + '<div style="flex:1;"></div>' + infoFooter() + "</div>";
+    return html;
+  }
+
   function boardSquare() {
     return '<div class="poster pticks social-board" data-shift="0" style="padding:70px 78px; display:flex; flex-direction:column;">'
       + '<div class="wash"></div>'
@@ -415,6 +604,9 @@
     { row: "print-row", label: "A · Signage type", size: "850×1100", w: 850, h: 1100, html: boardSignage(), social: false },
     { row: "print-row", label: "B · Three sessions", size: "850×1100", w: 850, h: 1100, html: boardSessions(), social: false },
     { row: "print-row", label: "C · Field diagram", size: "850×1100", w: 850, h: 1100, html: boardDiagram(), social: false },
+    { row: "riskier-row", label: "D · Dropped keyframe", size: "850×1100", w: 850, h: 1100, html: boardDroppedKeyframe(), social: false },
+    { row: "riskier-row", label: "G · Temperature ladder", size: "850×1100", w: 850, h: 1100, html: boardTemperature(), social: false },
+    { row: "riskier-row", label: "N · Writes itself", size: "850×1100", w: 850, h: 1100, html: boardSelfWriting(), social: false },
     { row: "social-row", label: "Square · Instagram", size: "1080×1080", w: 1080, h: 1080, html: boardSquare(), social: true },
     { row: "social-row", label: "Story · 9:16", size: "1080×1920", w: 1080, h: 1920, html: boardStory(), social: true }
   ];
@@ -446,9 +638,12 @@
       var spec = tw.world === "spectrum";
       p.classList.toggle("spectrum", spec);
       var social = p.classList.contains("social-board");
-      var moving = spec && social && tw.motion !== "off";
+      var riskMotion = p.classList.contains("risk-motion-board");
+      var moving = spec && (social || riskMotion) && tw.motion !== "off";
+      p.classList.toggle("moving", moving);
       var shift = Number(p.dataset.shift) || 0;
       var wash = p.querySelector(".wash");
+      if (!wash) { return; }
       wash.classList.toggle("animate", moving);
       if (moving) {
         wash.style.filter = "";

@@ -301,6 +301,23 @@ applied as soft washes and registration strokes behind heroes and mastheads.
 
 ---
 
+## Riskier poster identity — 2026-06-12
+
+Implemented the curated riskier campaign layer from the poster design study:
+D · Dropped Keyframe, G · Temperature Ladder, and N · Writes Itself.
+
+- **Design system**: added reusable Field Manual motifs in `assets/field.css`
+  for controlled glitch titles, temperature ladders, and self-writing token
+  panels. Motion remains inside reduced-motion-aware rules.
+- **Homepage + Session 1**: kept the existing structure and copy, then added
+  a subtle dropped-keyframe title accent, a compact self-writing campaign
+  panel, and a Session 1 temperature ladder figure.
+- **Poster proof page**: expanded `pages/camp-poster.html` from five boards
+  to eight by adding a new Riskier Identity section. The React prototype ideas
+  were ported into the existing vanilla renderer; no new runtime dependency.
+
+---
+
 ## Camp Poster 2026 — 2026-06-11
 
 Implemented from a second Claude Design handoff ("Camp Poster"):

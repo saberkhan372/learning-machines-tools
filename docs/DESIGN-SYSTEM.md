@@ -172,3 +172,20 @@ lifted above — never put text in the pseudo-elements. All animation is
 declared inside `@media (prefers-reduced-motion: no-preference)` and
 force-disabled under `reduce` (and `print` for tools). Don't raise the
 opacities — body text must stay AA-readable over the wash in every tone.
+
+### Riskier campaign motifs
+
+The campaign layer may use three sharper motifs from the 2026 poster study,
+but they should stay controlled and sparse:
+
+| Class | Purpose |
+|---|---|
+| `.risk-glitch` + `.is-live` | Dropped-keyframe title echo; use on one short phrase only |
+| `.temperature-ladder` + `.temp-row` | Temperature/sampling ladder for Session 1 teaching moments |
+| `.self-write-panel` + `.sw-*` | Compact token-by-token writing panel for campaign previews |
+
+These classes live in `assets/field.css` and inherit Field Manual tokens.
+They are identity/teaching motifs, not semantic state colors. All motion has
+static reduced-motion fallbacks. Use them on campaign-facing pages, Session 1
+temperature explanations, and the poster proofing page; avoid applying glitch
+treatments to ordinary body text or navigation.

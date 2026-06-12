@@ -353,6 +353,210 @@ b, strong { font-weight: 600; }
   }
 }
 
+/* ---------------- riskier poster identity motifs ---------------- */
+.risk-glitch {
+  --glitch-a: var(--poster-hot-pink);
+  --glitch-b: var(--poster-cyan);
+  --glitch-c: var(--poster-lime);
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+.risk-glitch .risk-glitch-base {
+  position: relative;
+  z-index: 2;
+}
+.risk-glitch::before,
+.risk-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  color: var(--glitch-a);
+  opacity: 0.56;
+  font: inherit;
+  letter-spacing: inherit;
+  mix-blend-mode: var(--poster-blend);
+  clip-path: inset(12% 0 62% 0);
+  transform: translate3d(-0.05em, 0.018em, 0);
+}
+.risk-glitch::after {
+  color: var(--glitch-b);
+  opacity: 0.48;
+  clip-path: inset(58% 0 18% 0);
+  transform: translate3d(0.044em, -0.016em, 0);
+}
+html[data-tone="slate"] .risk-glitch::before,
+html[data-tone="slate"] .risk-glitch::after {
+  mix-blend-mode: screen;
+}
+
+.temperature-ladder {
+  border: 1px solid var(--ink);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 14px;
+}
+.temp-row {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
+}
+.temp-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.temp-output {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: 1.08;
+  color: var(--ink);
+  word-break: break-word;
+}
+.temp-row.low .temp-output { color: var(--ink); }
+.temp-row.mid .temp-output { color: var(--m-text); }
+.temp-row.hot {
+  margin-inline: -8px;
+  padding: 5px 8px;
+  background: var(--m-video-tint);
+  border-left: 2px solid var(--m-video);
+}
+.temp-row.hot .temp-label,
+.temp-row.hot .temp-output { color: var(--m-video); }
+.temp-row.warm .temp-output { color: var(--m-image); }
+.temp-row.wild .temp-output { color: var(--m-cross); }
+.temp-row.noise .temp-output { color: var(--poster-hot-pink); }
+.temp-caption {
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.self-write-panel {
+  border: 1px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.self-write-panel::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  z-index: 0;
+  opacity: 0.13;
+  pointer-events: none;
+  mix-blend-mode: var(--poster-blend);
+  background:
+    radial-gradient(circle at 18% 28%, var(--poster-lime), transparent 24%),
+    radial-gradient(circle at 78% 18%, var(--poster-cyan), transparent 24%),
+    radial-gradient(circle at 74% 76%, var(--poster-hot-pink), transparent 28%);
+}
+.self-write-panel > * {
+  position: relative;
+  z-index: 1;
+}
+.sw-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 9px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sw-status { color: var(--m-text); white-space: nowrap; }
+.sw-token-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.sw-token {
+  --sw-ink: var(--m-text);
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid var(--sw-ink);
+  background: color-mix(in oklab, var(--sw-ink) 11%, transparent);
+  color: var(--sw-ink);
+  padding: 5px 7px 4px;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+.sw-token:nth-child(2) { --sw-ink: var(--m-image); }
+.sw-token:nth-child(3) { --sw-ink: var(--m-video); }
+.sw-token:nth-child(4) { --sw-ink: var(--m-cross); }
+.sw-token .sw-t { font-size: 16px; font-weight: 600; white-space: pre; }
+.sw-token .sw-p { font-size: 10px; color: var(--muted); }
+.sw-line {
+  margin-top: 12px;
+  max-width: 52ch;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.sw-caret {
+  display: inline-block;
+  width: 0.56em;
+  height: 1em;
+  margin-left: 3px;
+  background: var(--m-text);
+  vertical-align: -0.12em;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .risk-glitch.is-live::before { animation: risk-glitch-a 5.8s ease-in-out infinite alternate; }
+  .risk-glitch.is-live::after { animation: risk-glitch-b 6.4s ease-in-out infinite alternate; }
+  .self-write-panel.is-live::before { animation: self-write-wash 12s ease-in-out infinite alternate; }
+  .self-write-panel.is-live .sw-token {
+    animation: self-write-pulse 5.8s ease-in-out infinite;
+    animation-delay: var(--sw-delay, 0s);
+  }
+  .self-write-panel.is-live .sw-caret { animation: sw-caret-blink 1.1s steps(1) infinite; }
+  @keyframes risk-glitch-a {
+    0%, 100% { transform: translate3d(-0.04em, 0.014em, 0); clip-path: inset(12% 0 62% 0); }
+    45% { transform: translate3d(-0.075em, -0.01em, 0); clip-path: inset(28% 0 50% 0); }
+  }
+  @keyframes risk-glitch-b {
+    0%, 100% { transform: translate3d(0.036em, -0.014em, 0); clip-path: inset(58% 0 18% 0); }
+    52% { transform: translate3d(0.066em, 0.02em, 0); clip-path: inset(42% 0 34% 0); }
+  }
+  @keyframes self-write-wash {
+    from { transform: translate3d(-2%, -1%, 0); }
+    to { transform: translate3d(2%, 1%, 0); }
+  }
+  @keyframes self-write-pulse {
+    0%, 100% { transform: translateY(0); filter: none; }
+    18% { transform: translateY(-2px); filter: saturate(1.35); }
+    34% { transform: translateY(0); filter: none; }
+  }
+  @keyframes sw-caret-blink { 50% { opacity: 0; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .risk-glitch.is-live::before,
+  .risk-glitch.is-live::after,
+  .self-write-panel.is-live::before,
+  .self-write-panel.is-live .sw-token,
+  .self-write-panel.is-live .sw-caret {
+    animation: none !important;
+  }
+}
+
 /* ---------------- figure plates ---------------- */
 .plate {
   border: 1px solid var(--ink);

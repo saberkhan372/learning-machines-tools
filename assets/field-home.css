@@ -41,6 +41,18 @@ html[data-type="signage"] .hero h1 em { font-style: normal; font-weight: 700; co
   color: var(--muted);
 }
 .hero-principle b { color: var(--ink); font-weight: 500; }
+.hero-machine-panel {
+  margin-top: 22px;
+  max-width: 680px;
+}
+.hero-machine-panel .sw-token { --sw-delay: 0s; }
+.hero-machine-panel .sw-token:nth-child(2) { --sw-delay: 0.16s; }
+.hero-machine-panel .sw-token:nth-child(3) { --sw-delay: 0.32s; }
+.hero-machine-panel .sw-token:nth-child(4) { --sw-delay: 0.48s; }
+.hero-machine-panel .sw-line {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
 
 /* ---------------- spine plates ---------------- */
 .spine {

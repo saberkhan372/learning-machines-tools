@@ -138,6 +138,7 @@
   color: var(--muted);
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 12px;
 }
@@ -272,6 +273,16 @@
 }
 .through-step h4 { font-size: 15px; }
 .through-step p { font-size: 13px; color: var(--ink-soft); }
+.session-temp-note {
+  margin-top: 18px;
+  max-width: 760px;
+}
+.session-temp-note .temperature-ladder {
+  margin-top: 10px;
+}
+.session-temp-note .temp-output {
+  font-size: clamp(18px, 2.2vw, 25px);
+}
 
 /* ---------------- session tool list ---------------- */
 .tool-list { border-top: 1px solid var(--ink); }
