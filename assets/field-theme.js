@@ -22,12 +22,22 @@
   }
 
   function ensureLink(id, href) {
-    if (document.getElementById(id)) return;
-    var l = document.createElement("link");
+    var l = document.getElementById(id);
+    if (l) return l;
+    l = document.createElement("link");
     l.id = id;
     l.rel = "stylesheet";
     l.href = href;
     (document.head || document.documentElement).appendChild(l);
+    return l;
+  }
+
+  function moveIdentityAssetsLast() {
+    var head = document.head || document.documentElement;
+    var fonts = document.getElementById("lm-identity-fonts");
+    var css = document.getElementById("lm-identity-css");
+    if (fonts) head.appendChild(fonts);
+    if (css) head.appendChild(css);
   }
 
   function apply() {
@@ -43,6 +53,7 @@
        when a rendered element actually uses the family. */
     ensureLink("lm-identity-css", base + "field-identity.css");
     ensureLink("lm-identity-fonts", FONTS_HREF);
+    moveIdentityAssetsLast();
     refreshMenu();
   }
 
@@ -105,8 +116,12 @@
 
   apply();
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", buildMenu);
+    document.addEventListener("DOMContentLoaded", function () {
+      moveIdentityAssetsLast();
+      buildMenu();
+    });
   } else {
+    moveIdentityAssetsLast();
     buildMenu();
   }
 

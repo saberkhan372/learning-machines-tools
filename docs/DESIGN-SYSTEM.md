@@ -246,8 +246,9 @@ Anton) on every page, and renders the fixed "Skin ▾" menu (suppress with
 Rules:
 
 - Identity remaps the core tone/font tokens and a small set of shared
-  components inside `@media screen`; print always renders the field manual,
-  and `worksheet-print` routes stay field on screen too.
+  components inside `@media screen`; print always renders the field manual.
+  `worksheet-print` routes get restrained screen-only identity treatments so
+  the Skin menu visibly works while printable output stays clean.
 - Identity beats tone; while non-field, the route `data-skin` accent layer
   and poster washes are muted (skin tokens re-map to identity tokens) so only
   one voice speaks.
@@ -260,5 +261,5 @@ The shared P1 skin pass also styles common lower-page structures through
 `.throughline`, `.ros-row`, `.prompt`, `.visible-grid`, `.invest-card`,
 `.callout`, prose blocks, docs tables, prompt-pack cards, and migrated tool
 panels/cards. Prefer these shared hooks before adding page-specific CSS.
-Reference and print pages should stay restrained through `docs-field` and
-`worksheet-print`.
+Reference and print-first pages should stay restrained through `docs-field`
+and `worksheet-print`; restrained does not mean unskinned on screen.

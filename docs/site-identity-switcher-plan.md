@@ -10,9 +10,22 @@ plumbing, all three identities, and a 9-route × 3-identity mobile sweep
 (0 overflow, 0 console errors) shipped in one pass. Review feedback folded
 in: the menu-vs-tweaks-panel contradiction is resolved (one vanilla control
 everywhere, React panel untouched), `data-skin` now mutes rather than zeroes
-(modality cues survive via accent remap), and the font/stylesheet loading
-decisions are recorded explicitly under P0. Remaining: the full 65-route
-sweep per identity and AA contrast spot-checks (P4).
+(modality cues survive via accent remap), worksheets get visible screen skins
+while print stays Field, and the font/stylesheet loading decisions are
+recorded explicitly under P0. **P4 complete:** full sweep of all 69 public
+routes × 3 non-field identities at 375px — 0 overflow (one finding, a grid
+blowout in the `doc-spectrum` demo's table column, fixed with
+`minmax(0,1fr)`), 0 console errors, identity applied everywhere expected.
+AA contrast measured per identity on the token tiers: terminal 15.4 / 11.1 /
+5.7, spectrum 14.5 / 8.6 / 5.0 (`--muted` darkened from the demo's `#7a6d75`
+to `#6d6068` to clear 4.5:1 on cream), acid 15.4 / 12.2 / 7.4 — all tiers
+pass AA for normal text.
+
+Coverage note: the switcher rides `field-theme.js`, which 68 of 71 HTML files
+load. The three exceptions are intentional — the standalone skin demo pages
+(`pages/tool-terminal.html`, `pages/doc-spectrum.html`,
+`pages/session-acid.html`) are themselves frozen reference renderings of one
+identity each and must not restyle.
 Date: 2026-06-12
 
 Make the three bold poster skins — **EE terminal phosphor**, **FF spectrum
@@ -60,12 +73,12 @@ Reference implementations: the three standalone demos
      vs. pill stamps. Scoped per identity to the existing shared classes
      (`.nav`, `.sub-hero`, `.ix-row`, `.doc-row`, `.btn`, `.stamp`,
      `.prompt`, `.callout`, `.vis-card`, `.invest-card`, `.tool-mast`).
-   - *Guard rails*, enforced both ways: every identity block lives inside
+   - *Guard rails*, enforced both ways: identity blocks live inside
      `@media screen` so print always renders Field surfaces, **and**
-     `html[data-skin="worksheet-print"]` is excluded from identity remaps so
-     worksheet screen previews match their print output; reduced-motion
-     disables scanline flicker, wash drift, and pulse animations (the demos
-     already model these fallbacks).
+     `html[data-skin="worksheet-print"]` gets a restrained screen-only
+     treatment so worksheets visibly respond to the skin menu without harming
+     PDF/print output; reduced-motion disables scanline flicker, wash drift,
+     and pulse animations (the demos already model these fallbacks).
 
 3. **Identity menu** — vanilla JS (no React/Babel; the homepage tweaks panel
    predates that rule and should not be extended), rendered by
@@ -114,7 +127,9 @@ Reference implementations: the three standalone demos
    per-page font URL, and browsers only download font binaries when a
    rendered element uses the family, so field-identity visitors pay one small
    CSS fetch and no font bytes, while identity switches render without a
-   fallback flash.
+   fallback flash. The loader also moves the injected identity stylesheet to
+   the end of `<head>` after parsing so pages with later inline styles still
+   inherit the chosen identity.
 2. **P1 — terminal identity.** Token remap + overlays + dark-ground audits of
    the image/video tools. Ship behind the menu; field stays default.
 3. **P2 — spectrum identity.** Token remap + zine components. Mostly token
@@ -155,6 +170,7 @@ except the QA fixes it surfaces.
 - No flash of wrong identity on navigation.
 - All 65 routes pass the sweep under all four identities (no overflow, no
   console errors, AA body contrast, complete reduced-motion states).
-- Print output and worksheets always render the field identity.
+- Print output always renders the field identity. Worksheets visibly respond
+  to identities on screen, using restrained form-safe overrides.
 - The three demo pages and the contact sheet remain as the canonical
   reference for how far each identity may be pushed.

@@ -60,11 +60,12 @@
 @media print { .lm-skin-menu { display: none; } }
 
 /* Identities apply on screen only — print always renders the field manual.
-   Worksheet-print routes also stay field on screen so print preview matches. */
+   Worksheet-print routes get restrained screen skins but keep printer-safe
+   output through their own @media print rules. */
 @media screen {
 
 /* ---------------- shared non-field behavior ---------------- */
-html:not([data-identity="field"]):not([data-skin="worksheet-print"]) {
+html:not([data-identity="field"]) {
   /* mute the route-skin layer (surfaces, glow, washes) — but don't erase it:
      skin accents remap to the modality inks below so session semantics stay
      legible inside every identity */
@@ -100,6 +101,22 @@ html:not([data-identity="field"])[data-skin="studio-synthesis"] {
   --skin-accent: var(--m-cross);
   --skin-grid: color-mix(in oklab, var(--m-cross) 16%, transparent);
 }
+html:not([data-identity="field"])[data-skin="worksheet-print"][data-mod="text"] {
+  --skin-accent: var(--m-text);
+  --skin-grid: color-mix(in oklab, var(--m-text) 16%, transparent);
+}
+html:not([data-identity="field"])[data-skin="worksheet-print"][data-mod="image"] {
+  --skin-accent: var(--m-image);
+  --skin-grid: color-mix(in oklab, var(--m-image) 16%, transparent);
+}
+html:not([data-identity="field"])[data-skin="worksheet-print"][data-mod="video"] {
+  --skin-accent: var(--m-video);
+  --skin-grid: color-mix(in oklab, var(--m-video) 16%, transparent);
+}
+html:not([data-identity="field"])[data-skin="worksheet-print"][data-mod="cross"] {
+  --skin-accent: var(--m-cross);
+  --skin-grid: color-mix(in oklab, var(--m-cross) 16%, transparent);
+}
 /* some heroes set literal wash opacities; force them off for the identities
    that bring their own atmosphere */
 html[data-identity="terminal"] .poster-wash::before,
@@ -114,27 +131,27 @@ html[data-identity="acid"] .sub-hero:not(.poster-wash)::after {
 }
 
 /* ============ EE · terminal phosphor ============ */
-html[data-identity="terminal"]:not([data-skin="worksheet-print"]) {
-  --bg: #070d09;
-  --surface: #0b140d;
-  --surface-2: #0a120c;
-  --ink: #6fffa0;            /* brighter than the demo's #46ff7d for AA body copy */
-  --ink-soft: #4ddc82;
-  --muted: #3f9c63;
-  --rule: #1a3322;
-  --rule-soft: #13251a;
-  --font-display: "VT323", monospace;
-  --font-body: "IBM Plex Mono", monospace;
-  --m-text: #5cf2ff;
-  --m-image: #ffcf6b;
-  --m-video: #46ff7d;
-  --m-cross: #ff7de0;
-  --m-text-tint: rgba(92, 242, 255, 0.1);
-  --m-image-tint: rgba(255, 207, 107, 0.1);
-  --m-video-tint: rgba(70, 255, 125, 0.1);
-  --m-cross-tint: rgba(255, 125, 224, 0.1);
+html[data-identity="terminal"] {
+  --bg: #070d09 !important;
+  --surface: #0b140d !important;
+  --surface-2: #0a120c !important;
+  --ink: #6fffa0 !important;            /* brighter than the demo's #46ff7d for AA body copy */
+  --ink-soft: #4ddc82 !important;
+  --muted: #3f9c63 !important;
+  --rule: #1a3322 !important;
+  --rule-soft: #13251a !important;
+  --font-display: "VT323", monospace !important;
+  --font-body: "IBM Plex Mono", monospace !important;
+  --m-text: #5cf2ff !important;
+  --m-image: #ffcf6b !important;
+  --m-video: #46ff7d !important;
+  --m-cross: #ff7de0 !important;
+  --m-text-tint: rgba(92, 242, 255, 0.1) !important;
+  --m-image-tint: rgba(255, 207, 107, 0.1) !important;
+  --m-video-tint: rgba(70, 255, 125, 0.1) !important;
+  --m-cross-tint: rgba(255, 125, 224, 0.1) !important;
 }
-html[data-identity="terminal"]:not([data-skin="worksheet-print"]) body::before {
+html[data-identity="terminal"] body::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -164,16 +181,16 @@ html[data-identity="terminal"] iframe {
 html[data-identity="terminal"] .stamp.ready { color: var(--m-video); border-color: var(--m-video); }
 
 /* ============ FF · spectrum diffusion ============ */
-html[data-identity="spectrum"]:not([data-skin="worksheet-print"]) {
-  --bg: #f2ebdc;
-  --surface: #fcfaf4;
-  --surface-2: #ece4d2;
-  --ink: #211823;
-  --ink-soft: #4a3d49;
-  --muted: #7a6d75;
-  --rule: #d8cdb8;
-  --rule-soft: #e2d9c6;
-  --font-display: "Rubik Glitch", system-ui, cursive;
+html[data-identity="spectrum"] {
+  --bg: #f2ebdc !important;
+  --surface: #fcfaf4 !important;
+  --surface-2: #ece4d2 !important;
+  --ink: #211823 !important;
+  --ink-soft: #4a3d49 !important;
+  --muted: #6d6068 !important;  /* darkened from the demo's #7a6d75 to clear AA 4.5:1 on cream */
+  --rule: #d8cdb8 !important;
+  --rule-soft: #e2d9c6 !important;
+  --font-display: "Rubik Glitch", system-ui, cursive !important;
 }
 /* glitch face is display-only: long headings and body keep readable faces */
 html[data-identity="spectrum"] h3,
@@ -228,20 +245,20 @@ html[data-identity="spectrum"] .lm-skin-toggle {
 html[data-identity="spectrum"] .eyebrow { color: oklch(0.58 0.18 350); }
 
 /* ============ GG · acid brutalist ============ */
-html[data-identity="acid"]:not([data-skin="worksheet-print"]) {
-  --bg: oklch(0.93 0.21 110);
-  --surface: #f4f1e6;
-  --surface-2: #efeada;
-  --ink: #141312;
-  --ink-soft: #2a2825;
-  --muted: #4d4a42;
-  --rule: #141312;
-  --rule-soft: rgba(20, 19, 18, 0.3);
-  --font-display: "Anton", sans-serif;
-  --m-text: oklch(0.5 0.2 250);
-  --m-image: oklch(0.62 0.26 350);
-  --m-video: oklch(0.55 0.18 150);
-  --m-cross: oklch(0.55 0.22 305);
+html[data-identity="acid"] {
+  --bg: oklch(0.93 0.21 110) !important;
+  --surface: #f4f1e6 !important;
+  --surface-2: #efeada !important;
+  --ink: #141312 !important;
+  --ink-soft: #2a2825 !important;
+  --muted: #4d4a42 !important;
+  --rule: #141312 !important;
+  --rule-soft: rgba(20, 19, 18, 0.3) !important;
+  --font-display: "Anton", sans-serif !important;
+  --m-text: oklch(0.5 0.2 250) !important;
+  --m-image: oklch(0.62 0.26 350) !important;
+  --m-video: oklch(0.55 0.18 150) !important;
+  --m-cross: oklch(0.55 0.22 305) !important;
 }
 html[data-identity="acid"] h1,
 html[data-identity="acid"] h2 {
@@ -272,6 +289,94 @@ html[data-identity="acid"] .sec-rule .sec-no {
 html[data-identity="acid"] .ix-row,
 html[data-identity="acid"] .doc-row { border-bottom-width: 2px; }
 html[data-identity="acid"] .eyebrow { color: var(--ink); font-weight: 600; }
+
+/* Worksheets have local inline variables for print-first forms. Override them
+   only on screen so the skin switch visibly works without harming PDF output. */
+html[data-skin="worksheet-print"]:not([data-identity="field"]) {
+  --card: var(--surface) !important;
+  --border: var(--rule) !important;
+  --row-bg: var(--surface-2) !important;
+  --accent: var(--skin-accent) !important;
+  --accent-bg: color-mix(in oklab, var(--skin-accent) 14%, var(--surface)) !important;
+  --warm: var(--skin-accent) !important;
+  --radius: 2px !important;
+  --shadow: 0 0 0 1px var(--rule-soft), 0 18px 42px color-mix(in oklab, var(--ink) 10%, transparent) !important;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) body {
+  background: var(--bg) !important;
+  color: var(--ink) !important;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .wrap > header {
+  border: 1px solid var(--rule);
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--skin-accent) 16%, transparent), transparent 72%),
+    var(--surface);
+  padding: 18px;
+  margin-bottom: 18px;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .wrap > header h1 {
+  color: var(--ink);
+  text-decoration-color: var(--skin-accent);
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .section,
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .evidence-footer {
+  background: var(--surface) !important;
+  border-color: var(--rule) !important;
+  box-shadow: var(--shadow) !important;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .section-head,
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .exp-table th,
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .default-table th,
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .prompt-seed {
+  background: var(--surface-2) !important;
+  border-color: var(--rule) !important;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .exp-table td,
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .default-table td,
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .reflect-item {
+  border-color: var(--rule-soft) !important;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) textarea {
+  color: var(--ink) !important;
+  caret-color: var(--skin-accent);
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) textarea::placeholder {
+  color: var(--muted) !important;
+  opacity: 0.88;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) textarea:focus {
+  border-color: var(--skin-accent) !important;
+  background: color-mix(in oklab, var(--skin-accent) 12%, var(--surface)) !important;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) .btn-print {
+  background: var(--skin-accent) !important;
+  border-color: var(--skin-accent) !important;
+  color: var(--bg) !important;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) #lm-worksheet-nav-overrides.nav {
+  background: color-mix(in oklab, var(--bg) 86%, transparent) !important;
+  border-bottom-color: var(--rule) !important;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) #lm-worksheet-nav-overrides .brand .mark {
+  border-color: var(--skin-accent) !important;
+}
+html[data-skin="worksheet-print"]:not([data-identity="field"]) #lm-worksheet-nav-overrides .brand .mark::after {
+  background: var(--skin-accent) !important;
+}
+html[data-identity="terminal"][data-skin="worksheet-print"] .section,
+html[data-identity="terminal"][data-skin="worksheet-print"] .evidence-footer {
+  box-shadow: 0 0 0 1px var(--rule), 0 0 24px color-mix(in oklab, var(--skin-accent) 18%, transparent) !important;
+}
+html[data-identity="spectrum"][data-skin="worksheet-print"] .wrap > header {
+  box-shadow: 3px 4px 0 color-mix(in oklab, var(--ink) 64%, transparent);
+  transform: rotate(-0.4deg);
+}
+html[data-identity="acid"][data-skin="worksheet-print"] .section,
+html[data-identity="acid"][data-skin="worksheet-print"] .evidence-footer,
+html[data-identity="acid"][data-skin="worksheet-print"] .wrap > header {
+  border-width: 2.5px !important;
+  box-shadow: 4px 4px 0 var(--ink) !important;
+}
 
 } /* end @media screen */
 
