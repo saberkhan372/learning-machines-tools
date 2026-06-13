@@ -53,6 +53,7 @@ title: Participant Interest Form
 - [ ] How language models generate text
 - [ ] How image generation works
 - [ ] How video generation works
+- [ ] Under-the-hood mechanics (attention, embeddings, positional encoding, diffusion training, CFG, or latent space)
 - [ ] Model defaults and bias
 - [ ] Tokenization and probability
 - [ ] Dataset and training data questions

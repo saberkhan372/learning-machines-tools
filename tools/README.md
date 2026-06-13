@@ -32,3 +32,12 @@ Status reflects the current build; `tools-data.js` is the single source of truth
 | Confidence Is Not Truth Explorer | `confidence-is-not-truth-explorer/` | Cross | Cross |
 | Access Tiers | `access-tiers/` | Cross | Cross |
 | Evidence Wall | `evidence-wall/` | Cross | Cross |
+
+## Second-Wave Candidates
+
+The launch matrix intentionally stays at 20 browser-safe tools. Deeper
+mechanics identified during audit work live in
+[`../docs/advanced-concept-extensions.md`](../docs/advanced-concept-extensions.md),
+including positional encoding, prompt alignment / text encoders, VAE latent
+compression, classifier-free guidance, temporal attention, forward diffusion,
+backpropagation, and optical flow.

@@ -1,7 +1,8 @@
 /* Learning Machines — Field Manual theme loader.
    Applies persisted tone/type/ink/identity before paint; reacts to Tweaks.
-   Also injects assets/field-identity.css + the identity display fonts and
-   renders the site-wide "Look" menu (see docs/site-identity-switcher-plan.md). */
+   Also injects assets/field-identity.css, projection view assets, and the
+   identity display fonts; renders the site-wide "Look" menu
+   (see docs/site-identity-switcher-plan.md). */
 (function () {
   var KEYS = { tone: "lm-tone", type: "lm-type", ink: "lm-ink", identity: "lm-identity" };
   var DEFAULTS = { tone: "white", type: "signage", ink: "full", identity: "field" };
@@ -32,12 +33,25 @@
     return l;
   }
 
+  function ensureScript(id, src) {
+    var s = document.getElementById(id);
+    if (s) return s;
+    s = document.createElement("script");
+    s.id = id;
+    s.src = src;
+    s.defer = true;
+    (document.head || document.documentElement).appendChild(s);
+    return s;
+  }
+
   function moveIdentityAssetsLast() {
     var head = document.head || document.documentElement;
     var fonts = document.getElementById("lm-identity-fonts");
     var css = document.getElementById("lm-identity-css");
+    var projection = document.getElementById("lm-projection-css");
     if (fonts) head.appendChild(fonts);
     if (css) head.appendChild(css);
+    if (projection) head.appendChild(projection);
   }
 
   function apply() {
@@ -53,6 +67,8 @@
        when a rendered element actually uses the family. */
     ensureLink("lm-identity-css", base + "field-identity.css");
     ensureLink("lm-identity-fonts", FONTS_HREF);
+    ensureLink("lm-projection-css", base + "projection.css");
+    ensureScript("lm-projection-js", base + "projection.js");
     moveIdentityAssetsLast();
     refreshMenu();
   }

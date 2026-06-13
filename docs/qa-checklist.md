@@ -54,6 +54,15 @@ Use this before publishing or sharing the repo.
 - Confirm text does not overlap controls.
 - Confirm canvas tools remain usable or clearly stacked.
 
+## Projection QA
+
+- Confirm the `Project` button appears on the homepage, one session page, one interactive tool, one facilitation doc, one prompt pack, one worksheet, and one poster/design page.
+- Confirm `?project=1` opens directly in projection mode and changes the button to `Exit projection`.
+- Confirm Escape exits projection mode and removes `project=1` from the URL.
+- Test projection mode at 1280x720, 1440x900, and 1920x1080; confirm the essential classroom content is visible and there is no horizontal overflow.
+- Spot-check a narrow mobile width to confirm the exit control remains visible.
+- Confirm worksheet projection hides page controls but preserves the paper worksheet structure; then confirm Print / Save as PDF still uses the original print layout.
+
 ## Visual Identity QA
 
 - Confirm riskier identity changes follow the [Riskier Identity Page Audit](riskier-identity-audit.html).
