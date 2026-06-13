@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="video" data-skin="video-slitscan">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>Metronome Frame-Scrubber · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/field-theme.js"></script>
+  <style>
+    .ctrl-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+    .ctrl-val { font-family:var(--font-mono); font-size:1.2rem; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
+    .ctrl-val .u { font-size:.72rem; color:var(--muted); margin-left:2px; }
+    .range-scale { display:flex; justify-content:space-between; margin-top:6px; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.04em; color:var(--muted); }
+    .stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .stat { border:1px solid var(--line); border-radius:10px; background:var(--surface-2); padding:11px 12px; }
+    .stat-n { font-family:var(--font-mono); font-size:1.45rem; font-weight:600; color:var(--ink); line-height:1; font-variant-numeric:tabular-nums; }
+    .stat-n.sm { font-size:.95rem; padding-top:6px; }
+    .stat-l { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:7px; }
+    canvas.lab-canvas { display:block; width:100%; height:auto; border-radius:8px; }
+    .transport { display:flex; gap:10px; align-items:stretch; }
+    .transport .play-btn { flex:none; width:54px; background:var(--accent); color:var(--on-accent); border:1px solid var(--line); border-radius:8px; cursor:pointer; font-size:1rem; }
+    .transport .tp-read { flex:1; border:1px solid var(--line); border-radius:8px; background:var(--surface-2); display:flex; align-items:center; gap:14px; padding:0 15px; font-family:var(--font-mono); }
+    .transport .tp-read .big { font-size:1.15rem; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
+    .transport .tp-read .sub { font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+    .strip { display:flex; gap:3px; margin-top:4px; border:1px solid var(--line); border-radius:8px; background:var(--surface-2); padding:6px; }
+    .strip .cell { flex:1; height:32px; border:1px solid transparent; border-radius:3px; background:var(--code-bg); cursor:pointer; position:relative; display:flex; align-items:flex-end; justify-content:center; font-family:var(--font-mono); font-size:7px; color:var(--muted); padding-bottom:2px; }
+    .strip .cell.active { background:var(--accent); color:var(--on-accent); }
+    .strip .cell.inwindow::before { content:""; position:absolute; top:3px; left:3px; right:3px; height:3px; border-radius:2px; background:var(--accent); opacity:.5; }
+    .strip .cell.active.inwindow::before { opacity:0; }
+    .analogy { border-left:3px solid var(--accent); padding-left:14px; }
+    .analogy em { color:var(--accent); font-style:normal; font-weight:600; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../pages/tools.html" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Tool 23 &middot; Session 3 · Video · Temporal attention</p>
+      <h1 class="tool-title">Metronome Frame-Scrubber</h1>
+      <p class="tool-dek">Video adds a dimension text and stills never had: time. A video model must track pixel-vectors across frames so an object doesn't mutate from one moment to the next. Widen the temporal window and motion locks together; shrink it to one frame and the subject melts into spatiotemporal drift.</p>
+      <div class="tool-idea">Big idea: coherence over time is attention, not magic — narrow the window and the subject forgets itself.</div>
+    </header>
+
+    <section class="tool-grid-3">
+      <!-- CONTROL -->
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <div class="ctrl-row">
+              <p class="mini-label" style="margin:0;">Temporal window</p>
+              <span class="ctrl-val" id="v-win">12<span class="u">fr</span></span>
+            </div>
+            <input type="range" class="scrub-range" id="win" min="1" max="24" step="1" value="12" style="margin-top:10px;">
+            <div class="range-scale"><span>1 · amnesia</span><span>12</span><span>24 · locked</span></div>
+          </div>
+          <div>
+            <p class="mini-label">Transport · metronome</p>
+            <div class="transport">
+              <button class="play-btn" id="play" aria-label="Play / pause">▶</button>
+              <div class="tp-read">
+                <div><div class="big" id="tp-frame">01 / 24</div><div class="sub">frame</div></div>
+                <div style="margin-left:auto;text-align:right;"><div class="big">152</div><div class="sub">ticks · bpm</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="tool-button" type="button" id="onion" style="width:100%;">Onion-skin: ON</button>
+            <p class="small-muted" id="onion-hint">Past frames ghost behind the current one — the animator's tracing sheets.</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- VIEWPORT -->
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div class="stat-grid">
+            <div class="stat"><div class="stat-n" id="m-win">12</div><div class="stat-l">Window frames</div></div>
+            <div class="stat"><div class="stat-n" id="m-coh">48%</div><div class="stat-l">Temporal coherence</div></div>
+            <div class="stat"><div class="stat-n sm" id="m-drift" style="color:var(--warm);">Moderate</div><div class="stat-l">Drift state</div></div>
+          </div>
+          <div>
+            <p class="mini-label">fig. 1 — flipping pancake · onion-skin overlay</p>
+            <div class="scene-card">
+              <canvas id="stage" class="lab-canvas" width="512" height="360" aria-label="Animated subject with onion-skin overlay"></canvas>
+              <div class="scene-caption"><span id="stage-note">tracing the previous sheet</span> · anchors <b id="stage-anchor" style="color:var(--accent);">11</b></div>
+            </div>
+          </div>
+          <div>
+            <p class="mini-label">fig. 2 — frame track · highlighted = inside attention window</p>
+            <div class="strip" id="strip"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ANALOGY -->
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <h2 style="font-size:1.05rem;">The backlit light-box</h2>
+            <p class="analogy small-muted">An animator drawing a flipping pancake never draws blind. They set sheet #2 on a glowing <em>light-box</em> over sheet #1 and trace the existing edges, so the pancake shifts only a millimeter per frame. That backlit stack of past sheets is <em>temporal attention</em>. Switch it off — attend to one frame — and every drawing starts from scratch: the pancake bulges, twists, and dissolves. Engineers call it <em>spatiotemporal drift</em>.</p>
+          </div>
+          <div>
+            <p class="mini-label">Window extremes</p>
+            <div>
+              <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-soft);font-family:var(--font-mono);font-size:.8rem;"><span style="color:var(--muted);">= 1</span><span>light-box off · chaos</span></div>
+              <div style="display:flex;justify-content:space-between;padding:9px 0;font-family:var(--font-mono);font-size:.8rem;"><span style="color:var(--muted);">= 24</span><span>full stack · coherent</span></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+  const N=24;
+  const stage=document.getElementById('stage'), ctx=stage.getContext('2d');
+  const SW=stage.width, SH=stage.height;
+  const state=loadState();
+  let playing=false, timer=null, audioCtx=null;
+
+  const els={ win:document.getElementById('win'), vWin:document.getElementById('v-win'), play:document.getElementById('play'),
+    tpFrame:document.getElementById('tp-frame'), onion:document.getElementById('onion'), onionHint:document.getElementById('onion-hint'),
+    mWin:document.getElementById('m-win'), mCoh:document.getElementById('m-coh'), mDrift:document.getElementById('m-drift'),
+    stageNote:document.getElementById('stage-note'), stageAnchor:document.getElementById('stage-anchor'), strip:document.getElementById('strip') };
+
+  function loadState(){ try{const r=localStorage.getItem('lm-tool23'); if(r) return JSON.parse(r);}catch(e){} return {win:12,frame:0,onion:true}; }
+  function saveState(){ try{localStorage.setItem('lm-tool23', JSON.stringify(state));}catch(e){} }
+  function clamp(v,a,b){return Math.min(b,Math.max(a,v));}
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function rng(seed){let a=seed>>>0;return()=>{a=(a+0x6D2B79F5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
+
+  function intended(i){ const p=i/(N-1); return { x:lerp(96,SW-96,p), y:SH*0.52-Math.abs(Math.sin(p*Math.PI*2.5))*54, flip:p*Math.PI*5 }; }
+
+  function drawSubject(i,drift,alpha){
+    const st=intended(i); const r=rng(i*9173+17);
+    const dx=(r()-0.5)*drift*150, dy=(r()-0.5)*drift*95, rj=(r()-0.5)*drift*1.4;
+    const flipScale=Math.max(0.14,Math.abs(Math.cos(st.flip)));
+    ctx.save(); ctx.globalAlpha=alpha; ctx.translate(st.x+dx,st.y+dy); ctx.rotate(rj); ctx.scale(1,flipScale);
+    const K=22,rx=64,ry=44,pts=[];
+    for(let k=0;k<K;k++){ const a=(k/K)*Math.PI*2, wob=1+(r()-0.5)*drift*1.5; pts.push([Math.cos(a)*rx*wob,Math.sin(a)*ry*wob]); }
+    const top=[Math.round(lerp(232,150,drift)),Math.round(lerp(184,156,drift)),Math.round(lerp(96,128,drift))];
+    const edge=[Math.round(lerp(196,120,drift)),Math.round(lerp(132,124,drift)),Math.round(lerp(44,96,drift))];
+    const grad=ctx.createLinearGradient(0,-ry,0,ry); grad.addColorStop(0,`rgb(${top[0]},${top[1]},${top[2]})`); grad.addColorStop(1,`rgb(${edge[0]},${edge[1]},${edge[2]})`);
+    ctx.beginPath(); ctx.moveTo((pts[0][0]+pts[K-1][0])/2,(pts[0][1]+pts[K-1][1])/2);
+    for(let k=0;k<K;k++){ const cur=pts[k],nxt=pts[(k+1)%K]; ctx.quadraticCurveTo(cur[0],cur[1],(cur[0]+nxt[0])/2,(cur[1]+nxt[1])/2); }
+    ctx.closePath(); ctx.fillStyle=grad; ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle=`rgba(60,40,12,${0.5*alpha})`; ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawScene(){
+    const W=state.win, drift=1-(W-1)/(N-1), cur=state.frame;
+    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--code-bg').trim()||'#1f211d';
+    ctx.fillRect(0,0,SW,SH);
+    ctx.strokeStyle='rgba(127,127,127,0.28)'; ctx.lineWidth=1.5; ctx.setLineDash([4,5]);
+    ctx.beginPath(); for(let i=0;i<N;i++){ const s=intended(i); i?ctx.lineTo(s.x,s.y):ctx.moveTo(s.x,s.y);} ctx.stroke(); ctx.setLineDash([]);
+    if(state.onion){ const ghosts=Math.min(W-1,7);
+      for(let g=ghosts;g>=1;g--){ const fi=(cur-g+N)%N; drawSubject(fi,drift,0.10+0.16*(1-g/(ghosts+1))); } }
+    drawSubject(cur,drift,1);
+    els.stageAnchor.textContent=state.onion?Math.min(W,8):0;
+    els.stageNote.textContent=drift>0.7?'no past to trace — drifting':drift>0.3?'tracing a faint sheet':'anchors locked across frames';
+  }
+
+  function renderStrip(){
+    const W=state.win,cur=state.frame; els.strip.innerHTML='';
+    for(let i=0;i<N;i++){ const cell=document.createElement('div'); cell.className='cell';
+      if(((cur-i+N)%N)<W) cell.classList.add('inwindow'); if(i===cur) cell.classList.add('active');
+      cell.textContent=String(i+1).padStart(2,'0'); cell.title='Frame '+(i+1);
+      cell.addEventListener('click',()=>{state.frame=i;refresh();}); els.strip.appendChild(cell); }
+  }
+  function updateMetrics(){
+    const W=state.win, coh=Math.round((W-1)/(N-1)*100);
+    els.vWin.innerHTML=W+'<span class="u">fr</span>'; els.mWin.textContent=W; els.mCoh.textContent=coh+'%';
+    els.tpFrame.textContent=String(state.frame+1).padStart(2,'0')+' / '+N;
+    const d=W<=2?['Severe','oklch(0.55 0.18 26)']:W<=8?['Moderate','var(--warm)']:W<=18?['Slight','var(--accent)']:['Locked','var(--teal)'];
+    els.mDrift.textContent=d[0]; els.mDrift.style.color=d[1];
+  }
+  function refresh(){ drawScene(); renderStrip(); updateMetrics(); saveState(); }
+
+  function tick(){ state.frame=(state.frame+1)%N; refresh(); playClick(state.frame===0); }
+  function playClick(down){ try{ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.frequency.value=down?1760:1100; o.type='square';
+    g.gain.setValueAtTime(0.0001,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(down?0.12:0.07,audioCtx.currentTime+0.005);
+    g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+0.05); o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime+0.06);}catch(e){} }
+  function setPlaying(p){ playing=p; els.play.textContent=p?'❚❚':'▶';
+    if(p){ if(audioCtx&&audioCtx.state==='suspended') audioCtx.resume(); timer=setInterval(tick,395);} else { clearInterval(timer); timer=null; } }
+
+  els.win.value=state.win;
+  els.win.addEventListener('input',()=>{state.win=+els.win.value;refresh();});
+  els.play.addEventListener('click',()=>setPlaying(!playing));
+  els.onion.addEventListener('click',()=>{ state.onion=!state.onion;
+    els.onion.textContent='Onion-skin: '+(state.onion?'ON':'OFF'); els.onion.classList.toggle('secondary',!state.onion);
+    els.onionHint.textContent=state.onion?'Past frames ghost behind the current one — the animator\u2019s tracing sheets.':'Light-box off. Only the live frame is drawn — no reference to trace.';
+    refresh(); });
+  els.onion.textContent='Onion-skin: '+(state.onion?'ON':'OFF'); els.onion.classList.toggle('secondary',!state.onion);
+  refresh();
+  </script>
+</body>
+</html>

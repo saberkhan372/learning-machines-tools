@@ -65,6 +65,7 @@
           <a href="#browser-training">Train in the browser</a>
           <a href="#creative-code">Creative code</a>
           <a href="#local-models">Run local models</a>
+          <a href="#apis-agents">APIs &amp; agents</a>
         </nav>
       </aside>
     </div>
@@ -149,6 +150,31 @@
         <div class="scope">
           <p class="mono-line">One rule carries over</p>
           <p>Whatever you open from this page, run it like the camp runs everything: <b>predict before you press the button, change one variable, and name what the machine did</b> — a default, a failure, or a pattern. The tools change; the method is the take-home.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APIS & AGENTS -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no" id="apis-agents">§ E · APIs &amp; agents, affordably</h2><span class="sec-note">the build pathway · on a budget</span></div>
+      <div class="scope" style="margin-bottom: 24px;">
+        <p class="mono-line">For everyone who heard the API is out of reach</p>
+        <p>An <b>API</b> just means calling the model from your own code or a notebook instead of a chat box. The common belief that this needs an expensive subscription is <b>out of date</b>: every major provider now has a free tier or starter credits, and pay-as-you-go pricing is fractions of a cent for the small jobs a classroom runs. Here's where to start without a credit card — and what an "agent" actually is once you can make one call.</p>
+      </div>
+      <div class="res-list">
+        <div class="res">
+          <div><div class="r-title"><a href="https://aistudio.google.com/">Google AI Studio</a> — Gemini</div><div class="r-meta"><b>free · browser · no card to start</b> · get a key in minutes</div></div>
+          <p class="r-note">The lowest-friction door: sign in, generate an API key in the browser, and call a current model on a free daily quota — no billing setup. Best first stop for "I want to <em>build</em> with it, not just chat." Paste the key into a Colab notebook and you've moved from consumer to maker in an afternoon.</p>
+        </div>
+        <div class="res">
+          <div><div class="r-title"><a href="https://docs.claude.com/">Claude</a>, <a href="https://platform.openai.com/">OpenAI</a> &amp; <a href="https://docs.mistral.ai/">Mistral</a> APIs</div><div class="r-meta"><b>starter credits · free tier (Mistral) · then pennies</b> · pay per token</div></div>
+          <p class="r-note">All three give starter credits or a free tier, then charge <em>per token</em> rather than a flat subscription — a whole class's worth of short calls is cents, not a monthly fee. The camp's <a href="../tools/tokenizer-temperature-visualizer/">Tokenizer</a> shows why: you pay by the token, so short prompts stay cheap. The honest answer to "do APIs have a free way in?" is yes — and even paid use is far closer to a bus fare than a subscription.</p>
+        </div>
+        <div class="res">
+          <div><div class="r-title">What "agent" actually means</div><div class="r-meta"><b>concept · no framework needed</b> · prediction + tools + a loop</div></div>
+          <p class="r-note">An <em>agent</em> is just a model in a loop that can call tools — search the web, run code, hit another API — and decide what to do next, until a stopping rule says it's done. Strip the hype and it's the camp's own method automated: <b>predict, act, check, repeat.</b> You don't need a framework to see it — give a model one tool and let it choose when to reach for it. Once one API call works, an agent is that call, in a loop, with a decision.</p>
         </div>
       </div>
     </div>

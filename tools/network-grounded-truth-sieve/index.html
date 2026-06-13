@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>Network-Grounded Truth Sieve · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/field-theme.js"></script>
+  <style>
+    .claim-input { width:100%; min-height:150px; resize:vertical; border:1px solid var(--line); border-radius:8px; background:var(--surface-2); color:var(--ink); padding:12px; font-family:var(--font-body); font-size:.96rem; line-height:1.5; }
+    .claim-input:focus { outline:2px solid var(--accent); outline-offset:2px; }
+    .mtiles { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .mtile { border:1px solid var(--line); border-radius:10px; background:var(--surface-2); padding:12px; text-align:left; }
+    .mtile .mn { font-family:var(--font-mono); font-size:1.5rem; font-weight:600; color:var(--ink); line-height:1; font-variant-numeric:tabular-nums; }
+    .mtile .mn.sm { font-size:1rem; padding-top:6px; }
+    .mtile .ml { font-family:var(--font-mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+    .sieve-map { border:1px solid var(--line); border-radius:8px; background:var(--code-bg); padding:14px; line-height:2.1; font-size:.95rem; color:var(--muted); min-height:70px; }
+    .tok.anchor { background:color-mix(in oklab, var(--accent) 22%, transparent); color:var(--ink); border-radius:4px; padding:1px 5px; font-weight:600; }
+    .tok.filler { color:var(--warm); text-decoration:underline dotted; text-underline-offset:3px; }
+    .legend { display:flex; gap:16px; flex-wrap:wrap; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+    .legend span::before { content:""; display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:middle; }
+    .legend .lg-a::before { background:color-mix(in oklab, var(--accent) 50%, transparent); }
+    .legend .lg-f::before { background:var(--warm); }
+    .vlog { display:grid; gap:8px; }
+    .vrow { border:1px solid var(--line); border-left-width:4px; border-radius:8px; background:var(--surface-2); padding:10px 12px; }
+    .vrow.found { border-left-color:var(--pass, #2f7d52); }
+    .vrow.missing { border-left-color:var(--fail, #b3402f); }
+    .vrow strong { display:block; font-size:.9rem; }
+    .vrow p { margin:4px 0 0; font-size:.8rem; color:var(--muted); line-height:1.4; }
+    .vrow a { font-size:.78rem; color:var(--accent); }
+    .specimens { display:grid; gap:8px; }
+    .placeholder { color:var(--muted); font-size:.86rem; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../pages/tools.html" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../relational-co-occurrence-sieve/">Next: Co-Occurrence →</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Cross-session &middot; Verification &middot; 01</p>
+      <h1 class="tool-title">Network-Grounded Truth Sieve</h1>
+      <p class="tool-dek">A language model predicts fluent words, not true ones. This sieve ignores fluency entirely: it strips a passage down to its hard factual anchors — proper nouns, dates, numbers — then runs a live audit against Wikipedia to ask one thing of each anchor. Does it actually exist?</p>
+      <div class="tool-idea">Big idea: existence is the first checkpoint — a confident sentence full of invented names fails before truth even comes up.</div>
+    </header>
+
+    <section class="tool-grid-2">
+      <!-- INPUT -->
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Source claims</p>
+            <textarea class="claim-input" id="claim" placeholder="Paste a passage. The sieve extracts its entities and audits each against Wikipedia…"></textarea>
+          </div>
+          <button class="tool-button" type="button" id="run">Audit anchors via Wikipedia</button>
+          <div>
+            <p class="mini-label">Specimen passages</p>
+            <div class="specimens">
+              <button class="choice-button" type="button" data-sample="hallucination"><strong>The fabricated landmark</strong><span>Fluent writing on invented entities that map to no record.</span></button>
+              <button class="choice-button" type="button" data-sample="valid"><strong>Verified historical coordinates</strong><span>Real figures, events, and institutions with archival anchors.</span></button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- OUTPUT -->
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div class="mtiles">
+            <div class="mtile"><div class="mn" id="m-anchors">0</div><div class="ml">Isolated anchors</div></div>
+            <div class="mtile"><div class="mn" id="m-verified">0%</div><div class="ml">Reality verification</div></div>
+            <div class="mtile"><div class="mn sm" id="m-status" style="color:var(--muted);">Idle</div><div class="ml">Network pipeline</div></div>
+          </div>
+          <div>
+            <p class="mini-label">fig. 1 — token sieve map</p>
+            <div class="sieve-map" id="sieve">Awaiting raw claims submission…</div>
+            <div class="legend"><span class="lg-a">anchor · entity</span><span class="lg-f">filler · fluency</span></div>
+          </div>
+          <div>
+            <p class="mini-label">fig. 2 — knowledge-graph cross-reference log</p>
+            <div class="vlog" id="log"><div class="placeholder">Dispatched query findings map down here…</div></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="lab-panel" style="margin-top:18px;">
+      <div class="lab-pad">
+        <p class="mini-label">Field note · why we check the pantry, not the chef</p>
+        <p class="small-muted" style="max-width:74ch;">We are not asking the chef whether the dish is good. The sieve takes the names printed on the label — the isolated anchors — and sends a courier to the supply warehouse (Wikipedia) to confirm each vendor actually exists. If the warehouse says <em>"item not found,"</em> the chef invented an ingredient. Fluency is not evidence; existence is only the <em>first</em> thing worth checking — for whether real entities were <em>combined</em> truthfully, run the <a href="../relational-co-occurrence-sieve/">Relational Co-Occurrence Sieve</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../assets/lm-entities.js"></script>
+  <script>
+  const SAMPLES = {
+    hallucination: "Furthermore, it is crucial to note that the historic Battle of Shady Pines was won decisively by General Thaddeus Vance in 1843, cementing his pivotal role in the early expansionist framework.",
+    valid: "Records confirm that the Treaty of Versailles was signed inside the Hall of Mirrors in 1919, ending the First World War."
+  };
+  const FILLER = ['furthermore','crucial','testament','pivotal','conclusion','moreover','undeniable','decisively','cementing','utilize','facilitate','framework','transformative','subsequently'];
+
+  const el = id => document.getElementById(id);
+  const claim = el('claim'), sieve = el('sieve'), log = el('log');
+  const mAnchors = el('m-anchors'), mVerified = el('m-verified'), mStatus = el('m-status'), runBtn = el('run');
+
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderSieveMap(text, anchorSet){
+    const toks = text.split(/(\s+)/);
+    sieve.innerHTML = toks.map(t => {
+      if(/^\s+$/.test(t) || !t) return t;
+      const bare = t.replace(/[^A-Za-z0-9'’-]/g,'');
+      const low = bare.toLowerCase();
+      if(anchorSet.has(low)) return `<span class="tok anchor">${esc(t)}</span>`;
+      if(FILLER.some(f => low === f || (low.length>4 && f.includes(low)))) return `<span class="tok filler">${esc(t)}</span>`;
+      return esc(t);
+    }).join('');
+  }
+
+  async function run(){
+    const text = claim.value.trim();
+    if(!text){ sieve.textContent = "Awaiting raw claims submission…"; log.innerHTML = '<div class="placeholder">Dispatched query findings map down here…</div>'; return; }
+    runBtn.disabled = true;
+    mStatus.textContent = "Searching"; mStatus.style.color = "var(--accent)";
+    log.innerHTML = "";
+
+    const { phrases, years, numbers } = LMEntities.extract(text);
+    const anchors = [...phrases, ...years, ...numbers];
+
+    // highlight every word that belongs to an anchor
+    const anchorWords = new Set();
+    anchors.forEach(a => a.toLowerCase().split(/\s+/).forEach(w => anchorWords.add(w)));
+    renderSieveMap(text, anchorWords);
+    mAnchors.textContent = anchors.length;
+
+    if(phrases.length === 0){
+      mStatus.textContent = "No anchors"; mStatus.style.color = "var(--warm)";
+      mVerified.textContent = "0%";
+      log.innerHTML = `<div class="vrow missing"><strong>⚠ Zero grounding coordinates</strong><p>No proper nouns to cross-reference. Dates and bare numbers alone can't be audited for existence.</p></div>`;
+      runBtn.disabled = false; return;
+    }
+
+    let verified = 0;
+    for(const entity of phrases){
+      const res = await LMEntities.lookup(entity);
+      const row = document.createElement('div');
+      if(res.exists){
+        verified++;
+        row.className = "vrow found";
+        row.innerHTML = `<strong>✓ Verified — "${esc(entity)}" → "${esc(res.title)}"</strong><p>${esc(res.extract || 'Matched a real article in the public record.')}</p>${res.url?`<a href="${res.url}" target="_blank" rel="noopener">View record →</a>`:''}`;
+      } else if(res.disambiguation){
+        row.className = "vrow missing";
+        row.innerHTML = `<strong>～ Ambiguous — "${esc(entity)}"</strong><p>Resolves only to a disambiguation page, not a single specific entity.</p>`;
+      } else {
+        row.className = "vrow missing";
+        row.innerHTML = `<strong>✗ Unanchored — "${esc(entity)}" not found</strong><p>Wikipedia returned no definitive match for this name.</p>`;
+      }
+      log.appendChild(row);
+    }
+    // note years/numbers as contextual anchors (not existence-checked)
+    if(years.length || numbers.length){
+      const row = document.createElement('div');
+      row.className = "vrow";
+      row.innerHTML = `<strong>◷ Contextual anchors</strong><p>Dates / numbers carried for the co-occurrence stage: ${esc([...years,...numbers].join(', '))}</p>`;
+      log.appendChild(row);
+    }
+
+    mStatus.textContent = "Complete"; mStatus.style.color = "var(--accent)";
+    mVerified.textContent = `${Math.round((verified / phrases.length) * 100)}%`;
+    runBtn.disabled = false;
+  }
+
+  runBtn.addEventListener('click', run);
+  document.querySelectorAll('[data-sample]').forEach(b => b.addEventListener('click', () => { claim.value = SAMPLES[b.dataset.sample]; run(); }));
+  </script>
+</body>
+</html>

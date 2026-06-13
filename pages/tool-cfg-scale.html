@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-skin="image-spectrum">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>CFG Scale Visualizer - Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-tool.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="../index.html#method" class="hide-sm">Method</a>
+        <a class="btn btn-primary btn-sm" href="../tools/cfg-scale-visualizer/">Launch tool &rarr;</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero" data-mod="image">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#tools">Tool index</a><span class="sep">/</span>
+        <span>CFG Scale</span>
+      </div>
+      <div class="tool-hero-grid">
+        <div class="tool-hero">
+          <div class="meta-row">
+            <span class="stamp ready">Launch ready</span>
+            <span class="chip">Session 2 &middot; Images</span>
+            <span class="chip">Advanced concept</span>
+          </div>
+          <h1>CFG Scale Visualizer</h1>
+          <p class="tool-lede">Move classifier-free guidance from loose to useful to brittle. The tool shows why more prompt pressure can improve alignment at first, then create stiff, repeated, over-literal artifacts.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="../tools/cfg-scale-visualizer/">Launch the tool &rarr;</a>
+            <a class="btn" href="session-images.html">Open Session 2</a>
+          </div>
+        </div>
+        <div class="preview">
+          <div class="preview-bar">
+            <span class="modsq image"></span>
+            <span class="url">tools/cfg-scale-visualizer/</span>
+          </div>
+          <div class="preview-body">
+            <div class="preview-ph">
+              <span class="big">CFG 1 &rarr; 7 &rarr; 14 &rarr; 30</span>
+              <span>loose default &middot; useful guidance &middot; over-forced &middot; brittle artifacts</span>
+            </div>
+            <p class="preview-note mono">Live preview · launch for the interactive version</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section-tight" style="--mink: var(--m-image);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ A · What it makes visible</h2><span class="sec-note">prompt pressure</span></div>
+      <div class="visible-grid">
+        <div class="vis-card">
+          <div class="vn">Fig. 01</div>
+          <h3>Unconditioned habit</h3>
+          <p>At very low guidance, the system leans on broad learned defaults. The image can look plausible while ignoring prompt details.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">Fig. 02</div>
+          <h3>Useful guidance</h3>
+          <p>In the middle range, the prompt direction steers subject, setting, and style while preserving enough variation to look natural.</p>
+        </div>
+        <div class="vis-card">
+          <div class="vn">Fig. 03</div>
+          <h3>Over-correction</h3>
+          <p>At high guidance, the prompt gets amplified so hard that the simulated image becomes crowded, harsh, and artifact-prone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="--mink: var(--m-image);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ B · How to investigate it</h2><span class="sec-note">run it like an experiment</span></div>
+      <div class="invest">
+        <div class="invest-card">
+          <div class="ic-k">01 &middot; Predict</div>
+          <h4>Before moving the slider</h4>
+          <p>Ask learners what they think happens when guidance increases. Better image? More literal image? Stranger image?</p>
+          <div class="eg">prediction: "higher CFG will follow the prompt better"</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">02 &middot; Compare presets</div>
+          <h4>Use 1, 7, 14, 30</h4>
+          <p>Move through the four presets and name what changes: prompt match, leftover defaults, and artifact pressure.</p>
+          <div class="eg">CFG 7: useful &middot; CFG 30: brittle</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">03 &middot; Change prompt family</div>
+          <h4>Does the pattern hold?</h4>
+          <p>Switch scenarios and repeat the same slider movement. The mechanism should stay visible even as the prompt changes.</p>
+          <div class="eg">same dial, different scene</div>
+        </div>
+        <div class="invest-card">
+          <div class="ic-k">04 &middot; Make a claim</div>
+          <h4>Not just "high is bad"</h4>
+          <p>Write a precise claim about the tradeoff: where prompt alignment improves, and where over-guidance starts to damage the image.</p>
+          <div class="eg">"CFG is useful until it begins amplifying artifacts"</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" style="border-top:1px solid var(--line-soft);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ C · Debrief questions</h2><span class="sec-note">after the investigation</span></div>
+      <div class="prompts">
+        <div class="prompt">Where did the prompt first become clearly visible?</div>
+        <div class="prompt">At what point did the image start feeling over-forced?</div>
+        <div class="prompt">What did the low-CFG version fill in from model habit?</div>
+        <div class="prompt">Why is guidance not the same thing as quality, truth, or ethics?</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap doc-cols">
+      <div class="doc-group">
+        <h3>Pairs well with</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="tool-diffusion.html"><span class="d-name">Diffusion Step-Through</span><span class="d-desc">How structure emerges from noise</span></a>
+          <a class="doc-row" href="../tools/prompt-guidance-word-by-word/"><span class="d-name">Prompt Guidance Word-by-Word</span><span class="d-desc">How words constrain simulated outputs</span></a>
+        </div>
+      </div>
+      <div class="doc-group">
+        <h3>Use it in context</h3>
+        <div class="doc-list">
+          <a class="doc-row" href="session-images.html"><span class="d-name">Session 2 &middot; Images</span><span class="d-desc">Pixels, diffusion, prompt guidance, defaults</span></a>
+          <a class="doc-row" href="../docs/advanced-concept-extensions.html"><span class="d-name">Advanced Concept Extensions</span><span class="d-desc">Second-wave mechanics roadmap</span></a>
+          <a class="doc-row" href="../worksheets/image-default-test-board/"><span class="d-name">Image Default Test Board</span><span class="d-desc">Log prompt pressure and defaults</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-images.html"><div class="pg-dir mono">&larr; Back to session</div><div class="pg-title">Session 2 &middot; Images</div></a>
+        <a class="next" href="../tools/cfg-scale-visualizer/"><div class="pg-dir mono">Open it &rarr;</div><div class="pg-title">Launch the tool</div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <p class="mono">Single-file &middot; vanilla JavaScript &middot; no account &middot; no live model required.</p>
+    </div>
+  </footer>
+</body>
+</html>

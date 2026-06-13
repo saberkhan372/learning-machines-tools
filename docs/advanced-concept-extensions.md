@@ -26,7 +26,7 @@ The repo already has launch-ready tools for the main investigation arc:
 | Area | Existing coverage |
 |---|---|
 | Text | Tokenization, temperature, next-token prediction, bigram counting, ELIZA, confidence vs. truth |
-| Images | Diffusion step-through, feature extraction, default testing, prompt guidance, latent-space exploration, dataset balance |
+| Images | Diffusion step-through, feature extraction, default testing, prompt guidance, CFG scale, latent-space exploration, dataset balance |
 | Video | Temporal Telephone, video failure gallery, frame-by-frame coherence |
 | Cross-session | A/B/C comparison, model cards, access tiers, evidence wall, concept bridges, classroom activity builder |
 
@@ -62,6 +62,12 @@ The resulting design constraint is: keep the core sessions approachable and
 account-free, but add optional "under the hood" extensions for learners who want
 the machinery.
 
+## Shipped Advanced Concepts
+
+| Concept | Tool | What it adds |
+|---|---|---|
+| Classifier-free guidance (CFG) | `tools/cfg-scale-visualizer/` | Shows prompt pressure moving from loose to useful to over-forced, making it clear that guidance is not the same as quality |
+
 ## Proposed Concept Gaps
 
 | Modality | Concept | Why it matters | Best format |
@@ -72,7 +78,6 @@ the machinery.
 | Image / video | Text encoder / cross-modal alignment | Shows that image and video systems need a bridge from human words into learned numeric prompt space, often taught through CLIP-like alignment | Prompt-to-vector map paired with image-neighbor retrieval |
 | Images | Forward diffusion | Explains why reverse denoising training works by first destroying images | Slider or paired forward/reverse viewer |
 | Images | VAE / latent compression | Shows why image models operate in compressed latent space rather than raw pixels | Interactive compressor |
-| Images | Classifier-free guidance (CFG) | Image analogue to prompt-following strength; high values can create artifacts | Continuous slider visualizer |
 | Video | Temporal attention / cross-frame consistency | Shows how video tries to keep identity, physics, and scene layout stable | Frame scrubber / attention-window visualizer |
 | Video | Optical flow | Makes motion vectors and frame-to-frame displacement visible | Vector-field overlay |
 | Text / cross | Custom embedding data | Lets learners load a small local CSV of their own items into the latent map, showing embeddings are data, not magic | Stretch extension of `tools/latent-space-explorer/` (local file read; stays offline) |
@@ -84,8 +89,7 @@ These are next-wave candidates, not launch-ready repo tools.
 
 | Candidate | Working name | Session | Core interaction | Notes |
 |---|---|---|---|---|
-| Tool 21 | Latent Space Compressor / VAE Simulator | 2 · Images | Choose an image preset, compress it into a small latent grid, then reconstruct it | Should use image presets, visible reconstruction loss, and optional random latent sampling |
-| Tool 22 | CFG Scale Visualizer | 2 · Images | Move a guidance slider from loose/default to stable/prompt-aligned to overcooked/artifacted | Needs continuous interpolation and an explicit “too much guidance breaks” explanation |
+| Tool 22 | Latent Space Compressor / VAE Simulator | 2 · Images | Choose an image preset, compress it into a small latent grid, then reconstruct it | Should use image presets, visible reconstruction loss, and optional random latent sampling |
 | Tool 23 | Temporal Attention Tracker | 3 · Video | Scrub frames while changing the attention window / memory span | Avoid autoplay assumptions; make any audio user-triggered and optional |
 | Tool 24 | Forward Diffusion Trainer | 2 · Images | Move one slider forward into noise and backward into reconstruction | Should pair training direction with generation direction |
 | Tool 25 | Backpropagation Role-Play | 1 · Text / cross | Human model predicts, receives error, updates a visible rule or weight | Better as printable or Zoom activity than a screen-first tool |
@@ -145,26 +149,23 @@ Field Manual identity or become the site-wide metaphor.
 
 ## Recommended Order
 
-1. **CFG Scale Visualizer**
-   Fastest conceptual win for Session 2 because it pairs naturally with
-   temperature and prompt guidance.
-2. **VAE / Latent Compressor**
+1. **VAE / Latent Compressor**
    Deepens the existing Latent Space Explorer and diffusion tools.
-3. **Positional Encoding Line**
+2. **Positional Encoding Line**
    Smallest missing text-mechanics bridge: it clarifies why order has to become
    math before attention can use it.
-4. **Prompt Alignment Bridge**
+3. **Prompt Alignment Bridge**
    Connects the text session to image/video generation by showing that prompts
    pass through learned representations before steering pixels or frames.
-5. **Temporal Attention Tracker**
+4. **Temporal Attention Tracker**
    Strong fit for Session 3, especially after Temporal Telephone and
    Frame-by-Frame Coherence Viewer.
-6. **Forward Diffusion Trainer**
+5. **Forward Diffusion Trainer**
    Useful if learners need the training direction separated from generation.
-7. **Backpropagation Role-Play**
+6. **Backpropagation Role-Play**
    Important, but likely strongest as a printable/Zoom activity before an HTML
    simulator.
-8. **Optical Flow Field Viewer**
+7. **Optical Flow Field Viewer**
    Valuable stretch tool if Session 3 needs a more technical motion layer.
 
 ## Acceptance Bar

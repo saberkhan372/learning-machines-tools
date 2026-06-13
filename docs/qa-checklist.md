@@ -36,6 +36,7 @@ Use this before publishing or sharing the repo.
 - Feature Extraction / Pixel Resolution: switch image types, change detail level, switch Pixels/Edges/Features.
 - Default Test Comparison Viewer: switch vague prompts, compare A/B/C rows, review defaults, changes, and ethical questions, then copy or print a claim.
 - Prompt Guidance Word-by-Word: step through each prompt word, confirm the simulated image and change list update, and copy prediction notes.
+- CFG Scale Visualizer: switch prompt families, move CFG through 1/7/14/30 presets, confirm prompt match, model habit, and artifact pressure meters update, then copy notes.
 - Latent Space Explorer: switch datasets and lenses, select map points, confirm nearest neighbors update, and copy visibility/risk notes.
 - Dataset Balance Simulator: switch scenarios, move sliders, use balance/skew presets, confirm the default and likelihood bars update, and copy notes.
 - Temporal Telephone: confirm self-tests pass, draw frames, save, switch previous/anchor/both modes, play sequence, use the failure bridge, clear and reset.

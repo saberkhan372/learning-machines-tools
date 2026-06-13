@@ -35,7 +35,7 @@ The tool principle is:
 
 ## Launch Roadmap
 
-### Launch-Ready Tools (20)
+### Launch-Ready Tools (25)
 
 | Tool | Status | Session |
 | --- | --- | --- |
@@ -47,9 +47,12 @@ The tool principle is:
 | Feature Extraction / Pixel Resolution | Launch ready | 2 · Image |
 | Default Test Comparison Viewer | Launch ready | 2 · Image |
 | Prompt Guidance Word-by-Word | Launch ready | 2 · Image |
+| CFG Scale Visualizer | Launch ready | 2 · Image |
 | Latent Space Explorer | Launch ready | 2 · Image |
+| Latent Space Compressor | Launch ready | 2 · Image |
 | Dataset Balance Simulator | Launch ready | 2 · Image |
 | Temporal Telephone | Launch ready | 3 · Video |
+| Metronome Frame-Scrubber | Launch ready | 3 · Video |
 | Video Failure Gallery Viewer | Launch ready | 3 · Video |
 | Frame-by-Frame Coherence Viewer | Launch ready | 3 · Video |
 | A/B/C Comparison Board | Launch ready | Cross |
@@ -57,6 +60,8 @@ The tool principle is:
 | Model Card Builder | Launch ready | Studio |
 | Classroom Activity Builder | Launch ready | Studio |
 | Confidence Is Not Truth Explorer | Launch ready | Cross |
+| Network-Grounded Truth Sieve | Launch ready · live Wikipedia | Cross |
+| Relational Co-Occurrence Sieve | Launch ready · live Wikipedia | Cross |
 | Access Tiers | Launch ready | Cross |
 | Evidence Wall | Launch ready | Cross |
 
@@ -80,12 +85,15 @@ homepage keeps only a short preview.
 - [`tools/feature-extraction-pixel-resolution/`](tools/feature-extraction-pixel-resolution/) — Launch ready
 - [`tools/default-test-comparison-viewer/`](tools/default-test-comparison-viewer/) — Launch ready
 - [`tools/prompt-guidance-word-by-word/`](tools/prompt-guidance-word-by-word/) — Launch ready
+- [`tools/cfg-scale-visualizer/`](tools/cfg-scale-visualizer/) — Launch ready
 - [`tools/latent-space-explorer/`](tools/latent-space-explorer/) — Launch ready
+- [`tools/latent-space-compressor/`](tools/latent-space-compressor/) — Launch ready
 - [`tools/dataset-balance-simulator/`](tools/dataset-balance-simulator/) — Launch ready
 
 ### Session 3: Video
 
 - [`tools/temporal-telephone/`](tools/temporal-telephone/) — Launch ready
+- [`tools/metronome-frame-scrubber/`](tools/metronome-frame-scrubber/) — Launch ready
 - [`tools/video-failure-gallery-viewer/`](tools/video-failure-gallery-viewer/) — Launch ready
 - [`tools/frame-by-frame-coherence-viewer/`](tools/frame-by-frame-coherence-viewer/) — Launch ready
 
@@ -95,6 +103,8 @@ homepage keeps only a short preview.
 - [`tools/model-card-builder/`](tools/model-card-builder/) — Launch ready
 - [`tools/classroom-activity-builder/`](tools/classroom-activity-builder/) — Launch ready
 - [`tools/confidence-is-not-truth-explorer/`](tools/confidence-is-not-truth-explorer/) — Launch ready
+- [`tools/network-grounded-truth-sieve/`](tools/network-grounded-truth-sieve/) — Launch ready (live Wikipedia)
+- [`tools/relational-co-occurrence-sieve/`](tools/relational-co-occurrence-sieve/) — Launch ready (live Wikipedia)
 - [`tools/access-tiers/`](tools/access-tiers/) — Launch ready
 - [`tools/evidence-wall/`](tools/evidence-wall/) — Launch ready
 - [`tools/concept-bridges/`](tools/concept-bridges/) — Launch ready
@@ -113,7 +123,7 @@ homepage keeps only a short preview.
 - [Consent and recap protocol](docs/consent-recap-protocol.html)
 - [Field Manual redesign rollout plan](docs/FIELD-MANUAL-REDESIGN.html)
 - [Riskier Identity Page Audit](docs/riskier-identity-audit.html) — page-by-page visual QA and next-pass plan
-- [Advanced Concept Extensions](docs/advanced-concept-extensions.html) — audit response and proposed next-wave tools for positional encoding, prompt alignment, VAE, CFG, temporal attention, training, and optical flow
+- [Advanced Concept Extensions](docs/advanced-concept-extensions.html) — audit response, shipped CFG tool, and proposed next-wave tools for positional encoding, prompt alignment, VAE, temporal attention, training, and optical flow
 - [Site Identity Switcher Plan](docs/site-identity-switcher-plan.html) — proposal to make the EE/FF/GG skins user-selectable site-wide
 - [Site Usability Audit](docs/site-usability-audit.html) — design, language, and structure audit with prioritized recommendations
 - [Project brief](docs/project-brief.html)
@@ -123,7 +133,9 @@ homepage keeps only a short preview.
 - [Pre-session check-in](docs/pre-session-checkin.html)
 - [Vocabulary Field Guide](pages/vocabulary-field-guide.html)
 - [Further Reading](pages/further-reading.html) — critical & intersectional texts, fiction, philosophy
-- [Hands-On: Play with Real Models](pages/hands-on.html) — Teachable Machine, ml5.js, TensorFlow Playground, Ollama, Hugging Face
+- [Hands-On: Play with Real Models](pages/hands-on.html) — Teachable Machine, ml5.js, TensorFlow Playground, Ollama, Hugging Face, free API tiers & agents
+- [AI Access & Inequality](pages/ai-access.html) — who can use this at all; ties together Access Tiers, free/local tools, and the access readings
+- [How These Tools Were Made](pages/colophon.html) — participant-facing colophon: principle, constraints, lineage, and how to build your own
 - [Adapting for Younger Learners](pages/younger-learners.html) — ages 6–12, per-session notes
 - [No-AI pathway](pages/no-ai-pathway.html) — participant-facing route without direct generation
 - [No-AI pathway facilitation](pages/no-ai-pathway-facilitation.html) — facilitator language, tool list, and session plan

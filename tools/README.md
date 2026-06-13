@@ -8,7 +8,7 @@ title: Tool Directory
 Canonical tool folders for the Learning Machines camp.
 Status reflects the current build; `tools-data.js` is the single source of truth for the homepage tool browser.
 
-## Launch-Ready Tools (20)
+## Launch-Ready Tools (21)
 
 | Tool | Folder | Session | Modality |
 | --- | --- | --- | --- |
@@ -20,6 +20,7 @@ Status reflects the current build; `tools-data.js` is the single source of truth
 | Feature Extraction / Pixel Resolution | `feature-extraction-pixel-resolution/` | 2 | Image |
 | Default Test Comparison Viewer | `default-test-comparison-viewer/` | 2 | Image |
 | Prompt Guidance Word-by-Word | `prompt-guidance-word-by-word/` | 2 | Image |
+| CFG Scale Visualizer | `cfg-scale-visualizer/` | 2 | Image |
 | Latent Space Explorer | `latent-space-explorer/` | 2 | Image |
 | Dataset Balance Simulator | `dataset-balance-simulator/` | 2 | Image |
 | Temporal Telephone | `temporal-telephone/` | 3 | Video |
@@ -35,9 +36,9 @@ Status reflects the current build; `tools-data.js` is the single source of truth
 
 ## Second-Wave Candidates
 
-The launch matrix intentionally stays at 20 browser-safe tools. Deeper
-mechanics identified during audit work live in
+The launch matrix now includes the first advanced concept tool: CFG Scale
+Visualizer. Remaining deeper mechanics identified during audit work live in
 [`../docs/advanced-concept-extensions.md`](../docs/advanced-concept-extensions.md),
 including positional encoding, prompt alignment / text encoders, VAE latent
-compression, classifier-free guidance, temporal attention, forward diffusion,
-backpropagation, and optical flow.
+compression, temporal attention, forward diffusion, backpropagation, and
+optical flow.

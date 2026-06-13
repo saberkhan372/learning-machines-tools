@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="image" data-skin="image-spectrum">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>CFG Scale Visualizer · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/field-theme.js"></script>
+  <style>
+    .ctrl-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+    .ctrl-val { font-family:var(--font-mono); font-size:1.2rem; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
+    .range-scale { display:flex; justify-content:space-between; margin-top:6px; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.04em; color:var(--muted); }
+    .stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .stat { border:1px solid var(--line); border-radius:10px; background:var(--surface-2); padding:11px 12px; }
+    .stat-n { font-family:var(--font-mono); font-size:1.45rem; font-weight:600; color:var(--ink); line-height:1; font-variant-numeric:tabular-nums; }
+    .stat-n.sm { font-size:.95rem; padding-top:6px; }
+    .stat-l { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:7px; }
+    canvas.lab-canvas { display:block; width:100%; height:auto; border-radius:8px; }
+    .prompt-box { padding:13px 15px; border:1px solid var(--line); border-radius:8px; background:var(--code-bg); color:var(--ink); font-family:var(--font-mono); font-size:.92rem; line-height:1.5; }
+    .regime { border:1px solid var(--line); border-left-width:5px; border-radius:8px; background:var(--surface-2); padding:13px 14px; }
+    .regime .rg-top { display:flex; align-items:baseline; gap:10px; margin-bottom:5px; }
+    .regime .rg-tag { font-family:var(--font-mono); font-size:.66rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; }
+    .regime .rg-range { font-family:var(--font-mono); font-size:.66rem; color:var(--muted); margin-left:auto; }
+    .regime .rg-name { font-weight:800; font-size:1.02rem; color:var(--ink); }
+    .regime .rg-desc { font-size:.86rem; line-height:1.45; color:var(--muted); margin-top:4px; }
+    .analogy { border-left:3px solid var(--accent); padding-left:14px; }
+    .analogy em { color:var(--accent); font-style:normal; font-weight:600; }
+    .note-box { width:100%; min-height:96px; resize:vertical; border:1px solid var(--line); border-radius:8px; background:var(--surface-2); color:var(--ink); padding:10px; font-family:var(--font-body); line-height:1.45; }
+    .note-box:focus { outline:2px solid var(--accent); outline-offset:2px; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../pages/tools.html" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../../pages/session-images.html">Session 2</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Session 2 &middot; Images &middot; Guidance scale</p>
+      <h1 class="tool-title">CFG Scale Visualizer</h1>
+      <p class="tool-dek">Text models have a temperature dial; image models have CFG — the knob that weighs strict obedience to your prompt against the model's freedom to fall back on generic training defaults. Drag from 1 to 30 and watch one prompt swing from ignored, to obeyed, to screamed at until it breaks.</p>
+      <div class="tool-idea">Big idea: more obedience isn't more correct — past the sweet spot, literalism destroys the image.</div>
+    </header>
+
+    <section class="tool-grid-3">
+      <!-- CONTROL -->
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Fixed prompt</p>
+            <div class="prompt-box">"a fresh head of broccoli on a white plate"</div>
+            <p class="small-muted">Dataset default when unguided: <strong>a bowl of cherries</strong>.</p>
+          </div>
+          <div>
+            <div class="ctrl-row">
+              <p class="mini-label" style="margin:0;">CFG scale</p>
+              <span class="ctrl-val" id="v-cfg">7.0</span>
+            </div>
+            <input type="range" class="scrub-range" id="cfg" min="1" max="30" step="0.1" value="7" style="margin-top:10px;">
+            <div class="range-scale"><span>1.0</span><span>4–12 sweet spot</span><span>30.0</span></div>
+          </div>
+          <div>
+            <p class="mini-label">Presets</p>
+            <div class="choice-list" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;">
+              <button class="chip-button" type="button" data-cfg="2">2 asleep</button>
+              <button class="chip-button" type="button" data-cfg="7">7 clean</button>
+              <button class="chip-button" type="button" data-cfg="16">16 tense</button>
+              <button class="chip-button" type="button" data-cfg="28">28 broken</button>
+            </div>
+          </div>
+          <div>
+            <p class="mini-label">Inspector status · current regime</p>
+            <div class="regime" id="regime">
+              <div class="rg-top"><span class="rg-tag" id="rg-tag">Sweet spot</span><span class="rg-range" id="rg-range">CFG 4.0–12.0</span></div>
+              <div class="rg-name" id="rg-name">The inspector watches closely</div>
+              <div class="rg-desc" id="rg-desc">The cook follows the recipe and the plate still looks natural.</div>
+            </div>
+          </div>
+          <button class="tool-button secondary" type="button" id="vec-toggle">Inspect vector math</button>
+        </div>
+      </aside>
+
+      <!-- OUTPUT -->
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div class="stat-grid">
+            <div class="stat"><div class="stat-n" id="m-cfg">7.0</div><div class="stat-l">CFG weight</div></div>
+            <div class="stat"><div class="stat-n sm" id="m-adhere">on point</div><div class="stat-l">Prompt adherence</div></div>
+            <div class="stat"><div class="stat-n sm" id="m-regime" style="color:var(--accent);">Sweet spot</div><div class="stat-l">Regime</div></div>
+          </div>
+          <div>
+            <p class="mini-label">fig. 1 — sampled image</p>
+            <div class="scene-card">
+              <canvas id="scene" class="lab-canvas" width="512" height="400" aria-label="Generated image at the current CFG scale"></canvas>
+              <div class="scene-caption"><span id="scene-note">following the recipe</span> · w = <b id="scene-w" style="color:var(--accent);">7.0</b></div>
+            </div>
+          </div>
+          <div id="vec-wrap" hidden>
+            <p class="mini-label">fig. 2 — guidance vector · ε = ε<sub>u</sub> + w·(ε<sub>c</sub> − ε<sub>u</sub>)</p>
+            <div class="scene-card">
+              <canvas id="vec" class="lab-canvas" width="512" height="300" aria-label="Vector math diagram"></canvas>
+              <div class="scene-caption">baseline ε<sub>u</sub> · text ε<sub>c</sub> · guided — <span id="vec-state">on target</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ANALOGY + EVIDENCE -->
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <h2 style="font-size:1.05rem;">The inspector with a megaphone</h2>
+            <p class="analogy small-muted">Picture a health inspector over the cook. At <em>low CFG</em> the inspector is asleep — the cook ignores the ticket and plates the kitchen default. In the <em>sweet spot</em> they watch calmly; the dish still looks like food. At <em>high CFG</em> they scream the prompt through a megaphone and the panicked cook obeys every word until the plate turns into an oversaturated, thick-outlined, magenta mess.</p>
+          </div>
+          <div>
+            <p class="mini-label">Three regimes</p>
+            <div>
+              <div class="readline" style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-soft);font-family:var(--font-mono);font-size:.8rem;"><span style="color:var(--muted);">1.0–3.5</span><span>asleep · default</span></div>
+              <div class="readline" style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-soft);font-family:var(--font-mono);font-size:.8rem;"><span style="color:var(--muted);">4.0–12.0</span><span>watching · clean</span></div>
+              <div class="readline" style="display:flex;justify-content:space-between;padding:9px 0;font-family:var(--font-mono);font-size:.8rem;"><span style="color:var(--muted);">13.0–30.0</span><span>dictator · broken</span></div>
+            </div>
+          </div>
+          <label>
+            <span class="mini-label">Evidence-based claim</span>
+            <textarea class="note-box" id="claimBox">At CFG 7, the image follows the prompt while still looking natural.</textarea>
+          </label>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy notes</button>
+            <button class="tool-button secondary" type="button" onclick="window.print()">Print / save</button>
+          </div>
+          <p class="small-muted" id="testStatus" aria-live="polite"></p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+  const scene=document.getElementById('scene'), sx=scene.getContext('2d');
+  const vec=document.getElementById('vec'), vx=vec.getContext('2d');
+  const W=scene.width, H=scene.height;
+  const state=loadState();
+  const COL = { lax:'oklch(0.58 0.13 62)', sweet:'oklch(0.52 0.12 150)', dictator:'oklch(0.55 0.18 26)' };
+  let claimDirty=false;
+
+  const els={ cfg:document.getElementById('cfg'), vCfg:document.getElementById('v-cfg'), mCfg:document.getElementById('m-cfg'),
+    mAdhere:document.getElementById('m-adhere'), mRegime:document.getElementById('m-regime'), regime:document.getElementById('regime'),
+    rgTag:document.getElementById('rg-tag'), rgRange:document.getElementById('rg-range'), rgName:document.getElementById('rg-name'), rgDesc:document.getElementById('rg-desc'),
+    sceneNote:document.getElementById('scene-note'), sceneW:document.getElementById('scene-w'),
+    vecToggle:document.getElementById('vec-toggle'), vecWrap:document.getElementById('vec-wrap'), vecState:document.getElementById('vec-state'),
+    claimBox:document.getElementById('claimBox') };
+
+  function loadState(){ try{const r=localStorage.getItem('lm-cfg-scale'); if(r) return JSON.parse(r);}catch(e){} return {cfg:7,vec:false}; }
+  function saveState(){ try{localStorage.setItem('lm-cfg-scale', JSON.stringify(state));}catch(e){} }
+  function clamp(v,a,b){return Math.min(b,Math.max(a,v));}
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function mix(c1,c2,t){return [Math.round(lerp(c1[0],c2[0],t)),Math.round(lerp(c1[1],c2[1],t)),Math.round(lerp(c1[2],c2[2],t))];}
+  function rgb(c){return `rgb(${c[0]},${c[1]},${c[2]})`;}
+  function rng(seed){let a=seed>>>0;return()=>{a=(a+0x6D2B79F5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
+
+  function drawTable(){
+    const g=sx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#e7e0d0'); g.addColorStop(1,'#cabfa6');
+    sx.fillStyle=g; sx.fillRect(0,0,W,H);
+    sx.save(); sx.translate(W/2,H*0.62);
+    sx.fillStyle='rgba(0,0,0,0.12)'; sx.beginPath(); sx.ellipse(0,18,190,60,0,0,Math.PI*2); sx.fill();
+    sx.fillStyle='#fbfaf6'; sx.beginPath(); sx.ellipse(0,0,185,58,0,0,Math.PI*2); sx.fill();
+    sx.strokeStyle='#dcd6c8'; sx.lineWidth=3; sx.beginPath(); sx.ellipse(0,0,150,46,0,0,Math.PI*2); sx.stroke();
+    sx.restore();
+  }
+  function drawCherries(alpha){
+    if(alpha<0.01) return; sx.save(); sx.globalAlpha=alpha;
+    const cx=W/2,cy=H*0.55;
+    sx.fillStyle='#e9e4d6'; sx.beginPath(); sx.ellipse(cx,cy+6,120,40,0,0,Math.PI); sx.fill();
+    const ch=[[-58,-6],[-20,4],[18,-4],[52,6],[-34,-26],[24,-24],[0,-14]];
+    sx.strokeStyle='#7a5a2a'; sx.lineWidth=3;
+    ch.forEach(([dx,dy])=>{sx.beginPath();sx.moveTo(cx+dx,cy+dy-22);sx.quadraticCurveTo(cx+dx+10,cy+dy-44,cx+dx+2,cy+dy-58);sx.stroke();});
+    ch.forEach(([dx,dy])=>{ const g=sx.createRadialGradient(cx+dx-7,cy+dy-7,2,cx+dx,cy+dy,24);
+      g.addColorStop(0,'#e85d6a'); g.addColorStop(1,'#9c1622'); sx.fillStyle=g; sx.beginPath(); sx.arc(cx+dx,cy+dy,22,0,Math.PI*2); sx.fill();
+      sx.fillStyle='rgba(255,255,255,0.7)'; sx.beginPath(); sx.arc(cx+dx-7,cy+dy-8,4,0,Math.PI*2); sx.fill(); });
+    sx.restore();
+  }
+  function drawBroccoli(alpha,d){
+    if(alpha<0.01) return; sx.save(); sx.globalAlpha=alpha;
+    const cx=W/2,cy=H*0.5;
+    const stalk=mix([214,205,150],[150,255,90],d); sx.fillStyle=rgb(stalk);
+    if(d>0){sx.strokeStyle='#0a0a0a';sx.lineWidth=d*7;}
+    sx.beginPath(); sx.moveTo(cx-26,cy+96); sx.lineTo(cx-14,cy+10); sx.lineTo(cx+14,cy+10); sx.lineTo(cx+26,cy+96); sx.closePath(); sx.fill();
+    if(d>0) sx.stroke();
+    const base=[63,107,39],hot=[20,255,52];
+    const florets=[[0,-58,70],[-58,-28,56],[58,-30,56],[-30,-72,46],[34,-70,46]]; const r=rng(7);
+    florets.forEach(([fx,fy,rad])=>{ const col=mix(base,hot,d);
+      for(let i=0;i<26;i++){ const a=r()*Math.PI*2,rr=r()*rad; const px=cx+fx+Math.cos(a)*rr,py=cy+fy+Math.sin(a)*rr*0.8; const sz=7+r()*9;
+        sx.fillStyle=rgb(mix(col,[Math.max(0,col[0]-30),Math.max(0,col[1]-30),Math.max(0,col[2]-20)],r()*0.5));
+        sx.beginPath(); sx.arc(px,py,sz,0,Math.PI*2); sx.fill();
+        if(d>0){sx.strokeStyle='#080808';sx.lineWidth=d*5;sx.stroke();} } });
+    sx.restore();
+  }
+  function drawBreakdown(d){
+    if(d<=0) return; const r=rng(13); const n=Math.round(d*1400);
+    for(let i=0;i<n;i++){ const x=r()*W,y=r()*H,s=1+r()*3; sx.fillStyle=r()>0.5?`rgba(255,0,180,${0.25+d*0.5})`:`rgba(0,255,120,${0.2+d*0.4})`; sx.fillRect(x,y,s,s); }
+    sx.save(); sx.globalCompositeOperation='overlay'; sx.fillStyle=`rgba(255,40,200,${d*0.35})`; sx.fillRect(0,0,W,H);
+    sx.globalCompositeOperation='lighter';
+    for(let i=0;i<d*40;i++){ const x=r()*W,y=r()*H; sx.fillStyle='rgba(255,255,255,0.5)'; sx.fillRect(x,y,2+r()*4,2+r()*4); }
+    sx.restore();
+  }
+
+  const REGIMES=[
+    {max:3.5,cls:'lax',tag:'Lax isolation',range:'CFG 1.0–3.5',name:'The inspector is asleep',desc:'Prompt ignored. The model serves a common dataset default — cherries, not broccoli.',note:'ignoring the order ticket',short:'Lax',color:COL.lax,
+      claim:'the model ignores the prompt and falls back on a dataset default.'},
+    {max:12,cls:'sweet',tag:'Sweet spot',range:'CFG 4.0–12.0',name:'The inspector watches closely',desc:'The cook follows the recipe and the plate still looks natural.',note:'following the recipe',short:'Sweet spot',color:COL.sweet,
+      claim:'the image follows the prompt while still looking natural.'},
+    {max:31,cls:'dictator',tag:'The dictator',range:'CFG 13.0–30.0',name:'Screaming through the megaphone',desc:'Hyper-rigid literalism: clipped color, thick outlines, magenta noise. The image breaks.',note:'breaking under pressure',short:'Dictator',color:COL.dictator,
+      claim:'rigid literalism over-renders the image into oversaturated artifacts.'},
+  ];
+  function regimeFor(cfg){ return REGIMES.find(r=>cfg<=r.max)||REGIMES[2]; }
+  function suggestedClaim(cfg){ return 'At CFG '+cfg.toFixed(1)+', '+regimeFor(cfg).claim; }
+
+  function render(){
+    const cfg=state.cfg;
+    const t=clamp((cfg-2.5)/2,0,1); const cherryW=1-t, broccoliW=t;
+    const d=clamp((cfg-13)/15,0,1);
+    drawTable(); drawCherries(cherryW); drawBroccoli(broccoliW,d); drawBreakdown(d);
+    const rg=regimeFor(cfg);
+    els.vCfg.textContent=cfg.toFixed(1); els.mCfg.textContent=cfg.toFixed(1); els.sceneW.textContent=cfg.toFixed(1); els.sceneNote.textContent=rg.note;
+    els.mAdhere.textContent=cfg<2.5?'none':cfg<=12?'on point':'rigid';
+    els.mRegime.textContent=rg.short; els.mRegime.style.color=rg.color;
+    els.regime.style.borderLeftColor=rg.color;
+    els.rgTag.textContent=rg.tag; els.rgTag.style.color=rg.color; els.rgRange.textContent=rg.range; els.rgName.textContent=rg.name; els.rgDesc.textContent=rg.desc;
+    if(!claimDirty) els.claimBox.value=suggestedClaim(cfg);
+    syncPresets(cfg);
+    if(!els.vecWrap.hidden) renderVec(cfg);
+    saveState();
+  }
+
+  function syncPresets(cfg){
+    document.querySelectorAll('[data-cfg]').forEach(b=>b.classList.toggle('active', Number(b.dataset.cfg)===Math.round(cfg)));
+  }
+
+  function renderVec(cfg){
+    const w=vec.width,h=vec.height; vx.clearRect(0,0,w,h);
+    const css=getComputedStyle(document.documentElement);
+    const cLine=css.getPropertyValue('--line-soft').trim()||'#ccc';
+    const cMuted=css.getPropertyValue('--muted').trim()||'#888';
+    const cAccent=css.getPropertyValue('--accent').trim()||'#46c';
+    const cInk=css.getPropertyValue('--ink').trim()||'#222';
+    const cFail=COL.dictator;
+    vx.strokeStyle=cLine; vx.lineWidth=1;
+    for(let gx=0;gx<=w;gx+=40){vx.beginPath();vx.moveTo(gx,0);vx.lineTo(gx,h);vx.stroke();}
+    for(let gy=0;gy<=h;gy+=40){vx.beginPath();vx.moveTo(0,gy);vx.lineTo(w,gy);vx.stroke();}
+    const O={x:80,y:h-60},U={x:210,y:h-118},C={x:380,y:70};
+    const s=(cfg-1)/8; const G={x:U.x+s*(C.x-U.x),y:U.y+s*(C.y-U.y)};
+    function arrow(from,to,color,wd,label){ vx.strokeStyle=color;vx.fillStyle=color;vx.lineWidth=wd;
+      vx.beginPath();vx.moveTo(from.x,from.y);vx.lineTo(to.x,to.y);vx.stroke();
+      const ang=Math.atan2(to.y-from.y,to.x-from.x),hs=9;
+      vx.beginPath();vx.moveTo(to.x,to.y);vx.lineTo(to.x-hs*Math.cos(ang-0.4),to.y-hs*Math.sin(ang-0.4));vx.lineTo(to.x-hs*Math.cos(ang+0.4),to.y-hs*Math.sin(ang+0.4));vx.closePath();vx.fill();
+      if(label){vx.font='600 12px "IBM Plex Mono", monospace';vx.fillText(label,to.x+8,to.y-6);} }
+    if(s>1){ vx.setLineDash([5,5]); arrow(C,G,cFail,2,''); vx.setLineDash([]); }
+    arrow(O,U,cMuted,2,'εu'); arrow(O,C,cAccent,2,'εc'); arrow(O,G,cFail,3.5,'guided');
+    [[U,cMuted],[C,cAccent],[G,cFail]].forEach(([p,c])=>{vx.fillStyle=c;vx.beginPath();vx.arc(p.x,p.y,5,0,Math.PI*2);vx.fill();});
+    vx.fillStyle=cInk; vx.font='600 13px "IBM Plex Mono", monospace';
+    vx.fillText('w = '+cfg.toFixed(1)+'   ·   s = '+s.toFixed(2),16,26);
+    els.vecState.textContent=s<0.4?'pulled to baseline':s<=1.25?'on target':'overshooting εc';
+  }
+
+  els.cfg.value=state.cfg;
+  els.cfg.addEventListener('input',()=>{state.cfg=+els.cfg.value;render();});
+  els.claimBox.addEventListener('input',()=>{claimDirty=true;});
+  document.querySelectorAll('[data-cfg]').forEach(b=>b.addEventListener('click',()=>{ state.cfg=Number(b.dataset.cfg); els.cfg.value=state.cfg; render(); }));
+  els.vecToggle.addEventListener('click',()=>{ state.vec=!state.vec; els.vecWrap.hidden=!state.vec;
+    els.vecToggle.textContent=state.vec?'Hide vector math':'Inspect vector math';
+    els.vecToggle.classList.toggle('secondary',!state.vec);
+    if(state.vec) renderVec(state.cfg); saveState(); });
+  els.vecWrap.hidden=!state.vec;
+  if(state.vec){ els.vecToggle.textContent='Hide vector math'; els.vecToggle.classList.remove('secondary'); }
+
+  document.getElementById('copyBtn').addEventListener('click',()=>{
+    const cfg=state.cfg, rg=regimeFor(cfg);
+    const lines=['CFG Scale Visualizer','Prompt: a fresh head of broccoli on a white plate','CFG: '+cfg.toFixed(1),'Regime: '+rg.tag,'Claim: '+els.claimBox.value];
+    navigator.clipboard && navigator.clipboard.writeText(lines.join('\n'));
+  });
+
+  function runSelfTest(){
+    const tests=[
+      regimeFor(2).cls==='lax',
+      regimeFor(7).cls==='sweet',
+      regimeFor(28).cls==='dictator',
+      suggestedClaim(7).indexOf('natural')>-1
+    ];
+    document.getElementById('testStatus').textContent = tests.every(Boolean)
+      ? 'Self-test passed: regimes, morph, and claim logic are wired.'
+      : 'Self-test failed: check CFG regime logic.';
+  }
+
+  render();
+  runSelfTest();
+  </script>
+</body>
+</html>

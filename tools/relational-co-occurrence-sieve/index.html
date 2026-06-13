@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>Relational Co-Occurrence Sieve · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/field-theme.js"></script>
+  <style>
+    .claim-input { width:100%; min-height:140px; resize:vertical; border:1px solid var(--line); border-radius:8px; background:var(--surface-2); color:var(--ink); padding:12px; font-family:var(--font-body); font-size:.96rem; line-height:1.5; }
+    .claim-input:focus { outline:2px solid var(--accent); outline-offset:2px; }
+    .mtiles { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+    .mtile { border:1px solid var(--line); border-radius:10px; background:var(--surface-2); padding:12px; }
+    .mtile .mn { font-family:var(--font-mono); font-size:1.05rem; font-weight:600; color:var(--muted); line-height:1; letter-spacing:.06em; }
+    .mtile .ml { font-family:var(--font-mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+    .stage { border:1px solid var(--line); border-radius:10px; background:var(--surface-2); overflow:hidden; }
+    .stage + .stage { margin-top:12px; }
+    .stage-head { display:flex; justify-content:space-between; align-items:center; padding:11px 13px; border-bottom:1px solid var(--line); font-family:var(--font-mono); font-size:.74rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink); }
+    .stage-body { padding:12px 13px; font-size:.86rem; line-height:1.5; color:var(--muted); }
+    .stage-body strong { color:var(--ink); }
+    .vbadge { font-family:var(--font-mono); font-size:.62rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:3px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); }
+    .vbadge.warn { color:var(--warm); border-color:var(--warm); }
+    .vbadge.pass { color:#1f7a4d; border-color:#1f7a4d; }
+    .vbadge.fail { color:#b3402f; border-color:#b3402f; }
+    .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .chip { font-family:var(--font-mono); font-size:.74rem; padding:3px 9px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); white-space:nowrap; }
+    .chip.miss { border-color:#b3402f; color:#b3402f; text-decoration:line-through; }
+    .chip.ok { border-color:#1f7a4d; color:#1f7a4d; }
+    .chip.subj { border-color:var(--accent); color:var(--accent); font-weight:600; }
+    .specimens { display:grid; gap:8px; }
+    .fn-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px; }
+    .fn-cell { border:1px solid var(--line); border-radius:8px; padding:12px; }
+    .fn-cell .lv { font-family:var(--font-mono); font-size:.64rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
+    .fn-cell .lt { font-weight:700; font-size:.95rem; margin:4px 0 6px; }
+    .fn-cell p { font-size:.82rem; color:var(--muted); line-height:1.45; margin:0; }
+    @media (max-width:720px){ .fn-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../pages/tools.html" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../network-grounded-truth-sieve/">← Level 1 sieve</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Cross-session &middot; Verification &middot; 02</p>
+      <h1 class="tool-title">Relational Co-Occurrence Sieve</h1>
+      <p class="tool-dek">Two real facts can still compose a lie. After confirming each entity exists, this sieve asks the harder question: do they actually belong together? It pulls the primary subject's real Wikipedia page and checks that every other name, date, and place in the claim genuinely appears on it.</p>
+      <div class="tool-idea">Big idea: the lie lives in the relationship, not the ingredients — "Lincoln," "iPhone," and "1865" are all real, but iPhone never appears on Lincoln's page.</div>
+    </header>
+
+    <section class="tool-grid-2">
+      <!-- INPUT -->
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Source claim</p>
+            <textarea class="claim-input" id="claim" placeholder="Paste a claim. The sieve verifies each entity, then tests whether they co-occur on one real page…"></textarea>
+          </div>
+          <button class="tool-button" type="button" id="run">Run relational audit</button>
+          <div>
+            <p class="mini-label">Specimen passages</p>
+            <div class="specimens">
+              <button class="choice-button" type="button" data-sample="fake"><strong>Type 1 · pure fabrication</strong><span>Invented entities. Fails Level 1 — nothing to anchor to.</span></button>
+              <button class="choice-button" type="button" data-sample="trap"><strong>Type 2 · the relational lie</strong><span>Real entities (Lincoln, iPhone, 1865) bound into a false story.</span></button>
+              <button class="choice-button" type="button" data-sample="valid"><strong>Grounded · verified truth</strong><span>Real entities with a historically accurate relationship.</span></button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- PIPELINE -->
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div class="mtiles">
+            <div class="mtile"><div class="mn" id="m-lvl1">IDLE</div><div class="ml">Lvl 1 · entity existence</div></div>
+            <div class="mtile"><div class="mn" id="m-lvl2">IDLE</div><div class="ml">Lvl 2 · page co-occurrence</div></div>
+          </div>
+
+          <div class="stage">
+            <div class="stage-head"><span>Level 1 — entity existence</span><span class="vbadge" id="b1">Waiting</span></div>
+            <div class="stage-body" id="s1">Extracts proper-noun phrases and dates, then queries Wikipedia for each.</div>
+          </div>
+
+          <div class="stage">
+            <div class="stage-head"><span>Level 2 — co-occurrence on the page</span><span class="vbadge" id="b2">Waiting</span></div>
+            <div class="stage-body" id="s2">Requires every anchor to actually appear on the primary subject's page.</div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="lab-panel" style="margin-top:18px;">
+      <div class="lab-pad">
+        <p class="mini-label">Field note · the flaw in checking proper nouns alone</p>
+        <p class="small-muted" style="max-width:78ch;">A confident chef is not a trustworthy one. If a passage claims <em>"Abraham Lincoln used an iPhone,"</em> a naive checker looks up Lincoln and iPhone, sees both exist, and stamps it true. The lie lives in the <strong>relationship</strong>, so the sieve runs the inspector twice.</p>
+        <div class="fn-grid">
+          <div class="fn-cell"><div class="lv">Level 1 · the pantry</div><div class="lt">Do the ingredients exist?</div><p>Confirm every entity printed on the recipe card is a real article.</p></div>
+          <div class="fn-cell"><div class="lv">Level 2 · the cookbook</div><div class="lt">Have they ever been combined?</div><p>Open the subject's page and check the other ingredients are actually written into it — not just real somewhere else.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../assets/lm-entities.js"></script>
+  <script>
+  const SAMPLES = {
+    fake: "In 1843, the historic Battle of Shady Pines was won decisively by General Thaddeus Vance, altering the war.",
+    trap: "During the final days of the Civil War in 1865, Abraham Lincoln used his new iPhone to coordinate troop movements.",
+    valid: "Records confirm that Abraham Lincoln delivered the Gettysburg Address during the American Civil War in 1863."
+  };
+  const el = id => document.getElementById(id);
+  const claim = el('claim'), runBtn = el('run');
+  const mL1 = el('m-lvl1'), mL2 = el('m-lvl2'), b1 = el('b1'), b2 = el('b2'), s1 = el('s1'), s2 = el('s2');
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function setBadge(b, cls, txt){ b.className = 'vbadge' + (cls?(' '+cls):''); b.textContent = txt; }
+
+  async function run(){
+    const text = claim.value.trim();
+    if(!text) return;
+    runBtn.disabled = true;
+    mL1.textContent = 'TESTING'; mL1.style.color = 'var(--accent)';
+    mL2.textContent = 'WAITING'; mL2.style.color = 'var(--muted)';
+    setBadge(b1,'warn','Searching…'); setBadge(b2,'','Waiting');
+    s1.innerHTML = 'Querying Wikipedia for each entity…'; s2.innerHTML = 'Awaiting Level 1 completion…';
+
+    const { phrases, years, numbers } = LMEntities.extract(text);
+    if(phrases.length < 1 || (phrases.length + years.length + numbers.length) < 2){
+      s1.innerHTML = 'Not enough entities to test a relationship — paste a claim with at least two anchors.';
+      mL1.textContent = 'IDLE'; mL1.style.color = 'var(--muted)'; setBadge(b1,'','Waiting');
+      runBtn.disabled = false; return;
+    }
+
+    // LEVEL 1 — existence of every proper-noun phrase.
+    // A disambiguation page (e.g. "Civil War") means the term is real but ambiguous —
+    // that counts as existing; only a true "not found" is a fabrication.
+    const resolved = {};           // entity -> resolved title (any kind)
+    const cleanTitles = {};        // entity -> title for specific (non-disambiguation) articles
+    let anyMissing = false;
+    let chips = '';
+    for(const entity of phrases){
+      const r = await LMEntities.lookup(entity);
+      if(r.exists){ resolved[entity] = r.title; cleanTitles[entity] = r.title; chips += `<span class="chip ok">✓ ${esc(entity)}</span>`; }
+      else if(r.disambiguation){ resolved[entity] = r.title || entity; chips += `<span class="chip">～ ${esc(entity)}</span>`; }
+      else if(r.error){ resolved[entity] = entity; chips += `<span class="chip">… ${esc(entity)}</span>`; }
+      else { anyMissing = true; chips += `<span class="chip miss">✗ ${esc(entity)}</span>`; }
+    }
+    s1.innerHTML = chips;
+
+    if(anyMissing){
+      mL1.textContent = 'FAILED'; mL1.style.color = '#b3402f'; setBadge(b1,'fail','Fabrication');
+      mL2.textContent = 'SKIPPED'; mL2.style.color = 'var(--muted)'; setBadge(b2,'','Skipped');
+      s2.innerHTML = '<strong>Cannot run the relational check.</strong> One or more entities are invented (a Type 1 hallucination) — there is no real subject to ground against.';
+      runBtn.disabled = false; return;
+    }
+    mL1.textContent = 'PASSED'; mL1.style.color = '#1f7a4d'; setBadge(b1,'pass','All real');
+
+    // LEVEL 2 — page co-occurrence
+    mL2.textContent = 'TESTING'; mL2.style.color = 'var(--accent)'; setBadge(b2,'warn','Reading page…');
+
+    // primary subject = most specific phrase; prefer a clean article over a disambiguation term
+    const pool = Object.keys(cleanTitles).length ? Object.keys(cleanTitles) : phrases;
+    const primary = pool.slice().sort((a,b)=> b.split(' ').length - a.split(' ').length || b.length - a.length)[0];
+    const primaryTitle = resolved[primary];
+    const body = await LMEntities.pageText(primaryTitle);
+
+    if(!body){
+      s2.innerHTML = `Could not read the page text for <strong>${esc(primaryTitle)}</strong> to verify the relationship.`;
+      mL2.textContent = 'ERROR'; mL2.style.color = 'var(--warm)'; setBadge(b2,'warn','No page text');
+      runBtn.disabled = false; return;
+    }
+
+    const others = phrases.filter(p => p !== primary).concat(years, numbers);
+    const present = [], missing = [];
+    others.forEach(a => (LMEntities.appearsOn(body, a) ? present : missing).push(a));
+
+    let out = `Primary subject: <span class="chip subj">${esc(primaryTitle)}</span><div class="chips">`;
+    present.forEach(a => out += `<span class="chip ok">✓ ${esc(a)}</span>`);
+    missing.forEach(a => out += `<span class="chip miss">✗ ${esc(a)}</span>`);
+    out += '</div>';
+
+    if(missing.length === 0){
+      mL2.textContent = 'PASSED'; mL2.style.color = '#1f7a4d'; setBadge(b2,'pass','Relationship grounded');
+      out += `<p style="margin-top:10px;">✓ <strong>Intersection confirmed.</strong> Every anchor appears on the <em>${esc(primaryTitle)}</em> page — these entities genuinely belong to the same record.</p>`;
+    } else {
+      mL2.textContent = 'FAILED'; mL2.style.color = '#b3402f'; setBadge(b2,'fail','Relational lie');
+      out += `<p style="margin-top:10px;">✗ <strong>Relational lie detected.</strong> ${esc(missing.join(', '))} ${missing.length>1?'do':'does'} not appear anywhere on the <em>${esc(primaryTitle)}</em> page. Every entity is real, but the relationship is fabricated — a <strong>Type 2 hallucination</strong>.</p>`;
+    }
+    s2.innerHTML = out;
+    runBtn.disabled = false;
+  }
+
+  runBtn.addEventListener('click', run);
+  document.querySelectorAll('[data-sample]').forEach(b => b.addEventListener('click', () => { claim.value = SAMPLES[b.dataset.sample]; run(); }));
+  </script>
+</body>
+</html>
