@@ -286,6 +286,12 @@ b, strong { font-weight: 600; }
   color: var(--muted);
   text-align: right;
 }
+.sec-rule .sec-note a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+.sec-rule .sec-note a:hover { color: var(--ink); }
 html[data-skin] .sec-rule {
   border-top-color: color-mix(in oklab, var(--skin-accent) 62%, var(--ink));
 }
