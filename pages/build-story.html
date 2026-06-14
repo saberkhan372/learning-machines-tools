@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-projection>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>How this got built &mdash; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <script src="../assets/build-history.js"></script>
+  <style>
+    .sub-lede { color: var(--ink-soft); max-width: 64ch; margin-top: 10px; line-height: 1.6; }
+
+    /* by the numbers */
+    .bs-numbers {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--line); border: 1px solid var(--line); border-radius: 2px; overflow: hidden;
+    }
+    .bs-num { background: var(--surface); padding: 16px 14px; }
+    .bs-num .n { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; }
+    .bs-num .l { display: block; margin-top: 4px; color: var(--muted); font-size: 0.82rem; line-height: 1.4; }
+
+    /* commit timeline */
+    .bs-chart { margin-top: 8px; }
+    .bs-bars {
+      display: flex; align-items: flex-end; gap: 3px; height: 168px;
+      border-bottom: 1px solid var(--line); padding-bottom: 1px;
+    }
+    .bs-bar { flex: 1 1 0; min-width: 0; border-radius: 1px 1px 0 0; transition: opacity .15s; }
+    .bs-bar:hover { opacity: 0.65; }
+    .bs-bar.is-zero { background: var(--line-soft) !important; }
+    .bs-ribbon { display: flex; gap: 2px; margin-top: 6px; }
+    .bs-seg {
+      height: 22px; border-radius: 1px; display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.66rem; color: #fff; min-width: 0; overflow: hidden;
+    }
+    .bs-axis { display: flex; justify-content: space-between; margin-top: 6px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+    .bs-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 16px; }
+    .bs-leg { display: inline-flex; align-items: baseline; gap: 7px; font-size: 0.82rem; }
+    .bs-leg .sw { width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; align-self: center; }
+    .bs-leg .no { font-family: var(--font-mono); color: var(--muted); }
+
+    /* acts */
+    .bs-acts { display: grid; gap: 0; }
+    .bs-act { display: grid; grid-template-columns: 132px 1fr; gap: 0 22px; padding: 22px 0; border-top: 1px solid var(--line-soft); }
+    .bs-act:first-child { border-top: 0; }
+    .bs-act-meta .bs-act-no { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+    .bs-act-meta h3 { margin: 2px 0 6px; font-size: 1.15rem; }
+    .bs-act-meta .bs-act-span, .bs-act-meta .bs-act-stat {
+      display: block; font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); line-height: 1.5;
+    }
+    .bs-act-meta .bs-act-stat { color: var(--accent); }
+    .bs-act-body p { margin: 0 0 10px; line-height: 1.6; max-width: 68ch; }
+    .bs-act-body .bs-candid {
+      border-left: 2px solid var(--line); padding-left: 12px; color: var(--muted);
+      font-size: 0.92rem; font-style: italic; max-width: 64ch;
+    }
+
+    /* architecture diagram + swatches */
+    .bs-arch { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 2px; background: var(--surface); }
+    .bs-swatches { display: flex; flex-wrap: wrap; gap: 14px; }
+    .bs-swatch { border: 1px solid var(--line); border-radius: 2px; overflow: hidden; width: 168px; }
+    .bs-swatch .chip { height: 56px; display: flex; }
+    .bs-swatch .chip i { flex: 1; }
+    .bs-swatch .cap { padding: 8px 10px; font-size: 0.8rem; }
+    .bs-swatch .cap b { display: block; }
+    .bs-swatch .cap span { color: var(--muted); font-size: 0.74rem; }
+
+    @media (max-width: 720px) {
+      .bs-numbers { grid-template-columns: repeat(2, 1fr); }
+      .bs-act { grid-template-columns: 1fr; gap: 8px; }
+      .bs-bars { height: 132px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="colophon.html" class="hide-sm">Colophon</a>
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../index.html">Back home</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero" data-mod="cross">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="colophon.html">Colophon</a><span class="sep">/</span>
+        <span>Build story</span>
+      </div>
+      <h1 class="sess-title" style="font-size: clamp(34px, 5vw, 56px);">How this got built</h1>
+      <p class="sub-lede">People asked how the site and tools were made — not the principles (that's the
+        <a href="colophon.html">colophon</a>), but the actual story: what got built, in what order, and where it
+        wasn't tidy. This is a maker's log drawn straight from the git history. The timeline is real,
+        gap and typos included.</p>
+    </div>
+  </header>
+
+  <main class="wrap" style="padding-bottom:56px;">
+
+    <section style="padding:28px 0;">
+      <div class="sec-rule"><h2 class="sec-no">§ A · By the numbers</h2><span class="sec-note">27 days, start to launch-ready</span></div>
+      <div class="bs-numbers" data-bs-numbers></div>
+    </section>
+
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ B · The timeline</h2><span class="sec-note">commits per day · 2026 · generated from git log</span></div>
+      <p class="sub-lede" style="margin-bottom:18px;">Every bar is one day. The flat middle is the two-week stretch where
+        nothing was committed — the tools were being piloted, not coded. Two bursts bracket it: the first three days
+        of tool-building, and the four-day run that turned tools into a field manual and then a camp instrument.</p>
+      <div class="bs-chart">
+        <div class="bs-bars" data-bs-bars></div>
+        <div class="bs-ribbon" data-bs-ribbon></div>
+        <div class="bs-axis" data-bs-axis></div>
+        <div class="bs-legend" data-bs-legend></div>
+      </div>
+    </section>
+
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ C · Six acts</h2><span class="sec-note">tools → site → field manual → identity → instrument</span></div>
+      <div class="bs-acts" data-bs-acts></div>
+    </section>
+
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ D · How it's built</h2><span class="sec-note">no build step · static HTML · GitHub Pages</span></div>
+      <p class="sub-lede" style="margin-bottom:18px;">The architecture is deliberately boring so it survives a live session
+        and outlives the camp: every tool is a single self-contained HTML file, a thin shared <code>assets/</code> layer
+        gives them one look and a few data files, and the whole thing is static — no bundler, no accounts, no server.</p>
+      <svg class="bs-arch" viewBox="0 0 720 300" role="img" aria-label="Architecture: single-file tools and pages draw on a shared assets layer of one CSS system and data files, served statically from GitHub Pages with no build step.">
+        <style>
+          .ab { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+          .al { fill: var(--ink); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+          .am { fill: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; }
+          .ac { fill: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+          .aedge { stroke: var(--line); stroke-width: 1.2; fill: none; }
+        </style>
+        <!-- top: surfaces -->
+        <text x="20" y="28" class="am">SURFACES · one HTML file each</text>
+        <rect class="ab" x="20"  y="38" width="150" height="40" rx="3"/><text x="34" y="56" class="al">25 tools/</text><text x="34" y="70" class="am">single-file + inline JS</text>
+        <rect class="ab" x="186" y="38" width="150" height="40" rx="3"/><text x="200" y="56" class="al">53 pages/</text><text x="200" y="70" class="am">sessions · console · home</text>
+        <rect class="ab" x="352" y="38" width="150" height="40" rx="3"/><text x="366" y="56" class="al">5 worksheets/</text><text x="366" y="70" class="am">printable boards</text>
+        <rect class="ab" x="518" y="38" width="182" height="40" rx="3"/><text x="532" y="56" class="al">34 docs/ (md)</text><text x="532" y="70" class="am">briefs · plans · facilitation</text>
+        <!-- edges down -->
+        <path class="aedge" d="M95 78 L95 118"/><path class="aedge" d="M261 78 L261 118"/><path class="aedge" d="M427 78 L427 118"/>
+        <!-- middle: shared assets -->
+        <text x="20" y="140" class="am">SHARED · assets/ (~976 lines JS, one CSS system)</text>
+        <rect class="ab" x="20" y="150" width="680" height="66" rx="3"/>
+        <text x="34" y="172" class="ac">field.css · field-*.css</text><text x="240" y="172" class="am">one design system · 4 skins via field-theme.js</text>
+        <text x="34" y="194" class="ac">session-runs.js · tools-data.js · build-history.js</text><text x="380" y="194" class="am">data drives the pages</text>
+        <text x="34" y="208" class="am">recap.js · projection.js · worksheet-export.js</text>
+        <!-- edge down -->
+        <path class="aedge" d="M360 216 L360 250"/>
+        <!-- bottom: hosting -->
+        <rect class="ab" x="190" y="250" width="340" height="36" rx="3"/>
+        <text x="210" y="272" class="al">GitHub Pages</text><text x="330" y="272" class="am">static · no build step · no server</text>
+      </svg>
+    </section>
+
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ E · The look, in three moves</h2><span class="sec-note">cream → dark-first → four switchable skins</span></div>
+      <p class="sub-lede" style="margin-bottom:18px;">The visual identity changed twice. The original tools were warm cream paper.
+        The redesign went dark-first with a shared system. Then identity arrived: one switcher that flips the whole site
+        between four looks, persisted per visitor.</p>
+      <div class="bs-swatches">
+        <div class="bs-swatch"><div class="chip"><i style="background:#f5f3ee"></i><i style="background:#1a1a2e"></i></div><div class="cap"><b>Phase 0 · Paper</b><span>warm cream, per-tool inline CSS</span></div></div>
+        <div class="bs-swatch"><div class="chip"><i style="background:#13151a"></i><i style="background:#e8e6e1"></i><i style="background:#7c5cff"></i></div><div class="cap"><b>Redesign · Dark-first</b><span>one shared design system</span></div></div>
+        <div class="bs-swatch"><div class="chip"><i style="background:#0c0c0c"></i><i style="background:#00e676"></i></div><div class="cap"><b>Identity · Terminal</b><span>one of four switchable skins</span></div></div>
+        <div class="bs-swatch"><div class="chip"><i style="background:#eaff00"></i><i style="background:#e6007e"></i><i style="background:#00c853"></i></div><div class="cap"><b>Identity · Acid</b><span>fixed later to pass WCAG AA</span></div></div>
+      </div>
+    </section>
+
+    <p class="sub-lede" style="margin-top:8px;">Want the principles behind the tools rather than the timeline? That's the
+      <a href="colophon.html">colophon &rarr;</a></p>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="colophon.html">Colophon</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <p class="mono">Static HTML &middot; vanilla JavaScript &middot; no build step. Timeline generated from git history on 2026-06-14.</p>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var B = window.LM_BUILD;
+    if (!B) return;
+    var ACT_COLORS = ["#2f6f4f", "#9aa0a6", "#3b6ea5", "#1a1a2e", "#a4508b", "#c2410c"];
+
+    function esc(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+    function actIndexFor(iso) {
+      for (var i = 0; i < B.acts.length; i++) {
+        if (iso >= B.acts[i].span && iso <= B.acts[i].to) return i;
+      }
+      return 0;
+    }
+    function shortDate(iso) {
+      var p = iso.split("-");
+      return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    }
+
+    /* § A — numbers */
+    document.querySelector("[data-bs-numbers]").innerHTML = B.numbers.map(function (x) {
+      return '<div class="bs-num"><span class="n">' + esc(x.n) + '</span><span class="l">' + esc(x.label) + "</span></div>";
+    }).join("");
+
+    /* § B — bars */
+    var max = Math.max.apply(null, B.daily.map(function (d) { return d[1]; }));
+    document.querySelector("[data-bs-bars]").innerHTML = B.daily.map(function (d) {
+      var iso = d[0], n = d[1], ai = actIndexFor(iso);
+      var h = n === 0 ? 2 : Math.round((n / max) * 100);
+      var cls = "bs-bar" + (n === 0 ? " is-zero" : "");
+      var style = n === 0 ? "height:2px;" : ("height:" + h + "%;background:" + ACT_COLORS[ai] + ";");
+      return '<div class="' + cls + '" style="' + style + '" title="' + esc(shortDate(iso) + " · " + n + " commit" + (n === 1 ? "" : "s")) + '"></div>';
+    }).join("");
+
+    /* § B — act ribbon (segment width ∝ days in act) */
+    document.querySelector("[data-bs-ribbon]").innerHTML = B.acts.map(function (a, i) {
+      var days = B.daily.filter(function (d) { return d[0] >= a.span && d[0] <= a.to; }).length;
+      return '<div class="bs-seg" style="flex:' + days + ' 1 0;background:' + ACT_COLORS[i] + '" title="' + esc(a.title) + '">' + esc(a.no) + "</div>";
+    }).join("");
+
+    /* § B — axis + legend */
+    var first = B.daily[0][0], last = B.daily[B.daily.length - 1][0];
+    document.querySelector("[data-bs-axis]").innerHTML =
+      "<span>" + esc(shortDate(first)) + "</span><span>" + esc(shortDate(last)) + " · launch-ready</span>";
+    document.querySelector("[data-bs-legend]").innerHTML = B.acts.map(function (a, i) {
+      return '<span class="bs-leg"><span class="sw" style="background:' + ACT_COLORS[i] + '"></span>' +
+        '<span class="no">' + esc(a.no) + "</span>" + esc(a.title) + "</span>";
+    }).join("");
+
+    /* § C — acts */
+    document.querySelector("[data-bs-acts]").innerHTML = B.acts.map(function (a) {
+      var candid = a.candid ? '<p class="bs-candid">' + esc(a.candid) + "</p>" : "";
+      return '<div class="bs-act">' +
+        '<div class="bs-act-meta">' +
+          '<span class="bs-act-no">ACT ' + esc(a.no) + "</span>" +
+          "<h3>" + esc(a.title) + "</h3>" +
+          '<span class="bs-act-span">' + esc(shortDate(a.span) + " – " + shortDate(a.to)) + "</span>" +
+          '<span class="bs-act-stat">' + esc(a.stat) + "</span>" +
+        "</div>" +
+        '<div class="bs-act-body"><p>' + esc(a.beat) + "</p>" + candid + "</div>" +
+      "</div>";
+    }).join("");
+  })();
+  </script>
+</body>
+</html>
