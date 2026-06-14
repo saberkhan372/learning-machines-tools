@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../assets/field-tool.css">
   <link rel="stylesheet" href="../assets/field-sub.css">
   <script src="../assets/field-theme.js"></script>
+  <script src="../assets/session-runs.js"></script>
   <style>
     .sub-lede { color: var(--ink-soft); max-width: 62ch; margin-top: 10px; line-height: 1.55; }
     .link-session {
@@ -105,6 +106,9 @@
         During a live session these are the links that get pasted into Zoom chat &mdash;
         everyone lands on the same page, one click deep. Use the copy button to grab a
         session's links as a ready-to-paste block.</p>
+      <p class="sub-lede" style="margin-top:6px;">Running a session live? The
+        <a href="run-console.html"><b>Run console</b></a> pairs each of these links with its
+        run-of-show timing and a launch button &mdash; the whole session from one tab.</p>
     </div>
   </header>
 
@@ -122,38 +126,21 @@
 
   <script>
   (function () {
-    /* Run-of-show order per session. Paths are repo-relative; absolute URLs
-       are computed from the current host so the sheet is correct on any
-       deployment (GitHub Pages, localhost, a school mirror). */
-    var SESSIONS = [
-      { title: "Session 1 — How Machines Write", links: [
-        { name: "Tokenizer + Temperature Visualizer", path: "tools/tokenizer-temperature-visualizer/" },
-        { name: "Count the Next Token", path: "tools/count-the-next-token/" },
-        { name: "ELIZA Simulator", path: "tools/eliza-simulator/" },
-        { name: "Text Experiment Board", path: "worksheets/text-experiment-board/" },
-        { name: "Next-Token Prediction Game", path: "tools/next-token-prediction-game/", optional: true }
-      ]},
-      { title: "Session 2 — How Machines Imagine", links: [
-        { name: "Feature Extraction / Pixel Resolution", path: "tools/feature-extraction-pixel-resolution/" },
-        { name: "Diffusion Step-Through Viewer", path: "tools/diffusion-step-through-viewer/" },
-        { name: "Default Test Comparison Viewer", path: "tools/default-test-comparison-viewer/" },
-        { name: "CFG Scale Visualizer", path: "tools/cfg-scale-visualizer/", optional: true },
-        { name: "Image Default Test Board", path: "worksheets/image-default-test-board/" },
-        { name: "A/B/C Comparison Board", path: "tools/abc-comparison-board/", optional: true }
-      ]},
-      { title: "Session 3 — How Machines Move", links: [
-        { name: "Temporal Telephone", path: "tools/temporal-telephone/" },
-        { name: "Video Failure Gallery", path: "tools/video-failure-gallery-viewer/" },
-        { name: "Video Test Report", path: "worksheets/video-test-report/" },
-        { name: "Frame-by-Frame Coherence Viewer", path: "tools/frame-by-frame-coherence-viewer/", optional: true }
-      ]},
-      { title: "Studio — Showcase", links: [
-        { name: "Evidence Wall", path: "tools/evidence-wall/" },
-        { name: "Model Card Builder", path: "tools/model-card-builder/" },
-        { name: "Classroom Activity Builder", path: "tools/classroom-activity-builder/" },
-        { name: "A/B/C Comparison Board", path: "tools/abc-comparison-board/" }
-      ]}
-    ];
+    /* Sessions are derived from the shared run-of-show data (session-runs.js)
+       so the link sheet and the Run console never drift apart. We flatten each
+       session's per-step tools (plus any studio toolkit) into one de-duped list
+       in run-of-show order. Absolute URLs are computed from the current host so
+       the sheet is correct on any deployment (GitHub Pages, localhost, mirror). */
+    var SESSIONS = (window.LM_SESSION_RUNS || []).map(function (run) {
+      var tools = [];
+      (run.toolkit || []).forEach(function (t) { tools.push(t); });
+      (run.steps || []).forEach(function (s) {
+        (s.tools || []).forEach(function (t) { tools.push(t); });
+      });
+      var seen = {}, links = [];
+      tools.forEach(function (t) { if (!seen[t.path]) { seen[t.path] = 1; links.push(t); } });
+      return { title: run.title, links: links };
+    });
 
     /* this page lives in pages/, so repo root is one level up */
     function absUrl(path) {
