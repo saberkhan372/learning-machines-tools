@@ -233,14 +233,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Token</td><td>A chunk of text a model processes.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
-            <tr><td>Temperature</td><td>How much randomness enters sampling.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
-            <tr><td>Default</td><td>What appears when the prompt does not specify.</td><td><a href="../tools/default-test-comparison-viewer/">Default Test</a></td></tr>
-            <tr><td>Diffusion</td><td>An iterative noise-to-image process.</td><td><a href="tool-diffusion.html">Diffusion Viewer</a></td></tr>
-            <tr><td>Drift</td><td>Unwanted change over time.</td><td><a href="tool-temporal-telephone.html">Temporal Telephone</a></td></tr>
-            <tr><td>Coherence</td><td>Staying consistent across frames.</td><td><a href="../tools/video-failure-gallery-viewer/">Video Viewer</a></td></tr>
-            <tr><td>Hallucination</td><td>A plausible output without reliable grounding.</td><td><a href="tool-confidence-truth.html">Claim Checker</a></td></tr>
-            <tr><td>Human-in-the-loop</td><td>Human judgment before, during, and after generation.</td><td><a href="tool-model-card-builder.html">Model Card</a></td></tr>
+            <tr><td id="token">Token</td><td>A chunk of text a model processes.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
+            <tr><td id="temperature">Temperature</td><td>How much randomness enters sampling.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
+            <tr><td id="sampling">Greedy vs. sampled</td><td>Greedy always picks the most likely next token; sampling draws from the ranked options (often with top-k).</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
+            <tr><td id="default">Default</td><td>What appears when the prompt does not specify.</td><td><a href="../tools/default-test-comparison-viewer/">Default Test</a></td></tr>
+            <tr><td id="diffusion">Diffusion</td><td>An iterative noise-to-image process.</td><td><a href="tool-diffusion.html">Diffusion Viewer</a></td></tr>
+            <tr><td id="cfg">CFG (guidance)</td><td>How hard image generation is pushed to obey the prompt versus its defaults.</td><td><a href="tool-cfg-scale.html">CFG Scale Visualizer</a></td></tr>
+            <tr><td id="latent">Latent space</td><td>The compressed numeric space a model works in instead of raw pixels or words.</td><td><a href="../tools/latent-space-compressor/">Latent Space Compressor</a></td></tr>
+            <tr><td id="modality">Modality</td><td>A kind of medium a model works in — text, image, or video.</td><td><a href="tools.html">Tool index</a></td></tr>
+            <tr><td id="drift">Drift</td><td>Unwanted change over time.</td><td><a href="tool-temporal-telephone.html">Temporal Telephone</a></td></tr>
+            <tr><td id="spatiotemporal">Spatiotemporal</td><td>Across both space and time — what a video must hold consistent from frame to frame.</td><td><a href="tool-metronome-scrubber.html">Metronome Frame-Scrubber</a></td></tr>
+            <tr><td id="coherence">Coherence</td><td>Staying consistent across frames.</td><td><a href="../tools/video-failure-gallery-viewer/">Video Viewer</a></td></tr>
+            <tr><td id="hallucination">Hallucination</td><td>A plausible output without reliable grounding.</td><td><a href="tool-confidence-truth.html">Claim Checker</a></td></tr>
+            <tr><td id="human-in-the-loop">Human-in-the-loop</td><td>Human judgment before, during, and after generation.</td><td><a href="tool-model-card-builder.html">Model Card</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -343,6 +348,7 @@
   <footer class="footer">
     <div class="wrap">
       <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
       <p class="mono">Vocabulary Field Guide &middot; plain language, visual examples, tool connections.</p>
     </div>
   </footer>

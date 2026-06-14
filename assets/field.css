@@ -1407,3 +1407,8 @@ html[data-skin] .doc-row .d-desc {
   .brand { font-size: 14px; }
   .nav-links .btn { padding: 7px 10px; font-size: 11px; letter-spacing: 0.02em; }
 }
+
+/* footer escape-hatch links (site-audit fix) */
+.footer-links{margin-bottom:10px;font-family:var(--font-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.footer-links a{color:inherit;text-decoration:none}
+.footer-links a:hover{text-decoration:underline;text-underline-offset:3px}
