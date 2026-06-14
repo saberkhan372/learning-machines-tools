@@ -41,6 +41,15 @@ html[data-type="signage"] .hero h1 em { font-style: normal; font-weight: 700; co
   color: var(--muted);
 }
 .hero-principle b { color: var(--ink); font-weight: 500; }
+.hero-dates {
+  margin: 18px 0 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.hero-dates b { color: var(--ink); font-weight: 600; }
+.hero-dates a { color: var(--accent); text-decoration: none; }
+.hero-dates a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .hero-machine-panel {
   margin-top: 22px;
   max-width: 680px;

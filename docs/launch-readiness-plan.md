@@ -121,11 +121,24 @@ the advanced and network-dependent tools pushed to Tier 2.
 | Three-tier quick assignment per session (Foundation / Exploration / Classroom Adaptation) | Proven CC Fest framing; maps to #1 interest (classroom activities, 31/48) | content per session |
 
 ### P2 — polish / further de-overwhelming
-| Item | Why | Effort |
+| Item | Why | Status |
 |---|---|---|
-| Language pass (mono-caps budget, ledes ≤25 words) | Audit overwhelm findings; faster scanning | ~half-day |
-| Full pilot dry-run of one session | `pilot-checklist.md` exists; surfaces timing/tool issues | 90 min |
-| Truth Sieves live-network safety note in studio framing | The only network-dependent tools; keep off the live spine | ~30 min |
+| Language pass (mono-caps budget, ledes ≤25 words) | Audit overwhelm findings; faster scanning | ✅ done (ledes + eyebrow) — homepage lede 52→~33w and two-sentence; session-text/images ledes trimmed; hero eyebrow shortened and dates/deadline moved to a normal-case line by the Register button. **Note:** `.sec-note` turned out to already be lowercase (not the audit's all-caps), so no site-wide CSS change was needed — the only caps offender was the eyebrow. |
+| Full pilot dry-run of one session | `pilot-checklist.md` exists; surfaces timing/tool issues | ✅ done — virtual Session-1 dry-run, all stops clean (see below) |
+| Truth Sieves live-network safety note | The only network-dependent tools; keep off the live spine | ✅ done — "⚠ Needs internet — live Wikipedia lookups" callout added to both sieve tools |
+
+#### Session-1 virtual dry-run (2026-06-13)
+Walked the run-of-show; every stop loads with **no console errors** and the live
+moment works:
+- **Prediction Game (paste warm-up)** — pasted a Zoom-chat block, "Tally
+  guesses →" renders the room's distribution. ✅
+- **Count the Next Token** — button-driven (pick a context word), renders. ✅
+- **Tokenizer + Temperature** — slider updates the readout, the plain-language
+  label ("Near chaos…"), and the canvas; Greedy/Sample/Generate present. ✅
+- **ELIZA Simulator** — input + rule inspection render. ✅
+- **Text Experiment Board** (worksheet) — 33 printable fields, renders. ✅
+
+Still worth a human eyeball: live projection at full screen-share resolution.
 
 ---
 
