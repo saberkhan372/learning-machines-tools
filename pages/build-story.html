@@ -70,10 +70,25 @@
     .bs-swatch .cap b { display: block; }
     .bs-swatch .cap span { color: var(--muted); font-size: 0.74rem; }
 
+    /* prehistory / lineage */
+    .bs-pre { display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 4px; }
+    .bs-pre-row { display: grid; grid-template-columns: 88px 1fr; gap: 0 18px; padding: 14px 0 14px 20px; position: relative; }
+    .bs-pre-row::before {
+      content: ""; position: absolute; left: -7px; top: 20px; width: 10px; height: 10px;
+      border-radius: 50%; background: var(--surface); border: 2px solid var(--muted);
+    }
+    .bs-pre-row.is-bridge::before { background: var(--accent); border-color: var(--accent); }
+    .bs-pre-year { font-family: var(--font-mono); font-size: 0.86rem; font-weight: 600; color: var(--accent); padding-top: 1px; }
+    .bs-pre-row.is-bridge .bs-pre-year { color: var(--accent); }
+    .bs-pre-b h4 { margin: 0 0 4px; font-size: 1.02rem; }
+    .bs-pre-b p { margin: 0; color: var(--ink-soft); line-height: 1.55; max-width: 70ch; }
+    .bs-pre-row.is-bridge .bs-pre-b h4 { color: var(--accent); }
+
     @media (max-width: 720px) {
       .bs-numbers { grid-template-columns: repeat(2, 1fr); }
       .bs-act { grid-template-columns: 1fr; gap: 8px; }
       .bs-bars { height: 132px; }
+      .bs-pre-row { grid-template-columns: 1fr; gap: 4px; }
     }
   </style>
 </head>
@@ -100,14 +115,22 @@
       <h1 class="sess-title" style="font-size: clamp(34px, 5vw, 56px);">How this got built</h1>
       <p class="sub-lede">People asked how the site and tools were made — not the principles (that's the
         <a href="colophon.html">colophon</a>), but the actual story: what got built, in what order, and where it
-        wasn't tidy. This is a maker's log drawn straight from the git history. The timeline is real,
-        gap and typos included.</p>
+        wasn't tidy. It opens before commit 1 — a decade of CC Fest lineage — then follows the git history
+        day by day. The timeline is real, gap and typos included.</p>
     </div>
   </header>
 
   <main class="wrap" style="padding-bottom:56px;">
 
-    <section style="padding:28px 0;">
+    <section style="padding:28px 0 14px;">
+      <div class="sec-rule"><h2 class="sec-no">§ 0 · Before the repo</h2><span class="sec-note">a decade of lineage · 2016 → 2026</span></div>
+      <p class="sub-lede" style="margin-bottom:18px;">The git history starts on May 18, but the camp doesn't. It inherits a ten-year creative-coding
+        festival, a virtual-workshop model, and a high-school course where these exact tools were first built and tested
+        with students. <span style="color:var(--muted)">Lineage drawn from the CC Fest archive and the <a href="../docs/project-brief.html">project brief</a>.</span></p>
+      <div class="bs-pre" data-bs-pre></div>
+    </section>
+
+    <section style="padding:14px 0;">
       <div class="sec-rule"><h2 class="sec-no">§ A · By the numbers</h2><span class="sec-note">27 days, start to launch-ready</span></div>
       <div class="bs-numbers" data-bs-numbers></div>
     </section>
@@ -209,6 +232,17 @@
     function shortDate(iso) {
       var p = iso.split("-");
       return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    }
+
+    /* § 0 — prehistory lineage */
+    var preHost = document.querySelector("[data-bs-pre]");
+    if (preHost && B.prehistory) {
+      preHost.innerHTML = B.prehistory.map(function (p) {
+        return '<div class="bs-pre-row' + (p.bridge ? " is-bridge" : "") + '">' +
+          '<div class="bs-pre-year">' + esc(p.year) + "</div>" +
+          '<div class="bs-pre-b"><h4>' + esc(p.title) + "</h4><p>" + esc(p.note) + "</p></div>" +
+        "</div>";
+      }).join("");
     }
 
     /* § A — numbers */

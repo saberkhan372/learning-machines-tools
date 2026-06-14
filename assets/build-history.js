@@ -10,6 +10,25 @@
 window.LM_BUILD = {
   range: { start: "2026-05-18", end: "2026-06-14", days: 28, commits: 71 },
 
+  /* Before commit 1 — the lineage the git history can't show. Sourced from the
+     CC Fest archive (Notion) and docs/project-brief.md. */
+  prehistory: [
+    { year: "2016", title: "CC Fest is founded",
+      note: "Forty people at NYU ITP on a rainy October day. A free, community-run creative-coding festival — “you don't have to be a coder, you just have to be curious.” Ten years and 20+ countries later, that ethos is still the frame." },
+    { year: "2020", title: "CC Fest goes virtual",
+      note: "The first Zoom edition (July 11, 2020) reaches a global community — and sets the free / virtual / recorded model this camp still runs on." },
+    { year: "2021–24", title: "AI & ML enter the festival",
+      note: "Workshops on machine learning, ethics, and ml5.js join the p5.js core — the festival starts treating AI as something to investigate, not just use." },
+    { year: "2024", title: "CC Fest Teacher Camp",
+      note: "A multi-week cohort for educators — guests, assignment tiers, recaps, a showcase. This camp's run-of-show is modeled directly on it." },
+    { year: "2025–26", title: "“Generative AI as a Creative Collaborator”",
+      note: "Saber Khan & Danny Gámez's Campbell Hall course: language → image → video → final project. The exact arc, the inquiry method, and the first versions of these tools (ELIZA, Default Tests, Temporal Telephone) were built and tested with students here first." },
+    { year: "Spr 2026", title: "CC Fest Coding Camp",
+      note: "The operational template — a two-hour Zoom with 2–4 featured tools, a guest, a participant share, and recordings by Sunday. Learning Machines adapts it from p5.js coding to ML investigation." },
+    { year: "May 18", title: "Commit 1", bridge: true,
+      note: "The course tools, rebuilt from scratch as a public field manual. This is where the git history — and § B below — picks up." }
+  ],
+
   /* [iso date, commit count] for every day in the range */
   daily: [
     ["2026-05-18", 1], ["2026-05-19", 13], ["2026-05-20", 14], ["2026-05-21", 0],
