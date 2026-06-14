@@ -103,6 +103,15 @@
     .bs-tech h4 { margin: 0 0 6px; font-size: 1.02rem; }
     .bs-tech p { margin: 0; line-height: 1.55; color: var(--ink-soft); font-size: 0.93rem; }
 
+    /* AI footprint tables */
+    .bs-foot-table { border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
+    .bs-foot-row { display: grid; grid-template-columns: 1fr 120px; gap: 4px 16px; padding: 13px 16px; border-top: 1px solid var(--line-soft); align-items: baseline; }
+    .bs-foot-row:first-child { border-top: 0; }
+    .bs-foot-row.is-total { background: var(--surface); }
+    .bs-foot-label { font-weight: 600; }
+    .bs-foot-est { font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); text-align: right; font-weight: 600; }
+    .bs-foot-basis { grid-column: 1 / -1; margin: 2px 0 0; color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
+
     @media (max-width: 720px) {
       .bs-numbers { grid-template-columns: repeat(2, 1fr); }
       .bs-act { grid-template-columns: 1fr; gap: 8px; }
@@ -258,6 +267,47 @@
       </div>
     </section>
 
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ G · The AI footprint</h2><span class="sec-note">a rough, honest estimate · big error bars</span></div>
+      <p class="sub-lede" style="margin-bottom:18px;">This camp asks people to make AI's costs and mechanisms visible, so it owes the same of
+        itself. Here is a deliberately rough accounting of the AI used to build the site and tools. <b>Every number below is an
+        order-of-magnitude estimate</b> — the honest answer to “how much AI did this take” includes “we can't measure it
+        precisely, and here's why.” That uncertainty is itself one of the camp's lessons.</p>
+
+      <h3 class="bs-sub" style="margin-top:8px;">Tokens, very approximately</h3>
+      <div class="bs-foot-table" data-bs-tokens></div>
+
+      <h3 class="bs-sub">What that might cost the world</h3>
+      <div class="bs-foot-table" data-bs-impacts></div>
+
+      <div class="bs-parents" style="margin-top:20px;">
+        <div class="bs-parent">
+          <span class="bs-parent-k mono">What this does not count</span>
+          <h4>The big number is elsewhere</h4>
+          <p>This is <b>inference only</b> — the cost of <em>using</em> the models. It excludes the enormous one-time cost of
+            <b>training</b> them (orders of magnitude larger, but shared across billions of queries, so any one project's slice is
+            tiny — yet real), the carbon embodied in the <b>hardware</b>, and the energy of the human side (laptops, network, a
+            month of someone's attention). The ChatGPT/Codex and Notion figures are near-guesses; only the Claude side is
+            estimable from inside this tool, and even that is fuzzy because cached context muddies any token count.</p>
+        </div>
+        <div class="bs-parent">
+          <span class="bs-parent-k mono">Limitations &amp; other impacts</span>
+          <h4>The footprint isn't only carbon</h4>
+          <p>Providers rarely publish per-query energy, so public estimates vary 10–100×; the need to <em>guess</em> here is the
+            real finding. Beyond energy and water there's the <b>human labour</b> behind the models (data annotation, RLHF), and
+            the <b>data provenance</b> question — training sets include creative work used without consent, the same artist-labour
+            and consent issue the camp foregrounds elsewhere. And the trap of scale: each query feels free, while the aggregate is
+            a data-centre build-out. Individual negligibility plus collective magnitude is exactly the pattern worth teaching.</p>
+        </div>
+      </div>
+
+      <div class="bs-frame">
+        <b>How to read these numbers:</b> not as “see, it was cheap,” and not as alarm — but as a worked example of the camp's own
+        method. Make the invisible visible, show the assumptions, state the error bars, and refuse to pretend a confident figure
+        is the same as a correct one. If you can find better data, the estimates live in one file (<code>assets/build-history.js</code>) and are meant to be revised.
+      </div>
+    </section>
+
     <p class="sub-lede" style="margin-top:8px;">Want the principles behind the tools rather than the timeline? That's the
       <a href="colophon.html">colophon &rarr;</a></p>
   </main>
@@ -308,6 +358,31 @@
       techHost.innerHTML = B.techniques.map(function (t) {
         return '<div class="bs-tech"><h4>' + esc(t.title) + "</h4><p>" + esc(t.body) + "</p></div>";
       }).join("");
+    }
+
+    /* § G — AI footprint */
+    var fp = B.aiFootprint;
+    if (fp) {
+      var tokHost = document.querySelector("[data-bs-tokens]");
+      if (tokHost) {
+        tokHost.innerHTML = fp.tokens.map(function (r) {
+          return '<div class="bs-foot-row' + (r.total ? " is-total" : "") + '">' +
+            '<span class="bs-foot-label">' + esc(r.source) + "</span>" +
+            '<span class="bs-foot-est">' + esc(r.est) + "</span>" +
+            '<p class="bs-foot-basis">' + esc(r.basis) + "</p>" +
+          "</div>";
+        }).join("");
+      }
+      var impHost = document.querySelector("[data-bs-impacts]");
+      if (impHost) {
+        impHost.innerHTML = fp.impacts.map(function (r) {
+          return '<div class="bs-foot-row">' +
+            '<span class="bs-foot-label">' + esc(r.metric) + "</span>" +
+            '<span class="bs-foot-est">' + esc(r.est) + "</span>" +
+            '<p class="bs-foot-basis">' + esc(r.note) + "</p>" +
+          "</div>";
+        }).join("");
+      }
     }
 
     /* § A — numbers */

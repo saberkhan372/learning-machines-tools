@@ -105,5 +105,30 @@ window.LM_BUILD = {
       body: "A loop that repeats all over the commit log: write down what's actually wrong, lay out the options, confirm a direction, build it on a branch, and commit with a message that explains the why, not just the what. The honesty of the timeline is a side effect of that discipline." },
     { title: "Ship reversibly, degrade honestly",
       body: "Big changes land as visible phases, not one drop, so any step can be undone. Things that aren't ready yet — recaps, async prompts — render as labelled placeholders that point somewhere real instead of dead-ending. Nothing pretends to be finished before it is." }
-  ]
+  ],
+
+  /* A deliberately rough accounting of the AI used to build this. Every number
+     is an order-of-magnitude estimate with wide error bars — the uncertainty is
+     the point, not a flaw. Methodology and exclusions are spelled out on the
+     page. Edit these as better data appears. */
+  aiFootprint: {
+    tokens: [
+      { source: "Claude (Claude Code build sessions)", est: "~20–80 M",
+        basis: "The main code-and-prose partner across dozens of agentic sessions; large file contexts re-read each turn. The biggest single share." },
+      { source: "ChatGPT / Codex (cross-checks, copy)", est: "~5–20 M",
+        basis: "Used to draft and to audit Claude's work — the two models checked against each other. Volume unknown to this tool; estimated by analogy." },
+      { source: "Notion AI (planning, recap drafts)", est: "~1–5 M",
+        basis: "Curriculum hub, plans, and recap drafts. Smallest share; also a guess." },
+      { source: "Total — order of magnitude", est: "~30–100 M", total: true,
+        basis: "Call it tens of millions of tokens of inference. Could be 2–3× off in either direction." }
+    ],
+    impacts: [
+      { metric: "Energy", est: "~10–60 kWh",
+        note: "At a rough ~0.3–1 Wh per 1,000 tokens. ≈ a laptop running for one to four weeks, or roughly a day or two of a typical home's electricity." },
+      { metric: "Carbon", est: "~5–25 kg CO₂e",
+        note: "At a grid-average ~0.35 kg/kWh. ≈ driving 15–70 miles in an average petrol car, or a couple of servings of beef." },
+      { metric: "Water", est: "~10–200 L",
+        note: "Datacentre cooling, on- and off-site. The widest range here — public figures vary enormously by site and season." }
+    ]
+  }
 };
