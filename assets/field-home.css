@@ -672,3 +672,21 @@ html[data-skin="home-sampler"] .session-row[data-skin-row="studio-synthesis"]::a
   .ledger .cell:nth-child(-n+2) { border-top: 0; }
   .browser-head { flex-direction: column; align-items: flex-start; }
 }
+
+/* Repeat registration CTA — catches a convinced scroller before the
+   Materials library. Mirrors the hero ask lower on the page. */
+.register-band {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.register-band .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 28px;
+}
+.register-band .rb-copy { flex: 1 1 320px; }
+.register-band h2 { margin: 0 0 6px; }
+.register-band p { margin: 0; color: var(--ink-soft); }
+.register-band p b { color: var(--ink); font-weight: 600; }
+.register-band .rb-actions { display: flex; flex-wrap: wrap; gap: 12px; }
