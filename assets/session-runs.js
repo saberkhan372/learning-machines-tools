@@ -17,6 +17,7 @@ window.LM_SESSION_RUNS = [
     when: "Sat July 11 · 9–11 am PT", date: "2026-07-11",
     explore: "Tokens, prediction, and temperature — and why fluent output isn't the same as understanding.",
     asyncPrompt: null,
+    recap: { video: null, written: null, writtenHref: null },
     facilitation: "pages/docs-session-1-facilitation.html",
     overview: "pages/session-text.html",
     steps: [
@@ -55,6 +56,7 @@ window.LM_SESSION_RUNS = [
     when: "Sat July 18 · 9–11 am PT", date: "2026-07-18",
     explore: "Pixels, features, and diffusion — and the visual defaults a model fills in when you don't.",
     asyncPrompt: null,
+    recap: { video: null, written: null, writtenHref: null },
     facilitation: "pages/docs-session-2-facilitation.html",
     overview: "pages/session-images.html",
     steps: [
@@ -89,6 +91,7 @@ window.LM_SESSION_RUNS = [
     when: "Sat July 25 · 9–11 am PT", date: "2026-07-25",
     explore: "Time, drift, and coherence — and why moving images are harder than single frames.",
     asyncPrompt: null,
+    recap: { video: null, written: null, writtenHref: null },
     facilitation: "pages/docs-session-3-facilitation.html",
     overview: "pages/session-video.html",
     steps: [
@@ -120,6 +123,7 @@ window.LM_SESSION_RUNS = [
     when: "Optional studio · presentation format", date: null,
     explore: "Show what you made, document the evidence behind it, and adapt it for a classroom.",
     asyncPrompt: null,
+    recap: { video: null, written: null, writtenHref: null },
     facilitation: "pages/docs-session-4-facilitation.html",
     overview: "pages/session-showcase.html",
     toolkit: [

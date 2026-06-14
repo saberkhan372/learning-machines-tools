@@ -208,10 +208,15 @@
       var prompt = run.asyncPrompt
         ? '<p><b>Before next time:</b> ' + esc(run.asyncPrompt) + "</p>"
         : '<p class="ts-async-todo">Async catch-up prompt — coming soon</p>';
+      var rc = run.recap || {};
+      var recapReady = rc.video || rc.written || rc.writtenHref;
+      var recapHref = run.overview.replace(/^pages\//, "") + "#recap";
+      var catchUp = recapReady
+        ? 'Catch up any time: <a href="' + esc(recapHref) + '">watch the recap</a> and run the worksheet against the frozen prompt pack on the session page.'
+        : 'The recap posts after the session — find it, plus the worksheet and prompt pack, on the <a href="' + esc(recapHref) + '">session page</a>.';
       return '<div class="ts-last">' +
         "<h3>Last time · " + esc(run.title) + "</h3>" +
-        "<p>Catch up any time: watch the recording and run the worksheet against the frozen prompt pack on the " +
-          '<a href="' + esc(run.overview.replace(/^pages\//, "")) + '">session page</a>.</p>' +
+        "<p>" + catchUp + "</p>" +
         prompt +
         "</div>";
     }
