@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-projection>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>This Saturday · Your camp &mdash; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-tool.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <script src="../assets/session-runs.js"></script>
+  <style>
+    .sub-lede { color: var(--ink-soft); max-width: 60ch; margin-top: 10px; line-height: 1.55; }
+
+    .ts-status {
+      font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .ts-card {
+      border: 1px solid var(--line); border-left: 3px solid var(--accent);
+      border-radius: 2px; background: var(--surface); padding: 22px 24px; margin: 14px 0 26px;
+    }
+    .ts-card h2 { margin: 4px 0 2px; font-size: 1.5rem; }
+    .ts-kicker { color: var(--muted); font-size: 0.95rem; }
+    .ts-when {
+      font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft);
+      margin: 10px 0 16px;
+    }
+    .ts-when a { color: var(--accent); text-decoration: none; }
+    .ts-when a:hover { text-decoration: underline; }
+    .ts-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+
+    .ts-grid { display: grid; grid-template-columns: 130px 1fr; gap: 12px 18px; }
+    .ts-grid dt {
+      font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted); padding-top: 3px;
+    }
+    .ts-grid dd { margin: 0; }
+    .ts-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ts-chip {
+      display: inline-flex; align-items: baseline; gap: 7px; text-decoration: none;
+      border: 1px solid var(--line); border-radius: 2px; padding: 6px 11px;
+      color: var(--text); font-size: 0.9rem;
+    }
+    .ts-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .ts-chip .ts-flag {
+      font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .ts-explore { line-height: 1.5; }
+
+    .ts-last {
+      border: 1px solid var(--line-soft); border-radius: 2px; padding: 16px 18px; margin-bottom: 26px;
+    }
+    .ts-last h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .ts-last p { margin: 0 0 8px; color: var(--ink-soft); line-height: 1.5; }
+    .ts-async-todo {
+      font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted);
+      border: 1px dashed var(--line); border-radius: 2px; padding: 8px 10px; display: inline-block;
+    }
+
+    .ts-arc { display: grid; gap: 8px; margin-top: 8px; }
+    .ts-arc-row {
+      display: flex; align-items: baseline; gap: 12px; padding: 11px 14px;
+      border: 1px solid var(--line-soft); border-radius: 2px;
+    }
+    .ts-arc-row.is-now { border-color: var(--accent); }
+    .ts-dot {
+      width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--muted);
+      flex: 0 0 auto; align-self: center;
+    }
+    .ts-arc-row.is-done .ts-dot { background: var(--muted); }
+    .ts-arc-row.is-now .ts-dot { background: var(--accent); border-color: var(--accent); }
+    .ts-arc-when {
+      font-family: var(--font-mono); font-size: 0.76rem; color: var(--muted); margin-left: auto;
+    }
+    .ts-arc-row a { text-decoration: none; color: var(--text); font-weight: 600; }
+    .ts-arc-row a:hover { color: var(--accent); }
+
+    .ts-enroll-note { margin-top: 24px; color: var(--muted); font-size: 0.86rem; }
+    .ts-enroll-note a { color: var(--accent); }
+
+    @media (max-width: 600px) { .ts-grid { grid-template-columns: 1fr; gap: 4px 0; } .ts-grid dt { padding-top: 10px; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="camp-2026.html" class="hide-sm">Dates &amp; logistics</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a class="btn btn-sm" href="../index.html">Back home</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <span>This Saturday</span>
+      </div>
+      <h1>This Saturday</h1>
+      <p class="sub-lede">Your home for the camp: what's happening next, the tools you'll open,
+        and what to do between sessions. Bookmark this page and check back each week.</p>
+    </div>
+  </header>
+
+  <main class="wrap" style="padding-bottom:48px;">
+    <div data-this-saturday></div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="camp-2026.html">Dates &amp; logistics</a> · <a href="tools.html">Tool index</a> · <a href="../index.html#pathways">Pathways</a></nav>
+      <p class="mono">Static HTML &middot; vanilla JavaScript &middot; no required accounts &middot; recordings are shared with registered participants only.</p>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var RUNS = window.LM_SESSION_RUNS || [];
+    var JOIN_URL = "https://ccfest.rocks/ccfest-camp";
+    var host = document.querySelector("[data-this-saturday]");
+
+    function absUrl(path) { return new URL("../" + path, window.location.href).href; }
+    function esc(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+    function parseDate(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+    function dayStart(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+    function diffDays(dateStr, today) {
+      return Math.round((parseDate(dateStr) - today) / 86400000);
+    }
+    function dateLabel(dateStr) {
+      return parseDate(dateStr).toLocaleDateString(undefined,
+        { weekday: "long", month: "long", day: "numeric" });
+    }
+
+    /* participant-facing tool list: toolkit first, then per-step, deduped */
+    function toolsFor(run) {
+      var tools = [];
+      (run.toolkit || []).forEach(function (t) { tools.push(t); });
+      (run.steps || []).forEach(function (s) { (s.tools || []).forEach(function (t) { tools.push(t); }); });
+      var seen = {}, out = [];
+      tools.forEach(function (t) { if (!seen[t.path]) { seen[t.path] = 1; out.push(t); } });
+      return out;
+    }
+
+    function calUrl(run) {
+      /* 9–11 am PT = 16:00–18:00 UTC on the session date */
+      var d = run.date.replace(/-/g, "");
+      var dates = d + "T160000Z/" + d + "T180000Z";
+      return "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+        "&text=" + encodeURIComponent("Learning Machines · " + run.title) +
+        "&dates=" + dates +
+        "&details=" + encodeURIComponent("CC Fest Learning Machines camp. Join link: " + JOIN_URL) +
+        "&location=Zoom";
+    }
+
+    function chips(run) {
+      var ts = toolsFor(run);
+      if (!ts.length) return "<span class=\"ts-kicker\">—</span>";
+      return '<div class="ts-chips">' + ts.map(function (t) {
+        var flag = t.worksheet ? '<span class="ts-flag">worksheet</span>'
+          : (t.optional ? '<span class="ts-flag">optional</span>' : "");
+        return '<a class="ts-chip" href="' + esc(absUrl(t.path)) + '">' + esc(t.name) + flag + "</a>";
+      }).join("") + "</div>";
+    }
+
+    function focusCard(run, status, showJoin) {
+      var when = run.date
+        ? esc(dateLabel(run.date)) + " · 9–11 am PT · <a href=\"camp-2026.html\">your timezone →</a>"
+        : esc(run.when);
+      var actions = "";
+      if (showJoin && run.date) {
+        actions = '<div class="ts-actions">' +
+          '<a class="btn btn-primary" href="' + JOIN_URL + '">' + (status === "today" ? "Join the session →" : "Register / get the join link →") + "</a>" +
+          '<a class="btn" href="' + esc(calUrl(run)) + '">Add to calendar</a>' +
+          "</div>";
+      }
+      var statusText = status === "today" ? "Today"
+        : status === "after" ? "Camp wrap-up"
+        : ("Next up · " + run._days + (run._days === 1 ? " day" : " days"));
+      return '<p class="ts-status">' + esc(statusText) + "</p>" +
+        '<div class="ts-card">' +
+          '<h2>' + esc(run.title) + "</h2>" +
+          '<div class="ts-kicker">' + esc(run.kicker) + "</div>" +
+          '<div class="ts-when">' + when + "</div>" +
+          actions +
+          '<dl class="ts-grid">' +
+            "<dt>Explore</dt><dd class=\"ts-explore\">" + esc(run.explore || "") + "</dd>" +
+            "<dt>Tools you'll open</dt><dd>" + chips(run) + "</dd>" +
+            "<dt>Your pathway</dt><dd class=\"ts-explore\"><a href=\"../index.html#pathways\">Use · Observe · Teach · Build</a> — or the <a href=\"no-ai-pathway.html\">No-AI pathway</a>.</dd>" +
+          "</dl>" +
+        "</div>";
+    }
+
+    function lastBlock(run) {
+      var prompt = run.asyncPrompt
+        ? '<p><b>Before next time:</b> ' + esc(run.asyncPrompt) + "</p>"
+        : '<p class="ts-async-todo">Async catch-up prompt — coming soon</p>';
+      return '<div class="ts-last">' +
+        "<h3>Last time · " + esc(run.title) + "</h3>" +
+        "<p>Catch up any time: watch the recording and run the worksheet against the frozen prompt pack on the " +
+          '<a href="' + esc(run.overview.replace(/^pages\//, "")) + '">session page</a>.</p>' +
+        prompt +
+        "</div>";
+    }
+
+    function arc(runs, focusId) {
+      var rows = runs.map(function (r) {
+        var cls = "ts-arc-row";
+        if (r.id === focusId) cls += " is-now";
+        else if (r._state === "done") cls += " is-done";
+        var when = r.date ? esc(dateLabel(r.date)) : "Optional studio";
+        return '<div class="' + cls + '"><span class="ts-dot"></span>' +
+          '<a href="' + esc(r.overview.replace(/^pages\//, "")) + '">' + esc(r.title) + "</a>" +
+          '<span class="ts-arc-when">' + when + "</span></div>";
+      }).join("");
+      return '<h2 style="margin:8px 0 4px;font-size:1.05rem;">The arc</h2><div class="ts-arc">' + rows + "</div>";
+    }
+
+    function render() {
+      if (!RUNS.length) { host.innerHTML = "<p>Session data unavailable.</p>"; return; }
+      var today = dayStart(new Date());
+      var dated = RUNS.filter(function (r) { return r.date; });
+      dated.forEach(function (r) { r._days = diffDays(r.date, today); });
+
+      var todayRun = dated.filter(function (r) { return r._days === 0; })[0];
+      var upcoming = dated.filter(function (r) { return r._days > 0; }).sort(function (a, b) { return a._days - b._days; });
+      var past = dated.filter(function (r) { return r._days < 0; });
+
+      /* mark arc state */
+      RUNS.forEach(function (r) {
+        if (r.date && diffDays(r.date, today) < 0) r._state = "done";
+        else r._state = "";
+      });
+
+      var html = "", focusId;
+      if (todayRun) {
+        focusId = todayRun.id;
+        html += focusCard(todayRun, "today", true);
+      } else if (upcoming.length) {
+        focusId = upcoming[0].id;
+        html += focusCard(upcoming[0], "upcoming", true);
+        if (past.length) html += lastBlock(past[past.length - 1]);
+      } else {
+        /* all sessions past — point at the studio / wrap-up */
+        var studio = RUNS.filter(function (r) { return !r.date; })[0];
+        if (studio) { focusId = studio.id; html += focusCard(studio, "after", false); }
+        if (past.length) html += lastBlock(past[past.length - 1]);
+      }
+
+      html += arc(RUNS, focusId);
+      html += '<p class="ts-enroll-note">Not registered yet? The camp is free — ' +
+        '<a href="' + JOIN_URL + '">register at ccfest.rocks</a> (interest form due July 4).</p>';
+      host.innerHTML = html;
+    }
+
+    render();
+  })();
+  </script>
+</body>
+</html>

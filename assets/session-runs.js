@@ -14,7 +14,9 @@ window.LM_SESSION_RUNS = [
   {
     id: "1", num: "01", mod: "text",
     title: "Session 1 — Text", kicker: "How machines write",
-    when: "Sat July 11 · 9–11 am PT",
+    when: "Sat July 11 · 9–11 am PT", date: "2026-07-11",
+    explore: "Tokens, prediction, and temperature — and why fluent output isn't the same as understanding.",
+    asyncPrompt: null,
     facilitation: "pages/docs-session-1-facilitation.html",
     overview: "pages/session-text.html",
     steps: [
@@ -50,7 +52,9 @@ window.LM_SESSION_RUNS = [
   {
     id: "2", num: "02", mod: "image",
     title: "Session 2 — Images", kicker: "How machines imagine",
-    when: "Sat July 18 · 9–11 am PT",
+    when: "Sat July 18 · 9–11 am PT", date: "2026-07-18",
+    explore: "Pixels, features, and diffusion — and the visual defaults a model fills in when you don't.",
+    asyncPrompt: null,
     facilitation: "pages/docs-session-2-facilitation.html",
     overview: "pages/session-images.html",
     steps: [
@@ -82,7 +86,9 @@ window.LM_SESSION_RUNS = [
   {
     id: "3", num: "03", mod: "video",
     title: "Session 3 — Video", kicker: "How machines move",
-    when: "Sat July 25 · 9–11 am PT",
+    when: "Sat July 25 · 9–11 am PT", date: "2026-07-25",
+    explore: "Time, drift, and coherence — and why moving images are harder than single frames.",
+    asyncPrompt: null,
     facilitation: "pages/docs-session-3-facilitation.html",
     overview: "pages/session-video.html",
     steps: [
@@ -111,7 +117,9 @@ window.LM_SESSION_RUNS = [
   {
     id: "studio", num: "04", mod: "cross",
     title: "Studio — Showcase", kicker: "Human in the loop",
-    when: "Optional studio · presentation format",
+    when: "Optional studio · presentation format", date: null,
+    explore: "Show what you made, document the evidence behind it, and adapt it for a classroom.",
+    asyncPrompt: null,
     facilitation: "pages/docs-session-4-facilitation.html",
     overview: "pages/session-showcase.html",
     toolkit: [
