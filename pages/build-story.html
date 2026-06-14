@@ -84,11 +84,31 @@
     .bs-pre-b p { margin: 0; color: var(--ink-soft); line-height: 1.55; max-width: 70ch; }
     .bs-pre-row.is-bridge .bs-pre-b h4 { color: var(--accent); }
 
+    /* prehistory prose: two parents + consent frame */
+    .bs-sub { margin: 30px 0 14px; font-size: 1.15rem; }
+    .bs-parents { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .bs-parent { border: 1px solid var(--line); border-radius: 2px; background: var(--surface); padding: 18px 20px; }
+    .bs-parent-k { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+    .bs-parent h4 { margin: 6px 0 8px; font-size: 1.06rem; }
+    .bs-parent p { margin: 0; line-height: 1.6; color: var(--ink-soft); }
+    .bs-frame {
+      margin-top: 18px; border-left: 3px solid var(--accent); background: var(--surface);
+      padding: 16px 20px; border-radius: 0 2px 2px 0; line-height: 1.6; color: var(--ink-soft); max-width: 78ch;
+    }
+    .bs-frame b { color: var(--ink); }
+
+    /* techniques cards */
+    .bs-techs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
+    .bs-tech { background: var(--surface); padding: 18px 20px; }
+    .bs-tech h4 { margin: 0 0 6px; font-size: 1.02rem; }
+    .bs-tech p { margin: 0; line-height: 1.55; color: var(--ink-soft); font-size: 0.93rem; }
+
     @media (max-width: 720px) {
       .bs-numbers { grid-template-columns: repeat(2, 1fr); }
       .bs-act { grid-template-columns: 1fr; gap: 8px; }
       .bs-bars { height: 132px; }
       .bs-pre-row { grid-template-columns: 1fr; gap: 4px; }
+      .bs-parents, .bs-techs { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -128,6 +148,36 @@
         festival, a virtual-workshop model, and a high-school course where these exact tools were first built and tested
         with students. <span style="color:var(--muted)">Lineage drawn from the CC Fest archive and the <a href="../docs/project-brief.html">project brief</a>.</span></p>
       <div class="bs-pre" data-bs-pre></div>
+
+      <h3 class="bs-sub">Two direct parents</h3>
+      <div class="bs-parents">
+        <div class="bs-parent">
+          <span class="bs-parent-k mono">The course</span>
+          <h4>Generative AI as a Creative Collaborator</h4>
+          <p>A 2025–26 Campbell Hall course co-taught by Saber Khan and Danny Gámez with a class of sixteen students.
+            It runs language → image → video → a final film pitch — the same arc this camp uses — and its defining idea is
+            <b>prompting as experimental design</b>: change one variable, compare outputs, treat the artifacts as evidence.
+            That is, almost verbatim, the camp's investigation method. The first working versions of ELIZA-vs-LLM, the
+            Default Test, and the Temporal Telephone were built and pressure-tested with those students before any of them
+            became a public tool.</p>
+        </div>
+        <div class="bs-parent">
+          <span class="bs-parent-k mono">The camp</span>
+          <h4>CC Fest Coding Camp</h4>
+          <p>Four iterations in eighteen months — a 10-session Fall 2024 prototype, compressed to five sessions, then
+            reshaped into a designed learning community, then a community of practice by Spring 2026. It supplied the whole
+            operating model: a two-hour Zoom around 2–4 featured tools, a guest, a participant share, assignment tiers,
+            Notion recaps, and recordings by Sunday. Learning Machines keeps the machinery and swaps p5.js coding for ML
+            investigation.</p>
+        </div>
+      </div>
+
+      <div class="bs-frame">
+        <b>The most honest piece of the origin:</b> the no-AI pathway and the consent protocol aren't decoration. Spring 2026
+        feedback was clear that the camp's <em>AI use had grown faster than the consent infrastructure around it</em> — a
+        participant raised real concerns about data, artist labor, naming people accurately in recaps, and being able to opt
+        out. The ethics layer in this repo is a direct response to that criticism, not an afterthought bolted on at launch.
+      </div>
     </section>
 
     <section style="padding:14px 0;">
@@ -154,7 +204,14 @@
     </section>
 
     <section style="padding:14px 0 28px;">
-      <div class="sec-rule"><h2 class="sec-no">§ D · How it's built</h2><span class="sec-note">no build step · static HTML · GitHub Pages</span></div>
+      <div class="sec-rule"><h2 class="sec-no">§ D · Ideas &amp; techniques</h2><span class="sec-note">the interesting methods, with the evidence</span></div>
+      <p class="sub-lede" style="margin-bottom:18px;">A few methods did most of the work and are worth naming on their own —
+        some about building with AI, some about building so it lasts.</p>
+      <div class="bs-techs" data-bs-techs></div>
+    </section>
+
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ E · How it's built</h2><span class="sec-note">no build step · static HTML · GitHub Pages</span></div>
       <p class="sub-lede" style="margin-bottom:18px;">The architecture is deliberately boring so it survives a live session
         and outlives the camp: every tool is a single self-contained HTML file, a thin shared <code>assets/</code> layer
         gives them one look and a few data files, and the whole thing is static — no bundler, no accounts, no server.</p>
@@ -189,7 +246,7 @@
     </section>
 
     <section style="padding:14px 0 28px;">
-      <div class="sec-rule"><h2 class="sec-no">§ E · The look, in three moves</h2><span class="sec-note">cream → dark-first → four switchable skins</span></div>
+      <div class="sec-rule"><h2 class="sec-no">§ F · The look, in three moves</h2><span class="sec-note">cream → dark-first → four switchable skins</span></div>
       <p class="sub-lede" style="margin-bottom:18px;">The visual identity changed twice. The original tools were warm cream paper.
         The redesign went dark-first with a shared system. Then identity arrived: one switcher that flips the whole site
         between four looks, persisted per visitor.</p>
@@ -242,6 +299,14 @@
           '<div class="bs-pre-year">' + esc(p.year) + "</div>" +
           '<div class="bs-pre-b"><h4>' + esc(p.title) + "</h4><p>" + esc(p.note) + "</p></div>" +
         "</div>";
+      }).join("");
+    }
+
+    /* § D — techniques */
+    var techHost = document.querySelector("[data-bs-techs]");
+    if (techHost && B.techniques) {
+      techHost.innerHTML = B.techniques.map(function (t) {
+        return '<div class="bs-tech"><h4>' + esc(t.title) + "</h4><p>" + esc(t.body) + "</p></div>";
       }).join("");
     }
 
