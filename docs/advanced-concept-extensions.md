@@ -5,7 +5,7 @@ title: Advanced Concept Extensions
 
 # Advanced Concept Extensions
 
-Status: **planning reference / not a shipped tool list**
+Status: **post-launch backlog / not required for launch** · last reviewed 2026-06-13
 
 This document captures deeper backend concepts that could extend *Learning
 Machines* after the launch-ready field manual. It is meant to guide future
@@ -19,6 +19,28 @@ The core standard still applies:
 Every proposed extension should make one hidden mechanism visible, preserve the
 participation pathways, and remain account-free for the core teaching moment.
 
+## Launch Positioning (read first)
+
+**Nothing in this document is required for launch.** The launch field manual
+already ships 25 tools (Text 6 · Images 8 · Video 4 · cross-session), which is
+more than a live session can use. Sized against how a CC Fest session actually
+runs, the advanced layer is a *post-launch, poll-driven backlog*, not a build
+list to clear before July.
+
+**How a live session actually budgets tools.** A CC Fest Saturday is a two-hour
+Zoom that also carries a guest speaker (~20–30 min), a returning-participant
+share (~8 min), intros, and live making time — the ML session run-of-show is
+~90 minutes inside that window. In practice each p5.js session *featured only
+2–4 purpose-built tools*, and several were built mid-cohort in response to
+"magic moments" rather than pre-loaded. The same budget applies here: feature a
+small set live, keep the rest as a library.
+
+**Where the advanced tools belong.** Treat the shipped advanced tools as the
+**Investigate / studio path**, not as Session 2–3 core. They serve the learner
+doing a model-behavior investigation (the #2 "want to make" in the interest
+data) — not the beginner arc. Let the Session-1 interest poll decide which, if
+any, of the remaining proposals get built between Saturdays.
+
 ## Current Baseline
 
 The repo already has launch-ready tools for the main investigation arc:
@@ -26,9 +48,9 @@ The repo already has launch-ready tools for the main investigation arc:
 | Area | Existing coverage |
 |---|---|
 | Text | Tokenization, temperature, next-token prediction, bigram counting, ELIZA, confidence vs. truth |
-| Images | Diffusion step-through, feature extraction, default testing, prompt guidance, CFG scale, latent-space exploration, dataset balance |
-| Video | Temporal Telephone, video failure gallery, frame-by-frame coherence |
-| Cross-session | A/B/C comparison, model cards, access tiers, evidence wall, concept bridges, classroom activity builder |
+| Images | Diffusion step-through, feature extraction, default testing, prompt guidance, CFG scale, latent-space exploration, **latent-space compression (VAE)**, dataset balance |
+| Video | Temporal Telephone, video failure gallery, frame-by-frame coherence, **metronome frame-scrubber (temporal attention)** |
+| Cross-session | A/B/C comparison, model cards, access tiers, evidence wall, concept bridges, classroom activity builder, **network-grounded + relational truth sieves** |
 
 `tools/latent-space-explorer/` is already launch-ready. Future embedding work
 should extend or reference that tool rather than duplicate it.
@@ -46,27 +68,39 @@ we observe and test in a browser workshop?" The next-wave layer should answer
 "what mathematical bridge or training process made that behaviour possible?"
 
 Participant interest data supports adding this layer as an optional extension,
-not as a replacement for the current beginner path. In 43 interest-form
+not as a replacement for the current beginner path. In 48 interest-form
 responses, the largest signals were:
 
-- 27 respondents selected designing classroom activities about AI.
-- 22 selected making creative work with AI tools.
-- 21 selected ethics of generative AI.
-- 20 selected how image generators work.
-- 18 selected AI bias/defaults and 18 selected informed understanding.
-- 14 selected how video generation handles time and motion.
-- Open responses also asked for "nuts and bolts," math, local/free model
-  access, and whether the camp would build any models from scratch.
+- 31 respondents selected designing classroom activities about AI.
+- 25 selected making creative work with AI tools.
+- 23 selected ethics of generative AI.
+- 22 selected how image generators work.
+- 21 selected informed understanding; 19 selected AI bias/defaults.
+- 15 selected how video generation handles time and motion.
+- 10 selected how language models generate text.
+- Only **2** explicitly selected under-the-hood mechanics (attention,
+  embeddings, positional encoding). Open responses asked for "nuts and bolts,"
+  math, local/free model access, and whether the camp would build models from
+  scratch — a vocal minority, not the median learner.
 
 The resulting design constraint is: keep the core sessions approachable and
 account-free, but add optional "under the hood" extensions for learners who want
-the machinery.
+the machinery. The small explicit-mechanics signal (2 of 48) is why this layer
+is a backlog, not a launch requirement.
 
 ## Shipped Advanced Concepts
 
 | Concept | Tool | What it adds |
 |---|---|---|
-| Classifier-free guidance (CFG) | `tools/cfg-scale-visualizer/` | Shows prompt pressure moving from loose to useful to over-forced, making it clear that guidance is not the same as quality |
+| Classifier-free guidance (CFG) | `tools/cfg-scale-visualizer/` | Shows prompt pressure moving from loose to useful to over-forced, making it clear that guidance is not the same as quality. Consolidated 2026-06: canvas morph (cherries → broccoli → breakdown) + live guidance-vector diagram |
+| VAE / latent compression | `tools/latent-space-compressor/` | Compress an image into a tiny latent grid and decode it back; sample from random latents to show generative hallucination. Pairs with `latent-space-explorer` (compression vs. similarity) |
+| Temporal attention | `tools/metronome-frame-scrubber/` | Widen/shrink the temporal-window to lock motion or induce spatiotemporal drift; onion-skin trail makes the memory span visible |
+| Network-grounded verification | `tools/network-grounded-truth-sieve/` | Strips a passage to proper-noun phrases + dates and runs a live Wikipedia existence audit on each anchor (Level 1) |
+| Relational co-occurrence | `tools/relational-co-occurrence-sieve/` | Pulls the subject's real Wikipedia page and checks every other anchor actually appears on it — catches "Lincoln used an iPhone in 1865" (Level 2). Uses the live Wikipedia API |
+
+> Note: the two truth sieves are the only tools on the site that depend on a
+> live network (Wikipedia). That is a deliberate exception to the offline
+> constraint, documented in the README, because the lesson *is* the live lookup.
 
 ## Proposed Concept Gaps
 
@@ -77,20 +111,23 @@ the machinery.
 | Text / cross | Attention and context windows | Makes selective focus and forgetting visible | Small interactive map plus Zoom memory activity |
 | Image / video | Text encoder / cross-modal alignment | Shows that image and video systems need a bridge from human words into learned numeric prompt space, often taught through CLIP-like alignment | Prompt-to-vector map paired with image-neighbor retrieval |
 | Images | Forward diffusion | Explains why reverse denoising training works by first destroying images | Slider or paired forward/reverse viewer |
-| Images | VAE / latent compression | Shows why image models operate in compressed latent space rather than raw pixels | Interactive compressor |
-| Video | Temporal attention / cross-frame consistency | Shows how video tries to keep identity, physics, and scene layout stable | Frame scrubber / attention-window visualizer |
+| ~~Images~~ | ~~VAE / latent compression~~ ✅ shipped | Now `tools/latent-space-compressor/` | — |
+| ~~Video~~ | ~~Temporal attention / cross-frame consistency~~ ✅ shipped | Now `tools/metronome-frame-scrubber/` | — |
 | Video | Optical flow | Makes motion vectors and frame-to-frame displacement visible | Vector-field overlay |
 | Text / cross | Custom embedding data | Lets learners load a small local CSV of their own items into the latent map, showing embeddings are data, not magic | Stretch extension of `tools/latent-space-explorer/` (local file read; stays offline) |
 | Image / cross | User-supplied visual presets | Lets facilitators test edge cases and defaults with local classroom-safe images instead of only procedural examples | Local file drop zone with no upload and clear consent warning |
 
 ## Proposed Tools
 
-These are next-wave candidates, not launch-ready repo tools.
+These are next-wave candidates, not launch-ready repo tools. **Tools 22 and 23
+have shipped** (see Shipped Advanced Concepts above) — `latent-space-compressor`
+and `metronome-frame-scrubber` respectively — and are left here only as struck
+references so the numbering stays stable.
 
 | Candidate | Working name | Session | Core interaction | Notes |
 |---|---|---|---|---|
-| Tool 22 | Latent Space Compressor / VAE Simulator | 2 · Images | Choose an image preset, compress it into a small latent grid, then reconstruct it | Should use image presets, visible reconstruction loss, and optional random latent sampling |
-| Tool 23 | Temporal Attention Tracker | 3 · Video | Scrub frames while changing the attention window / memory span | Avoid autoplay assumptions; make any audio user-triggered and optional |
+| ~~Tool 22~~ ✅ | ~~Latent Space Compressor / VAE Simulator~~ | 2 · Images | Shipped as `tools/latent-space-compressor/` | — |
+| ~~Tool 23~~ ✅ | ~~Temporal Attention Tracker~~ | 3 · Video | Shipped as `tools/metronome-frame-scrubber/` | — |
 | Tool 24 | Forward Diffusion Trainer | 2 · Images | Move one slider forward into noise and backward into reconstruction | Should pair training direction with generation direction |
 | Tool 25 | Backpropagation Role-Play | 1 · Text / cross | Human model predicts, receives error, updates a visible rule or weight | Better as printable or Zoom activity than a screen-first tool |
 | Tool 26 | Optical Flow Field Viewer | 3 · Video | Compare two frames and show arrows for motion displacement | Can be simulated with simple inline SVG/canvas frames |
@@ -149,24 +186,27 @@ Field Manual identity or become the site-wide metaphor.
 
 ## Recommended Order
 
-1. **VAE / Latent Compressor**
-   Deepens the existing Latent Space Explorer and diffusion tools.
-2. **Positional Encoding Line**
-   Smallest missing text-mechanics bridge: it clarifies why order has to become
-   math before attention can use it.
-3. **Prompt Alignment Bridge**
+Done: ~~VAE / Latent Compressor~~ ✅ · ~~Temporal Attention Tracker~~ ✅.
+Remaining, in priority order — and all post-launch / poll-driven:
+
+1. **Positional Encoding Line** *(the only one worth considering pre-launch)*
+   Smallest missing text-mechanics bridge and the one genuine hole in the core
+   arc: it clarifies why order has to become math before attention can use it.
+   Even so, it is optional — the launch set stands without it.
+2. **Prompt Alignment Bridge**
    Connects the text session to image/video generation by showing that prompts
    pass through learned representations before steering pixels or frames.
-4. **Temporal Attention Tracker**
-   Strong fit for Session 3, especially after Temporal Telephone and
-   Frame-by-Frame Coherence Viewer.
-5. **Forward Diffusion Trainer**
+3. **Forward Diffusion Trainer**
    Useful if learners need the training direction separated from generation.
-6. **Backpropagation Role-Play**
-   Important, but likely strongest as a printable/Zoom activity before an HTML
-   simulator.
-7. **Optical Flow Field Viewer**
+4. **Backpropagation Role-Play**
+   Important, but strongest as a printable/Zoom activity before an HTML
+   simulator — keep it unplugged.
+5. **Optical Flow Field Viewer**
    Valuable stretch tool if Session 3 needs a more technical motion layer.
+
+Decision rule: build from this list only when the Session-1 interest poll asks
+for it, or when a live "magic moment" makes the need concrete — the same way the
+p5.js cohort grew its tool set mid-camp. Default to building nothing more.
 
 ## Acceptance Bar
 

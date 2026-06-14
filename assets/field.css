@@ -399,6 +399,7 @@ html[data-skin] .nav-links a:hover {
 .stamp.ready  { color: var(--ink); background: var(--surface); }
 .stamp.draft  { color: var(--muted); }
 .stamp.future { color: var(--muted); border-style: dashed; }
+.stamp.featured { color: var(--accent); border-color: var(--accent); background: color-mix(in oklab, var(--accent) 8%, transparent); font-weight: 600; }
 
 /* ---------------- sampled poster accents ---------------- */
 .poster-wash,

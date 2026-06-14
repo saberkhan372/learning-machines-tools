@@ -5,10 +5,16 @@
   if (!grid || !window.LM_TOOLS) return;
   var hrefPrefix = grid.getAttribute("data-tool-prefix") || "";
   var limit = parseInt(grid.getAttribute("data-tool-limit") || "", 10);
+  var tierAttr = grid.getAttribute("data-tool-tier") || "";
   var tools = window.LM_TOOLS;
+  if (tierAttr) {
+    tools = tools.filter(function (t) { return t.tier === tierAttr; });
+  }
   if (Number.isFinite(limit) && limit > 0) {
     tools = tools.slice(0, limit);
   }
+  /* don't double-badge an already-curated (tier-filtered) view */
+  var showFeatured = !tierAttr;
 
   var MOD_LABEL = { text: "Text", image: "Images", video: "Video", cross: "Cross" };
 
@@ -17,9 +23,10 @@
     var sess = t.session === "cross" ? "All"
       : t.session === "studio" ? "Studio"
       : "S" + t.session;
-    /* "ready" is the baseline \u2014 only statuses that differ get a stamp */
+    /* "ready" is the baseline \u2014 only statuses that differ get a stamp;
+       essentials get a "Featured" badge in the otherwise-empty cell */
     var stamp = t.status === "ready"
-      ? ""
+      ? (showFeatured && t.tier === "essential" ? '<span class="stamp featured">Featured</span>' : "")
       : '<span class="stamp ' + t.status + '">' + t.statusLabel + "</span>";
     return (
       '<a class="ix-row" data-mod="' + t.modality + '" data-status="' + t.status + '" href="' + hrefPrefix + t.href + '">' +
@@ -48,8 +55,12 @@
   var emptyEl = null;
 
   function matches(t) {
-    var okMod = activeFilter === "all" || t.modality === activeFilter;
-    if (!okMod) return false;
+    if (activeFilter === "essential") {
+      if (t.tier !== "essential") return false;
+    } else {
+      var okMod = activeFilter === "all" || t.modality === activeFilter;
+      if (!okMod) return false;
+    }
     if (!query) return true;
     var hay = (t.name + " " + t.blurb + " " + (t.tags || []).join(" ")).toLowerCase();
     return hay.indexOf(query) !== -1;

@@ -126,6 +126,8 @@ homepage keeps only a short preview.
 - [Advanced Concept Extensions](docs/advanced-concept-extensions.html) — audit response, shipped CFG tool, and proposed next-wave tools for positional encoding, prompt alignment, VAE, temporal attention, training, and optical flow
 - [Site Identity Switcher Plan](docs/site-identity-switcher-plan.html) — proposal to make the EE/FF/GG skins user-selectable site-wide
 - [Site Usability Audit](docs/site-usability-audit.html) — design, language, and structure audit with prioritized recommendations
+- [Site Audit Fixes Plan](docs/site-audit-fixes-plan.html) — structural follow-ups (skin-demo noindex, footer nav, facilitation rename, detail-page family, vocab anchors)
+- [Launch Readiness Plan](docs/launch-readiness-plan.html) — Tier 1/Tier 2 tool split for the Zoom sessions + July session-readiness checklist
 - [Project brief](docs/project-brief.html)
 - [Build roadmap](docs/build-roadmap.html)
 - [Pilot checklist](docs/pilot-checklist.html)
