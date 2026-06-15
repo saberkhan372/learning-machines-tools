@@ -277,3 +277,33 @@ The shared P1 skin pass also styles common lower-page structures through
 panels/cards. Prefer these shared hooks before adding page-specific CSS.
 Reference and print-first pages should stay restrained through `docs-field`
 and `worksheet-print`; restrained does not mean unskinned on screen.
+
+## Data-display layer — `assets/field-data.css` (core-adjacent)
+
+Editorial data components shared across content/editorial pages. Built on the
+core tokens; resolves `--accent` / `--m-*` per skin. **Load after
+`field-sub.css`; never inside `tools/`.**
+
+Components: `.fm-stats` (stat grid), `.fm-cardgrid`/`.fm-card` (accent-topped
+cards; `[data-mod]` tints by modality), `.fm-ribbon` (proportional segment
+bar), `.fm-bars` (labeled bars), `.fm-claim` (editorial callout; `--boxed`),
+`.fm-rail`/`.fm-rail-row` (meta-rail timeline; per-row `--fm-accent`),
+`.fm-legend`. Knobs: `--fm-cols`, `--fm-ribbon-h`, `--fm-rail-w`,
+`--fm-bar-label`, `--fm-bar-val`.
+
+**Conventions.** Encode categories with the modality inks via
+`.fm-card[data-mod="text|image|video|cross"]`. A *sequence/narrative* palette
+(e.g. build-story acts) is **data** — keep it in the page's data file
+(`build-history.js` / `session-runs.js`) and apply inline via `--fm-accent`,
+not in this CSS. Data pages follow: small JS data file → render viz into
+`[data-*]` mount points (see `build-history.js`, `session-runs.js`).
+
+**Exemplar:** `pages/build-story.html` is the kitchen-sink page.
+
+**Migrated onto this layer (2026-06-14):** build-story, run-console,
+this-saturday, colophon, vocabulary-field-guide, redesigns-index. Deliberate
+keep-local exceptions where a component is one-off or stateful: build-story
+swatches/commit-chart/footprint/lineage rail, run-console session-switcher &
+launch UI, this-saturday `.ts-arc` node grid + focus card + countdown
+typography, the colophon constraint table + method-loop SVG, and the vocab
+glossary table + viz demos.

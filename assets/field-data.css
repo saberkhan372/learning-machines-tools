@@ -1,0 +1,163 @@
+/* ============================================================
+   Learning Machines — Field Manual DATA-DISPLAY layer
+   Core-adjacent. Load AFTER field-sub.css on content/editorial
+   pages only. NEVER load inside tools/ (they use field-tool.css).
+   Token-only: depends on field.css tokens + the --accent / --m-*
+   inks resolved per-skin by field-theme.js + field-identity.css.
+   ============================================================ */
+
+/* Token shim: --line/--line-soft are aliased from core --rule/--rule-soft by
+   field-tool.css. Content pages may not load field-tool.css, so alias here too.
+   :where() keeps specificity 0 — if field-tool.css is present it harmlessly wins
+   with the same value. */
+:where(html) {
+  --line: var(--rule);
+  --line-soft: var(--rule-soft);
+}
+
+/* ---------------- 1. stat grid ---------------- */
+.fm-stats {
+  display: grid;
+  grid-template-columns: repeat(var(--fm-cols, 4), 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.fm-stat { background: var(--surface); padding: 16px 16px 18px; }
+.fm-stats--center .fm-stat { text-align: center; }
+.fm-stat .n {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1.6rem; letter-spacing: -0.01em; line-height: 1; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.fm-stat .l {
+  display: block; margin-top: 6px;
+  color: var(--muted); font-size: 0.82rem; line-height: 1.45;
+}
+@media (max-width: 760px) { .fm-stats { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------------- 2. card grid ---------------- */
+.fm-cardgrid {
+  display: grid;
+  grid-template-columns: repeat(var(--fm-cols, 2), minmax(0, 1fr));
+  gap: 1px; background: var(--line); border: 1px solid var(--line);
+}
+.fm-card {
+  background: var(--surface); padding: 18px 20px;
+  border-top: 3px solid var(--fm-accent, var(--accent));
+}
+.fm-card[data-mod="text"]  { --fm-accent: var(--m-text); }
+.fm-card[data-mod="image"] { --fm-accent: var(--m-image); }
+.fm-card[data-mod="video"] { --fm-accent: var(--m-video); }
+.fm-card[data-mod="cross"] { --fm-accent: var(--m-cross); }
+.fm-card h3, .fm-card h4 { margin: 0 0 6px; }
+.fm-card p { margin: 0; color: var(--ink-soft); line-height: 1.55; }
+.fm-card .k {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fm-accent, var(--accent));
+}
+/* loose variant: separated cards instead of hairline grid (e.g. pathways) */
+.fm-cardgrid--loose { gap: 14px; background: transparent; border: 0; }
+.fm-cardgrid--loose .fm-card { border: 1px solid var(--line); border-top: 3px solid var(--fm-accent, var(--accent)); }
+@media (max-width: 760px) { .fm-cardgrid { grid-template-columns: 1fr; } }
+
+/* ---------------- 3. ribbon ---------------- */
+.fm-ribbon { display: flex; gap: 2px; }
+.fm-ribbon .seg {
+  height: var(--fm-ribbon-h, 24px);
+  display: flex; align-items: center; justify-content: center;
+  min-width: 0; overflow: hidden; padding: 0 4px; white-space: nowrap;
+  font-family: var(--font-mono); font-size: 0.66rem; color: #fff;
+  cursor: default; transition: opacity .14s;
+}
+.fm-ribbon .seg:hover { opacity: 0.72; }
+.fm-ribbon-axis {
+  display: flex; justify-content: space-between; margin-top: 6px;
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);
+}
+
+/* ---------------- 4. labeled bars ---------------- */
+.fm-bars { display: grid; gap: 9px; }
+.fm-bars .row {
+  display: grid;
+  grid-template-columns: var(--fm-bar-label, 124px) 1fr var(--fm-bar-val, 28px);
+  gap: 12px; align-items: center;
+}
+.fm-bars .tl {
+  font-family: var(--font-mono); font-size: 0.74rem;
+  text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft);
+}
+.fm-bars .tb { height: 14px; background: var(--surface-2); position: relative; overflow: hidden; }
+.fm-bars .tb i { position: absolute; inset: 0 auto 0 0; height: 100%; background: var(--accent); }
+.fm-bars .tn { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); text-align: right; }
+
+/* ---------------- 5. editorial claim ---------------- */
+.fm-claim {
+  border-left: 3px solid var(--accent); background: var(--surface);
+  padding: 16px 20px; line-height: 1.6; color: var(--ink-soft); max-width: 78ch;
+}
+.fm-claim b { color: var(--ink); }
+.fm-claim--boxed {
+  max-width: none; border: 1px solid var(--ink); border-left-width: 3px;
+  padding: clamp(20px, 3vw, 30px) clamp(22px, 3vw, 32px);
+}
+.fm-claim .k {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+}
+.fm-claim .claim {
+  font-family: var(--font-display); font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: clamp(22px, 3vw, 33px); line-height: 1.2; color: var(--ink);
+  margin: 0; text-wrap: balance;
+}
+.fm-claim .claim em { color: var(--accent); font-style: normal; }
+
+/* ---------------- 6. meta-rail timeline ---------------- */
+.fm-rail { display: grid; border-top: 1px solid var(--line); }
+.fm-rail-row {
+  display: grid; grid-template-columns: var(--fm-rail-w, 150px) 1fr;
+  gap: 0 24px; padding: 20px 0 22px; border-bottom: 1px solid var(--line-soft);
+}
+.fm-rail-meta { border-left: 3px solid var(--fm-accent, var(--accent)); padding-left: 16px; }
+.fm-rail-meta .k {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--muted);
+}
+.fm-rail-meta h3 { margin: 3px 0 8px; font-size: 1.12rem; line-height: 1.2; }
+.fm-rail-meta .sub {
+  display: block; font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--muted); line-height: 1.5;
+}
+.fm-rail-meta .stat { color: var(--fm-accent, var(--accent)); font-weight: 500; margin-top: 4px; }
+.fm-rail-body p { margin: 0 0 12px; line-height: 1.62; max-width: 70ch; color: var(--ink-soft); }
+.fm-rail-body .candid {
+  border-left: 2px solid var(--line); padding-left: 14px; color: var(--muted);
+  font-size: 0.92rem; font-style: italic; max-width: 66ch;
+}
+@media (max-width: 640px) { .fm-rail-row { grid-template-columns: 1fr; gap: 12px; } }
+
+/* ---------------- 7. legend ---------------- */
+.fm-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; }
+.fm-legend-item {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-mono); font-size: 0.74rem;
+  text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted);
+}
+.fm-legend-item .sw { width: 10px; height: 10px; flex: none; }
+
+/* ============================================================
+   SKIN PARITY — mirror field-identity.css treatments so the new
+   components match each identity instead of looking generic.
+   ============================================================ */
+
+/* terminal — phosphor glow on numerals + accent stats */
+html[data-identity="terminal"] .fm-stat .n,
+html[data-identity="terminal"] .fm-rail-meta .stat {
+  text-shadow: 0 0 10px currentColor, 0 0 30px rgba(70, 255, 125, 0.18);
+}
+
+/* acid — hard, heavier edges (matches the 2px brutalist borders elsewhere) */
+html[data-identity="acid"] .fm-stats,
+html[data-identity="acid"] .fm-cardgrid { gap: 2px; border-width: 2px; background: var(--ink); }
+html[data-identity="acid"] .fm-card { border-width: 2px; border-top-width: 4px; }
+html[data-identity="acid"] .fm-claim { border-width: 2px; border-left-width: 4px; }

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-projection data-no-identity-menu>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,181 +11,77 @@
   <link rel="stylesheet" href="../assets/field.css">
   <link rel="stylesheet" href="../assets/field-tool.css">
   <link rel="stylesheet" href="../assets/field-sub.css">
+  <link rel="stylesheet" href="../assets/field-data.css">
   <script src="../assets/field-theme.js"></script>
   <style>
-    .guide-table {
-      width: 100%;
-      min-width: 760px;
-      border-collapse: collapse;
-    }
+    .sub-lede { color: var(--ink-soft); max-width: 62ch; margin-top: 10px; line-height: 1.6; }
 
-    .table-wrap {
-      overflow-x: auto;
-    }
+    /* modality distribution strip */
+    
+    
+    
+    
+    
+    
+    .vg-cell .n { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--fm-accent, var(--ink)); }
+    .vg-cell .l { display: block; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+    .vg-cell .terms { margin-top: 8px; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.5; }
 
-    .guide-table th,
-    .guide-table td {
-      padding: 14px;
-      border-bottom: 1px solid var(--line-soft);
-      text-align: left;
-      vertical-align: top;
-    }
+    /* glossary table */
+    .vg-table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); background: var(--surface); }
+    .vg-table th { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; color: var(--muted); font-weight: 500; padding: 11px 14px; border-bottom: 1px solid var(--ink); }
+    .vg-table td { font-size: 0.9rem; line-height: 1.5; color: var(--ink-soft); vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line-soft); border-left: 1px solid var(--line-soft); }
+    .vg-table td:first-child { border-left: 0; }
+    .vg-table tr:last-child td { border-bottom: 0; }
+    .vg-term { font-weight: 700; color: var(--ink) !important; white-space: nowrap; }
+    .vg-term .dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; vertical-align: 1px; background: var(--tm, var(--ink)); }
+    .vg-table tr[data-mod="text"]  { --tm: #3b6ea5; }
+    .vg-table tr[data-mod="image"] { --tm: #c2410c; }
+    .vg-table tr[data-mod="video"] { --tm: #2f8a5b; }
+    .vg-table tr[data-mod="cross"] { --tm: #8a4f9e; }
+    .vg-table td a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--accent) 40%, transparent); }
+    .vg-table td a:hover { border-bottom-color: var(--accent); }
+    .table-wrap { overflow-x: auto; }
+    @media (max-width: 720px) { .vg-table { min-width: 640px; } }
 
-    .guide-table th {
-      color: var(--muted);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .guide-table td:first-child {
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .vocab-card {
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      gap: 16px;
-      min-height: 180px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 2px;
-      background: var(--surface);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .vocab-card h3 {
-      margin: 0 0 6px;
-      font-size: 1.25rem;
-      letter-spacing: 0;
-    }
-
-    .vocab-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .vocab-card a {
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .mini-visual {
-      min-height: 134px;
-      border: 1px solid var(--line-soft);
-      border-radius: 2px;
+    /* visual example cards */
+    
+    .vg-card { display: grid; grid-template-columns: 156px 1fr; gap: 16px; }
+    
+    
+    
+    
+    .vg-card .viz {
+      min-height: 138px; border: 1px solid var(--line-soft);
       background:
-        linear-gradient(var(--grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-        var(--code-bg);
-      background-size: 18px 18px;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      padding: 12px;
+        linear-gradient(var(--line-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line-soft) 1px, transparent 1px),
+        var(--surface-2);
+      background-size: 16px 16px; overflow: hidden; display: grid; place-items: center; padding: 12px;
     }
+    .vg-card .vn { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fm-accent); margin-bottom: 4px; }
+    .vg-card h3 { margin: 0 0 6px; font-size: 1.15rem; }
+    .vg-card p { margin: 0; color: var(--ink-soft); font-size: 0.88rem; line-height: 1.55; }
+    .vg-card p a { color: var(--accent); font-weight: 600; }
 
-    .token-demo {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-content: center;
-      justify-content: center;
-    }
+    .token-demo { display: flex; flex-wrap: wrap; gap: 5px; align-content: center; justify-content: center; }
+    .token-demo span { padding: 5px 8px; color: #fff; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 700; }
+    .t-a { background: #3b6ea5; } .t-b { background: #c2410c; } .t-c { background: #2f8a5b; } .t-d { background: #8a4f9e; }
+    .bar-demo { width: 100%; display: grid; gap: 8px; }
+    .bar-demo .row { display: grid; grid-template-columns: 1fr 38px; gap: 8px; align-items: center; }
+    .bar-demo .tb { height: 12px; background: var(--surface); border: 1px solid var(--line-soft); overflow: hidden; }
+    .bar-demo .tb i { display: block; height: 100%; background: #3b6ea5; }
+    .bar-demo .pct { font-family: var(--font-mono); font-size: 0.66rem; color: var(--muted); text-align: right; }
+    .mini-svg { width: 100%; height: 100%; min-height: 120px; }
+    .claim-card { width: 100%; padding: 11px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-soft); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; }
+    .claim-card b { color: #c2410c; }
+    .claim-card .ok { color: #2f8a5b; }
+    .loop-demo { display: grid; gap: 6px; width: 100%; }
+    .loop-demo span { padding: 7px 9px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-family: var(--font-mono); font-size: 0.7rem; text-align: center; position: relative; }
+    .loop-demo span::before { content: attr(data-n); color: var(--accent); margin-right: 7px; }
 
-    .token-demo span {
-      padding: 5px 8px;
-      border-radius: 2px;
-      color: var(--ink);
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 800;
-    }
-
-    .t-a { background: var(--t0); color: var(--t0t) !important; }
-    .t-b { background: var(--t1); color: var(--t1t) !important; }
-    .t-c { background: var(--t2); color: var(--t2t) !important; }
-    .t-d { background: var(--t3); color: var(--t3t) !important; }
-
-    .bar-demo {
-      width: 100%;
-      display: grid;
-      gap: 8px;
-    }
-
-    .bar-demo div {
-      height: 12px;
-      border-radius: 999px;
-      background: var(--surface-2);
-      overflow: hidden;
-    }
-
-    .bar-demo i {
-      display: block;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    }
-
-    .mini-svg {
-      width: 100%;
-      height: 100%;
-      min-height: 120px;
-    }
-
-    .claim-card {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 2px;
-      background: var(--surface-2);
-      color: var(--ink-dim);
-      font-family: var(--font-mono);
-      font-size: 0.76rem;
-    }
-
-    .claim-card b {
-      color: var(--warm);
-    }
-
-    .loop-demo {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 6px;
-      width: 100%;
-    }
-
-    .loop-demo span {
-      padding: 7px 8px;
-      border: 1px solid var(--line);
-      border-radius: 2px;
-      background: var(--surface-2);
-      color: var(--ink);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      text-align: center;
-    }
-
-    @media (max-width: 920px) {
-      .guide-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .vocab-card {
-        grid-template-columns: 1fr;
-      }
-    }
+    
+    @media (max-width: 560px) { .vg-card { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -193,15 +89,15 @@
     <div class="wrap nav-inner">
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="colophon.html" class="hide-sm">Colophon</a>
         <a href="../index.html#sessions" class="hide-sm">Sessions</a>
-        <a href="materials.html" class="hide-sm">Materials</a>
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
         <a class="btn btn-sm" href="../index.html">Back home</a>
       </div>
     </div>
   </nav>
 
-  <header class="sub-hero">
+  <header class="sub-hero" data-mod="cross">
     <div class="wrap">
       <div class="crumb">
         <a href="../index.html">Home</a><span class="sep">/</span>
@@ -209,147 +105,153 @@
         <span>Vocabulary Field Guide</span>
       </div>
       <div class="sess-hero-grid">
-        <div class="sess-num">ABC<span class="of">guide</span></div>
+        <div class="sess-num">ABC<span class="of">field guide</span></div>
         <div>
-          <p class="sess-kicker">Participant reference</p>
-          <h1 class="sess-title">Vocabulary Field Guide</h1>
-          <p class="sess-q">A plain-language guide to the terms that show up across the camp.</p>
-          <p class="sess-lede">Use this before a session, during a debrief, or when a word sounds technical but the idea is actually visible in one of the tools.</p>
+          <p class="sess-kicker"><i class="modsq"></i>Participant reference</p>
+          <h1 class="sess-title" style="font-size: clamp(34px,5vw,60px);">Vocabulary Field Guide</h1>
+          <p class="sub-lede">A plain-language guide to the terms that show up across the camp — and the one tool
+            that makes each one visible. Every word here is something you can <em>watch happen</em>, not just a
+            definition to memorize. Use it before a session, during a debrief, or when a word sounds technical but
+            the idea is actually sitting in one of the tools.</p>
         </div>
       </div>
     </div>
   </header>
 
-  <section class="section-tight">
-    <div class="wrap">
-      <div class="section-head-sm"><span class="num">A.</span><h2>Quick Glossary</h2></div>
+  <main class="wrap" style="padding-bottom:56px;">
+
+    <!-- modality strip -->
+    <section style="padding:28px 0 14px;">
+      <div class="sec-rule"><h2 class="sec-no">§ 0 · The map</h2><span class="sec-note">13 terms · 4 modalities · one method</span></div>
+      <p class="sub-lede" style="margin-bottom:16px;">The vocabulary clusters by modality — the same arc the camp runs:
+        text, then images, then video, then the cross-cutting ideas that apply to all three. The color on each term
+        below tells you which world it lives in.</p>
+      <div class="fm-cardgrid" style="--fm-cols:4">
+        <div class="fm-card vg-cell" data-mod="text"><span class="n">3</span><span class="l">Text · Session 1</span><p class="terms">Token · Temperature · Greedy vs. sampled</p></div>
+        <div class="fm-card vg-cell" data-mod="image"><span class="n">4</span><span class="l">Image · Session 2</span><p class="terms">Default · Diffusion · CFG · Latent space</p></div>
+        <div class="fm-card vg-cell" data-mod="video"><span class="n">3</span><span class="l">Video · Session 3</span><p class="terms">Drift · Spatiotemporal · Coherence</p></div>
+        <div class="fm-card vg-cell" data-mod="cross"><span class="n">3</span><span class="l">Cross-cutting</span><p class="terms">Modality · Hallucination · Human-in-the-loop</p></div>
+      </div>
+    </section>
+
+    <!-- glossary -->
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ A · Quick glossary</h2><span class="sec-note">term · plain meaning · the tool that shows it</span></div>
       <div class="table-wrap">
-        <table class="guide-table">
-          <thead>
-            <tr>
-              <th>Term</th>
-              <th>Plain meaning</th>
-              <th>Tool connection</th>
-            </tr>
-          </thead>
+        <table class="vg-table">
+          <thead><tr><th>Term</th><th>Plain meaning</th><th>See it in</th></tr></thead>
           <tbody>
-            <tr><td id="token">Token</td><td>A chunk of text a model processes.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
-            <tr><td id="temperature">Temperature</td><td>How much randomness enters sampling.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
-            <tr><td id="sampling">Greedy vs. sampled</td><td>Greedy always picks the most likely next token; sampling draws from the ranked options (often with top-k).</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
-            <tr><td id="default">Default</td><td>What appears when the prompt does not specify.</td><td><a href="../tools/default-test-comparison-viewer/">Default Test</a></td></tr>
-            <tr><td id="diffusion">Diffusion</td><td>An iterative noise-to-image process.</td><td><a href="tool-diffusion.html">Diffusion Viewer</a></td></tr>
-            <tr><td id="cfg">CFG (guidance)</td><td>How hard image generation is pushed to obey the prompt versus its defaults.</td><td><a href="tool-cfg-scale.html">CFG Scale Visualizer</a></td></tr>
-            <tr><td id="latent">Latent space</td><td>The compressed numeric space a model works in instead of raw pixels or words.</td><td><a href="../tools/latent-space-compressor/">Latent Space Compressor</a></td></tr>
-            <tr><td id="modality">Modality</td><td>A kind of medium a model works in — text, image, or video.</td><td><a href="tools.html">Tool index</a></td></tr>
-            <tr><td id="drift">Drift</td><td>Unwanted change over time.</td><td><a href="tool-temporal-telephone.html">Temporal Telephone</a></td></tr>
-            <tr><td id="spatiotemporal">Spatiotemporal</td><td>Across both space and time — what a video must hold consistent from frame to frame.</td><td><a href="tool-metronome-scrubber.html">Metronome Frame-Scrubber</a></td></tr>
-            <tr><td id="coherence">Coherence</td><td>Staying consistent across frames.</td><td><a href="../tools/video-failure-gallery-viewer/">Video Viewer</a></td></tr>
-            <tr><td id="hallucination">Hallucination</td><td>A plausible output without reliable grounding.</td><td><a href="tool-confidence-truth.html">Claim Checker</a></td></tr>
-            <tr><td id="human-in-the-loop">Human-in-the-loop</td><td>Human judgment before, during, and after generation.</td><td><a href="tool-model-card-builder.html">Model Card</a></td></tr>
+            <tr data-mod="text"><td class="vg-term"><span class="dot"></span>Token</td><td>A chunk of text a model processes — often not a whole word.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
+            <tr data-mod="text"><td class="vg-term"><span class="dot"></span>Temperature</td><td>How much randomness enters sampling — low stays safe, high takes risks.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
+            <tr data-mod="text"><td class="vg-term"><span class="dot"></span>Greedy vs. sampled</td><td>Greedy always takes the most likely next token; sampling draws from the ranked options (often top-k).</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
+            <tr data-mod="image"><td class="vg-term"><span class="dot"></span>Default</td><td>What appears when the prompt doesn't specify — the model fills in the blanks.</td><td><a href="../tools/default-test-comparison-viewer/">Default Test</a></td></tr>
+            <tr data-mod="image"><td class="vg-term"><span class="dot"></span>Diffusion</td><td>An iterative noise-to-image process, refined step by step.</td><td><a href="tool-diffusion.html">Diffusion Viewer</a></td></tr>
+            <tr data-mod="image"><td class="vg-term"><span class="dot"></span>CFG (guidance)</td><td>How hard generation is pushed to obey the prompt versus its own defaults.</td><td><a href="tool-cfg-scale.html">CFG Scale Visualizer</a></td></tr>
+            <tr data-mod="image"><td class="vg-term"><span class="dot"></span>Latent space</td><td>The compressed numeric space a model works in instead of raw pixels or words.</td><td><a href="../tools/latent-space-compressor/">Latent Space Compressor</a></td></tr>
+            <tr data-mod="video"><td class="vg-term"><span class="dot"></span>Drift</td><td>Unwanted change over time — the subject won't stay put.</td><td><a href="tool-temporal-telephone.html">Temporal Telephone</a></td></tr>
+            <tr data-mod="video"><td class="vg-term"><span class="dot"></span>Spatiotemporal</td><td>Across both space and time — what a video must hold consistent frame to frame.</td><td><a href="tool-metronome-scrubber.html">Metronome Scrubber</a></td></tr>
+            <tr data-mod="video"><td class="vg-term"><span class="dot"></span>Coherence</td><td>Staying consistent across frames: identity, objects, camera, physics.</td><td><a href="../tools/video-failure-gallery-viewer/">Video Viewer</a></td></tr>
+            <tr data-mod="cross"><td class="vg-term"><span class="dot"></span>Modality</td><td>A kind of medium a model works in — text, image, or video.</td><td><a href="../index.html#tools">Tool index</a></td></tr>
+            <tr data-mod="cross"><td class="vg-term"><span class="dot"></span>Hallucination</td><td>A plausible-sounding output without reliable grounding.</td><td><a href="tool-confidence-truth.html">Claim Checker</a></td></tr>
+            <tr data-mod="cross"><td class="vg-term"><span class="dot"></span>Human-in-the-loop</td><td>Human judgment before, during, and after generation.</td><td><a href="tool-model-card-builder.html">Model Card</a></td></tr>
           </tbody>
         </table>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head-sm"><span class="num">B.</span><h2>Visual Examples</h2></div>
-      <div class="guide-grid">
-        <article class="vocab-card">
-          <div class="mini-visual"><div class="token-demo"><span class="t-a">learn</span><span class="t-b">ing</span><span class="t-c"> mach</span><span class="t-d">ines</span></div></div>
-          <div><h3>Token</h3><p>Text gets broken into chunks the model can count and predict. The chunks may not match words. Try it in the <a href="tool-tokenizer.html">Tokenizer</a>.</p></div>
+    <!-- visual examples -->
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ B · See it, don't define it</h2><span class="sec-note">each term as a small instrument</span></div>
+      <p class="sub-lede" style="margin-bottom:16px;">A definition tells you what a word means; a picture shows you the
+        mechanism. Here are the terms that are easiest to misread, each rendered as the thing the tool actually does.</p>
+      <div class="fm-cardgrid">
+
+        <article class="fm-card vg-card" data-mod="text">
+          <div class="viz"><div class="token-demo"><span class="t-a">learn</span><span class="t-b">ing</span><span class="t-c"> mach</span><span class="t-d">ines</span></div></div>
+          <div><div class="vn">Text · token</div><h3>Token</h3><p>Text is broken into chunks the model can count and predict — and the chunks may not match words. Try your own in the <a href="tool-tokenizer.html">Tokenizer</a>.</p></div>
         </article>
 
-        <article class="vocab-card">
-          <div class="mini-visual"><div class="bar-demo"><div><i style="width:88%;"></i></div><div><i style="width:54%;"></i></div><div><i style="width:28%;"></i></div><div><i style="width:12%;"></i></div></div></div>
-          <div><h3>Temperature</h3><p>A low setting favors the most likely next token. A higher setting lets less-likely continuations enter the sample. Watch the shift in the <a href="tool-tokenizer.html">Tokenizer</a>.</p></div>
+        <article class="fm-card vg-card" data-mod="text">
+          <div class="viz"><div class="bar-demo">
+            <div class="row"><div class="tb"><i style="width:88%;"></i></div><span class="pct">88%</span></div>
+            <div class="row"><div class="tb"><i style="width:54%;"></i></div><span class="pct">54%</span></div>
+            <div class="row"><div class="tb"><i style="width:28%;"></i></div><span class="pct">28%</span></div>
+            <div class="row"><div class="tb"><i style="width:12%;"></i></div><span class="pct">12%</span></div>
+          </div></div>
+          <div><div class="vn">Text · temperature</div><h3>Temperature</h3><p>Low temperature favors the top token; raise it and less-likely continuations enter the sample. Watch the bars flatten in the <a href="tool-tokenizer.html">Tokenizer</a>.</p></div>
         </article>
 
-        <article class="vocab-card">
-          <div class="mini-visual">
-            <svg class="mini-svg" viewBox="0 0 160 120" role="img" aria-label="Default example">
-              <rect width="160" height="120" fill="#10131a"/>
-              <rect x="18" y="24" width="58" height="38" rx="5" fill="#1c1f28" stroke="#5eead4"/>
-              <circle cx="108" cy="42" r="15" fill="#d9a06f"/>
-              <rect x="94" y="58" width="30" height="38" rx="10" fill="#f6bd60"/>
-              <text x="25" y="49" fill="#e8e6df" font-family="monospace" font-size="10">teacher</text>
-            </svg>
-          </div>
-          <div><h3>Default</h3><p>When a prompt is vague, the system fills in bodies, settings, styles, and roles. Compare those choices in the <a href="../tools/default-test-comparison-viewer/">Default Test</a>.</p></div>
+        <article class="fm-card vg-card" data-mod="image">
+          <div class="viz"><svg class="mini-svg" viewBox="0 0 160 120" role="img" aria-label="Default example: a vague prompt fills in a generic figure">
+            <rect width="160" height="120" fill="none"/>
+            <rect x="18" y="22" width="58" height="40" rx="2" fill="none" stroke="#c2410c"/>
+            <text x="26" y="46" fill="var(--ink-soft)" font-family="monospace" font-size="9">"a teacher"</text>
+            <circle cx="112" cy="40" r="14" fill="#c2410c" opacity="0.55"/>
+            <rect x="98" y="56" width="28" height="40" rx="3" fill="#c2410c" opacity="0.3"/>
+            <text x="76" y="110" fill="var(--muted)" font-family="monospace" font-size="8">prompt → filled-in default</text>
+          </svg></div>
+          <div><div class="vn">Image · default</div><h3>Default</h3><p>When a prompt is vague, the system invents bodies, settings, and roles. Compare those choices in the <a href="../tools/default-test-comparison-viewer/">Default Test</a>.</p></div>
         </article>
 
-        <article class="vocab-card">
-          <div class="mini-visual">
-            <svg class="mini-svg" viewBox="0 0 160 120" role="img" aria-label="Diffusion example">
-              <rect width="160" height="120" fill="#10131a"/>
-              <circle cx="36" cy="60" r="24" fill="#5eead4" opacity=".16"/>
-              <circle cx="74" cy="60" r="24" fill="#5eead4" opacity=".32"/>
-              <circle cx="112" cy="60" r="24" fill="#5eead4" opacity=".55"/>
-              <path d="M92 74 L112 38 L132 74 Z" fill="#f6bd60"/>
-              <text x="21" y="104" fill="#9197a3" font-family="monospace" font-size="9">noise -> structure</text>
-            </svg>
-          </div>
-          <div><h3>Diffusion</h3><p>The image is refined step by step from noisy structure toward a prompt-guided result. Use the <a href="tool-diffusion.html">Diffusion Viewer</a> to pause each stage.</p></div>
+        <article class="fm-card vg-card" data-mod="image">
+          <div class="viz"><svg class="mini-svg" viewBox="0 0 160 120" role="img" aria-label="Diffusion example: noise resolving into structure">
+            <circle cx="34" cy="60" r="22" fill="#c2410c" opacity="0.14"/>
+            <circle cx="74" cy="60" r="22" fill="#c2410c" opacity="0.32"/>
+            <circle cx="114" cy="60" r="22" fill="#c2410c" opacity="0.6"/>
+            <path d="M96 76 L114 40 L132 76 Z" fill="var(--surface)" stroke="#c2410c"/>
+            <text x="22" y="108" fill="var(--muted)" font-family="monospace" font-size="8">noise → structure</text>
+          </svg></div>
+          <div><div class="vn">Image · diffusion</div><h3>Diffusion</h3><p>The image is refined step by step from noise toward a prompt-guided result. Pause each stage in the <a href="tool-diffusion.html">Diffusion Viewer</a>.</p></div>
         </article>
 
-        <article class="vocab-card">
-          <div class="mini-visual">
-            <svg class="mini-svg" viewBox="0 0 160 120" role="img" aria-label="Drift example">
-              <rect width="160" height="120" fill="#10131a"/>
-              <circle cx="36" cy="48" r="13" fill="#d9a06f"/>
-              <rect x="26" y="62" width="22" height="28" rx="7" fill="#ef4444"/>
-              <circle cx="82" cy="48" r="15" fill="#d9a06f"/>
-              <rect x="70" y="62" width="26" height="28" rx="7" fill="#f6bd60"/>
-              <circle cx="128" cy="48" r="17" fill="#f0c7a5"/>
-              <rect x="114" y="62" width="30" height="28" rx="7" fill="#c084fc"/>
-            </svg>
-          </div>
-          <div><h3>Drift</h3><p>The subject keeps changing when it should stay stable. Temporal tools make drift visible frame by frame, especially <a href="tool-temporal-telephone.html">Temporal Telephone</a>.</p></div>
+        <article class="fm-card vg-card" data-mod="video">
+          <div class="viz"><svg class="mini-svg" viewBox="0 0 160 120" role="img" aria-label="Drift example: a subject changing across frames">
+            <circle cx="34" cy="46" r="12" fill="#2f8a5b" opacity="0.8"/><rect x="25" y="60" width="20" height="26" rx="2" fill="#2f8a5b" opacity="0.5"/>
+            <circle cx="80" cy="46" r="14" fill="#c2410c" opacity="0.7"/><rect x="68" y="60" width="24" height="26" rx="2" fill="#c2410c" opacity="0.5"/>
+            <circle cx="128" cy="46" r="16" fill="#8a4f9e" opacity="0.7"/><rect x="113" y="60" width="30" height="26" rx="2" fill="#8a4f9e" opacity="0.5"/>
+            <text x="30" y="108" fill="var(--muted)" font-family="monospace" font-size="8">frame 1 → 2 → 3: drift</text>
+          </svg></div>
+          <div><div class="vn">Video · drift</div><h3>Drift</h3><p>The subject keeps changing when it should stay stable. Temporal tools make it visible frame by frame — start with <a href="tool-temporal-telephone.html">Temporal Telephone</a>.</p></div>
         </article>
 
-        <article class="vocab-card">
-          <div class="mini-visual">
-            <svg class="mini-svg" viewBox="0 0 160 120" role="img" aria-label="Coherence example">
-              <rect width="160" height="120" fill="#10131a"/>
-              <rect x="20" y="36" width="28" height="40" rx="8" fill="#5eead4"/>
-              <rect x="66" y="36" width="28" height="40" rx="8" fill="#5eead4"/>
-              <rect x="112" y="36" width="28" height="40" rx="8" fill="#5eead4"/>
-              <path d="M52 56 H62 M98 56 H108" stroke="#e8e6df" stroke-width="3"/>
-              <text x="23" y="98" fill="#9197a3" font-family="monospace" font-size="9">same subject, same rules</text>
-            </svg>
-          </div>
-          <div><h3>Coherence</h3><p>Frames belong together: identity, objects, camera, and physics remain consistent. Inspect that with the <a href="../tools/frame-by-frame-coherence-viewer/">Frame-by-Frame Viewer</a>.</p></div>
+        <article class="fm-card vg-card" data-mod="video">
+          <div class="viz"><svg class="mini-svg" viewBox="0 0 160 120" role="img" aria-label="Coherence example: same subject across frames">
+            <rect x="18" y="34" width="28" height="42" rx="2" fill="#2f8a5b" opacity="0.7"/>
+            <rect x="66" y="34" width="28" height="42" rx="2" fill="#2f8a5b" opacity="0.7"/>
+            <rect x="114" y="34" width="28" height="42" rx="2" fill="#2f8a5b" opacity="0.7"/>
+            <path d="M50 55 H62 M98 55 H110" stroke="var(--ink-soft)" stroke-width="2"/>
+            <text x="22" y="100" fill="var(--muted)" font-family="monospace" font-size="8">same subject, same rules</text>
+          </svg></div>
+          <div><div class="vn">Video · coherence</div><h3>Coherence</h3><p>Frames belong together: identity, objects, camera, and physics stay consistent. Inspect it with the <a href="../tools/frame-by-frame-coherence-viewer/">Frame-by-Frame Viewer</a>.</p></div>
         </article>
 
-        <article class="vocab-card">
-          <div class="mini-visual"><div class="claim-card"><b>Sounds confident:</b> 94%<br><br>"According to Rivera 2021..."<br><br><b>Evidence:</b> source not found</div></div>
-          <div><h3>Hallucination</h3><p>A response can sound fluent and specific while lacking grounding. Treat it as a claim to verify in the <a href="tool-confidence-truth.html">Confidence Is Not Truth Explorer</a>.</p></div>
+        <article class="fm-card vg-card" data-mod="cross">
+          <div class="viz"><div class="claim-card"><b>Sounds confident:</b> 94%<br>"According to Rivera (2021)…"<br><br><span class="ok">Evidence:</span> source not found</div></div>
+          <div><div class="vn">Cross · hallucination</div><h3>Hallucination</h3><p>A response can sound fluent and specific while lacking grounding. Treat it as a claim to verify in the <a href="tool-confidence-truth.html">Confidence Is Not Truth Explorer</a>.</p></div>
         </article>
 
-        <article class="vocab-card">
-          <div class="mini-visual"><div class="loop-demo"><span>predict</span><span>generate or inspect</span><span>verify evidence</span><span>revise / refuse</span></div></div>
-          <div><h3>Human-in-the-loop</h3><p>Human judgment belongs before, during, and after generation: setting purpose, checking evidence, naming limits, and deciding what to do next. Document that with the <a href="tool-model-card-builder.html">Model Card</a>.</p></div>
+        <article class="fm-card vg-card" data-mod="cross">
+          <div class="viz"><div class="loop-demo"><span data-n="1">predict</span><span data-n="2">generate or inspect</span><span data-n="3">verify evidence</span><span data-n="4">revise / refuse</span></div></div>
+          <div><div class="vn">Cross · human-in-the-loop</div><h3>Human-in-the-loop</h3><p>Human judgment belongs before, during, and after generation — setting purpose, checking evidence, naming limits. Document it with the <a href="tool-model-card-builder.html">Model Card</a>.</p></div>
         </article>
+
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section-tight">
-    <div class="wrap">
+    <!-- pager -->
+    <section style="padding:6px 0 0;">
       <div class="pager">
-        <a href="../index.html#materials"><div class="pg-dir mono">&larr; Back to materials</div><div class="pg-title">Worksheets and planning</div></a>
-        <a href="no-ai-pathway.html"><div class="pg-dir mono">Pair it with</div><div class="pg-title">No-AI Pathway</div></a>
-        <a class="next" href="session-text.html"><div class="pg-dir mono">Start session &rarr;</div><div class="pg-title">01 &middot; Text</div></a>
+        <a href="colophon.html"><span class="pg-dir mono">← Pair it with</span><span class="pg-title">How these tools were made</span></a>
+        <a class="next" href="this-saturday.html"><span class="pg-dir mono">Your week →</span><span class="pg-title">This Saturday</span></a>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="wrap">
-      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
-      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
-      <p class="mono">Vocabulary Field Guide &middot; plain language, visual examples, tool connections.</p>
+      <div class="brand" style="margin-bottom:12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="colophon.html">Colophon</a> · <a href="run-console.html">Run console</a> · <a href="this-saturday.html">This Saturday</a></nav>
+      <p class="colophon">Vocabulary Field Guide · plain language, visible mechanisms, one tool per term.</p>
     </div>
   </footer>
 </body>

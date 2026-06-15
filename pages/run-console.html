@@ -1,149 +1,149 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-projection data-no-identity-menu>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <title>Run Console &mdash; Learning Machines</title>
+  <title>Run console &mdash; Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/field.css">
   <link rel="stylesheet" href="../assets/field-tool.css">
   <link rel="stylesheet" href="../assets/field-sub.css">
+  <link rel="stylesheet" href="../assets/field-data.css">
   <script src="../assets/field-theme.js"></script>
   <script src="../assets/session-runs.js"></script>
   <style>
-    .sub-lede { color: var(--ink-soft); max-width: 64ch; margin-top: 10px; line-height: 1.55; }
+    .sub-lede { color: var(--ink-soft); max-width: 64ch; margin-top: 10px; line-height: 1.6; }
 
-    /* session switcher */
-    .rc-switch { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 6px; }
+    /* session switcher (local) */
+    .rc-switch { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
     .rc-tab {
       font-family: var(--font-mono); font-size: 0.8rem; text-decoration: none;
-      color: var(--text); border: 1px solid var(--line); border-radius: 2px;
-      padding: 8px 12px; display: inline-flex; gap: 8px; align-items: baseline;
+      color: var(--ink-soft); border: 1px solid var(--line); padding: 8px 13px;
+      display: inline-flex; gap: 9px; align-items: baseline;
     }
-    .rc-tab .rc-tab-no { color: var(--muted); }
-    .rc-tab[aria-current="true"] { border-color: var(--accent); color: var(--accent); }
+    .rc-tab .no { color: var(--muted); }
+    .rc-tab[aria-current="true"] { border-color: var(--accent); color: var(--accent); background: color-mix(in oklab, var(--accent) 7%, transparent); }
     .rc-tab:hover { border-color: var(--accent); }
 
-    /* console action bar */
-    .rc-bar {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
-      padding: 14px 0 16px; border-bottom: 1px solid var(--line); margin-bottom: 20px;
-    }
+    /* ribbon caption (local) */
+    .rc-ribbon-cap { margin-top: 12px; font-size: 0.86rem; color: var(--ink-soft); line-height: 1.55; max-width: 70ch; }
+
+    /* action bar (local) */
+    .rc-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 16px 0; border-bottom: 1px solid var(--line); margin: 8px 0 4px; }
     .rc-when { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
-    .rc-bar .rc-spacer { flex: 1; }
-    .rc-bar a.rc-side {
-      font-family: var(--font-mono); font-size: 0.78rem; color: var(--text);
-      text-decoration: none; border-bottom: 1px solid var(--line);
-    }
-    .rc-bar a.rc-side:hover { color: var(--accent); border-color: var(--accent); }
-
-    /* timeline */
-    .rc-steps { display: grid; gap: 0; }
-    .rc-step {
-      display: grid; grid-template-columns: 88px 1fr; gap: 0 18px;
-      padding: 18px 0; border-top: 1px solid var(--line-soft);
-    }
-    .rc-step:first-child { border-top: 0; }
-    .rc-time {
-      font-family: var(--font-mono); font-size: 0.86rem; font-weight: 600;
-      color: var(--accent); padding-top: 1px;
-    }
-    .rc-seg { margin: 0 0 6px; font-size: 1.08rem; }
-    .rc-move { margin: 0 0 4px; line-height: 1.5; }
-    .rc-action { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.45; }
-    .rc-action::before { content: "→ "; }
-
-    /* per-tool launch rows */
-    .rc-tools { display: grid; gap: 8px; margin-top: 12px; }
-    .rc-tool {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
-      padding: 9px 12px; border: 1px solid var(--line); border-radius: 2px;
-      background: var(--surface);
-    }
-    .rc-tool .rc-tname { font-weight: 600; flex: 1 1 200px; }
-    .rc-tool .rc-flag {
-      font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-soft);
-      border-radius: 2px; padding: 1px 6px;
-    }
-    .rc-tool .rc-flag.work { color: var(--accent); border-color: var(--accent); }
+    .rc-spacer { flex: 1; }
+    .rc-side { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid var(--line); }
+    .rc-side:hover { color: var(--accent); border-color: var(--accent); }
     .rc-btn {
-      appearance: none; cursor: pointer; font-family: var(--font-mono);
-      font-size: 0.76rem; padding: 6px 11px; border-radius: 2px;
-      border: 1px solid var(--line); background: transparent; color: var(--text);
-      text-decoration: none;
+      appearance: none; cursor: pointer; font-family: var(--font-mono); font-size: 0.76rem;
+      padding: 7px 12px; border: 1px solid var(--line); background: transparent; color: var(--ink); text-decoration: none;
     }
     .rc-btn:hover { border-color: var(--accent); color: var(--accent); }
     .rc-btn.is-primary { border-color: var(--accent); color: var(--accent); }
+    .rc-btn.is-primary:hover { background: var(--accent); color: var(--bg); }
 
-    .rc-toolkit {
-      border: 1px solid var(--line); border-radius: 2px; background: var(--surface);
-      padding: 16px; margin-bottom: 20px;
-    }
-    .rc-toolkit h3 { margin: 0 0 4px; font-size: 1rem; }
-    .rc-toolkit p { margin: 0 0 12px; color: var(--muted); font-size: 0.9rem; }
+    /* studio toolkit (local) */
+    .rc-toolkit { border: 1px solid var(--line); background: var(--surface); padding: 16px 18px; margin-bottom: 22px; }
+    .rc-toolkit h3 { margin: 0 0 3px; font-size: 1rem; }
+    .rc-toolkit p { margin: 0 0 12px; color: var(--muted); font-size: 0.88rem; }
 
-    @media (max-width: 640px) {
-      .rc-step { grid-template-columns: 1fr; gap: 6px; }
-      .rc-time { padding-top: 0; }
-    }
+    /* timeline launch UI (local; rows are now .fm-rail/.fm-rail-row) */
+    .rc-action { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+    .rc-action::before { content: "→ "; color: var(--accent); }
+    .rc-tools { display: grid; gap: 8px; margin-top: 12px; }
+    .rc-tool { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 9px 12px; border: 1px solid var(--line); background: var(--surface); }
+    .rc-tool .tn { font-weight: 600; flex: 1 1 200px; }
+    .rc-flag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-soft); padding: 1px 6px; }
+    .rc-flag.work { color: var(--accent); border-color: var(--accent); }
   </style>
 </head>
-<body data-project-layout="doc">
+<body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="session-links.html" class="hide-sm">Link sheet</a>
-        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="this-saturday.html" class="hide-sm">This Saturday</a>
         <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="../index.html#tools" class="hide-sm">Tool index</a>
         <a class="btn btn-sm" href="../index.html">Back home</a>
       </div>
     </div>
   </nav>
 
-  <header class="sub-hero">
+  <header class="sub-hero" data-mod="cross">
     <div class="wrap">
       <div class="crumb">
         <a href="../index.html">Home</a><span class="sep">/</span>
         <a href="../index.html#sessions">Sessions</a><span class="sep">/</span>
         <span>Run console</span>
       </div>
-      <h1>Run console</h1>
-      <p class="sub-lede">The live cockpit for one session: the run-of-show in order, with the
-        link to paste into Zoom chat and a launch button at each step. Pick a session, then run
-        it top to bottom from this one tab.</p>
+      <h1 class="sess-title" style="font-size: clamp(34px,5vw,56px);">Run console</h1>
+      <p class="sub-lede">The live cockpit for one session: the run-of-show in order, the link to paste into Zoom
+        chat, and a launch button at each step. Pick a session and run it top to bottom from this one tab — the
+        ribbon below shows where the two hours actually go before you start.</p>
       <nav class="rc-switch" data-rc-switch aria-label="Choose session"></nav>
     </div>
   </header>
 
-  <main class="wrap" style="padding-bottom:48px;">
-    <div data-rc-console></div>
+  <main class="wrap" style="padding-bottom:56px;">
+
+    <!-- shape of the session -->
+    <section style="padding:26px 0 14px;">
+      <div class="sec-rule"><h2 class="sec-no">§ A · The shape of the session</h2><span class="sec-note" data-rc-shape-note>two hours · generated from the run-of-show</span></div>
+      <div class="fm-stats" data-rc-numbers></div>
+      <div class="fm-ribbon" data-rc-ribbon style="--fm-ribbon-h:30px;margin-top:8px"></div>
+      <div class="fm-ribbon-axis" data-rc-axis></div>
+      <p class="rc-ribbon-cap" data-rc-cap></p>
+    </section>
+
+    <!-- run of show -->
+    <section style="padding:8px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ B · Run of show</h2><span class="sec-note">facilitator move · participant action · launch</span></div>
+      <div data-rc-console></div>
+    </section>
+
   </main>
 
   <footer class="footer">
     <div class="wrap">
       <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
-      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="session-links.html">Link sheet</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
-      <p class="mono">Static HTML &middot; vanilla JavaScript &middot; no required accounts &middot; no live model dependency for core teaching moments.</p>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="this-saturday.html">This Saturday</a> · <a href="vocabulary-field-guide.html">Vocabulary</a> · <a href="../index.html#tools">Tool index</a></nav>
+      <p class="colophon">Static HTML · vanilla JavaScript · no required accounts · no live-model dependency for core teaching moments.</p>
     </div>
   </footer>
 
   <script>
   (function () {
     var RUNS = window.LM_SESSION_RUNS || [];
+    var ACCENT = "var(--m-cross)";
+    // a stable, readable palette for ribbon segments (cycles)
+    var SEG_COLORS = ["#2f6f4f", "#3b6ea5", "#a4508b", "#c2410c", "#5a5f8f", "#1a7f6b", "#9a6a3c", "#6b4f8a"];
+
     var switchHost = document.querySelector("[data-rc-switch]");
     var host = document.querySelector("[data-rc-console]");
 
-    /* this page lives in pages/, so repo root is one level up */
     function absUrl(path) { return new URL("../" + path, window.location.href).href; }
+    function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 
-    function esc(str) {
-      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    /* parse a time token to minutes-from-start. handles "0", "5", "0:00", "1:25" */
+    function toMin(tok) {
+      tok = tok.trim();
+      if (tok.indexOf(":") >= 0) { var p = tok.split(":"); return (+p[0]) * 60 + (+p[1]); }
+      return +tok;
+    }
+    /* a step.time like "5–15" or "0:10–1:25" → {start,end,dur} */
+    function span(timeStr) {
+      var parts = String(timeStr).split(/[–-]/);
+      var a = toMin(parts[0]), b = parts.length > 1 ? toMin(parts[1]) : a;
+      return { start: a, end: b, dur: Math.max(0, b - a) };
+    }
+    function fmtClock(min) {
+      if (min < 60) return min + "m";
+      var h = Math.floor(min / 60), m = min % 60;
+      return h + "h" + (m ? " " + m + "m" : "");
     }
 
     function currentId() {
@@ -155,90 +155,107 @@
       var tools = [];
       (run.toolkit || []).forEach(function (t) { tools.push(t); });
       (run.steps || []).forEach(function (s) { (s.tools || []).forEach(function (t) { tools.push(t); }); });
-      /* de-dupe by path, keep first label */
       var seen = {}, out = [];
       tools.forEach(function (t) { if (!seen[t.path]) { seen[t.path] = 1; out.push(t); } });
       return out;
     }
-
     function pasteBlock(run) {
       return allLinks(run).map(function (t) {
         return t.name + (t.optional ? " (optional)" : "") + " — " + absUrl(t.path);
       }).join("\n");
     }
-
     function copyText(text, btn) {
-      function done() {
-        var prev = btn.getAttribute("data-label") || btn.textContent;
-        btn.setAttribute("data-label", prev);
-        btn.textContent = "Copied";
-        setTimeout(function () { btn.textContent = prev; }, 1400);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, done);
-      } else {
-        var ta = document.createElement("textarea");
-        ta.value = text; document.body.appendChild(ta); ta.select();
-        try { document.execCommand("copy"); } catch (e) {}
-        document.body.removeChild(ta); done();
-      }
+      function done() { var prev = btn.getAttribute("data-label") || btn.textContent; btn.setAttribute("data-label", prev); btn.textContent = "Copied ✓"; setTimeout(function () { btn.textContent = prev; }, 1400); }
+      if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, done); }
+      else { var ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} document.body.removeChild(ta); done(); }
     }
 
     function toolRow(t) {
       var url = absUrl(t.path);
-      var flag = t.worksheet
-        ? '<span class="rc-flag work">worksheet</span>'
-        : (t.optional ? '<span class="rc-flag">optional</span>' : "");
-      return '<div class="rc-tool">' +
-        '<span class="rc-tname">' + esc(t.name) + "</span>" + flag +
+      var flag = t.worksheet ? '<span class="rc-flag work">worksheet</span>' : (t.optional ? '<span class="rc-flag">optional</span>' : "");
+      return '<div class="rc-tool"><span class="tn">' + esc(t.name) + "</span>" + flag +
         '<a class="rc-btn is-primary" href="' + esc(url) + '" target="_blank" rel="noopener">Open ↗</a>' +
-        '<button class="rc-btn" type="button" data-copy-url="' + esc(url) + '" data-copy-name="' + esc(t.name) + '">Copy link</button>' +
-        "</div>";
+        '<button class="rc-btn" type="button" data-copy-url="' + esc(url) + '" data-copy-name="' + esc(t.name) + '">Copy link</button></div>';
     }
 
+    /* ----- § A shape: numbers + ribbon ----- */
+    function renderShape(run) {
+      var steps = run.steps || [];
+      var spans = steps.map(function (s) { return span(s.time); });
+      var total = spans.reduce(function (a, s) { return a + s.dur; }, 0) || 1;
+      var links = allLinks(run);
+      var worksheets = links.filter(function (t) { return t.worksheet; }).length;
+      var tools = links.length - worksheets;
+
+      document.querySelector("[data-rc-shape-note]").textContent =
+        fmtClock(total) + " live · " + steps.length + " blocks · generated from the run-of-show";
+
+      document.querySelector("[data-rc-numbers]").innerHTML =
+        [["" + steps.length, "run-of-show blocks"],
+         [fmtClock(total), "live, start to close"],
+         ["" + tools, "tools to launch"],
+         ["" + (worksheets || "—"), worksheets === 1 ? "worksheet" : "worksheets"]]
+        .map(function (x) { return '<div class="fm-stat"><span class="n">' + x[0] + '</span><span class="l">' + x[1] + "</span></div>"; }).join("");
+
+      document.querySelector("[data-rc-ribbon]").innerHTML = steps.map(function (s, i) {
+        var d = spans[i].dur || 1;
+        var c = SEG_COLORS[i % SEG_COLORS.length];
+        var label = d >= 12 ? esc(s.segment) : (d >= 6 ? esc(s.time) : "");
+        return '<div class="seg" style="flex:' + d + ' 1 0;background:' + c + ';" title="' + esc(s.time + " · " + s.segment + " (" + spans[i].dur + " min)") + '">' + label + "</div>";
+      }).join("");
+
+      var firstT = steps.length ? steps[0].time.split(/[–-]/)[0] : "0";
+      document.querySelector("[data-rc-axis]").innerHTML =
+        "<span>" + esc(firstT) + " · start</span><span>close · " + fmtClock(total) + "</span>";
+
+      // candid caption: biggest block
+      var maxI = 0; spans.forEach(function (s, i) { if (s.dur > spans[maxI].dur) maxI = i; });
+      var biggest = steps[maxI];
+      document.querySelector("[data-rc-cap]").innerHTML =
+        "The longest single block is <b style=\"color:var(--ink)\">" + esc(biggest.segment) + "</b> at " +
+        spans[maxI].dur + " minutes — that's where the session actually lives. Everything else brackets it.";
+    }
+
+    /* ----- switcher + console ----- */
     function renderSwitch(activeId) {
       switchHost.innerHTML = RUNS.map(function (r) {
         var on = r.id === activeId;
-        return '<a class="rc-tab" href="run-console.html?s=' + esc(r.id) + '"' +
-          (on ? ' aria-current="true"' : "") + ' data-go="' + esc(r.id) + '">' +
-          '<span class="rc-tab-no">' + esc(r.num) + "</span>" + esc(r.kicker) + "</a>";
+        return '<a class="rc-tab" href="run-console.html?s=' + esc(r.id) + '"' + (on ? ' aria-current="true"' : "") +
+          ' data-go="' + esc(r.id) + '"><span class="no">' + esc(r.num) + "</span>" + esc(r.kicker) + "</a>";
       }).join("");
     }
 
-    function render(run) {
+    function renderConsole(run) {
       var bar = '<div class="rc-bar">' +
         '<span class="rc-when">' + esc(run.when) + "</span>" +
         '<button class="rc-btn is-primary" type="button" data-copy-all>Copy all session links</button>' +
-        '<span class="rc-spacer" style="flex:1"></span>' +
+        '<span class="rc-spacer"></span>' +
         '<a class="rc-side" href="' + esc(run.facilitation.replace(/^pages\//, "")) + '">Facilitation script ↗</a>' +
         '<a class="rc-side" href="' + esc(run.overview.replace(/^pages\//, "")) + '">Session overview ↗</a>' +
         "</div>";
 
       var toolkit = "";
       if (run.toolkit && run.toolkit.length) {
-        toolkit = '<div class="rc-toolkit"><h3>Studio toolkit</h3>' +
-          "<p>Open as needed across the showcase — these are not tied to a single block.</p>" +
+        toolkit = '<div class="rc-toolkit"><h3>Studio toolkit</h3><p>Open as needed across the showcase — not tied to a single block.</p>' +
           '<div class="rc-tools">' + run.toolkit.map(toolRow).join("") + "</div></div>";
       }
 
-      var steps = '<div class="rc-steps">' + (run.steps || []).map(function (s) {
-        var tools = (s.tools && s.tools.length)
-          ? '<div class="rc-tools">' + s.tools.map(toolRow).join("") + "</div>" : "";
-        return '<div class="rc-step">' +
-          '<div class="rc-time">' + esc(s.time) + "</div>" +
-          "<div>" +
-            '<h2 class="rc-seg">' + esc(s.segment) + "</h2>" +
-            '<p class="rc-move">' + esc(s.move) + "</p>" +
-            '<p class="rc-action">' + esc(s.action) + "</p>" +
-            tools +
+      var steps = '<div class="fm-rail">' + (run.steps || []).map(function (s) {
+        var sp = span(s.time);
+        var tools = (s.tools && s.tools.length) ? '<div class="rc-tools">' + s.tools.map(toolRow).join("") + "</div>" : "";
+        return '<div class="fm-rail-row">' +
+          '<div class="fm-rail-meta"><span class="k">' + esc(s.time) + '</span>' +
+             '<span class="sub">' + sp.dur + ' min</span></div>' +
+          '<div class="fm-rail-body">' +
+             '<h3 style="margin:0 0 6px;font-size:1.1rem;">' + esc(s.segment) + "</h3>" +
+             '<p>' + esc(s.move) + "</p>" +
+             '<p class="rc-action">' + esc(s.action) + "</p>" + tools +
           "</div></div>";
       }).join("") + "</div>";
 
       host.innerHTML = bar + toolkit + steps;
 
-      host.querySelector("[data-copy-all]").addEventListener("click", function () {
-        copyText(pasteBlock(run), this);
-      });
+      host.querySelector("[data-copy-all]").addEventListener("click", function () { copyText(pasteBlock(run), this); });
       host.addEventListener("click", function (e) {
         var b = e.target.closest("[data-copy-url]");
         if (!b) return;
@@ -248,14 +265,11 @@
 
     function show(id, push) {
       var run = RUNS.filter(function (r) { return r.id === id; })[0] || RUNS[0];
-      if (!run) return;
-      if (push) {
-        var url = new URL(window.location.href);
-        url.searchParams.set("s", run.id);
-        window.history.replaceState({}, "", url.toString());
-      }
+      if (!run) { host.innerHTML = "<p>Session data unavailable.</p>"; return; }
+      if (push) { var url = new URL(window.location.href); url.searchParams.set("s", run.id); window.history.replaceState({}, "", url.toString()); }
       renderSwitch(run.id);
-      render(run);
+      renderShape(run);
+      renderConsole(run);
     }
 
     switchHost.addEventListener("click", function (e) {
@@ -269,6 +283,5 @@
     show(currentId(), false);
   })();
   </script>
-  <script src="../assets/projection.js"></script>
 </body>
 </html>

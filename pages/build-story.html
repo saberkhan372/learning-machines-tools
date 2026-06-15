@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-projection>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-projection data-no-identity-menu>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,115 +9,59 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-tool.css">
   <link rel="stylesheet" href="../assets/field-sub.css">
+  <link rel="stylesheet" href="../assets/field-data.css">
   <script src="../assets/field-theme.js"></script>
   <script src="../assets/build-history.js"></script>
   <style>
     .sub-lede { color: var(--ink-soft); max-width: 64ch; margin-top: 10px; line-height: 1.6; }
 
-    /* by the numbers */
-    .bs-numbers {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-      background: var(--line); border: 1px solid var(--line); border-radius: 2px; overflow: hidden;
-    }
-    .bs-num { background: var(--surface); padding: 16px 14px; }
-    .bs-num .n { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; }
-    .bs-num .l { display: block; margin-top: 4px; color: var(--muted); font-size: 0.82rem; line-height: 1.4; }
-
-    /* commit timeline */
+    /* commit timeline (local: one-off bar chart) */
     .bs-chart { margin-top: 8px; }
-    .bs-bars {
-      display: flex; align-items: flex-end; gap: 3px; height: 168px;
-      border-bottom: 1px solid var(--line); padding-bottom: 1px;
-    }
-    .bs-bar { flex: 1 1 0; min-width: 0; border-radius: 1px 1px 0 0; transition: opacity .15s; }
+    .bs-bars { display: flex; align-items: flex-end; gap: 3px; height: 168px; border-bottom: 1px solid var(--line); padding-bottom: 1px; }
+    .bs-bar { flex: 1 1 0; min-width: 0; transition: opacity .15s; }
     .bs-bar:hover { opacity: 0.65; }
     .bs-bar.is-zero { background: var(--line-soft) !important; }
-    .bs-ribbon { display: flex; gap: 2px; margin-top: 6px; }
-    .bs-seg {
-      height: 22px; border-radius: 1px; display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-mono); font-size: 0.66rem; color: #fff; min-width: 0; overflow: hidden;
-    }
-    .bs-axis { display: flex; justify-content: space-between; margin-top: 6px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
-    .bs-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 16px; }
-    .bs-leg { display: inline-flex; align-items: baseline; gap: 7px; font-size: 0.82rem; }
-    .bs-leg .sw { width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; align-self: center; }
-    .bs-leg .no { font-family: var(--font-mono); color: var(--muted); }
+    .bs-chart-cap { margin-top: 14px; max-width: 70ch; color: var(--ink-soft); line-height: 1.6; font-size: 0.9rem; }
+    .bs-chart-cap b { color: var(--ink); }
 
-    /* acts */
-    .bs-acts { display: grid; gap: 0; }
-    .bs-act { display: grid; grid-template-columns: 132px 1fr; gap: 0 22px; padding: 22px 0; border-top: 1px solid var(--line-soft); }
-    .bs-act:first-child { border-top: 0; }
-    .bs-act-meta .bs-act-no { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
-    .bs-act-meta h3 { margin: 2px 0 6px; font-size: 1.15rem; }
-    .bs-act-meta .bs-act-span, .bs-act-meta .bs-act-stat {
-      display: block; font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); line-height: 1.5;
-    }
-    .bs-act-meta .bs-act-stat { color: var(--accent); }
-    .bs-act-body p { margin: 0 0 10px; line-height: 1.6; max-width: 68ch; }
-    .bs-act-body .bs-candid {
-      border-left: 2px solid var(--line); padding-left: 12px; color: var(--muted);
-      font-size: 0.92rem; font-style: italic; max-width: 64ch;
-    }
+    /* architecture diagram (local: one-off SVG) */
+    .bs-arch { width: 100%; height: auto; border: 1px solid var(--line); background: var(--surface); }
 
-    /* architecture diagram + swatches */
-    .bs-arch { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 2px; background: var(--surface); }
-    .bs-swatches { display: flex; flex-wrap: wrap; gap: 14px; }
-    .bs-swatch { border: 1px solid var(--line); border-radius: 2px; overflow: hidden; width: 168px; }
-    .bs-swatch .chip { height: 56px; display: flex; }
+    /* swatches — chip internals stay local; container is now .fm-cardgrid */
+    .bs-swatch { background: var(--surface); overflow: hidden; }
+    .bs-swatch .chip { height: 64px; display: flex; }
     .bs-swatch .chip i { flex: 1; }
-    .bs-swatch .cap { padding: 8px 10px; font-size: 0.8rem; }
-    .bs-swatch .cap b { display: block; }
+    .bs-swatch .cap { padding: 12px 14px 14px; font-size: 0.82rem; }
+    .bs-swatch .cap b { display: block; color: var(--ink); }
     .bs-swatch .cap span { color: var(--muted); font-size: 0.74rem; }
 
-    /* prehistory / lineage */
+    /* prehistory / lineage rail (local: dotted rail, distinct from .fm-rail) */
     .bs-pre { display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 4px; }
-    .bs-pre-row { display: grid; grid-template-columns: 88px 1fr; gap: 0 18px; padding: 14px 0 14px 20px; position: relative; }
-    .bs-pre-row::before {
-      content: ""; position: absolute; left: -7px; top: 20px; width: 10px; height: 10px;
-      border-radius: 50%; background: var(--surface); border: 2px solid var(--muted);
-    }
+    .bs-pre-row { display: grid; grid-template-columns: 92px 1fr; gap: 0 18px; padding: 14px 0 14px 22px; position: relative; }
+    .bs-pre-row::before { content: ""; position: absolute; left: -7px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
     .bs-pre-row.is-bridge::before { background: var(--accent); border-color: var(--accent); }
     .bs-pre-year { font-family: var(--font-mono); font-size: 0.86rem; font-weight: 600; color: var(--accent); padding-top: 1px; }
-    .bs-pre-row.is-bridge .bs-pre-year { color: var(--accent); }
     .bs-pre-b h4 { margin: 0 0 4px; font-size: 1.02rem; }
     .bs-pre-b p { margin: 0; color: var(--ink-soft); line-height: 1.55; max-width: 70ch; }
     .bs-pre-row.is-bridge .bs-pre-b h4 { color: var(--accent); }
 
-    /* prehistory prose: two parents + consent frame */
+    /* section sub-heading (local) */
     .bs-sub { margin: 30px 0 14px; font-size: 1.15rem; }
-    .bs-parents { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .bs-parent { border: 1px solid var(--line); border-radius: 2px; background: var(--surface); padding: 18px 20px; }
-    .bs-parent-k { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-    .bs-parent h4 { margin: 6px 0 8px; font-size: 1.06rem; }
-    .bs-parent p { margin: 0; line-height: 1.6; color: var(--ink-soft); }
-    .bs-frame {
-      margin-top: 18px; border-left: 3px solid var(--accent); background: var(--surface);
-      padding: 16px 20px; border-radius: 0 2px 2px 0; line-height: 1.6; color: var(--ink-soft); max-width: 78ch;
-    }
-    .bs-frame b { color: var(--ink); }
 
-    /* techniques cards */
-    .bs-techs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
-    .bs-tech { background: var(--surface); padding: 18px 20px; }
-    .bs-tech h4 { margin: 0 0 6px; font-size: 1.02rem; }
-    .bs-tech p { margin: 0; line-height: 1.55; color: var(--ink-soft); font-size: 0.93rem; }
-
-    /* AI footprint tables */
-    .bs-foot-table { border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
-    .bs-foot-row { display: grid; grid-template-columns: 1fr 120px; gap: 4px 16px; padding: 13px 16px; border-top: 1px solid var(--line-soft); align-items: baseline; }
+    /* AI footprint tables — left accent rail (local: one-off table) */
+    .bs-foot-table { border: 1px solid var(--line); }
+    .bs-foot-row { display: grid; grid-template-columns: 1fr 130px; gap: 4px 16px; padding: 14px 16px; border-top: 1px solid var(--line-soft); align-items: baseline; }
     .bs-foot-row:first-child { border-top: 0; }
-    .bs-foot-row.is-total { background: var(--surface); }
-    .bs-foot-label { font-weight: 600; }
+    .bs-foot-row.is-total { background: var(--surface); border-left: 3px solid var(--accent); }
+    .bs-foot-label { font-weight: 600; color: var(--ink); }
     .bs-foot-est { font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); text-align: right; font-weight: 600; }
     .bs-foot-basis { grid-column: 1 / -1; margin: 2px 0 0; color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
 
-    @media (max-width: 720px) {
-      .bs-numbers { grid-template-columns: repeat(2, 1fr); }
-      .bs-act { grid-template-columns: 1fr; gap: 8px; }
+    @media (max-width: 640px) {
       .bs-bars { height: 132px; }
       .bs-pre-row { grid-template-columns: 1fr; gap: 4px; }
-      .bs-parents, .bs-techs { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -127,7 +71,7 @@
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
         <a href="colophon.html" class="hide-sm">Colophon</a>
-        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="vocabulary-field-guide.html" class="hide-sm">Vocabulary</a>
         <a href="../index.html#sessions" class="hide-sm">Sessions</a>
         <a class="btn btn-sm" href="../index.html">Back home</a>
       </div>
@@ -141,11 +85,12 @@
         <a href="colophon.html">Colophon</a><span class="sep">/</span>
         <span>Build story</span>
       </div>
+      <p class="sess-kicker"><i class="modsq"></i>Making-of · the timeline, gaps and typos included</p>
       <h1 class="sess-title" style="font-size: clamp(34px, 5vw, 56px);">How this got built</h1>
       <p class="sub-lede">People asked how the site and tools were made — not the principles (that's the
-        <a href="colophon.html">colophon</a>), but the actual story: what got built, in what order, and where it
-        wasn't tidy. It opens before commit 1 — a decade of CC Fest lineage — then follows the git history
-        day by day. The timeline is real, gap and typos included.</p>
+        <a href="colophon.html" style="color:var(--accent);">colophon</a>), but the actual story: what got built, in
+        what order, and where it wasn't tidy. It opens before commit 1 — a decade of CC Fest lineage — then follows
+        the git history day by day. The timeline is real, gap and typos included.</p>
     </div>
   </header>
 
@@ -155,13 +100,13 @@
       <div class="sec-rule"><h2 class="sec-no">§ 0 · Before the repo</h2><span class="sec-note">a decade of lineage · 2016 → 2026</span></div>
       <p class="sub-lede" style="margin-bottom:18px;">The git history starts on May 18, but the camp doesn't. It inherits a ten-year creative-coding
         festival, a virtual-workshop model, and a high-school course where these exact tools were first built and tested
-        with students. <span style="color:var(--muted)">Lineage drawn from the CC Fest archive and the <a href="../docs/project-brief.html">project brief</a>.</span></p>
+        with students. <span style="color:var(--muted)">Lineage drawn from the CC Fest archive and the <a href="../docs/project-brief.html" style="color:var(--accent);">project brief</a>.</span></p>
       <div class="bs-pre" data-bs-pre></div>
 
       <h3 class="bs-sub">Two direct parents</h3>
-      <div class="bs-parents">
-        <div class="bs-parent">
-          <span class="bs-parent-k mono">The course</span>
+      <div class="fm-cardgrid">
+        <div class="fm-card">
+          <span class="k mono">The course</span>
           <h4>Generative AI as a Creative Collaborator</h4>
           <p>A 2025–26 Campbell Hall course co-taught by Saber Khan and Danny Gámez with a class of sixteen students.
             It runs language → image → video → a final film pitch — the same arc this camp uses — and its defining idea is
@@ -170,8 +115,8 @@
             Default Test, and the Temporal Telephone were built and pressure-tested with those students before any of them
             became a public tool.</p>
         </div>
-        <div class="bs-parent">
-          <span class="bs-parent-k mono">The camp</span>
+        <div class="fm-card">
+          <span class="k mono">The camp</span>
           <h4>CC Fest Coding Camp</h4>
           <p>Four iterations in eighteen months — a 10-session Fall 2024 prototype, compressed to five sessions, then
             reshaped into a designed learning community, then a community of practice by Spring 2026. It supplied the whole
@@ -181,7 +126,7 @@
         </div>
       </div>
 
-      <div class="bs-frame">
+      <div class="fm-claim">
         <b>The most honest piece of the origin:</b> the no-AI pathway and the consent protocol aren't decoration. Spring 2026
         feedback was clear that the camp's <em>AI use had grown faster than the consent infrastructure around it</em> — a
         participant raised real concerns about data, artist labor, naming people accurately in recaps, and being able to opt
@@ -191,7 +136,7 @@
 
     <section style="padding:14px 0;">
       <div class="sec-rule"><h2 class="sec-no">§ A · By the numbers</h2><span class="sec-note">27 days, start to launch-ready</span></div>
-      <div class="bs-numbers" data-bs-numbers></div>
+      <div class="fm-stats" data-bs-numbers></div>
     </section>
 
     <section style="padding:14px 0 28px;">
@@ -201,22 +146,23 @@
         of tool-building, and the four-day run that turned tools into a field manual and then a camp instrument.</p>
       <div class="bs-chart">
         <div class="bs-bars" data-bs-bars></div>
-        <div class="bs-ribbon" data-bs-ribbon></div>
-        <div class="bs-axis" data-bs-axis></div>
-        <div class="bs-legend" data-bs-legend></div>
+        <div class="fm-ribbon" data-bs-ribbon style="margin-top:6px"></div>
+        <div class="fm-ribbon-axis" data-bs-axis></div>
+        <div class="fm-legend" data-bs-legend style="margin-top:16px"></div>
+        <p class="bs-chart-cap" data-bs-chart-cap></p>
       </div>
     </section>
 
     <section style="padding:14px 0 28px;">
       <div class="sec-rule"><h2 class="sec-no">§ C · Six acts</h2><span class="sec-note">tools → site → field manual → identity → instrument</span></div>
-      <div class="bs-acts" data-bs-acts></div>
+      <div class="fm-rail" data-bs-acts></div>
     </section>
 
     <section style="padding:14px 0 28px;">
       <div class="sec-rule"><h2 class="sec-no">§ D · Ideas &amp; techniques</h2><span class="sec-note">the interesting methods, with the evidence</span></div>
       <p class="sub-lede" style="margin-bottom:18px;">A few methods did most of the work and are worth naming on their own —
         some about building with AI, some about building so it lasts.</p>
-      <div class="bs-techs" data-bs-techs></div>
+      <div class="fm-cardgrid" data-bs-techs></div>
     </section>
 
     <section style="padding:14px 0 28px;">
@@ -227,29 +173,25 @@
       <svg class="bs-arch" viewBox="0 0 720 300" role="img" aria-label="Architecture: single-file tools and pages draw on a shared assets layer of one CSS system and data files, served statically from GitHub Pages with no build step.">
         <style>
           .ab { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+          .abx { fill: var(--surface); stroke: var(--accent); stroke-width: 1.3; }
           .al { fill: var(--ink); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
           .am { fill: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; }
           .ac { fill: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
-          .aedge { stroke: var(--line); stroke-width: 1.2; fill: none; }
+          .aedge { stroke: var(--accent); stroke-width: 1.2; fill: none; }
         </style>
-        <!-- top: surfaces -->
         <text x="20" y="28" class="am">SURFACES · one HTML file each</text>
-        <rect class="ab" x="20"  y="38" width="150" height="40" rx="3"/><text x="34" y="56" class="al">25 tools/</text><text x="34" y="70" class="am">single-file + inline JS</text>
-        <rect class="ab" x="186" y="38" width="150" height="40" rx="3"/><text x="200" y="56" class="al">53 pages/</text><text x="200" y="70" class="am">sessions · console · home</text>
-        <rect class="ab" x="352" y="38" width="150" height="40" rx="3"/><text x="366" y="56" class="al">5 worksheets/</text><text x="366" y="70" class="am">printable boards</text>
-        <rect class="ab" x="518" y="38" width="182" height="40" rx="3"/><text x="532" y="56" class="al">34 docs/ (md)</text><text x="532" y="70" class="am">briefs · plans · facilitation</text>
-        <!-- edges down -->
+        <rect class="ab" x="20"  y="38" width="150" height="40"/><text x="34" y="56" class="al">25 tools/</text><text x="34" y="70" class="am">single-file + inline JS</text>
+        <rect class="ab" x="186" y="38" width="150" height="40"/><text x="200" y="56" class="al">53 pages/</text><text x="200" y="70" class="am">sessions · console · home</text>
+        <rect class="ab" x="352" y="38" width="150" height="40"/><text x="366" y="56" class="al">5 worksheets/</text><text x="366" y="70" class="am">printable boards</text>
+        <rect class="ab" x="518" y="38" width="182" height="40"/><text x="532" y="56" class="al">34 docs/ (md)</text><text x="532" y="70" class="am">briefs · plans · facilitation</text>
         <path class="aedge" d="M95 78 L95 118"/><path class="aedge" d="M261 78 L261 118"/><path class="aedge" d="M427 78 L427 118"/>
-        <!-- middle: shared assets -->
         <text x="20" y="140" class="am">SHARED · assets/ (~976 lines JS, one CSS system)</text>
-        <rect class="ab" x="20" y="150" width="680" height="66" rx="3"/>
+        <rect class="abx" x="20" y="150" width="680" height="66"/>
         <text x="34" y="172" class="ac">field.css · field-*.css</text><text x="240" y="172" class="am">one design system · 4 skins via field-theme.js</text>
         <text x="34" y="194" class="ac">session-runs.js · tools-data.js · build-history.js</text><text x="380" y="194" class="am">data drives the pages</text>
         <text x="34" y="208" class="am">recap.js · projection.js · worksheet-export.js</text>
-        <!-- edge down -->
         <path class="aedge" d="M360 216 L360 250"/>
-        <!-- bottom: hosting -->
-        <rect class="ab" x="190" y="250" width="340" height="36" rx="3"/>
+        <rect class="abx" x="190" y="250" width="340" height="36"/>
         <text x="210" y="272" class="al">GitHub Pages</text><text x="330" y="272" class="am">static · no build step · no server</text>
       </svg>
     </section>
@@ -259,7 +201,7 @@
       <p class="sub-lede" style="margin-bottom:18px;">The visual identity changed twice. The original tools were warm cream paper.
         The redesign went dark-first with a shared system. Then identity arrived: one switcher that flips the whole site
         between four looks, persisted per visitor.</p>
-      <div class="bs-swatches">
+      <div class="fm-cardgrid" style="--fm-cols:4">
         <div class="bs-swatch"><div class="chip"><i style="background:#f5f3ee"></i><i style="background:#1a1a2e"></i></div><div class="cap"><b>Phase 0 · Paper</b><span>warm cream, per-tool inline CSS</span></div></div>
         <div class="bs-swatch"><div class="chip"><i style="background:#13151a"></i><i style="background:#e8e6e1"></i><i style="background:#7c5cff"></i></div><div class="cap"><b>Redesign · Dark-first</b><span>one shared design system</span></div></div>
         <div class="bs-swatch"><div class="chip"><i style="background:#0c0c0c"></i><i style="background:#00e676"></i></div><div class="cap"><b>Identity · Terminal</b><span>one of four switchable skins</span></div></div>
@@ -271,8 +213,8 @@
       <div class="sec-rule"><h2 class="sec-no">§ G · The AI footprint</h2><span class="sec-note">a rough, honest estimate · big error bars</span></div>
       <p class="sub-lede" style="margin-bottom:18px;">This camp asks people to make AI's costs and mechanisms visible, so it owes the same of
         itself. Here is a deliberately rough accounting of the AI used to build the site and tools. <b>Every number below is an
-        order-of-magnitude estimate</b> — the honest answer to “how much AI did this take” includes “we can't measure it
-        precisely, and here's why.” That uncertainty is itself one of the camp's lessons.</p>
+        order-of-magnitude estimate</b> — the honest answer to "how much AI did this take" includes "we can't measure it
+        precisely, and here's why." That uncertainty is itself one of the camp's lessons.</p>
 
       <h3 class="bs-sub" style="margin-top:8px;">Tokens, very approximately</h3>
       <div class="bs-foot-table" data-bs-tokens></div>
@@ -280,9 +222,9 @@
       <h3 class="bs-sub">What that might cost the world</h3>
       <div class="bs-foot-table" data-bs-impacts></div>
 
-      <div class="bs-parents" style="margin-top:20px;">
-        <div class="bs-parent">
-          <span class="bs-parent-k mono">What this does not count</span>
+      <div class="fm-cardgrid" style="margin-top:20px;">
+        <div class="fm-card">
+          <span class="k mono">What this does not count</span>
           <h4>The big number is elsewhere</h4>
           <p>This is <b>inference only</b> — the cost of <em>using</em> the models. It excludes the enormous one-time cost of
             <b>training</b> them (orders of magnitude larger, but shared across billions of queries, so any one project's slice is
@@ -290,8 +232,8 @@
             month of someone's attention). The ChatGPT/Codex and Notion figures are near-guesses; only the Claude side is
             estimable from inside this tool, and even that is fuzzy because cached context muddies any token count.</p>
         </div>
-        <div class="bs-parent">
-          <span class="bs-parent-k mono">Limitations &amp; other impacts</span>
+        <div class="fm-card">
+          <span class="k mono">Limitations &amp; other impacts</span>
           <h4>The footprint isn't only carbon</h4>
           <p>Providers rarely publish per-query energy, so public estimates vary 10–100×; the need to <em>guess</em> here is the
             real finding. Beyond energy and water there's the <b>human labour</b> behind the models (data annotation, RLHF), and
@@ -301,21 +243,25 @@
         </div>
       </div>
 
-      <div class="bs-frame">
-        <b>How to read these numbers:</b> not as “see, it was cheap,” and not as alarm — but as a worked example of the camp's own
+      <div class="fm-claim">
+        <b>How to read these numbers:</b> not as "see, it was cheap," and not as alarm — but as a worked example of the camp's own
         method. Make the invisible visible, show the assumptions, state the error bars, and refuse to pretend a confident figure
         is the same as a correct one. If you can find better data, the estimates live in one file (<code>assets/build-history.js</code>) and are meant to be revised.
       </div>
     </section>
 
-    <p class="sub-lede" style="margin-top:8px;">Want the principles behind the tools rather than the timeline? That's the
-      <a href="colophon.html">colophon &rarr;</a></p>
+    <section style="padding:6px 0 0;">
+      <div class="pager">
+        <a href="colophon.html"><span class="pg-dir mono">← The why</span><span class="pg-title">How these tools were made</span></a>
+        <a class="next" href="redesigns-index.html"><span class="pg-dir mono">All redesigns →</span><span class="pg-title">Review set</span></a>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <div class="wrap">
       <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
-      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="colophon.html">Colophon</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="colophon.html">Colophon</a> · <a href="vocabulary-field-guide.html">Vocabulary</a> · <a href="run-console.html">Run console</a></nav>
       <p class="mono">Static HTML &middot; vanilla JavaScript &middot; no build step. Timeline generated from git history on 2026-06-14.</p>
     </div>
   </footer>
@@ -324,7 +270,7 @@
   (function () {
     var B = window.LM_BUILD;
     if (!B) return;
-    var ACT_COLORS = ["#2f6f4f", "#9aa0a6", "#3b6ea5", "#1a1a2e", "#a4508b", "#c2410c"];
+    var ACT_COLORS = ["#2f6f4f", "#9aa0a6", "#3b6ea5", "#3d3a6b", "#a4508b", "#c2410c"];
 
     function esc(s) {
       return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
@@ -356,7 +302,7 @@
     var techHost = document.querySelector("[data-bs-techs]");
     if (techHost && B.techniques) {
       techHost.innerHTML = B.techniques.map(function (t) {
-        return '<div class="bs-tech"><h4>' + esc(t.title) + "</h4><p>" + esc(t.body) + "</p></div>";
+        return '<div class="fm-card"><h4>' + esc(t.title) + "</h4><p>" + esc(t.body) + "</p></div>";
       }).join("");
     }
 
@@ -387,7 +333,7 @@
 
     /* § A — numbers */
     document.querySelector("[data-bs-numbers]").innerHTML = B.numbers.map(function (x) {
-      return '<div class="bs-num"><span class="n">' + esc(x.n) + '</span><span class="l">' + esc(x.label) + "</span></div>";
+      return '<div class="fm-stat"><span class="n">' + esc(x.n) + '</span><span class="l">' + esc(x.label) + "</span></div>";
     }).join("");
 
     /* § B — bars */
@@ -403,29 +349,40 @@
     /* § B — act ribbon (segment width ∝ days in act) */
     document.querySelector("[data-bs-ribbon]").innerHTML = B.acts.map(function (a, i) {
       var days = B.daily.filter(function (d) { return d[0] >= a.span && d[0] <= a.to; }).length;
-      return '<div class="bs-seg" style="flex:' + days + ' 1 0;background:' + ACT_COLORS[i] + '" title="' + esc(a.title) + '">' + esc(a.no) + "</div>";
+      return '<div class="seg" style="flex:' + days + ' 1 0;background:' + ACT_COLORS[i] + '" title="' + esc(a.title + " · " + days + " days") + '">' + esc(a.no) + "</div>";
     }).join("");
 
-    /* § B — axis + legend */
+    /* § B — axis + legend + caption */
     var first = B.daily[0][0], last = B.daily[B.daily.length - 1][0];
     document.querySelector("[data-bs-axis]").innerHTML =
       "<span>" + esc(shortDate(first)) + "</span><span>" + esc(shortDate(last)) + " · launch-ready</span>";
     document.querySelector("[data-bs-legend]").innerHTML = B.acts.map(function (a, i) {
-      return '<span class="bs-leg"><span class="sw" style="background:' + ACT_COLORS[i] + '"></span>' +
+      return '<span class="fm-legend-item"><span class="sw" style="background:' + ACT_COLORS[i] + '"></span>' +
         '<span class="no">' + esc(a.no) + "</span>" + esc(a.title) + "</span>";
     }).join("");
 
+    var zeroDays = B.daily.filter(function (d) { return d[1] === 0; }).length;
+    var peak = B.daily.reduce(function (a, d) { return d[1] > a[1] ? d : a; }, B.daily[0]);
+    var peakAct = B.acts[actIndexFor(peak[0])];
+    var capEl = document.querySelector("[data-bs-chart-cap]");
+    if (capEl) {
+      capEl.innerHTML = "Of " + B.daily.length + " days in range, <b>" + zeroDays +
+        "</b> were zero-commit — the pilot stretch, left in on purpose. The busiest single day, <b>" +
+        esc(shortDate(peak[0])) + "</b>, carried " + peak[1] + " commits — the " +
+        esc(peakAct ? peakAct.title.toLowerCase() : "build") + " burst.";
+    }
+
     /* § C — acts */
-    document.querySelector("[data-bs-acts]").innerHTML = B.acts.map(function (a) {
-      var candid = a.candid ? '<p class="bs-candid">' + esc(a.candid) + "</p>" : "";
-      return '<div class="bs-act">' +
-        '<div class="bs-act-meta">' +
-          '<span class="bs-act-no">ACT ' + esc(a.no) + "</span>" +
+    document.querySelector("[data-bs-acts]").innerHTML = B.acts.map(function (a, i) {
+      var candid = a.candid ? '<p class="candid">' + esc(a.candid) + "</p>" : "";
+      return '<div class="fm-rail-row">' +
+        '<div class="fm-rail-meta" style="--fm-accent:' + ACT_COLORS[i] + ';">' +
+          '<span class="k">ACT ' + esc(a.no) + "</span>" +
           "<h3>" + esc(a.title) + "</h3>" +
-          '<span class="bs-act-span">' + esc(shortDate(a.span) + " – " + shortDate(a.to)) + "</span>" +
-          '<span class="bs-act-stat">' + esc(a.stat) + "</span>" +
+          '<span class="sub">' + esc(shortDate(a.span) + " – " + shortDate(a.to)) + "</span>" +
+          '<span class="stat">' + esc(a.stat) + "</span>" +
         "</div>" +
-        '<div class="bs-act-body"><p>' + esc(a.beat) + "</p>" + candid + "</div>" +
+        '<div class="fm-rail-body"><p>' + esc(a.beat) + "</p>" + candid + "</div>" +
       "</div>";
     }).join("");
   })();

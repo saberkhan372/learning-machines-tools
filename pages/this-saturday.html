@@ -1,90 +1,77 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-projection>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-projection data-no-identity-menu>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <title>This Saturday · Your camp &mdash; Learning Machines</title>
+  <title>This Saturday &mdash; Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/field.css">
   <link rel="stylesheet" href="../assets/field-tool.css">
   <link rel="stylesheet" href="../assets/field-sub.css">
+  <link rel="stylesheet" href="../assets/field-data.css">
   <script src="../assets/field-theme.js"></script>
   <script src="../assets/session-runs.js"></script>
   <style>
-    .sub-lede { color: var(--ink-soft); max-width: 60ch; margin-top: 10px; line-height: 1.55; }
+    .sub-lede { color: var(--ink-soft); max-width: 62ch; margin-top: 10px; line-height: 1.6; }
 
-    .ts-status {
-      font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--accent);
-    }
-    .ts-card {
-      border: 1px solid var(--line); border-left: 3px solid var(--accent);
-      border-radius: 2px; background: var(--surface); padding: 22px 24px; margin: 14px 0 26px;
-    }
-    .ts-card h2 { margin: 4px 0 2px; font-size: 1.5rem; }
-    .ts-kicker { color: var(--muted); font-size: 0.95rem; }
-    .ts-when {
-      font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft);
-      margin: 10px 0 16px;
-    }
-    .ts-when a { color: var(--accent); text-decoration: none; }
-    .ts-when a:hover { text-decoration: underline; }
-    .ts-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+    /* countdown: structure from .fm-stats fm-stats--center; keep the hero-scale
+       numerals + mono labels as a scoped layer on top */
+    [data-ts-count] .fm-stat { padding: 16px 8px 14px; }
+    [data-ts-count] .n { font-size: clamp(28px, 5vw, 40px); line-height: 1; font-variant-numeric: tabular-nums; }
+    [data-ts-count] .l { display: block; margin-top: 7px; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
 
-    .ts-grid { display: grid; grid-template-columns: 130px 1fr; gap: 12px 18px; }
-    .ts-grid dt {
-      font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--muted); padding-top: 3px;
-    }
-    .ts-grid dd { margin: 0; }
-    .ts-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .ts-chip {
-      display: inline-flex; align-items: baseline; gap: 7px; text-decoration: none;
-      border: 1px solid var(--line); border-radius: 2px; padding: 6px 11px;
-      color: var(--text); font-size: 0.9rem;
-    }
-    .ts-chip:hover { border-color: var(--accent); color: var(--accent); }
-    .ts-chip .ts-flag {
-      font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--muted);
-    }
-    .ts-explore { line-height: 1.5; }
+    /* status line */
+    .ts-status { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); }
+    .ts-status .pulse { width: 9px; height: 9px; background: var(--accent); border-radius: 50%; position: relative; }
+    .ts-status .pulse::after { content: ""; position: absolute; inset: -5px; border: 1px solid var(--accent); border-radius: 50%; opacity: 0; animation: tsp 2.2s ease-out infinite; }
+    @keyframes tsp { 0% { transform: scale(0.6); opacity: 0.7; } 100% { transform: scale(1.5); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .ts-status .pulse::after { animation: none; } }
 
-    .ts-last {
-      border: 1px solid var(--line-soft); border-radius: 2px; padding: 16px 18px; margin-bottom: 26px;
+    /* the arc ribbon — 4 sessions, current marked (local: stateful node grid) */
+    .ts-arc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .ts-node {
+      border: 1px solid var(--line); background: var(--surface); padding: 13px 14px 14px;
+      border-top: 3px solid var(--nc, var(--line)); position: relative; text-decoration: none; color: inherit; display: block;
     }
-    .ts-last h3 { margin: 0 0 6px; font-size: 1.05rem; }
-    .ts-last p { margin: 0 0 8px; color: var(--ink-soft); line-height: 1.5; }
-    .ts-async-todo {
-      font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted);
-      border: 1px dashed var(--line); border-radius: 2px; padding: 8px 10px; display: inline-block;
-    }
+    .ts-node[data-mod="text"]  { --nc: var(--m-text); } .ts-node[data-mod="image"] { --nc: var(--m-image); }
+    .ts-node[data-mod="video"] { --nc: var(--m-video); } .ts-node[data-mod="cross"] { --nc: var(--m-cross); }
+    .ts-node .no { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+    .ts-node .ti { font-weight: 700; margin: 4px 0 2px; font-size: 0.98rem; color: var(--ink); }
+    .ts-node .dt { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-soft); }
+    .ts-node .st { display: inline-block; margin-top: 9px; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border: 1px solid var(--line-soft); color: var(--muted); }
+    .ts-node.is-done { opacity: 0.62; }
+    .ts-node.is-done .st { color: var(--muted); }
+    .ts-node.is-now { background: color-mix(in oklab, var(--nc) 9%, var(--surface)); box-shadow: inset 0 0 0 1px var(--nc); }
+    .ts-node.is-now .st { color: var(--nc); border-color: var(--nc); font-weight: 600; }
+    .ts-node:hover { border-color: var(--nc); }
 
-    .ts-arc { display: grid; gap: 8px; margin-top: 8px; }
-    .ts-arc-row {
-      display: flex; align-items: baseline; gap: 12px; padding: 11px 14px;
-      border: 1px solid var(--line-soft); border-radius: 2px;
-    }
-    .ts-arc-row.is-now { border-color: var(--accent); }
-    .ts-dot {
-      width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--muted);
-      flex: 0 0 auto; align-self: center;
-    }
-    .ts-arc-row.is-done .ts-dot { background: var(--muted); }
-    .ts-arc-row.is-now .ts-dot { background: var(--accent); border-color: var(--accent); }
-    .ts-arc-when {
-      font-family: var(--font-mono); font-size: 0.76rem; color: var(--muted); margin-left: auto;
-    }
-    .ts-arc-row a { text-decoration: none; color: var(--text); font-weight: 600; }
-    .ts-arc-row a:hover { color: var(--accent); }
+    /* focus card */
+    .ts-focus { border: 1px solid var(--ink); background: var(--surface); border-left: 3px solid var(--accent); }
+    .ts-focus-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; padding: 18px 22px 14px; border-bottom: 1px solid var(--line); }
+    .ts-focus-head .kick { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+    .ts-focus-head h2 { margin: 0; font-size: clamp(22px, 3vw, 30px); }
+    .ts-focus-head .when { margin-left: auto; font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-soft); }
+    .ts-focus-body { display: grid; grid-template-columns: 1.4fr 1fr; gap: 0; }
+    .ts-focus-body > div { padding: 18px 22px; }
+    .ts-focus-body .left { border-right: 1px solid var(--line); }
+    .ts-focus-body p { margin: 0 0 14px; line-height: 1.6; color: var(--ink-soft); }
+    .ts-explore { font-family: var(--font-serif); font-style: italic; font-size: 1.1rem; color: var(--ink) !important; }
+    .ts-arc-mini { display: flex; flex-direction: column; gap: 7px; }
+    .ts-arc-mini .h { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+    .ts-step { display: grid; grid-template-columns: 56px 1fr; gap: 10px; font-size: 0.86rem; line-height: 1.35; padding: 5px 0; border-bottom: 1px solid var(--line-soft); }
+    .ts-step:last-child { border-bottom: 0; }
+    .ts-step .tm { font-family: var(--font-mono); font-size: 0.74rem; color: var(--accent); }
+    .ts-step .sg { color: var(--ink); }
+    .ts-cta { display: flex; flex-wrap: wrap; gap: 10px; padding: 16px 22px; border-top: 1px solid var(--line); }
 
-    .ts-enroll-note { margin-top: 24px; color: var(--muted); font-size: 0.86rem; }
-    .ts-enroll-note a { color: var(--accent); }
-
-    @media (max-width: 600px) { .ts-grid { grid-template-columns: 1fr; gap: 4px 0; } .ts-grid dt { padding-top: 10px; } }
+    @media (max-width: 820px) {
+      .ts-arc { grid-template-columns: repeat(2, 1fr); }
+      .ts-focus-body { grid-template-columns: 1fr; }
+      .ts-focus-body .left { border-right: 0; border-bottom: 1px solid var(--line); }
+    }
   </style>
 </head>
 <body>
@@ -92,186 +79,213 @@
     <div class="wrap nav-inner">
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="camp-2026.html" class="hide-sm">Dates &amp; logistics</a>
-        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
-        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="run-console.html" class="hide-sm">Run console</a>
+        <a href="../index.html#sessions" class="hide-sm">All sessions</a>
+        <a href="vocabulary-field-guide.html" class="hide-sm">Vocabulary</a>
         <a class="btn btn-sm" href="../index.html">Back home</a>
       </div>
     </div>
   </nav>
 
-  <header class="sub-hero">
+  <header class="sub-hero" data-mod="cross">
     <div class="wrap">
       <div class="crumb">
         <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#sessions">Sessions</a><span class="sep">/</span>
         <span>This Saturday</span>
       </div>
-      <h1>This Saturday</h1>
-      <p class="sub-lede">Your home for the camp: what's happening next, the tools you'll open,
-        and what to do between sessions. Bookmark this page and check back each week.</p>
+      <p class="ts-status" data-ts-status><span class="pulse"></span>Loading schedule…</p>
+      <h1 class="sess-title" data-ts-title style="font-size: clamp(34px,5.5vw,62px); margin-top:10px;">This Saturday</h1>
+      <p class="sub-lede" data-ts-lede>One page that always points at the next session — what it's about, when it
+        starts, and the two things to do before you join. Everything else can wait.</p>
+      <div class="fm-stats fm-stats--center" data-ts-count style="--fm-cols:4;max-width:520px;margin-top:22px;">
+        <div class="fm-stat"><span class="n">—</span><span class="l">Days</span></div>
+        <div class="fm-stat"><span class="n">—</span><span class="l">Hours</span></div>
+        <div class="fm-stat"><span class="n">—</span><span class="l">Minutes</span></div>
+        <div class="fm-stat"><span class="n">—</span><span class="l">Seconds</span></div>
+      </div>
     </div>
   </header>
 
-  <main class="wrap" style="padding-bottom:48px;">
-    <div data-this-saturday></div>
+  <main class="wrap" style="padding-bottom:56px;">
+
+    <!-- § A — where we are in the arc -->
+    <section style="padding:26px 0 14px;">
+      <div class="sec-rule"><h2 class="sec-no">§ A · Where we are in the arc</h2><span class="sec-note">four Saturdays · text → image → video → showcase</span></div>
+      <div class="ts-arc" data-ts-arc></div>
+    </section>
+
+    <!-- § B — the focus -->
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ B · The focus</h2><span class="sec-note" data-ts-focus-note>this week's session</span></div>
+      <div class="ts-focus" data-ts-focus></div>
+    </section>
+
+    <!-- § C — before you join -->
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ C · Before you join</h2><span class="sec-note">two minutes, honestly</span></div>
+      <div class="fm-cardgrid" style="--fm-cols:3">
+        <div class="fm-card"><span class="k">01</span><h3>Open one tab</h3><p>You don't need to install anything or make an account. Everything runs in the browser — keep the <a href="run-console.html">Run console</a> open and launch tools from there.</p></div>
+        <div class="fm-card"><span class="k">02</span><h3>Pick a pathway</h3><p>Decide how you'll take part — generate live, observe, or critique. All three are full pathways. No one is required to produce AI output.</p></div>
+        <div class="fm-card"><span class="k">03</span><h3>Skim the words</h3><p>Two minutes with the <a href="vocabulary-field-guide.html">Vocabulary Field Guide</a> makes the session land faster. That's the whole prep.</p></div>
+      </div>
+    </section>
+
+    <!-- § D — can't make it / pathways -->
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ D · However you show up</h2><span class="sec-note">live, observing, or after the fact</span></div>
+      <div class="fm-cardgrid fm-cardgrid--loose" style="--fm-cols:3">
+        <div class="fm-card"><span class="k">Pathway · generate</span><h3>Hands on the tools</h3><p>Run the prompts live, log evidence, and bring one finding to the debrief.</p></div>
+        <div class="fm-card"><span class="k">Pathway · observe</span><h3>Watch &amp; critique</h3><p>No need to generate anything. Read the outputs, name the defaults and failures, ask the sharp question.</p></div>
+        <div class="fm-card"><span class="k">Pathway · async</span><h3>Catch up later</h3><p>Can't make Saturday? Every tool is a permanent link. Walk the same run-of-show on your own time from the <a href="run-console.html" style="color:var(--accent);">Run console</a>.</p></div>
+      </div>
+    </section>
+
+    <!-- pager -->
+    <section style="padding:6px 0 0;">
+      <div class="pager">
+        <a href="run-console.html"><span class="pg-dir mono">← Run it</span><span class="pg-title">Run console</span></a>
+        <a class="next" href="vocabulary-field-guide.html"><span class="pg-dir mono">Prep →</span><span class="pg-title">Vocabulary Field Guide</span></a>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <div class="wrap">
-      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
-      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="camp-2026.html">Dates &amp; logistics</a> · <a href="tools.html">Tool index</a> · <a href="../index.html#pathways">Pathways</a></nav>
-      <p class="mono">Static HTML &middot; vanilla JavaScript &middot; no required accounts &middot; recordings are shared with registered participants only.</p>
+      <div class="brand" style="margin-bottom:12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="run-console.html">Run console</a> · <a href="vocabulary-field-guide.html">Vocabulary</a> · <a href="colophon.html">Colophon</a></nav>
+      <p class="colophon">A free, virtual, four-Saturday studio on how generative machines actually work.</p>
     </div>
   </footer>
 
   <script>
   (function () {
-    var RUNS = window.LM_SESSION_RUNS || [];
-    var JOIN_URL = "https://ccfest.rocks/ccfest-camp";
-    var host = document.querySelector("[data-this-saturday]");
+    var RUNS = (window.LM_SESSION_RUNS || []).slice();
+    function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
-    function absUrl(path) { return new URL("../" + path, window.location.href).href; }
-    function esc(str) {
-      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    // parse "Sat July 11 · 9–11 am PT" + date "2026-07-11" into a start Date.
+    // Sessions start 9am PT (UTC-7 during July => 16:00 UTC).
+    function startOf(run){
+      if (!run.date) return null;
+      return new Date(run.date + "T09:00:00-07:00");
     }
-    function parseDate(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
-    function dayStart(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
-    function diffDays(dateStr, today) {
-      return Math.round((parseDate(dateStr) - today) / 86400000);
-    }
-    function dateLabel(dateStr) {
-      return parseDate(dateStr).toLocaleDateString(undefined,
-        { weekday: "long", month: "long", day: "numeric" });
+    function endOf(run){
+      var s = startOf(run); if (!s) return null;
+      return new Date(s.getTime() + 2*60*60*1000);
     }
 
-    /* participant-facing tool list: toolkit first, then per-step, deduped */
-    function toolsFor(run) {
-      var tools = [];
-      (run.toolkit || []).forEach(function (t) { tools.push(t); });
-      (run.steps || []).forEach(function (s) { (s.tools || []).forEach(function (t) { tools.push(t); }); });
-      var seen = {}, out = [];
-      tools.forEach(function (t) { if (!seen[t.path]) { seen[t.path] = 1; out.push(t); } });
-      return out;
+    var now = new Date();
+    var dated = RUNS.filter(function(r){ return !!r.date; });
+
+    // current = first session whose end is in the future; else last
+    var current = null;
+    for (var i=0;i<dated.length;i++){ if (endOf(dated[i]) > now){ current = dated[i]; break; } }
+    var allDone = !current;
+    if (!current) current = dated[dated.length-1] || RUNS[0];
+
+    var liveNow = current && startOf(current) <= now && endOf(current) > now;
+
+    /* ---- status + title + lede ---- */
+    var statusEl = document.querySelector("[data-ts-status]");
+    var titleEl = document.querySelector("[data-ts-title]");
+    var ledeEl = document.querySelector("[data-ts-lede]");
+    if (allDone){
+      statusEl.innerHTML = '<span class="pulse" style="background:var(--muted)"></span>The studio has wrapped';
+      titleEl.textContent = "That's a wrap";
+      ledeEl.textContent = "The four-Saturday studio is complete — but every tool is still live. Re-run any session at your own pace from the Run console.";
+    } else if (liveNow){
+      statusEl.innerHTML = '<span class="pulse"></span>Happening now · ' + esc(current.title);
+      titleEl.textContent = "It's on right now";
+      ledeEl.textContent = current.kicker + " — jump into the Run console and pick up at the current block.";
+    } else {
+      statusEl.innerHTML = '<span class="pulse"></span>Next up · ' + esc(current.title);
+      titleEl.textContent = "This Saturday";
+      ledeEl.textContent = "One page that always points at the next session — " + (current.explore || "") ;
     }
 
-    function calUrl(run) {
-      /* 9–11 am PT = 16:00–18:00 UTC on the session date */
-      var d = run.date.replace(/-/g, "");
-      var dates = d + "T160000Z/" + d + "T180000Z";
-      return "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-        "&text=" + encodeURIComponent("Learning Machines · " + run.title) +
-        "&dates=" + dates +
-        "&details=" + encodeURIComponent("CC Fest Learning Machines camp. Join link: " + JOIN_URL) +
-        "&location=Zoom";
-    }
-
-    function chips(run) {
-      var ts = toolsFor(run);
-      if (!ts.length) return "<span class=\"ts-kicker\">—</span>";
-      return '<div class="ts-chips">' + ts.map(function (t) {
-        var flag = t.worksheet ? '<span class="ts-flag">worksheet</span>'
-          : (t.optional ? '<span class="ts-flag">optional</span>' : "");
-        return '<a class="ts-chip" href="' + esc(absUrl(t.path)) + '">' + esc(t.name) + flag + "</a>";
-      }).join("") + "</div>";
-    }
-
-    function focusCard(run, status, showJoin) {
-      var when = run.date
-        ? esc(dateLabel(run.date)) + " · 9–11 am PT · <a href=\"camp-2026.html\">your timezone →</a>"
-        : esc(run.when);
-      var actions = "";
-      if (showJoin && run.date) {
-        actions = '<div class="ts-actions">' +
-          '<a class="btn btn-primary" href="' + JOIN_URL + '">' + (status === "today" ? "Join the session →" : "Register / get the join link →") + "</a>" +
-          '<a class="btn" href="' + esc(calUrl(run)) + '">Add to calendar</a>' +
-          "</div>";
+    /* ---- countdown ---- */
+    var countEl = document.querySelector("[data-ts-count]");
+    function pad(n){ return (n<10?"0":"")+n; }
+    function tick(){
+      var target = startOf(current);
+      if (!target || allDone){
+        countEl.innerHTML =
+          '<div class="fm-stat"><span class="n">4</span><span class="l">Sessions</span></div>' +
+          '<div class="fm-stat"><span class="n">25</span><span class="l">Tools live</span></div>' +
+          '<div class="fm-stat"><span class="n">∞</span><span class="l">Re-runs</span></div>' +
+          '<div class="fm-stat"><span class="n">0</span><span class="l">Accounts</span></div>';
+        return false;
       }
-      var statusText = status === "today" ? "Today"
-        : status === "after" ? "Camp wrap-up"
-        : ("Next up · " + run._days + (run._days === 1 ? " day" : " days"));
-      return '<p class="ts-status">' + esc(statusText) + "</p>" +
-        '<div class="ts-card">' +
-          '<h2>' + esc(run.title) + "</h2>" +
-          '<div class="ts-kicker">' + esc(run.kicker) + "</div>" +
-          '<div class="ts-when">' + when + "</div>" +
-          actions +
-          '<dl class="ts-grid">' +
-            "<dt>Explore</dt><dd class=\"ts-explore\">" + esc(run.explore || "") + "</dd>" +
-            "<dt>Tools you'll open</dt><dd>" + chips(run) + "</dd>" +
-            "<dt>Your pathway</dt><dd class=\"ts-explore\"><a href=\"../index.html#pathways\">Use · Observe · Teach · Build</a> — or the <a href=\"no-ai-pathway.html\">No-AI pathway</a>.</dd>" +
-          "</dl>" +
-        "</div>";
-    }
-
-    function lastBlock(run) {
-      var prompt = run.asyncPrompt
-        ? '<p><b>Before next time:</b> ' + esc(run.asyncPrompt) + "</p>"
-        : '<p class="ts-async-todo">Async catch-up prompt — coming soon</p>';
-      var rc = run.recap || {};
-      var recapReady = rc.video || rc.written || rc.writtenHref;
-      var recapHref = run.overview.replace(/^pages\//, "") + "#recap";
-      var catchUp = recapReady
-        ? 'Catch up any time: <a href="' + esc(recapHref) + '">watch the recap</a> and run the worksheet against the frozen prompt pack on the session page.'
-        : 'The recap posts after the session — find it, plus the worksheet and prompt pack, on the <a href="' + esc(recapHref) + '">session page</a>.';
-      return '<div class="ts-last">' +
-        "<h3>Last time · " + esc(run.title) + "</h3>" +
-        "<p>" + catchUp + "</p>" +
-        prompt +
-        "</div>";
-    }
-
-    function arc(runs, focusId) {
-      var rows = runs.map(function (r) {
-        var cls = "ts-arc-row";
-        if (r.id === focusId) cls += " is-now";
-        else if (r._state === "done") cls += " is-done";
-        var when = r.date ? esc(dateLabel(r.date)) : "Optional studio";
-        return '<div class="' + cls + '"><span class="ts-dot"></span>' +
-          '<a href="' + esc(r.overview.replace(/^pages\//, "")) + '">' + esc(r.title) + "</a>" +
-          '<span class="ts-arc-when">' + when + "</span></div>";
-      }).join("");
-      return '<h2 style="margin:8px 0 4px;font-size:1.05rem;">The arc</h2><div class="ts-arc">' + rows + "</div>";
-    }
-
-    function render() {
-      if (!RUNS.length) { host.innerHTML = "<p>Session data unavailable.</p>"; return; }
-      var today = dayStart(new Date());
-      var dated = RUNS.filter(function (r) { return r.date; });
-      dated.forEach(function (r) { r._days = diffDays(r.date, today); });
-
-      var todayRun = dated.filter(function (r) { return r._days === 0; })[0];
-      var upcoming = dated.filter(function (r) { return r._days > 0; }).sort(function (a, b) { return a._days - b._days; });
-      var past = dated.filter(function (r) { return r._days < 0; });
-
-      /* mark arc state */
-      RUNS.forEach(function (r) {
-        if (r.date && diffDays(r.date, today) < 0) r._state = "done";
-        else r._state = "";
-      });
-
-      var html = "", focusId;
-      if (todayRun) {
-        focusId = todayRun.id;
-        html += focusCard(todayRun, "today", true);
-      } else if (upcoming.length) {
-        focusId = upcoming[0].id;
-        html += focusCard(upcoming[0], "upcoming", true);
-        if (past.length) html += lastBlock(past[past.length - 1]);
-      } else {
-        /* all sessions past — point at the studio / wrap-up */
-        var studio = RUNS.filter(function (r) { return !r.date; })[0];
-        if (studio) { focusId = studio.id; html += focusCard(studio, "after", false); }
-        if (past.length) html += lastBlock(past[past.length - 1]);
+      var diff = target - new Date();
+      if (diff <= 0){
+        countEl.innerHTML =
+          '<div class="fm-stat"><span class="n">LIVE</span><span class="l">Now</span></div>' +
+          '<div class="fm-stat"><span class="n">·</span><span class="l">Join</span></div>' +
+          '<div class="fm-stat"><span class="n">·</span><span class="l">via</span></div>' +
+          '<div class="fm-stat"><span class="n">→</span><span class="l">Console</span></div>';
+        return false;
       }
-
-      html += arc(RUNS, focusId);
-      html += '<p class="ts-enroll-note">Not registered yet? The camp is free — ' +
-        '<a href="' + JOIN_URL + '">register at ccfest.rocks</a> (interest form due July 4).</p>';
-      host.innerHTML = html;
+      var d = Math.floor(diff/86400000);
+      var h = Math.floor(diff%86400000/3600000);
+      var m = Math.floor(diff%3600000/60000);
+      var s = Math.floor(diff%60000/1000);
+      var cells = [[d,"Days"],[pad(h),"Hours"],[pad(m),"Minutes"],[pad(s),"Seconds"]];
+      countEl.innerHTML = cells.map(function(c){ return '<div class="fm-stat"><span class="n">'+c[0]+'</span><span class="l">'+c[1]+'</span></div>'; }).join("");
+      return true;
     }
+    if (tick()) setInterval(tick, 1000);
 
-    render();
+    /* ---- arc ---- */
+    function shortDate(run){
+      var s = startOf(run);
+      if (!s) return "Optional studio";
+      return s.toLocaleDateString("en-US",{ month:"short", day:"numeric" });
+    }
+    document.querySelector("[data-ts-arc]").innerHTML = RUNS.map(function(run){
+      var s = startOf(run), e = endOf(run);
+      var state = "upcoming", label = "Upcoming";
+      if (run === current && liveNow){ state="now"; label="Live now"; }
+      else if (run === current){ state="now"; label="This week"; }
+      else if (e && e < now){ state="done"; label="Done"; }
+      else if (!run.date){ state="upcoming"; label="Optional"; }
+      return '<a class="ts-node is-'+state+'" data-mod="'+esc(run.mod)+'" href="'+esc((run.overview||"").replace(/^pages\//,""))+'">'+
+        '<span class="no">'+esc(run.num)+'</span>'+
+        '<div class="ti">'+esc(run.kicker)+'</div>'+
+        '<div class="dt">'+esc(shortDate(run))+'</div>'+
+        '<span class="st">'+label+'</span>'+
+      '</a>';
+    }).join("");
+
+    /* ---- focus card ---- */
+    document.querySelector("[data-ts-focus-note]").textContent =
+      allDone ? "re-run any session" : (liveNow ? "happening now" : "this week's session");
+
+    var steps = current.steps || [];
+    // pick 4 representative beats (skip pure welcome if room)
+    var pick = steps.length > 4 ? steps.slice(1,5) : steps;
+    var stepsHtml = pick.map(function(st){
+      return '<div class="ts-step"><span class="tm">'+esc(st.time)+'</span><span class="sg">'+esc(st.segment)+'</span></div>';
+    }).join("");
+
+    document.querySelector("[data-ts-focus]").innerHTML =
+      '<div class="ts-focus-head">' +
+        '<span class="kick">'+esc(current.num)+' · '+esc(current.title.split("—")[1] ? current.title.split("—")[1].trim() : current.title)+'</span>' +
+        '<h2>'+esc(current.kicker)+'</h2>' +
+        '<span class="when">'+esc(current.when)+'</span>' +
+      '</div>' +
+      '<div class="ts-focus-body">' +
+        '<div class="left">' +
+          '<p class="ts-explore">'+esc(current.explore||"")+'</p>' +
+          '<p>Two hours, run live and then permanent. You don\'t have to generate anything to take part — observing and critiquing are full pathways. The complete run-of-show, with a launch button at every step, lives in the Run console.</p>' +
+        '</div>' +
+        '<div>' +
+          '<div class="ts-arc-mini"><span class="h">The arc of the session</span>'+stepsHtml+'</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ts-cta">' +
+        '<a class="btn" href="run-console.html?s='+esc(current.id)+'">Open the run console →</a>' +
+        '<a class="btn btn-ghost" href="'+esc((current.overview||"").replace(/^pages\//,""))+'">Session overview</a>' +
+      '</div>';
   })();
   </script>
 </body>

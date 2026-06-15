@@ -1,33 +1,48 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-skin="docs-field">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-projection data-no-identity-menu>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <title>How These Tools Were Made — Learning Machines</title>
+  <title>How these tools were made &mdash; Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-tool.css">
   <link rel="stylesheet" href="../assets/field-sub.css">
+  <link rel="stylesheet" href="../assets/field-data.css">
   <script src="../assets/field-theme.js"></script>
   <style>
-    .scope { border: 1px solid var(--ink); background: var(--surface); padding: 16px 20px; max-width: 72ch; }
-    .scope p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
-    .scope b { color: var(--ink); }
-    .scope .mono-line { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .frame-note { border: 1px solid var(--rule); background: var(--surface); padding: 16px 18px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; max-width: 72ch; }
-    .frame-note b { color: var(--ink); }
-    .prose { max-width: 72ch; }
-    .prose p { font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
-    .prose p + p { margin-top: 12px; }
-    .prose b { color: var(--ink); }
-    .why-list { display: grid; gap: 0; border-top: 1px solid var(--rule); max-width: 78ch; }
-    .why { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.7fr); gap: 6px 24px; padding: 16px 2px; border-bottom: 1px solid var(--rule); }
-    .why .w-rule { font-weight: 600; font-size: 15.5px; line-height: 1.35; color: var(--ink); }
-    .why .w-why { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
-    .why .w-why a { color: inherit; }
-    @media (max-width: 720px) { .why { grid-template-columns: 1fr; } }
+    .sub-lede { color: var(--ink-soft); max-width: 64ch; margin-top: 10px; line-height: 1.6; }
+
+    /* § B — constraints table (local: one-off rule/why/buys grid) */
+    .co-cons { display: grid; gap: 0; border-top: 1px solid var(--line); }
+    .co-con {
+      display: grid; grid-template-columns: minmax(0,0.95fr) minmax(0,1.6fr) 132px; gap: 8px 24px;
+      padding: 18px 2px; border-bottom: 1px solid var(--line-soft); align-items: start;
+    }
+    .co-con .c-rule { font-weight: 600; font-size: 1rem; color: var(--ink); line-height: 1.35; }
+    .co-con .c-why { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.55; }
+    .co-con .c-why a { color: var(--accent); }
+    .co-con .c-buys { display: flex; flex-direction: column; gap: 5px; }
+    .co-buy { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+    .co-buy .sw { width: 9px; height: 9px; flex: none; }
+    /* value/data colors — exempt from theming (plan §6); shared by the table + legend */
+    .co-buy[data-buys="reliability"] .sw, .fm-legend-item.r .sw { background: #2f8a5b; }
+    .co-buy[data-buys="equity"] .sw,      .fm-legend-item.e .sw { background: #3b6ea5; }
+    .co-buy[data-buys="legibility"] .sw,  .fm-legend-item.l .sw { background: #8a4f9e; }
+    .co-buy[data-buys="longevity"] .sw,   .fm-legend-item.o .sw { background: #c2410c; }
+
+    /* method loop diagram (local: one-off SVG) */
+    .co-loop { width: 100%; height: auto; border: 1px solid var(--line); background: var(--surface); }
+    .co-loop-note { margin-top: 14px; max-width: 70ch; color: var(--ink-soft); line-height: 1.6; }
+    .co-loop-note b { color: var(--ink); }
+
+    @media (max-width: 760px) {
+      .co-con { grid-template-columns: 1fr; gap: 10px; }
+      .co-con .c-buys { flex-direction: row; flex-wrap: wrap; }
+    }
   </style>
 </head>
 <body>
@@ -35,15 +50,14 @@
     <div class="wrap nav-inner">
       <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
       <div class="nav-links">
-        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="vocabulary-field-guide.html" class="hide-sm">Vocabulary</a>
         <a href="../index.html#sessions" class="hide-sm">Sessions</a>
-        <a href="materials.html" class="hide-sm">Materials</a>
-        <a class="btn btn-sm" href="../index.html#materials">All materials</a>
+        <a href="run-console.html" class="hide-sm">Run console</a>
+        <a class="btn btn-sm" href="../index.html">Back home</a>
       </div>
     </div>
   </nav>
 
-  <!-- HERO -->
   <header class="sub-hero" data-mod="cross">
     <div class="wrap">
       <div class="crumb">
@@ -53,119 +67,207 @@
       </div>
       <p class="sess-kicker"><i class="modsq"></i>Colophon · for the curriculum designers who asked</p>
       <h1 class="sess-title" style="font-size: clamp(34px, 5vw, 56px);">How these tools were made</h1>
-      <p class="sess-lede" style="max-width: 66ch;">Several people asked how the camp's tools were designed — what the rules were, where they came from, and how to make more. This page is the answer: the principle, the constraints and the reason behind each one, the lineage, and the method baked into every tool so you can build your own.</p>
+      <p class="sub-lede">Several people asked how the camp's tools were designed — what the rules were,
+        where they came from, and how to make more. This is the answer: one principle, the constraints
+        and the exact reason behind each, the two lineages they came from, and the method baked into
+        every tool so you can build your own. The story of <em>when</em> it got built is the
+        <a href="../pages/build-story.html" style="color:var(--accent);">build story</a>; this is the <em>why</em>.</p>
     </div>
   </header>
 
-  <!-- ON THIS PAGE -->
-  <section class="reader-nav" style="--mink: var(--m-cross);">
-    <div class="wrap">
-      <aside class="toc" aria-label="Colophon sections">
-        <div class="toc-label">On this page</div>
-        <nav>
-          <a href="#principle">The one principle</a>
-          <a href="#constraints">The constraints &amp; why</a>
-          <a href="#lineage">Where they came from</a>
-          <a href="#method">The method inside each tool</a>
-          <a href="#make-your-own">Make your own</a>
-        </nav>
-      </aside>
-    </div>
-  </section>
+  <main class="wrap" style="padding-bottom:56px;">
 
-  <!-- PRINCIPLE -->
-  <section class="section-tight" style="--mink: var(--m-cross);">
-    <div class="wrap">
-      <div class="sec-rule"><h2 class="sec-no" id="principle">§ A · The one principle</h2><span class="sec-note">the test every tool has to pass</span></div>
-      <div class="scope">
-        <p class="mono-line">The whole design brief, in one line</p>
-        <p><b>Every tool should make something invisible visible.</b> Not "teach about AI" in general — make one hidden mechanism (a probability distribution, a denoising step, drift across frames) something you can <em>see, change, and break.</em> A tool that explains is a slideshow; a tool that lets you turn one knob and watch the output move is an instrument. The camp builds instruments.</p>
+    <!-- § A — principle -->
+    <section style="padding:28px 0 14px;">
+      <div class="sec-rule"><h2 class="sec-no">§ A · The one principle</h2><span class="sec-note">the test every tool has to pass</span></div>
+      <div class="fm-claim fm-claim--boxed">
+        <div class="k">The whole design brief, in one line</div>
+        <p class="claim">Every tool makes one invisible mechanism something you can <em>see, change, and break.</em></p>
+        <p style="margin-top:14px;max-width:70ch;">Not "teach about AI" in general — take one hidden thing (a probability distribution, a
+          denoising step, drift across frames) and turn it into a knob you can move. <b>A tool that explains is a
+          slideshow; a tool that lets you turn one knob and watch the output move is an instrument.</b> The camp
+          builds instruments. The companion rule: the tools are <b>simulations on purpose</b> — frozen examples and
+          hand-authored distributions, not a live model — so the mechanism stays legible and the demo is identical
+          every time. A live model would be more impressive and less <em>teachable.</em></p>
       </div>
-      <div class="prose" style="margin-top: 22px;">
-        <p>The companion rule is that the tools are <b>simulations on purpose.</b> They run on frozen examples and hand-authored distributions rather than a live model — so the mechanism stays legible, the result is the same every time you demonstrate it, and nothing depends on an account or a server. A live model would be more impressive and less <em>teachable.</em></p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONSTRAINTS -->
-  <section class="section-tight" style="--mink: var(--m-text);">
-    <div class="wrap">
-      <div class="sec-rule"><h2 class="sec-no" id="constraints">§ B · The constraints &amp; why</h2><span class="sec-note">each rule is a pedagogical decision in disguise</span></div>
-      <div class="why-list">
-        <div class="why"><div class="w-rule">Single-file HTML</div><div class="w-why">One file you can read top to bottom, save, email, or drop into a folder. No build step means a teacher can open the source and actually see how it works — the tool is its own documentation.</div></div>
-        <div class="why"><div class="w-rule">Vanilla JavaScript</div><div class="w-why">No framework, no package install, no version rot. A tool written in plain JS still runs in five years and can be remixed by someone who only knows a little code.</div></div>
-        <div class="why"><div class="w-rule">No required accounts</div><div class="w-why">The moment a tool needs a login, it has excluded someone — see <a href="ai-access.html">AI access &amp; inequality</a>. Account-free is an equity rule first.</div></div>
-        <div class="why"><div class="w-rule">No live model dependency</div><div class="w-why">Core teaching moments can't break because an API is down, rate-limited, or has quietly changed its behavior. Reliability in a live classroom is non-negotiable.</div></div>
-        <div class="why"><div class="w-rule">Frozen / precomputed examples</div><div class="w-why">The same demonstration every time means you can plan a lesson around it. It also keeps the comparison honest — everyone sees the identical case.</div></div>
-        <div class="why"><div class="w-rule">GitHub Pages friendly &amp; embeddable</div><div class="w-why">Static files host for free and drop into a Notion page or an LMS as an iframe. Free hosting keeps the whole project inside the access rule.</div></div>
-        <div class="why"><div class="w-rule">A low-AI and no-AI path</div><div class="w-why">Every tool works for someone who doesn't want to generate anything live — observation and critique are full pathways, not consolation prizes.</div></div>
+    <!-- numbers -->
+    <section style="padding:14px 0;">
+      <div class="sec-rule"><h2 class="sec-no">§ A.1 · The shape of it</h2><span class="sec-note">what "an instrument" cost, in parts</span></div>
+      <div class="fm-stats">
+        <div class="fm-stat"><span class="n">25</span><span class="l">single-file tools, no build step</span></div>
+        <div class="fm-stat"><span class="n">0</span><span class="l">required accounts or API keys</span></div>
+        <div class="fm-stat"><span class="n">1</span><span class="l">CSS system, 4 switchable skins</span></div>
+        <div class="fm-stat"><span class="n">∞</span><span class="l">identical re-runs of any demo</span></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- LINEAGE -->
-  <section class="section-tight" style="--mink: var(--m-image);">
-    <div class="wrap">
-      <div class="sec-rule"><h2 class="sec-no" id="lineage">§ C · Where they came from</h2><span class="sec-note">two bodies of work, joined</span></div>
-      <div class="prose">
-        <p>The tools grew out of a <b>generative-AI course</b> — ELIZA-vs-LLM comparisons, next-token prediction activities, image Default Tests, diffusion and latent-space activities, Temporal Telephone, A/B/C prompt testing, and student model-behavior investigations. The activities that survived contact with real students were the ones strong enough to adapt for adults.</p>
-        <p>The format comes from <b>CC Fest Coding Camp</b>: free, virtual, community-centered workshops that are beginner-friendly but intellectually serious — with recaps, asynchronous access, guest speakers, assignment tiers, and a closing showcase. Learning Machines is those two lineages fused: classroom-tested mechanisms delivered the CC Fest way. The full account is in the <a href="../docs/project-brief.html">Project Brief</a>.</p>
-      </div>
-    </div>
-  </section>
+    <!-- § B — constraints -->
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ B · The constraints &amp; what each one buys</h2><span class="sec-note">every rule is a pedagogical decision in disguise</span></div>
+      <p class="sub-lede" style="margin-bottom:16px;">Seven rules shaped every tool. None is about taste — each one
+        buys something specific: it keeps the demo <b>reliable</b> live, keeps the tool <b>equitable</b> to reach,
+        keeps the mechanism <b>legible</b>, or keeps the file alive for <b>years</b>. The column on the right names
+        what each constraint is really protecting.</p>
 
-  <!-- METHOD -->
-  <section class="section-tight" style="--mink: var(--m-video);">
-    <div class="wrap">
-      <div class="sec-rule"><h2 class="sec-no" id="method">§ D · The method inside each tool</h2><span class="sec-note">the loop the tools are shaped to support</span></div>
-      <div class="prose">
-        <p>Every tool is built to support the same four-beat loop, the one repeated across every session:</p>
-      </div>
-      <div class="scope" style="margin-top: 18px;">
-        <p class="mono-line">The take-home method</p>
-        <p><b>Predict</b> before you press the button · <b>change one variable</b> · <b>compare</b> the outputs · <b>name</b> precisely what the machine did — a default, a failure, or a pattern. The tools change; the method is the thing participants keep. Each session widens it into a full investigation: <em>hypothesis → controlled A/B/C test → output comparison → evidence-based claim → ethical and pedagogical reflection.</em></p>
-      </div>
-    </div>
-  </section>
+      <div class="co-cons" data-co-cons></div>
 
-  <!-- MAKE YOUR OWN -->
-  <section class="section-tight" style="--mink: var(--m-cross);">
-    <div class="wrap">
-      <div class="sec-rule"><h2 class="sec-no" id="make-your-own">§ E · Make your own</h2><span class="sec-note">the "Explain" studio pathway</span></div>
-      <div class="prose">
-        <p>Because every tool is a single readable file with no dependencies, the most direct way to understand one is to <b>open its source and change it</b> — swap the frozen examples for your own, relabel a knob, or fork the structure into a new mechanism. Building an explanatory tool, poster, or concept bridge is one of the camp's <a href="../docs/project-brief.html">final-project pathways</a>.</p>
+      <div class="fm-legend" style="margin-top:16px">
+        <span class="fm-legend-item r"><span class="sw"></span>Reliability</span>
+        <span class="fm-legend-item e"><span class="sw"></span>Equity / access</span>
+        <span class="fm-legend-item l"><span class="sw"></span>Legibility</span>
+        <span class="fm-legend-item o"><span class="sw"></span>Longevity</span>
       </div>
-      <div class="doc-list" style="margin-top: 22px;">
-        <a class="doc-row" href="../tools/count-the-next-token/"><span class="d-name">Count the Next Token</span><span class="d-desc">The clearest example of the principle: a language model built from arithmetic you can read</span></a>
-        <a class="doc-row" href="../tools/concept-bridges/"><span class="d-name">Concept Bridges</span><span class="d-desc">The smallest unit — one idea made visible; a good template to copy</span></a>
-        <a class="doc-row" href="tools.html"><span class="d-name">Full tool index</span><span class="d-desc">Every tool, filterable — open any source file and read how it works</span></a>
-        <a class="doc-row" href="hands-on.html"><span class="d-name">Hands-On: Play with Real Models</span><span class="d-desc">When you're ready to move from simulations to training and running real models</span></a>
-      </div>
-      <div style="margin-top: 28px;">
-        <div class="frame-note">
-          <b>The whole philosophy fits in a sentence:</b> if you can read the file, you can teach the idea — and if you can change one line and watch the output move, so can your students.
+
+      <h3 class="bs-sub" style="margin:24px 0 4px; font-size:1rem;">What the rule-set optimizes for, counted</h3>
+      <p class="sub-lede" style="margin:0 0 12px;">Tally the right-hand column and the priorities show themselves —
+        this is a curriculum that would rather be <em>dependable and reachable</em> than clever.</p>
+      <div class="fm-bars" data-co-tally style="margin-top:22px;max-width:560px"></div>
+    </section>
+
+    <!-- § C — lineage -->
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ C · Where they came from</h2><span class="sec-note">two bodies of work, joined</span></div>
+      <div class="fm-cardgrid">
+        <div class="fm-card">
+          <span class="k mono">The mechanisms</span>
+          <h3>A generative-AI course</h3>
+          <p>ELIZA-vs-LLM comparisons, next-token prediction, image Default Tests, diffusion and latent-space
+            activities, Temporal Telephone, A/B/C prompt testing. The activities that survived contact with real
+            students were the ones strong enough to adapt for adults — which is why the camp's tools feel
+            classroom-tested: they are.</p>
         </div>
-        <p class="prose" style="margin-top: 18px;">Curious how the whole thing actually came together — in what order, and where it wasn't tidy? That's the <a href="build-story.html">build story &rarr;</a> a maker's-log timeline drawn straight from the git history.</p>
+        <div class="fm-card">
+          <span class="k mono">The format</span>
+          <h3>CC Fest Coding Camp</h3>
+          <p>Free, virtual, community-centered workshops — beginner-friendly but intellectually serious, with
+            recaps, asynchronous access, guest speakers, assignment tiers, and a closing showcase. Learning Machines
+            is the two lineages fused: classroom-tested mechanisms, delivered the CC Fest way. The full account is in
+            the <a href="../docs/project-brief.html" style="color:var(--accent);">Project Brief</a>.</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PAGER -->
-  <section class="section-tight">
-    <div class="wrap">
+    <!-- § D — the method loop -->
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ D · The method inside each tool</h2><span class="sec-note">the loop the tools are shaped to support</span></div>
+      <svg class="co-loop" viewBox="0 0 760 220" role="img" aria-label="The four-beat method loop: predict, change one variable, compare, name — which widens into a full investigation from hypothesis to ethical reflection.">
+        <style>
+          .ll { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+          .lac { fill: var(--surface); stroke: var(--accent); stroke-width: 1.4; }
+          .lt { fill: var(--ink); font-family: 'Archivo', sans-serif; font-weight: 600; font-size: 15px; }
+          .ln { fill: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+          .ls { fill: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; }
+          .ledge { stroke: var(--accent); stroke-width: 1.4; fill: none; }
+          .lar { fill: var(--accent); }
+        </style>
+        <!-- four beats across -->
+        <g>
+          <rect class="lac" x="14"  y="40" width="166" height="64" rx="2"/>
+          <text x="28" y="62" class="ln">01</text><text x="28" y="84" class="lt">Predict</text><text x="28" y="99" class="ls">before you press go</text>
+          <rect class="lac" x="198" y="40" width="166" height="64" rx="2"/>
+          <text x="212" y="62" class="ln">02</text><text x="212" y="84" class="lt">Change one variable</text><text x="212" y="99" class="ls">hold everything else</text>
+          <rect class="lac" x="382" y="40" width="166" height="64" rx="2"/>
+          <text x="396" y="62" class="ln">03</text><text x="396" y="84" class="lt">Compare</text><text x="396" y="99" class="ls">the two outputs</text>
+          <rect class="lac" x="566" y="40" width="180" height="64" rx="2"/>
+          <text x="580" y="62" class="ln">04</text><text x="580" y="84" class="lt">Name it</text><text x="580" y="99" class="ls">default · failure · pattern</text>
+        </g>
+        <!-- arrows between -->
+        <path class="ledge" d="M180 72 H192"/><path class="lar" d="M192 72 l-7 -4 v8 z"/>
+        <path class="ledge" d="M364 72 H376"/><path class="lar" d="M376 72 l-7 -4 v8 z"/>
+        <path class="ledge" d="M548 72 H560"/><path class="lar" d="M560 72 l-7 -4 v8 z"/>
+        <!-- loop back -->
+        <path class="ledge" d="M656 104 V150 H97 V104" stroke-dasharray="4 4"/><path class="lar" d="M97 104 l-4 7 h8 z"/>
+        <text x="360" y="146" class="ls" text-anchor="middle">repeat — the tool changes, the method stays</text>
+        <!-- widen note -->
+        <rect class="ll" x="14" y="172" width="732" height="34" rx="2"/>
+        <text x="28" y="193" class="ls">SESSION SCALE · hypothesis → controlled A/B/C test → output comparison → evidence-based claim → ethical &amp; pedagogical reflection</text>
+      </svg>
+      <p class="co-loop-note">The take-home isn't any one tool — it's the loop. <b>Predict, change one variable,
+        compare, name precisely what the machine did.</b> Each session widens the same four beats into a full
+        investigation. Participants forget the URLs; they keep the method.</p>
+    </section>
+
+    <!-- § E — make your own -->
+    <section style="padding:14px 0 28px;">
+      <div class="sec-rule"><h2 class="sec-no">§ E · Make your own</h2><span class="sec-note">the "Explain" studio pathway</span></div>
+      <p class="sub-lede" style="margin-bottom:16px;">Because every tool is a single readable file with no
+        dependencies, the most direct way to understand one is to <b>open its source and change it</b> — swap the
+        frozen examples for your own, relabel a knob, or fork the structure into a new mechanism. Building an
+        explanatory tool, poster, or concept bridge is one of the camp's final-project pathways.</p>
+      <div class="doc-list">
+        <a class="doc-row" href="../tools/count-the-next-token/"><span class="d-name">Count the Next Token</span><span class="d-desc">the principle at its clearest — a model built from arithmetic you can read</span></a>
+        <a class="doc-row" href="../tools/concept-bridges/"><span class="d-name">Concept Bridges</span><span class="d-desc">the smallest unit — one idea made visible; a good template to copy</span></a>
+        <a class="doc-row" href="vocabulary-field-guide.html"><span class="d-name">Vocabulary Field Guide</span><span class="d-desc">the terms each tool makes visible, in plain language</span></a>
+        <a class="doc-row" href="../index.html#tools"><span class="d-name">Full tool index</span><span class="d-desc">every tool, filterable — open any source file and read how it works</span></a>
+      </div>
+      <div style="margin-top:24px;">
+        <div class="fm-claim">
+          <b>The whole philosophy fits in a sentence:</b> if you can read the file, you can teach the idea — and if
+          you can change one line and watch the output move, so can your students.
+        </div>
+      </div>
+    </section>
+
+    <!-- pager -->
+    <section style="padding:6px 0 0;">
       <div class="pager">
         <a href="../docs/project-brief.html"><span class="pg-dir mono">← Companion</span><span class="pg-title">Project Brief</span></a>
-        <a class="next" href="tools.html"><span class="pg-dir mono">Open index →</span><span class="pg-title">All tools</span></a>
+        <a class="next" href="../pages/build-story.html"><span class="pg-dir mono">The timeline →</span><span class="pg-title">How this got built</span></a>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="wrap">
-      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
-      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <div class="brand" style="margin-bottom:12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="vocabulary-field-guide.html">Vocabulary</a> · <a href="run-console.html">Run console</a> · <a href="this-saturday.html">This Saturday</a></nav>
       <p class="colophon">Single-file · vanilla · account-free · every tool makes something invisible visible.</p>
     </div>
   </footer>
+
+  <script>
+  (function () {
+    // constraint → why → what it buys (the data behind § B)
+    var CONS = [
+      { rule: "Single-file HTML", why: "One file you can read top to bottom, save, email, or drop into a folder. No build step means the tool is its own documentation.", buys: ["legibility", "longevity"] },
+      { rule: "Vanilla JavaScript", why: "No framework, no install, no version rot. Plain JS still runs in five years and can be remixed by someone who only knows a little code.", buys: ["longevity", "legibility"] },
+      { rule: "No required accounts", why: "The moment a tool needs a login, it has excluded someone. Account-free is an equity rule first.", buys: ["equity"] },
+      { rule: "No live-model dependency", why: "Core teaching moments can't break because an API is down, rate-limited, or has quietly changed behavior.", buys: ["reliability"] },
+      { rule: "Frozen / precomputed examples", why: "The same demonstration every time means you can plan a lesson around it — and the comparison stays honest.", buys: ["reliability", "legibility"] },
+      { rule: "GitHub Pages friendly &amp; embeddable", why: "Static files host for free and drop into a Notion page or LMS as an iframe. Free hosting keeps the project inside the access rule.", buys: ["equity", "longevity"] },
+      { rule: "A low-AI and no-AI path", why: "Every tool works for someone who won't generate anything live — observation and critique are full pathways, not consolation prizes.", buys: ["equity"] }
+    ];
+    var LABELS = { reliability: "Reliability", equity: "Equity", legibility: "Legibility", longevity: "Longevity" };
+
+    var host = document.querySelector("[data-co-cons]");
+    host.innerHTML = CONS.map(function (c) {
+      var buys = c.buys.map(function (b) {
+        return '<span class="co-buy" data-buys="' + b + '"><span class="sw"></span>' + LABELS[b] + "</span>";
+      }).join("");
+      return '<div class="co-con">' +
+        '<div class="c-rule">' + c.rule + "</div>" +
+        '<div class="c-why">' + c.why + "</div>" +
+        '<div class="c-buys">' + buys + "</div>" +
+      "</div>";
+    }).join("");
+
+    // tally how often each value is bought
+    var counts = { reliability: 0, equity: 0, legibility: 0, longevity: 0 };
+    CONS.forEach(function (c) { c.buys.forEach(function (b) { counts[b]++; }); });
+    var max = Math.max.apply(null, Object.keys(counts).map(function (k) { return counts[k]; }));
+    var order = ["equity", "longevity", "legibility", "reliability"];
+    var colorVar = { reliability: "#2f8a5b", equity: "#3b6ea5", legibility: "#8a4f9e", longevity: "#c2410c" };
+    document.querySelector("[data-co-tally]").innerHTML = order.map(function (k) {
+      var w = Math.round((counts[k] / max) * 100);
+      return '<div class="row">' +
+        '<span class="tl">' + LABELS[k] + "</span>" +
+        '<span class="tb"><i style="width:' + w + '%;background:' + colorVar[k] + ';"></i></span>' +
+        '<span class="tn">' + counts[k] + "</span>" +
+      "</div>";
+    }).join("");
+  })();
+  </script>
 </body>
 </html>
