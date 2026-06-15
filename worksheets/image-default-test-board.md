@@ -5,7 +5,7 @@ title: Image Default Test Board
 
 # Image Default Test Board
 
-Use this with the Feature Extraction / Pixel Resolution tool, Diffusion Step-Through Viewer, or curated image outputs.
+Use this with the The Squint Test (feature extraction) tool, Diffusion Step-Through Viewer, or curated image outputs.
 
 Participation options:
 

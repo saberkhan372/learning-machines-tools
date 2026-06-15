@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-  <title>CFG Scale Visualizer · Learning Machines</title>
+  <title>Prompt Pressure (CFG scale) · Learning Machines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
   <main class="tool-shell">
     <header class="tool-hero">
       <p class="tool-kicker">Session 2 &middot; Images &middot; Guidance scale</p>
-      <h1 class="tool-title">CFG Scale Visualizer</h1>
+      <h1 class="tool-title">Prompt Pressure (CFG scale)</h1>
       <p class="tool-dek">Text models have a temperature dial; image models have CFG — the knob that weighs strict obedience to your prompt against the model's freedom to fall back on generic training defaults. Drag from 1 to 30 and watch one prompt swing from ignored, to obeyed, to screamed at until it breaks.</p>
       <div class="tool-idea">Big idea: more obedience isn't more correct — past the sweet spot, literalism destroys the image.</div>
     </header>
@@ -288,7 +288,7 @@
 
   document.getElementById('copyBtn').addEventListener('click',()=>{
     const cfg=state.cfg, rg=regimeFor(cfg);
-    const lines=['CFG Scale Visualizer','Prompt: a fresh head of broccoli on a white plate','CFG: '+cfg.toFixed(1),'Regime: '+rg.tag,'Claim: '+els.claimBox.value];
+    const lines=['Prompt Pressure (CFG scale)','Prompt: a fresh head of broccoli on a white plate','CFG: '+cfg.toFixed(1),'Regime: '+rg.tag,'Claim: '+els.claimBox.value];
     navigator.clipboard && navigator.clipboard.writeText(lines.join('\n'));
   });
 

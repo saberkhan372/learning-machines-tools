@@ -44,10 +44,10 @@ The tool principle is:
 | Next-Token Prediction Game | Launch ready | 1 · Text |
 | Count the Next Token | Launch ready | 1 · Text |
 | Diffusion Step-Through Viewer | Launch ready | 2 · Image |
-| Feature Extraction / Pixel Resolution | Launch ready | 2 · Image |
+| The Squint Test (feature extraction) | Launch ready | 2 · Image |
 | Default Test Comparison Viewer | Launch ready | 2 · Image |
 | Prompt Guidance Word-by-Word | Launch ready | 2 · Image |
-| CFG Scale Visualizer | Launch ready | 2 · Image |
+| Prompt Pressure (CFG scale) | Launch ready | 2 · Image |
 | Latent Space Explorer | Launch ready | 2 · Image |
 | Latent Space Compressor | Launch ready | 2 · Image |
 | Dataset Balance Simulator | Launch ready | 2 · Image |
@@ -135,7 +135,7 @@ homepage keeps only a short preview.
 - [Pre-session check-in](docs/pre-session-checkin.html)
 - [Vocabulary Field Guide](pages/vocabulary-field-guide.html)
 - [Further Reading](pages/further-reading.html) — critical & intersectional texts, fiction, philosophy
-- [Hands-On: Play with Real Models](pages/hands-on.html) — Teachable Machine, ml5.js, TensorFlow Playground, Ollama, Hugging Face, free API tiers & agents
+- [Hands-On: Run Real Models](pages/hands-on.html) — Teachable Machine, ml5.js, TensorFlow Playground, Ollama, Hugging Face, free API tiers & agents
 - [AI Access & Inequality](pages/ai-access.html) — who can use this at all; ties together Access Tiers, free/local tools, and the access readings
 - [How These Tools Were Made](pages/colophon.html) — participant-facing colophon: principle, constraints, lineage, and how to build your own
 - [Adapting for Younger Learners](pages/younger-learners.html) — ages 6–12, per-session notes

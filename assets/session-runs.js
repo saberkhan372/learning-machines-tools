@@ -67,7 +67,7 @@ window.LM_SESSION_RUNS = [
       { time: "5–25", segment: "Feature / pixel activity",
         move: "Open Feature Extraction. Switch image types and reduce detail until recognition becomes difficult.",
         action: "Identify which cues return first: colour, outline, texture, context, or location.",
-        tools: [ { name: "Feature Extraction / Pixel Resolution", path: "tools/feature-extraction-pixel-resolution/" } ] },
+        tools: [ { name: "The Squint Test (feature extraction)", path: "tools/feature-extraction-pixel-resolution/" } ] },
       { time: "25–45", segment: "Diffusion step-through",
         move: "Open the Diffusion Viewer. Move slowly from pure noise to final image and read the prompt guidance.",
         action: "Describe what appears at each stage: composition, subject, edges, texture, details.",

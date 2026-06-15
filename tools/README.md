@@ -8,7 +8,7 @@ title: Tool Directory
 Canonical tool folders for the Learning Machines camp.
 Status reflects the current build; `tools-data.js` is the single source of truth for the homepage tool browser.
 
-## Launch-Ready Tools (21)
+## Launch-Ready Tools (25)
 
 | Tool | Folder | Session | Modality |
 | --- | --- | --- | --- |
@@ -17,13 +17,15 @@ Status reflects the current build; `tools-data.js` is the single source of truth
 | Next-Token Prediction Game | `next-token-prediction-game/` | 1 | Text |
 | Count the Next Token | `count-the-next-token/` | 1 | Text |
 | Diffusion Step-Through Viewer | `diffusion-step-through-viewer/` | 2 | Image |
-| Feature Extraction / Pixel Resolution | `feature-extraction-pixel-resolution/` | 2 | Image |
+| The Squint Test (feature extraction) | `feature-extraction-pixel-resolution/` | 2 | Image |
 | Default Test Comparison Viewer | `default-test-comparison-viewer/` | 2 | Image |
 | Prompt Guidance Word-by-Word | `prompt-guidance-word-by-word/` | 2 | Image |
-| CFG Scale Visualizer | `cfg-scale-visualizer/` | 2 | Image |
+| Prompt Pressure (CFG scale) | `cfg-scale-visualizer/` | 2 | Image |
 | Latent Space Explorer | `latent-space-explorer/` | 2 | Image |
+| Latent Space Compressor | `latent-space-compressor/` | 2 | Image |
 | Dataset Balance Simulator | `dataset-balance-simulator/` | 2 | Image |
 | Temporal Telephone | `temporal-telephone/` | 3 | Video |
+| Metronome Frame-Scrubber | `metronome-frame-scrubber/` | 3 | Video |
 | Video Failure Gallery Viewer | `video-failure-gallery-viewer/` | 3 | Video |
 | Frame-by-Frame Coherence Viewer | `frame-by-frame-coherence-viewer/` | 3 | Video |
 | A/B/C Comparison Board | `abc-comparison-board/` | Cross | Cross |
@@ -31,14 +33,17 @@ Status reflects the current build; `tools-data.js` is the single source of truth
 | Model Card Builder | `model-card-builder/` | Studio | Cross |
 | Classroom Activity Builder | `classroom-activity-builder/` | Studio | Cross |
 | Confidence Is Not Truth Explorer | `confidence-is-not-truth-explorer/` | Cross | Cross |
+| Network-Grounded Truth Sieve | `network-grounded-truth-sieve/` | Cross | Cross |
+| Relational Co-Occurrence Sieve | `relational-co-occurrence-sieve/` | Cross | Cross |
 | Access Tiers | `access-tiers/` | Cross | Cross |
 | Evidence Wall | `evidence-wall/` | Cross | Cross |
 
 ## Second-Wave Candidates
 
-The launch matrix now includes the first advanced concept tool: CFG Scale
-Visualizer. Remaining deeper mechanics identified during audit work live in
+The launch matrix now includes selected advanced concept tools: CFG Scale
+Visualizer, Latent Space Compressor, Metronome Frame-Scrubber, and the two
+Wikipedia-backed truth sieves. Remaining deeper mechanics identified during
+audit work live in
 [`../docs/advanced-concept-extensions.md`](../docs/advanced-concept-extensions.md),
-including positional encoding, prompt alignment / text encoders, VAE latent
-compression, temporal attention, forward diffusion, backpropagation, and
-optical flow.
+including positional encoding, prompt alignment / text encoders, forward
+diffusion, backpropagation, and optical flow.
