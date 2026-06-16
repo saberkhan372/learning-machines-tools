@@ -12,12 +12,11 @@
 <link rel="stylesheet" href="../../assets/field-tool.css">
 <script src="../../assets/field-theme.js"></script><style>
   :root {
-    --bg: #f5f3ee; --card: #ffffff; --border: #e2ddd5; --ink: #1c1917;
-    --muted: #78716c; --accent: #2563eb; --accent-bg: #eff6ff;
-    --warm: #b45f3a; --radius: 10px; --shadow: 0 1px 4px rgba(0,0,0,.07); --row-bg: #fafaf9;
+    --card: var(--surface); --border: var(--line); --accent-bg: color-mix(in oklab, var(--accent) 12%, transparent);
+    --warm: #b45f3a; --radius: 10px; --shadow: 0 1px 4px rgba(0,0,0,.07); --row-bg: var(--surface-2);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+  body { line-height: 1.5; }
   .wrap { max-width: 800px; margin: 0 auto; padding: 28px 20px 60px; }
   .back { display: inline-block; font-size: .875rem; color: var(--muted); text-decoration: none; margin-bottom: 16px; }
   .back:hover { color: var(--ink); }

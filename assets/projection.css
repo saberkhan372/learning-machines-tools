@@ -25,6 +25,13 @@
     color: var(--bg) !important;
   }
 
+  .lm-project-fallback {
+    position: fixed;
+    right: 16px;
+    top: 16px;
+    z-index: 2100;
+  }
+
   @media (max-width: 900px) {
     .nav-links .lm-project-btn {
       position: fixed;
@@ -101,6 +108,10 @@
     display: none !important;
   }
 
+  html[data-projection="on"] .lm-project-fallback {
+    top: 12px;
+  }
+
   html[data-projection="on"] .lm-project-btn {
     display: inline-flex !important;
     align-items: center;
@@ -124,7 +135,9 @@
   html[data-projection="on"] .hero,
   html[data-projection="on"] .tool-mast,
   html[data-projection="on"] .site-header,
-  html[data-projection="on"] .tool-hero {
+  html[data-projection="on"] .tool-hero,
+  html[data-projection="on"] body[data-project-layout="tool"] header,
+  html[data-projection="on"] body[data-project-layout="worksheet"] .wrap > header {
     padding-block: clamp(18px, 2.5vw, 36px) !important;
   }
 
@@ -133,17 +146,24 @@
   html[data-projection="on"] .wall-title,
   html[data-projection="on"] .site-header h1,
   html[data-projection="on"] .tool-hero h1,
-  html[data-projection="on"] .tool-mast h1 {
+  html[data-projection="on"] .tool-mast h1,
+  html[data-projection="on"] body[data-project-layout="tool"] header h1,
+  html[data-projection="on"] body[data-project-layout="tool"] main > h1:first-child,
+  html[data-projection="on"] body[data-project-layout="worksheet"] .wrap > header h1 {
     /* min() with a vw guard keeps fixed size on laptop+ and only shrinks on phones */
     font-size: min(var(--proj-title), 11vw) !important;
+    line-height: 0.96 !important;
   }
 
   html[data-projection="on"] .sess-lede,
   html[data-projection="on"] .tool-dek,
   html[data-projection="on"] .subtitle,
-  html[data-projection="on"] .tool-lede {
+  html[data-projection="on"] .tool-lede,
+  html[data-projection="on"] body[data-project-layout="tool"] header p,
+  html[data-projection="on"] body[data-project-layout="tool"] header .subtitle,
+  html[data-projection="on"] body[data-project-layout="worksheet"] .wrap > header .subtitle {
     max-width: 82ch;
-    font-size: var(--proj-lede);
+    font-size: var(--proj-lede) !important;
   }
 
   /* Body copy floor — readable after Zoom's downscale, regardless of viewport. */
@@ -257,6 +277,9 @@
   }
 
   html[data-projection="on"] body[data-project-layout="tool"] main,
+  html[data-projection="on"] body[data-project-layout="tool"] .page-wrap,
+  html[data-projection="on"] body[data-project-layout="tool"] .app,
+  html[data-projection="on"] body[data-project-layout="tool"] .container,
   html[data-projection="on"] body[data-project-layout="tool"] .tool-shell,
   html[data-projection="on"] body[data-project-layout="tool"] .tokenize-container,
   html[data-projection="on"] body[data-project-layout="tool"] .site-header,
@@ -346,9 +369,25 @@
   }
 
   html[data-projection="on"] body[data-project-layout="worksheet"] > .wrap {
-    width: min(1220px, 100% - 44px) !important;
+    width: min(1320px, 100% - 44px) !important;
     max-width: none !important;
     padding-top: 24px !important;
+  }
+
+  html[data-projection="on"] body[data-project-layout="worksheet"] .eyebrow,
+  html[data-projection="on"] body[data-project-layout="worksheet"] .section-title,
+  html[data-projection="on"] body[data-project-layout="worksheet"] th,
+  html[data-projection="on"] body[data-project-layout="worksheet"] .version-label,
+  html[data-projection="on"] body[data-project-layout="worksheet"] .claim-label {
+    font-size: var(--proj-meta) !important;
+  }
+
+  html[data-projection="on"] body[data-project-layout="worksheet"] .section-desc,
+  html[data-projection="on"] body[data-project-layout="worksheet"] .prompt-seed,
+  html[data-projection="on"] body[data-project-layout="worksheet"] td,
+  html[data-projection="on"] body[data-project-layout="worksheet"] textarea,
+  html[data-projection="on"] body[data-project-layout="worksheet"] .reflect-q {
+    font-size: var(--proj-table) !important;
   }
 
   html[data-projection="on"] body[data-project-layout="worksheet"] .section,
