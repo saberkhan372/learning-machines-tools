@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-skin="docs-field">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Start Here · Choose Your Route — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-home.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    /* logistics strip — recordings + time zones, restated from Camp 2026 */
+    .logi { border: 1px solid var(--ink); background: var(--surface); padding: 13px 18px; margin-top: 20px; max-width: 72ch;
+      font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.02em; color: var(--ink-soft); line-height: 1.6; }
+    .logi b { color: var(--ink); }
+    .logi a { color: var(--accent); }
+
+    /* route cards — four primary routes through camp */
+    .routes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 760px) { .routes { grid-template-columns: 1fr; } }
+    .route { border: 1px solid var(--rule); border-top: 3px solid var(--rc, var(--ink)); background: var(--surface);
+      padding: 20px 22px 18px; display: flex; flex-direction: column; }
+    .route[data-mod="text"]  { --rc: var(--m-text); }
+    .route[data-mod="image"] { --rc: var(--m-image); }
+    .route[data-mod="video"] { --rc: var(--m-video); }
+    .route[data-mod="cross"] { --rc: var(--m-cross); }
+    .route .r-k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .route .r-k .pin { color: var(--rc, var(--ink)); }
+    .route h3 { margin: 5px 0 0; font-size: 1.2rem; line-height: 1.2; }
+    .route .r-fit { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; margin: 8px 0 4px; }
+    .route .r-links { margin-top: 12px; border-top: 1px solid var(--rule); }
+    .route .r-link { display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--ink); font-size: 14px; }
+    .route .r-link:hover { color: var(--accent); }
+    .route .r-link.primary { font-weight: 600; }
+    .route .r-link .tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap; }
+    .route .r-meta { margin-top: 12px; font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); line-height: 1.6; }
+    .route .r-meta b { color: var(--ink-soft); font-weight: 600; }
+    .route .r-cross { margin-top: 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+    .route .r-cross a { color: var(--accent); text-decoration: none; }
+
+    .unsure { border: 1px solid var(--ink); background: var(--surface); padding: 18px 22px; max-width: 76ch; }
+    .unsure p { font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
+    .unsure b { color: var(--ink); }
+    .scope-line { border: 1px solid var(--rule); background: var(--surface); padding: 14px 18px; max-width: 72ch;
+      font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
+    .scope-line b { color: var(--ink); }
+    .reassure { font-family: var(--font-mono); font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 16px; max-width: 72ch; }
+    .reassure b { color: var(--ink-soft); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="this-saturday.html" class="hide-sm">This Saturday</a>
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="materials.html" class="hide-sm">Materials</a>
+        <a class="btn btn-primary btn-sm" href="https://ccfest.rocks/ccfest-camp">Register →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO — route-first -->
+  <header class="sub-hero" data-mod="cross">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <span>Start here</span>
+      </div>
+      <p class="sess-kicker"><i class="modsq"></i>Three minutes · pick a route, you can switch later</p>
+      <h1 class="sess-title" style="font-size: clamp(34px, 5vw, 58px);">Start here: choose your route through camp.</h1>
+      <p class="sess-lede" style="max-width: 66ch;">The camp has a lot in it — that's on purpose. This page is the short way in. Pick the route that fits where you are <b>right now</b>; nothing locks you in, and most people end up wandering across more than one.</p>
+      <div class="logi">
+        <b>Recorded · async-friendly · global time zones welcome.</b> Sessions run three Saturdays, 9–11 am PT, and every one is recorded for registered participants. Can't make the live time, or in a hard time zone? The async route is a full path through camp, not a consolation — <a href="camp-2026.html">see times &amp; recordings →</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ROUTES -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ A · Four routes in</h2><span class="sec-note">three starter links each · open the first one today</span></div>
+      <div class="routes">
+
+        <!-- Classroom Activity -->
+        <div class="route" data-mod="text">
+          <span class="r-k"><span class="pin">■</span> Classroom Activity</span>
+          <h3>Build something you can teach.</h3>
+          <p class="r-fit">For teachers, coaches, and curriculum designers who want a lesson, protocol, worksheet, or student-facing activity about how AI actually works.</p>
+          <div class="r-links">
+            <a class="r-link primary" href="../tools/classroom-activity-builder/" data-gc-event="start-here-route-classroom"><span>Classroom Activity Builder</span><span class="tag">open first</span></a>
+            <a class="r-link" href="younger-learners.html"><span>Adapting for Younger Learners</span><span class="tag">ages 6–12</span></a>
+            <a class="r-link" href="no-ai-pathway.html"><span>No-AI Pathway</span><span class="tag">no accounts</span></a>
+          </div>
+          <p class="r-meta"><b>You'll leave with</b> a ready-to-run activity or lesson plan.</p>
+          <p class="r-cross">Works for ages 6–12 and account-restricted classrooms — students never need to log into a tool.</p>
+        </div>
+
+        <!-- Creative Maker -->
+        <div class="route" data-mod="image">
+          <span class="r-k"><span class="pin">■</span> Creative Maker</span>
+          <h3>Make work with — and about — the tools.</h3>
+          <p class="r-fit">For artists, designers, and students who want to make images, video, prompts, or studio artifacts, and to think clearly about the ethics while doing it.</p>
+          <div class="r-links">
+            <a class="r-link primary" href="session-images.html" data-gc-event="start-here-route-creative"><span>Session 2 · Images</span><span class="tag">open first</span></a>
+            <a class="r-link" href="session-video.html"><span>Session 3 · Video</span><span class="tag">motion</span></a>
+            <a class="r-link" href="../packs/images/"><span>Image Prompt Pack</span><span class="tag">examples</span></a>
+          </div>
+          <p class="r-meta"><b>You'll leave with</b> a creative piece or an investigation of a tool's defaults.</p>
+          <p class="r-cross">Uneasy about consent, labor, and where "use" becomes "taking"? You're not alone here — sit it next to <a href="../worksheets/ai-use-consent-checklist/">AI Use + Consent</a> and <a href="further-reading.html">Further Reading</a>.</p>
+        </div>
+
+        <!-- Critical / Cautious / No-AI -->
+        <div class="route" data-mod="video">
+          <span class="r-k"><span class="pin">■</span> Critical / Cautious / No-AI</span>
+          <h3>Understand it without having to use it.</h3>
+          <p class="r-fit">For people who are skeptical, object to direct generation, are priced out, or simply want to think critically before touching a tool. This is a first-class route, not a fallback.</p>
+          <div class="r-links">
+            <a class="r-link primary" href="no-ai-pathway.html" data-gc-event="start-here-route-critical"><span>No-AI Pathway</span><span class="tag">open first</span></a>
+            <a class="r-link" href="ai-access.html"><span>AI Access &amp; Inequality</span><span class="tag">who pays</span></a>
+            <a class="r-link" href="further-reading.html"><span>Further Reading</span><span class="tag">critical</span></a>
+          </div>
+          <p class="r-meta"><b>You'll leave with</b> a critique, an investigation, or a clear, informed position.</p>
+          <p class="r-cross">Readings lean critical and intersectional — fiction and philosophy, not another technical bibliography.</p>
+        </div>
+
+        <!-- Mechanism Curious -->
+        <div class="route" data-mod="cross">
+          <span class="r-k"><span class="pin">■</span> Mechanism Curious · go deeper</span>
+          <h3>See what the machine is actually doing.</h3>
+          <p class="r-fit">For the under-the-hood crowd who want to watch tokens, probabilities, and diffusion steps directly. Optional depth — reach for it when you want it.</p>
+          <div class="r-links">
+            <a class="r-link primary" href="../tools/tokenizer-temperature-visualizer/" data-gc-event="start-here-route-mechanism"><span>Tokenizer + Temperature</span><span class="tag">open first</span></a>
+            <a class="r-link" href="../tools/count-the-next-token/"><span>Count the Next Token</span><span class="tag">probability</span></a>
+            <a class="r-link" href="../tools/diffusion-step-through-viewer/"><span>Diffusion Step-Through</span><span class="tag">images</span></a>
+          </div>
+          <p class="r-meta"><b>You'll leave with</b> a working mental model of prediction and diffusion.</p>
+          <p class="r-cross">Not sure where to start? This isn't the place — try a Classroom or Creative route first, then come back.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IF YOU'RE UNSURE -->
+  <section class="section-tight" style="--mink: var(--m-text);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ B · Not sure yet?</h2><span class="sec-note">most people aren't — that's fine</span></div>
+      <div class="unsure">
+        <p>You do <b>not</b> need to know what you want to make. If you teach, start with <b>Classroom Activity</b>. If you make things, start with <b>Creative Maker</b>. Both open onto everything else, and you can change routes any time. (We'd skip "Mechanism Curious" as a first stop unless taking systems apart is exactly why you came.)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCOPE -->
+  <section class="section-tight" style="--mink: var(--m-image);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ C · What this camp is</h2><span class="sec-note">setting expectations honestly</span></div>
+      <div class="scope-line">
+        <b>We investigate how models behave — we don't train them from scratch.</b> The work is taking finished systems apart: predicting, changing one thing, comparing what moved, and naming the human decision behind it. No coding or machine-learning background required.
+      </div>
+      <p class="reassure">
+        <b>What you don't need:</b> an account · an install · a paid subscription · a coding background · required pre-reading · a final project idea. Everything core runs in a browser on frozen examples. Bring curiosity; the rest is optional.
+      </p>
+    </div>
+  </section>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="../index.html"><span class="pg-dir mono">← Home</span><span class="pg-title">Learning Machines</span></a>
+        <a class="next" href="camp-2026.html"><span class="pg-dir mono">Dates &amp; logistics →</span><span class="pg-title">Camp 2026</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <p class="colophon">Pick a route · switch any time · recorded and async-friendly · no account or payment required.</p>
+    </div>
+  </footer>
+  <script src="../assets/analytics.js"></script>
+</body>
+</html>
