@@ -6,6 +6,17 @@
   var button = null;
   var fallbackRoot = null;
 
+  function assetRoot() {
+    if (currentScript && currentScript.src) {
+      return currentScript.src.replace(/assets\/projection\.js.*$/, "");
+    }
+    return new URL(".", window.location.href).toString();
+  }
+
+  function rootHref(path) {
+    return new URL(path, assetRoot()).toString();
+  }
+
   function path() {
     return window.location.pathname;
   }
@@ -54,8 +65,6 @@
   }
 
   function labelForOffState() {
-    var body = document.body;
-    if (body && body.getAttribute("data-project-layout") === "worksheet") return "Project worksheet";
     return "Project";
   }
 
@@ -64,7 +73,8 @@
     var on = isOn();
     button.textContent = on ? "Exit projection" : labelForOffState();
     button.setAttribute("aria-pressed", on ? "true" : "false");
-    button.setAttribute("aria-label", on ? "Exit projection view" : "Open projection view");
+    button.setAttribute("aria-label", on ? "Exit projection view" : "Projection view — for Zoom and classroom");
+    button.setAttribute("title", on ? "Exit projection view" : "Projection view — for Zoom and classroom");
   }
 
   function setUrlState(on) {
@@ -109,6 +119,26 @@
     syncButton();
   }
 
+  function replaceNavLinks() {
+    var navLinks = document.querySelector(".nav .nav-links");
+    if (!navLinks) return;
+
+    navLinks.textContent = "";
+
+    [
+      ["Tool index", "pages/tools.html"],
+      ["Sessions", "index.html#sessions"],
+      ["Materials", "pages/materials.html"],
+      ["Run console", "pages/run-console.html"]
+    ].forEach(function (item) {
+      var a = document.createElement("a");
+      a.href = rootHref(item[1]);
+      a.className = "hide-sm";
+      a.textContent = item[0];
+      navLinks.appendChild(a);
+    });
+  }
+
   function initFromQuery() {
     var params = new URLSearchParams(window.location.search);
     if (params.get("project") === "1") {
@@ -117,7 +147,9 @@
   }
 
   function init() {
-    if (!document.body || html.hasAttribute("data-no-projection")) return;
+    if (!document.body) return;
+    replaceNavLinks();
+    if (html.hasAttribute("data-no-projection")) return;
     stampPage();
     addButtonToNav();
     initFromQuery();

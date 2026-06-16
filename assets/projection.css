@@ -3,19 +3,77 @@
 
 @media screen {
   .lm-project-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     white-space: nowrap;
+    border: 1px solid var(--ink) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--ink) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 12px !important;
+    font-weight: 500;
+    letter-spacing: 0.04em !important;
+    line-height: 1.2;
+    padding: 8px 14px !important;
+    text-transform: uppercase !important;
+  }
+
+  .lm-project-btn:hover {
+    background: var(--ink) !important;
+    color: var(--bg) !important;
+  }
+
+  @media (max-width: 900px) {
+    .nav-links .lm-project-btn {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      z-index: 2100;
+      box-shadow: 0 0 0 1px var(--bg), 0 8px 22px rgba(0, 0, 0, 0.18);
+    }
   }
 
   html[data-projection="on"] {
     scroll-behavior: auto;
     --project-pad: clamp(18px, 2.2vw, 34px);
+
+    /* Zoom-tuned type ramp: fixed CSS-pixel sizes (× --proj-scale) so the
+       render is size-independent — a 13" laptop share looks the same as a
+       big monitor, instead of shrinking with the viewport (vw). */
+    --proj-scale: 1;
+    --proj-hero: calc(96px * var(--proj-scale));
+    --proj-num: calc(88px * var(--proj-scale));
+    --proj-title: calc(68px * var(--proj-scale));
+    --proj-lede: calc(20px * var(--proj-scale));
+    --proj-body: calc(18px * var(--proj-scale));
+    --proj-row: calc(17px * var(--proj-scale));
+    --proj-table: calc(16px * var(--proj-scale));
+    --proj-meta: calc(15px * var(--proj-scale));
   }
 
+  /* Flat, high-contrast canvas: the decorative gradient lowers text contrast
+     and muddies under video compression with no benefit on a shared feed. */
   html[data-projection="on"] body {
-    background:
-      linear-gradient(135deg, color-mix(in oklab, var(--skin-accent, var(--m-cross)) 7%, transparent), transparent 46%),
-      var(--bg);
+    background: var(--bg);
+    color: var(--ink);
     min-height: 100vh;
+  }
+
+  /* Nudge body copy toward full ink — thin/low-contrast text is the first
+     thing Zoom's encoder destroys. Scoped to light-background content
+     regions; hero ledes and accent text keep their contextual colors. */
+  html[data-projection="on"] .prose,
+  html[data-projection="on"] .prose p,
+  html[data-projection="on"] .prose li,
+  html[data-projection="on"] .md-doc p,
+  html[data-projection="on"] .md-doc li,
+  html[data-projection="on"] article p,
+  html[data-projection="on"] article li,
+  html[data-projection="on"] td,
+  html[data-projection="on"] th {
+    color: var(--ink) !important;
   }
 
   html[data-projection="on"] .lm-skin-menu,
@@ -30,9 +88,8 @@
     position: sticky;
     top: 0;
     z-index: 2000;
-    background: color-mix(in oklab, var(--bg) 92%, transparent) !important;
+    background: var(--bg) !important;
     border-bottom: 2px solid var(--ink) !important;
-    backdrop-filter: blur(16px) saturate(150%);
   }
 
   html[data-projection="on"] .nav-inner {
@@ -74,8 +131,11 @@
   html[data-projection="on"] .sess-title,
   html[data-projection="on"] .tool-title,
   html[data-projection="on"] .wall-title,
-  html[data-projection="on"] .site-header h1 {
-    font-size: clamp(34px, 5.2vw, 72px) !important;
+  html[data-projection="on"] .site-header h1,
+  html[data-projection="on"] .tool-hero h1,
+  html[data-projection="on"] .tool-mast h1 {
+    /* min() with a vw guard keeps fixed size on laptop+ and only shrinks on phones */
+    font-size: min(var(--proj-title), 11vw) !important;
   }
 
   html[data-projection="on"] .sess-lede,
@@ -83,7 +143,30 @@
   html[data-projection="on"] .subtitle,
   html[data-projection="on"] .tool-lede {
     max-width: 82ch;
-    font-size: clamp(15px, 1.25vw, 20px);
+    font-size: var(--proj-lede);
+  }
+
+  /* Body copy floor — readable after Zoom's downscale, regardless of viewport. */
+  html[data-projection="on"] .prose p,
+  html[data-projection="on"] .prose li,
+  html[data-projection="on"] .md-doc p,
+  html[data-projection="on"] .md-doc li,
+  html[data-projection="on"] article p,
+  html[data-projection="on"] article li {
+    font-size: var(--proj-body);
+    line-height: 1.55;
+  }
+
+  /* Thicken major container borders so they survive compression. */
+  html[data-projection="on"] .section,
+  html[data-projection="on"] .section-tight,
+  html[data-projection="on"] .panel,
+  html[data-projection="on"] .card,
+  html[data-projection="on"] .tile,
+  html[data-projection="on"] .tier-card,
+  html[data-projection="on"] .doc-table,
+  html[data-projection="on"] table {
+    border-width: 2px;
   }
 
   /* Homepage / directory index */
@@ -102,12 +185,12 @@
 
   html[data-projection="on"] body[data-project-page="home"] .hero h1 {
     max-width: 16ch;
-    font-size: clamp(44px, 6.5vw, 104px);
+    font-size: min(var(--proj-hero), 13vw);
   }
 
   html[data-projection="on"] body[data-project-page="home"] .hero-lede {
     max-width: 90ch;
-    font-size: clamp(16px, 1.35vw, 22px);
+    font-size: var(--proj-lede);
   }
 
   html[data-projection="on"] body[data-project-layout="index"] .tool-index,
@@ -132,7 +215,7 @@
   }
 
   html[data-projection="on"] body[data-project-layout="session"] .sess-num {
-    font-size: clamp(54px, 7vw, 104px);
+    font-size: min(var(--proj-num), 12vw);
   }
 
   html[data-projection="on"] body[data-project-layout="session"] .throughline {
@@ -142,15 +225,27 @@
 
   html[data-projection="on"] body[data-project-layout="session"] .tool-list .ix-row {
     grid-template-columns: 48px minmax(0, 1.2fr) minmax(0, 2.2fr) 92px;
+    font-size: var(--proj-row);
   }
 
   html[data-projection="on"] body[data-project-layout="session"] .ros-row {
     grid-template-columns: 80px minmax(0, 1fr);
     padding: 12px 0;
+    font-size: var(--proj-row);
   }
 
   html[data-projection="on"] body[data-project-layout="session"] .prompts {
+    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  /* Eyebrow / section meta labels — bump off the 12px default so they stay
+     legible after Zoom's downscale. */
+  html[data-projection="on"] .sess-kicker,
+  html[data-projection="on"] .sec-note,
+  html[data-projection="on"] .tool-kicker {
+    font-size: var(--proj-meta);
   }
 
   /* Interactive tools and tool wrapper pages */
@@ -202,7 +297,7 @@
 
   html[data-projection="on"] body[data-project-layout="doc"] .doc-table,
   html[data-projection="on"] body[data-project-layout="doc"] table {
-    font-size: clamp(14px, 1.05vw, 18px);
+    font-size: var(--proj-table);
   }
 
   html[data-projection="on"] body[data-project-page="bridge"] .bridge-grid {
@@ -242,6 +337,14 @@
     display: none !important;
   }
 
+  /* The worksheet's inline nav override carries its own backdrop blur; strip it
+     too so no projection nav relies on a blur that muddies under compression. */
+  html[data-projection="on"] body[data-project-layout="worksheet"] #lm-worksheet-nav-overrides.nav {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--bg) !important;
+  }
+
   html[data-projection="on"] body[data-project-layout="worksheet"] > .wrap {
     width: min(1220px, 100% - 44px) !important;
     max-width: none !important;
@@ -271,6 +374,23 @@
 
   html[data-projection="on"] body[data-project-layout="poster"] .poster {
     margin-inline: auto;
+  }
+
+  /* Zoom / laptop-share compression: laptop widths or short windows. Simplify
+     dense grids before they cramp — fewer, bigger cells survive downscaling. */
+  @media (max-width: 1366px), (max-height: 900px) {
+    html[data-projection="on"] body[data-project-layout="session"] .throughline,
+    html[data-projection="on"] body[data-project-layout="session"] .prompts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    html[data-projection="on"] body[data-project-page="bridge"] .bridge-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    html[data-projection="on"] body[data-project-layout="tool"] .tile-grid {
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
   }
 
   @media (max-width: 900px) {
