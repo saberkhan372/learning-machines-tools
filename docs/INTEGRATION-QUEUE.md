@@ -1,3 +1,8 @@
+---
+layout: page
+title: Integration Queue
+---
+
 # Integration Queue
 
 > **Maintained by Agent B.** After completing any task, append a section here.

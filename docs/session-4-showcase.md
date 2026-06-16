@@ -1,3 +1,8 @@
+---
+layout: page
+title: Optional Studio Showcase
+---
+
 # Optional Studio: Showcase
 ## What did we learn about generative AI by making with it?
 

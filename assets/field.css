@@ -1400,7 +1400,7 @@ html[data-skin] .doc-row .d-desc {
 }
 
 /* ---------------- responsive helpers ---------------- */
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .hide-sm { display: none; }
   .doc-row { flex-direction: column; gap: 3px; }
   .doc-row .d-desc { text-align: left; }

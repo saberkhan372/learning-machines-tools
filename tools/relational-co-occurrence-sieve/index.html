@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="studio-synthesis">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -69,12 +69,12 @@
       <aside class="lab-panel">
         <div class="lab-pad stack">
           <div>
-            <p class="mini-label">Source claim</p>
+            <h2 class="mini-label">Source claim</h2>
             <textarea class="claim-input" id="claim" placeholder="Paste a claim. The sieve verifies each entity, then tests whether they co-occur on one real page…"></textarea>
           </div>
           <button class="tool-button" type="button" id="run">Run relational audit</button>
           <div>
-            <p class="mini-label">Specimen passages</p>
+            <h2 class="mini-label">Specimen passages</h2>
             <div class="specimens">
               <button class="choice-button" type="button" data-sample="fake"><strong>Type 1 · pure fabrication</strong><span>Invented entities. Fails Level 1 — nothing to anchor to.</span></button>
               <button class="choice-button" type="button" data-sample="trap"><strong>Type 2 · the relational lie</strong><span>Real entities (Lincoln, iPhone, 1865) bound into a false story.</span></button>
@@ -107,7 +107,7 @@
 
     <section class="lab-panel" style="margin-top:18px;">
       <div class="lab-pad">
-        <p class="mini-label">Field note · the flaw in checking proper nouns alone</p>
+        <h2 class="mini-label">Field note · the flaw in checking proper nouns alone</h2>
         <p class="small-muted" style="max-width:78ch;">A confident chef is not a trustworthy one. If a passage claims <em>"Abraham Lincoln used an iPhone,"</em> a naive checker looks up Lincoln and iPhone, sees both exist, and stamps it true. The lie lives in the <strong>relationship</strong>, so the sieve runs the inspector twice.</p>
         <div class="fn-grid">
           <div class="fn-cell"><div class="lv">Level 1 · the pantry</div><div class="lt">Do the ingredients exist?</div><p>Confirm every entity printed on the recipe card is a real article.</p></div>

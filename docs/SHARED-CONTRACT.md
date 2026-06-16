@@ -1,3 +1,8 @@
+---
+layout: page
+title: Learning Machines Shared Contract
+---
+
 # Learning Machines — Shared Contract
 
 > **STATUS: COMPLETE — this is the live contract for all tool and page work.** Last updated 2026-06-10.

@@ -1,3 +1,8 @@
+---
+layout: page
+title: "Session 1: Text"
+---
+
 # Session 1: Text
 ## How do language models generate text that feels meaningful?
 

@@ -1,3 +1,8 @@
+---
+layout: page
+title: "Session 3: Video"
+---
+
 # Session 3: Video
 ## Why is video generation harder than image generation, and what does that tell us about how models work?
 

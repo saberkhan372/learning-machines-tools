@@ -1,3 +1,8 @@
+---
+layout: page
+title: Learning Machines Build Log
+---
+
 # Learning Machines — Build Log
 
 Phase-by-phase record of what was built and the key decisions made.

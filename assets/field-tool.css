@@ -83,6 +83,19 @@ html[data-skin="worksheet-print"][data-mod="cross"] {
   --skin-accent-2: var(--poster-lime);
 }
 
+/* Worksheet pages use print-sized tables. On screen, contain them inside the
+   worksheet section so a wide table does not widen the whole route. */
+@media screen {
+  html[data-skin="worksheet-print"] .section-body {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html[data-skin="worksheet-print"] .section-body > table {
+    min-width: 560px;
+  }
+}
+
 /* standard tool masthead (used when migrating .site-header markup) */
 .tool-mast {
   max-width: 1280px;

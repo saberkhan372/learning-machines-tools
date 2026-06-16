@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="">
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="studio-synthesis">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -65,12 +65,12 @@
       <aside class="lab-panel">
         <div class="lab-pad stack">
           <div>
-            <p class="mini-label">Source claims</p>
+            <h2 class="mini-label">Source claims</h2>
             <textarea class="claim-input" id="claim" placeholder="Paste a passage. The sieve extracts its entities and audits each against Wikipedia…"></textarea>
           </div>
           <button class="tool-button" type="button" id="run">Audit anchors via Wikipedia</button>
           <div>
-            <p class="mini-label">Specimen passages</p>
+            <h2 class="mini-label">Specimen passages</h2>
             <div class="specimens">
               <button class="choice-button" type="button" data-sample="hallucination"><strong>The fabricated landmark</strong><span>Fluent writing on invented entities that map to no record.</span></button>
               <button class="choice-button" type="button" data-sample="valid"><strong>Verified historical coordinates</strong><span>Real figures, events, and institutions with archival anchors.</span></button>
@@ -88,12 +88,12 @@
             <div class="mtile"><div class="mn sm" id="m-status" style="color:var(--muted);">Idle</div><div class="ml">Network pipeline</div></div>
           </div>
           <div>
-            <p class="mini-label">fig. 1 — token sieve map</p>
+            <h2 class="mini-label">fig. 1 — token sieve map</h2>
             <div class="sieve-map" id="sieve">Awaiting raw claims submission…</div>
             <div class="legend"><span class="lg-a">anchor · entity</span><span class="lg-f">filler · fluency</span></div>
           </div>
           <div>
-            <p class="mini-label">fig. 2 — knowledge-graph cross-reference log</p>
+            <h2 class="mini-label">fig. 2 — knowledge-graph cross-reference log</h2>
             <div class="vlog" id="log"><div class="placeholder">Dispatched query findings map down here…</div></div>
           </div>
         </div>
@@ -102,7 +102,7 @@
 
     <section class="lab-panel" style="margin-top:18px;">
       <div class="lab-pad">
-        <p class="mini-label">Field note · why we check the pantry, not the chef</p>
+        <h2 class="mini-label">Field note · why we check the pantry, not the chef</h2>
         <p class="small-muted" style="max-width:74ch;">We are not asking the chef whether the dish is good. The sieve takes the names printed on the label — the isolated anchors — and sends a courier to the supply warehouse (Wikipedia) to confirm each vendor actually exists. If the warehouse says <em>"item not found,"</em> the chef invented an ingredient. Fluency is not evidence; existence is only the <em>first</em> thing worth checking — for whether real entities were <em>combined</em> truthfully, run the <a href="../relational-co-occurrence-sieve/">Relational Co-Occurrence Sieve</a>.</p>
       </div>
     </section>

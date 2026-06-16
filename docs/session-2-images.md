@@ -1,3 +1,8 @@
+---
+layout: page
+title: "Session 2: Images"
+---
+
 # Session 2: Images
 ## How do image models turn words into pictures, and what defaults appear when prompts are vague?
 

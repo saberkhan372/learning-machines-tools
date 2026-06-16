@@ -59,6 +59,18 @@
 .lm-skin-opt[aria-selected="true"]::before { content: "■ "; font-size: 8px; vertical-align: 1px; }
 @media print { .lm-skin-menu { display: none; } }
 
+@media (max-width: 560px) {
+  .lm-skin-menu {
+    top: 70px !important;
+    right: 12px !important;
+    bottom: auto !important;
+  }
+  .lm-skin-toggle,
+  .lm-skin-opt {
+    font-size: 10.5px;
+  }
+}
+
 /* Identities apply on screen only — print always renders the field manual.
    Worksheet-print routes get restrained screen skins but keep printer-safe
    output through their own @media print rules. */
