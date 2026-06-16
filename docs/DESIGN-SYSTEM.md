@@ -1,3 +1,8 @@
+---
+layout: page
+title: Learning Machines Design System
+---
+
 # Learning Machines — Design System Reference
 
 > **Field Manual system (canonical as of 2026-06-10).** The full rollout
@@ -85,11 +90,34 @@ Each has a `-tint` variant for backgrounds. `html[data-ink="subtle"]`
 collapses all four to ink. On tools, `--accent` derives from `data-mod`
 via `field-tool.css`.
 
-**Rules for tool inline styles:**
-- Do NOT override `--bg`, `--ink`, `--accent`, `--muted`, `--rule`/`--line` in a tool's `:root{}`.
+**Rules for the editorial shell** (nav, `.section`, `.plate`, `.ix-row`,
+`.doc-row`, tool-detail `pages/tool-*.html`, docs, packs, the homepage):
+- Do NOT override `--bg`, `--ink`, `--accent`, `--muted`, `--rule`/`--line` in `:root{}`.
 - Do NOT set `body { background/color/font-family }` — `field.css` handles those.
 - Square corners: `--radius: 2px`; no box-shadows (the shim zeroes `--shadow*`).
 - You MAY define tool-specific tokens that don't clash (e.g. `--grid-cell-size`).
+
+**Interactive tool canvas exception** (the self-contained apps under
+`tools/<slug>/` and `tools/concept-bridges/<slug>/`):
+A tool's working surface is its own canvas and MAY diverge from the square/flat
+shell where the interaction calls for it. Specifically allowed:
+- Rounded corners (commonly `8–10px` cards, `999px` pills/chips/tabs).
+- Self-styling `body { background/color/font-family }` for a full-bleed app
+  shell — but reach for `var(--font-body)` / token values rather than new
+  hardcoded ones, so identity/tone switching still works.
+- `box-shadow` for focus rings and depth cues (prefer `inset` focus indicators).
+Keep the shared nav, footer, and any `.section`/`.plate`/`.ix-row` chrome on a
+tool page square and token-driven — the exception covers the *app*, not the
+site furniture around it.
+
+**Worksheet print exception** (`worksheets/<slug>/`, `data-skin="worksheet-print"`):
+Worksheets are print-first artifacts and MAY override `--bg`/`--ink`/`--accent`/
+`--muted` in `:root{}` and restyle `body` to lock a paper-clean print surface
+independent of screen tone. Keep on-screen identity restrained and print output
+Field-clean.
+
+**Documented tone exception:** `tools/latent-space-compressor/` intentionally
+pins `data-tone="slate"` for its dark latent-space canvas.
 
 ---
 

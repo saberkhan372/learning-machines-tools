@@ -281,7 +281,9 @@ html[data-skin] .through-step {
   color: var(--mink, var(--muted));
 }
 html[data-skin] .through-step .ts-n {
-  color: color-mix(in oklab, var(--skin-accent) 78%, var(--muted));
+  /* Anchored on --ink-soft for WCAG AA in default Field view; keeps an accent
+     tint. Identity modes override this separately. */
+  color: color-mix(in oklab, var(--skin-accent) 32%, var(--ink-soft));
 }
 .through-step h4 { font-size: 15px; }
 .through-step p { font-size: 13px; color: var(--ink-soft); }

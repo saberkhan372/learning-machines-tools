@@ -300,7 +300,9 @@ html[data-skin] .eyebrow {
   color: color-mix(in oklab, var(--skin-accent) 82%, var(--ink));
 }
 html[data-skin] .sec-rule .sec-note {
-  color: color-mix(in oklab, var(--skin-muted) 72%, var(--muted));
+  /* Anchored on --ink-soft for WCAG AA in default Field view; keeps a skin
+     tint. Identity modes override this separately. */
+  color: color-mix(in oklab, var(--skin-muted) 32%, var(--ink-soft));
 }
 
 /* ---------------- nav ---------------- */
