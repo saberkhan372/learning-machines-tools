@@ -26,7 +26,7 @@
     </div>
   </nav>
 
-  <header class="poster-hero" data-mod="cross">
+  <header class="poster-hero" data-mod="cross" data-screen-label="Hero">
     <div class="wrap poster-hero-grid">
       <div>
         <div class="crumb">
@@ -34,13 +34,12 @@
           <a href="../index.html#materials">Materials</a><span class="sep">/</span>
           <span>Camp poster</span>
         </div>
-        <p class="sess-kicker"><i class="modsq"></i>Promotion · print, animated exports &amp; social formats</p>
+        <p class="sess-kicker"><i class="modsq"></i>Promotion · one studio for print, motion &amp; social</p>
         <h1 class="sess-title">Camp Poster 2026</h1>
-        <p class="sess-lede">A consolidated poster hub for the Learning Machines camp: pick one design, tune the look, download finished GIF/MP4 exports, or make a new GIF from a curated template.</p>
+        <p class="sess-lede">One place to make the Learning Machines camp poster: pick a design, tune the look in the live preview, and download the finished file — or generate a fresh GIF of your custom version.</p>
         <div class="poster-actions" aria-label="Poster actions">
-          <a class="btn btn-primary" href="#studio">Customize poster</a>
-          <a class="btn btn-ghost" href="#downloads">Download exports</a>
-          <a class="btn btn-ghost" href="../export/Animated%20Posters.html">Open archive</a>
+          <a class="btn btn-primary" href="#studio">Open the studio ↓</a>
+          <a class="btn" href="https://ccfest.rocks/ccfest-camp">Register →</a>
         </div>
       </div>
       <div class="hero-preview" aria-label="Featured animated poster preview">
@@ -50,82 +49,60 @@
   </header>
 
   <main class="section-tight">
-    <div class="wrap poster-hub">
-      <section class="poster-studio" id="studio">
-        <div class="studio-panel">
-          <div class="sec-rule"><h2 class="sec-no">§ A · Poster Studio</h2><span class="sec-note">one editable preview · eight distinctive templates</span></div>
-          <div class="template-rail" id="template-rail" aria-label="Choose poster design"></div>
-          <div class="controls-inner" id="controls" aria-label="Poster style controls">
-            <span class="ctl"><span class="lbl">World</span><span class="seg" data-k="world"><button data-v="field">Field</button><button data-v="spectrum" class="on">Spectrum</button></span></span>
-            <span class="ctl"><span class="lbl">Motion</span><span class="seg" data-k="motion"><button data-v="on" class="on">On</button><button data-v="off">Off</button></span></span>
-            <span class="ctl"><span class="lbl">Tone</span><span class="seg" data-k="tone"><button data-v="paper" class="on">Paper</button><button data-v="white">White</button><button data-v="slate">Slate</button></span></span>
-            <span class="ctl"><span class="lbl">Ink</span><span class="seg" data-k="energy"><button data-v="printed">Printed</button><button data-v="bright" class="on">Bright</button></span></span>
-            <span class="ctl"><span class="lbl">Title ink</span><select data-k="lead"><option value="tri" selected>Ink</option><option value="text">Text blue</option><option value="image">Image rust</option><option value="video">Video green</option><option value="cross">Cross violet</option></select></span>
-            <span class="ctl"><span class="lbl">Voice</span><span class="seg" data-k="voice"><button data-v="signage" class="on">Signage</button><button data-v="field">Field serif</button></span></span>
-            <span class="ctl wide"><span class="lbl">Subline</span><select data-k="subline"><option value="camp" selected>Free creative AI camp…</option><option value="investigation">An investigation, not a tutorial…</option><option value="question">How do machines write, imagine…</option></select></span>
-          </div>
+    <div class="wrap">
+      <div class="sec-rule">
+        <h2 class="sec-no">§ Poster Studio</h2>
+        <span class="sec-note">pick a design · tune the look · download</span>
+      </div>
+
+      <section class="studio" id="studio" data-layout="split" data-screen-label="Poster Studio">
+        <div class="studio-layouts" id="studio-layouts" role="group" aria-label="Studio layout">
+          <span class="sl-label">Layout</span>
+          <button type="button" data-layout="split" class="on">Split</button>
+          <button type="button" data-layout="stage">Stage</button>
+          <button type="button" data-layout="dock">Dock</button>
         </div>
 
-        <div class="studio-preview">
-          <p class="board-label"><span id="poster-preview-label">Preview</span><span id="poster-preview-size">417×540</span></p>
-          <div class="stage" id="poster-preview-stage" data-w="850" data-h="1100">
-            <div class="art" id="poster-preview-art" style="width:850px;height:1100px;"></div>
+        <div class="studio-grid">
+          <div class="zone-rail">
+            <p class="zone-h">Design</p>
+            <div class="template-rail" id="template-rail" aria-label="Choose poster design"></div>
           </div>
-        </div>
-      </section>
 
-      <section class="downloads-block" id="downloads" data-project="hide">
-        <div class="sec-rule"><h2 class="sec-no">§ B · Finished Exports</h2><span class="sec-note">10 finished GIF/MP4 designs · web and 2x tiers</span></div>
-        <div class="anim-grid compact" id="animated-export-grid"></div>
-      </section>
-
-      <section class="gif-maker-block" data-project="hide">
-        <details class="maker-disclosure">
-          <summary>
-            <span>Make a new GIF</span>
-            <small>advanced · in-browser export · no upload</small>
-          </summary>
-          <div class="maker-shell">
-            <div class="maker-controls">
-              <div class="maker-control">
-                <label for="gif-design">Design</label>
-                <select id="gif-design"></select>
-              </div>
-              <div class="maker-control">
-                <label for="gif-size">Output size</label>
-                <select id="gif-size">
-                  <option value="web" selected>Web — fast</option>
-                  <option value="x2">2x — slower</option>
-                </select>
-              </div>
-              <div class="maker-control">
-                <label for="gif-length">Length</label>
-                <select id="gif-length">
-                  <option value="short">Short — 8 frames</option>
-                  <option value="standard" selected>Standard — 14 frames</option>
-                </select>
-              </div>
-              <div class="maker-control">
-                <label for="gif-name">File name</label>
-                <input id="gif-name" type="text" value="learning-machines" autocomplete="off">
-              </div>
-              <div class="maker-actions">
-                <button class="maker-btn primary" type="button" id="gif-generate">Generate GIF</button>
-                <a class="maker-btn" href="../export/Animated%20Posters.html">Archive</a>
-              </div>
-              <p class="maker-status" id="gif-status" role="status" aria-live="polite">Idle. Choose a design, tune the controls, then generate.</p>
-            </div>
-            <div class="maker-preview">
-              <div class="maker-stage">
-                <p class="board-label"><span id="gif-preview-label">Preview</span><span id="gif-preview-size">417×540</span></p>
-                <div class="stage" id="gif-preview-stage" data-w="850" data-h="1100">
-                  <div class="art" id="gif-preview-art" style="width:850px;height:1100px;"></div>
-                </div>
+          <div class="zone-preview">
+            <p class="board-label"><span id="poster-preview-label">Preview</span><span id="poster-preview-size">417×540</span></p>
+            <div class="studio-stagewrap">
+              <div class="stage" id="poster-preview-stage" data-w="850" data-h="1100">
+                <div class="art" id="poster-preview-art" style="width:850px;height:1100px;"></div>
               </div>
             </div>
           </div>
-          <div class="capture-bin" id="gif-capture-bin" aria-hidden="true"></div>
-        </details>
+
+          <div class="zone-controls">
+            <p class="zone-h">Style</p>
+            <div class="controls-inner" id="controls" aria-label="Poster style controls">
+              <span class="ctl"><span class="lbl">World</span><span class="seg" data-k="world"><button data-v="field">Field</button><button data-v="spectrum" class="on">Spectrum</button></span></span>
+              <span class="ctl"><span class="lbl">Tone</span><span class="seg" data-k="tone"><button data-v="paper" class="on">Paper</button><button data-v="white">White</button><button data-v="slate">Slate</button></span></span>
+              <span class="ctl"><span class="lbl">Motion</span><span class="seg" data-k="motion"><button data-v="on" class="on">On</button><button data-v="off">Off</button></span></span>
+              <span class="ctl"><span class="lbl">Subline</span><select data-k="subline"><option value="camp" selected>Free creative AI camp…</option><option value="investigation">An investigation, not a tutorial…</option><option value="question">How do machines write, imagine…</option></select></span>
+            </div>
+            <details class="adv">
+              <summary>Advanced</summary>
+              <div class="adv-controls" aria-label="Advanced style controls">
+                <span class="ctl"><span class="lbl">Ink</span><span class="seg" data-k="energy"><button data-v="printed">Printed</button><button data-v="bright" class="on">Bright</button></span></span>
+                <span class="ctl"><span class="lbl">Title ink</span><select data-k="lead"><option value="tri" selected>Ink</option><option value="text">Text blue</option><option value="image">Image rust</option><option value="video">Video green</option><option value="cross">Cross violet</option></select></span>
+                <span class="ctl"><span class="lbl">Voice</span><span class="seg" data-k="voice"><button data-v="signage" class="on">Signage</button><button data-v="field">Field serif</button></span></span>
+              </div>
+            </details>
+          </div>
+
+          <div class="zone-download" id="download">
+            <p class="zone-h">Download</p>
+            <div id="download-body"></div>
+          </div>
+        </div>
+
+        <div class="capture-bin" id="gif-capture-bin" aria-hidden="true"></div>
       </section>
     </div>
   </main>
@@ -134,12 +111,12 @@
     <div class="wrap">
       <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
       <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
-      <p class="colophon">Finished exports stay in the archive · custom GIFs download locally · reduced-motion freezes live previews.</p>
+      <p class="colophon">Finished exports are pre-rendered files · custom GIFs render in your browser and download locally · reduced-motion freezes the live preview.</p>
     </div>
   </footer>
 
-<script src="../export/gif-encoder.js"></script>
-<script src="../assets/camp-poster.js"></script>
+  <script src="../export/gif-encoder.js"></script>
+  <script src="../assets/camp-poster.js"></script>
   <script src="../assets/analytics.js"></script>
 </body>
 </html>

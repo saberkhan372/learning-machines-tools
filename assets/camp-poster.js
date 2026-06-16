@@ -1,7 +1,15 @@
 (function () {
   "use strict";
 
-  /* ---- palette logic (ported verbatim from the handoff prototype) ---- */
+  /* ====================================================================
+     Consolidated Camp Poster studio.
+     One flow: pick a design -> tune the look -> download.
+     The download panel swaps between finished exports (default look)
+     and an in-browser GIF generator (tuned look).
+     Palette + motif engine ported verbatim from the handoff prototype.
+     ==================================================================== */
+
+  /* ---- palette logic ---- */
   var P_TONES = {
     paper: { bg: "#f2ebdc", surface: "#f9f4e7", ink: "#23201a", soft: "#454034", muted: "#6e6757", rule: "#cfc2a6" },
     white: { bg: "#fcfcfa", surface: "#ffffff", ink: "#191a1c", soft: "#3c3e42", muted: "#67696e", rule: "#d4d4cc" },
@@ -50,7 +58,7 @@
     Object.keys(v).forEach(function (k) { el.style.setProperty(k, v[k]); });
   }
 
-  /* ---- motif builders (deterministic, ported) ---- */
+  /* ---- motif builders (deterministic) ---- */
   function pr(n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
 
   function probBars(inkVar, rows, hitFirst) {
@@ -136,7 +144,7 @@
     return out + "</span>";
   }
 
-  /* ---- boards ---- */
+  /* ---- boards (the 5 curated designs) ---- */
   function boardSignage() {
     return '<div class="poster pticks" data-shift="0" style="padding:56px 60px 52px; display:flex; flex-direction:column;">'
       + '<div class="wash"></div>'
@@ -151,67 +159,6 @@
       + tokenStrip()
       + '<p class="diag-cap" style="margin:12px 0 0;">fig. 0 — the camp name, the way a language model reads it: four tokens.</p>'
       + '<div style="height:48px;"></div>' + infoFooter() + "</div>";
-  }
-
-  function boardSessions() {
-    var bands = [
-      { no: "01", label: "Session 01 · Sat July 11", word: "Text", ink: "--itext",
-        q: "How do language models generate text that feels meaningful? Tokens, probability, temperature.",
-        motif: probBars("--itext") },
-      { no: "02", label: "Session 02 · Sat July 18", word: "Images", ink: "--iimage",
-        q: "What is an image model actually working with? Diffusion, defaults, and vague prompts.",
-        motif: noiseGrid("--iimage", 13, 7, 13) },
-      { no: "03", label: "Session 03 · Sat July 25", word: "Video", ink: "--ivideo",
-        q: "What changes when generation has to work across time? Drift, coherence, and motion.",
-        motif: filmFrames("--ivideo", "--ivideo-tint", 56, 44) }
-    ];
-    var html = '<div class="poster" data-shift="40" style="padding:54px 60px 52px; display:flex; flex-direction:column;">'
-      + '<div class="wash"></div>'
-      + '<div style="display:flex; justify-content:space-between; align-items:baseline;">'
-      + '<span class="eyebrow">CC Fest · Summer 2026</span><span class="eyebrow" style="color:var(--pink);">Free · Virtual · Beginner-friendly</span></div>'
-      + '<div class="rule-strong" style="margin:16px 0 0;"></div>'
-      + '<h1 class="display ghostable" style="font-size:84px; margin:40px 0 14px;">Learning Machines</h1>'
-      + '<p class="p-subline" style="font-size:20px; line-height:1.45; color:var(--psoft); max-width:52ch; margin:0;"></p>'
-      + '<div style="height:34px;"></div>';
-    bands.forEach(function (b) {
-      html += '<div class="band" style="--band-ink: var(' + b.ink + ');">'
-        + '<span class="bno">' + b.no + "</span><div>"
-        + '<h2 class="bword">' + b.word + "</h2>"
-        + '<p class="bq">' + b.q + "</p>"
-        + '<p class="bdate">' + b.label + " · 9–11 am PT</p></div>"
-        + '<div style="justify-self:end;">' + b.motif + "</div></div>";
-    });
-    html += '<div style="border-top:1px solid var(--prule); padding:16px 0 0;">'
-      + '<p class="mono" style="font-size:13.5px; color:var(--pmuted); margin:0;">+ optional studio — showcase what you made, found, or critiqued. No coding required. No-AI pathways for every activity.</p></div>'
-      + '<div style="flex:1;"></div>' + infoFooter() + "</div>";
-    return html;
-  }
-
-  function boardDiagram() {
-    var dist = [["machines", 41], ["models", 23], ["minds", 14], ["magic", 8]];
-    return '<div class="poster" data-shift="300" style="padding:54px 60px 52px; display:flex; flex-direction:column;">'
-      + '<div class="wash"></div>'
-      + '<div style="display:flex; justify-content:space-between; align-items:baseline;">'
-      + '<span class="eyebrow">CC Fest · Creative AI Camp · Summer 2026</span><span class="eyebrow" style="color:var(--pink);">Field Notes №1</span></div>'
-      + '<div class="rule-strong" style="margin:16px 0 40px;"></div>'
-      + '<div class="plate-c" style="padding:46px 42px 32px;">'
-      + '<div style="display:flex; align-items:center; gap:20px;">'
-      + '<span class="diag-chip" style="--chip-ink: var(--psoft); --chip-tint: transparent; font-size:17px;">learning</span>'
-      + '<span class="diag-arrow" style="font-size:22px;">→</span>'
-      + '<span class="diag-chip" style="--chip-ink: var(--icross); --chip-tint: var(--icross-tint); padding:18px 22px; font-size:19px;">model\n<span style="font-weight:400; font-size:13px; opacity:0.8;">(learned patterns)</span></span>'
-      + '<span class="diag-arrow" style="font-size:22px;">→</span>'
-      + '<div style="flex:1; min-width:300px;">' + probBars("--itext", dist, true) + "</div></div>"
-      + '<div class="rule" style="margin:32px 0 14px;"></div>'
-      + '<p class="diag-cap" style="margin:0; font-size:13px;">fig. 1 — prediction from learned patterns. the same logic writes text, paints images, and moves video — with different failure modes each time.</p></div>'
-      + '<h1 class="display ghostable" style="font-size:96px; margin:48px 0 0;">What is the machine <span style="color:var(--icross);">actually</span> doing?</h1>'
-      + '<p style="font-size:21px; line-height:1.5; color:var(--psoft); max-width:50ch; margin:26px 0 0;"><b style="color:var(--pink);">Learning Machines: Text, Images, Video</b> — <span class="p-subline-inline"></span></p>'
-      + '<div style="display:flex; gap:10px; margin:26px 0 0;">'
-      + ["text", "image", "video"].map(function (k, i) {
-          var w = ["Text", "Images", "Video"][i];
-          return '<span class="mono" style="font-size:13.5px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--i' + k + "); background:var(--i" + k + '-tint); border:1px solid var(--i' + k + '); padding:7px 12px;">' + w + "</span>";
-        }).join("")
-      + "</div>"
-      + '<div style="flex:1;"></div>' + infoFooter() + "</div>";
   }
 
   function boardDroppedKeyframe() {
@@ -230,59 +177,38 @@
       + '<span class="mono" style="font-size:15.5px; color:var(--pmuted); text-align:right; line-height:1.65; white-space:nowrap;">free · virtual · beginner-friendly<br>register → ccfest.rocks · form due July 4</span></div></div>';
   }
 
-  function boardTemperature() {
-    var rows = [
-      { t: "T = 0.1", s: "Learning Machines", c: "var(--pink)", cls: "" },
-      { t: "T = 0.5", s: "Learning Machnies", c: "var(--itext)", cls: "" },
-      { t: "T = 0.9", s: "Learnig Mashines", c: "var(--ivideo)", cls: " hot" },
-      { t: "T = 1.3", s: "Laerning Machines", c: "var(--iimage)", cls: "" },
-      { t: "T = 1.7", s: "L3arning M4chines", c: "var(--icross)", cls: "" },
-      { t: "T = 2.0", s: "Lrn1ng_M%ch!n3s", c: "oklch(0.62 0.26 350)", cls: "" }
+  function boardForwardPass() {
+    var nodes = [
+      ["x1", 12, 24], ["x2", 12, 48], ["x3", 12, 72],
+      ["h1", 44, 18], ["h2", 44, 38], ["h3", 44, 58], ["h4", 44, 78],
+      ["y", 78, 48]
     ];
-    var html = '<div class="poster" data-shift="90" style="padding:54px 60px 52px; display:flex; flex-direction:column;">'
+    var edges = [
+      [18, 28, 44, 20], [18, 52, 44, 40], [18, 76, 44, 80],
+      [50, 20, 78, 50], [50, 40, 78, 50], [50, 60, 78, 50], [50, 80, 78, 50]
+    ];
+    var html = '<div class="poster risk-motion-board" data-shift="240" style="padding:54px 60px 52px; display:flex; flex-direction:column;">'
       + '<div class="wash"></div>'
       + '<div style="display:flex; justify-content:space-between; align-items:baseline;">'
-      + '<span class="eyebrow">CC Fest · Creative AI Camp · Summer 2026</span><span class="eyebrow" style="color:var(--pink);">sampling, temperature rising</span></div>'
-      + '<div class="rule-strong" style="margin:16px 0 48px;"></div>'
-      + '<div class="poster-temp-stack">';
-    rows.forEach(function (r) {
-      html += '<div class="poster-temp-row' + r.cls + '"><span class="tlabel">' + r.t + '</span>'
-        + '<span class="display" style="font-size:64px;color:' + r.c + ';white-space:nowrap;">' + r.s + "</span></div>";
+      + '<span class="eyebrow">CC Fest · Summer 2026</span><span class="eyebrow" style="color:var(--ivideo);">forward pass · activation path</span></div>'
+      + '<div class="rule-strong" style="margin:16px 0 34px;"></div>'
+      + '<h1 class="display ghostable" style="font-size:86px; margin:0 0 28px;">Learning Machines</h1>'
+      + '<div class="forward-field">';
+    edges.forEach(function (e, i) {
+      var dx = e[2] - e[0];
+      var dy = e[3] - e[1];
+      var len = Math.sqrt(dx * dx + dy * dy);
+      var deg = Math.atan2(dy, dx) * 180 / Math.PI;
+      html += '<span class="forward-edge" data-step="' + i + '" style="left:' + e[0] + '%;top:' + e[1] + '%;width:' + len + '%;transform:rotate(' + deg + 'deg);"></span>';
+    });
+    nodes.forEach(function (n, i) {
+      html += '<span class="forward-node" data-step="' + i + '" style="left:calc(' + n[1] + '% - 17px);top:calc(' + n[2] + '% - 17px);">' + n[0] + "</span>";
     });
     html += "</div>"
-      + '<p class="diag-cap" style="margin:26px 0 0;">fig. 4 — the same model, sampled at rising temperature. too cold is boring; too hot is noise. we will be working around T = 0.9.</p>'
-      + '<div style="flex:1;"></div>'
-      + '<p style="font-size:22px; line-height:1.45; color:var(--psoft); max-width:46ch; margin:0;"><span class="p-subline-inline"></span> <b style="color:var(--pink);">Text · Images · Video.</b></p>'
-      + '<div style="height:40px;"></div>' + infoFooter() + "</div>";
-    return html;
-  }
-
-  function boardSelfWriting() {
-    var title = [
-      { t: "Learn", p: ".41", ink: "--itext", d: "0s" },
-      { t: "ing", p: ".87", ink: "--iimage", d: "0.18s" },
-      { t: " Mach", p: ".34", ink: "--ivideo", d: "0.36s" },
-      { t: "ines", p: ".92", ink: "--icross", d: "0.54s" }
-    ];
-    var body = "a free creative AI camp - text, images, video - for educators, artists, students &amp; curious learners.".split(" ");
-    var html = '<div class="poster risk-motion-board" data-shift="180" style="padding:54px 60px 52px; display:flex; flex-direction:column;">'
-      + '<div class="wash"></div>'
-      + '<div style="display:flex; justify-content:space-between; align-items:baseline;">'
-      + '<span class="eyebrow">CC Fest · Summer 2026</span><span class="eyebrow" style="color:var(--itext);">generating... · done loop · temp 0.9</span></div>'
-      + '<div class="rule-strong" style="margin:16px 0 56px;"></div>'
-      + '<div class="selfwrite-title">';
-    title.forEach(function (tok) {
-      html += '<span class="selfwrite-token" style="--wd:' + tok.d + ';"><span class="display" style="font-size:124px;color:var(' + tok.ink + ');">' + tok.t + '</span><span class="prob">p=' + tok.p + "</span></span>";
-    });
-    html += "</div>"
-      + '<div style="height:40px;"></div>'
-      + '<p class="selfwrite-body">';
-    body.forEach(function (word, i) {
-      html += '<span class="word" style="--wd:' + (0.9 + i * 0.13).toFixed(2) + 's;">' + word + " </span>";
-    });
-    html += '<span class="selfwrite-cursor" aria-hidden="true"></span></p>'
-      + '<p class="diag-cap" style="margin:26px 0 0; color:var(--itext);">fig. 7 — this poster, generating itself one token at a time. each word: a guess with a probability attached.</p>'
-      + '<div style="flex:1;"></div>' + infoFooter() + "</div>";
+      + '<p class="diag-cap" style="margin:18px 0 0; color:var(--ivideo);">fig. 8 — signals move layer by layer. the answer looks sudden, but the path has structure.</p>'
+      + '<div style="height:28px;"></div>'
+      + '<p class="p-subline" style="font-size:22px; line-height:1.45; color:var(--psoft); max-width:44ch; margin:0;"></p>'
+      + '<div style="flex:0.5;"></div>' + infoFooter() + "</div>";
     return html;
   }
 
@@ -331,221 +257,71 @@
     return html;
   }
 
-  function boardForwardPass() {
-    var nodes = [
-      ["x1", 12, 24], ["x2", 12, 48], ["x3", 12, 72],
-      ["h1", 44, 18], ["h2", 44, 38], ["h3", 44, 58], ["h4", 44, 78],
-      ["y", 78, 48]
-    ];
-    var edges = [
-      [18, 28, 44, 20], [18, 52, 44, 40], [18, 76, 44, 80],
-      [50, 20, 78, 50], [50, 40, 78, 50], [50, 60, 78, 50], [50, 80, 78, 50]
-    ];
-    var html = '<div class="poster risk-motion-board" data-shift="240" style="padding:54px 60px 52px; display:flex; flex-direction:column;">'
-      + '<div class="wash"></div>'
-      + '<div style="display:flex; justify-content:space-between; align-items:baseline;">'
-      + '<span class="eyebrow">CC Fest · Summer 2026</span><span class="eyebrow" style="color:var(--ivideo);">forward pass · activation path</span></div>'
-      + '<div class="rule-strong" style="margin:16px 0 34px;"></div>'
-      + '<h1 class="display ghostable" style="font-size:86px; margin:0 0 28px;">Learning Machines</h1>'
-      + '<div class="forward-field">';
-    edges.forEach(function (e, i) {
-      var dx = e[2] - e[0];
-      var dy = e[3] - e[1];
-      var len = Math.sqrt(dx * dx + dy * dy);
-      var deg = Math.atan2(dy, dx) * 180 / Math.PI;
-      html += '<span class="forward-edge" data-step="' + i + '" style="left:' + e[0] + '%;top:' + e[1] + '%;width:' + len + '%;transform:rotate(' + deg + 'deg);"></span>';
-    });
-    nodes.forEach(function (n, i) {
-      html += '<span class="forward-node" data-step="' + i + '" style="left:calc(' + n[1] + '% - 17px);top:calc(' + n[2] + '% - 17px);">' + n[0] + "</span>";
-    });
-    html += "</div>"
-      + '<p class="diag-cap" style="margin:18px 0 0; color:var(--ivideo);">fig. 8 — signals move layer by layer. the answer looks sudden, but the path has structure.</p>'
-      + '<div style="height:28px;"></div>'
-      + '<p class="p-subline" style="font-size:22px; line-height:1.45; color:var(--psoft); max-width:44ch; margin:0;"></p>'
-      + '<div style="flex:0.5;"></div>' + infoFooter() + "</div>";
-    return html;
+  /* ---- curated design set ----
+     files: finished GIF/MP4 exports that match the DEFAULT look.
+     null files => generate-only (no pre-rendered asset). */
+  var BASE_LETTER = { w: 850, h: 1100, webW: 417, webH: 540, x2W: 834, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110 };
+  function letterFiles(id) {
+    return {
+      gif: "../export/gifs/" + id + ".gif", gif2x: "../export/gifs-2x/" + id + ".gif",
+      mp4: "../export/mp4/" + id + ".mp4", mp42x: "../export/mp4-2x/" + id + ".mp4",
+      sizes: { gif: "417×540", gif2x: "834×1080", mp4: "416×540", mp42x: "834×1080" }
+    };
   }
 
-  function boardTerminal() {
-    return '<div class="poster risk-motion-board" data-shift="0" style="background:#0a0f0a;color:#46ff7d;padding:52px 56px;display:flex;flex-direction:column;">'
-      + '<div class="term-scan"></div>'
-      + '<p class="mono" style="font-family:\'IBM Plex Mono\',monospace;font-size:27px;line-height:1.35;margin:0;color:rgba(70,255,125,0.55);">ccfest@summer:~$ run learning-machines --year 2026</p>'
-      + '<p class="mono" style="font-family:\'IBM Plex Mono\',monospace;font-size:27px;line-height:1.35;margin:0;color:rgba(70,255,125,0.55);">loading curriculum .......... ok</p>'
-      + '<div style="flex:0.8;"></div>'
-      + '<h1 class="term-glow" style="font-family:\'IBM Plex Mono\',monospace;font-size:130px;line-height:0.92;margin:0;letter-spacing:0.01em;">LEARNING<br>MACHINES<span class="cursor" style="margin-left:14px;"></span></h1>'
-      + '<div style="flex:0.8;"></div>'
-      + '<p class="mono" style="font-size:24px;line-height:1.45;margin:0;color:rgba(70,255,125,0.55);">&gt; a free creative AI camp. no coding required.</p>'
-      + '<div style="height:22px;"></div>'
-      + '<p class="mono" style="font-size:25px;line-height:1.35;margin:0;">[01] TEXT&nbsp;&nbsp;&nbsp;&nbsp;jul 11&nbsp;&nbsp;tokens, probability, temperature</p>'
-      + '<p class="mono" style="font-size:25px;line-height:1.35;margin:0;">[02] IMAGES&nbsp;&nbsp;jul 18&nbsp;&nbsp;diffusion, noise, defaults</p>'
-      + '<p class="mono" style="font-size:25px;line-height:1.35;margin:0;">[03] VIDEO&nbsp;&nbsp;&nbsp;jul 25&nbsp;&nbsp;motion, drift, coherence</p>'
-      + '<div style="height:26px;"></div>'
-      + '<p class="mono term-glow" style="font-size:34px;line-height:1.35;margin:0;">&gt;&gt; register: ccfest.rocks&nbsp;&nbsp;[form due jul 4]</p>'
-      + "</div>";
-  }
-
-  function boardZine() {
-    return '<div class="poster spectrum risk-motion-board" data-shift="120" style="background:#f2ebdc;color:#1c0e24;padding:52px 56px;display:flex;flex-direction:column;">'
-      + '<div class="wash"></div>'
-      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;">'
-      + '<span class="sticker mono" style="--rot:-3deg;background:#1c0e24;color:#f2ebdc;font-size:16px;font-weight:600;letter-spacing:0.12em;">CC FEST · SUMMER 2026</span>'
-      + '<span class="sticker" style="--rot:4deg;background:oklch(0.9 0.22 125);color:#1c0e24;font-family:\'Archivo\',sans-serif;font-size:34px;font-weight:800;">FREE</span></div>'
-      + '<div style="flex:1;"></div>'
-      + '<h1 class="ghostable" style="font-family:\'Archivo\',sans-serif;font-size:132px;font-weight:800;line-height:0.98;margin:0;transform:rotate(-2deg);color:#1c0e24;">LEARNING<br>MACHINES</h1>'
-      + '<div style="height:30px;"></div>'
-      + '<div style="display:flex;gap:18px;flex-wrap:wrap;">'
-      + '<span class="sticker mono" style="--rot:-2deg;background:#fff;font-size:19px;font-weight:600;">TEXT — JUL 11</span>'
-      + '<span class="sticker mono" style="--rot:3deg;background:#fff;font-size:19px;font-weight:600;">IMAGES — JUL 18</span>'
-      + '<span class="sticker mono" style="--rot:-4deg;background:#fff;font-size:19px;font-weight:600;">VIDEO — JUL 25</span></div>'
-      + '<div style="flex:1;"></div>'
-      + '<p class="p-subline" style="font-family:\'Archivo\',sans-serif;font-size:22px;font-weight:600;line-height:1.4;max-width:36ch;margin:0;transform:rotate(-1deg);"></p>'
-      + '<div style="height:26px;"></div>'
-      + '<div style="display:flex;justify-content:space-between;align-items:flex-end;">'
-      + '<span class="sticker mono" style="--rot:2deg;background:#1c0e24;color:#f2ebdc;font-size:21px;font-weight:600;">SATURDAYS 9–11 AM PT</span>'
-      + '<span class="sticker mono" style="--rot:-3deg;background:oklch(0.62 0.26 350);color:#fff;font-size:21px;font-weight:600;">CCFEST.ROCKS →</span></div></div>';
-  }
-
-  function boardTokenReveal() {
-    var words = "Free creative AI camp for people who want to inspect the machine, not just prompt it.".split(" ");
-    var html = '<div class="poster risk-motion-board token-reveal-board" data-shift="180" style="padding:54px 60px 52px;display:flex;flex-direction:column;">'
-      + '<div class="wash"></div>'
-      + '<div style="display:flex;justify-content:space-between;align-items:baseline;">'
-      + '<span class="eyebrow">CC Fest · Summer 2026</span><span class="eyebrow" style="color:var(--itext);">token reveal · deterministic</span></div>'
-      + '<div class="rule-strong" style="margin:16px 0 52px;"></div>'
-      + '<h1 class="display ghostable" style="font-size:118px;margin:0;color:var(--plead);">Learning<br>Machines</h1>'
-      + '<div style="height:36px;"></div><p class="selfwrite-body" style="font-size:32px;max-width:34ch;">';
-    words.forEach(function (word, i) {
-      html += '<span class="word" data-step="' + i + '">' + word + " </span>";
-    });
-    html += '<span class="selfwrite-cursor" aria-hidden="true"></span></p>'
-      + '<p class="diag-cap" style="margin:26px 0 0;color:var(--itext);">fig. 9 — words arrive as a sequence of confident guesses.</p>'
-      + '<div style="flex:1;"></div>' + tokenStrip() + '<div style="height:34px;"></div>' + infoFooter() + "</div>";
-    return html;
-  }
-
-  var ANIMATED_EXPORTS = [
-    { id: "mosh", code: "D", name: "Dropped keyframe", aspect: "letter", desc: "Glitch slices over the datamosh wash.", dims: "GIF 417×540 · MP4 416×540 · 2x 834×1080", cls: "", editable: true, downloads: { gif: "../export/gifs/mosh.gif", gif2x: "../export/gifs-2x/mosh.gif", mp4: "../export/mp4/mosh.mp4", mp42x: "../export/mp4-2x/mosh.mp4" } },
-    { id: "slitscan", code: "H", name: "Slit-scan", aspect: "letter", desc: "Title pulled apart as frame columns.", dims: "GIF 417×540 · MP4 416×540 · 2x 834×1080", cls: "", editable: false, downloads: { gif: "../export/gifs/slitscan.gif", gif2x: "../export/gifs-2x/slitscan.gif", mp4: "../export/mp4/slitscan.mp4", mp42x: "../export/mp4-2x/slitscan.mp4" } },
-    { id: "signal", code: "I", name: "Raw signal", aspect: "letter", desc: "Color signal columns under a slow hue cycle.", dims: "GIF 417×540 · MP4 416×540 · 2x 834×1080", cls: "", editable: false, downloads: { gif: "../export/gifs/signal.gif", gif2x: "../export/gifs-2x/signal.gif", mp4: "../export/mp4/signal.mp4", mp42x: "../export/mp4-2x/signal.mp4" } },
-    { id: "forward", code: "M", name: "Forward pass", aspect: "letter", desc: "Network nodes and edges firing in sequence.", dims: "GIF 417×540 · MP4 416×540 · 2x 834×1080", cls: "", editable: true, downloads: { gif: "../export/gifs/forward.gif", gif2x: "../export/gifs-2x/forward.gif", mp4: "../export/mp4/forward.mp4", mp42x: "../export/mp4-2x/forward.mp4" } },
-    { id: "terminal", code: "K", name: "Terminal", aspect: "letter", desc: "Phosphor command line with cursor pulse.", dims: "GIF 417×540 · MP4 416×540 · 2x 834×1080", cls: "", editable: true, downloads: { gif: "../export/gifs/terminal.gif", gif2x: "../export/gifs-2x/terminal.gif", mp4: "../export/mp4/terminal.mp4", mp42x: "../export/mp4-2x/terminal.mp4" } },
-    { id: "zine", code: "L", name: "Zine chaos", aspect: "letter", desc: "Sticker collage over spectrum motion.", dims: "GIF 417×540 · MP4 416×540 · 2x 834×1080", cls: "", editable: true, downloads: { gif: "../export/gifs/zine.gif", gif2x: "../export/gifs-2x/zine.gif", mp4: "../export/mp4/zine.mp4", mp42x: "../export/mp4-2x/zine.mp4" } },
-    { id: "selfwriting", code: "N", name: "Writes itself", aspect: "letter", desc: "Poster copy generated token by token.", dims: "GIF 417×540 · MP4 416×540 · 2x 834×1080", cls: "", editable: true, downloads: { gif: "../export/gifs/selfwriting.gif", gif2x: "../export/gifs-2x/selfwriting.gif", mp4: "../export/mp4/selfwriting.mp4", mp42x: "../export/mp4-2x/selfwriting.mp4" } },
-    { id: "wordbyword", code: "DD", name: "Word by word", aspect: "letter", desc: "Prompt guidance revealed one word at a time.", dims: "GIF 417×540 · MP4 416×540 · 2x 834×1080", cls: "", editable: true, downloads: { gif: "../export/gifs/wordbyword.gif", gif2x: "../export/gifs-2x/wordbyword.gif", mp4: "../export/mp4/wordbyword.mp4", mp42x: "../export/mp4-2x/wordbyword.mp4" } },
-    { id: "square", code: "IG", name: "Social square", aspect: "square", desc: "Instagram square with animated spectrum wash.", dims: "540×540 · 1080×1080", cls: "square", editable: true, downloads: { gif: "../export/gifs/square.gif", gif2x: "../export/gifs-2x/square.gif", mp4: "../export/mp4/square.mp4", mp42x: "../export/mp4-2x/square.mp4" } },
-    { id: "story", code: "9:16", name: "Social story", aspect: "story", desc: "Vertical story format with animated wash.", dims: "304×540 · 608×1080", cls: "tall", editable: true, downloads: { gif: "../export/gifs/story.gif", gif2x: "../export/gifs-2x/story.gif", mp4: "../export/mp4/story.mp4", mp42x: "../export/mp4-2x/story.mp4" } }
+  var DESIGNS = [
+    Object.assign({ id: "forward", label: "Forward Pass", code: "M", aspect: "Letter", group: "Motion",
+      blurb: "Network nodes and edges firing in sequence.", render: boardForwardPass, files: letterFiles("forward") }, BASE_LETTER),
+    Object.assign({ id: "clean", label: "Field Letter", code: "A", aspect: "Letter", group: "Print",
+      blurb: "Clean signage — the canonical printed poster.", render: boardSignage, files: null }, BASE_LETTER),
+    Object.assign({ id: "mosh", label: "Dropped Keyframe", code: "D", aspect: "Letter", group: "Motion",
+      blurb: "Glitch slices over a datamosh wash.", render: boardDroppedKeyframe, files: letterFiles("mosh") }, BASE_LETTER),
+    { id: "square", label: "Social Square", code: "IG", aspect: "1:1", group: "Social",
+      blurb: "Instagram square with animated spectrum wash.", render: boardSquare,
+      w: 1080, h: 1080, webW: 540, webH: 540, x2W: 1080, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110,
+      files: { gif: "../export/gifs/square.gif", gif2x: "../export/gifs-2x/square.gif", mp4: "../export/mp4/square.mp4", mp42x: "../export/mp4-2x/square.mp4",
+        sizes: { gif: "540×540", gif2x: "1080×1080", mp4: "540×540", mp42x: "1080×1080" } } },
+    { id: "story", label: "Social Story", code: "9:16", aspect: "9:16", group: "Social",
+      blurb: "Vertical story format with animated wash.", render: boardStory,
+      w: 1080, h: 1920, webW: 304, webH: 540, x2W: 608, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110,
+      files: { gif: "../export/gifs/story.gif", gif2x: "../export/gifs-2x/story.gif", mp4: "../export/mp4/story.mp4", mp42x: "../export/mp4-2x/story.mp4",
+        sizes: { gif: "304×540", gif2x: "608×1080", mp4: "304×540", mp42x: "608×1080" } } }
   ];
 
-  var GIF_TEMPLATES = [
-    { id: "clean", label: "Field Letter", code: "A", aspect: "letter", editable: true, w: 850, h: 1100, webW: 417, webH: 540, x2W: 834, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110, render: boardSignage },
-    { id: "mosh", label: "Dropped Keyframe", code: "D", aspect: "letter", editable: true, w: 850, h: 1100, webW: 417, webH: 540, x2W: 834, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110, render: boardDroppedKeyframe },
-    { id: "forward", label: "Forward Pass", code: "M", aspect: "letter", editable: true, w: 850, h: 1100, webW: 417, webH: 540, x2W: 834, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110, render: boardForwardPass },
-    { id: "terminal", label: "Terminal", code: "K", aspect: "letter", editable: true, w: 850, h: 1100, webW: 417, webH: 540, x2W: 834, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110, render: boardTerminal },
-    { id: "zine", label: "Zine Chaos", code: "L", aspect: "letter", editable: true, w: 850, h: 1100, webW: 417, webH: 540, x2W: 834, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110, render: boardZine },
-    { id: "token", label: "Token Reveal", code: "T", aspect: "letter", editable: true, w: 850, h: 1100, webW: 417, webH: 540, x2W: 834, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110, render: boardTokenReveal },
-    { id: "square", label: "Social Square", code: "IG", aspect: "square", editable: true, w: 1080, h: 1080, webW: 540, webH: 540, x2W: 1080, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110, render: boardSquare },
-    { id: "story", label: "Social Story", code: "9:16", aspect: "story", editable: true, w: 1080, h: 1920, webW: 304, webH: 540, x2W: 608, x2H: 1080, shortFrames: 8, standardFrames: 14, delayMs: 110, render: boardStory }
-  ];
+  function designById(id) {
+    for (var i = 0; i < DESIGNS.length; i++) if (DESIGNS[i].id === id) return DESIGNS[i];
+    return DESIGNS[0];
+  }
 
-  var currentTemplateId = "forward";
+  /* ---- studio state ---- */
+  var DEFAULTS = { tone: "paper", voice: "signage", energy: "bright", lead: "tri", subline: "camp", world: "spectrum", motion: "on" };
+  var tw = Object.assign({}, DEFAULTS);
+  var currentDesignId = "forward";
+  var genState = { size: "web", length: "standard", name: "learning-machines", open: false };
+  var busy = false;
+
+  function isDefaultStyle() {
+    return Object.keys(DEFAULTS).every(function (k) { return tw[k] === DEFAULTS[k]; });
+  }
 
   function fileStem(s) {
-    return String(s || "learning-machines")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "") || "learning-machines";
+    return String(s || "learning-machines").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "learning-machines";
   }
 
-  function renderExportCards() {
-    var grid = document.getElementById("animated-export-grid");
-    if (!grid) return;
-    grid.innerHTML = "";
-    ANIMATED_EXPORTS.forEach(function (item) {
-      var card = document.createElement("article");
-      card.className = "anim-card" + (item.cls ? " " + item.cls : "");
-      card.innerHTML =
-        '<div class="anim-preview"><img loading="lazy" src="' + item.downloads.gif + '" alt="' + item.name + ' animated poster preview"></div>'
-        + '<div class="anim-body">'
-        + '<h3 class="anim-title"><span class="anim-code">' + item.code + '</span><span>' + item.name + '</span></h3>'
-        + '<p class="anim-desc">' + item.desc + '</p>'
-        + '<p class="anim-meta">' + item.dims + '</p>'
-        + '<div class="download-row">'
-        + '<a download href="' + item.downloads.gif + '">GIF</a>'
-        + '<a download href="' + item.downloads.gif2x + '">GIF 2x</a>'
-        + '<a download href="' + item.downloads.mp4 + '">MP4</a>'
-        + '<a download href="' + item.downloads.mp42x + '">MP4 2x</a>'
-        + "</div></div>";
-      grid.appendChild(card);
-    });
-  }
-
-  function templateById(id) {
-    for (var i = 0; i < GIF_TEMPLATES.length; i++) {
-      if (GIF_TEMPLATES[i].id === id) return GIF_TEMPLATES[i];
-    }
-    return GIF_TEMPLATES[0];
-  }
-
-  function selectedTemplate() {
-    var sel = document.getElementById("gif-design");
-    return templateById(sel && sel.value ? sel.value : currentTemplateId);
-  }
-
-  function outputSizeFor(template) {
-    var size = document.getElementById("gif-size").value;
-    if (size === "x2") return { key: "2x", w: template.x2W, h: template.x2H };
-    return { key: "web", w: template.webW, h: template.webH };
-  }
-
-  function frameSpec(template) {
-    template = template || selectedTemplate();
-    var length = document.getElementById("gif-length").value;
-    if (length === "short") return { frames: template.shortFrames, delay: template.delayMs + 10 };
-    return { frames: template.standardFrames, delay: template.delayMs };
-  }
-
-  function fillMakerSelects() {
-    var sel = document.getElementById("gif-design");
-    if (sel) {
-      sel.innerHTML = "";
-      GIF_TEMPLATES.forEach(function (template) {
-        var option = document.createElement("option");
-        option.value = template.id;
-        option.textContent = template.label;
-        sel.appendChild(option);
-      });
-      sel.value = currentTemplateId;
-    }
-    renderTemplateRail();
-  }
-
-  function renderTemplateRail() {
-    var rail = document.getElementById("template-rail");
-    if (!rail) return;
-    rail.innerHTML = "";
-    GIF_TEMPLATES.forEach(function (template) {
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "template-chip" + (template.id === currentTemplateId ? " on" : "");
-      btn.dataset.template = template.id;
-      btn.innerHTML = '<span>' + template.code + '</span><b>' + template.label + '</b><small>' + template.aspect + "</small>";
-      rail.appendChild(btn);
-    });
-  }
-
+  /* ---- preview fitting ---- */
   function fitBoards() {
     document.querySelectorAll(".stage").forEach(function (st) {
       var w = st.clientWidth;
+      if (!w) return;
       var scale = w / Number(st.dataset.w);
       st.style.height = Number(st.dataset.h) * scale + "px";
-      st.querySelector(".art").style.transform = "scale(" + scale + ")";
+      var art = st.querySelector(".art");
+      if (art) art.style.transform = "scale(" + scale + ")";
     });
   }
   window.addEventListener("resize", fitBoards);
 
-  /* ---- state + controls ---- */
-  var tw = { tone: "paper", voice: "signage", energy: "bright", lead: "tri", subline: "camp", world: "spectrum", motion: "on" };
-
+  /* ---- deterministic frame + state ---- */
   function frameProgress(frameIndex, frameCount) {
     if (frameIndex === null || frameIndex === undefined || !frameCount) return 0;
     return frameIndex / Math.max(1, frameCount - 1);
@@ -573,18 +349,6 @@
     p.querySelectorAll(".forward-node, .forward-edge").forEach(function (el) {
       el.classList.toggle("is-hot", Number(el.dataset.step) <= activeStep);
     });
-    p.querySelectorAll(".cursor").forEach(function (cursor) {
-      cursor.style.opacity = Math.floor(progress * 10) % 2 ? "0" : "1";
-    });
-    var words = Array.prototype.slice.call(p.querySelectorAll(".token-reveal-board .word"));
-    if (words.length) {
-      var visible = Math.max(1, Math.ceil(progress * words.length));
-      words.forEach(function (word, i) {
-        var on = i < visible;
-        word.style.opacity = on ? "1" : "0.12";
-        word.style.transform = on ? "translateY(0)" : "translateY(5px)";
-      });
-    }
   }
 
   function applyPosterState(p, state, frameIndex, frameCount, deterministic) {
@@ -619,42 +383,137 @@
     if (deterministic) applyDeterministicFrame(p, frameIndex || 0, frameCount || 1);
   }
 
-  function renderTemplateInto(target, template, frameIndex, frameCount, deterministic) {
-    target.style.width = template.w + "px";
-    target.style.height = template.h + "px";
-    target.innerHTML = template.render();
+  function renderTemplateInto(target, design, frameIndex, frameCount, deterministic) {
+    target.style.width = design.w + "px";
+    target.style.height = design.h + "px";
+    target.innerHTML = design.render();
     var poster = target.querySelector(".poster");
     if (poster) applyPosterState(poster, tw, frameIndex, frameCount, deterministic);
     return poster;
   }
 
-  function renderPrimaryPreview() {
+  /* ---- design rail ---- */
+  function renderRail() {
+    var rail = document.getElementById("template-rail");
+    if (!rail) return;
+    rail.innerHTML = "";
+    DESIGNS.forEach(function (d) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "template-chip" + (d.id === currentDesignId ? " on" : "");
+      btn.dataset.design = d.id;
+      btn.innerHTML = '<span class="tc-code">' + d.code + '</span>'
+        + '<b>' + d.label + '</b>'
+        + '<small>' + d.group + ' · ' + d.aspect + '</small>';
+      rail.appendChild(btn);
+    });
+  }
+
+  /* ---- live preview ---- */
+  function renderPreview() {
     var art = document.getElementById("poster-preview-art");
     var stage = document.getElementById("poster-preview-stage");
     if (!art || !stage) return;
-    var template = templateById(currentTemplateId);
-    var out = outputSizeFor(template);
-    stage.dataset.w = template.w;
-    stage.dataset.h = template.h;
-    document.getElementById("poster-preview-label").textContent = template.label;
-    document.getElementById("poster-preview-size").textContent = out.w + "×" + out.h;
-    renderTemplateInto(art, template, null, null, false);
-  }
-
-  function renderMakerPreview() {
-    var art = document.getElementById("gif-preview-art");
-    var stage = document.getElementById("gif-preview-stage");
-    if (!art || !stage) return;
-    var template = selectedTemplate();
-    var out = outputSizeFor(template);
-    stage.dataset.w = template.w;
-    stage.dataset.h = template.h;
-    document.getElementById("gif-preview-label").textContent = template.label;
-    document.getElementById("gif-preview-size").textContent = out.w + "×" + out.h;
-    renderTemplateInto(art, template, 0, frameSpec(template).frames, true);
+    var d = designById(currentDesignId);
+    stage.dataset.w = d.w;
+    stage.dataset.h = d.h;
+    var lab = document.getElementById("poster-preview-label");
+    var sz = document.getElementById("poster-preview-size");
+    if (lab) lab.textContent = d.label;
+    if (sz) sz.textContent = d.webW + "×" + d.webH;
+    renderTemplateInto(art, d, null, null, false);
     fitBoards();
   }
 
+  /* ---- download panel ---- */
+  function generateMarkup(d) {
+    return '<div class="gen-controls">'
+      + '<div class="gen-row">'
+      + '<label class="gen-field"><span>Size</span>'
+      + '<select id="gif-size"><option value="web"' + (genState.size === "web" ? " selected" : "") + '>Web — ' + d.webW + '×' + d.webH + '</option>'
+      + '<option value="x2"' + (genState.size === "x2" ? " selected" : "") + '>2× — ' + d.x2W + '×' + d.x2H + '</option></select></label>'
+      + '<label class="gen-field"><span>Length</span>'
+      + '<select id="gif-length"><option value="short"' + (genState.length === "short" ? " selected" : "") + '>Short — 8f</option>'
+      + '<option value="standard"' + (genState.length === "standard" ? " selected" : "") + '>Standard — 14f</option></select></label>'
+      + '</div>'
+      + '<label class="gen-field"><span>File name</span><input id="gif-name" type="text" autocomplete="off" value="' + genState.name + '"></label>'
+      + '<button class="btn btn-primary btn-sm" type="button" id="gif-generate">Generate GIF</button>'
+      + '<p class="gen-status" id="gif-status" role="status" aria-live="polite">In-browser · no upload · downloads locally.</p>'
+      + '</div>';
+  }
+
+  function downloadGrid(d) {
+    var f = d.files, s = f.sizes;
+    return '<div class="dl-grid">'
+      + '<a class="dl-btn" download href="' + f.gif + '">GIF<small>' + s.gif + '</small></a>'
+      + '<a class="dl-btn" download href="' + f.gif2x + '">GIF 2×<small>' + s.gif2x + '</small></a>'
+      + '<a class="dl-btn" download href="' + f.mp4 + '">MP4<small>' + s.mp4 + '</small></a>'
+      + '<a class="dl-btn" download href="' + f.mp42x + '">MP4 2×<small>' + s.mp42x + '</small></a>'
+      + '</div>';
+  }
+
+  function renderDownload() {
+    var host = document.getElementById("download-body");
+    if (!host || busy) return;
+    var d = designById(currentDesignId);
+    var html = "";
+
+    if (!d.files) {
+      /* generate-only design */
+      html = '<p class="dl-note">No pre-rendered file for this design — generate a GIF of the live preview.</p>'
+        + generateMarkup(d);
+    } else if (isDefaultStyle()) {
+      /* finished files match the current (default) look */
+      html = '<p class="dl-note"><b>Finished exports.</b> Ready-made files for this design — GIF &amp; MP4, web and 2× tiers.</p>'
+        + downloadGrid(d);
+      if (genState.open) {
+        html += '<div class="gen-wrap">' + generateMarkup(d) + '</div>';
+        html += '<button class="dl-toggle" type="button" id="gen-toggle" data-open="1">Hide custom GIF</button>';
+      } else {
+        html += '<button class="dl-toggle" type="button" id="gen-toggle" data-open="0">Make a custom GIF →</button>';
+      }
+    } else {
+      /* tuned look — finished files no longer match */
+      html = '<p class="dl-note dl-warn"><b>Tuned look.</b> The finished files match the default style, not your changes. Generate to capture this look — or <a href="#" id="reset-style">reset the style</a> to grab the ready-made files.</p>'
+        + generateMarkup(d);
+    }
+
+    host.innerHTML = html;
+    bindDownload();
+  }
+
+  function bindDownload() {
+    var host = document.getElementById("download-body");
+    if (!host) return;
+    var sizeSel = host.querySelector("#gif-size");
+    if (sizeSel) sizeSel.addEventListener("change", function () { genState.size = sizeSel.value; });
+    var lenSel = host.querySelector("#gif-length");
+    if (lenSel) lenSel.addEventListener("change", function () { genState.length = lenSel.value; });
+    var nameInput = host.querySelector("#gif-name");
+    if (nameInput) nameInput.addEventListener("input", function () { genState.name = nameInput.value; });
+    var gen = host.querySelector("#gif-generate");
+    if (gen) gen.addEventListener("click", generateGif);
+    var toggle = host.querySelector("#gen-toggle");
+    if (toggle) toggle.addEventListener("click", function () { genState.open = toggle.dataset.open !== "1"; renderDownload(); });
+    var reset = host.querySelector("#reset-style");
+    if (reset) reset.addEventListener("click", function (e) { e.preventDefault(); resetStyle(); });
+  }
+
+  function resetStyle() {
+    tw = Object.assign({}, DEFAULTS);
+    syncControlsUI();
+    render();
+  }
+
+  /* ---- GIF generation ---- */
+  function outputSizeFor(d) {
+    if (genState.size === "x2") return { key: "2x", w: d.x2W, h: d.x2H };
+    return { key: "web", w: d.webW, h: d.webH };
+  }
+  function frameSpec(d) {
+    if (genState.length === "short") return { frames: d.shortFrames, delay: d.delayMs + 10 };
+    return { frames: d.standardFrames, delay: d.delayMs };
+  }
   function setGifStatus(text) {
     var el = document.getElementById("gif-status");
     if (el) el.textContent = text;
@@ -666,9 +525,7 @@
     var dst = src.cloneNode(false);
     var cs = getComputedStyle(src);
     var txt = "";
-    for (var i = 0; i < cs.length; i++) {
-      txt += cs[i] + ":" + cs.getPropertyValue(cs[i]) + ";";
-    }
+    for (var i = 0; i < cs.length; i++) txt += cs[i] + ":" + cs.getPropertyValue(cs[i]) + ";";
     dst.setAttribute("style", txt + "animation:none!important;transition:none!important;");
     for (var c = src.firstChild; c; c = c.nextSibling) dst.appendChild(cloneStyled(c));
     return dst;
@@ -684,17 +541,14 @@
         var img = new Image();
         img.onload = function () {
           var canvas = document.createElement("canvas");
-          canvas.width = outW;
-          canvas.height = outH;
+          canvas.width = outW; canvas.height = outH;
           var ctx = canvas.getContext("2d", { willReadFrequently: true });
           ctx.drawImage(img, 0, 0, outW, outH);
           resolve(ctx.getImageData(0, 0, outW, outH).data);
         };
         img.onerror = function () { reject(new Error("Could not rasterize poster frame.")); };
         img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
-      } catch (err) {
-        reject(err);
-      }
+      } catch (err) { reject(err); }
     });
   }
 
@@ -710,30 +564,27 @@
   }
 
   async function generateGif() {
-    if (!window.encodeGIF) {
-      setGifStatus("Error: GIF encoder did not load.");
-      return;
-    }
+    if (!window.encodeGIF) { setGifStatus("Error: GIF encoder did not load."); return; }
     var btn = document.getElementById("gif-generate");
-    var template = selectedTemplate();
-    var out = outputSizeFor(template);
-    var spec = frameSpec(template);
-    var baseName = fileStem(document.getElementById("gif-name").value);
-    var filename = baseName + "-" + template.id + "-" + out.key + ".gif";
+    var d = designById(currentDesignId);
+    var out = outputSizeFor(d);
+    var spec = frameSpec(d);
+    var filename = fileStem(genState.name) + "-" + d.id + "-" + out.key + ".gif";
     var bin = document.getElementById("gif-capture-bin");
     var art = document.createElement("div");
     art.className = "capture-art";
     bin.innerHTML = "";
     bin.appendChild(art);
-    btn.disabled = true;
+    busy = true;
+    if (btn) btn.disabled = true;
     try {
       if (document.fonts && document.fonts.ready) await document.fonts.ready;
       var frames = [];
       for (var i = 0; i < spec.frames; i++) {
         setGifStatus("Capturing frame " + (i + 1) + " of " + spec.frames + "…");
-        var poster = renderTemplateInto(art, template, i, spec.frames, true);
+        var poster = renderTemplateInto(art, d, i, spec.frames, true);
         await new Promise(function (resolve) { requestAnimationFrame(function () { requestAnimationFrame(resolve); }); });
-        var rgba = await rasterizePoster(poster, template.w, template.h, out.w, out.h);
+        var rgba = await rasterizePoster(poster, d.w, d.h, out.w, out.h);
         frames.push({ rgba: rgba });
       }
       setGifStatus("Encoding GIF…");
@@ -745,65 +596,85 @@
       console.error(err);
       setGifStatus("Error: " + (err && err.message ? err.message : "GIF generation failed."));
     } finally {
-      btn.disabled = false;
+      if (btn) btn.disabled = false;
       bin.innerHTML = "";
+      busy = false;
     }
   }
 
+  /* ---- controls UI sync ---- */
+  function syncControlsUI() {
+    document.querySelectorAll("#controls .seg, .adv-controls .seg").forEach(function (seg) {
+      var k = seg.dataset.k;
+      seg.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b.dataset.v === tw[k]); });
+    });
+    document.querySelectorAll("#controls select[data-k], .adv-controls select[data-k]").forEach(function (sel) {
+      sel.value = tw[sel.dataset.k];
+    });
+  }
+
+  /* ---- master render ---- */
   function render() {
-    document.querySelectorAll(".poster").forEach(function (p) {
-      if (p.closest(".capture-bin")) return;
-      applyPosterState(p, tw, null, null, false);
-    });
-    renderPrimaryPreview();
-    renderMakerPreview();
-    renderTemplateRail();
+    renderRail();
+    renderPreview();
+    renderDownload();
   }
 
-  document.getElementById("controls").addEventListener("click", function (e) {
-    var btn = e.target.closest("button[data-v]");
-    if (!btn) { return; }
-    var seg = btn.closest(".seg");
-    tw[seg.dataset.k] = btn.dataset.v;
-    seg.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b === btn); });
-    render();
-  });
-  document.querySelectorAll("#controls select").forEach(function (sel) {
-    sel.addEventListener("change", function () { tw[sel.dataset.k] = sel.value; render(); });
-  });
+  /* ---- wiring ---- */
+  function wireControls() {
+    document.querySelectorAll("#controls, .adv-controls").forEach(function (group) {
+      group.addEventListener("click", function (e) {
+        var btn = e.target.closest("button[data-v]");
+        if (!btn) return;
+        var seg = btn.closest(".seg");
+        tw[seg.dataset.k] = btn.dataset.v;
+        seg.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b === btn); });
+        render();
+      });
+      group.querySelectorAll("select[data-k]").forEach(function (sel) {
+        sel.addEventListener("change", function () { tw[sel.dataset.k] = sel.value; render(); });
+      });
+    });
 
-  var rail = document.getElementById("template-rail");
-  if (rail) {
-    rail.addEventListener("click", function (e) {
-      var btn = e.target.closest("button[data-template]");
+    var rail = document.getElementById("template-rail");
+    if (rail) rail.addEventListener("click", function (e) {
+      var btn = e.target.closest("button[data-design]");
       if (!btn) return;
-      currentTemplateId = btn.dataset.template;
-      var sel = document.getElementById("gif-design");
-      if (sel) sel.value = currentTemplateId;
+      currentDesignId = btn.dataset.design;
+      genState.open = false;
       render();
+    });
+
+    /* layout switcher */
+    var ls = document.getElementById("studio-layouts");
+    var studio = document.getElementById("studio");
+    if (ls && studio) ls.addEventListener("click", function (e) {
+      var btn = e.target.closest("button[data-layout]");
+      if (!btn) return;
+      studio.dataset.layout = btn.dataset.layout;
+      ls.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b === btn); });
+      try { localStorage.setItem("lm-poster-layout", btn.dataset.layout); } catch (err) {}
+      requestAnimationFrame(fitBoards);
     });
   }
 
-  ["gif-design", "gif-size", "gif-length"].forEach(function (id) {
-    var el = document.getElementById(id);
-    if (el) el.addEventListener("change", function () {
-      if (id === "gif-design") currentTemplateId = el.value;
-      render();
-    });
-  });
-  var generateBtn = document.getElementById("gif-generate");
-  if (generateBtn) generateBtn.addEventListener("click", generateGif);
+  function initLayout() {
+    var studio = document.getElementById("studio");
+    var ls = document.getElementById("studio-layouts");
+    if (!studio) return;
+    var saved = "split";
+    try { saved = localStorage.getItem("lm-poster-layout") || "split"; } catch (e) {}
+    studio.dataset.layout = saved;
+    if (ls) ls.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b.dataset.layout === saved); });
+  }
 
-  renderExportCards();
-  fillMakerSelects();
+  /* ---- boot ---- */
+  initLayout();
+  syncControlsUI();
+  wireControls();
   render();
   fitBoards();
   window.addEventListener("load", fitBoards);
-  window.LMCampPoster = {
-    renderPrimaryPreview: renderPrimaryPreview,
-    renderMakerPreview: renderMakerPreview,
-    generateGif: generateGif,
-    exports: ANIMATED_EXPORTS,
-    templates: GIF_TEMPLATES
-  };
+
+  window.LMCampPoster = { render: render, generateGif: generateGif, designs: DESIGNS };
 })();
