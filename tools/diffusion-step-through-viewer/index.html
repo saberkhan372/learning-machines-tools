@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../../assets/field.css">
   <link rel="stylesheet" href="../../assets/field-tool.css">
   <script src="../../assets/field-theme.js"></script>
+  <script src="../../assets/lm-media.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -255,6 +256,9 @@ h1 { color: var(--ink); }
 <div class="slider-ends">
   <span>Pure noise</span>
   <span>Final image</span>
+</div>
+<div class="controls-row">
+  <button class="step-btn" id="save-img-btn" type="button" style="width:auto;padding:0 14px;" title="Save this step as a PNG you keep">Save image</button>
 </div>
 
 <div class="prompt-bar" id="prompt-bar">
@@ -778,6 +782,22 @@ selectSeq(0);
       failed.map(r => r.name + ': ' + r.msg).join(' | ');
     el.style.color = '#b91c1c';
   }
+})();
+
+/* Save the current denoising step as a PNG (capture stays on the device). */
+(function () {
+  var btn = document.getElementById("save-img-btn");
+  if (!btn || !window.LMMedia) return;
+  btn.addEventListener("click", function () {
+    var cv = document.getElementById("cv");
+    var slider = document.getElementById("step-slider");
+    var stepNo = slider ? String(slider.value).padStart(2, "0") : "00";
+    window.LMMedia.capture(cv, "diffusion-step-" + stepNo + ".png", { tool: "diffusion-step-through-viewer", step: stepNo }).then(function (ok) {
+      var prev = btn.textContent;
+      btn.textContent = ok ? "Saved" : "Save failed";
+      setTimeout(function () { btn.textContent = prev; }, 1500);
+    });
+  });
 })();
 </script>
   <script src="../../assets/analytics.js"></script>

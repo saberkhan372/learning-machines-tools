@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../../assets/field.css">
   <link rel="stylesheet" href="../../assets/field-tool.css">
   <script src="../../assets/field-theme.js"></script>
+  <script src="../../assets/lm-media.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -621,6 +622,39 @@ IMAGES.forEach((img, i) => {
   b.onclick = () => selectImage(i);
   picker.appendChild(b);
 });
+
+// "Your image" — read locally in the browser, never uploaded.
+if (window.LMMedia) {
+  const upWrap = document.createElement('label');
+  upWrap.className = 'img-pill';
+  upWrap.style.cursor = 'pointer';
+  upWrap.textContent = 'Your image';
+  upWrap.title = 'Loaded in your browser only — never uploaded';
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = 'image/*';
+  fileInput.style.display = 'none';
+  upWrap.appendChild(fileInput);
+  picker.appendChild(upWrap);
+  window.LMMedia.wireImport({
+    input: fileInput,
+    onImage: function (item) {
+      const im = new Image();
+      im.onload = function () {
+        currentImageIdx = -1;
+        document.querySelectorAll('.img-pill').forEach(b => b.classList.remove('active'));
+        upWrap.classList.add('active');
+        srcCtx.clearRect(0, 0, SRC_W, SRC_H);
+        const scale = Math.max(SRC_W / im.width, SRC_H / im.height);
+        const w = im.width * scale, h = im.height * scale;
+        srcCtx.drawImage(im, (SRC_W - w) / 2, (SRC_H - h) / 2, w, h);
+        URL.revokeObjectURL(item.url);
+        render();
+      };
+      im.src = item.url;
+    }
+  });
+}
 
 // Mode buttons
 document.querySelectorAll('.mode-pill').forEach(b => {

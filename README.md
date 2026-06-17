@@ -120,14 +120,17 @@ homepage keeps only a short preview.
 - [Camp 2026 dates & logistics](pages/camp-2026.html) — Saturdays July 11/18/25, timezones, recordings, on-ramp
 - [Camp Poster 2026](pages/camp-poster.html) — print, riskier identity, and social poster boards with tweakable color worlds
 - [Session link sheet](pages/session-links.html) — one canonical link per tool, per session
+- [Field Notebook](pages/notebook.html) — local-only notes, saved pages, worksheet work, export/import
 - [Consent and recap protocol](docs/consent-recap-protocol.html)
 - [Field Manual redesign rollout plan](docs/FIELD-MANUAL-REDESIGN.html)
 - [Riskier Identity Page Audit](docs/riskier-identity-audit.html) — page-by-page visual QA and next-pass plan
 - [Advanced Concept Extensions](docs/advanced-concept-extensions.html) — audit response, shipped CFG tool, and proposed next-wave tools for positional encoding, prompt alignment, VAE, temporal attention, training, and optical flow
 - [Site Identity Switcher Plan](docs/site-identity-switcher-plan.html) — proposal to make the EE/FF/GG skins user-selectable site-wide
+- [Browser Power Layer](docs/browser-power-plan.html) — share-links, offline PWA shell, and local media/capture/projection powers that orbit the participant notebook
 - [Site Usability Audit](docs/site-usability-audit.html) — design, language, and structure audit with prioritized recommendations
 - [Site Audit Fixes Plan](docs/site-audit-fixes-plan.html) — structural follow-ups (skin-demo noindex, footer nav, facilitation rename, detail-page family, vocab anchors)
 - [Launch Readiness Plan](docs/launch-readiness-plan.html) — Tier 1/Tier 2 tool split for the Zoom sessions + July session-readiness checklist
+- [Browser Continuity Layer Plan](docs/browser-continuity-layer-plan.html) — Codex-owned local storage, Field Notebook, resume, export/import, and clear controls
 - [Project brief](docs/project-brief.html)
 - [Build roadmap](docs/build-roadmap.html)
 - [Pilot checklist](docs/pilot-checklist.html)

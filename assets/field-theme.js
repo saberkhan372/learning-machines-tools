@@ -68,6 +68,7 @@
     ensureLink("lm-identity-css", base + "field-identity.css");
     ensureLink("lm-identity-fonts", FONTS_HREF);
     ensureLink("lm-projection-css", base + "projection.css");
+    ensureScript("lm-state-js", base + "lm-state.js");
     ensureScript("lm-projection-js", base + "projection.js");
     moveIdentityAssetsLast();
     refreshMenu();
@@ -151,4 +152,44 @@
   });
 
   window.LMField = { apply: apply, get: get };
+
+  /* ── Offline shell (PWA) ─────────────────────────────────────────────
+     Progressive enhancement only: inject the manifest link so the kit is
+     installable, and register the service worker for offline use. Guarded to
+     secure contexts (https / localhost) — never file:, never required for any
+     tool. See sw.js and docs/browser-power-plan.md. */
+  function siteRoot() {
+    /* `base` ends in ".../assets/"; the site root is one level up. */
+    return new URL("../", new URL(base, location.href)).href;
+  }
+  function ensureManifest() {
+    try {
+      if (document.querySelector('link[rel="manifest"]')) { return; }
+      var link = document.createElement("link");
+      link.rel = "manifest";
+      link.href = siteRoot() + "manifest.webmanifest";
+      (document.head || document.documentElement).appendChild(link);
+      if (!document.querySelector('meta[name="theme-color"]')) {
+        var meta = document.createElement("meta");
+        meta.name = "theme-color";
+        meta.content = "#23201a";
+        (document.head || document.documentElement).appendChild(meta);
+      }
+    } catch (e) {}
+  }
+  function registerSW() {
+    if (!("serviceWorker" in navigator)) { return; }
+    var host = location.hostname;
+    var secure = location.protocol === "https:" || host === "localhost" || host === "127.0.0.1";
+    if (!secure) { return; } /* not file:, not plain http */
+    try {
+      navigator.serviceWorker.register(siteRoot() + "sw.js").catch(function () { /* offline is optional */ });
+    } catch (e) {}
+  }
+  ensureManifest();
+  if (document.readyState === "complete") {
+    registerSW();
+  } else {
+    window.addEventListener("load", registerSW);
+  }
 })();

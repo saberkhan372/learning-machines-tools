@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../../assets/field-tool.css">
   <link rel="stylesheet" href="../../assets/tool-lab.css">
   <script src="../../assets/field-theme.js"></script>
+  <script src="../../assets/lm-state-url.js"></script>
   <style>
     .ctrl-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
     .ctrl-val { font-family:var(--font-mono); font-size:1.2rem; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
@@ -140,6 +141,7 @@
           </label>
           <div class="button-row">
             <button class="tool-button secondary" type="button" id="copyBtn">Copy notes</button>
+            <button class="tool-button secondary" type="button" id="shareBtn" title="Copy a link that reopens this exact CFG setup">Copy share link</button>
             <button class="tool-button secondary" type="button" onclick="window.print()">Print / save</button>
           </div>
           <p class="small-muted" id="testStatus" aria-live="polite"></p>
@@ -306,6 +308,31 @@
 
   render();
   runSelfTest();
+
+  /* Share link — public CFG config only (the claim note stays private). */
+  function lmGetState(){ return { cfg: state.cfg, vec: !!state.vec }; }
+  function lmApplyState(s){
+    if(!s) return;
+    if(Number.isFinite(s.cfg)){ state.cfg=clamp(s.cfg,1,30); els.cfg.value=state.cfg; }
+    if(typeof s.vec==='boolean'){
+      state.vec=s.vec; els.vecWrap.hidden=!state.vec;
+      els.vecToggle.textContent=state.vec?'Hide vector math':'Inspect vector math';
+      els.vecToggle.classList.toggle('secondary',!state.vec);
+    }
+    render();
+  }
+  if(window.LMUrl){
+    const shareBtn=document.getElementById('shareBtn');
+    window.LMUrl.wire({
+      button: shareBtn, getState: lmGetState, applyState: lmApplyState,
+      onShare: function(ok){
+        if(!shareBtn) return;
+        const prev=shareBtn.textContent;
+        shareBtn.textContent=ok?'Link copied':'Copy failed';
+        setTimeout(function(){ shareBtn.textContent=prev; },1800);
+      }
+    });
+  }
   </script>
   <script src="../../assets/analytics.js"></script>
 </body>

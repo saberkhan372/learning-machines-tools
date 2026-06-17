@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../../assets/field.css">
   <link rel="stylesheet" href="../../assets/field-tool.css">
   <script src="../../assets/field-theme.js"></script>
+  <script src="../../assets/lm-state-url.js"></script>
 <style>
   :root {
     --panel: var(--surface);
@@ -654,6 +655,7 @@
       <button class="btn btn-dark" id="btnAuto">Auto Run</button>
       <button class="btn btn-ghost" id="btnReset">Reset</button>
       <button class="btn btn-ghost" id="btnSeed">New Roll</button>
+      <button class="btn btn-ghost" id="btnShare" title="Copy a link that reopens this exact setup">Copy share link</button>
     </div>
 
     <div class="stat-row">
@@ -1402,6 +1404,54 @@
   renderTokens();
   resetGen();
   runTests();
+
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  SHARE LINK  —  public config travels in the URL hash (no notes)
+  // ═══════════════════════════════════════════════════════════════════
+
+  function lmGetState() {
+    const activeTab = document.querySelector(".mode-tab.active");
+    return {
+      panel: activeTab ? activeTab.dataset.panel : "tokenize",
+      text: els.tokInput.value,
+      seqIdx: state.seqIdx,
+      temp: Number(els.tempSlider.value),
+      mode: state.mode,
+    };
+  }
+
+  function lmApplyState(s) {
+    if (!s) return;
+    if (typeof s.text === "string") els.tokInput.value = s.text;
+    if (Number.isFinite(s.seqIdx) && SCENARIOS[s.seqIdx]) {
+      state.seqIdx = s.seqIdx;
+      els.seqSelect.value = String(s.seqIdx);
+    }
+    if (Number.isFinite(s.temp)) els.tempSlider.value = String(s.temp);
+    if (s.mode === "greedy" || s.mode === "sample") state.mode = s.mode;
+    renderTokens();
+    resetGen();
+    if (s.panel === "generate") {
+      const tab = document.querySelector('.mode-tab[data-panel="generate"]');
+      if (tab) tab.click();
+    }
+  }
+
+  if (window.LMUrl) {
+    const btnShare = document.getElementById("btnShare");
+    window.LMUrl.wire({
+      button: btnShare,
+      getState: lmGetState,
+      applyState: lmApplyState,
+      onShare: function (ok) {
+        if (!btnShare) return;
+        const prev = btnShare.textContent;
+        btnShare.textContent = ok ? "Link copied" : "Copy failed — select & copy";
+        setTimeout(function () { btnShare.textContent = prev; }, 1800);
+      },
+    });
+  }
 
 })();
 </script>

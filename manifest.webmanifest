@@ -1,0 +1,16 @@
+{
+  "name": "Learning Machines: Text, Images, Video",
+  "short_name": "Learning Machines",
+  "description": "CC Fest creative AI / machine learning camp tools — single-file, browser-based, account-free.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f2ebdc",
+  "theme_color": "#23201a",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" },
+    { "src": "favicon.ico", "sizes": "48x48", "type": "image/x-icon" }
+  ]
+}

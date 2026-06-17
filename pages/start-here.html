@@ -49,6 +49,13 @@
     .unsure { border: 1px solid var(--ink); background: var(--surface); padding: 18px 22px; max-width: 76ch; }
     .unsure p { font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
     .unsure b { color: var(--ink); }
+    .resume-panel { display: none; border: 1px solid var(--line); background: var(--surface); padding: 16px 18px; margin-top: 20px; max-width: 76ch; }
+    .resume-panel.on { display: block; }
+    .resume-panel h2 { margin: 0 0 8px; font-size: 1rem; }
+    .resume-panel p { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.55; }
+    .resume-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .resume-link { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); color: var(--ink); text-decoration: none; padding: 8px 11px; font-family: var(--font-mono); font-size: 12px; }
+    .resume-link:hover { border-color: var(--accent); color: var(--accent); }
     .scope-line { border: 1px solid var(--rule); background: var(--surface); padding: 14px 18px; max-width: 72ch;
       font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
     .scope-line b { color: var(--ink); }
@@ -81,6 +88,11 @@
       <p class="sess-lede" style="max-width: 66ch;">The camp has a lot in it — that's on purpose. This page is the short way in. Pick the route that fits where you are <b>right now</b>; nothing locks you in, and most people end up wandering across more than one.</p>
       <div class="logi">
         <b>Recorded · async-friendly · global time zones welcome.</b> Sessions run three Saturdays, 9–11 am PT, and every one is recorded for registered participants. Can't make the live time, or in a hard time zone? The async route is a full path through camp, not a consolation — <a href="camp-2026.html">see times &amp; recordings →</a>
+      </div>
+      <div class="resume-panel" data-resume-panel>
+        <h2>Where you left off</h2>
+        <p data-resume-copy></p>
+        <div class="resume-links" data-resume-links></div>
       </div>
     </div>
   </header>
@@ -192,5 +204,43 @@
     </div>
   </footer>
   <script src="../assets/analytics.js"></script>
+  <script>
+  (function () {
+    function whenState(fn) {
+      if (window.LMState) fn();
+      else window.addEventListener("lmstate:ready", fn, { once: true });
+    }
+    function esc(str) {
+      return String(str || "").replace(/[&<>"']/g, function (ch) {
+        return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch];
+      });
+    }
+    whenState(function () {
+      var entries = window.LMState.entries();
+      var pages = Object.keys(entries.pages || {}).map(function (key) { return entries.pages[key]; }).filter(Boolean);
+      var later = pages.filter(function (page) { return page.bringBackLater; }).sort(function (a, b) {
+        return String(b.updatedAt || "").localeCompare(String(a.updatedAt || ""));
+      });
+      var last = window.LMState.get("meta", "lastVisited", null);
+      var panel = document.querySelector("[data-resume-panel]");
+      var copy = document.querySelector("[data-resume-copy]");
+      var links = document.querySelector("[data-resume-links]");
+      var items = [];
+      if (last && last.title && last.url && last.url.indexOf("/pages/start-here") === -1) {
+        items.push({ label: "Last opened: " + last.title, href: last.href || last.url });
+      }
+      later.slice(0, 2).forEach(function (page) {
+        items.push({ label: "Bring back: " + (page.title || page.url), href: page.href || page.url });
+      });
+      if (!items.length) return;
+      panel.classList.add("on");
+      copy.textContent = "This browser has local Notebook memory. Use it as orientation, not a checklist.";
+      items.push({ label: "Open Field Notebook", href: "notebook.html" });
+      links.innerHTML = items.map(function (item) {
+        return '<a class="resume-link" href="' + esc(item.href) + '">' + esc(item.label) + '</a>';
+      }).join("");
+    });
+  })();
+  </script>
 </body>
 </html>

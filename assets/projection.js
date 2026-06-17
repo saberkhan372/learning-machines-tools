@@ -87,12 +87,56 @@
     window.history.replaceState({}, "", url.toString());
   }
 
+  /* Wake Lock + Fullscreen — progressive enhancement for live projection.
+     Both are best-effort: feature-detected, failures swallowed, never required. */
+  var wakeLock = null;
+
+  function requestWakeLock() {
+    try {
+      if (!("wakeLock" in navigator)) return;
+      navigator.wakeLock.request("screen").then(function (sentinel) {
+        wakeLock = sentinel;
+      }).catch(function () { /* denied / unsupported — fine */ });
+    } catch (e) {}
+  }
+  function releaseWakeLock() {
+    try { if (wakeLock) { wakeLock.release(); wakeLock = null; } } catch (e) {}
+  }
+  /* Wake locks drop when the tab is hidden; re-acquire if still projecting. */
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && isOn() && !wakeLock) requestWakeLock();
+  });
+
+  function enterFullscreen() {
+    try {
+      var el = document.documentElement;
+      var req = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (req && !document.fullscreenElement && !document.webkitFullscreenElement) {
+        var p = req.call(el);
+        if (p && p.catch) p.catch(function () {});
+      }
+    } catch (e) {}
+  }
+  function exitFullscreen() {
+    try {
+      var exit = document.exitFullscreen || document.webkitExitFullscreen;
+      if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+        var p = exit.call(document);
+        if (p && p.catch) p.catch(function () {});
+      }
+    } catch (e) {}
+  }
+
   function setProjection(on, updateUrl) {
     if (on) {
       stampPage();
       html.setAttribute("data-projection", "on");
+      requestWakeLock();
+      enterFullscreen();
     } else {
       html.removeAttribute("data-projection");
+      releaseWakeLock();
+      exitFullscreen();
     }
     if (updateUrl !== false) setUrlState(on);
     syncButton();

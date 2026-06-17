@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="docs-field" data-no-notebook>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Field Notebook &mdash; Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-tool.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    .nb-lede { max-width: 70ch; color: var(--ink-soft); line-height: 1.6; margin-top: 10px; }
+    .nb-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; align-items: start; padding-bottom: 60px; }
+    .nb-panel { border: 1px solid var(--line); background: var(--surface); padding: 18px; }
+    .nb-panel h2 { margin: 0 0 10px; font-size: 1.05rem; }
+    .nb-panel p { color: var(--ink-soft); line-height: 1.55; font-size: 0.92rem; }
+    .nb-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .nb-btn, .nb-file-label {
+      appearance: none; border: 1px solid var(--line); background: transparent; color: var(--ink);
+      font-family: var(--font-mono); font-size: 0.76rem; padding: 8px 11px; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .nb-btn:hover, .nb-file-label:hover { border-color: var(--accent); color: var(--accent); }
+    .nb-danger { color: #b42318; }
+    .nb-danger:hover { border-color: #b42318; color: #b42318; }
+    .nb-file-label input { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
+    .nb-status { margin-top: 10px; color: var(--muted); font-family: var(--font-mono); font-size: 0.76rem; min-height: 1.4em; }
+    .nb-list { display: grid; gap: 12px; }
+    .nb-empty { color: var(--muted); border: 1px dashed var(--line); padding: 16px; background: var(--surface); }
+    .nb-card { border: 1px solid var(--line); background: var(--surface); padding: 15px 16px; }
+    .nb-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+    .nb-card h3 { margin: 0; font-size: 1rem; }
+    .nb-meta { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+    .nb-chiprow { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .nb-chip { border: 1px solid var(--line-soft); color: var(--muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .nb-card p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.5; }
+    .nb-kv { margin-top: 10px; display: grid; gap: 6px; }
+    .nb-kv div { display: grid; grid-template-columns: 150px 1fr; gap: 10px; border-top: 1px solid var(--line-soft); padding-top: 6px; font-size: 0.86rem; }
+    .nb-kv b { color: var(--muted); font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; overflow-wrap: anywhere; }
+    .nb-kv span { color: var(--ink-soft); overflow-wrap: anywhere; }
+    .nb-note { white-space: pre-wrap; }
+    .nb-artifact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 10px; }
+    .nb-artifact { border: 1px solid var(--line-soft); background: var(--surface-2); padding: 10px; display: grid; gap: 8px; }
+    .nb-artifact img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: var(--surface); border: 1px solid var(--line-soft); }
+    .nb-artifact a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+    .nb-artifact .nb-btn { justify-content: center; }
+    .nb-side { position: sticky; top: 82px; display: grid; gap: 14px; }
+    .nb-side .nb-panel { padding: 16px; }
+    @media (max-width: 900px) {
+      .nb-grid { grid-template-columns: 1fr; }
+      .nb-side { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="materials.html" class="hide-sm">Materials</a>
+        <a class="btn btn-sm" href="../index.html">Back home</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero" data-mod="cross">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="materials.html">Materials</a><span class="sep">/</span>
+        <span>Field Notebook</span>
+      </div>
+      <h1 class="sess-title" style="font-size:clamp(34px,5vw,58px);">Field Notebook</h1>
+      <p class="nb-lede">Your local continuity surface for Learning Machines. Notes and saved work live in this browser, on this device. Nothing is uploaded or synced.</p>
+    </div>
+  </header>
+
+  <main class="wrap nb-grid">
+    <section>
+      <div class="sec-rule"><h2 class="sec-no">§ A · Where you left off</h2><span class="sec-note">visited · saved · bring back later</span></div>
+      <div class="nb-list" data-pages></div>
+
+      <div class="sec-rule" style="margin-top:34px;"><h2 class="sec-no">§ B · Notes in this browser</h2><span class="sec-note">freeform notes attached to pages</span></div>
+      <div class="nb-list" data-notes></div>
+
+      <div class="sec-rule" style="margin-top:34px;"><h2 class="sec-no">§ C · Worksheet and tool work</h2><span class="sec-note">existing saved local work</span></div>
+      <div class="nb-list" data-legacy></div>
+
+      <div class="sec-rule" style="margin-top:34px;"><h2 class="sec-no">§ D · Captured artifacts</h2><span class="sec-note">images saved from browser tools</span></div>
+      <div class="nb-list" data-artifacts></div>
+    </section>
+
+    <aside class="nb-side" aria-label="Notebook actions">
+      <div class="nb-panel">
+        <h2>Export</h2>
+        <p>Download a readable Markdown summary or a JSON backup that can be restored in another browser profile.</p>
+        <div class="nb-actions">
+          <button class="nb-btn" type="button" data-export-md>Markdown</button>
+          <button class="nb-btn" type="button" data-export-json>JSON backup</button>
+        </div>
+      </div>
+      <div class="nb-panel">
+        <h2>Import</h2>
+        <p>Import a Learning Machines JSON backup. You can merge it with this browser or replace this browser's Notebook data.</p>
+        <div class="nb-actions">
+          <label class="nb-file-label">Choose JSON <input type="file" accept="application/json,.json" data-import-file></label>
+          <button class="nb-btn" type="button" data-import-merge disabled>Merge</button>
+          <button class="nb-btn nb-danger" type="button" data-import-replace disabled>Replace</button>
+        </div>
+        <p class="nb-status" data-import-status></p>
+      </div>
+      <div class="nb-panel">
+        <h2>Shared device</h2>
+        <p>If this is a classroom or shared computer, clear your work before you leave.</p>
+        <div class="nb-actions">
+          <button class="nb-btn nb-danger" type="button" data-clear-all>Clear everything on this device</button>
+        </div>
+        <p class="nb-status" data-status></p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:14px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <p class="colophon">Local-only notes and saved work · explicit export · no sync.</p>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var pendingImport = null;
+    function whenState(fn) {
+      if (window.LMState) fn();
+      else window.addEventListener("lmstate:ready", fn, { once: true });
+    }
+    function esc(str) {
+      return String(str || "").replace(/[&<>"']/g, function (ch) {
+        return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch];
+      });
+    }
+    function hasValue(value) {
+      if (value === true) return true;
+      if (typeof value === "string") return value.trim() !== "";
+      return value !== false && value !== null && value !== undefined && value !== "";
+    }
+    function displayValue(value) {
+      if (value === true) return "yes";
+      if (value === false) return "no";
+      if (typeof value === "object") return JSON.stringify(value);
+      return String(value || "");
+    }
+    function download(name, type, text) {
+      var blob = new Blob([text], { type: type });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 400);
+    }
+    function rootLink(path) {
+      return new URL("../" + path, window.location.href).href;
+    }
+    function card(title, meta, body, chips, href) {
+      var chipHtml = (chips || []).filter(Boolean).map(function (c) { return '<span class="nb-chip">' + esc(c) + '</span>'; }).join("");
+      return '<article class="nb-card">' +
+        '<div class="nb-card-head"><h3>' + (href ? '<a href="' + esc(href) + '">' + esc(title) + '</a>' : esc(title)) + '</h3><span class="nb-meta">' + esc(meta || "") + '</span></div>' +
+        (chipHtml ? '<div class="nb-chiprow">' + chipHtml + '</div>' : "") +
+        body +
+      '</article>';
+    }
+    var artifactUrls = [];
+    function releaseArtifactUrls() {
+      artifactUrls.forEach(function (url) { URL.revokeObjectURL(url); });
+      artifactUrls = [];
+    }
+    function renderArtifacts(items) {
+      var host = document.querySelector("[data-artifacts]");
+      if (!items || !items.length) {
+        host.innerHTML = '<div class="nb-empty">No captured artifacts yet. Use a capture button in tools like Diffusion or Metronome Frame-Scrubber.</div>';
+        return;
+      }
+      var cards = items.map(function (item) {
+        var body = "";
+        var download = "";
+        if (item.blob) {
+          var url = URL.createObjectURL(item.blob);
+          artifactUrls.push(url);
+          if (/^image\//.test(item.mime || item.blob.type || "")) {
+            body += '<div class="nb-artifact"><img alt="' + esc(item.title) + '" src="' + esc(url) + '">';
+          } else {
+            body += '<div class="nb-artifact">';
+          }
+          download = '<a href="' + esc(url) + '" download="' + esc(item.title || "artifact") + '">Download</a>';
+        } else {
+          body += '<div class="nb-artifact">';
+          download = '<span class="nb-meta">Blob unavailable in this browser.</span>';
+        }
+        body += '<p class="nb-meta">' + esc(item.mime || item.type || "artifact") + ' · ' + Math.round((item.size || 0) / 1024) + ' KB</p>';
+        body += '<div class="nb-actions">' + download + '<button class="nb-btn nb-danger" type="button" data-delete-artifact="' + esc(item.id) + '">Delete</button></div></div>';
+        return card(item.title || "Captured artifact", item.session || "", body, ["artifact", item.tool || item.type || ""], item.href);
+      }).join("");
+      host.innerHTML = cards;
+      host.querySelectorAll("[data-delete-artifact]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          if (!confirm("Delete this captured artifact from this browser?")) return;
+          window.LMState.deleteArtifact(btn.getAttribute("data-delete-artifact")).then(render);
+        });
+      });
+    }
+    function render() {
+      releaseArtifactUrls();
+      var entries = window.LMState.entries();
+      var pages = Object.keys(entries.pages || {}).map(function (k) { return entries.pages[k]; })
+        .filter(Boolean)
+        .sort(function (a, b) { return String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")); });
+      var notes = Object.keys(entries.notes || {}).map(function (k) { return entries.notes[k]; })
+        .filter(function (n) { return n && n.text && n.text.trim(); })
+        .sort(function (a, b) { return String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")); });
+      var legacy = entries.legacy || [];
+
+      document.querySelector("[data-pages]").innerHTML = pages.length ? pages.map(function (p) {
+        return card(p.title || p.url, p.session || "", '<p>' + esc(p.url || "") + '</p>', [
+          p.visited ? "visited" : "",
+          p.saved ? "saved" : "",
+          p.bringBackLater ? "bring back later" : ""
+        ], p.href || p.url);
+      }).join("") : '<div class="nb-empty">No visited or saved pages yet. Open a session or tool and the Notebook will remember where you were.</div>';
+
+      document.querySelector("[data-notes]").innerHTML = notes.length ? notes.map(function (n) {
+        return card(n.title || n.url, n.session || "", '<p class="nb-note">' + esc(n.text) + '</p>', ["note"], n.href || n.url);
+      }).join("") : '<div class="nb-empty">No notes yet. Use the Notebook button on any page to save a note in this browser.</div>';
+
+      document.querySelector("[data-legacy]").innerHTML = legacy.length ? legacy.map(function (item) {
+        var rows = Object.keys(item.data || {}).filter(function (key) { return hasValue(item.data[key]); }).slice(0, 12).map(function (key) {
+          return '<div><b>' + esc(key) + '</b><span>' + esc(displayValue(item.data[key])) + '</span></div>';
+        }).join("");
+        var more = Object.keys(item.data || {}).filter(function (key) { return hasValue(item.data[key]); }).length > 12 ? '<p class="nb-meta">Showing first 12 filled fields. Export Markdown for the full set.</p>' : "";
+        return card(item.title, item.session, '<div class="nb-kv">' + rows + '</div>' + more, [item.kind, item.filled + " fields"], rootLink(item.path));
+      }).join("") : '<div class="nb-empty">No worksheet or tool work has been saved in this browser yet.</div>';
+      if (window.LMState.listArtifacts) {
+        window.LMState.listArtifacts().then(renderArtifacts);
+      } else {
+        renderArtifacts([]);
+      }
+    }
+    function markdown() {
+      var entries = window.LMState.entries();
+      var lines = ["# Learning Machines Field Notebook", "", "_Exported " + new Date().toLocaleString() + "_", ""];
+      var pages = Object.keys(entries.pages || {}).map(function (k) { return entries.pages[k]; }).filter(Boolean);
+      if (pages.length) {
+        lines.push("## Where I left off");
+        pages.forEach(function (p) {
+          var flags = [];
+          if (p.visited) flags.push("visited");
+          if (p.saved) flags.push("saved");
+          if (p.bringBackLater) flags.push("bring back later");
+          lines.push("- **" + (p.title || p.url) + "** (" + flags.join(", ") + ") — " + (p.href || p.url));
+        });
+        lines.push("");
+      }
+      var notes = Object.keys(entries.notes || {}).map(function (k) { return entries.notes[k]; }).filter(function (n) { return n && n.text && n.text.trim(); });
+      if (notes.length) {
+        lines.push("## Notes");
+        notes.forEach(function (n) {
+          lines.push("### " + (n.title || n.url));
+          lines.push(n.text.trim());
+          lines.push("");
+        });
+      }
+      if (entries.legacy.length) {
+        lines.push("## Worksheet and tool work");
+        entries.legacy.forEach(function (item) {
+          lines.push("### " + item.title);
+          Object.keys(item.data || {}).forEach(function (key) {
+            if (hasValue(item.data[key])) lines.push("- **" + key + ":** " + displayValue(item.data[key]).replace(/\n+/g, " / "));
+          });
+          lines.push("");
+        });
+      }
+      if (entries.artifacts && entries.artifacts.length) {
+        lines.push("## Captured artifacts");
+        entries.artifacts.forEach(function (item) {
+          lines.push("- **" + (item.title || "Captured artifact") + "** — " + (item.mime || item.type || "artifact") + ", " + Math.round((item.size || 0) / 1024) + " KB" + (item.tool ? ", " + item.tool : ""));
+        });
+        lines.push("");
+      }
+      return lines.join("\n").trim() + "\n";
+    }
+    whenState(function () {
+      render();
+      document.querySelector("[data-export-md]").addEventListener("click", function () {
+        download("learning-machines-field-notebook.md", "text/markdown", markdown());
+      });
+      document.querySelector("[data-export-json]").addEventListener("click", function () {
+        download("learning-machines-field-notebook.json", "application/json", JSON.stringify(window.LMState.exportAll(), null, 2));
+      });
+      document.querySelector("[data-import-file]").addEventListener("change", function () {
+        var file = this.files && this.files[0];
+        if (!file) return;
+        file.text().then(function (text) {
+          try {
+            pendingImport = JSON.parse(text);
+            var preview = window.LMState.previewImport(pendingImport);
+            document.querySelector("[data-import-status]").textContent = "Ready: " + preview.scopedCount + " Notebook items and " + preview.legacyCount + " worksheet/tool backups from " + (preview.exportedAt || "unknown date") + ".";
+            document.querySelector("[data-import-merge]").disabled = false;
+            document.querySelector("[data-import-replace]").disabled = false;
+          } catch (err) {
+            pendingImport = null;
+            document.querySelector("[data-import-status]").textContent = err.message;
+          }
+        });
+      });
+      document.querySelector("[data-import-merge]").addEventListener("click", function () {
+        if (!pendingImport) return;
+        window.LMState.importAll(pendingImport, { mode: "merge" });
+        document.querySelector("[data-import-status]").textContent = "Imported and merged into this browser.";
+        render();
+      });
+      document.querySelector("[data-import-replace]").addEventListener("click", function () {
+        if (!pendingImport) return;
+        if (!confirm("Replace this browser's Notebook data with the imported backup? Export first if you need a copy.")) return;
+        window.LMState.importAll(pendingImport, { mode: "replace" });
+        document.querySelector("[data-import-status]").textContent = "Imported and replaced this browser's Notebook data.";
+        render();
+      });
+      document.querySelector("[data-clear-all]").addEventListener("click", function () {
+        if (!confirm("Clear all Notebook notes, page flags, and known worksheet/tool saved work on this device? Export first if you need a copy.")) return;
+        window.LMState.clearAll();
+        document.querySelector("[data-status]").textContent = "Cleared local Notebook and known worksheet/tool work on this device.";
+        render();
+      });
+    });
+  })();
+  </script>
+  <script src="../assets/analytics.js"></script>
+</body>
+</html>

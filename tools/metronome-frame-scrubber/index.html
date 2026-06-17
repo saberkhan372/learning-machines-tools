@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="../../assets/field-tool.css">
   <link rel="stylesheet" href="../../assets/tool-lab.css">
   <script src="../../assets/field-theme.js"></script>
+  <script src="../../assets/lm-state-url.js"></script>
+  <script src="../../assets/lm-media.js"></script>
   <style>
     .ctrl-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
     .ctrl-val { font-family:var(--font-mono); font-size:1.2rem; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
@@ -82,6 +84,8 @@
           <div>
             <button class="tool-button" type="button" id="onion" style="width:100%;">Onion-skin: ON</button>
             <p class="small-muted" id="onion-hint">Past frames ghost behind the current one — the animator's tracing sheets.</p>
+            <button class="tool-button secondary" type="button" id="shareBtn" style="width:100%;margin-top:10px;" title="Copy a link that reopens this exact window, frame, and onion-skin setting">Copy share link</button>
+            <button class="tool-button secondary" type="button" id="saveImgBtn" style="width:100%;margin-top:8px;" title="Save the current frame as a PNG you keep">Save frame</button>
           </div>
         </div>
       </aside>
@@ -210,6 +214,46 @@
     refresh(); });
   els.onion.textContent='Onion-skin: '+(state.onion?'ON':'OFF'); els.onion.classList.toggle('secondary',!state.onion);
   refresh();
+
+  /* Share link — public scrubber config travels in the URL hash. */
+  function lmGetState(){ return { win: state.win, frame: state.frame, onion: !!state.onion }; }
+  function lmApplyState(s){
+    if(!s) return;
+    if(Number.isFinite(s.win)){ state.win=clamp(s.win,1,24); els.win.value=state.win; }
+    if(Number.isFinite(s.frame)){ state.frame=clamp(s.frame,0,N-1); }
+    if(typeof s.onion==='boolean'){
+      state.onion=s.onion;
+      els.onion.textContent='Onion-skin: '+(state.onion?'ON':'OFF');
+      els.onion.classList.toggle('secondary',!state.onion);
+      els.onionHint.textContent=state.onion?'Past frames ghost behind the current one — the animator’s tracing sheets.':'Light-box off. Only the live frame is drawn — no reference to trace.';
+    }
+    refresh();
+  }
+  if(window.LMUrl){
+    const shareBtn=document.getElementById('shareBtn');
+    window.LMUrl.wire({
+      button: shareBtn, getState: lmGetState, applyState: lmApplyState,
+      onShare: function(ok){
+        if(!shareBtn) return;
+        const prev=shareBtn.textContent;
+        shareBtn.textContent=ok?'Link copied':'Copy failed';
+        setTimeout(function(){ shareBtn.textContent=prev; },1800);
+      }
+    });
+  }
+
+  /* Save the current frame as a PNG (capture stays on the device). */
+  if(window.LMMedia){
+    const saveBtn=document.getElementById('saveImgBtn');
+    if(saveBtn) saveBtn.addEventListener('click',function(){
+      const frameNo=String(state.frame+1).padStart(2,'0');
+      window.LMMedia.capture(stage,'metronome-frame-'+frameNo+'.png',{tool:'metronome-frame-scrubber',frame:frameNo,window:state.win}).then(function(ok){
+        const prev=saveBtn.textContent;
+        saveBtn.textContent=ok?'Saved':'Save failed';
+        setTimeout(function(){ saveBtn.textContent=prev; },1500);
+      });
+    });
+  }
   </script>
   <script src="../../assets/analytics.js"></script>
 </body>
