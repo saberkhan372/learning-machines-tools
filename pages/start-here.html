@@ -15,7 +15,8 @@
   <style>
     /* logistics strip — recordings + time zones, restated from Camp 2026 */
     .logi { border: 1px solid var(--ink); background: var(--surface); padding: 13px 18px; margin-top: 20px; max-width: 72ch;
-      font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.02em; color: var(--ink-soft); line-height: 1.6; }
+      font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.02em; color: var(--ink-soft); line-height: 1.6;
+      overflow-wrap: anywhere; }
     .logi b { color: var(--ink); }
     .logi a { color: var(--accent); }
 
@@ -33,8 +34,9 @@
     .route h3 { margin: 5px 0 0; font-size: 1.2rem; line-height: 1.2; }
     .route .r-fit { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; margin: 8px 0 4px; }
     .route .r-links { margin-top: 12px; border-top: 1px solid var(--rule); }
-    .route .r-link { display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    .route .r-link { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 12px;
       padding: 10px 0; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--ink); font-size: 14px; }
+    .route .r-link > span:first-child { min-width: 0; overflow-wrap: anywhere; }
     .route .r-link:hover { color: var(--accent); }
     .route .r-link.primary { font-weight: 600; }
     .route .r-link .tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;

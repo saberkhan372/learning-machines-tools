@@ -1,9 +1,9 @@
 ---
 layout: page
-title: Pre-Camp Site Support Plan
+title: Participant Support Plan
 ---
 
-# Pre-Camp Site Support Plan
+# Participant Support Plan
 
 Status: **largely implemented — 2026-06-16**
 Date: 2026-06-16 (revised)
@@ -29,9 +29,11 @@ Outstanding: only the post-launch GoatCounter *observation* itself (needs live
 traffic).
 
 This plan uses cohort-interest data to decide how the site should support
-people *before* camp begins. It is not a raw spreadsheet analysis and does not
-include individual names, emails, or identifiable response text. For the full
-data breakdown and themes, see
+everyone who lands on it interested in the camp — as they explore, orient, and
+decide whether and how to take part. (It applies before camp, but is not limited
+to that window.) It is not a raw spreadsheet analysis and does not include
+individual names, emails, or identifiable response text. For the full data
+breakdown and themes, see
 [Interest-Form Analysis & Site Support Plan](interest-form-site-support-analysis.md).
 
 The main recommendation is simple: keep the site rich, but give people a
@@ -212,8 +214,8 @@ behave — we don't train them from scratch."* This prevents expectation mismatc
 
 ## What Is Not Helpful Right Now
 
-- **More tools before camp.** The site already has 25 launch-ready tools. The
-  interest data is broad, but the pre-camp problem is orientation, not tool
+- **More tools.** The site already has 25 launch-ready tools. The
+  interest data is broad, but the problem to solve is orientation, not tool
   coverage.
 - **Required readings.** Readings are useful and explicitly requested, but should
   stay optional and *invited*, not mandatory. The site should not make cautious

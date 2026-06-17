@@ -12,7 +12,7 @@ workbook's two hidden helper sheets inflate a raw row count to ~1,000; only the
 `Form Responses 1` sheet holds real submissions).
 
 This document is the data-grounded companion to
-[Pre-Camp Site Support Plan](pre-camp-site-support-plan.md). That plan proposes a
+[Participant Support Plan](participant-support-plan.md). That plan proposes a
 single `Start Here` orientation page; this one shows the cohort evidence behind
 those recommendations and widens the scope to the rest of the site.
 
@@ -172,7 +172,7 @@ The site already matches the dominant signals; the gap is mostly
 | 6 | **Image-generation on-ramp** in `session-images.html` | 45% want image mechanics, but 21% have never used an image tool — open gently before going deep. | Low–Med | Medium |
 
 For full design of item #3 (route cards, universal prep checklist, acceptance
-criteria), see [Pre-Camp Site Support Plan](pre-camp-site-support-plan.md).
+criteria), see [Participant Support Plan](participant-support-plan.md).
 
 ### Implementation status (2026-06-16) — all six shipped
 
