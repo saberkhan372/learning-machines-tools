@@ -132,6 +132,7 @@ homepage keeps only a short preview.
 - [Launch Readiness Plan](docs/launch-readiness-plan.html) — Tier 1/Tier 2 tool split for the Zoom sessions + July session-readiness checklist
 - [Browser Continuity Layer Plan](docs/browser-continuity-layer-plan.html) — Codex-owned local storage, Field Notebook, resume, export/import, and clear controls
 - [Project brief](docs/project-brief.html)
+- [Enriched-Cohort Design Pass](docs/enriched-cohort-design-pass.html) — second design pass from the n=74 applicant data: positioning, contributor/adopter lane, creative-ethics and governance strands
 - [Build roadmap](docs/build-roadmap.html)
 - [Pilot checklist](docs/pilot-checklist.html)
 - [Pilot feedback form template](docs/pilot-feedback-form.html)
