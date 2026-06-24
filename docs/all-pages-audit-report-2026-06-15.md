@@ -136,7 +136,7 @@ links plus the injected `Project` control. Worksheets also have wide tables.
 | `pages/session-text.html` | 19px at 390; 143px at 768 |
 | `pages/session-images.html` | 19px at 390; 143px at 768 |
 | `tools/network-grounded-truth-sieve/index.html` | 40px at 390; 52px at 768 |
-| `pages/docs-session-4-facilitation.html` | 26px at 390; 27px at 768 |
+| `pages/docs-showcase-facilitation.html` | 26px at 390; 27px at 768 |
 | `pages/younger-learners.html` | 6px at 390; 36px at 768 |
 | `pages/no-ai-pathway-facilitation.html` | 6px at 390; 3px at 768 |
 | `pages/tool-terminal.html` | 13px at 390 |
@@ -228,7 +228,7 @@ Fix Pass 2 added Jekyll front matter to:
 - `docs/session-1-text.md`
 - `docs/session-2-images.md`
 - `docs/session-3-video.md`
-- `docs/session-4-showcase.md`
+- `docs/showcase-script.md`
 
 Static verification now reports zero Markdown front matter gaps.
 

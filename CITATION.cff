@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use, adapt, or build on these materials, please cite them as below."
+title: "Learning Machines: Text, Images, Video"
+abstract: >-
+  Browser-based tools and curriculum for investigating how generative AI
+  systems create text, images, and video. A CC Fest creative AI / machine
+  learning camp for educators, artists, students, and curious learners.
+type: software
+authors:
+  - family-names: Khan
+    given-names: Saber
+url: "https://saberkhan372.github.io/learning-machines-tools"
+repository-code: "https://github.com/saberkhan372/learning-machines-tools"
+license:
+  - MIT
+  - CC-BY-4.0
+year: 2026
+keywords:
+  - generative AI
+  - AI literacy
+  - creative coding
+  - art and technology
+  - education

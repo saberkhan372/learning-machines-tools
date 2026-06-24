@@ -29,7 +29,7 @@ and a one-off URL-hash importer in the Evidence Wall. The modern browser can do 
 without a server: reproduce a tool setup from a link, run offline on flaky workshop
 wifi, take in a participant's own media locally, and keep a projected screen awake. Used
 carefully, these make the kit more reliable in live sessions and let participants carry
-artifacts into the Session-4 showcase — all client-side, all optional.
+artifacts into the optional showcase — all client-side, all optional.
 
 ## Baseline (verified in-repo)
 

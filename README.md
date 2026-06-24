@@ -148,7 +148,7 @@ homepage keeps only a short preview.
 - [Session 1 facilitation notes](docs/session-1-facilitation.html)
 - [Session 2 facilitation notes](docs/session-2-facilitation.html)
 - [Session 3 facilitation notes](docs/session-3-facilitation.html)
-- [Session 4 showcase script](docs/session-4-showcase.html)
+- [Optional Showcase script](docs/showcase-script.html)
 - [Launch QA checklist](docs/qa-checklist.html)
 
 ## Pilot Readiness
@@ -171,3 +171,20 @@ The repo is ready for a small live pilot. Start from the published homepage, use
 ## Local Use
 
 Open `index.html` in a browser for the static tools and participant pages. Markdown-backed docs under `docs/` render as `.html` on GitHub Pages; when browsing locally without Jekyll, open the corresponding `.md` file instead. Each tool is a static page under `tools/`. Launch-critical tools do not require accounts, API keys, npm, a build step, or live model access.
+
+## License, Citation & Reuse
+
+These materials are made to be reused, adapted, and brought into your own school, studio, lab, or community.
+
+- **Code** — the browser tools, site code, scripts, and assets — is licensed under the **[MIT License](LICENSE)**.
+- **Curriculum & content** — worksheets, facilitation docs, prompt packs, planning docs, and written copy — is licensed under **[Creative Commons Attribution 4.0 (CC BY 4.0)](LICENSE-CONTENT.md)**.
+
+Both licenses allow commercial and non-commercial use and require attribution. Where a single file mixes code and instructional prose, MIT covers the code and CC BY 4.0 covers the content.
+
+**To cite or credit**, use the [`CITATION.cff`](CITATION.cff) entry, or:
+
+> Saber Khan, *Learning Machines: Text, Images, Video* (CC Fest), 2026. https://saberkhan372.github.io/learning-machines-tools — CC BY 4.0 / MIT.
+
+**Adapt responsibly.** If you fork, remix, or run a local version, please carry the [Participation Norms](#participation-norms) too: AI use stays optional and visible; low-AI and no-AI pathways stay first-class; name labor, consent, data, and bias; do not simulate real people without consent. Attribution is required; implying endorsement is not.
+
+**Bring it to your context.** Educators, artists, and researchers adapting this for a class, district, or institution — or interested in a guest share, co-facilitation, or office hour — are welcome to open an issue on the repository or reach out via the camp pages.

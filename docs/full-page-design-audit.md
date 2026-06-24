@@ -134,7 +134,7 @@ space before the page announces itself.
 | Image spectrum | Session 2, image tools, image packs, image worksheets | Session 2 page only | Tool/detail/pack coverage missing. |
 | Latent nebula | Advanced image mechanics, latent/compression pages | Not live as page skin | Use selectively for latent-space and advanced image pages. |
 | Video slit-scan | Session 3, video tools, video packs, video worksheets | Session 3 page only | Tool/detail/pack coverage missing. |
-| Studio synthesis | Session 4 and cross-session tools | Session 4 page only | Cross-session tools still neutral. |
+| Studio synthesis | Optional Showcase and cross-session tools | Optional Showcase page only | Cross-session tools still neutral. |
 | Docs field | Logistics, facilitation, references | Mostly neutral | Needs quiet but intentional section accents. |
 | Worksheet print | Worksheets | Neutral print pages | Need session-colored headers without hurting print. |
 
@@ -165,7 +165,7 @@ space before the page announces itself.
 | `pages/docs-facilitation.html` | Unskinned | Text terminal, quiet | Session 1 guide does not visually match Session 1. | Add terminal section labels and one counting/attention motif. |
 | `pages/docs-session-2-facilitation.html` | Unskinned | Image spectrum, quiet | Session 2 guide lacks denoising/defaults language. | Add pastel spectrum header, pixel/default cards, and image-session tags. |
 | `pages/docs-session-3-facilitation.html` | Unskinned | Video slit-scan, quiet | Session 3 guide lacks frame/coherence identity. | Add frame-strip headers and temporal-coherence callouts. |
-| `pages/docs-session-4-facilitation.html` | Unskinned | Studio synthesis, quiet | Session 4 guide lacks evidence/showcase identity. | Add evidence-wall support cards and consent/claim tags. |
+| `pages/docs-showcase-facilitation.html` | Unskinned | Studio synthesis, quiet | Optional Showcase guide lacks evidence/showcase identity. | Add evidence-wall support cards and consent/claim tags. |
 
 ### Tool Detail Pages
 
@@ -182,7 +182,7 @@ space before the page announces itself.
 | `pages/tool-abc-comparison-board.html` | Unskinned | Studio synthesis | Comparison/evidence tool needs studio language. | Add A/B/C evidence cards and modality tags. |
 | `pages/tool-model-card-builder.html` | Unskinned | Studio synthesis | Model card page can carry reflection/evidence system. | Add claim/default/failure bands. |
 | `pages/tool-access-tiers.html` | Unskinned | Docs field / studio | Equity/access page needs clearer comparative visual structure. | Add tier comparison accents and print-safe exclusion panel styling. |
-| `pages/tool-evidence-wall.html` | Unskinned | Studio synthesis | Detail page should look like the Session 4 aggregation tool. | Add tile-wall preview and consent tag treatment. |
+| `pages/tool-evidence-wall.html` | Unskinned | Studio synthesis | Detail page should look like the Optional Showcase aggregation tool. | Add tile-wall preview and consent tag treatment. |
 
 ### Tool Apps
 

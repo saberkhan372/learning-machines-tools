@@ -209,7 +209,7 @@ Final   →  A runs integration wiring (§6 of spec)
 - `pages/session-text.html` — add pathway picker + anchor IDs to existing activity sections
 - `pages/session-images.html` — CREATE (follows same structure as `session-text.html`; content from `docs/session-2-*.md`)
 - `pages/session-video.html` — CREATE (follows same structure; content from `docs/session-3-*.md`)
-- `pages/session-showcase.html` — CREATE (Session 4)
+- `pages/session-showcase.html` — CREATE (Optional Showcase)
 - `index.html` — update session arc links from `pages/session-text.html` to correct pages for sessions 2–4
 
 **Picker spec:** 5 equal-weight pill buttons anchoring to `#use`, `#observe`, `#teach`, `#build`, `#critical` sections on the same page. Use `lm.css` chip/button tokens. Style in `assets/sub.css` (add `.pathway-picker` rule there).
@@ -337,7 +337,7 @@ Use the docs page layout (`assets/sub.css` `.docs-layout`, `.prose`, `.callout`)
 - URL-hash export: serialize wall state to `location.hash`; loading a link with that hash reproduces the wall
 - Consent reminder: visible in-tool note that pasted participant work needs affirmative share consent before public display
 
-**Use cases:** breakout group regroup AND Session 4 showcase.
+**Use cases:** breakout group regroup AND Optional Showcase.
 
 **Multiplayer pattern:** paste-aggregation + URL-hash state (both, per spec §3.5).
 
@@ -446,13 +446,13 @@ Run only after all Wave 1–3 PRs are merged.
 
 1. **`assets/tools-data.js`** — add entries for all B-built tools (`evidence-wall`, `access-tiers`, `note-predictor`, `frame-by-frame`); update `count-the-next-token` as new entry; confirm `abc-comparison-board` and `model-card-builder` show `status: "ready"`.
 
-2. **`index.html`** — add packs row near Worksheets/Docs section; add evidence-wall link to Session 4 area; add pre-session-checkin link in the docs strip. The tool grid updates automatically from `tools-data.js`.
+2. **`index.html`** — add packs row near Worksheets/Docs section; add evidence-wall link to Optional Showcase area; add pre-session-checkin link in the docs strip. The tool grid updates automatically from `tools-data.js`.
 
 3. **`pages/session-text.html`** — add link to `count-the-next-token` and `evidence-wall` in the tools section; add link to `docs/unplugged-human-as-model.html` in the Low-AI pathway callout.
 
 4. **`pages/session-video.html`** — add link to `frame-by-frame-coherence-viewer` (once built).
 
-5. **`pages/session-showcase.html`** — add link to `evidence-wall` as the primary Session 4 aggregation tool.
+5. **`pages/session-showcase.html`** — add link to `evidence-wall` as the primary Optional Showcase aggregation tool.
 
 6. **`README.md`** — reclassify `abc-comparison-board` + `model-card-builder` as launch-supported; register new tools with status tags.
 
@@ -483,7 +483,7 @@ From SHARED-CONTRACT (spec §3.7):
 
 | Decision | Gates |
 |---|---|
-| Session 4 confirmed vs. demand-contingent | priority of `session-showcase.html` / evidence-wall showcase wiring |
+| Optional Showcase confirmed vs. demand-contingent | priority of `session-showcase.html` / evidence-wall showcase wiring |
 | Build both optional tools (note-predictor, frame-by-frame) or just access-tiers? | B-T4, B-T5 |
 | Pack depth — how many prompt families per pack? (floor = 3) | B-T2 content scope |
 | Saber supplies pack media — which format / how handed off? | B-T2 image + video content |

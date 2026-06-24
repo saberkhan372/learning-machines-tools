@@ -40,7 +40,7 @@ content is about; skin says which visual world should frame it.
 | `image-spectrum` | Session 2 image/default/diffusion pages and tools |
 | `latent-nebula` | Latent-space and compression mechanics |
 | `video-slitscan` | Session 3 video, frame, drift, and temporal coherence pages |
-| `studio-synthesis` | Session 4, evidence, model cards, comparison, cross-session studio tools |
+| `studio-synthesis` | Optional Showcase, evidence, model cards, comparison, cross-session studio tools |
 | `docs-field` | Logistics, access, reading, reference, and quieter support pages |
 | `worksheet-print` | Worksheets and print-first artifacts |
 

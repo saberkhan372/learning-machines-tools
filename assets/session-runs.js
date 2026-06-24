@@ -124,7 +124,7 @@ window.LM_SESSION_RUNS = [
     explore: "Show what you made, document the evidence behind it, and adapt it for a classroom.",
     asyncPrompt: null,
     recap: { video: null, written: null, writtenHref: null },
-    facilitation: "pages/docs-session-4-facilitation.html",
+    facilitation: "pages/docs-showcase-facilitation.html",
     overview: "pages/session-showcase.html",
     toolkit: [
       { name: "Evidence Wall", path: "tools/evidence-wall/" },

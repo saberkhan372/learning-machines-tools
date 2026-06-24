@@ -114,12 +114,12 @@ without adding clarity. The fix is scaffolding:
   and reassuring. **Implemented:** the participant page now keeps the promise,
   principles, and alternatives; the new facilitation page carries tools,
   facilitator language, materials, and a simple session plan.
-- **`session-showcase.html` (5.9k px).** Session 4 carries showcase logistics
+- **`session-showcase.html` (5.9k px).** Optional Showcase carries showcase logistics
   *and* the whole reflection/critique apparatus. The "run a showcase" half
   (consent, schedule, formats) is a facilitator artifact; the reflection
   prompts belong with the session. Same split pattern. **Implemented:** the
   learner-facing page no longer carries the run-of-show; the existing
-  `pages/docs-session-4-facilitation.html` remains the home for schedule,
+  `pages/docs-showcase-facilitation.html` remains the home for schedule,
   format, consent, and facilitation notes.
 
 ### 4 · The materials list mixes audiences — including us

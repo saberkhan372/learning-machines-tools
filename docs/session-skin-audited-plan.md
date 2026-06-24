@@ -37,7 +37,7 @@ constraints remain intact.
 | **Image spectrum** | pastel diffusion gradients, noisy pixel fields, denoising grids | Session 2 pages, image tools, image worksheets, image packs |
 | **Latent nebula** | dark gradient, glowing latent nodes, compression diagrams, italic display moments | image-mechanics and advanced concept pages |
 | **Video slit-scan** | dark light-box, cyan/magenta offsets, frame strips, onion-skin overlays | Session 3 pages, video tools, video worksheets, video packs |
-| **Studio synthesis** | evidence tiles, mixed modality tags, poster-board grids, restrained multi-skin accents | Session 4, cross-session tools, showcase pages |
+| **Studio synthesis** | evidence tiles, mixed modality tags, poster-board grids, restrained multi-skin accents | Optional Showcase, cross-session tools, showcase pages |
 | **Docs field** | mostly quiet Field Manual pages with occasional skin callout bands | facilitation, logistics, reading, access, policy, and planning pages |
 | **Worksheet print** | printer-safe content first, with a single session-colored header/accent | worksheet HTML and Markdown mirrors |
 | **Reference/archive** | no redesign work; preserve as provenance | `assets/archive`, `docs/archive`, `newdesignideas`, external downloads |
@@ -133,7 +133,7 @@ constraints remain intact.
 | File | Skin | Planned treatment |
 |---|---|---|
 | `pages/session-showcase.html` | Studio synthesis | Evidence wall tiles, mixed modality bands, gallery energy. |
-| `pages/docs-session-4-facilitation.html` | Studio synthesis, quieter | Facilitation guide gets evidence-board callouts and mixed-session tags. |
+| `pages/docs-showcase-facilitation.html` | Studio synthesis, quieter | Facilitation guide gets evidence-board callouts and mixed-session tags. |
 | `pages/tool-abc-comparison-board.html` | Studio synthesis | Detail page gets A/B/C poster-board preview. |
 | `pages/tool-model-card-builder.html` | Studio synthesis | Detail page gets model-card evidence grid preview. |
 | `pages/tool-access-tiers.html` | Studio synthesis | Detail page gets tier comparison signal blocks. |
@@ -149,8 +149,8 @@ constraints remain intact.
 | `worksheets/ai-use-consent-checklist.md` | Worksheet print | Mirror content only; note skin pairing if needed. |
 | `worksheets/model-investigation-journal/index.html` | Worksheet print + studio synthesis | Cross-session journal gets mixed modality header accents. |
 | `worksheets/model-investigation-journal.md` | Worksheet print | Mirror content only; note skin pairing if needed. |
-| `docs/session-4-showcase.md` | Docs field + studio notes | Source script remains readable. |
-| `docs/session-4-slides.md` | Studio synthesis | Future slide styling should use evidence-wall/gallery motifs. |
+| `docs/showcase-script.md` | Docs field + studio notes | Source script remains readable. |
+| `docs/showcase-slides.md` | Studio synthesis | Future slide styling should use evidence-wall/gallery motifs. |
 
 ### Concept Bridges
 
@@ -214,8 +214,8 @@ when relevant.
 | `docs/session-3-video.md` | Video slit-scan source script. |
 | `docs/session-3-facilitation.md` | Video slit-scan facilitation source. |
 | `docs/session-3-slides.md` | Video slit-scan slide source. |
-| `docs/session-4-showcase.md` | Studio synthesis source script. |
-| `docs/session-4-slides.md` | Studio synthesis slide source. |
+| `docs/showcase-script.md` | Studio synthesis source script. |
+| `docs/showcase-slides.md` | Studio synthesis slide source. |
 | `docs/archive/REDESIGN-PLAN.md` | Historical archive; no redesign treatment. |
 | `samples/video-color-motion/README.md` | Sample/reference material; no skin work unless linked publicly later. |
 | `samples/video-color-motion-gif/README.md` | Sample/reference material; no skin work unless linked publicly later. |

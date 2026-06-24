@@ -7,3 +7,15 @@ teacherdocs/
 # local design-sampling source material (palettes, video frames)
 samples/
 newdesignideas/
+
+# Applicant / participant PII — never commit raw interest-form data or enriched rosters.
+# (These normally live outside the repo; this is a safety net if copied in.)
+# Use git add -f only if you are certain a file here is non-PII.
+*.xlsx
+*.csv
+*Interest Form*
+*(Responses)*
+participant-prep-*
+*deep-enriched*
+applicant-data/
+_private/
