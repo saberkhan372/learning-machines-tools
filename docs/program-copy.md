@@ -11,7 +11,7 @@ Use these descriptions across channels. Keep the core line: *"Participants will 
 
 ## Social Post (short — fits one tweet or Instagram caption)
 
-> How do AI systems write, imagine, and move? Learning Machines is a free, beginner-friendly creative AI camp that investigates text, image, and video generation — not to use AI better, but to understand what it's actually doing. Three core sessions + optional studio. No coding required. Educators, artists, students, and curious learners welcome.
+> How do AI systems write, imagine, and move? Learning Machines is a free creative AI camp for investigating text, image, and video generation — not to use AI better, but to understand what it's actually doing. Serious enough for educators, artists, and researchers to bring real questions; accessible enough that beginners can enter and skeptics can opt out of direct use. Three core sessions + optional studio. No coding required.
 
 **Thread extension (optional):**
 
@@ -39,7 +39,7 @@ The optional studio is a showcase and work period where participants can share a
 
 No coding or machine learning background required. Low-AI and no-AI participation pathways are available for every activity.
 
-**Beginner-friendly. Free. Virtual.**
+**Free. Virtual. No coding required.**
 
 ---
 
@@ -62,7 +62,7 @@ Every session has low-AI and no-AI participation pathways. You don't have to use
 
 Participants will leave not just knowing how to use AI tools, but knowing how to ask better questions about them.
 
-**Free. Virtual. Beginner-friendly.**
+**Free. Virtual. No coding required.**
 
 → [Register here](https://forms.gle/Knw7T7nUJAjUA28n9)
 → [Read the full program description](https://saberkhan372.github.io/learning-machines-tools/)
@@ -79,7 +79,7 @@ Questions? Reply to this email.
 
 ---
 
-**Learning Machines: Text, Images, Video** is a beginner-friendly creative AI camp for educators, artists, students, and curious learners. Across three core sessions plus optional studio, participants investigate how generative AI systems create text, images, and video.
+**Learning Machines: Text, Images, Video** is a creative AI camp for investigating how generative AI systems create text, images, and video — serious enough for educators, artists, and researchers to bring real questions, and accessible enough that beginners can enter and skeptics can opt out of direct use. Across three core sessions plus optional studio, participants investigate models as systems, not interfaces.
 
 Each session asks the same question:
 
