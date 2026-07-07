@@ -12,7 +12,7 @@ workbook's two hidden helper sheets inflate a raw row count to ~1,000; only the
 `Form Responses 1` sheet holds real submissions).
 
 This document is the data-grounded companion to
-[Participant Support Plan](participant-support-plan.md). That plan proposes a
+[Participant Support Plan](participant-support-plan.html). That plan proposes a
 single `Start Here` orientation page; this one shows the cohort evidence behind
 those recommendations and widens the scope to the rest of the site.
 
@@ -91,7 +91,7 @@ Brazil, Venezuela, India, Ireland, Scotland, Portugal, Mexico, and Hawaii.
 looked like a real but **small** minority.
 
 **Superseded 2026-07-07:** the final n=80 split in
-[Final-Cohort Fix List](final-cohort-fix-list.md) shows the mechanics option was
+[Final-Cohort Fix List](final-cohort-fix-list.html) shows the mechanics option was
 almost certainly added mid-form: 0% of early respondents selected it, but **51%**
 of late respondents did once they saw it. Do not cite the 14% line as the current
 mechanics signal; treat under-the-hood interest as a visible go-deeper path, not
@@ -179,7 +179,7 @@ The site already matches the dominant signals; the gap is mostly
 | 6 | **Image-generation on-ramp** in `session-images.html` | 45% want image mechanics, but 21% have never used an image tool — open gently before going deep. | Low–Med | Medium |
 
 For full design of item #3 (route cards, universal prep checklist, acceptance
-criteria), see [Participant Support Plan](participant-support-plan.md).
+criteria), see [Participant Support Plan](participant-support-plan.html).
 
 ### Implementation status (2026-06-16) — all six shipped
 

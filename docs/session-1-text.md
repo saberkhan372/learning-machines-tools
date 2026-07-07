@@ -22,7 +22,7 @@ By the end of this session you will be able to:
 - Run a controlled A/B/C prompt experiment and make a claim based on evidence
 
 **Tools:** [Next-Token Prediction Game](https://saberkhan372.github.io/learning-machines-tools/tools/next-token-prediction-game/) · [Tokenizer + Temperature Visualizer](https://saberkhan372.github.io/learning-machines-tools/tools/tokenizer-temperature-visualizer/) · [ELIZA Simulator](https://saberkhan372.github.io/learning-machines-tools/tools/eliza-simulator/)
-**Worksheet:** [Text Experiment Board](../worksheets/text-experiment-board/) ([printable Markdown](../worksheets/text-experiment-board.md))
+**Worksheet:** [Text Experiment Board](../worksheets/text-experiment-board/) ([printable Markdown](../worksheets/text-experiment-board.html))
 
 ---
 
@@ -150,7 +150,7 @@ This tool shows what happens when a language model actually picks the next token
 
 ## Structured Investigation: Text Experiment Board (1:20–1:40)
 
-**Worksheet:** [Text Experiment Board](../worksheets/text-experiment-board/) ([printable Markdown](../worksheets/text-experiment-board.md))
+**Worksheet:** [Text Experiment Board](../worksheets/text-experiment-board/) ([printable Markdown](../worksheets/text-experiment-board.html))
 
 This is individual work time. Participants choose an LLM tool (ChatGPT, Claude, Gemini, etc.) and run a controlled prompt experiment, or they analyze pre-generated examples if they prefer not to use a tool directly.
 

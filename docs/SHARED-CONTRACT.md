@@ -15,8 +15,8 @@ title: Learning Machines Shared Contract
 ## 1. Design token source of truth
 
 > **Field Manual (2026-06-10): the rollout is complete.** Every served page is
-> on the Field system; the v1 assets (`lm.css`, `theme.js`, `home.css`,
-> `sub.css`, `app.js`, `hero.js`) are archived in `assets/archive/`. Rollout
+> on the Field system; the legacy v1 CSS/JS assets are archived in
+> `assets/archive/`. Rollout
 > record: `docs/FIELD-MANUAL-REDESIGN.md`.
 
 **Canonical file:** `assets/field.css` (+ `assets/field-tool.css` shim for
@@ -65,7 +65,7 @@ immediately on load; the attributes are the fallback.
 | `--font-body` | Archivo |
 | `--font-mono` | IBM Plex Mono (specimen labels) |
 
-Legacy `lm.css` token names (`--line`, `--ink-dim`, `--warm`, `--teal`,
+Legacy pre-Field token names (`--line`, `--ink-dim`, `--warm`, `--teal`,
 `--t0…--t5`, …) keep resolving through the `field-tool.css` shim, so older
 inline styles don't break — but new code should use the Field names.
 

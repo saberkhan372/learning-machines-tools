@@ -22,7 +22,7 @@ By the end of this session you will be able to:
 - Run a controlled A/B/C video prompt test and document what broke
 
 **Tool:** [Temporal Telephone](https://saberkhan372.github.io/learning-machines-tools/tools/temporal-telephone/)
-**Worksheet:** [Video Test Report](../worksheets/video-test-report/) ([printable Markdown](../worksheets/video-test-report.md))
+**Worksheet:** [Video Test Report](../worksheets/video-test-report/) ([printable Markdown](../worksheets/video-test-report.html))
 
 ---
 
@@ -117,7 +117,7 @@ This tool runs the telephone experiment in two rounds with different reference c
 
 ## Video Investigation: Failure Modes (1:05–1:35)
 
-**Worksheet:** [Video Test Report](../worksheets/video-test-report/) ([printable Markdown](../worksheets/video-test-report.md))
+**Worksheet:** [Video Test Report](../worksheets/video-test-report/) ([printable Markdown](../worksheets/video-test-report.html))
 
 Participants investigate video generation failures using a video model (Sora, Runway, Kling, Pika, etc.) or analyze pre-generated examples.
 

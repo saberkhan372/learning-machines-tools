@@ -54,4 +54,4 @@ to be used. If you reuse or adapt them, please carry the norms too: AI use stays
 optional, visible, and discussable; low-AI and no-AI pathways stay first-class;
 name labor, consent, data, and bias concerns; and do not generate or simulate
 real people without consent. See the **Participation Norms** in the
-[README](README.md#participation-norms).
+[README](README.html#participation-norms).

@@ -472,6 +472,7 @@
       ".lm-notebook-panel h2{font-size:15px;margin:0}.lm-notebook-panel p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}",
       ".lm-notebook-panel textarea{width:100%;min-height:88px;resize:vertical;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);padding:8px;font:14px var(--font-body)}",
       ".lm-notebook-actions{display:flex;flex-wrap:wrap;gap:6px}.lm-notebook-danger{color:#b42318!important}",
+      "@media (max-width:520px){.lm-notebook-widget{right:10px;bottom:0;}}",
       "@media print{.lm-notebook-widget{display:none!important}}",
       "html[data-projection='on'] .lm-notebook-widget{display:none!important}"
     ].join("\n");

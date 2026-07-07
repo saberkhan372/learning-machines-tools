@@ -13,7 +13,7 @@
 > The conventions in §1–§2 below remain accurate; task tickets (§3–§9) are done.
 
 **Based on:** `learning-machines-DESIGN.md` (the original task specification, not kept in this repo)
-**Reconciled with:** completed redesign (`assets/lm.css` design system, Phase 1–7)
+**Reconciled with:** completed Field Manual redesign (`assets/field.css` design system, Phase 1–7)
 
 **Agent A = Claude Code (Integrator)** — touches existing files, aggregators, session pages
 **Agent B = Codex (Builder)** — greenfield new tools only, never edits aggregator files
@@ -26,25 +26,24 @@ The visual redesign is complete and verified:
 
 | What | Where |
 |---|---|
-| Shared design system | `assets/lm.css`, `assets/home.css`, `assets/sub.css` |
-| Theme loader (runs in `<head>`) | `assets/theme.js` |
-| Hero animation | `assets/hero.js` |
-| Tool browser + scroll reveal | `assets/app.js` |
+| Shared design system | `assets/field.css`, `assets/field-home.css`, `assets/field-sub.css`, `assets/field-tool.css` |
+| Theme loader (runs in `<head>`) | `assets/field-theme.js` |
+| Hero / tool browser + scroll reveal | `assets/field-app.js` |
 | Tool catalog data | `assets/tools-data.js` |
 | Tweaks panel (React) | `assets/tweaks-panel.jsx` |
 | Homepage | `index.html` |
 | Session 1 page | `pages/session-text.html` |
 | Tokenizer tool detail page | `pages/tool-tokenizer.html` |
 | Facilitation doc page | `pages/docs-facilitation.html` |
-| Nav chrome on all 20 tools | `tools/*/index.html` (lm.css + theme.js linked, new nav) |
+| Nav chrome on all tools | `tools/*/index.html` (Field CSS + `field-theme.js` linked, shared nav) |
 
 ---
 
-## 1. Design system — OVERRIDE to §3.1 of the spec
+## 1. Design system — current Field source
 
-> **The canonical token source is `assets/lm.css`, not the tokenizer tool.**
+> **The canonical token source is `assets/field.css`, not the tokenizer tool.**
 
-The spec's §3.1 was written before the redesign. Ignore its instruction to copy tokens from `tools/tokenizer-temperature-visualizer/index.html`. That file's `:root` block contains **old values** that conflict with `lm.css`.
+The spec's §3.1 was written before the redesign. Ignore its instruction to copy tokens from `tools/tokenizer-temperature-visualizer/index.html`. That file's `:root` block contains **old values** that conflict with the Field system.
 
 ### Correct token source
 
@@ -52,33 +51,33 @@ The spec's §3.1 was written before the redesign. Ignore its instruction to copy
 <!-- Every new tool's <head>, before any inline <style> -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/lm.css">
-<script src="../../assets/theme.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/field.css">
+<link rel="stylesheet" href="../../assets/field-tool.css">
+<script src="../../assets/field-theme.js"></script>
 ```
 
 The `../ ` depth is `../../` for anything at `tools/<slug>/` or `worksheets/<slug>/`. For `docs/` files it is `../`.
 
-### Token quick-reference (lm.css)
+### Token quick-reference (field.css)
 
-| Token | Dark value | Paper value | Light value |
-|---|---|---|---|
-| `--bg` | `#0e0f13` | `#f3ecdd` | `#ffffff` |
-| `--surface` | `#16181f` | `#fffaf1` | `#ffffff` |
-| `--ink` | `#e8e6df` | `#20201d` | `#111418` |
-| `--accent` | `#5eead4` (teal) | `#0f766e` | `#0d9488` |
-| `--accent-2` | `#c084fc` (purple) | `#7c3aed` | `#7c3aed` |
-| `--muted` | `#9197a3` | `#6f675b` | `#5b6573` |
-| `--line` | `#2a2e39` | `#ddd0bb` | `#e4e7ec` |
-| `--font-display` | Space Grotesk 600 | same | same |
-| `--font-body` | DM Sans | same | same |
-| `--font-mono` | IBM Plex Mono | same | same |
+| Token | Purpose |
+|---|---|
+| `--bg` | Page background |
+| `--surface` / `--surface-2` | Card and panel backgrounds |
+| `--ink` / `--ink-soft` | Primary and secondary text |
+| `--accent` | Current modality ink from `data-mod` |
+| `--muted` | Subdued labels and helper text |
+| `--rule` / `--rule-soft` | Borders and hairlines |
+| `--font-display` | Newsreader / Archivo display stack |
+| `--font-body` | Archivo |
+| `--font-mono` | IBM Plex Mono |
 
 ### New tool inline style rules
 
-- **Do NOT** override `--bg`, `--ink`, `--accent`, `--muted`, `--line` in your tool's `:root{}`. Use them as-is from `lm.css`.
+- **Do NOT** override `--bg`, `--ink`, `--accent`, `--muted`, `--rule` in your tool's `:root{}`. Use them as-is from the Field system.
 - **You may** define tool-specific tokens for internal UI (e.g. `--grid-cell-size`, `--playback-accent`).
-- **Do NOT** set `body { background: ... }` or `body { color: ... }`. `lm.css` handles that and it must switch with the theme.
+- **Do NOT** set `body { background: ... }` or `body { color: ... }`. `field.css` handles that and it must switch with the theme.
 - **Do NOT** re-declare font families. Use `var(--font-body)`, `var(--font-mono)`, `var(--font-display)`.
 
 ### Standard nav chrome (copy verbatim into every new tool)
@@ -108,7 +107,7 @@ For `docs/` pages the depth is `../` not `../../`.
 
 The contract is a single authoritative reference file. It must contain:
 
-1. **Token source** — points to `assets/lm.css` as above; the old tokenizer `:root` is NOT the source.
+1. **Token source** — points to `assets/field.css` as above; the old tokenizer `:root` is NOT the source.
 2. **Nav chrome** — the exact snippet above for `tools/` and `docs/` depths.
 3. **Pathway picker markup** (§3.3 of spec — copy verbatim):
    ```html
@@ -120,7 +119,7 @@ The contract is a single authoritative reference file. It must contain:
      <a href="#critical">Critical / No-AI</a>
    </nav>
    ```
-   Style: five equal-weight pill links. Use `lm.css` chip/button tokens. Critical/No-AI is **not** visually secondary.
+   Style: five equal-weight pill links. Use Field chip/button tokens. Critical/No-AI is **not** visually secondary.
 4. **Worksheet evidence footer markup** (§3.4 of spec — copy verbatim):
    ```html
    <footer class="evidence-footer">
@@ -212,7 +211,7 @@ Final   →  A runs integration wiring (§6 of spec)
 - `pages/session-showcase.html` — CREATE (Optional Showcase)
 - `index.html` — update session arc links from `pages/session-text.html` to correct pages for sessions 2–4
 
-**Picker spec:** 5 equal-weight pill buttons anchoring to `#use`, `#observe`, `#teach`, `#build`, `#critical` sections on the same page. Use `lm.css` chip/button tokens. Style in `assets/sub.css` (add `.pathway-picker` rule there).
+**Picker spec:** 5 equal-weight pill buttons anchoring to `#use`, `#observe`, `#teach`, `#build`, `#critical` sections on the same page. Use Field chip/button tokens. Style in `assets/field-sub.css` (add `.pathway-picker` rule there).
 
 **Done when:** each session page shows all five pathways; each pill jumps to its track; Critical/No-AI is visually equal weight to "Use"; sessions 2–4 pages exist and are linked from the homepage arc.
 
@@ -228,8 +227,8 @@ Final   →  A runs integration wiring (§6 of spec)
 - `worksheets/model-investigation-journal/index.html`
 
 **Changes per file:**
-1. Add `data-theme="dark" data-font="lab"` to `<html>` tag
-2. In `<head>`, add before existing `<style>`: Google Fonts link, `../../assets/lm.css` link, `../../assets/theme.js` script
+1. Add the standard Field `<html>` attributes: `data-tone="white" data-type="signage" data-ink="full"`
+2. In `<head>`, add before existing `<style>`: Google Fonts link, `../../assets/field.css`, `../../assets/field-tool.css`, and `../../assets/field-theme.js`
 3. Add standard nav chrome (from §1 of this doc, depth `../../`) at top of `<body>`
 4. Add the evidence footer at bottom of `<body>` (exact markup from §2 of this doc)
 5. **Do not** change any existing worksheet content, styles, or logic
@@ -245,10 +244,10 @@ Final   →  A runs integration wiring (§6 of spec)
 - `tools/model-card-builder/index.html`
 
 **Changes:**
-1. Keep both tools inheriting core color, type, line, and shadow tokens from `lm.css`. Tool-specific semantic colors are fine when they do not override global tokens.
+1. Keep both tools inheriting core color, type, line, and shadow tokens from the Field system. Tool-specific semantic colors are fine when they do not override global tokens.
 2. Keep page backgrounds on shared tokens such as `var(--bg)`, `var(--surface)`, and `var(--surface-2)`.
 3. Fix any input/textarea/button base styles that hardcode `#fffdf8` — replace with `var(--surface)` and `var(--ink)`.
-4. Update any in-tool nonlaunch status labels to "Launch ready" (match `lm.css` `.status.ready` chip pattern).
+4. Update any in-tool nonlaunch status labels to "Launch ready" (match the shared `.status.ready` chip pattern).
 5. Run acceptance bar: zero console errors, responsive 360/768/1280, keyboard-operable.
 
 **Also update:**
@@ -304,7 +303,7 @@ Final   →  A runs integration wiring (§6 of spec)
 - Debrief prompts
 - Tagged: Critical/No-AI + Teach/Design
 
-Use the docs page layout (`assets/sub.css` `.docs-layout`, `.prose`, `.callout`). Depth = `../` for asset paths.
+Use the docs page layout (`assets/field-sub.css` `.docs-layout`, `.prose`, `.callout`). Depth = `../` for asset paths.
 
 **Done when:** runnable from the page alone on a Zoom call; no software needed; linked from `pages/session-text.html` Low-AI section.
 
@@ -341,7 +340,7 @@ Use the docs page layout (`assets/sub.css` `.docs-layout`, `.prose`, `.callout`)
 
 **Multiplayer pattern:** paste-aggregation + URL-hash state (both, per spec §3.5).
 
-**lm.css integration:** use `--surface`, `--line`, `--ink`, `--accent`; nav chrome at `../../` depth.
+**Field integration:** use `--surface`, `--rule`, `--ink`, `--accent`; nav chrome at `../../` depth.
 
 **Done when:** paste → grid renders; URL-hash export reproduces wall on reload; consent reminder visible; no backend; responsive 360/768/1280; keyboard-operable; passes acceptance bar.
 
@@ -366,7 +365,7 @@ Use the docs page layout (`assets/sub.css` `.docs-layout`, `.prose`, `.callout`)
 
 **Content scope:** 3–4 prompt families per pack minimum. Text and images should be content-complete (use placeholder copy where Saber hasn't supplied final media, clearly marked `<!-- PLACEHOLDER -->`). Video may ship with more placeholders.
 
-**lm.css integration:** asset depth `../../assets/`; nav links back to `../../index.html`.
+**Field integration:** asset depth `../../assets/`; nav links back to `../../index.html`.
 
 **Done when:** all three pack pages render using the same template; image/video accessibility passes; no live network calls for content; responsive; linked from INTEGRATION-QUEUE.
 
@@ -385,7 +384,7 @@ Use the docs page layout (`assets/sub.css` `.docs-layout`, `.prose`, `.callout`)
 - "Exclusion panel" that is editable and printable (simple textareas + print CSS)
 - Pairs with `model-card-builder`
 
-**lm.css integration:** standard nav at `../../`; use `lm.css` tokens throughout.
+**Field integration:** standard nav at `../../`; use Field tokens throughout.
 
 **Done when:** three tiers comparable side-by-side; exclusion panel editable and print-friendly; zero network calls; responsive; keyboard-operable.
 
@@ -434,7 +433,7 @@ Use the docs page layout (`assets/sub.css` `.docs-layout`, `.prose`, `.callout`)
 - Transfer audience (who are you designing for?)
 - Fourth-session interest
 
-This is a reference mirror — the live form lives in Google Forms. This page is for facilitators to review or adapt. Use the docs layout (`assets/sub.css`). Depth = `../`.
+This is a reference mirror — the live form lives in Google Forms. This page is for facilitators to review or adapt. Use the docs layout (`assets/field-sub.css`). Depth = `../`.
 
 **Done when:** full question set presented cleanly; no form submission; printable; linked from INTEGRATION-QUEUE.
 
@@ -472,8 +471,8 @@ From SHARED-CONTRACT (spec §3.7):
 - [ ] Keyboard-operable: all controls reachable and activatable by keyboard
 - [ ] Visible focus states on interactive elements
 - [ ] Alt text on all meaningful images
-- [ ] Dark / paper / light themes all render correctly (lm.css tokens used, no hardcoded colors that clash)
-- [ ] `<html>` has `data-theme="dark" data-font="lab"` (theme.js will override from localStorage)
+- [ ] Paper / white / slate tones render correctly (Field tokens used, no hardcoded colors that clash)
+- [ ] `<html>` has the standard Field attributes (`data-tone`, `data-type`, `data-ink`, and `data-mod` where relevant); `field-theme.js` will override from localStorage
 - [ ] Nav chrome present and links resolve
 - [ ] Passes `docs/qa-checklist.md` (source); viewed as `docs/qa-checklist.html` on GitHub Pages
 

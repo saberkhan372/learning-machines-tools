@@ -268,7 +268,7 @@
 let TAG_CYCLE  = ["text", "image", "video", "cross"];
 let TAG_LABELS = { text: "Text", image: "Image", video: "Video", cross: "Cross" };
 
-/* Tags use the lm.css token chip classes (t0–t4) */
+/* Tags use the legacy-compatible token chip classes (t0–t4). */
 let TAG_CLASSES = { text: "tag-text", image: "tag-image", video: "tag-video", cross: "tag-cross" };
 
 /* ── State ──────────────────────────────────────────────────── */
@@ -342,7 +342,7 @@ function parsePaste(raw) {
     /* skip Zoom reaction / reply metadata */
     if (/^(Reacted to |Removed a |Replying to )/.test(line)) { return; }
 
-    /* Zoom saved-chat header: "14:32:05 From Sandra Soto to Everyone:" —
+    /* Zoom saved-chat header: "14:32:05 From Jamie Rivera to Everyone:" —
        capture the name; the submission is on the following line(s).
        Older Zoom puts it on the same line after the colon. */
     let zoomHeader = line.match(/^\d{1,2}:\d{2}(?::\d{2})?\s+From\s+(.+?)(?:\s+[Tt]o\s+.+?)?:\s*(.*)$/);
@@ -776,7 +776,7 @@ function runTests() {
 
   /* Zoom saved-chat format: header + indented message, name attributed */
   let zoomSaved =
-    "14:32:05 From Sandra Soto to Everyone:\n" +
+    "14:32:05 From Jamie Rivera to Everyone:\n" +
     "\tThe default was a suburb.\n" +
     "14:33:01 From Lee to Everyone:\n" +
     "\tReacted to \"The default...\" with \u{1F44D}\n" +
@@ -785,7 +785,7 @@ function runTests() {
     "\tIt drifted by frame three.";
   let r6 = parsePaste(zoomSaved);
   assert(r6.length === 3, "parse: zoom saved-chat tile count");
-  assert(r6[0].name === "Sandra Soto", "parse: zoom saved-chat name");
+  assert(r6[0].name === "Jamie Rivera", "parse: zoom saved-chat name");
   assert(r6[0].content === "The default was a suburb.", "parse: zoom saved-chat content");
   assert(r6[2].name === "Greg K", "parse: zoom multi-line keeps name");
 

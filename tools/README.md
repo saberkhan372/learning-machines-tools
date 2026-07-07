@@ -44,6 +44,6 @@ The launch matrix now includes selected advanced concept tools: CFG Scale
 Visualizer, Latent Space Compressor, Metronome Frame-Scrubber, and the two
 Wikipedia-backed truth sieves. Remaining deeper mechanics identified during
 audit work live in
-[`../docs/advanced-concept-extensions.md`](../docs/advanced-concept-extensions.md),
+[`../docs/advanced-concept-extensions.html`](../docs/advanced-concept-extensions.html),
 including positional encoding, prompt alignment / text encoders, forward
 diffusion, backpropagation, and optical flow.

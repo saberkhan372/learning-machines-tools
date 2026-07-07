@@ -34,7 +34,7 @@ decide whether and how to take part. (It applies before camp, but is not limited
 to that window.) It is not a raw spreadsheet analysis and does not include
 individual names, emails, or identifiable response text. For the full data
 breakdown and themes, see
-[Interest-Form Analysis & Site Support Plan](interest-form-site-support-analysis.md).
+[Interest-Form Analysis & Site Support Plan](interest-form-site-support-analysis.html).
 
 The main recommendation is simple: keep the site rich, but give people a
 shorter first path through it. The current site already has the right materials;

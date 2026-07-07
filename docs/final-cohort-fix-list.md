@@ -9,8 +9,8 @@ Status: **proposed**
 Date: 2026-07-07
 Source: "Learning Machines — Interest Form v3" final responses, **80 prospective
 participants** (form effectively closed 2026-07-03). Companion to
-[Interest-Form Analysis & Site Support Plan](interest-form-site-support-analysis.md)
-(n=58, 2026-06-16) and [Enriched-Cohort Design Pass](enriched-cohort-design-pass.md)
+[Interest-Form Analysis & Site Support Plan](interest-form-site-support-analysis.html)
+(n=58, 2026-06-16) and [Enriched-Cohort Design Pass](enriched-cohort-design-pass.html)
 (n=74, 2026-06-23). Incorporates verified items from an external (Codex) review
 of the same data; items it proposed that already exist on the site are listed in
 §4 so they don't get rebuilt.

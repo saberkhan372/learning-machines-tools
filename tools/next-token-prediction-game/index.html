@@ -397,7 +397,7 @@ function parsePaste(raw) {
     if (line.indexOf("left the meeting")   !== -1) { return; }
     if (/^(Reacted to |Removed a |Replying to )/.test(line)) { return; }
 
-    /* Zoom saved-chat header: "14:32:05 From Sandra Soto to Everyone:" —
+    /* Zoom saved-chat header: "14:32:05 From Jamie Rivera to Everyone:" —
        the guess usually sits on the next (indented) line, which parses as
        a bare word; older Zoom puts it on the same line after the colon */
     let zoomHeader = line.match(/^\d{1,2}:\d{2}(?::\d{2})?\s+From\s+.+?(?:\s+[Tt]o\s+.+?)?:\s*(.*)$/);
@@ -597,7 +597,7 @@ function runTests() {
 
   /* parse Zoom saved-chat format: header line + indented message */
   let zoomChat =
-    "14:32:05 From Sandra Soto to Everyone:\n" +
+    "14:32:05 From Jamie Rivera to Everyone:\n" +
     "\tmat\n" +
     "14:32:10 From Greg K to Everyone:\n" +
     "\tfloor\n" +
