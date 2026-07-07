@@ -29,6 +29,8 @@ Core question: what changes when generation has to work across time?
 
 Optional pilot evidence move: use the A/B/C Comparison Board to document a hypothesis, one changed variable, a baseline motion prompt, one continuity anchor, and a stronger anchor or stress test. Keep real-person likeness and consent concerns visible before exporting. Debrief shares collected in chat can also be pasted into the Evidence Wall to put the round's observations on one screen (the consent banner applies before anything is shown or exported).
 
+For credit, attribution, likeness, and recap decisions, use the existing [AI Use + Consent Checklist](../worksheets/ai-use-consent-checklist/) rather than creating a new worksheet.
+
 ## Facilitator Prompts
 
 - "Where did the sequence first begin to drift?"
@@ -38,6 +40,9 @@ Optional pilot evidence move: use the A/B/C Comparison Board to document a hypot
 - "What does video require that a single image does not?"
 - "Which failure type is easiest to spot frame by frame?"
 - "What would you need to specify to keep identity, motion, and setting stable?"
+- "What did the human do? What did the model do?"
+- "What should be credited, and to whom?"
+- "Whose work, data, or labor is hidden in this output?"
 
 ## Investigation Prompt
 

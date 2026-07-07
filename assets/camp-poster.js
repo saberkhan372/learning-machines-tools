@@ -115,7 +115,7 @@
       + '<div class="cell"><span class="k">Dates</span><span class="v">July 11 · 18 · 25<small>three Saturdays</small></span></div>'
       + '<div class="cell"><span class="k">Time</span><span class="v">9 – 11 am PT<small>live · virtual</small></span></div>'
       + '<div class="cell"><span class="k">Cost</span><span class="v">Free<small>beginner-friendly</small></span></div>'
-      + '<div class="cell"><span class="k">Register</span><span class="v">ccfest.rocks<small>interest form due July 4</small></span></div>'
+      + '<div class="cell"><span class="k">Waitlist</span><span class="v">ccfest.rocks<small>recordings + next cycle</small></span></div>'
       + "</div>";
   }
 
@@ -174,7 +174,7 @@
       + '<div style="flex:1.2;"></div>'
       + '<div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:2px solid var(--pink); padding-top:18px;">'
       + '<span class="mono" style="font-size:17px; font-weight:600; line-height:1.55;">July 11 · 18 · 25<br>Saturdays 9–11 am PT</span>'
-      + '<span class="mono" style="font-size:15.5px; color:var(--pmuted); text-align:right; line-height:1.65; white-space:nowrap;">free · virtual · beginner-friendly<br>register → ccfest.rocks · form due July 4</span></div></div>';
+      + '<span class="mono" style="font-size:15.5px; color:var(--pmuted); text-align:right; line-height:1.65; white-space:nowrap;">free · virtual · beginner-friendly<br>join waitlist → ccfest.rocks</span></div></div>';
   }
 
   function boardForwardPass() {
@@ -225,7 +225,7 @@
       + '<div style="flex:1.4;"></div>'
       + '<div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:2px solid var(--pink); padding-top:24px;">'
       + '<span class="mono" style="font-size:24px; font-weight:600; line-height:1.5;">July 11 · 18 · 25<br>Saturdays 9–11 am PT</span>'
-      + '<span class="mono" style="font-size:22px; color:var(--pmuted); text-align:right; line-height:1.7; white-space:nowrap;">free · virtual · beginner-friendly<br>register → ccfest.rocks</span></div></div>';
+      + '<span class="mono" style="font-size:22px; color:var(--pmuted); text-align:right; line-height:1.7; white-space:nowrap;">free · virtual · beginner-friendly<br>join waitlist → ccfest.rocks</span></div></div>';
   }
 
   function boardStory() {
@@ -252,8 +252,8 @@
         + '<div style="transform:scale(1.35); transform-origin:right center;">' + b.motif + "</div></div>";
     });
     html += '<div style="border-top:2px solid var(--pink); padding-top:30px; margin-top:8px;">'
-      + '<p class="mono" style="font-size:27px; font-weight:600; margin:0;">Register → ccfest.rocks</p>'
-      + '<p class="mono" style="font-size:20px; color:var(--pmuted); margin:12px 0 0;">interest form due July 4 · no coding required</p></div></div>';
+      + '<p class="mono" style="font-size:27px; font-weight:600; margin:0;">Join waitlist → ccfest.rocks</p>'
+      + '<p class="mono" style="font-size:20px; color:var(--pmuted); margin:12px 0 0;">recordings + next cycle · no coding required</p></div></div>';
     return html;
   }
 

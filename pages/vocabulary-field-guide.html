@@ -122,15 +122,15 @@
 
     <!-- modality strip -->
     <section style="padding:28px 0 14px;">
-      <div class="sec-rule"><h2 class="sec-no">§ 0 · The map</h2><span class="sec-note">13 terms · 4 modalities · one method</span></div>
+      <div class="sec-rule"><h2 class="sec-no">§ 0 · The map</h2><span class="sec-note">20 terms · 4 modalities · one method</span></div>
       <p class="sub-lede" style="margin-bottom:16px;">The vocabulary clusters by modality — the same arc the camp runs:
         text, then images, then video, then the cross-cutting ideas that apply to all three. The color on each term
         below tells you which world it lives in.</p>
       <div class="fm-cardgrid" style="--fm-cols:4">
-        <div class="fm-card vg-cell" data-mod="text"><span class="n">3</span><span class="l">Text · Session 1</span><p class="terms">Token · Temperature · Greedy vs. sampled</p></div>
+        <div class="fm-card vg-cell" data-mod="text"><span class="n">4</span><span class="l">Text · Session 1</span><p class="terms">Token · Temperature · Greedy vs. sampled · Context window</p></div>
         <div class="fm-card vg-cell" data-mod="image"><span class="n">4</span><span class="l">Image · Session 2</span><p class="terms">Default · Diffusion · CFG · Latent space</p></div>
-        <div class="fm-card vg-cell" data-mod="video"><span class="n">3</span><span class="l">Video · Session 3</span><p class="terms">Drift · Spatiotemporal · Coherence</p></div>
-        <div class="fm-card vg-cell" data-mod="cross"><span class="n">3</span><span class="l">Cross-cutting</span><p class="terms">Modality · Hallucination · Human-in-the-loop</p></div>
+        <div class="fm-card vg-cell" data-mod="video"><span class="n">4</span><span class="l">Video · Session 3</span><p class="terms">Drift · Spatiotemporal · Coherence · Attention</p></div>
+        <div class="fm-card vg-cell" data-mod="cross"><span class="n">8</span><span class="l">Cross-cutting</span><p class="terms">Modality · Hallucination · Human-in-the-loop · Training data · Embedding · Evaluation · Red-teaming · Model card</p></div>
       </div>
     </section>
 
@@ -144,6 +144,7 @@
             <tr data-mod="text"><td class="vg-term"><span class="dot"></span>Token</td><td>A chunk of text a model processes — often not a whole word.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
             <tr id="temperature" data-mod="text"><td class="vg-term"><span class="dot"></span>Temperature</td><td>How much randomness enters sampling — low stays safe, high takes risks.</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
             <tr data-mod="text"><td class="vg-term"><span class="dot"></span>Greedy vs. sampled</td><td>Greedy always takes the most likely next token; sampling draws from the ranked options (often top-k).</td><td><a href="tool-tokenizer.html">Tokenizer</a></td></tr>
+            <tr id="context-window" data-mod="text"><td class="vg-term"><span class="dot"></span>Context window</td><td>The amount of recent text a model can use at once. Anything outside the window is not part of the next prediction.</td><td><a href="../tools/count-the-next-token/">Count the Next Token</a></td></tr>
             <tr data-mod="image"><td class="vg-term"><span class="dot"></span>Default</td><td>What appears when the prompt doesn't specify — the model fills in the blanks.</td><td><a href="../tools/default-test-comparison-viewer/">Default Test</a></td></tr>
             <tr id="diffusion" data-mod="image"><td class="vg-term"><span class="dot"></span>Diffusion</td><td>An iterative noise-to-image process, refined step by step.</td><td><a href="tool-diffusion.html">Diffusion Viewer</a></td></tr>
             <tr data-mod="image"><td class="vg-term"><span class="dot"></span>CFG (guidance)</td><td>How hard generation is pushed to obey the prompt versus its own defaults.</td><td><a href="tool-cfg-scale.html">Prompt Pressure (CFG scale)</a></td></tr>
@@ -151,9 +152,15 @@
             <tr data-mod="video"><td class="vg-term"><span class="dot"></span>Drift</td><td>Unwanted change over time — the subject won't stay put.</td><td><a href="tool-temporal-telephone.html">Temporal Telephone</a></td></tr>
             <tr data-mod="video"><td class="vg-term"><span class="dot"></span>Spatiotemporal</td><td>Across both space and time — what a video must hold consistent frame to frame.</td><td><a href="tool-metronome-scrubber.html">Metronome Scrubber</a></td></tr>
             <tr id="coherence" data-mod="video"><td class="vg-term"><span class="dot"></span>Coherence</td><td>Staying consistent across frames: identity, objects, camera, physics.</td><td><a href="../tools/video-failure-gallery-viewer/">Video Viewer</a></td></tr>
+            <tr id="attention" data-mod="video"><td class="vg-term"><span class="dot"></span>Attention</td><td>A weighted lookup: the system gives some earlier pieces more influence than others. It is computation, not human focus.</td><td><a href="tool-metronome-scrubber.html">Metronome Scrubber</a></td></tr>
             <tr data-mod="cross"><td class="vg-term"><span class="dot"></span>Modality</td><td>A kind of medium a model works in — text, image, or video.</td><td><a href="../index.html#tools">Tool index</a></td></tr>
             <tr data-mod="cross"><td class="vg-term"><span class="dot"></span>Hallucination</td><td>A plausible-sounding output without reliable grounding.</td><td><a href="tool-confidence-truth.html">Claim Checker</a></td></tr>
             <tr data-mod="cross"><td class="vg-term"><span class="dot"></span>Human-in-the-loop</td><td>Human judgment before, during, and after generation.</td><td><a href="tool-model-card-builder.html">Model Card</a></td></tr>
+            <tr id="training-data" data-mod="cross"><td class="vg-term"><span class="dot"></span>Training data / dataset</td><td>The examples a system learned patterns from. Skewed examples can make skewed defaults feel normal.</td><td><a href="tool-dataset-balance.html">Dataset Balance</a></td></tr>
+            <tr id="embedding" data-mod="cross"><td class="vg-term"><span class="dot"></span>Embedding</td><td>A learned numeric address for meaning, style, or features. Similar items land near each other in the model's map.</td><td><a href="../tools/latent-space-explorer/">Latent Space Explorer</a></td></tr>
+            <tr id="eval" data-mod="cross"><td class="vg-term"><span class="dot"></span>Eval / evaluation</td><td>A structured test of what a model does in a situation: what passed, what failed, and what evidence supports that judgment.</td><td><a href="tool-abc-comparison-board.html">ABC Comparison Board</a></td></tr>
+            <tr id="red-teaming" data-mod="cross"><td class="vg-term"><span class="dot"></span>Red-teaming</td><td>Trying hard to make a system fail before people rely on it. The point is finding the weak spots, not proving it works.</td><td><a href="tool-network-truth-sieve.html">Network Truth Sieve</a></td></tr>
+            <tr id="model-card" data-mod="cross"><td class="vg-term"><span class="dot"></span>Model card</td><td>A short, public-facing record of what a model or classroom tool is for, where it fails, who it affects, and what evidence was checked.</td><td><a href="tool-model-card-builder.html">Model Card Builder</a></td></tr>
           </tbody>
         </table>
       </div>

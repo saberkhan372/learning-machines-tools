@@ -87,8 +87,15 @@ Brazil, Venezuela, India, Ireland, Scotland, Portugal, Mexico, and Hawaii.
 | How language models generate text | 24% |
 | **Under-the-hood mechanics (attention, embeddings, CFG, latent space)** | **14%** |
 
-**Read:** pedagogy + ethics + image mechanics dominate. Deep math is a real but
-**small** minority — design the site accordingly.
+**Read at the time:** pedagogy + ethics + image mechanics dominated. Deep math
+looked like a real but **small** minority.
+
+**Superseded 2026-07-07:** the final n=80 split in
+[Final-Cohort Fix List](final-cohort-fix-list.md) shows the mechanics option was
+almost certainly added mid-form: 0% of early respondents selected it, but **51%**
+of late respondents did once they saw it. Do not cite the 14% line as the current
+mechanics signal; treat under-the-hood interest as a visible go-deeper path, not
+a niche appendix.
 
 ### Desired outcome
 
@@ -207,9 +214,12 @@ needed. `run-console` is intentionally kept as a facilitator surface.
 
 ## 5. What is not helpful right now — trim or de-emphasize
 
-- **Don't lead with deep math.** Attention / embeddings / positional encoding /
-  CFG drew only **14%**. Keep the deep tool pages as an opt-in "advanced lane,"
-  not the front door.
+- **Mechanics note superseded.** This section originally said "Don't lead with
+  deep math" because attention / embeddings / positional encoding / CFG drew
+  only **14%** in the June 16 read. The final n=80 wave finding supersedes that:
+  among respondents who saw the mechanics option, **51%** selected it. Keep
+  mechanics visible in the front-door pathway and tool surfacing, while still
+  avoiding a fifth required route or a new pre-camp tool sprint.
 - **Don't pitch the landing page at beginners.** Only ~10% are novices; "what is
   generative AI" framing under-serves the 71% who use it regularly.
 - **Consolidate the design-experiment pages.** `redesigns-index`,

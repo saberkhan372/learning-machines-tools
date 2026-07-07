@@ -30,6 +30,8 @@ Core question: when a model sees or generates an image, what is it actually work
 
 Optional pilot evidence move: use the A/B/C Comparison Board to compare a vague prompt, one added detail, and a responsible revision. Export only examples that have been reviewed for consent and attribution. Debrief shares collected in chat can also be pasted into the Evidence Wall to put the round's observations on one screen (the consent banner applies before anything is shown or exported).
 
+For credit, attribution, and recap decisions, use the existing [AI Use + Consent Checklist](../worksheets/ai-use-consent-checklist/) rather than creating a new worksheet.
+
 ## Facilitator Prompts
 
 - "When did the image become recognizable?"
@@ -38,6 +40,9 @@ Optional pilot evidence move: use the A/B/C Comparison Board to compare a vague 
 - "At what diffusion step does the subject become guessable?"
 - "What did the prompt leave unspecified?"
 - "Which defaults are technical, and which are social?"
+- "What did the human do? What did the model do?"
+- "What should be credited, and to whom?"
+- "Whose work, data, or labor is hidden in this output?"
 
 ## Investigation Prompt
 

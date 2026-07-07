@@ -150,7 +150,7 @@ function PosterSignal({ tw }) {
           <div className="rule" style={{ background: "rgba(242,235,220,0.3)", margin: "28px 0 18px" }}></div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 10 }}>
             <span className="mono" style={{ fontSize: 16, fontWeight: 600 }}>Text · Images · Video — July 11 · 18 · 25, Sat 9–11 am PT</span>
-            <span className="mono" style={{ fontSize: 14.5, color: "rgba(242,235,220,0.65)" }}>free · virtual · ccfest.rocks · form due July 4</span>
+            <span className="mono" style={{ fontSize: 14.5, color: "rgba(242,235,220,0.65)" }}>free · virtual · ccfest.rocks · recordings + next cycle</span>
           </div>
         </div>
       </div>

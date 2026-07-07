@@ -41,7 +41,7 @@ function PosterBrutalist({ tw }) {
             <span style={{ color: "oklch(0.85 0.21 110)" }}>CCFEST.ROCKS</span>
           </p>
           <p className="mono" style={{ fontSize: 12.5, color: "rgba(232,255,0,0.55)", margin: "12px 0 0" }}>
-            interest form due July 4 — what is the machine actually doing?
+            recordings + next cycle — what is the machine actually doing?
           </p>
         </div>
       </div>

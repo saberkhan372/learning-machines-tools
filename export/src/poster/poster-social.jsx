@@ -36,7 +36,7 @@ function PosterSquare({ tw }) {
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderTop: "2px solid var(--pink)", paddingTop: 24 }}>
         <span className="mono" style={{ fontSize: 24, fontWeight: 600, lineHeight: 1.5 }}>July 11 · 18 · 25<br />Saturdays 9–11 am PT</span>
-        <span className="mono" style={{ fontSize: 22, color: "var(--pmuted)", textAlign: "right", lineHeight: 1.7, whiteSpace: "nowrap" }}>free · virtual · beginner-friendly<br />register → ccfest.rocks</span>
+        <span className="mono" style={{ fontSize: 22, color: "var(--pmuted)", textAlign: "right", lineHeight: 1.7, whiteSpace: "nowrap" }}>free · virtual · beginner-friendly<br />join waitlist → ccfest.rocks</span>
       </div>
     </div>
   );
@@ -91,8 +91,8 @@ function PosterStory({ tw }) {
       ))}
 
       <div style={{ borderTop: "2px solid var(--pink)", paddingTop: 30, marginTop: 8 }}>
-        <p className="mono" style={{ fontSize: 27, fontWeight: 600, margin: 0 }}>Register → ccfest.rocks</p>
-        <p className="mono" style={{ fontSize: 20, color: "var(--pmuted)", margin: "12px 0 0" }}>interest form due July 4 · no coding required</p>
+        <p className="mono" style={{ fontSize: 27, fontWeight: 600, margin: 0 }}>Join waitlist → ccfest.rocks</p>
+        <p className="mono" style={{ fontSize: 20, color: "var(--pmuted)", margin: "12px 0 0" }}>recordings + next cycle · no coding required</p>
       </div>
     </div>
   );

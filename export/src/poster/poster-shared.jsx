@@ -138,7 +138,7 @@ function InfoFooter({ compact }) {
       <div className="cell"><span className="k">Dates</span><span className="v">July 11 · 18 · 25<small>three Saturdays</small></span></div>
       <div className="cell"><span className="k">Time</span><span className="v">9 – 11 am PT<small>live · virtual</small></span></div>
       <div className="cell"><span className="k">Cost</span><span className="v">Free<small>beginner-friendly</small></span></div>
-      <div className="cell"><span className="k">Register</span><span className="v">ccfest.rocks<small>interest form due July 4</small></span></div>
+      <div className="cell"><span className="k">Waitlist</span><span className="v">ccfest.rocks<small>recordings + next cycle</small></span></div>
     </div>
   );
 }

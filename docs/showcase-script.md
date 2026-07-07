@@ -48,6 +48,7 @@ A few norms for the share-out:
 - We respond to evidence, not to impressiveness.
 - "That surprised me" and "I don't know what to make of that" are complete responses.
 - We name what the human decided.
+- We name what the model contributed and what human work, data, or labor made the output possible.
 
 You have 8–10 minutes. There is no required format. Show what you made, explain what you found, or describe what you would teach. Then we ask two questions.
 
@@ -65,6 +66,14 @@ Facilitator keeps time. After each presentation, ask the group two questions:
 2. **"What question does this open?"** — something the project raised that wasn't settled
 
 Do not open the floor to general feedback. The two-question format keeps responses substantive and prevents the session from drifting into praise or critique.
+
+After those two questions, run a 60-second credit scan before anything is archived or recapped:
+
+1. **"What did the human do? What did the model do?"**
+2. **"What should be credited, and to whom?"**
+3. **"Whose work, data, or labor is hidden in this output?"**
+
+Use the [AI Use + Consent Checklist](../worksheets/ai-use-consent-checklist/) for credit, consent, and recap decisions; do not create a new worksheet for this scan.
 
 ### What participants might bring (by pathway)
 

@@ -57,7 +57,7 @@ function PosterMosh({ tw }) {
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderTop: "2px solid var(--pink)", paddingTop: 18 }}>
         <span className="mono" style={{ fontSize: 17, fontWeight: 600, lineHeight: 1.55 }}>July 11 · 18 · 25<br />Saturdays 9–11 am PT</span>
-        <span className="mono" style={{ fontSize: 15.5, color: "var(--pmuted)", textAlign: "right", lineHeight: 1.65, whiteSpace: "nowrap" }}>free · virtual · beginner-friendly<br />register → ccfest.rocks · form due July 4</span>
+        <span className="mono" style={{ fontSize: 15.5, color: "var(--pmuted)", textAlign: "right", lineHeight: 1.65, whiteSpace: "nowrap" }}>free · virtual · beginner-friendly<br />join waitlist → ccfest.rocks</span>
       </div>
     </div>
   );
