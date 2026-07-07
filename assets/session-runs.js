@@ -20,6 +20,7 @@ window.LM_SESSION_RUNS = [
     recap: { video: null, written: null, writtenHref: null },
     facilitation: "pages/docs-session-1-facilitation.html",
     overview: "pages/session-text.html",
+    deck: "pages/session-1-deck.html",
     steps: [
       { time: "0–5", segment: "Welcome & norms",
         move: "Name the question. Remind everyone direct AI use is optional.",
@@ -59,6 +60,7 @@ window.LM_SESSION_RUNS = [
     recap: { video: null, written: null, writtenHref: null },
     facilitation: "pages/docs-session-2-facilitation.html",
     overview: "pages/session-images.html",
+    deck: "pages/session-2-deck.html",
     steps: [
       { time: "0–5", segment: "Welcome & bridge",
         move: "Connect Session 1 to Session 2: text becomes tokens; images become pixels, features, and learned patterns.",
@@ -94,6 +96,7 @@ window.LM_SESSION_RUNS = [
     recap: { video: null, written: null, writtenHref: null },
     facilitation: "pages/docs-session-3-facilitation.html",
     overview: "pages/session-video.html",
+    deck: "pages/session-3-deck.html",
     steps: [
       { time: "0–5", segment: "Welcome & bridge",
         move: "Connect Session 2 to Session 3: a good frame is not enough; video must stay coherent across time.",

@@ -230,6 +230,7 @@
         '<span class="rc-when">' + esc(run.when) + "</span>" +
         '<button class="rc-btn is-primary" type="button" data-copy-all>Copy all session links</button>' +
         '<span class="rc-spacer"></span>' +
+        (run.deck ? '<a class="rc-side" href="' + esc(run.deck.replace(/^pages\//, "")) + '">Live deck ↗</a>' : "") +
         '<a class="rc-side" href="' + esc(run.facilitation.replace(/^pages\//, "")) + '">Facilitation script ↗</a>' +
         '<a class="rc-side" href="' + esc(run.overview.replace(/^pages\//, "")) + '">Session overview ↗</a>' +
         "</div>";

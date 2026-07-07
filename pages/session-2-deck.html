@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Session 2 · Images — Human Image Model (live deck · DRAFT)</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f6f4ef; --paper-2:#efebe2; --cell:#fffdf8;
+    --ink:#1c1a24; --muted:#6b6552; --line:#ddd7ca; --line-2:#cfc8b8;
+    --violet:#5546d6; --violet-deep:#3f33a8; --violet-soft:#ece9fb;
+    --amber:#bf7a20; --amber-ink:#8a560f; --amber-soft:#f7ecd6;
+    --mono:'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans:'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ===== audience stage: fixed 1280x720, scaled to fit ===== */
+  .stage-wrap{position:relative;overflow:hidden}
+  .stage{width:1280px;height:720px;position:absolute;top:0;left:0;transform-origin:top left;
+    background:radial-gradient(120% 90% at 0% 0%,#fbfaf6,var(--paper));display:flex;flex-direction:column;padding:58px 66px}
+  .stage.shape{background:radial-gradient(130% 95% at 100% 0%,#fdf4e4,var(--paper))}
+  .s-eyebrow{font-family:var(--mono);font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-ink);display:flex;align-items:center;gap:13px}
+  .s-eyebrow .pill{border:1px solid var(--amber);border-radius:30px;padding:3px 13px}
+  .s-head{font-family:var(--mono);font-weight:500;font-size:50px;line-height:1.04;letter-spacing:-.01em;margin:16px 0 0}
+  .s-idea{font-size:28px;line-height:1.25;color:var(--violet-deep);font-weight:600;margin:14px 0 0;max-width:32ch}
+  .s-body{margin-top:22px;flex:1;min-height:0;display:flex;flex-direction:column;gap:16px;overflow:hidden}
+  .s-task{margin-top:auto;display:flex;align-items:center;gap:15px;border:2px solid var(--amber);background:var(--amber-soft);border-radius:15px;padding:15px 22px}
+  .s-task .lab{font-family:var(--mono);font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-ink);flex:none}
+  .s-task .txt{font-size:22px;font-weight:600}
+  .s-take{margin-top:14px;border-left:5px solid var(--amber);background:var(--amber-soft);border-radius:0 13px 13px 0;padding:13px 18px;font-size:21px;font-weight:600;color:var(--amber-ink)}
+
+  .s-prompt{font-family:var(--mono);font-size:42px;background:var(--cell);border:1px solid var(--line-2);border-radius:15px;padding:26px 30px;text-align:center}
+  .s-prompt .cur{color:var(--violet);animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  .title-tape{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .title-tape .tk{font-family:var(--mono);font-size:25px;background:var(--cell);border:1px solid var(--line-2);border-radius:9px;padding:8px 14px}
+  .title-tape .tk.last{background:var(--violet-soft);border-color:var(--violet);color:var(--violet-deep);animation:pulse 1.7s var(--ease) infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(85,70,214,0)}50%{box-shadow:0 0 0 5px rgba(85,70,214,.16)}}
+  .title-flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:26px;font-family:var(--mono);font-size:17px;color:var(--muted)}
+  .title-flow .f{padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--cell)}
+  .title-flow .f.sh{border-color:var(--amber);color:var(--amber-ink);background:var(--amber-soft)}
+  .title-flow .bk{color:var(--violet)}
+
+  .qlist{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+  .qrow{display:flex;gap:15px;font-size:23px;line-height:1.3;background:var(--cell);border:1px solid var(--line);border-radius:11px;padding:13px 18px}
+  .qrow .qn{font-family:var(--mono);color:var(--violet);font-size:19px;flex:none}
+  .qrow .txt2{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .qrow .note{font-size:18px;color:var(--muted)}
+  .qrow .go{font-family:var(--mono);font-size:16px;color:var(--violet-deep);word-break:break-all}
+  .qrow.opt{border-style:dashed} .qrow.opt .qn{color:var(--muted)}
+  .qlist.c{gap:8px} .qrow.c{padding:7px 14px;font-size:18px;gap:12px}
+  .qrow.c .note{font-size:15px} .qrow.c .go{font-size:13px}
+
+  /* aid visuals on stage */
+  .av-bars{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+  .av-bar{display:grid;grid-template-columns:200px 1fr 56px;align-items:center;gap:15px}
+  .av-bar .nm{font-family:var(--mono);font-size:22px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .av-bar .tk{height:32px;background:var(--paper-2);border-radius:8px;overflow:hidden}
+  .av-bar .fl{height:100%;width:0;background:var(--violet);border-radius:8px;transition:width .4s var(--ease)}
+  .av-bar.top .fl{background:var(--amber)} .av-bar.top .nm{color:var(--amber-ink);font-weight:500}
+  .av-bar .n{font-family:var(--mono);font-size:21px;color:var(--muted)}
+  .av-empty{font-size:20px;color:var(--muted);text-align:center;margin-top:18px}
+
+  /* canvas raster aids (pixels, diffusion) */
+  .av-canvas{margin-top:2px;border:1px solid var(--line-2);border-radius:14px;overflow:hidden;background:#0e0d12;display:flex;align-items:center;justify-content:center;max-height:340px}
+  .av-canvas canvas{display:block;width:auto;max-width:100%;max-height:340px;height:auto;image-rendering:pixelated}
+  .av-cap{text-align:center;font-size:21px;margin-top:12px;color:var(--muted)} .av-cap b{color:var(--amber-ink)}
+
+  /* meters (guidance) */
+  .av-meter{display:grid;grid-template-columns:230px 1fr 62px;align-items:center;gap:14px;margin:0 0 14px}
+  .av-meter .nm{font-family:var(--mono);font-size:21px;text-align:right}
+  .av-meter .track{height:28px;background:var(--paper-2);border-radius:8px;overflow:hidden}
+  .av-meter .fill{height:100%;width:0;border-radius:8px;transition:width .3s var(--ease)}
+  .av-meter .v{font-family:var(--mono);font-size:18px;color:var(--muted)}
+
+  /* contributions map (whose picture) */
+  .av-contrib{display:flex;gap:16px;margin-top:4px}
+  .av-col{flex:1;border:1px solid var(--line-2);border-radius:14px;background:var(--cell);padding:16px 18px}
+  .av-col h4{margin:0 0 8px;font-family:var(--mono);font-size:19px;text-transform:uppercase;letter-spacing:.06em}
+  .av-col.h h4{color:var(--violet-deep)} .av-col.m h4{color:var(--amber-ink)}
+  .av-col p{margin:0;font-size:21px;line-height:1.35}
+  .av-hidden{margin-top:14px;border-left:5px solid var(--amber);background:var(--amber-soft);border-radius:0 12px 12px 0;padding:12px 16px;font-size:20px;color:var(--amber-ink)}
+  .av-hidden b{font-weight:700}
+
+  /* ===== audience window (full-bleed) ===== */
+  body.audience{background:#0e0d12;display:flex;align-items:center;justify-content:center}
+  .aud-flag{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:50;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(85,70,214,.85);padding:5px 12px;border-radius:20px;opacity:0;transition:opacity .3s}
+  body.audience:hover .aud-flag{opacity:.5}
+  .aud-nav{position:fixed;right:16px;bottom:16px;z-index:60;display:none;gap:8px;background:rgba(20,18,28,.7);padding:8px;border-radius:30px}
+  body.audience .aud-nav{display:flex}
+  .aud-nav button{font-family:var(--mono);font-size:13px;color:#fff;background:rgba(255,255,255,.12);border:none;border-radius:20px;padding:8px 13px}
+  .aud-nav button:hover{background:var(--violet)}
+
+  /* ===== presenter cockpit ===== */
+  .cockpit{display:grid;grid-template-rows:auto 1fr;height:100vh}
+  .topbar{display:flex;align-items:center;gap:13px;padding:11px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--paper),var(--paper-2))}
+  .tb-badge{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--violet);padding:5px 10px;border-radius:7px}
+  .tb-badge.draft{background:var(--amber)}
+  .tb-title{font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .tb-sp{flex:1}
+  .tb-timer{font-family:var(--mono);font-size:28px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
+  .tb-timer.warn{color:var(--violet-deep)} .tb-timer.done{color:var(--amber-ink)}
+  .mini{font-family:var(--mono);font-size:12px;border:1px solid var(--line-2);background:var(--paper);border-radius:8px;padding:6px 11px;color:var(--ink);transition:.15s var(--ease)}
+  .mini:hover{background:var(--violet-soft);border-color:var(--violet)}
+  .mini.go{background:var(--violet);color:#fff;border-color:var(--violet)} .mini.go:hover{background:var(--violet-deep)}
+
+  .body3{display:grid;grid-template-columns:210px minmax(0,1fr) 372px;min-height:0}
+  .rail{border-right:1px solid var(--line);background:linear-gradient(180deg,var(--paper),var(--paper-2));padding:16px 12px;overflow:auto;display:flex;flex-direction:column;gap:5px}
+  .rail h2{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+  .nav-item{display:grid;grid-template-columns:30px 1fr;gap:9px;align-items:center;text-align:left;border:1px solid transparent;background:none;border-radius:10px;padding:7px 8px;color:var(--ink);width:100%;transition:.15s var(--ease)}
+  .nav-item:hover{background:var(--cell);border-color:var(--line)}
+  .nav-item.on{background:var(--cell);border-color:var(--line-2)}
+  .nav-item.on .nv-num{background:var(--violet);color:#fff;border-color:var(--violet)}
+  .nv-num{font-family:var(--mono);font-size:12px;width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:8px;background:var(--cell);color:var(--muted)}
+  .nv-t{font-size:13px;font-weight:600;line-height:1.15}
+  .nv-m{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+  .center{min-width:0;overflow:auto;padding:18px 20px 30px}
+  .pv-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:8px}
+  .pv-label .dot{width:8px;height:8px;border-radius:50%;background:#cf4b4b}
+  .pv-box{width:100%;aspect-ratio:16/9;border:1px solid var(--line-2);border-radius:13px;overflow:hidden;box-shadow:0 10px 34px -20px rgba(40,30,80,.45)}
+  .notes{margin-top:18px;display:flex;flex-direction:column;gap:11px}
+  .seg-line{display:flex;align-items:baseline;gap:11px;margin-bottom:2px}
+  .seg-line .num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--ink);border-radius:7px;padding:4px 9px}
+  .seg-line.shape .num{background:var(--amber)}
+  .seg-line h2{font-family:var(--mono);font-weight:500;font-size:20px;margin:0}
+  .nc{border-radius:0 11px 11px 0;padding:12px 15px}
+  .nc .bl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+  .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:5px;color:#fff}
+  .tag.you{background:var(--violet)} .tag.room{background:var(--amber)} .tag.eye{background:var(--ink)}
+  .nc.look{border:1px solid var(--line-2);border-left:3px solid var(--ink);background:var(--cell)} .nc.look .bl{color:var(--muted)}
+  .nc.you{border-left:3px solid var(--violet);background:#fff;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)} .nc.you .bl{color:var(--violet-deep)}
+  .nc.say{border-left:3px solid var(--violet);background:var(--violet-soft)} .nc.say .bl{color:var(--violet-deep)}
+  .nc.room{border-left:3px solid var(--amber);background:var(--amber-soft)} .nc.room .bl{color:var(--amber-ink)}
+  .nc.watch{border:1px dashed var(--line-2);border-left:3px dashed var(--amber);background:var(--cell)} .nc.watch .bl{color:var(--amber-ink)}
+  .nc p{margin:0;font-size:14.5px;line-height:1.5} .nc p+p{margin-top:8px}
+  .nc ul{margin:0;padding-left:18px} .nc li{font-size:14px;margin:4px 0;line-height:1.45}
+
+  .ctrlcol{border-left:1px solid var(--line);background:rgba(255,253,248,.7);overflow:auto;padding:16px 15px;display:flex;flex-direction:column;gap:12px}
+  .ctrlcol h2{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0}
+  .ctrl{border:1px solid var(--line-2);border-radius:12px;background:var(--cell);overflow:hidden}
+  .ctrl .hd{display:flex;align-items:center;gap:9px;padding:9px 13px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--cell))}
+  .ctrl .ct{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--violet);padding:3px 8px;border-radius:6px}
+  .ctrl .ct.live{background:var(--amber)}
+  .ctrl .cn{font-weight:600;font-size:13px} .ctrl .mark{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+  .ctrl .bd{padding:12px 13px}
+  .ctrl .hint{font-size:12px;color:var(--muted);margin:0 0 10px}
+  textarea,input[type=text]{font-family:var(--mono);font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--line-2);border-radius:9px;padding:9px 11px;width:100%;resize:vertical}
+  textarea:focus,input:focus{outline:2px solid var(--violet);outline-offset:1px;border-color:var(--violet)}
+  .btn{font-family:var(--mono);font-size:12px;padding:8px 12px;border-radius:9px;border:1px solid var(--violet);background:var(--violet);color:#fff;transition:.15s var(--ease)}
+  .btn:hover{background:var(--violet-deep)}
+  .btn.ghost{background:transparent;color:var(--violet-deep)} .btn.ghost:hover{background:var(--violet-soft)}
+  .crow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  input[type=range]{width:100%;accent-color:var(--violet)}
+  .seg-toggle{display:inline-flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden}
+  .seg-toggle button{font-family:var(--mono);font-size:12px;padding:7px 11px;border:none;background:var(--paper);color:var(--muted)}
+  .seg-toggle button.on{background:var(--violet);color:#fff}
+  .small{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .small a{color:var(--violet-deep)}
+  .scards{display:grid;grid-template-columns:1fr;gap:10px;margin-top:4px}
+  .scard{border:1px solid var(--line-2);border-radius:11px;background:var(--paper);padding:11px}
+  .scard h4{margin:0 0 7px;font-size:13px;font-family:var(--mono)}
+  .navrow{display:flex;align-items:center;gap:9px;margin-top:4px}
+  .navbtn{font-family:var(--mono);font-size:12.5px;border:1px solid var(--line-2);background:var(--cell);border-radius:9px;padding:9px 14px;color:var(--ink)}
+  .navbtn:hover{border-color:var(--violet);background:var(--violet-soft)}
+  .navbtn.prim{background:var(--violet);color:#fff;border-color:var(--violet)} .navbtn.prim:hover{background:var(--violet-deep)}
+  .navrow .cnt{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+  .scrim{position:fixed;inset:0;background:rgba(20,16,30,.5);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+  .card{max-width:560px;background:var(--paper);border:1px solid var(--line-2);border-radius:18px;padding:26px 28px;box-shadow:0 30px 80px -30px rgba(30,20,60,.6)}
+  .card h3{font-family:var(--mono);font-weight:500;font-size:21px;margin:0 0 4px}
+  .card .two{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:16px 0}
+  .card .vw{border:1px solid var(--line-2);border-radius:11px;padding:13px;background:var(--cell)}
+  .card .vw h4{margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+  .card .vw.y h4{color:var(--violet-deep)} .card .vw.t h4{color:var(--amber-ink)}
+  .card .vw p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+  .card ol{margin:14px 0 0;padding-left:20px;font-size:14px} .card li{margin:6px 0}
+  .card .x{margin-top:18px;display:flex;gap:10px;justify-content:flex-end}
+  kbd{font-family:var(--mono);font-size:11px;background:var(--paper-2);border:1px solid var(--line-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px}
+
+  @media (max-width:1080px){
+    .body3{grid-template-columns:1fr}
+    .rail{flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--line)}
+    .rail h2{width:100%} .nav-item{width:auto} .nv-m{display:none}
+    .ctrlcol{border-left:none;border-top:1px solid var(--line)}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff}
+    .topbar,.rail,.ctrlcol,.aud-nav,.aud-flag,.scrim{display:none!important}
+    .body3{display:block} .center{overflow:visible}
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<div class="scrim" id="onboard" style="display:none">
+  <div class="card">
+    <h3>Two screens, one deck</h3>
+    <p class="small" style="color:var(--muted)">DRAFT — revise after the Session 1 run. A private cockpit for you, a clean slide for the room; the live tools sync between them and survive a refresh.</p>
+    <div class="two">
+      <div class="vw y"><h4>You see — presenter</h4><p>The slide preview, your script, what the room does, the timer, and the controls for each live tool.</p></div>
+      <div class="vw t"><h4>They see — audience</h4><p>Only the slide: the big idea, the room's task, and the live tool's visual. No notes, no controls.</p></div>
+    </div>
+    <ol>
+      <li>Click <b>Open audience window</b>. A clean slide opens in a new window.</li>
+      <li>In Zoom, <b>Share Screen → that window</b> (not your whole screen).</li>
+      <li>Keep this cockpit private. Move with <kbd>←</kbd> <kbd>→</kbd>; the tally, sliders, and text all mirror to the shared slide.</li>
+      <li>State persists across refreshes. Use <b>new session</b> for a clean run, and <b>copy log</b> after to export what the room built.</li>
+    </ol>
+    <div class="x">
+      <button class="btn ghost" id="obSkip">Run in one window</button>
+      <button class="btn" id="obOpen">Open audience window</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var isAudience = location.hash.indexOf('audience') !== -1;
+
+  /* ============ CONTENT (edit here) ============ */
+  var SITE = 'https://saberkhan372.github.io/learning-machines-tools/';
+  var VAGUE = 'a doctor';
+  var DEMO_ATTRS = 'man man older white coat stethoscope hospital man serious glasses coat man male';
+
+  /* studio slide: mirrors the Session 2 run-of-show in assets/session-runs.js */
+  var TOOLS = [
+    {n:'The Squint Test', u:SITE+'tools/feature-extraction-pixel-resolution/', w:'pixels → edges → features, for real'},
+    {n:'Diffusion Step-Through', u:SITE+'tools/diffusion-step-through-viewer/', w:'noise → image, guidance shown'},
+    {n:'Default Test Comparison', u:SITE+'tools/default-test-comparison-viewer/', w:'vague vs. specific vs. revised'},
+    {n:'CFG Scale Visualizer', u:SITE+'tools/cfg-scale-visualizer/', w:'guidance — match vs. artifacts'},
+    {n:'Image Default Test Board', u:SITE+'worksheets/image-default-test-board/', w:'worksheet — one default, one revision'}
+  ];
+  var CLOSERS = [
+    {n:'Session 2 page — your map of everything we touched', u:SITE+'pages/session-images.html'},
+    {n:'Vocabulary Field Guide — diffusion, guidance, defaults, training data', u:SITE+'pages/vocabulary-field-guide.html'},
+    {n:'Image Default Test Board — finish your claim before Saturday', u:SITE+'worksheets/image-default-test-board/'}
+  ];
+
+  var SLIDES = [
+    { id:'title', kind:'title', time:4, nav:'Start + bridge',
+      head:'Human Image Model',
+      idea:'Last week the room became a text machine. Today it becomes an image machine — noise into a picture — then asks whose pictures it learned from.',
+      notes:{
+        look:'Presenter cockpit: slide preview + notes on the left, live-tool controls on the right, timer and slide list up top. The audience window shows only the slide.',
+        you:['Screen-share the audience window only.','Bridge from Session 1: "text became tokens; images become pixels, then features."','Assign loose roles: Describers (chat), Voters, and a Scribe. You can play Scribe.'],
+        room:['Say hello in chat.','No task yet — get oriented.','Expect to type short descriptions and votes in chat.'],
+        say:['"Same investigation as last week, new modality. We predict, change one thing, and name the human decision behind the output."','"You do not need an image account today. The room and this console are the machine."'],
+        watch:'Keep the Session 1 thread visible: prediction and training shaped that loop; the same is true here, just over pixels instead of words.'} },
+
+    { id:'s0', kind:'setup', aid:'pixel', time:8, shape:true, num:'00', nav:'What a model sees',
+      head:'A model does not see a cat',
+      idea:'It sees pixels, then learns to group them into features — edges, textures, parts — from millions of captioned images.',
+      task:'As detail drops, call out in chat: what is the FIRST cue that tells you what this is?',
+      take:'An image model learned patterns from labelled pictures — including who made them.',
+      notes:{
+        look:'You look at: the detail slider and the pixels/features toggle. Attendees see: the scene getting blockier, then labelled regions.',
+        you:['Start at low detail (blocky). Ask what they can tell.','Raise detail slowly; note when it "snaps" into recognition.','Flip to Features: the model does not store pixels, it stores learned parts.'],
+        room:['Watch the blocks resolve.','In chat: colour, outline, texture, or context — which cue returned first?','Notice you recognised it before every pixel was clear.'],
+        say:['"You did not need every pixel — a few features were enough. That is what the model learned to do: pull features out of pixels."','"This is a cartoon of the Squint Test tool you will open later."'],
+        watch:'Do not claim the model literally draws this scene. The point is pixels → features → recognition, and that those features came from human-made, human-labelled data.'} },
+
+    { id:'s1', kind:'defaults', aid:'tally', time:9, num:'01', nav:'Round 1 — Defaults',
+      head:'Say "a doctor." What appears?',
+      idea:'When you leave detail unspecified, the model fills it from the average of its training data. So does a room.',
+      prompt:'a doctor',
+      task:'Type the FIRST image that comes to mind for "a doctor" — a few words in chat.',
+      take:'A default is a design decision. The model’s defaults come from whose images it saw most.',
+      notes:{
+        look:'You look at: Zoom chat and the tally box. Attendees see: the prompt and the room’s collective default after you tally.',
+        you:['Ask for the first image, not the "correct" one. Speed matters.','Paste 12–20 chat responses into the tally.','Name the room’s top default aloud, then ask: who is NOT in this picture?','Optionally run a second prompt ("a nurse", "a beautiful home") if time.'],
+        room:['Type fast — first instinct, a few words.','Notice the room has a default too, and where it came from.','Name one person the default leaves out.'],
+        say:['"Nobody chose to exclude anyone. The default just reflects what we have seen most — same mechanism as the model."','"Changing the default is not censorship. It is specifying what you actually want."'],
+        watch:'This is the bias/defaults core — 38 of 80 asked for it. Keep it about mechanism (data averages), not blame. The room’s own tally makes it land without pointing at the model alone.'} },
+
+    { id:'s2', kind:'aid', aid:'diffuse', time:8, num:'02', nav:'Round 2 — Diffusion',
+      head:'From noise to picture',
+      idea:'A diffusion model starts from pure static and removes noise step by step, pulled toward the prompt.',
+      task:'At each step, call out in chat: what is it becoming?',
+      take:'Generation is guided denoising — structure pulled out of noise toward a prompt.',
+      notes:{
+        look:'You look at: the step slider. Attendees see: static resolving toward the prompt image.',
+        you:['Start at step 0 — pure noise. Ask what they see (nothing / everything).','Advance slowly. Ask for guesses before the shape is obvious.','Name the prompt only after the room has guessed.'],
+        room:['Watch the static.','Guess early — what is emerging?','Notice the picture was never "drawn" — it was uncovered.'],
+        say:['"It is not painting left to right. It is removing noise everywhere at once, guided toward the prompt."','"Your early guesses are the same bet the model is making — commit to structure before the details exist."'],
+        watch:'This is a cartoon of the Diffusion Step-Through tool. Do not over-explain the math; the felt idea is noise → structure → detail, guided.'} },
+
+    { id:'s3', kind:'aid', aid:'guide', time:8, num:'03', nav:'Round 3 — Guidance',
+      head:'How hard should it obey?',
+      idea:'Guidance (CFG) sets how tightly the image is forced to match the prompt. More is not better.',
+      task:'In chat: name one thing low guidance gives you, and one thing high guidance breaks.',
+      take:'Guidance is a dial between the model’s habits and rigid obedience — both extremes cost you.',
+      notes:{
+        look:'You look at: the guidance slider. Attendees see: three meters — prompt match, the model’s own habits, artifact pressure.',
+        you:['Slide to low: the model wanders, adds its defaults.','Slide to high: match rises, then artifacts and sameness creep in.','Land in the middle and name the trade-off.'],
+        room:['Watch the three meters move together.','In chat: when did it start looking "AI-ish" or broken?','Notice the sweet spot is a choice, not a maximum.'],
+        say:['"Cranking guidance to the max does not give you obedience — it gives you fried, samey images."','"This is a dial a human sets. The model does not know what you meant."'],
+        watch:'A cartoon of the CFG Scale Visualizer. Frame guidance as a human-set trade-off, not intelligence.'} },
+
+    { id:'s4', kind:'contrib', aid:'contrib', time:10, shape:true, num:'04', nav:'Round 4 — Whose picture?',
+      head:'Whose picture is this, really?',
+      idea:'Every output carries hidden human labour: the data, the captions, and the artists behind the styles.',
+      task:'In chat: name one thing the human contributed, and one thing the model took from someone else.',
+      take:'Fluent output is not authorless. Naming the hidden labour is part of using it responsibly.',
+      notes:{
+        look:'You look at: three boxes you fill from the room. Attendees see: a live contributions map — human / machine / hidden.',
+        you:['Fill "the human did" and "the machine did" from chat.','Then the hard one: "hidden in the output" — whose work, style, or labour?','Do not resolve it. Hold the question open; let the room disagree.'],
+        room:['Separate the human’s choices from the model’s fill-ins.','Name whose labour or style might be hidden.','Say one thing you think should be credited.'],
+        say:['"The prompt-writer made choices. But the look came from real artists whose work trained it — usually uncredited."','"You can hold two things at once: this is useful, and it carries labour that was not consented or paid."'],
+        watch:'This round matters most for this cohort — nearly half are artists. Do not moralise or resolve; map the contributions honestly and let the tension stand. Wire it to the AI Use + Consent Checklist.'} },
+
+    { id:'s5', kind:'questions', time:7, num:'05', nav:'Debrief',
+      head:'What did the room become?',
+      idea:'Pixels become features; prompts become defaults; noise becomes a picture — all shaped by data.',
+      task:'Answer in chat or aloud — we will pick a few.',
+      take:'An image is generated from noise toward a prompt, but its defaults, style, and content come from human-made data.',
+      questions:[
+        'When did the blocky image "snap" into something you recognised?',
+        'Where did the room’s "a doctor" default come from?',
+        'What did higher guidance improve — and what did it break?',
+        'Whose labour or style is hidden in a generated image?',
+        'How is this different from a person drawing the same thing?'],
+      notes:{
+        look:'You look at: the questions and the clock. Attendees see: the questions only.',
+        you:['Pick 3–5. Start with the defaults and the hidden-labour questions.','Take chat first, then call on one or two people.','Tie back to Session 1: same investigation, new modality.'],
+        room:['Answer in chat or aloud.','Connect one moment to something you have noticed making or seeing AI images.'],
+        say:['"Defaults and hidden labour are not side issues — they are how the system works."','"You can now investigate an image model the way you investigated a text model."'],
+        watch:'End on defaults + labour, not on the diffusion math.'} },
+
+    { id:'s6', kind:'studio', time:23, num:'06', nav:'Tool studio',
+      head:'Your turn — the real tools',
+      idea:'The slides were cartoons. These are the instruments — real defaults, real dials.',
+      task:'Pick ONE tool. Log one default + one responsible revision on the Image Default Test Board.',
+      notes:{
+        look:'You look at: the Copy links button and the clock. Attendees see: the tool list with what to notice in each.',
+        you:['Click Copy links for chat and paste the block into Zoom chat.','Name the deal: one tool, one default, one worksheet row.','Circulate — ask "what did the model fill in that you did not ask for?"','Five-minute warning: one claim in chat.'],
+        room:['Open one tool — no accounts, no installs.','Find one default the model fills in unasked.','Write one responsible revision on the Image Default Test Board.','Drop one claim in chat before we regroup.'],
+        say:['"The point is not a pretty picture — it is a claim about what the model assumes."','"Also worth a look: the Dataset Balance Simulator, for where those defaults come from."'],
+        watch:'Steer people to finish one worksheet row before touring tools. The claim is the deliverable.'} },
+
+    { id:'s7', kind:'close', time:5, shape:true, num:'07', nav:'Close + next week',
+      head:'What you leave with',
+      idea:'You can now narrate an image model: pixels → features → noise → guided denoising → defaults, all shaped by human data.',
+      take:'Next Saturday: video — images plus time, and where staying consistent gets expensive.',
+      notes:{
+        look:'You look at: the closing pointers and the clock. Attendees see: three links and the takeaway.',
+        you:['Read the recap consent line: recordings are for registered participants; people choose how they are named.','Point at the three links — session page is the map, worksheet is the invitation.','Name next Saturday: video, same time, same room.','After the call: click copy log and paste it into your recap notes.'],
+        room:['Bookmark the session page.','Finish your Image Default Test Board row before Saturday if you can.','Bring one question about video next week.'],
+        say:['"Same loop, new modality: predict, change one thing, compare, name the human decision."','"Next week: what has to stay the same from frame to frame for motion to feel real?"'],
+        watch:'End warm and on time. The worksheet is an invitation, not homework pressure.'} }
+  ];
+
+  /* ============ STATE ============ */
+  function freshState(rev){
+    return {
+      rev: rev||0,
+      slide:0,
+      tally:[],
+      pixel:{detail:0.14, mode:'pixels'},
+      diffuse:{step:0.0, seed:1337},
+      guide:{g:0.42},
+      contrib:{
+        human:'chose the prompt, picked and cropped one result, decided it was good enough',
+        model:'filled every unspecified detail from training-data averages',
+        hidden:'the photographers, illustrators, and stock libraries whose captioned images taught it — usually uncredited' }
+    };
+  }
+  var state = freshState(0);
+
+  /* ============ SESSION IDENTITY + PERSISTENCE ============ */
+  var SID_KEY = 'hlm-s2-sid', STORE_BASE = 'hlm-s2-deck-', CHAN_BASE = 'hlm-s2-deck-v1-';
+  function newSidValue(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  var sid = (function(){ try{
+    var s = localStorage.getItem(SID_KEY);
+    if(!s){ s = newSidValue(); localStorage.setItem(SID_KEY, s); }
+    return s;
+  }catch(e){ return 'solo'; } })();
+  function storeKey(){ return STORE_BASE + sid; }
+  function saveState(){ try{ localStorage.setItem(storeKey(), JSON.stringify(state)); }catch(e){} }
+  function restoreState(){ try{
+    var s = JSON.parse(localStorage.getItem(storeKey()) || 'null');
+    if(s && typeof s.slide === 'number'){ state = freshState(0); for(var k in s) state[k] = s[k]; }
+  }catch(e){} }
+  function pruneStores(){ try{
+    var dead = [], k;
+    for(var i=0;i<localStorage.length;i++){ k=localStorage.key(i);
+      if(k && k.indexOf(STORE_BASE)===0 && k!==storeKey()) dead.push(k); }
+    dead.forEach(function(d){ localStorage.removeItem(d); });
+  }catch(e){} }
+  restoreState();
+
+  /* ============ SYNC (per-run channel + rev guard) ============ */
+  var chan = null;
+  function onMsg(e){ var m=e.data||{};
+    if(m.type==='state'){ if((m.state.rev||0) < (state.rev||0)) return;
+      var sameSlide=(m.state.slide===state.slide); state=m.state; saveState();
+      if(sameSlide){ paint(); syncAffordances(); } else { renderAll(); } }
+    else if(m.type==='rekey' && m.sid && m.sid!==sid){
+      sid=m.sid; try{ localStorage.setItem(SID_KEY, sid); }catch(err){}
+      openChannel(); restoreState(); renderAll();
+      if(isAudience && chan) chan.postMessage({type:'hello'}); }
+    else if(m.type==='hello' && !isAudience){ broadcast(); }
+  }
+  function openChannel(){ if(chan){ try{ chan.close(); }catch(e){} }
+    chan = ('BroadcastChannel' in window) ? new BroadcastChannel(CHAN_BASE+sid) : null;
+    if(chan) chan.onmessage = onMsg; }
+  openChannel();
+  function broadcast(){ if(chan) chan.postMessage({type:'state', state:state}); }
+  function update(){ state.rev=(state.rev||0)+1; paint(); saveState(); broadcast(); }
+  function commit(){ state.rev=(state.rev||0)+1; renderAll(); saveState(); broadcast(); }
+
+  /* ============ HELPERS ============ */
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function shortUrl(u){ return u.replace(/^https?:\/\//,''); }
+  function clamp01(x){ return x<0?0:x>1?1:x; }
+  function clampByte(x){ return x<0?0:x>255?255:x; }
+  function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a);
+    t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+
+  /* ============ AUDIENCE STAGE HTML ============ */
+  function audienceHTML(i){
+    var s=SLIDES[i];
+    var eyebrow = (s.num!=null)
+      ? '<div class="s-eyebrow"><span class="pill">'+s.num+'</span> '+esc(s.nav.replace(/^Round \d+ — /,''))+'</div>'
+      : '<div class="s-eyebrow"><span class="pill">workshop</span> 12–40 people · 120 min</div>';
+    var head='<div class="s-head">'+esc(s.head)+'</div>';
+    var idea=s.idea?'<div class="s-idea">'+esc(s.idea)+'</div>':'';
+    var sh=s.shape?' shape':'';
+
+    if(s.kind==='title'){
+      var flow='<div class="title-flow"><span class="f sh">captioned images</span><span>→</span><span class="f">pixels</span><span>→</span><span class="f">features</span><span>→</span><span class="f">noise</span><span>→</span><span class="f">denoise</span><span>→</span><span class="f">defaults</span> <span class="bk">↺</span> <span>→</span><span class="f sh">your crop &amp; choices</span></div>';
+      return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:38ch">'+esc(s.idea)+'</div>'+flow+'</div>';
+    }
+    if(s.kind==='setup'){
+      var body='<div class="s-body">'+pixelViz()+'</div>';
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+body+task(s)+'</div>';
+    }
+    if(s.kind==='defaults'){
+      var body='<div class="s-body"><div class="s-prompt">"'+esc(s.prompt)+'" <span class="cur">▮</span></div>'+tallyBars()+'</div>';
+      return '<div class="stage">'+eyebrow+head+idea+body+task(s)+'</div>';
+    }
+    if(s.aid==='diffuse'){
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+diffuseViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.aid==='guide'){
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+guideViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='contrib'){
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+contribViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='questions'){
+      var qs='<div class="qlist">'+s.questions.map(function(q,k){return '<div class="qrow"><span class="qn">Q'+(k+1)+'</span>'+esc(q)+'</div>';}).join('')+'</div>';
+      return '<div class="stage">'+eyebrow+head+'<div class="s-body">'+qs+'</div><div class="s-take">'+esc(s.take)+'</div></div>';
+    }
+    if(s.kind==='studio'){
+      var rows='<div class="qlist c">'+TOOLS.map(function(t,k){
+        return '<div class="qrow c'+(t.opt?' opt':'')+'"><span class="qn">'+(k+1)+'</span><span class="txt2"><span><b>'+esc(t.n)+'</b> <span class="note">— '+esc(t.w)+'</span></span><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
+      }).join('')+'</div>';
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='close'){
+      var pts='<div class="qlist c">'+CLOSERS.map(function(t,k){
+        return '<div class="qrow c"><span class="qn">→</span><span class="txt2"><b>'+esc(t.n)+'</b><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
+      }).join('')+'</div>';
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+pts+'</div><div class="s-take">'+esc(s.take)+'</div></div>';
+    }
+    return '<div class="stage">'+eyebrow+head+idea+'</div>';
+  }
+  function task(s){ return s.task?'<div class="s-task"><span class="lab">your task</span><span class="txt">'+esc(s.task)+'</span></div>':''; }
+
+  function tallyBars(){
+    if(!state.tally.length) return '<div class="av-empty">The room’s collective default appears here once people drop words in chat.</div>';
+    var max=state.tally[0][1];
+    return '<div class="av-bars">'+state.tally.slice(0,7).map(function(p,k){
+      return '<div class="av-bar'+(k===0?' top':'')+'"><span class="nm">'+esc(p[0])+'</span><span class="tk"><span class="fl" style="width:'+(p[1]/max*100)+'%"></span></span><span class="n">'+p[1]+'</span></div>';
+    }).join('')+'</div>';
+  }
+  function pixelViz(){
+    return '<div class="av-canvas"><canvas data-aid="pixel" width="256" height="144"></canvas></div>'+
+      '<div class="av-cap">mode <b>'+esc(state.pixel.mode)+'</b> · detail '+Math.round(state.pixel.detail*100)+'% — a model works from <b>features</b>, not stored pixels</div>';
+  }
+  function diffuseViz(){
+    return '<div class="av-canvas"><canvas data-aid="diffuse" width="256" height="144"></canvas></div>'+
+      '<div class="av-cap">prompt: <b>an orange cat, front view</b> · step '+Math.round(state.diffuse.step*100)+'% — structure pulled out of noise</div>';
+  }
+  function meterRow(nm,val,color){ var pct=Math.round(clamp01(val)*100);
+    return '<div class="av-meter"><span class="nm">'+esc(nm)+'</span><span class="track"><span class="fill" style="width:'+pct+'%;background:'+color+'"></span></span><span class="v">'+pct+'%</span></div>'; }
+  function guideViz(){
+    var g=state.guide.g;
+    var match = g<0.8 ? g/0.8 : 1-(g-0.8)*0.6;
+    var habit = 1-g;
+    var artifact = g<0.6 ? g*0.18 : 0.108+(g-0.6)*2.1;
+    var read = g<0.3 ? 'loose — the model wanders off-prompt'
+      : (g>0.72 ? 'rigid — artifacts and sameness creep in' : 'balanced — follows the prompt, still natural');
+    return '<div style="margin-top:8px">'+meterRow('prompt match',match,'#5546d6')+
+      meterRow('the model’s own habits',habit,'#8a8470')+
+      meterRow('artifact pressure',artifact,'#bf7a20')+'</div>'+
+      '<div class="av-cap">guidance '+Math.round(g*100)+'% — <b>'+esc(read)+'</b></div>';
+  }
+  function contribViz(){
+    var c=state.contrib;
+    return '<div class="av-contrib">'+
+      '<div class="av-col h"><h4>the human did</h4><p>'+esc(c.human||'—')+'</p></div>'+
+      '<div class="av-col m"><h4>the machine did</h4><p>'+esc(c.model||'—')+'</p></div>'+
+      '</div><div class="av-hidden"><b>hidden in the output:</b> '+esc(c.hidden||'—')+'</div>';
+  }
+
+  /* ============ CANVAS AIDS (deterministic; both windows match) ============ */
+  function drawAids(rootEl){
+    var px=rootEl.querySelector('canvas[data-aid="pixel"]'); if(px) drawPixel(px);
+    var df=rootEl.querySelector('canvas[data-aid="diffuse"]'); if(df) drawDiffuse(df);
+  }
+  function paintScene(ctx,W,H){ // procedural, deterministic outdoor scene
+    var g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#8fb9ea'); g.addColorStop(1,'#ecd6a6');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#f4c542'; ctx.beginPath(); ctx.arc(W*0.72,H*0.30,H*0.14,0,7); ctx.fill();
+    ctx.fillStyle='#6f8f5a'; ctx.fillRect(0,H*0.66,W,H*0.34);
+    ctx.fillStyle='#6b4a2b'; ctx.fillRect(W*0.22-W*0.012,H*0.50,W*0.024,H*0.22);
+    ctx.fillStyle='#3f7a43'; ctx.beginPath(); ctx.arc(W*0.22,H*0.46,H*0.15,0,7); ctx.fill();
+  }
+  var _sceneCv=null;
+  function sceneCanvas(W,H){ if(!_sceneCv){ _sceneCv=document.createElement('canvas'); }
+    if(_sceneCv.width!==W||_sceneCv.height!==H){ _sceneCv.width=W; _sceneCv.height=H; }
+    paintScene(_sceneCv.getContext('2d'),W,H); return _sceneCv; }
+  function drawPixel(cv){
+    var W=cv.width,H=cv.height,ctx=cv.getContext('2d');
+    var full=sceneCanvas(W,H);
+    var blocks=Math.max(6, Math.round(6 + state.pixel.detail*(W-6)));
+    var bh=Math.max(4, Math.round(blocks*H/W));
+    var tmp=document.createElement('canvas'); tmp.width=blocks; tmp.height=bh;
+    var tctx=tmp.getContext('2d'); tctx.imageSmoothingEnabled=true; tctx.drawImage(full,0,0,blocks,bh);
+    ctx.imageSmoothingEnabled=false; ctx.clearRect(0,0,W,H); ctx.drawImage(tmp,0,0,W,H);
+    if(state.pixel.mode==='features'){
+      ctx.globalAlpha=0.5; ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H); ctx.globalAlpha=1;
+      var boxes=[[0.10,0.30,0.24,0.30,'tree'],[0.60,0.14,0.24,0.34,'sun'],[0.0,0.66,1.0,0.34,'ground']];
+      ctx.lineWidth=Math.max(1,W*0.006); ctx.font='bold '+Math.round(H*0.11)+'px monospace'; ctx.textBaseline='top';
+      boxes.forEach(function(b){ var x=b[0]*W,y=b[1]*H,w=b[2]*W,h=b[3]*H;
+        ctx.strokeStyle='#5546d6'; ctx.strokeRect(x,y,w,h);
+        ctx.fillStyle='#ece9fb'; ctx.fillText(b[4], x+W*0.012, y+H*0.02); });
+    }
+  }
+  function catTarget(W,H){
+    var cv=document.createElement('canvas'); cv.width=W; cv.height=H; var ctx=cv.getContext('2d');
+    ctx.fillStyle='#14121c'; ctx.fillRect(0,0,W,H);
+    var cx=W*0.5, cy=H*0.56, r=H*0.34;
+    ctx.fillStyle='#d98a3d';
+    // ears
+    ctx.beginPath(); ctx.moveTo(cx-r*0.7,cy-r*0.7); ctx.lineTo(cx-r*0.25,cy-r*1.15); ctx.lineTo(cx-r*0.05,cy-r*0.55); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(cx+r*0.7,cy-r*0.7); ctx.lineTo(cx+r*0.25,cy-r*1.15); ctx.lineTo(cx+r*0.05,cy-r*0.55); ctx.closePath(); ctx.fill();
+    // head
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,7); ctx.fill();
+    // eyes
+    ctx.fillStyle='#14121c';
+    ctx.beginPath(); ctx.ellipse(cx-r*0.38,cy-r*0.05,r*0.12,r*0.20,0,0,7); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(cx+r*0.38,cy-r*0.05,r*0.12,r*0.20,0,0,7); ctx.fill();
+    // nose
+    ctx.fillStyle='#8a560f';
+    ctx.beginPath(); ctx.moveTo(cx-r*0.10,cy+r*0.28); ctx.lineTo(cx+r*0.10,cy+r*0.28); ctx.lineTo(cx,cy+r*0.42); ctx.closePath(); ctx.fill();
+    return ctx.getImageData(0,0,W,H).data;
+  }
+  var _catData=null, _catW=0, _catH=0;
+  function drawDiffuse(cv){
+    var W=cv.width,H=cv.height,ctx=cv.getContext('2d');
+    if(!_catData||_catW!==W||_catH!==H){ _catData=catTarget(W,H); _catW=W; _catH=H; }
+    var out=ctx.createImageData(W,H), d=out.data, t=_catData;
+    var rnd=mulberry32(state.diffuse.seed|0), step=clamp01(state.diffuse.step);
+    var jit=(1-step)*70;
+    for(var p=0;p<W*H;p++){ var i=p*4;
+      if(rnd()<step){
+        d[i]=clampByte(t[i]+(rnd()*2-1)*jit);
+        d[i+1]=clampByte(t[i+1]+(rnd()*2-1)*jit);
+        d[i+2]=clampByte(t[i+2]+(rnd()*2-1)*jit);
+        d[i+3]=255;
+      } else { var n=(rnd()*255)|0; d[i]=n; d[i+1]=n; d[i+2]=n; d[i+3]=255; }
+    }
+    ctx.putImageData(out,0,0);
+  }
+
+  function wireStage(rootEl){ /* no clickable stage elements in this deck */ }
+
+  /* ============ SESSION LOG ============ */
+  function buildLog(){
+    var d=new Date(), L=[];
+    L.push('# Human Image Model — session log');
+    L.push('_Session 2 · Images — ' + d.toDateString() + '_');
+    L.push('');
+    L.push('## Round 1 — "'+VAGUE+'" defaults');
+    L.push(state.tally.length ? ('- room tally: ' + state.tally.map(function(p){return p[0]+' ×'+p[1];}).join(' · ')) : '- no tally recorded');
+    L.push('');
+    L.push('## Round 2 — diffusion');
+    L.push('- final step: ' + Math.round(state.diffuse.step*100) + '% (noise → image)');
+    L.push('');
+    L.push('## Round 3 — guidance (CFG)');
+    L.push('- final guidance: ' + Math.round(state.guide.g*100) + '%');
+    L.push('');
+    L.push('## Round 4 — whose picture (contributions map)');
+    L.push('- the human did: ' + state.contrib.human);
+    L.push('- the machine did: ' + state.contrib.model);
+    L.push('- hidden in the output: ' + state.contrib.hidden);
+    L.push('');
+    L.push('_Generated from the Session 2 live deck. Tools: ' + SITE + 'pages/session-images.html_');
+    return L.join('\n');
+  }
+  function copyText(txt, done, fail){
+    var fb=function(){ var a=document.createElement('textarea');a.value=txt;a.style.position='fixed';a.style.left='-9999px';
+      document.body.appendChild(a);a.select();try{document.execCommand('copy');done();}catch(e){fail();}document.body.removeChild(a); };
+    if(navigator.clipboard&&window.isSecureContext) navigator.clipboard.writeText(txt).then(done,fb); else fb();
+  }
+
+  /* ============ PAINT ============ */
+  var root=document.getElementById('root');
+  function fit(wrap, full){ var st=wrap.querySelector('.stage'); if(!st) return;
+    var w=full?window.innerWidth:wrap.clientWidth, h=full?window.innerHeight:wrap.clientHeight;
+    var sc=Math.min(w/1280, h/720); st.style.transform='scale('+sc+')'; }
+  function paint(){
+    if(isAudience){ var aw=document.getElementById('aw'); if(!aw) return;
+      aw.innerHTML=audienceHTML(state.slide)+'<div class="aud-flag">audience view</div>'; fit(aw,true); wireStage(aw); drawAids(aw);
+    } else { var pv=document.getElementById('pv'); if(!pv) return;
+      pv.innerHTML=audienceHTML(state.slide); requestAnimationFrame(function(){fit(pv,false);}); wireStage(pv); drawAids(pv); }
+  }
+  function syncAffordances(){ /* presenter readouts that must not rebuild controls live here */ }
+
+  /* ============ TOP-LEVEL RENDER ============ */
+  function renderAll(){ isAudience ? buildAudience() : buildPresenter(); }
+
+  function buildAudience(){
+    document.body.classList.add('audience');
+    root.innerHTML='<div class="stage-wrap" id="aw" style="width:100vw;height:100vh"></div>'+
+      '<div class="aud-nav"><button id="an-prev">←</button><button id="an-mode">presenter</button><button id="an-next">→</button></div>';
+    paint();
+    window.onresize=function(){ var aw=document.getElementById('aw'); if(aw) fit(aw,true); };
+    document.getElementById('an-prev').onclick=function(){ goto(state.slide-1); };
+    document.getElementById('an-next').onclick=function(){ goto(state.slide+1); };
+    document.getElementById('an-mode').onclick=function(){ isAudience=false; location.hash=''; document.body.classList.remove('audience'); renderAll(); };
+  }
+
+  function buildPresenter(){
+    document.body.classList.remove('audience');
+    var i=state.slide, s=SLIDES[i];
+    root.innerHTML=
+      '<div class="cockpit">'+
+        '<div class="topbar"><span class="tb-badge draft">draft</span>'+
+          '<span class="tb-title">Session 2 · Human Image Model · only you see this</span><span class="tb-sp"></span>'+
+          '<span class="tb-timer" id="timer">00:00</span>'+
+          '<button class="mini go" id="tStart">start</button><button class="mini" id="tReset">reset</button>'+
+          '<button class="mini" id="openAud">open audience window</button>'+
+          '<button class="mini" id="peek">preview audience</button>'+
+          '<button class="mini" id="logBtn">copy log</button>'+
+          '<button class="mini" id="fresh">new session</button>'+
+          '<button class="mini" id="howto">how to run</button>'+
+          '<button class="mini" id="printb">print</button></div>'+
+        '<div class="body3">'+
+          '<aside class="rail"><h2>Slides</h2><div id="nav"></div></aside>'+
+          '<main class="center">'+
+            '<div class="pv-label"><span class="dot"></span> on their screen now</div>'+
+            '<div class="pv-box stage-wrap" id="pv"></div>'+
+            '<div class="notes" id="notes"></div>'+
+          '</main>'+
+          '<aside class="ctrlcol"><h2>Live tool · this slide</h2><div id="controls"></div>'+
+            '<div class="navrow"><button class="navbtn" id="prev">← prev</button><button class="navbtn prim" id="next">next →</button><span class="cnt" id="cnt"></span></div>'+
+          '</aside>'+
+        '</div>'+
+      '</div>';
+
+    var nav=document.getElementById('nav');
+    SLIDES.forEach(function(sl,k){ var b=document.createElement('button'); b.className='nav-item'+(k===i?' on':'');
+      b.innerHTML='<span class="nv-num">'+(sl.num!=null?sl.num:'··')+'</span><span><span class="nv-t">'+esc(sl.nav)+'</span><span class="nv-m">'+sl.time+' min</span></span>';
+      b.onclick=function(){ goto(k); }; nav.appendChild(b); });
+
+    document.getElementById('notes').innerHTML=notesHTML(s);
+    document.getElementById('controls').innerHTML=controlsHTML(s);
+    document.getElementById('cnt').textContent=(i+1)+' / '+SLIDES.length;
+
+    paint();
+    window.onresize=function(){ var pv=document.getElementById('pv'); if(pv) fit(pv,false); };
+
+    document.getElementById('prev').onclick=function(){ goto(i-1); };
+    document.getElementById('next').onclick=function(){ goto(i+1); };
+    document.getElementById('openAud').onclick=openAudience;
+    document.getElementById('peek').onclick=function(){ isAudience=true; location.hash='audience-peek'; renderAll(); var f=document.querySelector('.aud-flag'); if(f){f.textContent='audience preview — Esc to return';f.style.opacity='.6';} };
+    document.getElementById('howto').onclick=function(){ var ob=document.getElementById('onboard'); ob.style.display='flex'; };
+    document.getElementById('printb').onclick=function(){ window.print(); };
+    document.getElementById('logBtn').onclick=function(){ var b=this;
+      copyText(buildLog(), function(){ b.textContent='copied ✓'; setTimeout(function(){b.textContent='copy log';},1400); },
+        function(){ b.textContent='copy failed'; setTimeout(function(){b.textContent='copy log';},1400); }); };
+    document.getElementById('fresh').onclick=function(){
+      if(!confirm('Start a fresh session? This clears the tally, sliders, and contributions map.')) return;
+      var next=newSidValue();
+      if(chan) chan.postMessage({type:'rekey', sid:next});
+      sid=next; try{ localStorage.setItem(SID_KEY, sid); }catch(e){}
+      openChannel(); pruneStores();
+      state=freshState((state.rev||0)+1); TM.rem=SLIDES[0].time*60; TM.run=false; commit();
+    };
+
+    wireTimer(s.time);
+    wireControls(s);
+    syncAffordances();
+  }
+
+  function notesHTML(s){
+    var n=s.notes, li=function(a){return '<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';};
+    var p=function(a){return a.map(function(x){return '<p>'+esc(x)+'</p>';}).join('');};
+    var seg='<div class="seg-line'+(s.shape?' shape':'')+'">'+(s.num!=null?'<span class="num">'+s.num+'</span>':'')+'<h2>'+esc(s.nav)+'</h2></div>';
+    return seg+
+      '<div class="nc look"><div class="bl"><span class="tag eye">view</span> what you’re looking at</div><p>'+esc(n.look)+'</p></div>'+
+      '<div class="nc you"><div class="bl"><span class="tag you">you</span> instructor does</div>'+li(n.you)+'</div>'+
+      '<div class="nc room"><div class="bl"><span class="tag room">room</span> zoom attendees do</div>'+li(n.room)+'</div>'+
+      '<div class="nc say"><div class="bl"><span class="tag you">you</span> say this</div>'+p(n.say)+'</div>'+
+      '<div class="nc watch"><div class="bl">watch for / transition</div><p>'+esc(n.watch)+'</p></div>';
+  }
+
+  /* ============ CONTROLS ============ */
+  function controlsHTML(s){
+    if(s.aid==='pixel') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Pixels → features</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Drop the detail to blur recognition, then raise it. Flip to Features to show learned parts, not stored pixels.</p>'+
+      '<label class="small" style="display:flex;justify-content:space-between">detail <b id="pxv" style="color:var(--violet-deep)">14%</b></label>'+
+      '<input type="range" id="pxSlider" min="2" max="100" value="14" />'+
+      '<div class="crow"><span class="seg-toggle" id="pxMode"><button data-v="pixels" class="on">pixels</button><button data-v="features">features</button></span></div></div></div>';
+    if(s.aid==='tally') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">live tally</span><span class="cn">Room default</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Paste the words the room dropped for "'+esc(VAGUE)+'". Bars push to the shared slide; amber is the top default.</p>'+
+      '<textarea id="tIn" rows="3" placeholder="man older white coat stethoscope ..."></textarea>'+
+      '<div class="crow"><button class="btn" id="tGo">Tally → audience</button><button class="btn ghost" id="tDemo">Use demo words</button><button class="btn ghost" id="tClr">Clear</button></div></div></div>'+
+      '<p class="small">Ask "who is NOT in this picture?" before moving on. The point is where defaults come from, not blame.</p>';
+    if(s.aid==='diffuse') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Diffusion</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Drag from pure noise (0%) to the finished image. Ask for guesses before the shape is obvious.</p>'+
+      '<label class="small" style="display:flex;justify-content:space-between">denoise step <b id="dfv" style="color:var(--violet-deep)">0%</b></label>'+
+      '<input type="range" id="dfSlider" min="0" max="100" value="0" />'+
+      '<div class="crow"><button class="btn" id="dfStep">+ one step</button><button class="btn ghost" id="dfRst">Back to noise</button></div></div></div>';
+    if(s.aid==='guide') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Guidance (CFG)</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Low = the model wanders. High = rigid, then artifacts. Land in the middle and name the trade-off.</p>'+
+      '<label class="small" style="display:flex;justify-content:space-between">guidance <b id="gdv" style="color:var(--violet-deep)">42%</b></label>'+
+      '<input type="range" id="gdSlider" min="0" max="100" value="42" /></div></div>';
+    if(s.aid==='contrib') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Contributions map</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Fill each box from the room. The hard one is "hidden" — whose work or style is in the output. Do not resolve it.</p>'+
+      '<div class="scards">'+
+        '<div class="scard"><h4>the human did</h4><textarea id="coH" rows="2"></textarea></div>'+
+        '<div class="scard"><h4>the machine did</h4><textarea id="coM" rows="2"></textarea></div>'+
+        '<div class="scard"><h4>hidden in the output</h4><textarea id="coX" rows="3"></textarea></div>'+
+      '</div><div class="crow"><span class="small">edits mirror live · <a href="'+SITE+'worksheets/ai-use-consent-checklist/" target="_blank" rel="noopener">Consent checklist ↗</a></span></div></div></div>';
+    if(s.kind==='studio') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Tool links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
+      '<p class="hint">One click copies every tool + the worksheet as a paste-ready block for Zoom chat.</p>'+
+      '<div class="crow"><button class="btn" id="copyL">Copy links for chat</button><span class="small" id="copyLS"></span></div></div></div>'+
+      '<p class="small">Same list as the <a href="session-links.html" target="_blank" rel="noopener">Session Link Sheet</a> — edit <code>assets/session-runs.js</code> to change both.</p>';
+    if(s.kind==='close') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Closing links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
+      '<p class="hint">Paste the three take-home links, then click <b>copy log</b> in the top bar and save what the room built.</p>'+
+      '<div class="crow"><button class="btn" id="copyX2">Copy closing links</button><span class="small" id="copyXS"></span></div></div></div>';
+    return '<p class="small">No live tool on this slide — this one runs entirely in the room and on the slide.</p>';
+  }
+
+  /* ============ WIRE CONTROLS ============ */
+  function wireControls(s){
+    if(s.aid==='pixel'){ var sl=document.getElementById('pxSlider'), v=document.getElementById('pxv');
+      sl.value=Math.round(state.pixel.detail*100); v.textContent=Math.round(state.pixel.detail*100)+'%';
+      sl.oninput=function(){ state.pixel.detail=Math.max(0.02,parseInt(sl.value,10)/100); v.textContent=Math.round(state.pixel.detail*100)+'%'; update(); };
+      document.getElementById('pxMode').onclick=function(e){ var b=e.target.closest('button'); if(!b)return;
+        Array.prototype.forEach.call(this.children,function(c){c.classList.toggle('on',c===b);});
+        state.pixel.mode=b.dataset.v; update(); };
+    }
+    if(s.aid==='tally'){
+      var run=function(){ var raw=document.getElementById('tIn').value.toLowerCase().split(/[\s,]+/).map(function(w){return w.replace(/[^a-z'·-]/g,'');}).filter(Boolean);
+        var c={}; raw.forEach(function(w){c[w]=(c[w]||0)+1;});
+        state.tally=Object.keys(c).map(function(k){return [k,c[k]];}).sort(function(a,b){return b[1]-a[1];}); update(); };
+      document.getElementById('tGo').onclick=run;
+      document.getElementById('tDemo').onclick=function(){ document.getElementById('tIn').value=DEMO_ATTRS; run(); };
+      document.getElementById('tClr').onclick=function(){ document.getElementById('tIn').value=''; state.tally=[]; update(); };
+    }
+    if(s.aid==='diffuse'){ var sl=document.getElementById('dfSlider'), v=document.getElementById('dfv');
+      sl.value=Math.round(state.diffuse.step*100); v.textContent=Math.round(state.diffuse.step*100)+'%';
+      sl.oninput=function(){ state.diffuse.step=clamp01(parseInt(sl.value,10)/100); v.textContent=Math.round(state.diffuse.step*100)+'%'; update(); };
+      document.getElementById('dfStep').onclick=function(){ state.diffuse.step=clamp01(state.diffuse.step+0.2); sl.value=Math.round(state.diffuse.step*100); v.textContent=Math.round(state.diffuse.step*100)+'%'; update(); };
+      document.getElementById('dfRst').onclick=function(){ state.diffuse.step=0; sl.value=0; v.textContent='0%'; update(); };
+    }
+    if(s.aid==='guide'){ var sl=document.getElementById('gdSlider'), v=document.getElementById('gdv');
+      sl.value=Math.round(state.guide.g*100); v.textContent=Math.round(state.guide.g*100)+'%';
+      sl.oninput=function(){ state.guide.g=clamp01(parseInt(sl.value,10)/100); v.textContent=Math.round(state.guide.g*100)+'%'; update(); };
+    }
+    if(s.aid==='contrib'){
+      var H=document.getElementById('coH'), M=document.getElementById('coM'), X=document.getElementById('coX');
+      H.value=state.contrib.human; M.value=state.contrib.model; X.value=state.contrib.hidden;
+      H.oninput=function(){ state.contrib.human=H.value; update(); };
+      M.oninput=function(){ state.contrib.model=M.value; update(); };
+      X.oninput=function(){ state.contrib.hidden=X.value; update(); };
+    }
+    if(s.kind==='studio'){ var ls=document.getElementById('copyLS');
+      document.getElementById('copyL').onclick=function(){
+        var txt=TOOLS.map(function(t){return t.n+(t.opt?' (optional)':'')+' — '+t.u;}).join('\n');
+        copyText(txt, function(){ls.textContent='copied';setTimeout(function(){ls.textContent='';},1300);},
+          function(){ls.textContent='select & copy';});
+      }; }
+    if(s.kind==='close'){ var xs=document.getElementById('copyXS');
+      document.getElementById('copyX2').onclick=function(){
+        var txt=CLOSERS.map(function(t){return t.n+' — '+t.u;}).join('\n');
+        copyText(txt, function(){xs.textContent='copied';setTimeout(function(){xs.textContent='';},1300);},
+          function(){xs.textContent='select & copy';});
+      }; }
+  }
+
+  /* ============ TIMER ============ */
+  var TM={rem:0,run:false,id:null};
+  function fmt(s){var m=Math.floor(s/60),x=s%60;return (m<10?'0':'')+m+':'+(x<10?'0':'')+x;}
+  function drawT(){var el=document.getElementById('timer');if(!el)return;el.textContent=fmt(Math.max(0,TM.rem));el.classList.toggle('warn',TM.run&&TM.rem<=30&&TM.rem>0);}
+  function tickT(){if(!TM.run)return;TM.rem--;if(TM.rem<=0){TM.rem=0;stopT();var el=document.getElementById('timer');if(el)el.classList.add('done');beep();}drawT();}
+  function startT(){if(TM.run||TM.rem<=0)return;TM.run=true;TM.id=setInterval(tickT,1000);var b=document.getElementById('tStart');if(b){b.textContent='pause';b.classList.remove('go');}}
+  function stopT(){TM.run=false;if(TM.id)clearInterval(TM.id);var b=document.getElementById('tStart');if(b){b.textContent='start';b.classList.add('go');}}
+  function setT(sec){stopT();TM.rem=sec;var el=document.getElementById('timer');if(el)el.classList.remove('done');drawT();}
+  function wireTimer(mins){ setT(TM.rem>0?TM.rem:mins*60);
+    var st=document.getElementById('tStart'),rs=document.getElementById('tReset');
+    if(st)st.onclick=function(){TM.run?stopT():startT();}; if(rs)rs.onclick=function(){setT(mins*60);}; drawT(); }
+  var actx=null;
+  function beep(){ if(reduce)return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    [0,170].forEach(function(d){var o=actx.createOscillator(),g=actx.createGain();o.frequency.value=660;o.connect(g);g.connect(actx.destination);
+    var t=actx.currentTime+d/1000;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.start(t);o.stop(t+.17);}); }catch(e){} }
+
+  /* ============ NAV ============ */
+  function goto(i){ i=Math.max(0,Math.min(SLIDES.length-1,i)); state.slide=i; TM.rem=SLIDES[i].time*60; TM.run=false; commit(); }
+  document.addEventListener('keydown',function(e){
+    var tag=(e.target&&e.target.tagName)||''; if(tag==='TEXTAREA'||tag==='INPUT') return;
+    if(e.key==='ArrowRight'||e.key==='PageDown') goto(state.slide+1);
+    else if(e.key==='ArrowLeft'||e.key==='PageUp') goto(state.slide-1);
+    else if(e.key==='Escape' && location.hash.indexOf('peek')!==-1){ isAudience=false; location.hash=''; document.body.classList.remove('audience'); renderAll(); }
+  });
+
+  window.addEventListener('hashchange', function(){
+    var aud = location.hash.indexOf('audience') !== -1;
+    if(aud !== isAudience){ isAudience = aud; document.body.classList.toggle('audience', aud); renderAll(); }
+  });
+
+  function openAudience(){ var url=location.href.split('#')[0]+'#audience';
+    var w=window.open(url,'hlm-s2-audience','width=1280,height=720');
+    if(!w){ alert('Popup blocked. Allow popups for this page, or use "preview audience" for one-window mode.'); return; }
+    setTimeout(broadcast,500); var ob=document.getElementById('onboard'); if(ob) ob.style.display='none'; }
+
+  window.__hlm = { log: buildLog, state: function(){ return state; }, sid: function(){ return sid; } };
+
+  /* ============ BOOT ============ */
+  if(isAudience){ renderAll(); if(chan) chan.postMessage({type:'hello'}); }
+  else { renderAll(); var ob=document.getElementById('onboard'); ob.style.display='flex';
+    document.getElementById('obSkip').onclick=function(){ ob.style.display='none'; };
+    document.getElementById('obOpen').onclick=openAudience; }
+})();
+</script>
+<script src="../assets/analytics.js"></script>
+</body>
+</html>

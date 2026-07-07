@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Session 3 · Video — Human Video Model (live deck · DRAFT)</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f6f4ef; --paper-2:#efebe2; --cell:#fffdf8;
+    --ink:#1c1a24; --muted:#6b6552; --line:#ddd7ca; --line-2:#cfc8b8;
+    --violet:#5546d6; --violet-deep:#3f33a8; --violet-soft:#ece9fb;
+    --amber:#bf7a20; --amber-ink:#8a560f; --amber-soft:#f7ecd6;
+    --mono:'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans:'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ===== audience stage: fixed 1280x720, scaled to fit ===== */
+  .stage-wrap{position:relative;overflow:hidden}
+  .stage{width:1280px;height:720px;position:absolute;top:0;left:0;transform-origin:top left;
+    background:radial-gradient(120% 90% at 0% 0%,#fbfaf6,var(--paper));display:flex;flex-direction:column;padding:58px 66px}
+  .stage.shape{background:radial-gradient(130% 95% at 100% 0%,#fdf4e4,var(--paper))}
+  .s-eyebrow{font-family:var(--mono);font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-ink);display:flex;align-items:center;gap:13px}
+  .s-eyebrow .pill{border:1px solid var(--amber);border-radius:30px;padding:3px 13px}
+  .s-head{font-family:var(--mono);font-weight:500;font-size:50px;line-height:1.04;letter-spacing:-.01em;margin:16px 0 0}
+  .s-idea{font-size:28px;line-height:1.25;color:var(--violet-deep);font-weight:600;margin:14px 0 0;max-width:32ch}
+  .s-body{margin-top:22px;flex:1;min-height:0;display:flex;flex-direction:column;gap:16px;overflow:hidden}
+  .s-task{margin-top:auto;display:flex;align-items:center;gap:15px;border:2px solid var(--amber);background:var(--amber-soft);border-radius:15px;padding:15px 22px}
+  .s-task .lab{font-family:var(--mono);font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-ink);flex:none}
+  .s-task .txt{font-size:22px;font-weight:600}
+  .s-take{margin-top:14px;border-left:5px solid var(--amber);background:var(--amber-soft);border-radius:0 13px 13px 0;padding:13px 18px;font-size:21px;font-weight:600;color:var(--amber-ink)}
+
+  .title-flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:26px;font-family:var(--mono);font-size:17px;color:var(--muted)}
+  .title-flow .f{padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--cell)}
+  .title-flow .f.sh{border-color:var(--amber);color:var(--amber-ink);background:var(--amber-soft)}
+  .title-flow .bk{color:var(--violet)}
+
+  .qlist{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+  .qrow{display:flex;gap:15px;font-size:23px;line-height:1.3;background:var(--cell);border:1px solid var(--line);border-radius:11px;padding:13px 18px}
+  .qrow .qn{font-family:var(--mono);color:var(--violet);font-size:19px;flex:none}
+  .qrow .txt2{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .qrow .note{font-size:18px;color:var(--muted)}
+  .qrow .go{font-family:var(--mono);font-size:16px;color:var(--violet-deep);word-break:break-all}
+  .qrow.opt{border-style:dashed} .qrow.opt .qn{color:var(--muted)}
+  .qlist.c{gap:8px} .qrow.c{padding:7px 14px;font-size:18px;gap:12px}
+  .qrow.c .note{font-size:15px} .qrow.c .go{font-size:13px}
+
+  /* ===== frame visuals (SVG) ===== */
+  .av-film{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+  .av-fr{width:90px;border:1px solid var(--line-2);border-radius:11px;background:var(--cell);overflow:hidden;position:relative}
+  .av-fr.on{border-color:var(--amber);box-shadow:0 0 0 2px var(--amber-soft)}
+  .av-fr.brk{border-color:#cf4b4b}
+  .av-fr svg{display:block;width:100%;height:auto;background:#14121c}
+  .av-fr .fn{position:absolute;left:6px;top:5px;font-family:var(--mono);font-size:12px;color:#cbb890}
+  .av-fr .lab{padding:6px 8px;font-size:12.5px;line-height:1.15;color:var(--ink);border-top:1px solid var(--line)}
+  .av-big{border:1px solid var(--line-2);border-radius:14px;overflow:hidden;background:#14121c;max-height:142px;display:flex;justify-content:center}
+  .av-big svg{display:block;height:132px;width:auto;max-width:100%}
+  .av-cap{text-align:center;font-size:21px;margin-top:12px;color:var(--muted)} .av-cap b{color:var(--amber-ink)}
+  .av-empty{font-size:20px;color:var(--muted);text-align:center;margin-top:18px}
+  .av-frbig{display:flex;gap:18px;align-items:center}
+  .av-frbig .big{flex:none}
+  .av-frbig .col{min-width:0}
+
+  /* meters (motion failure) */
+  .av-meter{display:grid;grid-template-columns:200px 1fr 62px;align-items:center;gap:14px;margin:0 0 13px}
+  .av-meter .nm{font-family:var(--mono);font-size:21px;text-align:right}
+  .av-meter .track{height:28px;background:var(--paper-2);border-radius:8px;overflow:hidden}
+  .av-meter .fill{height:100%;width:0;border-radius:8px;transition:width .3s var(--ease)}
+  .av-meter.top .nm{color:var(--amber-ink);font-weight:500}
+  .av-meter .v{font-family:var(--mono);font-size:18px;color:var(--muted)}
+
+  /* contributions / consent map */
+  .av-contrib{display:flex;gap:16px;margin-top:4px}
+  .av-col{flex:1;border:1px solid var(--line-2);border-radius:14px;background:var(--cell);padding:16px 18px}
+  .av-col h4{margin:0 0 8px;font-family:var(--mono);font-size:19px;text-transform:uppercase;letter-spacing:.06em}
+  .av-col.h h4{color:var(--violet-deep)} .av-col.m h4{color:var(--amber-ink)}
+  .av-col p{margin:0;font-size:21px;line-height:1.35}
+  .av-hidden{margin-top:14px;border-left:5px solid var(--amber);background:var(--amber-soft);border-radius:0 12px 12px 0;padding:12px 16px;font-size:20px;color:var(--amber-ink)}
+  .av-hidden b{font-weight:700}
+
+  /* ===== audience window (full-bleed) ===== */
+  body.audience{background:#0e0d12;display:flex;align-items:center;justify-content:center}
+  .aud-flag{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:50;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(85,70,214,.85);padding:5px 12px;border-radius:20px;opacity:0;transition:opacity .3s}
+  body.audience:hover .aud-flag{opacity:.5}
+  .aud-nav{position:fixed;right:16px;bottom:16px;z-index:60;display:none;gap:8px;background:rgba(20,18,28,.7);padding:8px;border-radius:30px}
+  body.audience .aud-nav{display:flex}
+  .aud-nav button{font-family:var(--mono);font-size:13px;color:#fff;background:rgba(255,255,255,.12);border:none;border-radius:20px;padding:8px 13px}
+  .aud-nav button:hover{background:var(--violet)}
+
+  /* ===== presenter cockpit ===== */
+  .cockpit{display:grid;grid-template-rows:auto 1fr;height:100vh}
+  .topbar{display:flex;align-items:center;gap:13px;padding:11px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--paper),var(--paper-2))}
+  .tb-badge{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--violet);padding:5px 10px;border-radius:7px}
+  .tb-badge.draft{background:var(--amber)}
+  .tb-title{font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .tb-sp{flex:1}
+  .tb-timer{font-family:var(--mono);font-size:28px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
+  .tb-timer.warn{color:var(--violet-deep)} .tb-timer.done{color:var(--amber-ink)}
+  .mini{font-family:var(--mono);font-size:12px;border:1px solid var(--line-2);background:var(--paper);border-radius:8px;padding:6px 11px;color:var(--ink);transition:.15s var(--ease)}
+  .mini:hover{background:var(--violet-soft);border-color:var(--violet)}
+  .mini.go{background:var(--violet);color:#fff;border-color:var(--violet)} .mini.go:hover{background:var(--violet-deep)}
+
+  .body3{display:grid;grid-template-columns:210px minmax(0,1fr) 372px;min-height:0}
+  .rail{border-right:1px solid var(--line);background:linear-gradient(180deg,var(--paper),var(--paper-2));padding:16px 12px;overflow:auto;display:flex;flex-direction:column;gap:5px}
+  .rail h2{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+  .nav-item{display:grid;grid-template-columns:30px 1fr;gap:9px;align-items:center;text-align:left;border:1px solid transparent;background:none;border-radius:10px;padding:7px 8px;color:var(--ink);width:100%;transition:.15s var(--ease)}
+  .nav-item:hover{background:var(--cell);border-color:var(--line)}
+  .nav-item.on{background:var(--cell);border-color:var(--line-2)}
+  .nav-item.on .nv-num{background:var(--violet);color:#fff;border-color:var(--violet)}
+  .nv-num{font-family:var(--mono);font-size:12px;width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:8px;background:var(--cell);color:var(--muted)}
+  .nv-t{font-size:13px;font-weight:600;line-height:1.15}
+  .nv-m{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+  .center{min-width:0;overflow:auto;padding:18px 20px 30px}
+  .pv-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:8px}
+  .pv-label .dot{width:8px;height:8px;border-radius:50%;background:#cf4b4b}
+  .pv-box{width:100%;aspect-ratio:16/9;border:1px solid var(--line-2);border-radius:13px;overflow:hidden;box-shadow:0 10px 34px -20px rgba(40,30,80,.45)}
+  .notes{margin-top:18px;display:flex;flex-direction:column;gap:11px}
+  .seg-line{display:flex;align-items:baseline;gap:11px;margin-bottom:2px}
+  .seg-line .num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--ink);border-radius:7px;padding:4px 9px}
+  .seg-line.shape .num{background:var(--amber)}
+  .seg-line h2{font-family:var(--mono);font-weight:500;font-size:20px;margin:0}
+  .nc{border-radius:0 11px 11px 0;padding:12px 15px}
+  .nc .bl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+  .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:5px;color:#fff}
+  .tag.you{background:var(--violet)} .tag.room{background:var(--amber)} .tag.eye{background:var(--ink)}
+  .nc.look{border:1px solid var(--line-2);border-left:3px solid var(--ink);background:var(--cell)} .nc.look .bl{color:var(--muted)}
+  .nc.you{border-left:3px solid var(--violet);background:#fff;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)} .nc.you .bl{color:var(--violet-deep)}
+  .nc.say{border-left:3px solid var(--violet);background:var(--violet-soft)} .nc.say .bl{color:var(--violet-deep)}
+  .nc.room{border-left:3px solid var(--amber);background:var(--amber-soft)} .nc.room .bl{color:var(--amber-ink)}
+  .nc.watch{border:1px dashed var(--line-2);border-left:3px dashed var(--amber);background:var(--cell)} .nc.watch .bl{color:var(--amber-ink)}
+  .nc p{margin:0;font-size:14.5px;line-height:1.5} .nc p+p{margin-top:8px}
+  .nc ul{margin:0;padding-left:18px} .nc li{font-size:14px;margin:4px 0;line-height:1.45}
+
+  .ctrlcol{border-left:1px solid var(--line);background:rgba(255,253,248,.7);overflow:auto;padding:16px 15px;display:flex;flex-direction:column;gap:12px}
+  .ctrlcol h2{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0}
+  .ctrl{border:1px solid var(--line-2);border-radius:12px;background:var(--cell);overflow:hidden}
+  .ctrl .hd{display:flex;align-items:center;gap:9px;padding:9px 13px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--cell))}
+  .ctrl .ct{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--violet);padding:3px 8px;border-radius:6px}
+  .ctrl .ct.live{background:var(--amber)}
+  .ctrl .cn{font-weight:600;font-size:13px} .ctrl .mark{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+  .ctrl .bd{padding:12px 13px}
+  .ctrl .hint{font-size:12px;color:var(--muted);margin:0 0 10px}
+  textarea,input[type=text]{font-family:var(--mono);font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--line-2);border-radius:9px;padding:9px 11px;width:100%;resize:vertical}
+  textarea:focus,input:focus{outline:2px solid var(--violet);outline-offset:1px;border-color:var(--violet)}
+  .btn{font-family:var(--mono);font-size:12px;padding:8px 12px;border-radius:9px;border:1px solid var(--violet);background:var(--violet);color:#fff;transition:.15s var(--ease)}
+  .btn:hover{background:var(--violet-deep)}
+  .btn.ghost{background:transparent;color:var(--violet-deep)} .btn.ghost:hover{background:var(--violet-soft)}
+  .crow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  input[type=range]{width:100%;accent-color:var(--violet)}
+  .seg-toggle{display:inline-flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden}
+  .seg-toggle button{font-family:var(--mono);font-size:12px;padding:7px 11px;border:none;background:var(--paper);color:var(--muted)}
+  .seg-toggle button.on{background:var(--violet);color:#fff}
+  .small{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .small a{color:var(--violet-deep)}
+  .navrow{display:flex;align-items:center;gap:9px;margin-top:4px}
+  .navbtn{font-family:var(--mono);font-size:12.5px;border:1px solid var(--line-2);background:var(--cell);border-radius:9px;padding:9px 14px;color:var(--ink)}
+  .navbtn:hover{border-color:var(--violet);background:var(--violet-soft)}
+  .navbtn.prim{background:var(--violet);color:#fff;border-color:var(--violet)} .navbtn.prim:hover{background:var(--violet-deep)}
+  .navrow .cnt{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+  .scrim{position:fixed;inset:0;background:rgba(20,16,30,.5);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+  .card{max-width:560px;background:var(--paper);border:1px solid var(--line-2);border-radius:18px;padding:26px 28px;box-shadow:0 30px 80px -30px rgba(30,20,60,.6)}
+  .card h3{font-family:var(--mono);font-weight:500;font-size:21px;margin:0 0 4px}
+  .card .two{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:16px 0}
+  .card .vw{border:1px solid var(--line-2);border-radius:11px;padding:13px;background:var(--cell)}
+  .card .vw h4{margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+  .card .vw.y h4{color:var(--violet-deep)} .card .vw.t h4{color:var(--amber-ink)}
+  .card .vw p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+  .card ol{margin:14px 0 0;padding-left:20px;font-size:14px} .card li{margin:6px 0}
+  .card .x{margin-top:18px;display:flex;gap:10px;justify-content:flex-end}
+  kbd{font-family:var(--mono);font-size:11px;background:var(--paper-2);border:1px solid var(--line-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px}
+
+  @media (max-width:1080px){
+    .body3{grid-template-columns:1fr}
+    .rail{flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--line)}
+    .rail h2{width:100%} .nav-item{width:auto} .nv-m{display:none}
+    .ctrlcol{border-left:none;border-top:1px solid var(--line)}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff}
+    .topbar,.rail,.ctrlcol,.aud-nav,.aud-flag,.scrim{display:none!important}
+    .body3{display:block} .center{overflow:visible}
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<div class="scrim" id="onboard" style="display:none">
+  <div class="card">
+    <h3>Two screens, one deck</h3>
+    <p class="small" style="color:var(--muted)">DRAFT — revise after the Session 1 &amp; 2 runs. A private cockpit for you, a clean slide for the room; the live tools sync between them and survive a refresh.</p>
+    <div class="two">
+      <div class="vw y"><h4>You see — presenter</h4><p>The slide preview, your script, what the room does, the timer, and the controls for each live tool.</p></div>
+      <div class="vw t"><h4>They see — audience</h4><p>Only the slide: the big idea, the room's task, and the live tool's visual. No notes, no controls.</p></div>
+    </div>
+    <ol>
+      <li>Click <b>Open audience window</b>. A clean slide opens in a new window.</li>
+      <li>In Zoom, <b>Share Screen → that window</b> (not your whole screen).</li>
+      <li>Keep this cockpit private. Move with <kbd>←</kbd> <kbd>→</kbd>; frames, scrubber, and text all mirror to the shared slide.</li>
+      <li>State persists across refreshes. Use <b>new session</b> for a clean run, and <b>copy log</b> after to export what the room built.</li>
+    </ol>
+    <div class="x">
+      <button class="btn ghost" id="obSkip">Run in one window</button>
+      <button class="btn" id="obOpen">Open audience window</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var isAudience = location.hash.indexOf('audience') !== -1;
+
+  /* ============ CONTENT (edit here) ============ */
+  var SITE = 'https://saberkhan372.github.io/learning-machines-tools/';
+
+  var TOOLS = [
+    {n:'Temporal Telephone', u:SITE+'tools/temporal-telephone/', w:'draw each frame from the last — watch drift'},
+    {n:'Metronome Frame Scrubber', u:SITE+'tools/metronome-frame-scrubber/', w:'step frames on a beat'},
+    {n:'Frame-by-Frame Coherence', u:SITE+'tools/frame-by-frame-coherence-viewer/', w:'onion-skin the drift'},
+    {n:'Video Failure Gallery', u:SITE+'tools/video-failure-gallery-viewer/', w:'name failure modes precisely'},
+    {n:'Video Test Report', u:SITE+'worksheets/video-test-report/', w:'worksheet — one claim, one boundary'}
+  ];
+  var CLOSERS = [
+    {n:'Session 3 page — your map of everything we touched', u:SITE+'pages/session-video.html'},
+    {n:'Optional Studio / Showcase — show what you made', u:SITE+'pages/session-showcase.html'},
+    {n:'Video Test Report — finish your claim any time', u:SITE+'worksheets/video-test-report/'}
+  ];
+
+  var SLIDES = [
+    { id:'title', kind:'title', time:4, nav:'Start + bridge',
+      head:'Human Video Model',
+      idea:'Text became tokens; images became pixels. Today the room becomes a video machine — motion, one frame at a time — then watches where time breaks.',
+      notes:{
+        look:'Presenter cockpit: slide preview + notes on the left, live-tool controls on the right, timer and slide list up top. The audience window shows only the slide.',
+        you:['Screen-share the audience window only.','Bridge from Session 2: "a good frame is not enough — video has to stay consistent across time."','Assign loose roles: Describers (chat), Scrubbers, a Scribe.'],
+        room:['Say hello in chat.','No task yet — get oriented.','Expect to describe frames and vote in chat.'],
+        say:['"A single good image is last week. The new problem is time: the model has to remember what it just made."','"You do not need a video account today. The room and this console are the machine."'],
+        watch:'Set up the whole-camp arc: this is the third and last core session. Text → image → video, same investigation each time.'} },
+
+    { id:'s0', kind:'setup', aid:'frames', time:8, shape:true, num:'00', nav:'Frames + memory',
+      head:'Video is frames that must agree',
+      idea:'A model makes video as a sequence of frames — and each one has to remember the last, or motion falls apart.',
+      task:'Watch the loop. In chat: what has to stay the SAME from frame to frame?',
+      take:'Video generation is prediction across time — coherence is the whole problem.',
+      notes:{
+        look:'You look at: play / step / reset for the frame strip. Attendees see: a bouncing ball playing frame by frame, coherent.',
+        you:['Press Play — let the ball bounce cleanly a couple of loops.','Step frame by frame; point out the ball is the same ball each time.','Ask: what would break if frame 4 forgot the ball was orange?'],
+        room:['Watch the motion.','In chat: colour, size, position, identity — what must persist?','Notice a clean loop is frames agreeing with each other.'],
+        say:['"Nothing here is moving, really. These are still frames your eye stitches into motion."','"The hard job is memory: every frame has to agree with the ones around it."'],
+        watch:'Keep this one clean and short — it is the "before" picture. Round 1 introduces drift, so this is the contrast.'} },
+
+    { id:'s1', kind:'telephone', aid:'telephone', time:12, num:'01', nav:'Round 1 — Telephone',
+      head:'Draw the next frame from the last',
+      idea:'If each frame is made only from the one before it — with no memory of the whole plan — small errors compound.',
+      prompt:'a person waving',
+      task:'Each new frame, describe ONLY the next small change in chat — a few words.',
+      take:'Without a plan for the whole clip, tiny changes accumulate into drift.',
+      notes:{
+        look:'You look at: an add-frame box. Attendees see: the growing strip — and the figure slowly wandering off.',
+        you:['Take the room’s description of the next frame; type a short label; click Add frame.','Do 6–10 frames. Do not correct earlier frames.','Point out the figure drifting as frames accumulate — that is the mechanism.'],
+        room:['Describe only the next small change, not the whole clip.','Do not fix earlier frames — you cannot see the plan.','Watch identity and position drift by the end.'],
+        say:['"This is previous-frame-only mode — the model’s hardest case. No memory of the whole clip."','"Nobody made a big mistake. Small ones just piled up. That is drift."'],
+        watch:'This mirrors the Temporal Telephone tool. The drift on screen is the point — let it get a little absurd by frame 8.'} },
+
+    { id:'s2', kind:'drift', aid:'drift', time:9, num:'02', nav:'Round 2 — Coherence',
+      head:'Find where it stops making sense',
+      idea:'Scrub a clip and watch for the frame where an object changes identity — the classic failure of generated video.',
+      task:'In chat: vote on the frame number where it breaks.',
+      take:'Drift is the model forgetting. Consistency across time is expensive.',
+      notes:{
+        look:'You look at: the scrubber, onion-skin, and reveal. Attendees see: a hand across frames — count the fingers.',
+        you:['Scrub slowly. Ask the room to watch the hand.','Collect chat votes for the break frame before you reveal.','Toggle onion-skin to show the ghost of the previous frame.','Reveal — the extra finger appears at a specific frame.'],
+        room:['Scrub with me; watch one feature (the fingers).','Vote in chat: which frame breaks?','Notice the break is sudden, not gradual.'],
+        say:['"The model is not tracking a hand — it is re-guessing a plausible hand every frame."','"Onion-skin shows what a coherent model would keep steady."'],
+        watch:'Mirrors the Coherence Viewer + Metronome Scrubber. Let the room vote before Reveal — the guess is the engagement.'} },
+
+    { id:'s3', kind:'motion', aid:'motion', time:8, num:'03', nav:'Round 3 — Time',
+      head:'What breaks first?',
+      idea:'Models fake motion by filling in plausible in-between frames — so some things break before others.',
+      task:'Before the reveal, predict in chat: hands, text, faces, or physics — what breaks first?',
+      take:'Generated motion is interpolation, not physics. It has predictable weak points.',
+      notes:{
+        look:'You look at: the clip-length toggle and reveal. Attendees see: break-likelihood meters for hands, text, faces, physics.',
+        you:['Ask the room to predict the weakest point before revealing.','Reveal the meters; note hands and text break first.','Switch short → long clip: longer means more drift everywhere.'],
+        room:['Predict what breaks first in chat.','Watch the meters rise as the clip gets longer.','Notice the model has no physics — only plausible frames.'],
+        say:['"It does not simulate a bouncing ball. It guesses what a bounce usually looks like."','"Hands and text break first because they need exact structure the model only approximates."'],
+        watch:'A cartoon of the Failure Gallery patterns. Frame it as interpolation vs. understanding.'} },
+
+    { id:'s4', kind:'contrib', aid:'contrib', time:10, shape:true, num:'04', nav:'Round 4 — Whose motion?',
+      head:'Whose motion is this?',
+      idea:'Video makes the consent stakes concrete: faces, voices, and performances belong to people.',
+      task:'In chat: name one consent question a generated clip of a real person raises.',
+      take:'Likeness and performance are human labour. Naming the consent question is part of using this responsibly.',
+      notes:{
+        look:'You look at: three boxes you fill from the room. Attendees see: a live contributions / consent map.',
+        you:['Fill "the human did" and "the machine did" from chat.','Then the hard one: "hidden" — whose likeness, performance, or labour?','Hold the deepfake/consent question open; do not resolve it.'],
+        room:['Separate the prompter’s choices from the model’s fill-ins.','Name whose likeness or performance is hidden in the clip.','Say one consent question this raises.'],
+        say:['"A generated clip of a real person uses a likeness that person did not hand over."','"Two things at once: this is powerful, and it can take a face or a performance without consent."'],
+        watch:'The consent stakes are sharpest in video. Do not moralise — map it honestly and wire it to the AI Use + Consent Checklist.'} },
+
+    { id:'s5', kind:'questions', time:7, num:'05', nav:'Debrief',
+      head:'What did the room become?',
+      idea:'Frames become motion; memory becomes coherence; interpolation fakes physics.',
+      task:'Answer in chat or aloud — we will pick a few.',
+      take:'Video is prediction across time. What has to stay constant, and what it takes from real people, are the whole story.',
+      questions:[
+        'Where did the telephone figure start to drift?',
+        'What one feature did you watch to catch the break?',
+        'Does the model understand time, or fake it? How can you tell?',
+        'Whose likeness or performance is hidden in a generated clip?',
+        'Text → image → video: what stayed the same about how you investigated?'],
+      notes:{
+        look:'You look at: the questions and the clock. Attendees see: the questions only.',
+        you:['Pick 3–5. Start with drift and the consent question.','Take chat first, then call on one or two people.','Close the whole-camp arc: same investigation across three modalities.'],
+        room:['Answer in chat or aloud.','Name one thing you will carry into your own work or classroom.'],
+        say:['"Coherence and consent are not add-ons — they are what video generation is about."','"You can now investigate any modality the same way: predict, change one thing, compare, name the human decision."'],
+        watch:'End on the camp-wide method, not the video math.'} },
+
+    { id:'s6', kind:'studio', time:23, num:'06', nav:'Tool studio',
+      head:'Your turn — the real tools',
+      idea:'The slides were cartoons. These are the instruments — real drift, real scrubbing.',
+      task:'Pick ONE tool. Log one coherence claim + one boundary on the Video Test Report.',
+      notes:{
+        look:'You look at: the Copy links button and the clock. Attendees see: the tool list with what to notice in each.',
+        you:['Click Copy links for chat and paste the block into Zoom chat.','Name the deal: one tool, one failure named precisely, one worksheet row.','Circulate — ask "which feature drifted, and at which frame?"','Five-minute warning: one claim in chat.'],
+        room:['Open one tool — no accounts, no installs.','Find and name one failure mode precisely.','Write one coherence claim + one boundary on the Video Test Report.','Drop one claim in chat before we regroup.'],
+        say:['"Name the failure precisely: identity drift, physics break, style drift, temporal jump."','"One good claim beats ten broken clips."'],
+        watch:'Steer people to finish one worksheet row before touring. The precise failure name is the deliverable.'} },
+
+    { id:'s7', kind:'close', time:5, shape:true, num:'07', nav:'Close + what’s next',
+      head:'What you leave with',
+      idea:'Three modalities, one method: predict, change one thing, compare, name the human decision — and ask whose labour is inside.',
+      take:'This was the last core session. The optional Studio is where you show what you made and adapt it for your own context.',
+      notes:{
+        look:'You look at: the closing pointers and the clock. Attendees see: three links and the takeaway.',
+        you:['Read the recap consent line: recordings are for registered participants; people choose how they are named.','Point at the three links — session page, the optional Studio, the worksheet.','Name the optional Studio / showcase as the next gathering, not a fourth core session.','After the call: click copy log and paste it into your recap notes.'],
+        room:['Bookmark the session page.','Consider bringing something to the optional Studio.','Finish your Video Test Report row when you can.'],
+        say:['"You investigated text, image, and video the same way. That method is the thing to keep."','"The Studio is optional and low-stakes: show one thing you made and the evidence behind it."'],
+        watch:'End warm. This is the camp’s last core beat — name what they can now do, not what they should have memorised.'} }
+  ];
+
+  /* ============ STATE ============ */
+  function freshState(rev){
+    return {
+      rev: rev||0,
+      slide:0,
+      play:{head:0, n:8},
+      telephone:{frames:[], seed:7},
+      drift:{frame:0, n:10, breakAt:6, onion:false, revealed:false},
+      motion:{variant:'long', revealed:false},
+      contrib:{
+        human:'described the scene, chose the clip, decided it was usable',
+        model:'guessed every in-between frame to fake smooth motion',
+        hidden:'the filmed performers, animators, and videographers whose footage taught it motion — likeness and labour, often without consent' }
+    };
+  }
+  var state = freshState(0);
+
+  /* ============ SESSION IDENTITY + PERSISTENCE ============ */
+  var SID_KEY = 'hlm-s3-sid', STORE_BASE = 'hlm-s3-deck-', CHAN_BASE = 'hlm-s3-deck-v1-';
+  function newSidValue(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  var sid = (function(){ try{
+    var s = localStorage.getItem(SID_KEY);
+    if(!s){ s = newSidValue(); localStorage.setItem(SID_KEY, s); }
+    return s;
+  }catch(e){ return 'solo'; } })();
+  function storeKey(){ return STORE_BASE + sid; }
+  function saveState(){ try{ localStorage.setItem(storeKey(), JSON.stringify(state)); }catch(e){} }
+  function restoreState(){ try{
+    var s = JSON.parse(localStorage.getItem(storeKey()) || 'null');
+    if(s && typeof s.slide === 'number'){ state = freshState(0); for(var k in s) state[k] = s[k]; }
+  }catch(e){} }
+  function pruneStores(){ try{
+    var dead = [], k;
+    for(var i=0;i<localStorage.length;i++){ k=localStorage.key(i);
+      if(k && k.indexOf(STORE_BASE)===0 && k!==storeKey()) dead.push(k); }
+    dead.forEach(function(d){ localStorage.removeItem(d); });
+  }catch(e){} }
+  restoreState();
+
+  /* ============ SYNC (per-run channel + rev guard) ============ */
+  var chan = null;
+  function onMsg(e){ var m=e.data||{};
+    if(m.type==='state'){ if((m.state.rev||0) < (state.rev||0)) return;
+      var sameSlide=(m.state.slide===state.slide); state=m.state; saveState();
+      if(sameSlide){ paint(); syncAffordances(); } else { renderAll(); } }
+    else if(m.type==='rekey' && m.sid && m.sid!==sid){
+      sid=m.sid; try{ localStorage.setItem(SID_KEY, sid); }catch(err){}
+      openChannel(); restoreState(); renderAll();
+      if(isAudience && chan) chan.postMessage({type:'hello'}); }
+    else if(m.type==='hello' && !isAudience){ broadcast(); }
+  }
+  function openChannel(){ if(chan){ try{ chan.close(); }catch(e){} }
+    chan = ('BroadcastChannel' in window) ? new BroadcastChannel(CHAN_BASE+sid) : null;
+    if(chan) chan.onmessage = onMsg; }
+  openChannel();
+  function broadcast(){ if(chan) chan.postMessage({type:'state', state:state}); }
+  function update(){ state.rev=(state.rev||0)+1; paint(); saveState(); broadcast(); }
+  function commit(){ state.rev=(state.rev||0)+1; renderAll(); saveState(); broadcast(); }
+
+  /* ============ HELPERS ============ */
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function shortUrl(u){ return u.replace(/^https?:\/\//,''); }
+  function clamp01(x){ return x<0?0:x>1?1:x; }
+  function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a);
+    t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+
+  /* ============ SVG FRAME PRIMITIVES ============ */
+  // bouncing ball, viewBox 0 0 100 100, optional drift offsets + hue shift
+  function ballSVG(idx, n, dxy, hue){
+    var t = n>1 ? idx/(n-1) : 0;
+    var x = 16 + t*68 + (dxy?dxy[0]:0);
+    var bounce = Math.abs(Math.sin(idx*0.85))*44;
+    var y = 70 - bounce + (dxy?dxy[1]:0);
+    var h = 28 + (hue||0);
+    var col = 'hsl('+h+',68%,58%)';
+    return '<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">'+
+      '<line x1="8" y1="80" x2="92" y2="80" stroke="#3a3550" stroke-width="2"/>'+
+      '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="9" fill="'+col+'"/></svg>';
+  }
+  // hand with a variable finger count, viewBox 0 0 100 100
+  function handSVG(fingers, ghost){
+    var op = ghost?0.28:1, base='#e7c9a3';
+    var s='<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><g opacity="'+op+'">';
+    s+='<rect x="34" y="52" width="34" height="34" rx="8" fill="'+base+'"/>';
+    for(var i=0;i<fingers;i++){ var fx=34 + i*(34/Math.max(1,fingers-0)) + 2;
+      s+='<rect x="'+fx.toFixed(1)+'" y="'+(24+ (i%2)*4)+'" width="5.5" height="30" rx="2.7" fill="'+base+'"/>'; }
+    s+='</g></svg>';
+    return s;
+  }
+
+  /* ============ AUDIENCE STAGE HTML ============ */
+  function audienceHTML(i){
+    var s=SLIDES[i];
+    var eyebrow = (s.num!=null)
+      ? '<div class="s-eyebrow"><span class="pill">'+s.num+'</span> '+esc(s.nav.replace(/^Round \d+ — /,''))+'</div>'
+      : '<div class="s-eyebrow"><span class="pill">workshop</span> 12–40 people · 120 min</div>';
+    var head='<div class="s-head">'+esc(s.head)+'</div>';
+    var idea=s.idea?'<div class="s-idea">'+esc(s.idea)+'</div>':'';
+    var sh=s.shape?' shape':'';
+
+    if(s.kind==='title'){
+      var flow='<div class="title-flow"><span class="f sh">filmed footage</span><span>→</span><span class="f">frames</span><span>→</span><span class="f">predict next</span><span>→</span><span class="f">interpolate</span> <span class="bk">↺</span> <span class="f">drift</span><span>→</span><span class="f sh">whose likeness?</span></div>';
+      return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:38ch">'+esc(s.idea)+'</div>'+flow+'</div>';
+    }
+    if(s.kind==='setup'){
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+framesViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='telephone'){
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+telephoneViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='drift'){
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+driftViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='motion'){
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+motionViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='contrib'){
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+contribViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='questions'){
+      var qs='<div class="qlist">'+s.questions.map(function(q,k){return '<div class="qrow"><span class="qn">Q'+(k+1)+'</span>'+esc(q)+'</div>';}).join('')+'</div>';
+      return '<div class="stage">'+eyebrow+head+'<div class="s-body">'+qs+'</div><div class="s-take">'+esc(s.take)+'</div></div>';
+    }
+    if(s.kind==='studio'){
+      var rows='<div class="qlist c">'+TOOLS.map(function(t,k){
+        return '<div class="qrow c'+(t.opt?' opt':'')+'"><span class="qn">'+(k+1)+'</span><span class="txt2"><span><b>'+esc(t.n)+'</b> <span class="note">— '+esc(t.w)+'</span></span><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
+      }).join('')+'</div>';
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='close'){
+      var pts='<div class="qlist c">'+CLOSERS.map(function(t,k){
+        return '<div class="qrow c"><span class="qn">→</span><span class="txt2"><b>'+esc(t.n)+'</b><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
+      }).join('')+'</div>';
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+pts+'</div><div class="s-take">'+esc(s.take)+'</div></div>';
+    }
+    return '<div class="stage">'+eyebrow+head+idea+'</div>';
+  }
+  function task(s){ return s.task?'<div class="s-task"><span class="lab">your task</span><span class="txt">'+esc(s.task)+'</span></div>':''; }
+
+  function framesViz(){
+    var n=state.play.n, head=state.play.head, strip='';
+    for(var k=0;k<n;k++){ strip+='<div class="av-fr'+(k===head?' on':'')+'"><span class="fn">'+k+'</span>'+ballSVG(k,n,null,0)+'</div>'; }
+    return '<div class="av-film">'+strip+'</div>'+
+      '<div class="av-cap">frame <b>'+head+'</b> of '+n+' — a clean, coherent loop the room stitches into motion</div>';
+  }
+  function driftFor(k){ // deterministic cumulative wander for telephone frame k
+    var rnd=mulberry32(state.telephone.seed|0), ox=0, oy=0, hue=0;
+    for(var j=0;j<=k;j++){ ox+=(rnd()*2-1)*4.2; oy+=(rnd()*2-1)*4.2; hue+=(rnd()*2-1)*26; }
+    return [ox,oy,hue];
+  }
+  function telephoneViz(){
+    var frames=state.telephone.frames||[];
+    if(!frames.length) return '<div class="av-empty">Frames appear here as the room describes each next change. Watch the figure wander.</div>';
+    var strip=''; for(var k=0;k<frames.length;k++){ var dr=driftFor(k);
+      strip+='<div class="av-fr"><span class="fn">'+(k+1)+'</span>'+ballSVG(k,Math.max(2,frames.length),[dr[0],dr[1]],dr[2])+
+        '<div class="lab">'+esc(frames[k])+'</div></div>'; }
+    return '<div class="av-film">'+strip+'</div>'+
+      '<div class="av-cap">'+frames.length+' frames · each drawn from the last — <b>watch the drift compound</b></div>';
+  }
+  function driftViz(){
+    var d=state.drift, cur=d.frame, base=5, fingers=(cur>=d.breakAt?base+1:base);
+    var big='<div class="av-big" style="width:190px;position:relative">'+
+      (d.onion&&cur>0?('<div style="position:absolute;inset:0">'+handSVG(cur-1>=d.breakAt?base+1:base,true)+'</div>'):'')+
+      handSVG(fingers,false)+'</div>';
+    var strip=''; for(var k=0;k<d.n;k++){ var brk=d.revealed&&k===d.breakAt;
+      strip+='<div class="av-fr'+(k===cur?' on':'')+(brk?' brk':'')+'"><span class="fn">'+k+'</span>'+handSVG(k>=d.breakAt?base+1:base,false)+'</div>'; }
+    var cap=d.revealed
+      ? '<div class="av-cap">identity drift at <b>frame '+d.breakAt+'</b> — a sixth finger appears. Same "hand", re-guessed each frame.</div>'
+      : '<div class="av-cap" style="color:var(--muted)">scrub and count the fingers · vote in chat where it breaks'+(d.onion?' · onion-skin on':'')+'</div>';
+    return '<div class="av-frbig"><div class="big">'+big+'</div><div class="col"><div class="av-cap" style="text-align:left;margin-top:0">frame <b>'+cur+'</b> of '+(d.n-1)+' · fingers: <b>'+fingers+'</b></div></div></div>'+
+      '<div class="av-film">'+strip+'</div>'+cap;
+  }
+  function meterRow(nm,val,color,top){ var pct=Math.round(clamp01(val)*100);
+    return '<div class="av-meter'+(top?' top':'')+'"><span class="nm">'+esc(nm)+'</span><span class="track"><span class="fill" style="width:'+pct+'%;background:'+color+'"></span></span><span class="v">'+pct+'%</span></div>'; }
+  function motionViz(){
+    var lng=state.motion.variant==='long';
+    var vals=[['hands', lng?0.82:0.55],['text', lng?0.72:0.5],['faces', lng?0.55:0.36],['physics', lng?0.5:0.3]];
+    var maxi=0; vals.forEach(function(v,k){ if(v[1]>vals[maxi][1]) maxi=k; });
+    var rows=vals.map(function(v,k){ var top=state.motion.revealed&&k===maxi;
+      return meterRow(v[0], v[1], top?'#bf7a20':'#5546d6', top); }).join('');
+    var cap=state.motion.revealed
+      ? '<div class="av-cap"><b>'+vals[maxi][0]+' break first</b> — they need exact structure the model only approximates.</div>'
+      : '<div class="av-cap" style="color:var(--muted)">'+(lng?'long clip':'short clip')+' — predict in chat what breaks first</div>';
+    return '<div style="margin-top:8px">'+rows+'</div>'+cap;
+  }
+  function contribViz(){
+    var c=state.contrib;
+    return '<div class="av-contrib">'+
+      '<div class="av-col h"><h4>the human did</h4><p>'+esc(c.human||'—')+'</p></div>'+
+      '<div class="av-col m"><h4>the machine did</h4><p>'+esc(c.model||'—')+'</p></div>'+
+      '</div><div class="av-hidden"><b>hidden in the output:</b> '+esc(c.hidden||'—')+'</div>';
+  }
+
+  function wireStage(rootEl){ /* no clickable stage elements */ }
+
+  /* ============ SESSION LOG ============ */
+  function buildLog(){
+    var d=new Date(), L=[];
+    L.push('# Human Video Model — session log');
+    L.push('_Session 3 · Video — ' + d.toDateString() + '_');
+    L.push('');
+    L.push('## Round 1 — temporal telephone ("'+ (SLIDES[2].prompt||'') +'")');
+    var f=state.telephone.frames||[];
+    L.push(f.length ? f.map(function(x,k){return '- frame '+(k+1)+': '+x;}).join('\n') : '- no frames recorded');
+    L.push('');
+    L.push('## Round 2 — coherence / drift');
+    L.push('- break frame: ' + state.drift.breakAt + ' of ' + (state.drift.n-1) + (state.drift.revealed?' (revealed)':' (not revealed)'));
+    L.push('');
+    L.push('## Round 3 — motion / time');
+    L.push('- clip length: ' + state.motion.variant + (state.motion.revealed?' · revealed weakest point':''));
+    L.push('');
+    L.push('## Round 4 — whose motion (consent map)');
+    L.push('- the human did: ' + state.contrib.human);
+    L.push('- the machine did: ' + state.contrib.model);
+    L.push('- hidden in the output: ' + state.contrib.hidden);
+    L.push('');
+    L.push('_Generated from the Session 3 live deck. Tools: ' + SITE + 'pages/session-video.html_');
+    return L.join('\n');
+  }
+  function copyText(txt, done, fail){
+    var fb=function(){ var a=document.createElement('textarea');a.value=txt;a.style.position='fixed';a.style.left='-9999px';
+      document.body.appendChild(a);a.select();try{document.execCommand('copy');done();}catch(e){fail();}document.body.removeChild(a); };
+    if(navigator.clipboard&&window.isSecureContext) navigator.clipboard.writeText(txt).then(done,fb); else fb();
+  }
+
+  /* ============ PAINT ============ */
+  var root=document.getElementById('root');
+  function fit(wrap, full){ var st=wrap.querySelector('.stage'); if(!st) return;
+    var w=full?window.innerWidth:wrap.clientWidth, h=full?window.innerHeight:wrap.clientHeight;
+    var sc=Math.min(w/1280, h/720); st.style.transform='scale('+sc+')'; }
+  function paint(){
+    if(isAudience){ var aw=document.getElementById('aw'); if(!aw) return;
+      aw.innerHTML=audienceHTML(state.slide)+'<div class="aud-flag">audience view</div>'; fit(aw,true); wireStage(aw);
+    } else { var pv=document.getElementById('pv'); if(!pv) return;
+      pv.innerHTML=audienceHTML(state.slide); requestAnimationFrame(function(){fit(pv,false);}); wireStage(pv); }
+  }
+  function syncAffordances(){ /* presenter readouts that must not rebuild controls live here */ }
+
+  /* ============ TOP-LEVEL RENDER ============ */
+  function renderAll(){ isAudience ? buildAudience() : buildPresenter(); }
+
+  function buildAudience(){
+    document.body.classList.add('audience');
+    root.innerHTML='<div class="stage-wrap" id="aw" style="width:100vw;height:100vh"></div>'+
+      '<div class="aud-nav"><button id="an-prev">←</button><button id="an-mode">presenter</button><button id="an-next">→</button></div>';
+    paint();
+    window.onresize=function(){ var aw=document.getElementById('aw'); if(aw) fit(aw,true); };
+    document.getElementById('an-prev').onclick=function(){ goto(state.slide-1); };
+    document.getElementById('an-next').onclick=function(){ goto(state.slide+1); };
+    document.getElementById('an-mode').onclick=function(){ isAudience=false; location.hash=''; document.body.classList.remove('audience'); renderAll(); };
+  }
+
+  function buildPresenter(){
+    document.body.classList.remove('audience');
+    var i=state.slide, s=SLIDES[i];
+    root.innerHTML=
+      '<div class="cockpit">'+
+        '<div class="topbar"><span class="tb-badge draft">draft</span>'+
+          '<span class="tb-title">Session 3 · Human Video Model · only you see this</span><span class="tb-sp"></span>'+
+          '<span class="tb-timer" id="timer">00:00</span>'+
+          '<button class="mini go" id="tStart">start</button><button class="mini" id="tReset">reset</button>'+
+          '<button class="mini" id="openAud">open audience window</button>'+
+          '<button class="mini" id="peek">preview audience</button>'+
+          '<button class="mini" id="logBtn">copy log</button>'+
+          '<button class="mini" id="fresh">new session</button>'+
+          '<button class="mini" id="howto">how to run</button>'+
+          '<button class="mini" id="printb">print</button></div>'+
+        '<div class="body3">'+
+          '<aside class="rail"><h2>Slides</h2><div id="nav"></div></aside>'+
+          '<main class="center">'+
+            '<div class="pv-label"><span class="dot"></span> on their screen now</div>'+
+            '<div class="pv-box stage-wrap" id="pv"></div>'+
+            '<div class="notes" id="notes"></div>'+
+          '</main>'+
+          '<aside class="ctrlcol"><h2>Live tool · this slide</h2><div id="controls"></div>'+
+            '<div class="navrow"><button class="navbtn" id="prev">← prev</button><button class="navbtn prim" id="next">next →</button><span class="cnt" id="cnt"></span></div>'+
+          '</aside>'+
+        '</div>'+
+      '</div>';
+
+    var nav=document.getElementById('nav');
+    SLIDES.forEach(function(sl,k){ var b=document.createElement('button'); b.className='nav-item'+(k===i?' on':'');
+      b.innerHTML='<span class="nv-num">'+(sl.num!=null?sl.num:'··')+'</span><span><span class="nv-t">'+esc(sl.nav)+'</span><span class="nv-m">'+sl.time+' min</span></span>';
+      b.onclick=function(){ goto(k); }; nav.appendChild(b); });
+
+    document.getElementById('notes').innerHTML=notesHTML(s);
+    document.getElementById('controls').innerHTML=controlsHTML(s);
+    document.getElementById('cnt').textContent=(i+1)+' / '+SLIDES.length;
+
+    paint();
+    window.onresize=function(){ var pv=document.getElementById('pv'); if(pv) fit(pv,false); };
+
+    document.getElementById('prev').onclick=function(){ goto(i-1); };
+    document.getElementById('next').onclick=function(){ goto(i+1); };
+    document.getElementById('openAud').onclick=openAudience;
+    document.getElementById('peek').onclick=function(){ isAudience=true; location.hash='audience-peek'; renderAll(); var f=document.querySelector('.aud-flag'); if(f){f.textContent='audience preview — Esc to return';f.style.opacity='.6';} };
+    document.getElementById('howto').onclick=function(){ var ob=document.getElementById('onboard'); ob.style.display='flex'; };
+    document.getElementById('printb').onclick=function(){ window.print(); };
+    document.getElementById('logBtn').onclick=function(){ var b=this;
+      copyText(buildLog(), function(){ b.textContent='copied ✓'; setTimeout(function(){b.textContent='copy log';},1400); },
+        function(){ b.textContent='copy failed'; setTimeout(function(){b.textContent='copy log';},1400); }); };
+    document.getElementById('fresh').onclick=function(){
+      if(!confirm('Start a fresh session? This clears the frame strip, scrubber, and consent map.')) return;
+      stopPlay();
+      var next=newSidValue();
+      if(chan) chan.postMessage({type:'rekey', sid:next});
+      sid=next; try{ localStorage.setItem(SID_KEY, sid); }catch(e){}
+      openChannel(); pruneStores();
+      state=freshState((state.rev||0)+1); TM.rem=SLIDES[0].time*60; TM.run=false; commit();
+    };
+
+    wireTimer(s.time);
+    wireControls(s);
+    syncAffordances();
+  }
+
+  function notesHTML(s){
+    var n=s.notes, li=function(a){return '<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';};
+    var p=function(a){return a.map(function(x){return '<p>'+esc(x)+'</p>';}).join('');};
+    var seg='<div class="seg-line'+(s.shape?' shape':'')+'">'+(s.num!=null?'<span class="num">'+s.num+'</span>':'')+'<h2>'+esc(s.nav)+'</h2></div>';
+    return seg+
+      '<div class="nc look"><div class="bl"><span class="tag eye">view</span> what you’re looking at</div><p>'+esc(n.look)+'</p></div>'+
+      '<div class="nc you"><div class="bl"><span class="tag you">you</span> instructor does</div>'+li(n.you)+'</div>'+
+      '<div class="nc room"><div class="bl"><span class="tag room">room</span> zoom attendees do</div>'+li(n.room)+'</div>'+
+      '<div class="nc say"><div class="bl"><span class="tag you">you</span> say this</div>'+p(n.say)+'</div>'+
+      '<div class="nc watch"><div class="bl">watch for / transition</div><p>'+esc(n.watch)+'</p></div>';
+  }
+
+  /* ============ CONTROLS ============ */
+  function controlsHTML(s){
+    if(s.aid==='frames') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Frame strip</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Play a clean loop, then step frame by frame. Point out the ball is the same ball each time.</p>'+
+      '<div class="crow"><button class="btn" id="frPlay">Play</button><button class="btn ghost" id="frStep">Step</button><button class="btn ghost" id="frRst">Reset</button></div></div></div>'+
+      '<p class="small">This is the "before" picture — coherent motion. Round 1 breaks it on purpose.</p>';
+    if(s.aid==='telephone') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">live</span><span class="cn">Add a frame</span><span class="mark">grows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Type the room’s next-frame description; click Add. Do not fix earlier frames — the drift is the point.</p>'+
+      '<input type="text" id="tpIn" placeholder="hand a little higher..." />'+
+      '<div class="crow"><button class="btn" id="tpAdd">Add frame</button><button class="btn ghost" id="tpUndo">Undo</button><button class="btn ghost" id="tpRst">Reset</button></div></div></div>';
+    if(s.aid==='drift') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Coherence scrubber</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Scrub and count fingers. Take chat votes for the break frame before Reveal.</p>'+
+      '<label class="small" style="display:flex;justify-content:space-between">frame <b id="drv" style="color:var(--violet-deep)">0</b></label>'+
+      '<input type="range" id="drSlider" min="0" max="9" value="0" />'+
+      '<label class="small" style="display:flex;justify-content:space-between;margin-top:8px">break at frame <b id="drb" style="color:var(--amber-ink)">6</b></label>'+
+      '<input type="range" id="drBreak" min="3" max="9" value="6" />'+
+      '<div class="crow"><button class="btn ghost" id="drOnion">Onion-skin</button><button class="btn" id="drRev">Reveal</button><button class="btn ghost" id="drRst">Reset</button></div></div></div>';
+    if(s.aid==='motion') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Break-likelihood</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Let the room predict before you reveal. Longer clips drift more everywhere.</p>'+
+      '<div class="crow"><span class="seg-toggle" id="moTog"><button data-v="short">short clip</button><button data-v="long" class="on">long clip</button></span>'+
+      '<button class="btn" id="moRev">Reveal</button><button class="btn ghost" id="moRst">Hide</button></div></div></div>';
+    if(s.aid==='contrib') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Consent map</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Fill each box from the room. The hard one is "hidden" — whose likeness or performance. Do not resolve it.</p>'+
+      '<div style="display:grid;gap:10px;margin-top:4px">'+
+        '<div><div class="small" style="margin-bottom:3px;color:var(--violet-deep)">the human did</div><textarea id="coH" rows="2"></textarea></div>'+
+        '<div><div class="small" style="margin-bottom:3px;color:var(--amber-ink)">the machine did</div><textarea id="coM" rows="2"></textarea></div>'+
+        '<div><div class="small" style="margin-bottom:3px;color:var(--amber-ink)">hidden in the output</div><textarea id="coX" rows="3"></textarea></div>'+
+      '</div><div class="crow"><span class="small"><a href="'+SITE+'worksheets/ai-use-consent-checklist/" target="_blank" rel="noopener">Consent checklist ↗</a></span></div></div></div>';
+    if(s.kind==='studio') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Tool links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
+      '<p class="hint">One click copies every tool + the worksheet as a paste-ready block for Zoom chat.</p>'+
+      '<div class="crow"><button class="btn" id="copyL">Copy links for chat</button><span class="small" id="copyLS"></span></div></div></div>'+
+      '<p class="small">Same list as the <a href="session-links.html" target="_blank" rel="noopener">Session Link Sheet</a> — edit <code>assets/session-runs.js</code> to change both.</p>';
+    if(s.kind==='close') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Closing links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
+      '<p class="hint">Paste the three take-home links, then click <b>copy log</b> in the top bar and save what the room built.</p>'+
+      '<div class="crow"><button class="btn" id="copyX2">Copy closing links</button><span class="small" id="copyXS"></span></div></div></div>';
+    return '<p class="small">No live tool on this slide — this one runs entirely in the room and on the slide.</p>';
+  }
+
+  /* ============ PLAY LOOP (setup frame strip) ============ */
+  var playTimer=null;
+  function stopPlay(){ if(playTimer){ clearInterval(playTimer); playTimer=null; }
+    var b=document.getElementById('frPlay'); if(b) b.textContent='Play'; }
+  function startPlay(){ if(playTimer) return; var b=document.getElementById('frPlay'); if(b) b.textContent='Pause';
+    playTimer=setInterval(function(){ state.play.head=(state.play.head+1)%state.play.n; update(); }, 720); }
+
+  /* ============ WIRE CONTROLS ============ */
+  function wireControls(s){
+    if(s.aid==='frames'){
+      document.getElementById('frPlay').onclick=function(){ playTimer?stopPlay():startPlay(); };
+      document.getElementById('frStep').onclick=function(){ stopPlay(); state.play.head=(state.play.head+1)%state.play.n; update(); };
+      document.getElementById('frRst').onclick=function(){ stopPlay(); state.play.head=0; update(); };
+    }
+    if(s.aid==='telephone'){
+      var inp=document.getElementById('tpIn');
+      var add=function(){ var v=inp.value.trim(); if(!v) return; state.telephone.frames=state.telephone.frames.concat([v.slice(0,42)]); inp.value=''; update(); };
+      document.getElementById('tpAdd').onclick=add;
+      inp.onkeydown=function(e){ if(e.key==='Enter'){ e.preventDefault(); add(); } };
+      document.getElementById('tpUndo').onclick=function(){ state.telephone.frames=state.telephone.frames.slice(0,-1); update(); };
+      document.getElementById('tpRst').onclick=function(){ state.telephone.frames=[]; update(); };
+    }
+    if(s.aid==='drift'){ var sl=document.getElementById('drSlider'), v=document.getElementById('drv'),
+        bs=document.getElementById('drBreak'), bv=document.getElementById('drb');
+      sl.max=state.drift.n-1; sl.value=state.drift.frame; v.textContent=state.drift.frame;
+      bs.value=state.drift.breakAt; bv.textContent=state.drift.breakAt;
+      sl.oninput=function(){ state.drift.frame=parseInt(sl.value,10); v.textContent=sl.value; update(); };
+      bs.oninput=function(){ state.drift.breakAt=parseInt(bs.value,10); bv.textContent=bs.value; update(); };
+      document.getElementById('drOnion').onclick=function(){ state.drift.onion=!state.drift.onion; update(); };
+      document.getElementById('drRev').onclick=function(){ state.drift.revealed=true; update(); };
+      document.getElementById('drRst').onclick=function(){ state.drift.revealed=false; state.drift.onion=false; state.drift.frame=0; sl.value=0; v.textContent='0'; update(); };
+    }
+    if(s.aid==='motion'){
+      document.getElementById('moTog').onclick=function(e){ var b=e.target.closest('button'); if(!b)return;
+        Array.prototype.forEach.call(this.children,function(c){c.classList.toggle('on',c===b);});
+        state.motion.variant=b.dataset.v; update(); };
+      document.getElementById('moRev').onclick=function(){ state.motion.revealed=true; update(); };
+      document.getElementById('moRst').onclick=function(){ state.motion.revealed=false; update(); };
+    }
+    if(s.aid==='contrib'){
+      var H=document.getElementById('coH'), M=document.getElementById('coM'), X=document.getElementById('coX');
+      H.value=state.contrib.human; M.value=state.contrib.model; X.value=state.contrib.hidden;
+      H.oninput=function(){ state.contrib.human=H.value; update(); };
+      M.oninput=function(){ state.contrib.model=M.value; update(); };
+      X.oninput=function(){ state.contrib.hidden=X.value; update(); };
+    }
+    if(s.kind==='studio'){ var ls=document.getElementById('copyLS');
+      document.getElementById('copyL').onclick=function(){
+        var txt=TOOLS.map(function(t){return t.n+(t.opt?' (optional)':'')+' — '+t.u;}).join('\n');
+        copyText(txt, function(){ls.textContent='copied';setTimeout(function(){ls.textContent='';},1300);},
+          function(){ls.textContent='select & copy';});
+      }; }
+    if(s.kind==='close'){ var xs=document.getElementById('copyXS');
+      document.getElementById('copyX2').onclick=function(){
+        var txt=CLOSERS.map(function(t){return t.n+' — '+t.u;}).join('\n');
+        copyText(txt, function(){xs.textContent='copied';setTimeout(function(){xs.textContent='';},1300);},
+          function(){xs.textContent='select & copy';});
+      }; }
+  }
+
+  /* ============ TIMER ============ */
+  var TM={rem:0,run:false,id:null};
+  function fmt(s){var m=Math.floor(s/60),x=s%60;return (m<10?'0':'')+m+':'+(x<10?'0':'')+x;}
+  function drawT(){var el=document.getElementById('timer');if(!el)return;el.textContent=fmt(Math.max(0,TM.rem));el.classList.toggle('warn',TM.run&&TM.rem<=30&&TM.rem>0);}
+  function tickT(){if(!TM.run)return;TM.rem--;if(TM.rem<=0){TM.rem=0;stopT();var el=document.getElementById('timer');if(el)el.classList.add('done');beep();}drawT();}
+  function startT(){if(TM.run||TM.rem<=0)return;TM.run=true;TM.id=setInterval(tickT,1000);var b=document.getElementById('tStart');if(b){b.textContent='pause';b.classList.remove('go');}}
+  function stopT(){TM.run=false;if(TM.id)clearInterval(TM.id);var b=document.getElementById('tStart');if(b){b.textContent='start';b.classList.add('go');}}
+  function setT(sec){stopT();TM.rem=sec;var el=document.getElementById('timer');if(el)el.classList.remove('done');drawT();}
+  function wireTimer(mins){ setT(TM.rem>0?TM.rem:mins*60);
+    var st=document.getElementById('tStart'),rs=document.getElementById('tReset');
+    if(st)st.onclick=function(){TM.run?stopT():startT();}; if(rs)rs.onclick=function(){setT(mins*60);}; drawT(); }
+  var actx=null;
+  function beep(){ if(reduce)return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    [0,170].forEach(function(d){var o=actx.createOscillator(),g=actx.createGain();o.frequency.value=660;o.connect(g);g.connect(actx.destination);
+    var t=actx.currentTime+d/1000;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.start(t);o.stop(t+.17);}); }catch(e){} }
+
+  /* ============ NAV ============ */
+  function goto(i){ stopPlay(); i=Math.max(0,Math.min(SLIDES.length-1,i)); state.slide=i; TM.rem=SLIDES[i].time*60; TM.run=false; commit(); }
+  document.addEventListener('keydown',function(e){
+    var tag=(e.target&&e.target.tagName)||''; if(tag==='TEXTAREA'||tag==='INPUT') return;
+    if(e.key==='ArrowRight'||e.key==='PageDown') goto(state.slide+1);
+    else if(e.key==='ArrowLeft'||e.key==='PageUp') goto(state.slide-1);
+    else if(e.key==='Escape' && location.hash.indexOf('peek')!==-1){ isAudience=false; location.hash=''; document.body.classList.remove('audience'); renderAll(); }
+  });
+
+  window.addEventListener('hashchange', function(){
+    var aud = location.hash.indexOf('audience') !== -1;
+    if(aud !== isAudience){ isAudience = aud; document.body.classList.toggle('audience', aud); renderAll(); }
+  });
+
+  function openAudience(){ var url=location.href.split('#')[0]+'#audience';
+    var w=window.open(url,'hlm-s3-audience','width=1280,height=720');
+    if(!w){ alert('Popup blocked. Allow popups for this page, or use "preview audience" for one-window mode.'); return; }
+    setTimeout(broadcast,500); var ob=document.getElementById('onboard'); if(ob) ob.style.display='none'; }
+
+  window.__hlm = { log: buildLog, state: function(){ return state; }, sid: function(){ return sid; } };
+
+  /* ============ BOOT ============ */
+  if(isAudience){ renderAll(); if(chan) chan.postMessage({type:'hello'}); }
+  else { renderAll(); var ob=document.getElementById('onboard'); ob.style.display='flex';
+    document.getElementById('obSkip').onclick=function(){ ob.style.display='none'; };
+    document.getElementById('obOpen').onclick=openAudience; }
+})();
+</script>
+<script src="../assets/analytics.js"></script>
+</body>
+</html>

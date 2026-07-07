@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Session 1 · Text — Human Language Model (live deck)</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f6f4ef; --paper-2:#efebe2; --cell:#fffdf8;
+    --ink:#1c1a24; --muted:#6b6552; --line:#ddd7ca; --line-2:#cfc8b8;
+    --violet:#5546d6; --violet-deep:#3f33a8; --violet-soft:#ece9fb;
+    --amber:#bf7a20; --amber-ink:#8a560f; --amber-soft:#f7ecd6;
+    --mono:'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans:'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ===== audience stage: fixed 1280x720, scaled to fit ===== */
+  .stage-wrap{position:relative;overflow:hidden}
+  .stage{width:1280px;height:720px;position:absolute;top:0;left:0;transform-origin:top left;
+    background:radial-gradient(120% 90% at 0% 0%,#fbfaf6,var(--paper));display:flex;flex-direction:column;padding:58px 66px}
+  .stage.shape{background:radial-gradient(130% 95% at 100% 0%,#fdf4e4,var(--paper))}
+  .s-eyebrow{font-family:var(--mono);font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-ink);display:flex;align-items:center;gap:13px}
+  .s-eyebrow .pill{border:1px solid var(--amber);border-radius:30px;padding:3px 13px}
+  .s-head{font-family:var(--mono);font-weight:500;font-size:50px;line-height:1.04;letter-spacing:-.01em;margin:16px 0 0}
+  .s-idea{font-size:28px;line-height:1.25;color:var(--violet-deep);font-weight:600;margin:14px 0 0;max-width:32ch}
+  .s-body{margin-top:22px;flex:1;min-height:0;display:flex;flex-direction:column;gap:16px;overflow:hidden}
+  .s-task{margin-top:auto;display:flex;align-items:center;gap:15px;border:2px solid var(--amber);background:var(--amber-soft);border-radius:15px;padding:15px 22px}
+  .s-task .lab{font-family:var(--mono);font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-ink);flex:none}
+  .s-task .txt{font-size:22px;font-weight:600}
+  .s-take{margin-top:14px;border-left:5px solid var(--amber);background:var(--amber-soft);border-radius:0 13px 13px 0;padding:13px 18px;font-size:21px;font-weight:600;color:var(--amber-ink)}
+
+  .s-corpus{font-size:24px;line-height:1.5;background:var(--cell);border:2px solid var(--amber);border-radius:16px;padding:22px 26px}
+  .s-rule{font-size:19px;font-weight:600;color:var(--amber-ink);margin-top:14px}
+  .chips{display:flex;gap:13px;flex-wrap:wrap;margin-top:4px;align-items:center}
+  .chip{font-family:var(--mono);font-size:21px;background:var(--paper);border:1px solid var(--line-2);border-radius:9px;padding:6px 13px}
+  .chip .sl{color:var(--violet);padding:0 3px}
+  .chips .cap{font-size:17px;color:var(--muted)}
+  .s-prompt{font-family:var(--mono);font-size:42px;background:var(--cell);border:1px solid var(--line-2);border-radius:15px;padding:26px 30px;text-align:center}
+  .s-prompt .cur{color:var(--violet);animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  .title-tape{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .title-tape .tk{font-family:var(--mono);font-size:25px;background:var(--cell);border:1px solid var(--line-2);border-radius:9px;padding:8px 14px}
+  .title-tape .tk.last{background:var(--violet-soft);border-color:var(--violet);color:var(--violet-deep);animation:pulse 1.7s var(--ease) infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(85,70,214,0)}50%{box-shadow:0 0 0 5px rgba(85,70,214,.16)}}
+  .title-flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:26px;font-family:var(--mono);font-size:17px;color:var(--muted)}
+  .title-flow .f{padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--cell)}
+  .title-flow .f.sh{border-color:var(--amber);color:var(--amber-ink);background:var(--amber-soft)}
+  .title-flow .bk{color:var(--violet)}
+
+  .qlist{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+  .qrow{display:flex;gap:15px;font-size:23px;line-height:1.3;background:var(--cell);border:1px solid var(--line);border-radius:11px;padding:13px 18px}
+  .qrow .qn{font-family:var(--mono);color:var(--violet);font-size:19px;flex:none}
+  .qrow .txt2{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .qrow .note{font-size:18px;color:var(--muted)}
+  .qrow .go{font-family:var(--mono);font-size:16px;color:var(--violet-deep);word-break:break-all}
+  .qrow.opt{border-style:dashed} .qrow.opt .qn{color:var(--muted)}
+  .qlist.c{gap:8px} .qrow.c{padding:7px 14px;font-size:18px;gap:12px}
+  .qrow.c .note{font-size:15px} .qrow.c .go{font-size:13px}
+
+  /* aid visuals on stage */
+  .av-bars{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+  .av-bar{display:grid;grid-template-columns:190px 1fr 56px;align-items:center;gap:15px}
+  .av-bar .nm{font-family:var(--mono);font-size:23px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .av-bar .tk{height:32px;background:var(--paper-2);border-radius:8px;overflow:hidden}
+  .av-bar .fl{height:100%;width:0;background:var(--violet);border-radius:8px;transition:width .4s var(--ease)}
+  .av-bar.top .fl{background:var(--amber)} .av-bar.top .nm{color:var(--amber-ink);font-weight:500}
+  .av-bar .n{font-family:var(--mono);font-size:21px;color:var(--muted)}
+  .av-empty{font-size:20px;color:var(--muted);text-align:center;margin-top:18px}
+
+  .av-temp{display:flex;align-items:flex-end;gap:13px;min-height:230px;margin-top:4px}
+  .av-cand{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+  .av-cand .bar{width:100%;max-width:74px;background:var(--violet-soft);border:1px solid var(--violet);border-bottom:none;border-radius:9px 9px 0 0;transition:height .3s var(--ease)}
+  .av-cand .nm{font-family:var(--mono);font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .av-cand .pc{font-family:var(--mono);font-size:15px;color:var(--muted)}
+  .av-cand.pick .bar{background:var(--amber);border-color:var(--amber)} .av-cand.pick .nm{color:var(--amber-ink);font-weight:500}
+  .av-stream{font-family:var(--mono);font-size:28px;color:var(--violet-deep);margin-top:18px;text-align:center}
+  .av-stream b{color:var(--amber-ink)}
+
+  .av-att{display:flex;flex-wrap:wrap;gap:13px;margin-top:8px;justify-content:center}
+  .av-w{display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;border:none;background:none;padding:0}
+  .av-w .cell{font-family:var(--mono);font-size:28px;padding:13px 17px;border:1px solid var(--line-2);border-radius:11px;background:var(--paper);transition:.15s var(--ease)}
+  .av-w:hover .cell{border-color:var(--violet)}
+  .av-w .cell.it{background:var(--violet);color:#fff;border-color:var(--violet)}
+  .av-w .cell.ref{box-shadow:0 0 0 3px var(--amber);border-color:var(--amber)}
+  .av-w .pts{height:7px;width:50px;border-radius:4px;background:var(--paper-2);overflow:hidden}
+  .av-w .pts>i{display:block;height:100%;width:0;background:var(--violet);transition:width .25s var(--ease)}
+  .av-att-cap{text-align:center;font-size:23px;margin-top:22px} .av-att-cap b{color:var(--amber-ink)}
+
+  .av-teams{display:flex;gap:18px;margin-top:4px}
+  .av-team{flex:1;border:1px solid var(--line-2);border-radius:15px;background:var(--cell);padding:18px 20px}
+  .av-team h4{margin:0 0 10px;font-family:var(--mono);font-size:20px}
+  .av-team.win{border-color:var(--amber);box-shadow:0 0 0 2px var(--amber-soft)}
+  .av-team p{margin:0;font-size:22px;line-height:1.4}
+  .av-reward{margin-top:16px;border:1px solid var(--amber);background:var(--amber-soft);border-radius:13px;padding:15px 20px;font-size:21px;color:var(--amber-ink)}
+  .av-reward b{font-weight:700}
+
+  /* ===== audience window (full-bleed) ===== */
+  body.audience{background:#0e0d12;display:flex;align-items:center;justify-content:center}
+  .aud-flag{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:50;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(85,70,214,.85);padding:5px 12px;border-radius:20px;opacity:0;transition:opacity .3s}
+  body.audience:hover .aud-flag{opacity:.5}
+  .aud-nav{position:fixed;right:16px;bottom:16px;z-index:60;display:none;gap:8px;background:rgba(20,18,28,.7);padding:8px;border-radius:30px}
+  body.audience .aud-nav{display:flex}
+  .aud-nav button{font-family:var(--mono);font-size:13px;color:#fff;background:rgba(255,255,255,.12);border:none;border-radius:20px;padding:8px 13px}
+  .aud-nav button:hover{background:var(--violet)}
+
+  /* ===== presenter cockpit ===== */
+  .cockpit{display:grid;grid-template-rows:auto 1fr;height:100vh}
+  .topbar{display:flex;align-items:center;gap:13px;padding:11px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--paper),var(--paper-2))}
+  .tb-badge{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--violet);padding:5px 10px;border-radius:7px}
+  .tb-title{font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .tb-sp{flex:1}
+  .tb-timer{font-family:var(--mono);font-size:28px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
+  .tb-timer.warn{color:var(--violet-deep)} .tb-timer.done{color:var(--amber-ink)}
+  .mini{font-family:var(--mono);font-size:12px;border:1px solid var(--line-2);background:var(--paper);border-radius:8px;padding:6px 11px;color:var(--ink);transition:.15s var(--ease)}
+  .mini:hover{background:var(--violet-soft);border-color:var(--violet)}
+  .mini.go{background:var(--violet);color:#fff;border-color:var(--violet)} .mini.go:hover{background:var(--violet-deep)}
+
+  .body3{display:grid;grid-template-columns:210px minmax(0,1fr) 372px;min-height:0}
+  .rail{border-right:1px solid var(--line);background:linear-gradient(180deg,var(--paper),var(--paper-2));padding:16px 12px;overflow:auto;display:flex;flex-direction:column;gap:5px}
+  .rail h2{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+  .nav-item{display:grid;grid-template-columns:30px 1fr;gap:9px;align-items:center;text-align:left;border:1px solid transparent;background:none;border-radius:10px;padding:7px 8px;color:var(--ink);width:100%;transition:.15s var(--ease)}
+  .nav-item:hover{background:var(--cell);border-color:var(--line)}
+  .nav-item.on{background:var(--cell);border-color:var(--line-2)}
+  .nav-item.on .nv-num{background:var(--violet);color:#fff;border-color:var(--violet)}
+  .nv-num{font-family:var(--mono);font-size:12px;width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:8px;background:var(--cell);color:var(--muted)}
+  .nv-t{font-size:13px;font-weight:600;line-height:1.15}
+  .nv-m{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+  .center{min-width:0;overflow:auto;padding:18px 20px 30px}
+  .pv-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:8px}
+  .pv-label .dot{width:8px;height:8px;border-radius:50%;background:#cf4b4b}
+  .pv-box{width:100%;aspect-ratio:16/9;border:1px solid var(--line-2);border-radius:13px;overflow:hidden;box-shadow:0 10px 34px -20px rgba(40,30,80,.45)}
+  .notes{margin-top:18px;display:flex;flex-direction:column;gap:11px}
+  .seg-line{display:flex;align-items:baseline;gap:11px;margin-bottom:2px}
+  .seg-line .num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--ink);border-radius:7px;padding:4px 9px}
+  .seg-line.shape .num{background:var(--amber)}
+  .seg-line h2{font-family:var(--mono);font-weight:500;font-size:20px;margin:0}
+  .nc{border-radius:0 11px 11px 0;padding:12px 15px}
+  .nc .bl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+  .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:5px;color:#fff}
+  .tag.you{background:var(--violet)} .tag.room{background:var(--amber)} .tag.eye{background:var(--ink)}
+  .nc.look{border:1px solid var(--line-2);border-left:3px solid var(--ink);background:var(--cell)} .nc.look .bl{color:var(--muted)}
+  .nc.you{border-left:3px solid var(--violet);background:#fff;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)} .nc.you .bl{color:var(--violet-deep)}
+  .nc.say{border-left:3px solid var(--violet);background:var(--violet-soft)} .nc.say .bl{color:var(--violet-deep)}
+  .nc.room{border-left:3px solid var(--amber);background:var(--amber-soft)} .nc.room .bl{color:var(--amber-ink)}
+  .nc.watch{border:1px dashed var(--line-2);border-left:3px dashed var(--amber);background:var(--cell)} .nc.watch .bl{color:var(--amber-ink)}
+  .nc p{margin:0;font-size:14.5px;line-height:1.5} .nc p+p{margin-top:8px}
+  .nc ul{margin:0;padding-left:18px} .nc li{font-size:14px;margin:4px 0;line-height:1.45}
+
+  .ctrlcol{border-left:1px solid var(--line);background:rgba(255,253,248,.7);overflow:auto;padding:16px 15px;display:flex;flex-direction:column;gap:12px}
+  .ctrlcol h2{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0}
+  .ctrl{border:1px solid var(--line-2);border-radius:12px;background:var(--cell);overflow:hidden}
+  .ctrl .hd{display:flex;align-items:center;gap:9px;padding:9px 13px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--cell))}
+  .ctrl .ct{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--violet);padding:3px 8px;border-radius:6px}
+  .ctrl .ct.live{background:var(--amber)}
+  .ctrl .cn{font-weight:600;font-size:13px} .ctrl .mark{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+  .ctrl .bd{padding:12px 13px}
+  .ctrl .hint{font-size:12px;color:var(--muted);margin:0 0 10px}
+  textarea,input[type=text]{font-family:var(--mono);font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--line-2);border-radius:9px;padding:9px 11px;width:100%;resize:vertical}
+  textarea:focus,input:focus{outline:2px solid var(--violet);outline-offset:1px;border-color:var(--violet)}
+  .btn{font-family:var(--mono);font-size:12px;padding:8px 12px;border-radius:9px;border:1px solid var(--violet);background:var(--violet);color:#fff;transition:.15s var(--ease)}
+  .btn:hover{background:var(--violet-deep)}
+  .btn.ghost{background:transparent;color:var(--violet-deep)} .btn.ghost:hover{background:var(--violet-soft)}
+  .crow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  input[type=range]{width:100%;accent-color:var(--violet)}
+  .seg-toggle{display:inline-flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden}
+  .seg-toggle button{font-family:var(--mono);font-size:12px;padding:7px 11px;border:none;background:var(--paper);color:var(--muted)}
+  .seg-toggle button.on{background:var(--violet);color:#fff}
+  .small{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .small a{color:var(--violet-deep)}
+  .scards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+  .scard{border:1px solid var(--line-2);border-radius:11px;background:var(--paper);padding:11px}
+  .scard h4{margin:0 0 7px;font-size:14px;font-family:var(--mono)}
+  .scard label{display:grid;gap:3px;margin-top:7px;font-size:11px;color:var(--muted);font-family:var(--mono)}
+  .navrow{display:flex;align-items:center;gap:9px;margin-top:4px}
+  .navbtn{font-family:var(--mono);font-size:12.5px;border:1px solid var(--line-2);background:var(--cell);border-radius:9px;padding:9px 14px;color:var(--ink)}
+  .navbtn:hover{border-color:var(--violet);background:var(--violet-soft)}
+  .navbtn.prim{background:var(--violet);color:#fff;border-color:var(--violet)} .navbtn.prim:hover{background:var(--violet-deep)}
+  .navrow .cnt{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+  .scrim{position:fixed;inset:0;background:rgba(20,16,30,.5);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+  .card{max-width:560px;background:var(--paper);border:1px solid var(--line-2);border-radius:18px;padding:26px 28px;box-shadow:0 30px 80px -30px rgba(30,20,60,.6)}
+  .card h3{font-family:var(--mono);font-weight:500;font-size:21px;margin:0 0 4px}
+  .card .two{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:16px 0}
+  .card .vw{border:1px solid var(--line-2);border-radius:11px;padding:13px;background:var(--cell)}
+  .card .vw h4{margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+  .card .vw.y h4{color:var(--violet-deep)} .card .vw.t h4{color:var(--amber-ink)}
+  .card .vw p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+  .card ol{margin:14px 0 0;padding-left:20px;font-size:14px} .card li{margin:6px 0}
+  .card .x{margin-top:18px;display:flex;gap:10px;justify-content:flex-end}
+  kbd{font-family:var(--mono);font-size:11px;background:var(--paper-2);border:1px solid var(--line-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px}
+
+  @media (max-width:1080px){
+    .body3{grid-template-columns:1fr}
+    .rail{flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--line)}
+    .rail h2{width:100%} .nav-item{width:auto} .nv-m{display:none}
+    .ctrlcol{border-left:none;border-top:1px solid var(--line)}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff}
+    .topbar,.rail,.ctrlcol,.aud-nav,.aud-flag,.scrim{display:none!important}
+    .body3{display:block} .center{overflow:visible}
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<div class="scrim" id="onboard" style="display:none">
+  <div class="card">
+    <h3>Two screens, one deck</h3>
+    <p class="small" style="color:var(--muted)">A private cockpit for you, a clean slide for the room — the live tools sync between them, and everything survives a refresh.</p>
+    <div class="two">
+      <div class="vw y"><h4>You see — presenter</h4><p>The slide preview, your script, what the room does, the timer, and the controls for each live tool.</p></div>
+      <div class="vw t"><h4>They see — audience</h4><p>Only the slide: the big idea, the room's task, and the live tool's visual. No notes, no controls.</p></div>
+    </div>
+    <ol>
+      <li>Click <b>Open audience window</b>. A clean slide opens in a new window.</li>
+      <li>In Zoom, <b>Share Screen → that window</b> (not your whole screen).</li>
+      <li>Keep this cockpit private. Move with <kbd>←</kbd> <kbd>→</kbd>; tally, sample, and clicks all mirror to the shared slide.</li>
+      <li>The sentence, tally, points, and scores persist across refreshes. Use <b>new session</b> in the top bar for a clean run, and <b>copy log</b> after to export what the room built.</li>
+    </ol>
+    <div class="x">
+      <button class="btn ghost" id="obSkip">Run in one window</button>
+      <button class="btn" id="obOpen">Open audience window</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var isAudience = location.hash.indexOf('audience') !== -1;
+
+  /* ============ CONTENT (edit here) ============ */
+  var SITE = 'https://saberkhan372.github.io/learning-machines-tools/';
+  var CAND = [['sleeps',3.0],['walks',2.5],['watches',2.1],['waits',1.7],['finds',1.4],['knows',1.0],['returns',0.7]];
+  var CORPUS = "Every morning the orange cat walks into the small bookshop and finds a warm spot near the window. It watches the street, sleeps in the afternoon sun, and waits for the owner to open a tin of fish. The cat does not read the books, but it knows where every quiet corner is, and it always returns before the rain.";
+  var DEMO_WORDS = "sleeps walks sleeps watches sleeps walks waits sleeps finds sleeps walks knows sleeps";
+  var SEED = 'The orange cat';
+
+  /* studio slide: mirrors the Session 1 run-of-show in assets/session-runs.js */
+  var TOOLS = [
+    {n:'Tokenizer + Temperature Visualizer', u:SITE+'tools/tokenizer-temperature-visualizer/', w:'Rounds 1–2 for real — tokens, probabilities, sampling'},
+    {n:'Count the Next Token', u:SITE+'tools/count-the-next-token/', w:'training as arithmetic — count, divide, predict'},
+    {n:'Next-Token Prediction Game', u:SITE+'tools/next-token-prediction-game/', w:'the room’s guesses vs. a model’s top-k'},
+    {n:'ELIZA Simulator', u:SITE+'tools/eliza-simulator/', w:'optional — visible rules vs. learned patterns', opt:true},
+    {n:'Text Experiment Board', u:SITE+'worksheets/text-experiment-board/', w:'the worksheet — one claim: prediction, evidence, change'}
+  ];
+  var CLOSERS = [
+    {n:'Session 1 page — your map of everything we touched', u:SITE+'pages/session-text.html'},
+    {n:'Vocabulary Field Guide — token, temperature, attention, and friends', u:SITE+'pages/vocabulary-field-guide.html'},
+    {n:'Text Experiment Board — finish your claim before Saturday', u:SITE+'worksheets/text-experiment-board/'}
+  ];
+
+  var SLIDES = [
+    { id:'title', kind:'title', time:4, nav:'Start + roles',
+      head:'Human Language Model',
+      idea:'Today the Zoom room becomes a text-generating machine. We build text one piece at a time, then ask what makes it useful to humans.',
+      notes:{
+        look:'Presenter cockpit: slide preview + your notes on the left, live-tool controls on the right, timer and slide list up top. The audience window shows only the slide.',
+        you:['Make sure you are screen-sharing the audience window only.','Tell people they will mostly use Zoom chat, not the webpage.','Assign loose roles: User, Sampler, Scribe, Raters. You can play Sampler/Scribe if easier.'],
+        room:['Watch the slide and say hello in chat.','No task yet — just get oriented.','Expect to type short answers in chat when prompted.'],
+        say:['"You are not pretending to be one smart brain. You are pretending to be many tiny pieces of a system."','"The webpage is my console and our shared visual. Your main tool is Zoom chat."'],
+        watch:'Protect the distinction early: generation happens live; training happened before and shapes what the live generation can do.'} },
+
+    { id:'s0', kind:'setup', time:8, shape:true, num:'00', nav:'Training data + tokens',
+      head:"The model's tiny world",
+      idea:'A model is shaped by what it read — and it reads in tokens, not exactly words.',
+      task:'Read the paragraph. In Rounds 1–2, only suggest words you find in it.',
+      take:'A model builds from patterns in its data and the current context.',
+      aid:'corpus',
+      notes:{
+        look:'You look at: the corpus copy button and token examples. Attendees see: the paragraph, the rule, and token chips.',
+        you:['Click Copy corpus and paste it into Zoom chat.','Point at book·shop and after·noon — both from our paragraph.','Say the restriction is a simulation, not exactly how real LLMs work.'],
+        room:['Read the corpus once.','Rounds 1–2: only suggest words that appear in it.','Notice repeated words and likely next words.'],
+        say:['"For this activity, this paragraph is everything our stand-in model can use. Real LLMs are far more flexible — they recombine patterns — but they’re still shaped by the data, styles, and blind spots they learned."','"Tokens are chunks: sometimes whole words, sometimes punctuation, sometimes word pieces."'],
+        watch:'Do not overteach tokenization. The point is simply: text becomes pieces, and the pieces are the units the system works with. The Tokenizer tool in the studio block is the real version.'} },
+
+    { id:'s1', kind:'prompt', time:7, num:'01', nav:'Round 1 — Prediction',
+      head:'Predict the next token',
+      idea:'The room generates a sentence by choosing one next word at a time.',
+      task:'Type ONE next word in chat — only words from the paragraph.',
+      take:'Nobody planned the sentence. It emerged from repeated next-token prediction.',
+      aid:'tally',
+      notes:{
+        look:'You look at: Zoom chat, the tally box, and the growing sentence. Attendees see: the sentence so far and the bar chart after you tally.',
+        you:['Start from "The orange cat".','Ask everyone for exactly one next word in chat.','Paste 10–20 responses into the tally and click Tally.','Click Append top word — the sentence grows on their screen. Repeat 4–6×.'],
+        room:['Type one next word only.','Use corpus words only.','After each appended word, reread the new line and suggest the next.'],
+        say:['"This is temperature zero: always take the safest, most common next word."','"The sentence can become coherent even though nobody planned the whole answer."'],
+        watch:'The goal is not a beautiful sentence — it is to feel the loop: read context → propose → choose → append → repeat. The finished sentence goes in the session log.'} },
+
+    { id:'s2', kind:'aid', aid:'temp', time:7, num:'02', nav:'Round 2 — Temperature',
+      head:'Turn up the temperature',
+      idea:'Same prediction loop, different sampling rule. Low is safe; high allows surprises.',
+      task:'Suggest a safe word first, then a surprising-but-allowed word.',
+      take:'Creativity is sampling lower-probability tokens — not magic.',
+      notes:{
+        look:'You look at: the preset bars and sampled stream. Attendees see: the pretend distribution, the slider, and the chosen word.',
+        you:['Remind them this is a preset illustrative distribution, not the live tally.','Sample at low temperature twice.','Raise temperature, sample several times.','Ask when output got more interesting, and when it got worse.'],
+        room:['Watch how the bar heights change.','In chat, name one benefit and one risk of higher temperature.','Notice high temperature is not "anything goes".'],
+        say:['"High temperature is the model gambling on a less likely word."','"In our stand-in model we banned outside words, so it still can’t say spaceship. Real models aren’t capped like that — but their surprises also come from learned patterns and context."'],
+        watch:'Students may equate temperature with intelligence. Frame it as risk in the sampling step, not deeper understanding. If running behind, two samples per temperature is enough — cut repetitions here, not rounds.'} },
+
+    { id:'s3', kind:'aid', aid:'att', time:10, num:'03', nav:'Round 3 — Attention',
+      head:'What does "it" point to?',
+      idea:'Meaning changes when nearby context changes. Each token weighs which OTHER tokens matter.',
+      task:'In chat, vote: does "it" mean the trophy or the case?',
+      notes:{
+        look:'You look at: chat votes and the attention router. Attendees see: the sentence, your point allocation, and the revealed referent.',
+        you:['Ask what "it" refers to; collect chat votes.','Click words to spend up to 10 points (right-click removes).','Reveal the referent.','Switch too big → too small and repeat.','Say attention is token-to-token routing, not human "paying attention".'],
+        room:['Vote in chat: trophy or case.','If asked, justify in a phrase: too big for what? too small for what?','Notice "it" stayed the same but the context changed.'],
+        say:['"Nothing about the word it changed. The words around it changed, so the route changed."','"Attention is not the alignment team. It does not ask is this helpful — it asks which positions matter for interpreting other positions."'],
+        watch:'Highest-value conceptual moment — this cohort asked for attention by name on the interest form. Slow down enough for them to see the referent flip.'} },
+
+    { id:'s4', kind:'align', aid:'align', time:9, shape:true, num:'04', nav:'Round 4 — Alignment',
+      head:'Fluent is not the same as useful',
+      idea:'Now humans judge which output better serves a person.',
+      prompt:'Write a one-sentence apology to a teacher for turning in late work.',
+      task:'Team A and Team B each propose one sentence; raters pick the more useful one.',
+      take:'Usefulness is probable text shaped toward human needs by repeated feedback.',
+      notes:{
+        look:'You look at: two team outputs, score sliders, and the reward summary. Attendees see: the prompt, both outputs, and the rating result.',
+        you:['Split the room loosely into Team A and Team B.','Each team writes one sentence; paste them into the boxes.','A rater panel scores clarity, responsibility, usefulness.','Click Score round and name the reward pattern.','Run one quick revision aimed at that pattern.'],
+        room:['Teams propose full sentences, not just next words.','Raters judge usefulness, not just fluency.','Reward person says what humans seem to prefer.'],
+        say:['"Nothing about next-token prediction disappeared. But now human preference shapes which answer wins."','"The model became more useful because humans repeatedly taught it what useful looked like."'],
+        watch:'Do not claim real LLM training is exactly this simple. This dramatizes instruction tuning / preference learning.'} },
+
+    { id:'s5', kind:'questions', time:7, num:'05', nav:'Debrief',
+      head:'What did the room become?',
+      idea:'Prediction creates language. Training shapes usefulness.',
+      task:'Answer in chat or aloud — we will pick a few.',
+      take:'A response is generated one token at a time, but usefulness is shaped by data, instructions, feedback, and human judgment.',
+      questions:[
+        'Who had power over the final answer: predictors, sampler, scribe, or raters?',
+        'Was anyone thinking for the whole group? Where did the intelligence come from?',
+        'When did the answer become fluent? When did it become useful?',
+        'What changed when temperature went up?',
+        'What did the attention round show about context?'],
+      notes:{
+        look:'You look at: the questions and the clock. Attendees see: the questions only.',
+        you:['Pick 3–5 depending on time.','Start with Q1 and Q3 — they land best.','Take chat responses first, then call on one or two people.'],
+        room:['Answer in chat or aloud.','Connect one activity moment to something you have noticed using AI.'],
+        say:['"Generation is the live loop; training is what shaped the loop before we used it."','"A chatbot can sound fluent before it is useful. Human feedback is part of what pushes it toward usefulness."'],
+        watch:'End on the autocomplete-vs-human-shaped-usefulness distinction, not a vocabulary quiz.'} },
+
+    { id:'s6', kind:'studio', time:25, num:'06', nav:'Tool studio',
+      head:'Your turn — the real tools',
+      idea:'The activity was a cartoon. These are the instruments — same loop, real numbers.',
+      task:'Pick ONE tool. Log one claim on the Text Experiment Board before we regroup.',
+      notes:{
+        look:'You look at: the Copy links button and the clock. Attendees see: the tool list with what to notice in each.',
+        you:['Click Copy links for chat and paste the block into Zoom chat.','Name the deal: one tool, one experiment, one worksheet row.','Circulate — ask "what did you predict, and what actually moved?"','Five-minute warning: ask people to drop one claim in chat.'],
+        room:['Open one tool in your browser — no accounts, no installs.','Run one experiment: predict first, then test.','Fill one row of the Text Experiment Board.','Drop one claim in chat before we regroup.'],
+        say:['"The deck slide was scaled down so the room could be the machine. These tools are the full instruments — same loop, real numbers."','"One good claim beats ten screenshots."'],
+        watch:'Some people will bounce between tools. Steer them to finish one worksheet row before switching — the claim is the deliverable, not the tour.'} },
+
+    { id:'s7', kind:'close', time:5, shape:true, num:'07', nav:'Close + next week',
+      head:'What you leave with',
+      idea:'Generation is a loop you can now narrate: context → predict → sample → append. Training shaped every step of it before we arrived.',
+      take:'Next Saturday: images — same investigation, different modality. The site is your map between sessions.',
+      notes:{
+        look:'You look at: the closing pointers and the clock. Attendees see: three links and the takeaway.',
+        you:['Read the recap consent line: recordings are for registered participants; people choose how they’re named in public recaps.','Point at the three links — the session page is the map, the worksheet is the homework-shaped invitation.','Name next Saturday: images, same time, same room.','After the call: click copy log in the top bar and paste it into your recap notes.'],
+        room:['Bookmark the session page.','Finish your Experiment Board row before Saturday if you can.','Bring one question about images next week.'],
+        say:['"You can now narrate the loop: context in, prediction, sampling, append, repeat — with training behind every step."','"Next week the same investigation meets images: what does a model fill in when you don’t specify?"'],
+        watch:'End warm and on time. The worksheet ask is an invitation, not homework pressure — 61% of this cohort is here for the first time.'} }
+  ];
+
+  var ATT = {
+    big:  {words:['The','trophy','did','not','fit','in','the','case','because','it','was','too','big','.'], ref:1, it:9},
+    small:{words:['The','trophy','did','not','fit','in','the','case','because','it','was','too','small','.'], ref:7, it:9}
+  };
+
+  /* ============ STATE ============ */
+  function freshState(rev){
+    return {
+      rev: rev||0,
+      slide:0,
+      tally:[],
+      round1:{sentence:SEED},
+      temp:{t:1.0, picked:-1, stream:'the orange cat'},
+      att:{variant:'big', points:{}, revealed:false},
+      align:{
+        a:'I am sorry my work is late; I take responsibility and will submit it by end of day.',
+        b:'Sorry, I was really busy and it is late but I hope that is okay.',
+        s:{a1:4,a2:4,a3:4,b1:3,b2:2,b3:2}, result:null }
+    };
+  }
+  var state = freshState(0);
+
+  /* ============ SESSION IDENTITY + PERSISTENCE ============ */
+  /* Each run has its own session id (sid). The sync channel AND the storage key
+     are derived from it, so a tab left over from an earlier run (even one the
+     OS froze, which misses broadcasts) is fully orphaned onto a dead channel
+     and a dead storage key the moment you click "new session". The rev guard
+     below remains as a second layer for tabs sharing the same run. */
+  var SID_KEY = 'hlm-s1-sid', STORE_BASE = 'hlm-s1-deck-';
+  function newSidValue(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  var sid = (function(){ try{
+    var s = localStorage.getItem(SID_KEY);
+    if(!s){ s = newSidValue(); localStorage.setItem(SID_KEY, s); }
+    return s;
+  }catch(e){ return 'solo'; } })();
+  function storeKey(){ return STORE_BASE + sid; }
+  function saveState(){ try{ localStorage.setItem(storeKey(), JSON.stringify(state)); }catch(e){} }
+  function restoreState(){ try{
+    var s = JSON.parse(localStorage.getItem(storeKey()) || 'null');
+    if(s && typeof s.slide === 'number'){ state = freshState(0); for(var k in s) state[k] = s[k]; }
+  }catch(e){} }
+  function pruneStores(){ try{
+    var dead = [], k;
+    for(var i=0;i<localStorage.length;i++){ k=localStorage.key(i);
+      if(k && k.indexOf(STORE_BASE)===0 && k!==storeKey()) dead.push(k); }
+    dead.forEach(function(d){ localStorage.removeItem(d); });
+  }catch(e){} }
+  restoreState();
+
+  /* ============ SYNC ============ */
+  /* rev guard: every local change bumps state.rev; incoming state older than ours
+     is ignored, so two tabs on the same run cannot re-inject old state. */
+  var chan = null;
+  function onMsg(e){ var m=e.data||{};
+    if(m.type==='state'){ if((m.state.rev||0) < (state.rev||0)) return;
+      var sameSlide=(m.state.slide===state.slide); state=m.state; saveState();
+      if(sameSlide){ paint(); syncAffordances(); } else { renderAll(); } }
+    else if(m.type==='rekey' && m.sid && m.sid!==sid){
+      sid=m.sid; try{ localStorage.setItem(SID_KEY, sid); }catch(err){}
+      openChannel(); restoreState(); renderAll();
+      if(isAudience && chan) chan.postMessage({type:'hello'}); }
+    else if(m.type==='hello' && !isAudience){ broadcast(); }
+  }
+  function openChannel(){ if(chan){ try{ chan.close(); }catch(e){} }
+    chan = ('BroadcastChannel' in window) ? new BroadcastChannel('hlm-deck-v5-'+sid) : null;
+    if(chan) chan.onmessage = onMsg; }
+  openChannel();
+  function broadcast(){ if(chan) chan.postMessage({type:'state', state:state}); }
+  // local TOOL change: repaint stage + tell other window, but DON'T rebuild controls
+  function update(){ state.rev=(state.rev||0)+1; paint(); saveState(); broadcast(); }
+  // local STRUCTURAL change (slide nav): rebuild everything + tell other window
+  function commit(){ state.rev=(state.rev||0)+1; renderAll(); saveState(); broadcast(); }
+
+  /* ============ MATH ============ */
+  function probs(T){ var ls=CAND.map(function(c){return c[1]/T;}), mx=Math.max.apply(null,ls);
+    var ex=ls.map(function(l){return Math.exp(l-mx);}), s=ex.reduce(function(a,b){return a+b;},0);
+    return ex.map(function(e){return e/s;}); }
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function shortUrl(u){ return u.replace(/^https?:\/\//,''); }
+
+  /* ============ AUDIENCE STAGE HTML ============ */
+  function audienceHTML(i){
+    var s=SLIDES[i];
+    var eyebrow = (s.num!=null)
+      ? '<div class="s-eyebrow"><span class="pill">'+s.num+'</span> '+esc(s.nav.replace(/^Round \d+ — /,''))+'</div>'
+      : '<div class="s-eyebrow"><span class="pill">workshop</span> 12–40 people · 120 min</div>';
+    var head='<div class="s-head">'+esc(s.head)+'</div>';
+    var idea=s.idea?'<div class="s-idea">'+esc(s.idea)+'</div>':'';
+    var sh=s.shape?' shape':'';
+
+    if(s.kind==='title'){
+      var ws=CORPUS.split(' ').slice(0,9);
+      var tape='<div class="title-tape">'+ws.map(function(w,k){return '<span class="tk'+(k===ws.length-1?' last':'')+'">'+esc(w)+'</span>';}).join('')+'</div>';
+      var flow='<div class="title-flow"><span class="f sh">training data</span><span>→</span><span class="f">tokenize</span><span>→</span><span class="f">attention</span><span>→</span><span class="f">predict</span><span>→</span><span class="f">sample</span><span>→</span><span class="f">append</span> <span class="bk">↺ keep going</span> <span>→</span><span class="f sh">human feedback</span></div>';
+      return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:36ch">'+esc(s.idea)+'</div>'+tape+flow+'</div>';
+    }
+    if(s.kind==='setup'){
+      var body='<div class="s-body"><div class="s-corpus">'+esc(CORPUS)+'<div class="s-rule">'+esc(s.task)+'</div></div>'+
+        '<div class="chips"><span class="chip">book<span class="sl">·</span>shop</span><span class="chip">after<span class="sl">·</span>noon</span><span class="cap">illustrative splits — real tokenizers choose their own</span></div>'+
+        '<div class="s-take">'+esc(s.take)+'</div></div>';
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+body+'</div>';
+    }
+    if(s.kind==='prompt'){
+      var body='<div class="s-body"><div class="s-prompt">'+esc(state.round1.sentence)+' <span class="cur">█</span></div>'+tallyBars()+'</div>';
+      return '<div class="stage">'+eyebrow+head+idea+body+task(s)+'</div>';
+    }
+    if(s.aid==='temp'){
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+tempViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.aid==='att'){
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+attViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='align'){
+      return '<div class="stage'+sh+'">'+eyebrow+head+'<div class="s-body"><div class="s-prompt" style="font-size:28px;text-align:left">'+esc(s.prompt)+'</div>'+alignViz()+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='questions'){
+      var qs='<div class="qlist">'+s.questions.map(function(q,k){return '<div class="qrow"><span class="qn">Q'+(k+1)+'</span>'+esc(q)+'</div>';}).join('')+'</div>';
+      return '<div class="stage">'+eyebrow+head+'<div class="s-body">'+qs+'</div><div class="s-take">'+esc(s.take)+'</div></div>';
+    }
+    if(s.kind==='studio'){
+      var rows='<div class="qlist c">'+TOOLS.map(function(t,k){
+        return '<div class="qrow c'+(t.opt?' opt':'')+'"><span class="qn">'+(k+1)+'</span><span class="txt2"><span><b>'+esc(t.n)+'</b> <span class="note">— '+esc(t.w)+(t.opt?' ':'')+'</span></span><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
+      }).join('')+'</div>';
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
+    }
+    if(s.kind==='close'){
+      var pts='<div class="qlist c">'+CLOSERS.map(function(t,k){
+        return '<div class="qrow c"><span class="qn">→</span><span class="txt2"><b>'+esc(t.n)+'</b><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
+      }).join('')+'</div>';
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+pts+'</div><div class="s-take">'+esc(s.take)+'</div></div>';
+    }
+    return '<div class="stage">'+eyebrow+head+idea+'</div>';
+  }
+  function task(s){ return s.task?'<div class="s-task"><span class="lab">your task</span><span class="txt">'+esc(s.task)+'</span></div>':''; }
+
+  function tallyBars(){
+    if(!state.tally.length) return '<div class="av-empty">The distribution appears here once the room has dropped words in chat.</div>';
+    var max=state.tally[0][1];
+    return '<div class="av-bars">'+state.tally.slice(0,7).map(function(p,k){
+      return '<div class="av-bar'+(k===0?' top':'')+'"><span class="nm">'+esc(p[0])+'</span><span class="tk"><span class="fl" style="width:'+(p[1]/max*100)+'%"></span></span><span class="n">'+p[1]+'</span></div>';
+    }).join('')+'</div>';
+  }
+  function tempViz(){
+    var p=probs(Math.max(0.05,state.temp.t)), mx=Math.max.apply(null,p);
+    var cols=CAND.map(function(c,k){ var h=Math.round(20+(p[k]/mx)*200);
+      return '<div class="av-cand'+(state.temp.picked===k?' pick':'')+'"><span class="pc">'+Math.round(p[k]*100)+'%</span><div class="bar" style="height:'+h+'px"></div><span class="nm">'+c[0]+'</span></div>';
+    }).join('');
+    var st='<div class="av-stream">'+esc(state.temp.stream)+(state.temp.picked>=0?' <b>'+CAND[state.temp.picked][0]+'</b>':'')+'</div>';
+    return '<div class="av-temp">'+cols+'</div>'+st;
+  }
+  function attViz(){
+    var d=ATT[state.att.variant];
+    var ws=d.words.map(function(w,idx){ var isit=idx===d.it, isref=state.att.revealed&&idx===d.ref, pts=state.att.points[idx]||0;
+      return '<button class="av-w" data-wi="'+idx+'"><span class="cell'+(isit?' it':'')+(isref?' ref':'')+'">'+esc(w)+'</span><span class="pts"><i style="width:'+(pts/10*100)+'%"></i></span></button>';
+    }).join('');
+    var cap=state.att.revealed
+      ? '<div class="av-att-cap">attention routes <b>it → '+esc(d.words[d.ref])+'</b> — same "it", different context.</div>'
+      : '<div class="av-att-cap" style="color:var(--muted)">vote in chat, then spend points on what <b>it</b> looks at.</div>';
+    return '<div class="av-att">'+ws+'</div>'+cap;
+  }
+  function alignViz(){
+    var r=state.align.result, win=r?r.winner:null;
+    var card=function(name,txt,key){ return '<div class="av-team'+(win===key?' win':'')+'"><h4>Team '+name+(win===key?' ★':'')+'</h4><p>'+esc(txt||'—')+'</p></div>'; };
+    var teams='<div class="av-teams">'+card('A',state.align.a,'A')+card('B',state.align.b,'B')+'</div>';
+    var rew=r?'<div class="av-reward"><b>'+esc(r.winner==='Tie'?'A tie':('Team '+r.winner+' wins'))+' ('+r.a+'–'+r.b+').</b> '+esc(r.pattern)+'</div>':'';
+    return teams+rew;
+  }
+
+  /* attention clicks work in either window */
+  function wireStage(rootEl){
+    rootEl.querySelectorAll('.av-w').forEach(function(b){ var idx=parseInt(b.dataset.wi,10);
+      b.addEventListener('click', function(e){ attPoint(idx, (e.shiftKey||e.altKey)?-1:1); });
+      b.addEventListener('contextmenu', function(e){ e.preventDefault(); attPoint(idx,-1); });
+    });
+  }
+  function attPoint(idx, delta){ var d=ATT[state.att.variant]; if(idx===d.it) return;
+    var total=0,k; for(k in state.att.points) total+=state.att.points[k];
+    var cur=state.att.points[idx]||0; if(delta>0 && total>=10) return;
+    cur=Math.max(0,cur+delta); if(cur===0) delete state.att.points[idx]; else state.att.points[idx]=cur;
+    update(); syncAffordances();
+  }
+
+  /* ============ SESSION LOG ============ */
+  function buildLog(){
+    var d=new Date(), L=[];
+    L.push('# Human Language Model — session log');
+    L.push('_Session 1 · Text — ' + d.toDateString() + '_');
+    L.push('');
+    L.push('## Round 1 — the room’s sentence');
+    L.push('> ' + state.round1.sentence);
+    if(state.tally.length){
+      L.push('');
+      L.push('Last tally: ' + state.tally.map(function(p){return p[0]+' ×'+p[1];}).join(' · '));
+    }
+    L.push('');
+    L.push('## Round 2 — temperature');
+    L.push('- final temperature: ' + state.temp.t.toFixed(1));
+    L.push('- sampled stream: ' + state.temp.stream);
+    L.push('');
+    L.push('## Round 3 — attention');
+    L.push('- sentence variant: too ' + state.att.variant);
+    var pts=Object.keys(state.att.points);
+    var d3=ATT[state.att.variant];
+    L.push('- points spent: ' + (pts.length ? pts.map(function(k){return d3.words[k]+':'+state.att.points[k];}).join(', ') : 'none'));
+    L.push('- revealed: ' + (state.att.revealed ? ('yes — it → ' + d3.words[d3.ref]) : 'no'));
+    L.push('');
+    L.push('## Round 4 — alignment');
+    L.push('- Team A: ' + state.align.a);
+    L.push('- Team B: ' + state.align.b);
+    if(state.align.result){
+      var r=state.align.result;
+      L.push('- result: ' + (r.winner==='Tie'?'tie':'Team '+r.winner+' wins') + ' (' + r.a + '–' + r.b + ')');
+      L.push('- reward pattern: ' + r.pattern);
+    } else { L.push('- result: not scored'); }
+    L.push('');
+    L.push('_Generated from the Session 1 live deck. Tools: ' + SITE + 'pages/session-text.html_');
+    return L.join('\n');
+  }
+  function copyText(txt, done, fail){
+    var fb=function(){ var a=document.createElement('textarea');a.value=txt;a.style.position='fixed';a.style.left='-9999px';
+      document.body.appendChild(a);a.select();try{document.execCommand('copy');done();}catch(e){fail();}document.body.removeChild(a); };
+    if(navigator.clipboard&&window.isSecureContext) navigator.clipboard.writeText(txt).then(done,fb); else fb();
+  }
+
+  /* ============ PAINT (stage only) ============ */
+  var root=document.getElementById('root');
+  function fit(wrap, full){ var st=wrap.querySelector('.stage'); if(!st) return;
+    var w=full?window.innerWidth:wrap.clientWidth, h=full?window.innerHeight:wrap.clientHeight;
+    var sc=Math.min(w/1280, h/720); st.style.transform='scale('+sc+')'; }
+  function paint(){
+    if(isAudience){ var aw=document.getElementById('aw'); if(!aw) return;
+      aw.innerHTML=audienceHTML(state.slide)+'<div class="aud-flag">audience view</div>'; fit(aw,true); wireStage(aw);
+    } else { var pv=document.getElementById('pv'); if(!pv) return;
+      pv.innerHTML=audienceHTML(state.slide); requestAnimationFrame(function(){fit(pv,false);}); wireStage(pv); }
+  }
+  function syncAffordances(){ // keep small presenter readouts in step without rebuilding controls
+    var al=document.getElementById('attLeft'); if(al){ var t=0,k; for(k in state.att.points)t+=state.att.points[k]; al.textContent=10-t; }
+    var sn=document.getElementById('r1Sent'); if(sn){ sn.textContent=state.round1.sentence; }
+  }
+
+  /* ============ TOP-LEVEL RENDER ============ */
+  function renderAll(){ isAudience ? buildAudience() : buildPresenter(); }
+
+  function buildAudience(){
+    document.body.classList.add('audience');
+    root.innerHTML='<div class="stage-wrap" id="aw" style="width:100vw;height:100vh"></div>'+
+      '<div class="aud-nav"><button id="an-prev">←</button><button id="an-mode">presenter</button><button id="an-next">→</button></div>';
+    paint();
+    window.onresize=function(){ var aw=document.getElementById('aw'); if(aw) fit(aw,true); };
+    document.getElementById('an-prev').onclick=function(){ goto(state.slide-1); };
+    document.getElementById('an-next').onclick=function(){ goto(state.slide+1); };
+    document.getElementById('an-mode').onclick=function(){ isAudience=false; location.hash=''; document.body.classList.remove('audience'); renderAll(); };
+  }
+
+  function buildPresenter(){
+    document.body.classList.remove('audience');
+    var i=state.slide, s=SLIDES[i];
+    root.innerHTML=
+      '<div class="cockpit">'+
+        '<div class="topbar"><span class="tb-badge">presenter</span>'+
+          '<span class="tb-title">Session 1 · Human Language Model · only you see this</span><span class="tb-sp"></span>'+
+          '<span class="tb-timer" id="timer">00:00</span>'+
+          '<button class="mini go" id="tStart">start</button><button class="mini" id="tReset">reset</button>'+
+          '<button class="mini" id="openAud">open audience window</button>'+
+          '<button class="mini" id="peek">preview audience</button>'+
+          '<button class="mini" id="logBtn">copy log</button>'+
+          '<button class="mini" id="fresh">new session</button>'+
+          '<button class="mini" id="howto">how to run</button>'+
+          '<button class="mini" id="printb">print</button></div>'+
+        '<div class="body3">'+
+          '<aside class="rail"><h2>Slides</h2><div id="nav"></div></aside>'+
+          '<main class="center">'+
+            '<div class="pv-label"><span class="dot"></span> on their screen now</div>'+
+            '<div class="pv-box stage-wrap" id="pv"></div>'+
+            '<div class="notes" id="notes"></div>'+
+          '</main>'+
+          '<aside class="ctrlcol"><h2>Live tool · this slide</h2><div id="controls"></div>'+
+            '<div class="navrow"><button class="navbtn" id="prev">← prev</button><button class="navbtn prim" id="next">next →</button><span class="cnt" id="cnt"></span></div>'+
+          '</aside>'+
+        '</div>'+
+      '</div>';
+
+    // nav
+    var nav=document.getElementById('nav');
+    SLIDES.forEach(function(sl,k){ var b=document.createElement('button'); b.className='nav-item'+(k===i?' on':'');
+      b.innerHTML='<span class="nv-num">'+(sl.num!=null?sl.num:'··')+'</span><span><span class="nv-t">'+esc(sl.nav)+'</span><span class="nv-m">'+sl.time+' min</span></span>';
+      b.onclick=function(){ goto(k); }; nav.appendChild(b); });
+
+    document.getElementById('notes').innerHTML=notesHTML(s);
+    document.getElementById('controls').innerHTML=controlsHTML(s);
+    document.getElementById('cnt').textContent=(i+1)+' / '+SLIDES.length;
+
+    paint();
+    window.onresize=function(){ var pv=document.getElementById('pv'); if(pv) fit(pv,false); };
+
+    document.getElementById('prev').onclick=function(){ goto(i-1); };
+    document.getElementById('next').onclick=function(){ goto(i+1); };
+    document.getElementById('openAud').onclick=openAudience;
+    document.getElementById('peek').onclick=function(){ isAudience=true; location.hash='audience-peek'; renderAll(); var f=document.querySelector('.aud-flag'); if(f){f.textContent='audience preview — Esc to return';f.style.opacity='.6';} };
+    document.getElementById('howto').onclick=function(){ var ob=document.getElementById('onboard'); ob.style.display='flex'; };
+    document.getElementById('printb').onclick=function(){ window.print(); };
+    document.getElementById('logBtn').onclick=function(){ var b=this;
+      copyText(buildLog(), function(){ b.textContent='copied ✓'; setTimeout(function(){b.textContent='copy log';},1400); },
+        function(){ b.textContent='copy failed'; setTimeout(function(){b.textContent='copy log';},1400); }); };
+    document.getElementById('fresh').onclick=function(){
+      if(!confirm('Start a fresh session? This clears the sentence, tally, points, and scores.')) return;
+      var next=newSidValue();
+      if(chan) chan.postMessage({type:'rekey', sid:next}); // live windows follow; frozen leftovers get orphaned
+      sid=next; try{ localStorage.setItem(SID_KEY, sid); }catch(e){}
+      openChannel(); pruneStores();
+      state=freshState((state.rev||0)+1); TM.rem=SLIDES[0].time*60; TM.run=false; commit();
+    };
+
+    wireTimer(s.time);
+    wireControls(s);
+    syncAffordances();
+  }
+
+  function notesHTML(s){
+    var n=s.notes, li=function(a){return '<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';};
+    var p=function(a){return a.map(function(x){return '<p>'+esc(x)+'</p>';}).join('');};
+    var seg='<div class="seg-line'+(s.shape?' shape':'')+'">'+(s.num!=null?'<span class="num">'+s.num+'</span>':'')+'<h2>'+esc(s.nav)+'</h2></div>';
+    return seg+
+      '<div class="nc look"><div class="bl"><span class="tag eye">view</span> what you’re looking at</div><p>'+esc(n.look)+'</p></div>'+
+      '<div class="nc you"><div class="bl"><span class="tag you">you</span> instructor does</div>'+li(n.you)+'</div>'+
+      '<div class="nc room"><div class="bl"><span class="tag room">room</span> zoom attendees do</div>'+li(n.room)+'</div>'+
+      '<div class="nc say"><div class="bl"><span class="tag you">you</span> say this</div>'+p(n.say)+'</div>'+
+      '<div class="nc watch"><div class="bl">watch for / transition</div><p>'+esc(n.watch)+'</p></div>';
+  }
+
+  /* ============ CONTROLS (built once per slide) ============ */
+  function controlsHTML(s){
+    if(s.aid==='corpus') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Corpus</span></div><div class="bd">'+
+      '<p class="hint">This paragraph is on the audience slide. Paste it into Zoom chat so everyone has it.</p>'+
+      '<div class="crow"><button class="btn" id="copyC">Copy corpus</button><span class="small" id="copyS"></span></div></div></div>'+
+      '<p class="small">Real LLMs are not limited to one paragraph — the cap just makes the model’s world, and its blind spots, visible. The <a href="'+SITE+'tools/tokenizer-temperature-visualizer/" target="_blank" rel="noopener">Tokenizer tool</a> shows real splits in the studio block.</p>';
+    if(s.aid==='tally') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">live tally</span><span class="cn">Distribution</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Paste the words the room dropped in chat. Bars push to the shared slide; amber is the temperature-zero pick.</p>'+
+      '<textarea id="tIn" rows="3" placeholder="sleeps walks sleeps watches ..."></textarea>'+
+      '<div class="crow"><button class="btn" id="tGo">Tally → audience</button><button class="btn ghost" id="tDemo">Use demo words</button><button class="btn ghost" id="tClr">Clear</button></div></div></div>'+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Sentence so far</span><span class="mark">grows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Append the amber pick after each tally — the room watches the sentence grow. It lands in the session log.</p>'+
+      '<p class="small" id="r1Sent" style="color:var(--violet-deep)">'+esc(state.round1.sentence)+'</p>'+
+      '<div class="crow"><button class="btn" id="r1Add">Append top word</button><button class="btn ghost" id="r1Undo">Undo word</button><button class="btn ghost" id="r1Rst">Reset sentence</button></div></div></div>';
+    if(s.aid==='temp') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct">preset model</span><span class="cn">Temperature</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">A preset, illustrative spread for “the orange cat ___” — not the Round 1 tally. Slide, then sample; the audience mirrors it.</p>'+
+      '<label class="small" style="display:flex;justify-content:space-between">temperature <b id="tv" style="color:var(--violet-deep)">1.0</b></label>'+
+      '<input type="range" id="tSlider" min="5" max="200" value="100" />'+
+      '<div class="crow"><button class="btn" id="tSamp">Sample a word</button><button class="btn ghost" id="tRst">Reset stream</button></div></div></div>';
+    if(s.aid==='att') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Attention router</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Click words in the preview or here to spend points on what <em>it</em> refers to. Shift-click or right-click removes one.</p>'+
+      '<div class="crow"><span class="seg-toggle" id="attTog"><button data-v="big" class="on">too big</button><button data-v="small">too small</button></span>'+
+      '<button class="btn ghost" id="attRev">Reveal</button><button class="btn ghost" id="attRes">Reset</button>'+
+      '<span class="small">left: <b id="attLeft" style="color:var(--violet-deep)">10</b></span></div></div></div>';
+    if(s.aid==='align') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">human feedback</span><span class="cn">Rater panel</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Edit each team’s sentence; the room sees them live. Score, then name the pattern raters reward.</p>'+
+      '<div class="scards">'+
+        '<div class="scard"><h4>Team A</h4><textarea id="alA" rows="3"></textarea>'+
+          '<label>clarity <input id="a1" type="range" min="1" max="5"></label>'+
+          '<label>responsibility <input id="a2" type="range" min="1" max="5"></label>'+
+          '<label>usefulness <input id="a3" type="range" min="1" max="5"></label></div>'+
+        '<div class="scard"><h4>Team B</h4><textarea id="alB" rows="3"></textarea>'+
+          '<label>clarity <input id="b1" type="range" min="1" max="5"></label>'+
+          '<label>responsibility <input id="b2" type="range" min="1" max="5"></label>'+
+          '<label>usefulness <input id="b3" type="range" min="1" max="5"></label></div>'+
+      '</div><div class="crow"><button class="btn" id="alScore">Score round → audience</button><button class="btn ghost" id="alClr">Reset scores</button></div></div></div>';
+    if(s.kind==='studio') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Tool links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
+      '<p class="hint">One click copies every tool + the worksheet as a paste-ready block for Zoom chat. Links point at the live site.</p>'+
+      '<div class="crow"><button class="btn" id="copyL">Copy links for chat</button><span class="small" id="copyLS"></span></div></div></div>'+
+      '<p class="small">Same list as the <a href="session-links.html" target="_blank" rel="noopener">Session Link Sheet</a> and the Run Console — edit <code>assets/session-runs.js</code> to change both.</p>';
+    if(s.kind==='close') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Closing links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
+      '<p class="hint">Paste the three take-home links, then click <b>copy log</b> in the top bar and save what the room built into your recap notes.</p>'+
+      '<div class="crow"><button class="btn" id="copyX">Copy closing links</button><span class="small" id="copyXS"></span></div></div></div>';
+    return '<p class="small">No live tool on this slide — this one runs entirely in the room and on the slide.</p>';
+  }
+
+  /* ============ WIRE CONTROLS ============ */
+  function wireControls(s){
+    if(s.aid==='corpus'){ var cs=document.getElementById('copyS');
+      document.getElementById('copyC').onclick=function(){
+        copyText(CORPUS, function(){cs.textContent='copied';setTimeout(function(){cs.textContent='';},1300);},
+          function(){cs.textContent='select & copy';});
+      }; }
+    if(s.aid==='tally'){
+      var run=function(){ var raw=document.getElementById('tIn').value.toLowerCase().split(/[\s,]+/).map(function(w){return w.replace(/[^a-z'·-]/g,'');}).filter(Boolean);
+        var c={}; raw.forEach(function(w){c[w]=(c[w]||0)+1;});
+        state.tally=Object.keys(c).map(function(k){return [k,c[k]];}).sort(function(a,b){return b[1]-a[1];}); update(); };
+      document.getElementById('tGo').onclick=run;
+      document.getElementById('tDemo').onclick=function(){ document.getElementById('tIn').value=DEMO_WORDS; run(); };
+      document.getElementById('tClr').onclick=function(){ document.getElementById('tIn').value=''; state.tally=[]; update(); };
+      document.getElementById('r1Add').onclick=function(){ if(!state.tally.length) return;
+        state.round1.sentence += ' ' + state.tally[0][0]; update(); syncAffordances(); };
+      document.getElementById('r1Undo').onclick=function(){ var w=state.round1.sentence.split(' ');
+        if(w.length>SEED.split(' ').length){ w.pop(); state.round1.sentence=w.join(' '); update(); syncAffordances(); } };
+      document.getElementById('r1Rst').onclick=function(){ state.round1.sentence=SEED; update(); syncAffordances(); };
+    }
+    if(s.aid==='temp'){ var sl=document.getElementById('tSlider'), tv=document.getElementById('tv');
+      sl.value=Math.round(state.temp.t*100); tv.textContent=state.temp.t.toFixed(1);
+      sl.oninput=function(){ state.temp.t=Math.max(0.05,parseInt(sl.value,10)/100); tv.textContent=state.temp.t.toFixed(1); update(); }; // no control rebuild -> drag is smooth
+      document.getElementById('tSamp').onclick=function(){ var p=probs(Math.max(0.05,state.temp.t)), r=Math.random(), acc=0, idx=p.length-1;
+        for(var k=0;k<p.length;k++){acc+=p[k];if(r<=acc){idx=k;break;}}
+        state.temp.picked=idx; state.temp.stream=(state.temp.stream+' '+CAND[idx][0]).split(' ').slice(-12).join(' '); update(); };
+      document.getElementById('tRst').onclick=function(){ state.temp.stream='the orange cat'; state.temp.picked=-1; update(); };
+    }
+    if(s.aid==='att'){
+      document.getElementById('attRev').onclick=function(){ state.att.revealed=true; update(); };
+      document.getElementById('attRes').onclick=function(){ state.att.points={}; state.att.revealed=false; update(); syncAffordances(); };
+      document.getElementById('attTog').onclick=function(e){ var b=e.target.closest('button'); if(!b)return;
+        Array.prototype.forEach.call(this.children,function(c){c.classList.toggle('on',c===b);});
+        state.att.variant=b.dataset.v; state.att.points={}; state.att.revealed=false; update(); syncAffordances(); };
+    }
+    if(s.aid==='align'){
+      var A=document.getElementById('alA'), B=document.getElementById('alB');
+      A.value=state.align.a; B.value=state.align.b;
+      ['a1','a2','a3','b1','b2','b3'].forEach(function(id){ document.getElementById(id).value=state.align.s[id]; });
+      A.oninput=function(){ state.align.a=A.value; update(); };   // text mirrors live; controls not rebuilt
+      B.oninput=function(){ state.align.b=B.value; update(); };
+      ['a1','a2','a3','b1','b2','b3'].forEach(function(id){ document.getElementById(id).oninput=function(){ state.align.s[id]=parseInt(this.value,10); }; });
+      document.getElementById('alScore').onclick=function(){
+        var s2=state.align.s, a=s2.a1+s2.a2+s2.a3, b=s2.b1+s2.b2+s2.b3;
+        var winner=a===b?'Tie':(a>b?'A':'B'), pattern;
+        if(winner==='Tie'){ pattern='Raters are split — ask what would improve both, then run again.'; }
+        else { var sc=winner==='A'?[s2.a1,s2.a2,s2.a3]:[s2.b1,s2.b2,s2.b3];
+          var names=['clarity','responsibility','usefulness'], top=sc.indexOf(Math.max.apply(null,sc));
+          var second=sc.map(function(v,k){return [v,k];}).sort(function(x,y){return y[0]-x[0];})[1];
+          var phrase=names[top]+(second&&second[0]===Math.max.apply(null,sc)?' and '+names[second[1]]:'');
+          pattern='Raters rewarded '+phrase+'. Now revise the other answer toward that.'; }
+        state.align.result={winner:winner,a:a,b:b,pattern:pattern}; update();
+      };
+      document.getElementById('alClr').onclick=function(){ state.align.s={a1:3,a2:3,a3:3,b1:3,b2:3,b3:3}; state.align.result=null;
+        ['a1','a2','a3','b1','b2','b3'].forEach(function(id){ document.getElementById(id).value=3; }); update(); };
+    }
+    if(s.kind==='studio'){ var ls=document.getElementById('copyLS');
+      document.getElementById('copyL').onclick=function(){
+        var txt=TOOLS.map(function(t){return t.n+(t.opt?' (optional)':'')+' — '+t.u;}).join('\n');
+        copyText(txt, function(){ls.textContent='copied';setTimeout(function(){ls.textContent='';},1300);},
+          function(){ls.textContent='select & copy';});
+      }; }
+    if(s.kind==='close'){ var xs=document.getElementById('copyXS');
+      document.getElementById('copyX').onclick=function(){
+        var txt=CLOSERS.map(function(t){return t.n+' — '+t.u;}).join('\n');
+        copyText(txt, function(){xs.textContent='copied';setTimeout(function(){xs.textContent='';},1300);},
+          function(){xs.textContent='select & copy';});
+      }; }
+  }
+
+  /* ============ TIMER ============ */
+  var TM={rem:0,run:false,id:null};
+  function fmt(s){var m=Math.floor(s/60),x=s%60;return (m<10?'0':'')+m+':'+(x<10?'0':'')+x;}
+  function drawT(){var el=document.getElementById('timer');if(!el)return;el.textContent=fmt(Math.max(0,TM.rem));el.classList.toggle('warn',TM.run&&TM.rem<=30&&TM.rem>0);}
+  function tickT(){if(!TM.run)return;TM.rem--;if(TM.rem<=0){TM.rem=0;stopT();var el=document.getElementById('timer');if(el)el.classList.add('done');beep();}drawT();}
+  function startT(){if(TM.run||TM.rem<=0)return;TM.run=true;TM.id=setInterval(tickT,1000);var b=document.getElementById('tStart');if(b){b.textContent='pause';b.classList.remove('go');}}
+  function stopT(){TM.run=false;if(TM.id)clearInterval(TM.id);var b=document.getElementById('tStart');if(b){b.textContent='start';b.classList.add('go');}}
+  function setT(sec){stopT();TM.rem=sec;var el=document.getElementById('timer');if(el)el.classList.remove('done');drawT();}
+  function wireTimer(mins){ setT(TM.rem>0?TM.rem:mins*60);
+    var st=document.getElementById('tStart'),rs=document.getElementById('tReset');
+    if(st)st.onclick=function(){TM.run?stopT():startT();}; if(rs)rs.onclick=function(){setT(mins*60);}; drawT(); }
+  var actx=null;
+  function beep(){ if(reduce)return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    [0,170].forEach(function(d){var o=actx.createOscillator(),g=actx.createGain();o.frequency.value=660;o.connect(g);g.connect(actx.destination);
+    var t=actx.currentTime+d/1000;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.start(t);o.stop(t+.17);}); }catch(e){} }
+
+  /* ============ NAV ============ */
+  function goto(i){ i=Math.max(0,Math.min(SLIDES.length-1,i)); state.slide=i; TM.rem=SLIDES[i].time*60; TM.run=false; commit(); }
+  document.addEventListener('keydown',function(e){
+    var tag=(e.target&&e.target.tagName)||''; if(tag==='TEXTAREA'||tag==='INPUT') return;
+    if(e.key==='ArrowRight'||e.key==='PageDown') goto(state.slide+1);
+    else if(e.key==='ArrowLeft'||e.key==='PageUp') goto(state.slide-1);
+    else if(e.key==='Escape' && location.hash.indexOf('peek')!==-1){ isAudience=false; location.hash=''; document.body.classList.remove('audience'); renderAll(); }
+  });
+
+  /* mode follows the hash, so pasting #audience (or clearing it) works without a reload */
+  window.addEventListener('hashchange', function(){
+    var aud = location.hash.indexOf('audience') !== -1;
+    if(aud !== isAudience){ isAudience = aud; document.body.classList.toggle('audience', aud); renderAll(); }
+  });
+
+  function openAudience(){ var url=location.href.split('#')[0]+'#audience';
+    var w=window.open(url,'hlm-audience','width=1280,height=720');
+    if(!w){ alert('Popup blocked. Allow popups for this page, or use "preview audience" for one-window mode.'); return; }
+    setTimeout(broadcast,500); var ob=document.getElementById('onboard'); if(ob) ob.style.display='none'; }
+
+  /* debug/verification handle (harmless in production) */
+  window.__hlm = { log: buildLog, state: function(){ return state; }, sid: function(){ return sid; } };
+
+  /* ============ BOOT ============ */
+  if(isAudience){ renderAll(); if(chan) chan.postMessage({type:'hello'}); }
+  else { renderAll(); var ob=document.getElementById('onboard'); ob.style.display='flex';
+    document.getElementById('obSkip').onclick=function(){ ob.style.display='none'; };
+    document.getElementById('obOpen').onclick=openAudience; }
+})();
+</script>
+<script src="../assets/analytics.js"></script>
+</body>
+</html>
