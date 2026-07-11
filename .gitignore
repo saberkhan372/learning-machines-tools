@@ -19,3 +19,6 @@ participant-prep-*
 *deep-enriched*
 applicant-data/
 _private/
+
+# Analysis outputs may contain participant PII (rosters, invite trackers)
+outputs/
