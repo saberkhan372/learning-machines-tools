@@ -120,8 +120,6 @@
   .tb-badge{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--violet);padding:5px 10px;border-radius:7px}
   .tb-title{font-family:var(--mono);font-size:13px;color:var(--muted)}
   .tb-sp{flex:1}
-  .tb-timer{font-family:var(--mono);font-size:28px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
-  .tb-timer.warn{color:var(--violet-deep)} .tb-timer.done{color:var(--amber-ink)}
   .mini{font-family:var(--mono);font-size:12px;border:1px solid var(--line-2);background:var(--paper);border-radius:8px;padding:6px 11px;color:var(--ink);transition:.15s var(--ease)}
   .mini:hover{background:var(--violet-soft);border-color:var(--violet)}
   .mini.go{background:var(--violet);color:#fff;border-color:var(--violet)} .mini.go:hover{background:var(--violet-deep)}
@@ -135,7 +133,6 @@
   .nav-item.on .nv-num{background:var(--violet);color:#fff;border-color:var(--violet)}
   .nv-num{font-family:var(--mono);font-size:12px;width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:8px;background:var(--cell);color:var(--muted)}
   .nv-t{font-size:13px;font-weight:600;line-height:1.15}
-  .nv-m{font-family:var(--mono);font-size:11px;color:var(--muted)}
 
   .center{min-width:0;overflow:auto;padding:18px 20px 30px}
   .pv-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:8px}
@@ -204,7 +201,7 @@
   @media (max-width:1080px){
     .body3{grid-template-columns:1fr}
     .rail{flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--line)}
-    .rail h2{width:100%} .nav-item{width:auto} .nv-m{display:none}
+    .rail h2{width:100%} .nav-item{width:auto}
     .ctrlcol{border-left:none;border-top:1px solid var(--line)}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -223,7 +220,7 @@
     <h3>Two screens, one deck</h3>
     <p class="small" style="color:var(--muted)">A private cockpit for you, a clean slide for the room — the live tools sync between them, and everything survives a refresh.</p>
     <div class="two">
-      <div class="vw y"><h4>You see — presenter</h4><p>The slide preview, your script, what the room does, the timer, and the controls for each live tool.</p></div>
+      <div class="vw y"><h4>You see — presenter</h4><p>The slide preview, your script, what the room does, and the controls for each live tool.</p></div>
       <div class="vw t"><h4>They see — audience</h4><p>Only the slide: the big idea, the room's task, and the live tool's visual. No notes, no controls.</p></div>
     </div>
     <ol>
@@ -242,7 +239,6 @@
 <script>
 (function(){
   "use strict";
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   var isAudience = location.hash.indexOf('audience') !== -1;
 
   /* ============ CONTENT (edit here) ============ */
@@ -267,17 +263,17 @@
   ];
 
   var SLIDES = [
-    { id:'title', kind:'title', time:4, nav:'Start + roles',
+    { id:'title', kind:'title', nav:'Start + roles',
       head:'Human Language Model',
       idea:'Today the Zoom room becomes a text-generating machine. We build text one piece at a time, then ask what makes it useful to humans.',
       notes:{
-        look:'Presenter cockpit: slide preview + your notes on the left, live-tool controls on the right, timer and slide list up top. The audience window shows only the slide.',
-        you:['Make sure you are screen-sharing the audience window only.','Tell people they will mostly use Zoom chat, not the webpage.','Assign loose roles: User, Sampler, Scribe, Raters. You can play Sampler/Scribe if easier.'],
+        look:'Presenter cockpit: slide preview + your notes on the left, live-tool controls on the right, slide list up top. The audience window shows only the slide.',
+        you:['Make sure you are screen-sharing the audience window only.','Tell people they will mostly use Zoom chat, not the webpage.','Keep everyone as predictors. You can play Sampler and Scribe; recruit Raters before the alignment round.'],
         room:['Watch the slide and say hello in chat.','No task yet — just get oriented.','Expect to type short answers in chat when prompted.'],
         say:['"You are not pretending to be one smart brain. You are pretending to be many tiny pieces of a system."','"The webpage is my console and our shared visual. Your main tool is Zoom chat."'],
         watch:'Protect the distinction early: generation happens live; training happened before and shapes what the live generation can do.'} },
 
-    { id:'s0', kind:'setup', time:8, shape:true, num:'00', nav:'Training data + tokens',
+    { id:'s0', kind:'setup', shape:true, num:'00', nav:'Training data + tokens',
       head:"The model's tiny world",
       idea:'A model is shaped by what it read — and it reads in tokens, not exactly words.',
       task:'Read the paragraph. In Rounds 1–2, only suggest words you find in it.',
@@ -290,7 +286,7 @@
         say:['"For this activity, this paragraph is everything our stand-in model can use. Real LLMs are far more flexible — they recombine patterns — but they’re still shaped by the data, styles, and blind spots they learned."','"Tokens are chunks: sometimes whole words, sometimes punctuation, sometimes word pieces."'],
         watch:'Do not overteach tokenization. The point is simply: text becomes pieces, and the pieces are the units the system works with. The Tokenizer tool in the studio block is the real version.'} },
 
-    { id:'s1', kind:'prompt', time:7, num:'01', nav:'Round 1 — Prediction',
+    { id:'s1', kind:'prompt', num:'01', nav:'Round 1 — Prediction',
       head:'Predict the next token',
       idea:'The room generates a sentence by choosing one next word at a time.',
       task:'Type ONE next word in chat — only words from the paragraph.',
@@ -303,19 +299,19 @@
         say:['"This is temperature zero: always take the safest, most common next word."','"The sentence can become coherent even though nobody planned the whole answer."'],
         watch:'The goal is not a beautiful sentence — it is to feel the loop: read context → propose → choose → append → repeat. The finished sentence goes in the session log.'} },
 
-    { id:'s2', kind:'aid', aid:'temp', time:7, num:'02', nav:'Round 2 — Temperature',
+    { id:'s2', kind:'aid', aid:'temp', num:'02', nav:'Round 2 — Temperature',
       head:'Turn up the temperature',
       idea:'Same prediction loop, different sampling rule. Low is safe; high allows surprises.',
-      task:'Suggest a safe word first, then a surprising-but-allowed word.',
+      task:'In chat: name one benefit and one risk of turning the temperature up.',
       take:'Creativity is sampling lower-probability tokens — not magic.',
       notes:{
         look:'You look at: the preset bars and sampled stream. Attendees see: the pretend distribution, the slider, and the chosen word.',
-        you:['Remind them this is a preset illustrative distribution, not the live tally.','Sample at low temperature twice.','Raise temperature, sample several times.','Ask when output got more interesting, and when it got worse.'],
+        you:['Remind them this is a preset illustrative distribution, not the live tally.','Lower the slider, then sample twice.','Raise temperature, sample several times.','Ask when output got more interesting, and when it got worse.'],
         room:['Watch how the bar heights change.','In chat, name one benefit and one risk of higher temperature.','Notice high temperature is not "anything goes".'],
         say:['"High temperature is the model gambling on a less likely word."','"In our stand-in model we banned outside words, so it still can’t say spaceship. Real models aren’t capped like that — but their surprises also come from learned patterns and context."'],
         watch:'Students may equate temperature with intelligence. Frame it as risk in the sampling step, not deeper understanding. If running behind, two samples per temperature is enough — cut repetitions here, not rounds.'} },
 
-    { id:'s3', kind:'aid', aid:'att', time:10, num:'03', nav:'Round 3 — Attention',
+    { id:'s3', kind:'aid', aid:'att', num:'03', nav:'Round 3 — Attention',
       head:'What does "it" point to?',
       idea:'Meaning changes when nearby context changes. Each token weighs which OTHER tokens matter.',
       task:'In chat, vote: does "it" mean the trophy or the case?',
@@ -326,7 +322,7 @@
         say:['"Nothing about the word it changed. The words around it changed, so the route changed."','"Attention is not the alignment team. It does not ask is this helpful — it asks which positions matter for interpreting other positions."'],
         watch:'Highest-value conceptual moment — this cohort asked for attention by name on the interest form. Slow down enough for them to see the referent flip.'} },
 
-    { id:'s4', kind:'align', aid:'align', time:9, shape:true, num:'04', nav:'Round 4 — Alignment',
+    { id:'s4', kind:'align', aid:'align', shape:true, num:'04', nav:'Round 4 — Alignment',
       head:'Fluent is not the same as useful',
       idea:'Now humans judge which output better serves a person.',
       prompt:'Write a one-sentence apology to a teacher for turning in late work.',
@@ -339,7 +335,7 @@
         say:['"Nothing about next-token prediction disappeared. But now human preference shapes which answer wins."','"The model became more useful because humans repeatedly taught it what useful looked like."'],
         watch:'Do not claim real LLM training is exactly this simple. This dramatizes instruction tuning / preference learning.'} },
 
-    { id:'s5', kind:'questions', time:7, num:'05', nav:'Debrief',
+    { id:'s5', kind:'questions', num:'05', nav:'Debrief',
       head:'What did the room become?',
       idea:'Prediction creates language. Training shapes usefulness.',
       task:'Answer in chat or aloud — we will pick a few.',
@@ -357,7 +353,7 @@
         say:['"Generation is the live loop; training is what shaped the loop before we used it."','"A chatbot can sound fluent before it is useful. Human feedback is part of what pushes it toward usefulness."'],
         watch:'End on the autocomplete-vs-human-shaped-usefulness distinction, not a vocabulary quiz.'} },
 
-    { id:'s6', kind:'studio', time:25, num:'06', nav:'Tool studio',
+    { id:'s6', kind:'studio', num:'06', nav:'Tool studio',
       head:'Your turn — the real tools',
       idea:'The activity was a cartoon. These are the instruments — same loop, real numbers.',
       task:'Pick ONE tool. Log one claim on the Text Experiment Board before we regroup.',
@@ -368,7 +364,7 @@
         say:['"The deck slide was scaled down so the room could be the machine. These tools are the full instruments — same loop, real numbers."','"One good claim beats ten screenshots."'],
         watch:'Some people will bounce between tools. Steer them to finish one worksheet row before switching — the claim is the deliverable, not the tour.'} },
 
-    { id:'s7', kind:'close', time:5, shape:true, num:'07', nav:'Close + next week',
+    { id:'s7', kind:'close', shape:true, num:'07', nav:'Close + next week',
       head:'What you leave with',
       idea:'Generation is a loop you can now narrate: context → predict → sample → append. Training shaped every step of it before we arrived.',
       take:'Next Saturday: images — same investigation, different modality. The site is your map between sessions.',
@@ -465,7 +461,7 @@
     var s=SLIDES[i];
     var eyebrow = (s.num!=null)
       ? '<div class="s-eyebrow"><span class="pill">'+s.num+'</span> '+esc(s.nav.replace(/^Round \d+ — /,''))+'</div>'
-      : '<div class="s-eyebrow"><span class="pill">workshop</span> 12–40 people · 120 min</div>';
+      : '<div class="s-eyebrow"><span class="pill">workshop</span> 12–40 people</div>';
     var head='<div class="s-head">'+esc(s.head)+'</div>';
     var idea=s.idea?'<div class="s-idea">'+esc(s.idea)+'</div>':'';
     var sh=s.shape?' shape':'';
@@ -641,8 +637,6 @@
       '<div class="cockpit">'+
         '<div class="topbar"><span class="tb-badge">presenter</span>'+
           '<span class="tb-title">Session 1 · Human Language Model · only you see this</span><span class="tb-sp"></span>'+
-          '<span class="tb-timer" id="timer">00:00</span>'+
-          '<button class="mini go" id="tStart">start</button><button class="mini" id="tReset">reset</button>'+
           '<button class="mini" id="openAud">open audience window</button>'+
           '<button class="mini" id="peek">preview audience</button>'+
           '<button class="mini" id="logBtn">copy log</button>'+
@@ -665,7 +659,7 @@
     // nav
     var nav=document.getElementById('nav');
     SLIDES.forEach(function(sl,k){ var b=document.createElement('button'); b.className='nav-item'+(k===i?' on':'');
-      b.innerHTML='<span class="nv-num">'+(sl.num!=null?sl.num:'··')+'</span><span><span class="nv-t">'+esc(sl.nav)+'</span><span class="nv-m">'+sl.time+' min</span></span>';
+      b.innerHTML='<span class="nv-num">'+(sl.num!=null?sl.num:'··')+'</span><span><span class="nv-t">'+esc(sl.nav)+'</span></span>';
       b.onclick=function(){ goto(k); }; nav.appendChild(b); });
 
     document.getElementById('notes').innerHTML=notesHTML(s);
@@ -690,10 +684,9 @@
       if(chan) chan.postMessage({type:'rekey', sid:next}); // live windows follow; frozen leftovers get orphaned
       sid=next; try{ localStorage.setItem(SID_KEY, sid); }catch(e){}
       openChannel(); pruneStores();
-      state=freshState((state.rev||0)+1); TM.rem=SLIDES[0].time*60; TM.run=false; commit();
+      state=freshState((state.rev||0)+1); commit();
     };
 
-    wireTimer(s.time);
     wireControls(s);
     syncAffordances();
   }
@@ -833,24 +826,8 @@
       }; }
   }
 
-  /* ============ TIMER ============ */
-  var TM={rem:0,run:false,id:null};
-  function fmt(s){var m=Math.floor(s/60),x=s%60;return (m<10?'0':'')+m+':'+(x<10?'0':'')+x;}
-  function drawT(){var el=document.getElementById('timer');if(!el)return;el.textContent=fmt(Math.max(0,TM.rem));el.classList.toggle('warn',TM.run&&TM.rem<=30&&TM.rem>0);}
-  function tickT(){if(!TM.run)return;TM.rem--;if(TM.rem<=0){TM.rem=0;stopT();var el=document.getElementById('timer');if(el)el.classList.add('done');beep();}drawT();}
-  function startT(){if(TM.run||TM.rem<=0)return;TM.run=true;TM.id=setInterval(tickT,1000);var b=document.getElementById('tStart');if(b){b.textContent='pause';b.classList.remove('go');}}
-  function stopT(){TM.run=false;if(TM.id)clearInterval(TM.id);var b=document.getElementById('tStart');if(b){b.textContent='start';b.classList.add('go');}}
-  function setT(sec){stopT();TM.rem=sec;var el=document.getElementById('timer');if(el)el.classList.remove('done');drawT();}
-  function wireTimer(mins){ setT(TM.rem>0?TM.rem:mins*60);
-    var st=document.getElementById('tStart'),rs=document.getElementById('tReset');
-    if(st)st.onclick=function(){TM.run?stopT():startT();}; if(rs)rs.onclick=function(){setT(mins*60);}; drawT(); }
-  var actx=null;
-  function beep(){ if(reduce)return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
-    [0,170].forEach(function(d){var o=actx.createOscillator(),g=actx.createGain();o.frequency.value=660;o.connect(g);g.connect(actx.destination);
-    var t=actx.currentTime+d/1000;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.start(t);o.stop(t+.17);}); }catch(e){} }
-
   /* ============ NAV ============ */
-  function goto(i){ i=Math.max(0,Math.min(SLIDES.length-1,i)); state.slide=i; TM.rem=SLIDES[i].time*60; TM.run=false; commit(); }
+  function goto(i){ i=Math.max(0,Math.min(SLIDES.length-1,i)); state.slide=i; commit(); }
   document.addEventListener('keydown',function(e){
     var tag=(e.target&&e.target.tagName)||''; if(tag==='TEXTAREA'||tag==='INPUT') return;
     if(e.key==='ArrowRight'||e.key==='PageDown') goto(state.slide+1);
