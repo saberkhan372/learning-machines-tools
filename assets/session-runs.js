@@ -17,7 +17,7 @@ window.LM_SESSION_RUNS = [
     when: "Sat July 11 · 9–11 am PT", date: "2026-07-11",
     explore: "Tokens, prediction, and temperature — and why fluent output isn't the same as understanding.",
     asyncPrompt: "Pick one sentence stem in the Text Experiment Board (or a frozen example), predict the next word yourself, then compare it to the model's top choice. Share what you disagreed on and name one reason why.",
-    recap: { video: null, written: null, writtenHref: null },
+    recap: { video: null, written: "We started unplugged — guessing the next word ourselves before watching the model do the same. We traced how text becomes tokens, how temperature slides output from predictable to surprising, and what ELIZA makes visible that a modern LLM hides. The session's central claim: fluent output isn't the same as understanding. [EDIT: add one participant claim or question from the debrief, and a line about what to carry into the classroom.]", writtenHref: null },
     facilitation: "pages/docs-session-1-facilitation.html",
     overview: "pages/session-text.html",
     deck: "pages/session-1-deck.html",
