@@ -43,7 +43,10 @@
       parts.push('<a class="recap-watch" href="' + esc(rc.video) + '">▶ Watch the recording</a>');
     }
     if (rc.written) {
-      parts.push('<p class="recap-written">' + esc(rc.written) + "</p>");
+      var paras = rc.written.split(/\n\n+/).map(function (p) {
+        return '<p class="recap-written">' + esc(p.trim()) + "</p>";
+      }).join("");
+      parts.push(paras);
     }
     if (rc.writtenHref) {
       parts.push('<a class="recap-read" href="' + esc(resolve(rc.writtenHref)) + '">Read the full recap →</a>');
