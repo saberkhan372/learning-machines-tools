@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="text" data-skin="text-terminal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Assignment Options · Session 1 Text — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .option-card {
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: var(--surface);
+      padding: 20px 22px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    .option-card.featured {
+      border-color: var(--accent);
+    }
+
+    .option-tag {
+      width: fit-content;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .option-card.featured .option-tag {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .option-card h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .option-card p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .option-time {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .option-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .option-links a {
+      border: 1px solid var(--line-soft);
+      padding: 5px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .option-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .share-block {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: 20px 24px;
+      max-width: 80ch;
+    }
+
+    .share-block p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .share-block p + p {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 760px) {
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="run-console.html?s=1" class="hide-sm">Run console</a>
+        <a class="btn btn-sm" href="session-text.html">Session 1 overview</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero" data-mod="text">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#sessions">Sessions</a><span class="sep">/</span>
+        <a href="session-text.html">Text</a><span class="sep">/</span>
+        <span>Assignment options</span>
+      </div>
+      <div class="sess-hero-grid">
+        <div class="sess-num">01<span class="of">asgn</span></div>
+        <div>
+          <p class="sess-kicker"><i class="modsq"></i>Session 1 · Text</p>
+          <h1 class="sess-title">Assignment Options</h1>
+          <p class="sess-lede">Five ways to keep going between sessions. Pick one that fits your time, access, and interest. Each option includes an estimated time commitment. All work is optional, and all five options count as full participation.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- OPTIONS -->
+  <section class="section-tight" style="--mink: var(--m-text);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ A · Choose one</h2><span class="sec-note">all count as full participation</span></div>
+      <div class="option-grid">
+
+        <article class="option-card featured">
+          <span class="option-tag">Default · Async share</span>
+          <h3>Predict and compare</h3>
+          <p>Open the Next-Token Prediction Game and choose one built-in sentence stem. Before looking at the model distribution, enter your own prediction as a one-line guess and tally it. Compare your choice with the model's top predictions, then name one place you agreed or disagreed and one reason why.</p>
+          <p class="option-time">~15–20 min · one screenshot and two sentences</p>
+          <div class="option-links">
+            <a href="../tools/next-token-prediction-game/">Next-Token Prediction Game</a>
+            <a href="../tools/count-the-next-token/">Optional: see the counting</a>
+          </div>
+        </article>
+
+        <article class="option-card">
+          <span class="option-tag">Go deeper · Tool</span>
+          <h3>Run the temperature test</h3>
+          <p>Choose one built-in prompt in the Tokenizer + Temperature Visualizer. Run it at low and high temperature, then compare greedy decoding with sampling. Document what changed in the output and what stayed constant about the mechanism.</p>
+          <p class="option-time">~30–45 min · one written or screenshot comparison</p>
+          <div class="option-links">
+            <a href="../tools/tokenizer-temperature-visualizer/">Tokenizer + Temperature Visualizer</a>
+          </div>
+        </article>
+
+        <article class="option-card">
+          <span class="option-tag">Go deeper · Contrast</span>
+          <h3>Build an ELIZA vs. LLM comparison</h3>
+          <p>Open the ELIZA Simulator and have a brief exchange. Then switch to its ELIZA vs. LLM tab and choose one paired prompt. Write down what ELIZA makes visible about the mechanism that the LLM hides, plus one moment where the outputs feel similar despite the mechanisms being different.</p>
+          <p class="option-time">~25–35 min · one page or a few bullet points</p>
+          <div class="option-links">
+            <a href="../tools/eliza-simulator/">ELIZA Simulator + paired comparison</a>
+          </div>
+        </article>
+
+        <article class="option-card">
+          <span class="option-tag">Teach</span>
+          <h3>Adapt the prediction game for a classroom</h3>
+          <p>Design an unplugged version of the next-word prediction game — one that works without a computer, internet connection, or AI account. What is the sentence stem? How do you tally the room? What is the debrief question? Create a one-page protocol, a set of slides, or a rough worksheet.</p>
+          <p class="option-time">~45–60 min · one-page protocol, slides, or rough worksheet</p>
+          <div class="option-links">
+            <a href="../tools/classroom-activity-builder/">Classroom Activity Builder</a>
+          </div>
+        </article>
+
+        <article class="option-card">
+          <span class="option-tag">No AI · Critique</span>
+          <h3>Analyze a frozen example</h3>
+          <p>Choose one pre-generated output from the Text Prompt Pack. Identify one default, assumption, or limitation you can support with an exact phrase from the output. Separate what the evidence shows from your hypothesis about why it happened, then name one question you would need answered to test that hypothesis.</p>
+          <p class="option-time">~20–30 min · one annotated example · no live AI use required</p>
+          <div class="option-links">
+            <a href="../packs/text/">Text Prompt Pack (frozen)</a>
+            <a href="no-ai-pathway.html">No-AI participation guide</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT TO BRING -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ B · What to submit</h2><span class="sec-note">one artifact, however rough</span></div>
+      <div class="share-block">
+        <p>Before Session 2, post <b>one thing you can point to</b> in Google Classroom: a screenshot, a written comparison, a quote from an output, a draft protocol, or an annotated example. It does not need to be polished — the debrief works better with raw material than with finished analysis.</p>
+        <p>Name the evidence behind it. If you made a claim about what the model did, be ready to say: here is the prompt, here is the output, and here is the specific thing I noticed. That's the whole method.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-text.html"><span class="pg-dir mono">&larr; Session overview</span><span class="pg-title">Session 1 · Text</span></a>
+        <a class="next" href="session-images.html"><span class="pg-dir mono">Next session &rarr;</span><span class="pg-title">02 · Images</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <p class="colophon">Session 1 · Text · Assignment options — predict, compare, investigate, teach, or critique.</p>
+    </div>
+  </footer>
+  <script src="../assets/analytics.js"></script>
+</body>
+</html>
