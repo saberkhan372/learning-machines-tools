@@ -329,7 +329,7 @@
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var p = payload();
-    if(![].some.call(p.keys(), function(){ return true; })){
+    if(!p.toString()){
       status.textContent = 'Nothing filled in yet — anything you share helps.';
       status.classList.remove('err');
       return;
