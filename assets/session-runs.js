@@ -18,7 +18,7 @@ window.LM_SESSION_RUNS = [
     explore: "Tokens, prediction, and temperature — and why fluent output isn't the same as understanding.",
     asyncPrompt: "Pick one sentence stem in the Text Experiment Board (or a frozen example), predict the next word yourself, then compare it to the model's top choice. Share what you disagreed on and name one reason why.",
     recap: {
-      video: null, writtenHref: "pages/session-1-recap.html", written: null,
+      video: "https://youtu.be/zulcCbYdvwc", writtenHref: "pages/session-1-recap.html", written: null,
       sections: {
         summary: "We started with genuine ambivalence — mine included. Six things later, most people left with a more precise version of the concern and a better vocabulary for the mechanism. Here's what we actually looked at.",
         investigated: [
