@@ -154,9 +154,13 @@
     if (rc.video) {
       parts.push('<a class="recap-watch" href="' + esc(rc.video) + '">▶ Watch the recording</a>');
     }
-    rc.written.split(/\n\n+/).forEach(function (p) {
-      parts.push('<p class="recap-written">' + esc(p.trim()) + "</p>");
-    });
+    if (rc.written) {
+      var paragraphs = String(rc.written).split(/\n\s*\n/);
+      var written = paragraphs.map(function (paragraph) {
+        return "<p>" + esc(paragraph) + "</p>";
+      }).join("");
+      parts.push('<div class="recap-written">' + written + "</div>");
+    }
     if (rc.writtenHref) {
       parts.push('<a class="recap-read" href="' + esc(resolve(rc.writtenHref)) + '">Read the full recap →</a>');
     }
