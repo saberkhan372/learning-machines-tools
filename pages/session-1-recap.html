@@ -162,19 +162,29 @@
       display: grid;
       gap: 8px;
     }
-    .action-list li {
+    .prose .action-list li {
       display: grid;
-      grid-template-columns: 20px 1fr;
+      grid-template-columns: 20px minmax(0, 1fr);
       gap: 10px;
-      align-items: baseline;
+      align-items: start;
       font-size: 0.95rem;
       line-height: 1.55;
+      padding: 10px 0;
+      width: 100%;
     }
-    .action-list li::before {
+    .prose .action-list li::before {
       content: "→";
+      position: static;
+      inset: auto;
+      width: auto;
+      height: auto;
+      background: none;
       font-family: var(--font-mono);
       font-size: 0.8rem;
       color: var(--muted);
+    }
+    html[data-skin] .prose .action-list li::before {
+      background: none;
     }
 
     /* Links & resources */
