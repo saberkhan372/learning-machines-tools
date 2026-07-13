@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-skin="text-terminal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Session 1 Recap · Text — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    /* ── Recap-specific layout ─────────────────────────────────── */
+    .recap-lede {
+      font-size: 1.15rem;
+      line-height: 1.75;
+      max-width: 65ch;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+
+    /* Start-here tier cards */
+    .start-here-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0 0;
+    }
+    .sh-card {
+      border: 1px solid var(--line);
+      padding: 16px 18px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+    .sh-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .sh-card h3 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .sh-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .sh-link {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .sh-link:hover { text-decoration: underline; }
+
+    /* Moment pull-quotes */
+    .moment {
+      border-left: 3px solid var(--accent);
+      padding: 10px 16px;
+      margin: 18px 0;
+      background: var(--surface);
+    }
+    .moment p {
+      margin: 0;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .moment cite {
+      display: block;
+      margin-top: 6px;
+      font-style: normal;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* Chat tally */
+    .tally-wrap {
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    .tally {
+      border-collapse: collapse;
+      min-width: 420px;
+      font-size: 0.88rem;
+    }
+    .tally th {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      padding: 6px 12px 6px 0;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .tally td {
+      padding: 6px 12px 6px 0;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line-soft, color-mix(in srgb, var(--line) 50%, transparent));
+    }
+    .tally tr.tally-top td { font-weight: 600; }
+    .tally-count {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .tally-names {
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+    }
+
+    /* Guest spotlight */
+    .guest-card {
+      border: 1px solid var(--line);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: start;
+      margin: 20px 0;
+    }
+    .guest-name { font-size: 1.15rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+    .guest-role { font-size: 0.88rem; color: var(--ink-soft); margin: 0 0 12px; }
+    .guest-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .guest-links a {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      padding: 4px 8px;
+    }
+    .guest-links a:hover { border-color: var(--accent); color: var(--accent); }
+    .guest-contact {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* Action items */
+    .action-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+      display: grid;
+      gap: 8px;
+    }
+    .action-list li {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 10px;
+      align-items: baseline;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    .action-list li::before {
+      content: "→";
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* Links & resources */
+    .resource-group {
+      margin: 16px 0 24px;
+    }
+    .resource-group h4 {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 8px;
+      font-weight: 500;
+    }
+    .resource-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 6px;
+    }
+    .resource-list li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: baseline;
+      font-size: 0.9rem;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--line-soft, color-mix(in srgb, var(--line) 40%, transparent));
+    }
+    .resource-list li:last-child { border-bottom: none; }
+    .resource-list a { color: var(--ink); word-break: break-all; }
+    .resource-list a:hover { color: var(--accent); }
+    .res-who {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* Participants list */
+    .participant-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .participant-chip {
+      font-size: 0.85rem;
+      border: 1px solid var(--line);
+      padding: 4px 10px;
+      background: var(--surface);
+      white-space: nowrap;
+    }
+    .participant-chip.notable {
+      border-color: var(--accent);
+    }
+
+    /* Narrow teaching-note callout */
+    .teaching-note {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--m-text, var(--accent));
+      padding: 14px 18px;
+      margin: 14px 0;
+      background: var(--surface);
+    }
+    .teaching-note p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .teaching-note strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+      .start-here-grid { grid-template-columns: 1fr; }
+      .guest-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="run-console.html?s=1" class="hide-sm">Run console</a>
+        <a class="btn btn-sm" href="session-text.html#recap">← Back to recap</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero" data-mod="text">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#sessions">Sessions</a><span class="sep">/</span>
+        <a href="session-text.html">Text</a><span class="sep">/</span>
+        <span>Recap</span>
+      </div>
+      <div class="sess-hero-grid">
+        <div class="sess-num">01<span class="of">recap</span></div>
+        <div>
+          <p class="sess-kicker"><i class="modsq"></i>Session 1 · Text · Saturday July 11</p>
+          <h1 class="sess-title">How machines write</h1>
+          <p class="sess-lede recap-lede">We started with genuine ambivalence — mine included. Six activities and a lot of chat later, most people left with a more precise version of the concern and a better vocabulary for the mechanism.</p>
+          <p class="doc-meta" style="margin-top: 14px;">
+            <span class="chip">~25 participants</span>
+            <span class="chip">9–11 am PT</span>
+            <span class="chip">Registered participants · never used to train AI</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section-tight" data-screen-label="Recap body">
+    <div class="wrap docs-layout">
+
+      <!-- TOC -->
+      <aside class="toc">
+        <p class="toc-label">On this page</p>
+        <nav>
+          <a href="#start-here">Start here</a>
+          <a href="#overview">Session overview</a>
+          <a href="#the-room">Who was in the room</a>
+          <a href="#prediction-game">The prediction game</a>
+          <a href="#temperature">Temperature</a>
+          <a href="#trophy">Trophy-case flip</a>
+          <a href="#apology">Homework apology</a>
+          <a href="#eliza">ELIZA vs. LLM</a>
+          <a href="#local-llms">Local LLMs tangent</a>
+          <a href="#guest">Guest: Dr. Tiffany Tseng</a>
+          <a href="#teaching-notes">Teaching notes</a>
+          <a href="#action-items">Action items</a>
+          <a href="#links">Links &amp; resources</a>
+        </nav>
+      </aside>
+
+      <!-- BODY -->
+      <article class="prose">
+
+        <!-- ── START HERE ──────────────────────────────────────────── -->
+        <h2 id="start-here">Start here</h2>
+        <div class="start-here-grid">
+          <div class="sh-card">
+            <span class="sh-label">5 min</span>
+            <h3>Just the highlights</h3>
+            <p>Read <a class="sh-link" href="#overview">Session overview</a> and the two <a class="sh-link" href="#patterns">patterns</a> we named. That's the argument.</p>
+          </div>
+          <div class="sh-card">
+            <span class="sh-label">20 min</span>
+            <h3>The full mechanism tour</h3>
+            <p>Read through <a class="sh-link" href="#prediction-game">prediction</a>, <a class="sh-link" href="#temperature">temperature</a>, <a class="sh-link" href="#trophy">attention</a>, <a class="sh-link" href="#apology">alignment</a>, and <a class="sh-link" href="#eliza">ELIZA</a>. The five mechanisms in order.</p>
+          </div>
+          <div class="sh-card">
+            <span class="sh-label">Deeper path</span>
+            <h3>Read everything</h3>
+            <p>Add <a class="sh-link" href="#guest">Dr. Tseng's spotlight</a>, the <a class="sh-link" href="#teaching-notes">teaching notes</a>, and the full <a class="sh-link" href="#links">links &amp; resources</a> section.</p>
+          </div>
+        </div>
+
+        <!-- ── SESSION OVERVIEW ──────────────────────────────────── -->
+        <h2 id="overview">Session overview</h2>
+        <p>The core question was: <em>when a language model writes, what is it actually doing?</em> We moved through five mechanisms — tokenization, prediction, temperature, attention, and alignment — not to exhaustively cover them but to make them visible enough to argue about.</p>
+        <p>The running theme was the gap between fluency and meaning. Every activity was designed to make that gap tangible: the model sounds certain because it outputs high-probability tokens, not because it knows. ELIZA at the end made this especially stark — it doesn't "know" anything, but it often felt warmer than expected.</p>
+
+        <div class="callout" id="patterns">
+          <p><b>Two patterns we named by the end:</b></p>
+          <ol style="margin: 8px 0 0; padding-left: 1.2em; line-height: 1.8;">
+            <li>Fluency consistently outran accuracy in first impressions. The gap between "sounds right" and "is right" is the central risk in classroom use.</li>
+            <li>ELIZA's responses felt warmer than expected even when the rule was fully visible. Fluency perception overrides mechanism knowledge — even when we can see exactly what's happening.</li>
+          </ol>
+        </div>
+
+        <!-- ── WHO WAS IN THE ROOM ──────────────────────────────── -->
+        <h2 id="the-room">Who was in the room</h2>
+        <p>About 25 participants spread across time zones. A few snapshots of who was there:</p>
+
+        <div class="participant-grid">
+          <span class="participant-chip notable">Shane Curry <span style="font-size:0.78em;color:var(--muted)">NYC · TinyML</span></span>
+          <span class="participant-chip notable">Angela Kwon <span style="font-size:0.78em;color:var(--muted)">Castilleja School</span></span>
+          <span class="participant-chip notable">Andrea Pech <span style="font-size:0.78em;color:var(--muted)">São Paulo · middle school</span></span>
+          <span class="participant-chip">Greg <span style="font-size:0.78em;color:var(--muted)">Hawaii</span></span>
+          <span class="participant-chip">Pop Penguin <span style="font-size:0.78em;color:var(--muted)">Europe</span></span>
+          <span class="participant-chip">Randy Macdonald <span style="font-size:0.78em;color:var(--muted)">K–12 AI</span></span>
+          <span class="participant-chip">Ryan</span>
+          <span class="participant-chip">Judy Lieff <span style="font-size:0.78em;color:var(--muted)">filmmaker</span></span>
+          <span class="participant-chip">Yunseo Lee</span>
+          <span class="participant-chip">Cha</span>
+          <span class="participant-chip">Shelly Xiong</span>
+          <span class="participant-chip">Ray Chen</span>
+          <span class="participant-chip">Margot</span>
+          <span class="participant-chip">MeganMcKissack</span>
+          <span class="participant-chip">MeghanClark</span>
+          <span class="participant-chip">Sandra Soto</span>
+          <span class="participant-chip">Sumanth Mysore Krishna</span>
+          <span class="participant-chip">Craig Kapp</span>
+          <span class="participant-chip">Anita &amp; Gary</span>
+          <span class="participant-chip">Andrea Tejedor</span>
+          <span class="participant-chip">Hope A</span>
+          <span class="participant-chip">TakeMoreCare</span>
+          <span class="participant-chip notable">Dr. Tiffany Tseng <span style="font-size:0.78em;color:var(--muted)">Barnard · guest</span></span>
+        </div>
+
+        <p>The range was wide — middle school tech integrators, CS teachers, a filmmaker, someone working on embedded ML at the hardware level, researchers. That diversity showed up in the discussion: Shane's TinyML lens pushed back productively on every LLM-centric frame.</p>
+
+        <div class="moment">
+          <p>Right at the start, Shane asked the question that framed everything: what's the difference between ML broadly and LLMs specifically? We talked through the self-driving car analogy — LLMs are language-specific ML, not a different category — and he said he was "emotionally okay with TinyML" in a way he wasn't quite sure about LLMs. That distinction mattered throughout.</p>
+          <cite>— Opening discussion</cite>
+        </div>
+
+        <!-- ── PREDICTION GAME ──────────────────────────────────── -->
+        <h2 id="prediction-game">The prediction game</h2>
+        <p>We started unplugged. Sentence stem: <em>"The orange cat…"</em> Everyone typed their next-word guess in Zoom chat simultaneously before anyone else's answer was visible.</p>
+
+        <p>The histogram tool I'd planned to use failed mid-demo. ("I totally messed that up, so we'll just do a manual count.") We tallied in chat instead — which worked better, because everyone could see the actual responses as they arrived.</p>
+
+        <div class="tally-wrap">
+          <table class="tally">
+            <thead>
+              <tr>
+                <th>Guess</th>
+                <th class="tally-count">Count</th>
+                <th class="tally-names">Who</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="tally-top">
+                <td><strong>walks</strong></td>
+                <td class="tally-count">7</td>
+                <td class="tally-names">Cha, Shelly, MeghanClark, Yunseo, Angela, Shane, MeganMcKissack</td>
+              </tr>
+              <tr>
+                <td>looks</td>
+                <td class="tally-count">3</td>
+                <td class="tally-names">Randy, Yunseo, Cierra</td>
+              </tr>
+              <tr>
+                <td>jumps</td>
+                <td class="tally-count">2</td>
+                <td class="tally-names">Anita &amp; Gary, Andrea Tejedor</td>
+              </tr>
+              <tr>
+                <td>reads</td>
+                <td class="tally-count">2</td>
+                <td class="tally-names">Greg, TakeMoreCare</td>
+              </tr>
+              <tr>
+                <td>is</td>
+                <td class="tally-count">2</td>
+                <td class="tally-names">Craig Kapp, Sumanth</td>
+              </tr>
+              <tr>
+                <td>finds</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">Pop Penguin</td>
+              </tr>
+              <tr>
+                <td>bookshop</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">Margot</td>
+              </tr>
+              <tr>
+                <td>sleeps</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">MeghanClark</td>
+              </tr>
+              <tr>
+                <td>waits</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">Ray Chen</td>
+              </tr>
+              <tr>
+                <td>eats</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">Hope A</td>
+              </tr>
+              <tr>
+                <td>rules</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">Sandra</td>
+              </tr>
+              <tr>
+                <td>opens</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">Ryan</td>
+              </tr>
+              <tr>
+                <td>enter</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">Andrea Pech</td>
+              </tr>
+              <tr>
+                <td>does not</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">Pop Penguin</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Cha called it: <em>walks</em> had the most votes. The model's top prediction was also <em>walks</em> — the first word that follows "orange cat" more than any other in the training corpus. The room and the model weren't thinking the same thing; the room's distribution just happened to look like the model's distribution.</p>
+
+        <p>We then ran Count the Next Token to show the arithmetic: count how many times each word follows the stem in the corpus, divide by the total, get a probability. That's the whole mechanism — no understanding, just a very large fraction.</p>
+
+        <div class="teaching-note">
+          <strong>Teaching note</strong>
+          <p>The unplugged prediction game is fully portable — sentence stems on a slide, chat or hands-raised for guesses, whiteboard tally. No logins, no AI use, no accounts. Margot's guess ("bookshop") was the most interesting pedagogically: it was far from the modal response but made complete grammatical and narrative sense. That's a useful discussion move — why did Margot guess differently, and does that difference matter to the model?</p>
+        </div>
+
+        <!-- ── TEMPERATURE ──────────────────────────────────────── -->
+        <h2 id="temperature">Tokenizer + Temperature</h2>
+        <p>We opened the Tokenizer + Temperature Visualizer and looked at two things in sequence: how the tokenizer splits text (often not where a human reader would cut), then how temperature slides output from predictable to surprising.</p>
+        <p>The key demonstration was the same prompt at low temperature vs. high temperature — low was safe and repetitive, high was surprising and sometimes unstable. The dial isn't adding noise arbitrarily; it's deliberately widening the distribution that the model samples from. Low temperature collapses the distribution to its mode; high temperature flattens it.</p>
+
+        <div class="moment">
+          <p>Angela noticed that even "surprising" outputs at high temperature still felt coherent at a surface level — they were grammatically fine, just semantically strange. That observation set up the ELIZA comparison well: fluency is a separate property from accuracy.</p>
+          <cite>— Angela Kwon, during temperature demo</cite>
+        </div>
+
+        <!-- ── TROPHY CASE ──────────────────────────────────────── -->
+        <h2 id="trophy">The trophy-case flip (attention)</h2>
+        <p>To make attention visible, we used a single sentence with one-word change:</p>
+        <ul>
+          <li>"The trophy didn't fit in the case because <strong>it was too big</strong>" → <em>it</em> refers to the trophy</li>
+          <li>"The trophy didn't fit in the case because <strong>it was too small</strong>" → <em>it</em> refers to the case</li>
+        </ul>
+        <p>One word — big vs. small — flips which object the pronoun refers to across the whole sentence. The model has to hold the entire sentence in relation to itself to resolve it correctly. That's attention: routing reference across distance.</p>
+
+        <div class="tally-wrap">
+          <table class="tally">
+            <thead>
+              <tr><th>Pronoun resolves to</th><th class="tally-names">Who</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>trophy</strong></td><td class="tally-names">MeghanClark, Shelly, Randy, Greg</td></tr>
+              <tr><td><strong>case</strong></td><td class="tally-names">MeghanClark, Randy, TakeMoreCare</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>MeghanClark and Randy each appear in both rows — they caught the flip when the sentence changed. That's exactly the exercise: notice how your own interpretation shifts with one word, then understand that the model does something structurally similar, across the whole context, for every token it generates.</p>
+
+        <!-- ── HOMEWORK APOLOGY ─────────────────────────────────── -->
+        <h2 id="apology">The homework apology (alignment / RLHF)</h2>
+        <p>We showed two homework apology texts — Team A (specific accountability, new timeline, acknowledgment of impact) and Team B (vague, no concrete plan) — and asked which one was better and why.</p>
+        <p>The room almost universally picked Team A. That's the point: there's no "correct" answer the model discovers from text alone. Knowing that A is better took human judgment — RLHF teams rating responses, scoring what "better" means, feeding that signal back into training. The fluent model inherited that judgment.</p>
+
+        <div class="moment">
+          <p>"B implies the work has already been potentially turned in — by saying 'I thought it was fine as is,' the student is saying I already submitted it and I'm not going to fix it."</p>
+          <cite>— Shane, on why he picked Team A</cite>
+        </div>
+
+        <div class="moment">
+          <p>"More details and specific tokens."</p>
+          <cite>— MeghanClark, on what made Team A better</cite>
+        </div>
+
+        <div class="moment">
+          <p>"Owning responsibility."</p>
+          <cite>— Judy Lieff</cite>
+        </div>
+
+        <p>Judy also mentioned the South Park episode about AI — a useful cultural touchstone for the "it sounds like a person" anxiety. The apology exercise works precisely because it shows the moment where "sounding like a person" is real but the source of that quality is human labor, not machine understanding.</p>
+
+        <!-- ── ELIZA ────────────────────────────────────────────── -->
+        <h2 id="eliza">ELIZA vs. LLM</h2>
+        <p>We closed the mechanism tour with ELIZA — the 1966 rule-based chatbot that matches patterns and substitutes pronouns. The exercise: inspect the actual rule ELIZA matched, see the template it selected, read the output. Completely transparent. Then compare to a pre-generated LLM response to the same input.</p>
+
+        <p>ELIZA consistently felt warmer than it should. Even after we showed the rule — <code>I (.*) you → Perhaps in your fantasies we \1 each other</code> — the outputs still read as somewhat sympathetic. That's the stability of the illusion: knowing the mechanism doesn't dissolve the perception.</p>
+
+        <div class="moment">
+          <p>Yunseo gave the clearest summary of the difference: ELIZA uses fixed rule-based weights (explicit pattern → template mappings), while an LLM uses learned weights that are unfixed — shaped by training but not readable as rules. The architecture is categorically different, but the surface experience can feel similar.</p>
+          <cite>— Yunseo Lee</cite>
+        </div>
+
+        <div class="moment">
+          <p>"i loveee these questions / i feel like this is really where the crux of the learning happens"</p>
+          <cite>— Angela Kwon, during the ELIZA / LLM architecture discussion</cite>
+        </div>
+
+        <p>Angela pushed on whether ELIZA's "rule-based" label was precise — is the pattern matching closer to a lookup table or something else? The answer is: it's a sequence of regex-like patterns, evaluated in order, and the first match wins. Nothing is learned. That contrast with gradient descent is sharp and teachable.</p>
+
+        <p>Ryan shared the <a href="https://www.masswerk.at/elizabot/eliza.html">original ELIZA implementation</a> from masswerk.at — the closest thing to the 1966 Weizenbaum program still running.</p>
+
+        <!-- ── LOCAL LLMS ───────────────────────────────────────── -->
+        <h2 id="local-llms">Local LLMs tangent</h2>
+        <p>Shane opened a thread about running models locally. He'd been experimenting with Ollama — running a frontier model locally and watching it interact with a smaller model.</p>
+
+        <div class="moment">
+          <p>"If you use a frontier model to help you set up a local LLM, it's fun, watching it get frustrated talking to a stupider machine is wild."</p>
+          <cite>— Shane Curry, on Ollama + local model setup</cite>
+        </div>
+
+        <div class="moment">
+          <p>"Bonzai lol"</p>
+          <cite>— Shane, later in the same thread</cite>
+        </div>
+
+        <p>Shane also connected local LLMs to TinyML — the embedded ML space he works in. The distinction between a frontier cloud model and something running on a microcontroller is enormous, but both involve the same core loop: data in, pattern out. The scale difference is pedagogically useful.</p>
+
+        <p>Ryan shared several tools in this thread: <a href="https://ollama.com/">Ollama</a> for local model serving, <a href="https://developers.google.com/edge/gallery">Google Edge Gallery</a> for on-device ML, and <a href="https://microbit.org/ai/">micro:bit AI</a> for embedded educational contexts.</p>
+
+        <!-- ── GUEST SPOTLIGHT ─────────────────────────────────── -->
+        <h2 id="guest">Guest spotlight</h2>
+        <div class="guest-card">
+          <div>
+            <h3 class="guest-name">Dr. Tiffany Tseng</h3>
+            <p class="guest-role">Design Tools Lab, Barnard College · research on creative tools and human-computer interaction</p>
+            <p>Tiffany joined for the closing discussion and landed the question that reframed the whole session: <em>"How does AI change the work?"</em> rather than <em>"Does it replace creativity?"</em> The shift matters — the first question is empirical and observable, the second tends toward abstraction.</p>
+            <p>Her lab's <a href="https://github.com/apple/ml-keyframer">ml-keyframer</a> project explores exactly this: how does an AI-assisted keyframing tool change what animators actually do, not just whether they "still" do it? The answer from that research is nuanced — the tool changes the kind of decisions that remain in the human's hands, not the quantity of decisions.</p>
+            <p>Shane connected this immediately to vibe coding: you let go of the mental model because the output looks stable. That's the same dynamic Tiffany's research surfaces — the risk isn't replacement, it's that the visible output quality decouples from the depth of understanding behind it.</p>
+            <div class="guest-links" style="margin-top: 12px;">
+              <a href="https://tifftseng.com/">tifftseng.com</a>
+              <a href="https://designtoolslab.org/">Design Tools Lab</a>
+              <a href="https://github.com/apple/ml-keyframer">ml-keyframer</a>
+            </div>
+            <p class="guest-contact">ttseng@barnard.edu</p>
+          </div>
+        </div>
+
+        <!-- ── TEACHING NOTES ─────────────────────────────────── -->
+        <h2 id="teaching-notes">Teaching notes</h2>
+
+        <div class="teaching-note">
+          <strong>Backup for the histogram tool</strong>
+          <p>The live histogram failed. The Zoom chat tally worked better anyway — participants could see each other's guesses arriving in real time, which added social dynamics the histogram missed. The low-tech version (sentence stem on a slide, guesses in chat, manual tally on a whiteboard or in a doc) is fully sufficient and probably preferable for the debrief.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>The unplugged route works for almost everything</strong>
+          <p>The prediction game, the trophy-case exercise, and the homework apology comparison all work with zero AI use. ELIZA needs a browser but no accounts. Only the Temperature Visualizer requires live model inference. A fully no-AI version of this session is viable — see the <a href="no-ai-pathway.html">No-AI participation guide</a> for the detailed pathway.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Shane's framing is a gift</strong>
+          <p>The ML vs. LLM distinction he raised at the start (with the self-driving car analogy) is exactly the frame that prevents the common conflation — treating LLMs as "AI" as a category rather than one architecture among many. Having a participant from the TinyML/embedded world in the room made that distinction land differently than it would have from a slide.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Angela's point on high-temperature fluency</strong>
+          <p>She noticed that even strange high-temperature outputs were grammatically coherent. This is worth foregrounding in future sessions: fluency is a property of the output format, not of the content. A model can produce well-formed sentences that say nothing. That's true at any temperature.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Randy's K–12 breakout offer</strong>
+          <p>Randy offered to run a breakout or follow-up specifically for K–12 AI teaching contexts. Worth organizing — there was clearly demand from participants working in middle school and high school settings.</p>
+        </div>
+
+        <!-- ── ACTION ITEMS ───────────────────────────────────── -->
+        <h2 id="action-items">Action items</h2>
+        <ul class="action-list">
+          <li>Add recording URL to session data when available (update <code>recap.video</code> in <code>session-runs.js</code>)</li>
+          <li>Post the links from this page to <a href="https://classroom.google.com/c/ODY4NzI1OTQ2MzYz?cjc=ho76be3s">Google Classroom</a> for async participants</li>
+          <li>Organize Randy's K–12 AI teaching breakout — reach out to Randy, Shane, and Angela as anchors</li>
+          <li>Replace <code>entry.ASSIGNMENT_OPTION</code> placeholder in the <a href="session-1-feedback.html">feedback form</a> after adding the question to Google Forms (run <code>getFormEntryIds()</code> in the Apps Script)</li>
+          <li>Prep Session 2 — Images (July 18): core question is what an image model fills in when you don't ask</li>
+          <li>Follow up with Dr. Tiffany Tseng (<a href="mailto:ttseng@barnard.edu">ttseng@barnard.edu</a>) about possible deeper involvement in Session 2 or Studio</li>
+        </ul>
+
+        <!-- ── LINKS & RESOURCES ──────────────────────────────── -->
+        <h2 id="links">Links &amp; resources from chat</h2>
+
+        <div class="resource-group">
+          <h4>Session tools (used live)</h4>
+          <ul class="resource-list">
+            <li><a href="../tools/next-token-prediction-game/">Next-Token Prediction Game</a><span class="res-who">session tool</span></li>
+            <li><a href="../tools/count-the-next-token/">Count the Next Token</a><span class="res-who">session tool</span></li>
+            <li><a href="../tools/tokenizer-temperature-visualizer/">Tokenizer + Temperature Visualizer</a><span class="res-who">session tool</span></li>
+            <li><a href="../tools/eliza-simulator/">ELIZA Simulator</a><span class="res-who">session tool</span></li>
+            <li><a href="../worksheets/text-experiment-board/">Text Experiment Board</a><span class="res-who">worksheet</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Shared in chat — pedagogy</h4>
+          <ul class="resource-list">
+            <li><a href="https://dschool.stanford.edu/tools/i-love-algorithms-machineless-machine-learning">I Love Algorithms — Stanford d.school card deck</a><span class="res-who">Angela</span></li>
+            <li><a href="https://machinelearningforkids.co.uk/">Machine Learning for Kids</a><span class="res-who">session</span></li>
+            <li><a href="https://teachablemachine.withgoogle.com/">Teachable Machine</a><span class="res-who">session</span></li>
+            <li><a href="https://www.kodewithklossy.com/">Kode with Klossy</a><span class="res-who">session</span></li>
+            <li><a href="https://microbit.org/ai/">micro:bit AI</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://microbit.org/createai/">micro:bit Create AI</a><span class="res-who">Ryan</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Shared in chat — ML/LLM concepts</h4>
+          <ul class="resource-list">
+            <li><a href="https://youtu.be/KZeIEiBrT_w?si=BpTt9cUCEWXjeTfE">Markov chains (YouTube)</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://deviationgame.com/">Deviation Game</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://projector.tensorflow.org/">TensorFlow Embedding Projector</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://www.pinecone.io/learn/vector-database/">Vector databases — Pinecone guide</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://www.masswerk.at/elizabot/eliza.html">Original ELIZA (masswerk)</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://thecodingtrain.com/">The Coding Train</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://natureofcode.com/">Nature of Code</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://ml5js.org/">ml5.js</a><span class="res-who">Ryan</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Shared in chat — tools &amp; local ML</h4>
+          <ul class="resource-list">
+            <li><a href="https://ollama.com/">Ollama — local LLM serving</a><span class="res-who">Ryan / Shane</span></li>
+            <li><a href="https://developers.google.com/edge/gallery">Google Edge Gallery</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://microbit.org/">micro:bit</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://www.plushpal.app/">Plush Pal</a><span class="res-who">session</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Shared in chat — Dr. Tiffany Tseng's work</h4>
+          <ul class="resource-list">
+            <li><a href="https://tifftseng.com/">tifftseng.com</a><span class="res-who">Tiffany</span></li>
+            <li><a href="https://designtoolslab.org/">Design Tools Lab</a><span class="res-who">Tiffany</span></li>
+            <li><a href="https://github.com/apple/ml-keyframer">ml-keyframer (GitHub)</a><span class="res-who">Tiffany</span></li>
+            <li><a href="https://machinelearning.apple.com/research/coml">Apple CoML research</a><span class="res-who">Tiffany</span></li>
+            <li><a href="https://github.com/apple/ml-comlet">ml-comlet (GitHub)</a><span class="res-who">Tiffany</span></li>
+            <li><a href="https://www.media.mit.edu/groups/lifelong-kindergarten/overview/">MIT Media Lab · Lifelong Kindergarten</a><span class="res-who">Tiffany</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Shared in chat — art &amp; misc</h4>
+          <ul class="resource-list">
+            <li><a href="https://auroramititelu.com/">Aurora Mititelu — artist</a><span class="res-who">session</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Session admin</h4>
+          <ul class="resource-list">
+            <li><a href="https://classroom.google.com/c/ODY4NzI1OTQ2MzYz?cjc=ho76be3s">Google Classroom</a><span class="res-who">Saber</span></li>
+          </ul>
+        </div>
+
+      </article>
+    </div>
+  </main>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-text.html#recap"><span class="pg-dir mono">&larr; Back</span><span class="pg-title">Session 1 overview</span></a>
+        <a class="next" href="session-1-assignment.html"><span class="pg-dir mono">Next &rarr;</span><span class="pg-title">Assignment options</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <p class="colophon">Session 1 · Text · Recap — shared with registered participants, never used to train AI.</p>
+    </div>
+  </footer>
+  <script src="../assets/analytics.js"></script>
+</body>
+</html>

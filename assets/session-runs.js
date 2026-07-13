@@ -17,7 +17,49 @@ window.LM_SESSION_RUNS = [
     when: "Sat July 11 · 9–11 am PT", date: "2026-07-11",
     explore: "Tokens, prediction, and temperature — and why fluent output isn't the same as understanding.",
     asyncPrompt: "Pick one sentence stem in the Text Experiment Board (or a frozen example), predict the next word yourself, then compare it to the model's top choice. Share what you disagreed on and name one reason why.",
-    recap: { video: "https://youtu.be/zulcCbYdvwc", written: "We started with some genuine ambivalence — mine included. This is a fraught topic, but there's a lot of fun and learning underneath it, and I wanted us to hold both. If you came in worried, I hoped you'd leave more fluent about why. If you came in excited, I hoped you'd pick up some of the concern.\n\nWe spent the first chunk being the model ourselves. I dropped a passage about an orange cat in a bookshop and asked everyone: what's the next word? The room leaned toward 'walks' — the literal first verb in the corpus — with 'jumps,' 'reads,' and 'looks' among the alternatives. That's prediction: pattern-matching on what it's seen. Not wrong, just not interesting yet. Temperature is what opens it up — and the counterintuitive part is that you have to add uncertainty to get something useful.\n\nThe trophy-case exercise landed for a lot of people. 'The trophy didn't fit in the case because it was too big' versus 'too small' — one word flip, and the pronoun points somewhere completely different. That's attention: the model holding the whole sentence in relation to itself. That's the transformer breakthrough.\n\nThen we compared two homework apologies. Team A took responsibility with a new timeline. Team B said 'I was really busy, hope that's okay.' Almost everyone chose A. There's no pure machine answer for that — that's alignment, and it takes enormous human effort.\n\nELIZA is still my favorite illustration. A few dozen rules, keyword-matching, and it holds a conversation. But the contrast is the whole point: you can see exactly how ELIZA works. An LLM takes the opposite approach — instead of writing rules, it studies the entire language through a neural net and uses that to respond to anything, even nonsense. Shane made the connection late in the session: it's like vibe coding where you let go of the mental model because the output looks stable. That's also why even the people who built these things can't fully explain them.\n\nAngela's question is the one I want to carry into every session: who made the model, and what's baked into it? It connects the technical to the social. Dr. Tiffany Tseng closed with work from her Design Tools Lab at Barnard — tools that let non-experts create with ML. I left with a reframe: move away from asking whether AI replaces creativity and toward asking how it changes creative work. That's worth carrying forward.", writtenHref: null },
+    recap: {
+      video: "https://youtu.be/zulcCbYdvwc", writtenHref: "pages/session-1-recap.html", written: null,
+      sections: {
+        summary: "We started with genuine ambivalence — mine included. Six things later, most people left with a more precise version of the concern and a better vocabulary for the mechanism. Here's what we actually looked at.",
+        investigated: [
+          "How a language model predicts the next word — token by token, probability not meaning.",
+          "How temperature slides output from predictable to surprising, and why adding uncertainty is the point.",
+          "What attention does: routes pronoun reference across the whole sentence, not just nearby words.",
+          "How ELIZA's visible rule-matching contrasts with an LLM's opaque neural approach — and why that contrast matters.",
+          "Where alignment lives: the human scoring and feedback that shapes what counts as a 'better' response."
+        ],
+        mechanisms: [
+          { name: "Tokenization", where: "Orange-cat passage", observed: "Text splits at unexpected places — not how a human reader would cut a sentence." },
+          { name: "Next-token prediction", where: "Room guessing game", observed: "Room split toward 'walks'; model's top choice matched the corpus. Pattern-matching, not understanding." },
+          { name: "Temperature", where: "Tokenizer + Temperature Visualizer", observed: "Low temp: safe and repetitive. High temp: surprising, sometimes unstable. The dial adds uncertainty on purpose." },
+          { name: "Attention", where: "Trophy-case pronoun flip", observed: "'Too big' → 'too small' — one word flipped which object the pronoun referred to. The model held the whole sentence in relation to itself." },
+          { name: "Alignment (RLHF)", where: "Homework apology comparison", observed: "Almost everyone chose Team A. There's no pure machine answer for that — scoring better responses takes enormous human effort." }
+        ],
+        patterns: [
+          { what: "Fluency consistently outran accuracy in first impressions — outputs felt more correct than they were.", suggests: "The gap between 'sounds right' and 'is right' is the central risk in classroom use.", next: "Build in a verification step before treating LLM output as factual." },
+          { what: "ELIZA's responses felt warmer than expected even when the rule was fully visible.", suggests: "Fluency perception overrides mechanism knowledge — even when we can see exactly what's happening.", next: "Carry this into Session 2: what defaults does an image model fill in when you don't ask?" }
+        ],
+        hmse: {
+          human: "RLHF teams scored which homework apology was better — Team A, with accountability and a new timeline. That judgment is now baked into the model.",
+          machine: "Both apologies were fluent. The LLM couldn't distinguish the better one without alignment training — and even then, it can only reflect the scoring it received.",
+          system: "Training corpus determines token probabilities. 'Walks' follows 'cat' more often than 'jumps' does — that's all the model knows. Angela asked: who built that corpus, and what's in it?",
+          ethics: "Dr. Tiffany Tseng's closing question — 'how does AI change the work?' rather than 'does it replace creativity?' — reframes the whole thing. Shane's connection: it's like vibe coding. You let go of the mental model because the output looks stable."
+        },
+        classroom: {
+          students: "The next-word prediction game works with any paragraph and paper/pencil — no login, no AI account, no generation required.",
+          shortCircuit: "If students use AI to generate rather than predict, they skip the 'being the model' experience that makes the mechanism visible.",
+          noAI: "Unplugged version: sentence stems on a slide, hands raised or chat tally, whiteboard distribution — then compare to the model's top-k side by side."
+        },
+        next: {
+          prep: "Session 2 — Images — Saturday July 18. Core question: when an image model generates a picture, what is it actually deciding?",
+          asyncRoute: {
+            prompt: "Pick one sentence stem in the Text Experiment Board (or a frozen example), predict the next word yourself, then compare it to the model's top choice. Share what you disagreed on and name one reason why.",
+            worksheetPath: "worksheets/text-experiment-board/",
+            packPath: "packs/text/"
+          }
+        }
+      }
+    },
     facilitation: "pages/docs-session-1-facilitation.html",
     overview: "pages/session-text.html",
     deck: "pages/session-1-deck.html",
