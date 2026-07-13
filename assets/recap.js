@@ -141,6 +141,10 @@
       out += "</div>";
     }
 
+    if (rc.writtenHref) {
+      out += '<a class="recap-read" href="' + esc(resolve(rc.writtenHref)) + '">Read the full recap →</a>';
+    }
+
     return '<div class="recap recap--structured">' + out + "</div>";
   }
 
