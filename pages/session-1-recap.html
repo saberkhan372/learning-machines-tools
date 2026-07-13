@@ -322,9 +322,9 @@
         <div>
           <p class="sess-kicker"><i class="modsq"></i>Session 1 · Text · Saturday July 11</p>
           <h1 class="sess-title">How machines write</h1>
-          <p class="sess-lede recap-lede">We started with genuine ambivalence — mine included. Six activities and a lot of chat later, most people left with a more precise version of the concern and a better vocabulary for the mechanism.</p>
+          <p class="sess-lede recap-lede">We started with genuine ambivalence — mine included — and separated several mechanisms that are often collapsed into one idea: prediction, temperature, attention, and human feedback.</p>
           <p class="doc-meta" style="margin-top: 14px;">
-            <span class="chip">~25 participants</span>
+            <span class="chip">20+ contributors</span>
             <span class="chip">9–11 am PT</span>
             <span class="chip">Registered participants · never used to train AI</span>
           </p>
@@ -379,7 +379,7 @@
           <div class="sh-card">
             <span class="sh-label">5 min</span>
             <h3>Just the highlights</h3>
-            <p>Read <a class="sh-link" href="#overview">Session overview</a> and the two <a class="sh-link" href="#patterns">patterns</a> we named. That's the argument.</p>
+            <p>Read the <a class="sh-link" href="#overview">session overview</a> and two <a class="sh-link" href="#patterns">mechanism takeaways</a>.</p>
           </div>
           <div class="sh-card">
             <span class="sh-label">20 min</span>
@@ -396,19 +396,19 @@
         <!-- ── SESSION OVERVIEW ──────────────────────────────────── -->
         <h2 id="overview">Session overview</h2>
         <p>The core question was: <em>when a language model writes, what is it actually doing?</em> We moved through five mechanisms — tokenization, prediction, temperature, attention, and alignment — not to exhaustively cover them but to make them visible enough to argue about.</p>
-        <p>The running theme was the gap between fluency and meaning. Every activity was designed to make that gap tangible: the model sounds certain because it outputs high-probability tokens, not because it knows. ELIZA at the end made this especially stark — it doesn't "know" anything, but it often felt warmer than expected.</p>
+        <p>The mechanism tour separated several jobs that are easy to collapse into one idea: prediction supplies possible next tokens, temperature reshapes their probabilities, attention connects tokens across context, and human feedback helps define what counts as a useful response. The session treated fluent output as something to investigate, not as evidence that a system understands or is correct.</p>
 
         <div class="callout" id="patterns">
-          <p><b>Two patterns we named by the end:</b></p>
+          <p><b>Two takeaways from the mechanism tour:</b></p>
           <ol style="margin: 8px 0 0; padding-left: 1.2em; line-height: 1.8;">
-            <li>Fluency consistently outran accuracy in first impressions. The gap between "sounds right" and "is right" is the central risk in classroom use.</li>
-            <li>ELIZA's responses felt warmer than expected even when the rule was fully visible. Fluency perception overrides mechanism knowledge — even when we can see exactly what's happening.</li>
+            <li>A next-token probability is a prediction about language patterns, not a measure of truth or understanding.</li>
+            <li>Human choices enter the system in multiple places, including the corpus, the learning setup, and judgments about which responses are better.</li>
           </ol>
         </div>
 
         <!-- ── WHO WAS IN THE ROOM ──────────────────────────────── -->
         <h2 id="the-room">Who was in the room</h2>
-        <p>About 25 participants spread across time zones. A few snapshots of who was there:</p>
+        <p>More than 20 people contributed in chat and discussion across time zones. Participants are identified here by first name or chosen display name only:</p>
 
         <div class="participant-grid">
           <span class="participant-chip notable">Shane</span>
@@ -430,7 +430,7 @@
           <span class="participant-chip">Sumanth</span>
           <span class="participant-chip">Craig</span>
           <span class="participant-chip">Anita &amp; Gary</span>
-          <span class="participant-chip">Andrea</span>
+          <span class="participant-chip">Cierra</span>
           <span class="participant-chip">Hope</span>
           <span class="participant-chip">TakeMoreCare</span>
           <span class="participant-chip notable">Tiffany <span style="font-size:0.78em;color:var(--muted)">guest</span></span>
@@ -439,15 +439,15 @@
         <p>The range was wide — educators, artists, researchers, and people working across different kinds of machine learning. That diversity kept the conversation from becoming too LLM-centric.</p>
 
         <div class="moment">
-          <p>Right at the start, Shane asked the question that framed everything: what's the difference between ML broadly and LLMs specifically? We talked through the self-driving car analogy — LLMs are language-specific ML, not a different category — and he said he was "emotionally okay with TinyML" in a way he wasn't quite sure about LLMs. That distinction mattered throughout.</p>
+          <p>Early in the session, Shane asked about the difference between machine learning broadly and LLMs specifically, saying he felt "emotionally okay with TinyML" in a way he did not yet feel about some generative AI. The discussion used a self-driving-car analogy to distinguish older rule-based AI from machine-learning systems that build models from data.</p>
           <cite>— Opening discussion</cite>
         </div>
 
         <!-- ── PREDICTION GAME ──────────────────────────────────── -->
         <h2 id="prediction-game">The prediction game</h2>
-        <p>We started unplugged. Sentence stem: <em>"The orange cat…"</em> Everyone typed their next-word guess in Zoom chat simultaneously before anyone else's answer was visible.</p>
+        <p>We started unplugged. Sentence stem: <em>"The orange cat…"</em> Participants typed their next-word guesses in Zoom chat.</p>
 
-        <p>The histogram tool I'd planned to use failed mid-demo. ("I totally messed that up, so we'll just do a manual count.") We tallied in chat instead — which worked better, because everyone could see the actual responses as they arrived.</p>
+        <p>The histogram tool I'd planned to use failed mid-demo. ("I totally messed that up, so we'll just do a manual count.") We tallied the visible chat responses instead.</p>
 
         <div class="tally-wrap">
           <table class="tally">
@@ -461,13 +461,13 @@
             <tbody>
               <tr class="tally-top">
                 <td><strong>walks</strong></td>
-                <td class="tally-count">7</td>
-                <td class="tally-names">Cha, Shelly, Meghan, Yunseo, Angela, Shane, Megan</td>
+                <td class="tally-count">6</td>
+                <td class="tally-names">Cha, Shelly, Yunseo, Angela, Shane, Megan</td>
               </tr>
               <tr>
                 <td>looks</td>
                 <td class="tally-count">3</td>
-                <td class="tally-names">Randy, Yunseo, Cierra</td>
+                <td class="tally-names">Randy, Cierra, Ryan</td>
               </tr>
               <tr>
                 <td>jumps</td>
@@ -529,27 +529,32 @@
                 <td class="tally-count">1</td>
                 <td class="tally-names">Pop Penguin</td>
               </tr>
+              <tr>
+                <td>watches</td>
+                <td class="tally-count">1</td>
+                <td class="tally-names">Judy</td>
+              </tr>
             </tbody>
           </table>
         </div>
 
-        <p>Cha called it: <em>walks</em> had the most votes. The model's top prediction was also <em>walks</em> — the first word that follows "orange cat" more than any other in the training corpus. The room and the model weren't thinking the same thing; the room's distribution just happened to look like the model's distribution.</p>
+        <p>Cha called it: <em>walks</em> had the most votes. In the tiny paragraph supplied for the activity, the phrase itself begins "the orange cat walks," so a corpus-based predictor also favors <em>walks</em>. This was a deliberately small teaching corpus, not a demonstration of an LLM's full training data.</p>
 
-        <p>We then ran Count the Next Token to show the arithmetic: count how many times each word follows the stem in the corpus, divide by the total, get a probability. That's the whole mechanism — no understanding, just a very large fraction.</p>
+        <p>We then used Count the Next Token to make a simplified frequency model visible: count how often each word follows a context, divide by the total, and obtain a probability distribution. An LLM is far more complex than this toy bigram model, but the exercise exposes the basic move from observed patterns to possible next tokens.</p>
 
         <div class="teaching-note">
           <strong>Teaching note</strong>
-          <p>The unplugged prediction game is fully portable — sentence stems on a slide, chat or hands-raised for guesses, whiteboard tally. No logins, no AI use, no accounts. Margot's guess ("bookshop") was the most interesting pedagogically: it was far from the modal response but made complete grammatical and narrative sense. That's a useful discussion move — why did Margot guess differently, and does that difference matter to the model?</p>
+          <p>The unplugged prediction game is fully portable — sentence stems on a slide, chat or hands-raised for guesses, whiteboard tally. No logins, no AI use, no accounts. Margot's guess ("bookshop") offers a useful contrast: it was far from the modal response but still grammatically and narratively plausible.</p>
         </div>
 
         <!-- ── TEMPERATURE ──────────────────────────────────────── -->
         <h2 id="temperature">Tokenizer + Temperature</h2>
         <p>We opened the Tokenizer + Temperature Visualizer and looked at two things in sequence: how the tokenizer splits text (often not where a human reader would cut), then how temperature slides output from predictable to surprising.</p>
-        <p>The key demonstration was the same prompt at low temperature vs. high temperature — low was safe and repetitive, high was surprising and sometimes unstable. The dial isn't adding noise arbitrarily; it's deliberately widening the distribution that the model samples from. Low temperature collapses the distribution to its mode; high temperature flattens it.</p>
+        <p>Temperature reshapes a model's probability distribution. Lower values sharpen it toward the most likely tokens; higher values flatten it so lower-probability tokens become more available. Greedy decoding still selects the top token, while sampling can produce different continuations from the reshaped distribution.</p>
 
         <div class="moment">
-          <p>Angela noticed that even "surprising" outputs at high temperature still felt coherent at a surface level — they were grammatically fine, just semantically strange. That observation set up the ELIZA comparison well: fluency is a separate property from accuracy.</p>
-          <cite>— Angela, during the temperature demo</cite>
+          <p>Shane asked whether raising the temperature could eventually make the output stop making sense. Saber explained that temperature introduces less-likely possibilities, but meaning, legibility, alignment, and fluency require additional processes.</p>
+          <cite>— Temperature discussion, 28:20–28:56</cite>
         </div>
 
         <!-- ── TROPHY CASE ──────────────────────────────────────── -->
@@ -576,17 +581,17 @@
         <p>Meghan and Randy each appear in both rows — they caught the flip when the sentence changed. That's exactly the exercise: notice how your own interpretation shifts with one word, then understand that the model does something structurally similar, across the whole context, for every token it generates.</p>
 
         <!-- ── HOMEWORK APOLOGY ─────────────────────────────────── -->
-        <h2 id="apology">The homework apology (alignment / RLHF)</h2>
-        <p>We showed two homework apology texts — Team A (specific accountability, new timeline, acknowledgment of impact) and Team B (vague, no concrete plan) — and asked which one was better and why.</p>
-        <p>The room almost universally picked Team A. That's the point: there's no "correct" answer the model discovers from text alone. Knowing that A is better took human judgment — RLHF teams rating responses, scoring what "better" means, feeding that signal back into training. The fluent model inherited that judgment.</p>
+        <h2 id="apology">The homework apology (alignment / human feedback)</h2>
+        <p>We compared two generated apologies. Team A said, "I'm sorry my work is late. I took responsibility and I submitted by the end of the day." Team B said, "Sorry, I was really busy. It is late, but I hope that that's okay." Participants were asked which was better and why.</p>
+        <p>The room almost universally picked Team A. The exercise illustrated alignment as a human judgment problem: people supplied the criteria—responsibility, specificity, and usefulness—rather than the text containing a purely mechanical answer to which apology was better.</p>
 
         <div class="moment">
-          <p>"B implies the work has already been potentially turned in — by saying 'I thought it was fine as is,' the student is saying I already submitted it and I'm not going to fix it."</p>
-          <cite>— Shane, on why he picked Team A</cite>
+          <p>Shane noted that A sounded nicer, while B's wording could imply that the work already existed, making its subtext more ambiguous.</p>
+          <cite>— Shane, during the apology comparison</cite>
         </div>
 
         <div class="moment">
-          <p>"More details and specific tokens."</p>
+          <p>"A, more details and specific tokens."</p>
           <cite>— Meghan, on what made Team A better</cite>
         </div>
 
@@ -595,46 +600,36 @@
           <cite>— Judy</cite>
         </div>
 
-        <p>Judy also mentioned a South Park episode about AI — a useful cultural touchstone for the "it sounds like a person" anxiety. The apology exercise works precisely because it shows the moment where "sounding like a person" is real but the source of that quality is human labor, not machine understanding.</p>
+        <div class="moment">
+          <p>"i loveee these questions / i feel like this is really where the crux of the learning happens"</p>
+          <cite>— Angela, during the alignment discussion</cite>
+        </div>
 
         <!-- ── ELIZA ────────────────────────────────────────────── -->
         <h2 id="eliza">ELIZA vs. LLM</h2>
         <p>We closed the mechanism tour with ELIZA — the 1966 rule-based chatbot that matches patterns and substitutes pronouns. The exercise: inspect the actual rule ELIZA matched, see the template it selected, read the output. Completely transparent. Then compare to a pre-generated LLM response to the same input.</p>
 
-        <p>ELIZA consistently felt warmer than it should. Even after we showed the rule — <code>I (.*) you → Perhaps in your fantasies we \1 each other</code> — the outputs still read as somewhat sympathetic. That's the stability of the illusion: knowing the mechanism doesn't dissolve the perception.</p>
+        <p>The Rule Inspector made ELIZA's mechanism visible: a keyword or pattern selects a programmed response template. The comparison panel then placed that rule-based output beside a pre-generated LLM response to the same input.</p>
 
         <div class="moment">
-          <p>Yunseo gave the clearest summary of the difference: ELIZA uses fixed rule-based weights (explicit pattern → template mappings), while an LLM uses learned weights that are unfixed — shaped by training but not readable as rules. The architecture is categorically different, but the surface experience can feel similar.</p>
-          <cite>— Yunseo</cite>
-
+          <p>Yunseo asked how ELIZA differs from an LLM. Saber explained that ELIZA follows explicit conditional rules for keywords, while an LLM learns numerical weights from language data and uses the prior context to predict continuations. Those learned weights are normally fixed during inference; variation comes from the context and decoding process, not from the weights changing with every response.</p>
+          <cite>— Yunseo's question and Saber's response, 1:16:31–1:19:13</cite>
         </div>
 
-        <div class="moment">
-          <p>"i loveee these questions / i feel like this is really where the crux of the learning happens"</p>
-          <cite>— Angela, during the ELIZA / LLM architecture discussion</cite>
-        </div>
+        <p>In chat, Angela described ELIZA as pattern recognition using <code>if/else</code>-style rules and explicitly noted that this might be an oversimplification. The key contrast remained: ELIZA's responses come from authored rules and templates; an LLM's relationships are learned during training rather than written as conversational rules.</p>
 
-        <p>Angela pushed on whether ELIZA's "rule-based" label was precise — is the pattern matching closer to a lookup table or something else? The answer is: it's a sequence of regex-like patterns, evaluated in order, and the first match wins. Nothing is learned. That contrast with gradient descent is sharp and teachable.</p>
-
-        <p>Ryan shared the <a href="https://www.masswerk.at/elizabot/eliza.html">original ELIZA implementation</a> from masswerk.at — the closest thing to the 1966 Weizenbaum program still running.</p>
+        <p>Ryan shared an <a href="https://www.masswerk.at/elizabot/eliza.html">online ELIZA implementation</a> from masswerk.at.</p>
 
         <!-- ── LOCAL LLMS ───────────────────────────────────────── -->
         <h2 id="local-llms">Local LLMs tangent</h2>
-        <p>Shane opened a thread about running models locally. He'd been experimenting with Ollama — running a frontier model locally and watching it interact with a smaller model.</p>
+        <p>Saber encouraged trying local LLMs because smaller models can expose failure modes and computational costs that polished cloud systems hide. Ryan added that running a model on one's own computer can offer more privacy and make the physical scale of the computation easier to see.</p>
 
         <div class="moment">
           <p>"If you use a frontier model to help you set up a local LLM, it's fun, watching it get frustrated talking to a stupider machine is wild."</p>
-          <cite>— Shane, on Ollama + local model setup</cite>
+          <cite>— Shane, in chat during the local-model discussion</cite>
         </div>
 
-        <div class="moment">
-          <p>"Bonzai lol"</p>
-          <cite>— Shane, later in the same thread</cite>
-        </div>
-
-        <p>Shane also connected local LLMs to TinyML and embedded ML. The distinction between a frontier cloud model and something running on a microcontroller is enormous, but both involve the same core loop: data in, pattern out. The scale difference is pedagogically useful.</p>
-
-        <p>Ryan shared several tools in this thread: <a href="https://ollama.com/">Ollama</a> for local model serving, <a href="https://developers.google.com/edge/gallery">Google Edge Gallery</a> for on-device ML, and <a href="https://microbit.org/ai/">micro:bit AI</a> for embedded educational contexts.</p>
+        <p>Ryan shared <a href="https://ollama.com/">Ollama</a> for local model serving and discussed Google Edge Gallery for on-device models; Judy and Ryan both posted the <a href="https://developers.google.com/edge/gallery">Edge Gallery link</a>. Hope later shared <a href="https://microbit.org/ai/">micro:bit AI</a>, and Randy shared <a href="https://microbit.org/createai/">micro:bit CreateAI</a>.</p>
 
         <!-- ── GUEST SPOTLIGHT ─────────────────────────────────── -->
         <h2 id="guest">Guest spotlight</h2>
@@ -642,12 +637,13 @@
           <div>
             <h3 class="guest-name">Dr. Tiffany Tseng</h3>
             <p class="guest-role">Design Tools Lab, Barnard College · research on creative tools and human-computer interaction</p>
-            <p>Tiffany joined for the closing discussion and landed the question that reframed the whole session: <em>"How does AI change the work?"</em> rather than <em>"Does it replace creativity?"</em> The shift matters — the first question is empirical and observable, the second tends toward abstraction.</p>
-            <p>Her lab's <a href="https://github.com/apple/ml-keyframer">ml-keyframer</a> project explores exactly this: how does an AI-assisted keyframing tool change what animators actually do, not just whether they "still" do it? The answer from that research is nuanced — the tool changes the kind of decisions that remain in the human's hands, not the quantity of decisions.</p>
-            <p>Shane connected this immediately to vibe coding: you let go of the mental model because the output looks stable. That's the same dynamic Tiffany's research surfaces — the risk isn't replacement, it's that the visible output quality decouples from the depth of understanding behind it.</p>
+            <p>Tiffany presented four projects about helping people create with and learn through computational tools. <b>PlushPal</b> lets children train gesture-recognition models for interactive stuffed toys. <b>Co-ML</b> supports collaborative data collection and model building across tablets. <b>Keyframer</b> combines natural-language animation generation with direct inspection and editing of generated SVG code. <b>Flowcode</b>, demonstrated live, visualizes how an existing creative-coding project works and generates partial, editable steps instead of a complete solution.</p>
+            <p>The common thread was scaffolding participation without hiding the material being learned: data collection stays visible in Co-ML, generated animation code remains editable in Keyframer, and Flowcode points learners back into the structure of the code.</p>
             <div class="guest-links" style="margin-top: 12px;">
               <a href="https://tifftseng.com/">tifftseng.com</a>
               <a href="https://designtoolslab.org/">Design Tools Lab</a>
+              <a href="https://www.plushpal.app/">PlushPal</a>
+              <a href="https://machinelearning.apple.com/research/coml">Co-ML</a>
               <a href="https://github.com/apple/ml-keyframer">ml-keyframer</a>
             </div>
           </div>
@@ -658,12 +654,12 @@
 
         <div class="teaching-note">
           <strong>Backup for the histogram tool</strong>
-          <p>The live histogram failed. The Zoom chat tally worked better anyway — participants could see each other's guesses arriving in real time, which added social dynamics the histogram missed. The low-tech version (sentence stem on a slide, guesses in chat, manual tally on a whiteboard or in a doc) is fully sufficient and probably preferable for the debrief.</p>
+          <p>The live histogram failed, and the group completed the activity by counting the Zoom chat responses manually. The low-tech version (sentence stem on a slide, guesses in chat, manual tally on a whiteboard or in a doc) is fully sufficient for the debrief.</p>
         </div>
 
         <div class="teaching-note">
           <strong>The unplugged route works for almost everything</strong>
-          <p>The prediction game, the trophy-case exercise, and the homework apology comparison all work with zero AI use. ELIZA needs a browser but no accounts. Only the Temperature Visualizer requires live model inference. A fully no-AI version of this session is viable — see the <a href="no-ai-pathway.html">No-AI participation guide</a> for the detailed pathway.</p>
+          <p>The prediction game, trophy-case exercise, and homework-apology comparison all work with zero AI use. ELIZA and the Temperature Visualizer need a browser, but their core demonstrations use no live model API or account. A fully no-AI version of this session is viable — see the <a href="no-ai-pathway.html">No-AI participation guide</a> for the detailed pathway.</p>
         </div>
 
         <div class="teaching-note">
@@ -672,8 +668,8 @@
         </div>
 
         <div class="teaching-note">
-          <strong>Angela's point on high-temperature fluency</strong>
-          <p>She noticed that even strange high-temperature outputs were grammatically coherent. This is worth foregrounding in future sessions: fluency is a property of the output format, not of the content. A model can produce well-formed sentences that say nothing. That's true at any temperature.</p>
+          <strong>Angela's questions about power and boundaries</strong>
+          <p>Angela highlighted questions about who makes a model, what biases it may contain, and how learning about those choices could help students decide their own boundaries around AI use.</p>
         </div>
 
         <div class="teaching-note">
@@ -710,8 +706,8 @@
             <li><a href="https://machinelearningforkids.co.uk/">Machine Learning for Kids</a><span class="res-who">session</span></li>
             <li><a href="https://teachablemachine.withgoogle.com/">Teachable Machine</a><span class="res-who">session</span></li>
             <li><a href="https://www.kodewithklossy.com/">Kode with Klossy</a><span class="res-who">session</span></li>
-            <li><a href="https://microbit.org/ai/">micro:bit AI</a><span class="res-who">Ryan</span></li>
-            <li><a href="https://microbit.org/createai/">micro:bit Create AI</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://microbit.org/ai/">micro:bit AI</a><span class="res-who">Hope</span></li>
+            <li><a href="https://microbit.org/createai/">micro:bit Create AI</a><span class="res-who">Randy</span></li>
           </ul>
         </div>
 
@@ -722,7 +718,7 @@
             <li><a href="https://deviationgame.com/">Deviation Game</a><span class="res-who">Ryan</span></li>
             <li><a href="https://projector.tensorflow.org/">TensorFlow Embedding Projector</a><span class="res-who">Ryan</span></li>
             <li><a href="https://www.pinecone.io/learn/vector-database/">Vector databases — Pinecone guide</a><span class="res-who">Ryan</span></li>
-            <li><a href="https://www.masswerk.at/elizabot/eliza.html">Original ELIZA (masswerk)</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://www.masswerk.at/elizabot/eliza.html">ELIZA implementation (masswerk)</a><span class="res-who">Ryan</span></li>
             <li><a href="https://thecodingtrain.com/">The Coding Train</a><span class="res-who">Ryan</span></li>
             <li><a href="https://natureofcode.com/">Nature of Code</a><span class="res-who">Ryan</span></li>
             <li><a href="https://ml5js.org/">ml5.js</a><span class="res-who">Ryan</span></li>
@@ -732,8 +728,8 @@
         <div class="resource-group">
           <h4>Shared in chat — tools &amp; local ML</h4>
           <ul class="resource-list">
-            <li><a href="https://ollama.com/">Ollama — local LLM serving</a><span class="res-who">Ryan / Shane</span></li>
-            <li><a href="https://developers.google.com/edge/gallery">Google Edge Gallery</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://ollama.com/">Ollama — local LLM serving</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://developers.google.com/edge/gallery">Google Edge Gallery</a><span class="res-who">Judy / Ryan</span></li>
             <li><a href="https://microbit.org/">micro:bit</a><span class="res-who">Ryan</span></li>
             <li><a href="https://www.plushpal.app/">Plush Pal</a><span class="res-who">session</span></li>
           </ul>
@@ -757,6 +753,8 @@
             <li><a href="https://auroramititelu.com/">Aurora Mititelu — artist</a><span class="res-who">session</span></li>
           </ul>
         </div>
+
+        <p class="colophon">This summary was drafted and revised with AI assistance. Quotations and attributions were checked against the session transcript and chat export; final facilitator review is recommended.</p>
 
       </article>
     </div>

@@ -20,7 +20,7 @@ window.LM_SESSION_RUNS = [
     recap: {
       video: "https://youtu.be/zulcCbYdvwc", writtenHref: "pages/session-1-recap.html", written: null,
       sections: {
-        summary: "We started with genuine ambivalence — mine included. Six things later, most people left with a more precise version of the concern and a better vocabulary for the mechanism. Here's what we actually looked at.",
+        summary: "We started with genuine ambivalence — mine included — and separated several mechanisms that are often collapsed into one idea: prediction, temperature, attention, and human feedback. Here's what we actually looked at.",
         investigated: [
           "How a language model predicts the next word — token by token, probability not meaning.",
           "How temperature slides output from predictable to surprising, and why adding uncertainty is the point.",
@@ -31,19 +31,19 @@ window.LM_SESSION_RUNS = [
         mechanisms: [
           { name: "Tokenization", where: "Orange-cat passage", observed: "Text splits at unexpected places — not how a human reader would cut a sentence." },
           { name: "Next-token prediction", where: "Room guessing game", observed: "Room split toward 'walks'; model's top choice matched the corpus. Pattern-matching, not understanding." },
-          { name: "Temperature", where: "Tokenizer + Temperature Visualizer", observed: "Low temp: safe and repetitive. High temp: surprising, sometimes unstable. The dial adds uncertainty on purpose." },
+          { name: "Temperature", where: "Tokenizer + Temperature Visualizer", observed: "Lower values sharpen the probability distribution; higher values make lower-probability tokens more available." },
           { name: "Attention", where: "Trophy-case pronoun flip", observed: "'Too big' → 'too small' — one word flipped which object the pronoun referred to. The model held the whole sentence in relation to itself." },
-          { name: "Alignment (RLHF)", where: "Homework apology comparison", observed: "Almost everyone chose Team A. There's no pure machine answer for that — scoring better responses takes enormous human effort." }
+          { name: "Alignment / human feedback", where: "Homework apology comparison", observed: "Almost everyone chose Team A; the activity used their reasons to make human scoring and judgment visible." }
         ],
         patterns: [
-          { what: "Fluency consistently outran accuracy in first impressions — outputs felt more correct than they were.", suggests: "The gap between 'sounds right' and 'is right' is the central risk in classroom use.", next: "Build in a verification step before treating LLM output as factual." },
-          { what: "ELIZA's responses felt warmer than expected even when the rule was fully visible.", suggests: "Fluency perception overrides mechanism knowledge — even when we can see exactly what's happening.", next: "Carry this into Session 2: what defaults does an image model fill in when you don't ask?" }
+          { what: "A next-token probability describes a language pattern, not whether the resulting statement is true.", suggests: "Prediction and verification are separate classroom moves.", next: "Ask learners to name the evidence they would need before treating an output as factual." },
+          { what: "Human choices enter through the corpus, the learning setup, and judgments about which responses are better.", suggests: "A model's behavior cannot be separated from the people and institutions that shaped it.", next: "Carry this into Session 2: what defaults does an image model fill in when the prompt leaves details unspecified?" }
         ],
         hmse: {
-          human: "RLHF teams scored which homework apology was better — Team A, with accountability and a new timeline. That judgment is now baked into the model.",
-          machine: "Both apologies were fluent. The LLM couldn't distinguish the better one without alignment training — and even then, it can only reflect the scoring it received.",
-          system: "Training corpus determines token probabilities. 'Walks' follows 'cat' more often than 'jumps' does — that's all the model knows. Angela asked: who built that corpus, and what's in it?",
-          ethics: "Dr. Tiffany Tseng's closing question — 'how does AI change the work?' rather than 'does it replace creativity?' — reframes the whole thing. Shane's connection: it's like vibe coding. You let go of the mental model because the output looks stable."
+          human: "Participants preferred Team A because it took responsibility and gave a concrete commitment. The activity made the human judgment behind alignment visible.",
+          machine: "Both apologies were generated text. The comparison did not reveal a mechanical 'correct' answer; people supplied the criteria for what counted as better.",
+          system: "In the tiny paragraph used for the activity, 'walks' follows 'the orange cat,' so a corpus-based predictor favors it. Angela asked who makes a model, what biases it may contain, and how that knowledge should shape students' boundaries.",
+          ethics: "Dr. Tiffany Tseng presented tools that keep data, code, and iteration visible: PlushPal, Co-ML, Keyframer, and Flowcode. The common design question was how to support creation without hiding the material learners are trying to understand."
         },
         classroom: {
           students: "The next-word prediction game works with any paragraph and paper/pencil — no login, no AI account, no generation required.",
