@@ -877,7 +877,8 @@ html[data-skin="studio-synthesis"] .pathway-card {
   font-size: 0.84rem;
 }
 .recap-watch:hover { background: var(--accent); color: var(--bg); }
-.recap-written { margin: 0; line-height: 1.55; max-width: 66ch; }
+.recap-written { display: grid; gap: 14px; line-height: 1.55; max-width: 66ch; }
+.recap-written p { margin: 0; }
 .recap-read {
   width: fit-content;
   color: var(--accent);
