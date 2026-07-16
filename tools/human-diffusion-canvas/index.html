@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="image" data-skin="image-spectrum">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>Human Diffusion Canvas · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/field-theme.js"></script>
+  <script src="../../assets/lm-state-url.js"></script>
+  <style>
+    .play-grid { display:grid; gap:16px; grid-template-columns:minmax(250px, 0.72fr) minmax(0, 1.55fr); align-items:start; }
+    @media (max-width: 880px) { .play-grid { grid-template-columns:1fr; } }
+
+    /* The canvas is paper, not chrome: it stays white in every theme so the
+       thing you export matches the thing you drew. */
+    canvas.board { display:block; width:100%; height:auto; background:rgb(255,255,255); border:1px solid var(--line); border-radius:8px; touch-action:none; cursor:crosshair; }
+    canvas.board:focus-visible { outline:3px solid var(--m-image); outline-offset:3px; }
+    canvas.board.locked { cursor:default; }
+    .board-frame { position:relative; }
+    .chip-row .chip-button { min-width:44px; min-height:44px; }
+    .stage-line { margin:10px 0 0; font-family:var(--font-mono); font-size:.74rem; letter-spacing:.04em; color:var(--muted); }
+    .stage-line b { color:var(--ink); font-weight:600; }
+
+    .prompt-input { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:var(--surface-2); color:var(--ink); font:inherit; font-size:1rem; }
+    .prompt-input:focus { outline:2px solid var(--accent); outline-offset:2px; }
+
+    .sched { display:grid; gap:8px; margin:0; padding:0; list-style:none; }
+    .sched-row { display:grid; grid-template-columns:18px 1fr auto; gap:10px; align-items:start; padding:9px 10px; border:1px solid var(--line); border-radius:8px; background:var(--surface-2); opacity:.78; }
+    .sched-row.now { opacity:1; border-color:var(--accent); box-shadow:var(--shadow-sm); }
+    .sched-row.done { opacity:.5; }
+    .sched-sw { width:18px; height:18px; border-radius:5px; margin-top:2px; }
+    .sched-name { display:block; font-weight:800; font-size:.88rem; color:var(--ink); }
+    .sched-tip { display:block; font-size:.78rem; line-height:1.35; color:var(--muted); }
+    .sched-brush { font-family:var(--font-mono); font-size:.64rem; color:var(--muted); padding-top:3px; }
+
+    .meter { height:10px; border:1px solid var(--line); border-radius:6px; background:var(--surface-2); overflow:hidden; }
+    .meter-fill { height:100%; width:100%; background:repeating-linear-gradient(45deg, rgba(125,125,125,.7) 0 4px, rgba(205,205,205,.7) 4px 8px); transition:width .4s ease; }
+    .meter-row { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+    .meter-val { font-family:var(--font-mono); font-size:.9rem; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
+
+    .timer-fill { height:100%; width:0%; background:var(--accent); transition:width .95s linear; }
+    .btn-stack { display:grid; gap:8px; }
+    .range-row { display:flex; align-items:center; gap:10px; }
+    .range-row input[type=range] { flex:1; accent-color:var(--accent); }
+    .brush-dot-wrap { width:36px; height:36px; display:grid; place-items:center; border:1px solid var(--line); border-radius:8px; background:rgb(255,255,255); }
+    .brush-dot { border-radius:50%; }
+    .brush-px { font-family:var(--font-mono); font-size:.72rem; color:var(--muted); min-width:42px; text-align:right; }
+
+    .export-note { margin-top:8px; font-size:.8rem; color:var(--muted); }
+    .export-status { min-height:1.2em; margin-top:6px; font-family:var(--font-mono); font-size:.72rem; color:var(--accent); }
+
+    .quick-steps { margin:0; padding-left:18px; color:var(--muted); font-size:.88rem; line-height:1.55; }
+    .quick-steps b { color:var(--ink); }
+
+    .break-grid { display:grid; gap:14px; grid-template-columns:repeat(3, minmax(0,1fr)); }
+    @media (max-width: 880px) { .break-grid { grid-template-columns:1fr; } }
+    .break-card { border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:8px; background:var(--surface-2); padding:13px 14px; }
+    .break-card h3 { margin:0 0 6px; font-size:1rem; }
+    .break-card p { margin:0; font-size:.88rem; line-height:1.5; color:var(--muted); }
+
+    .note-box { width:100%; min-height:96px; resize:vertical; border:1px solid var(--line); border-radius:8px; background:var(--surface-2); color:var(--ink); padding:10px; font-family:var(--font-body); line-height:1.45; }
+    .note-box:focus { outline:2px solid var(--accent); outline-offset:2px; }
+
+    .pulse { animation:hd-pulse 1s ease infinite; }
+    @keyframes hd-pulse { 50% { transform:scale(1.02); } }
+    @media (prefers-reduced-motion: reduce) { .pulse { animation:none; } .meter-fill, .timer-fill { transition:none; } }
+
+    .run-list { margin:0; padding-left:18px; color:var(--muted); line-height:1.6; }
+    .run-list b { color:var(--ink); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../pages/tools.html" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="../../pages/tool-human-diffusion.html" class="hide-sm">Tool notes</a>
+        <a class="btn btn-sm" href="../../pages/session-images.html">Session 2</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Session 2 &middot; Images &middot; Diffusion, embodied</p>
+      <h1 class="tool-title">Human Diffusion Canvas</h1>
+      <p class="tool-dek">You are the denoiser. The words arrive, noise sits on the canvas, and step by step you commit what you're sure of — biggest shapes first, details last, a veil of noise thinning between rounds. When you finish, export the GIF and compare your trajectory with the machine's.</p>
+      <div class="tool-idea">Big idea: diffusion iteratively revises a noisy representation under prompt guidance. This activity uses locked, coarse-to-fine rounds to make one trajectory discussable.</div>
+    </header>
+
+    <div class="play-grid">
+      <!-- ============ CONTROL RAIL ============ -->
+      <div style="display:grid;gap:16px;">
+        <section class="lab-panel"><div class="lab-pad">
+          <p class="mini-label">1 · The words (the prompt)</p>
+          <input id="promptInput" class="prompt-input" type="text" maxlength="120"
+                 placeholder="type the words the facilitator says…"
+                 aria-label="The prompt words guiding your drawing">
+          <p class="small-muted">The model hears its words at <em>every</em> step. Keep yours in view the whole time.</p>
+        </div></section>
+
+        <section class="lab-panel"><div class="lab-pad">
+          <p class="mini-label">2 · The step schedule</p>
+          <div class="meter-row"><span class="mini-label" style="margin:0;">Noise remaining</span><span class="meter-val" id="noiseVal">100%</span></div>
+          <div class="meter" role="img" id="noiseMeter" aria-label="Noise remaining: 100 percent"><div class="meter-fill" id="noiseFill"></div></div>
+          <ul class="sched" id="schedList" style="margin-top:12px;"></ul>
+        </div></section>
+
+        <section class="lab-panel"><div class="lab-pad">
+          <p class="mini-label">3 · Brush — it shrinks every step</p>
+          <div class="range-row">
+            <span class="brush-dot-wrap"><span class="brush-dot" id="brushDot"></span></span>
+            <input id="brushSlider" type="range" min="50" max="150" value="100" step="5" aria-label="Brush size adjustment, percent of this step's default">
+            <span class="brush-px" id="brushPx">30px</span>
+          </div>
+          <p class="small-muted">Coarse steps get fat brushes and fine steps get thin ones. That is this activity's constraint, echoing a common denoising pattern rather than a rule every model follows.</p>
+        </div></section>
+
+        <section class="lab-panel"><div class="lab-pad">
+          <p class="mini-label">4 · Round timer (optional)</p>
+          <div class="chip-row" role="group" aria-label="Round timer length">
+            <button class="chip-button active" data-timer="0" type="button" aria-pressed="true">Off</button>
+            <button class="chip-button" data-timer="30" type="button" aria-pressed="false">30s</button>
+            <button class="chip-button" data-timer="60" type="button" aria-pressed="false">60s</button>
+          </div>
+          <div class="meter" style="margin-top:10px;"><div class="timer-fill" id="timerFill"></div></div>
+          <p class="small-muted" id="timerLabel" aria-live="polite">No timer — the facilitator calls time.</p>
+        </div></section>
+
+        <section class="lab-panel"><div class="lab-pad">
+          <p class="mini-label">5 · Commit</p>
+          <div class="btn-stack">
+            <button class="tool-button" id="commitBtn" type="button">Commit step 1 — drop the veil</button>
+            <button class="tool-button secondary" id="undoBtn" type="button" disabled>Undo stroke (this step only)</button>
+            <button class="tool-button secondary" id="resetBtn" type="button">Start over — new noise</button>
+          </div>
+          <p class="small-muted">Undo works inside the current activity step. Locked rounds preserve your trajectory; unlike this activity, later model updates can still revise structure in the current representation.</p>
+        </div></section>
+
+        <section class="lab-panel"><div class="lab-pad">
+          <p class="mini-label">6 · Export</p>
+          <div class="btn-stack">
+            <button class="tool-button" id="pngBtn" type="button">Export image (PNG)</button>
+            <button class="tool-button secondary" id="gifBtn" type="button">Export trajectory (GIF)</button>
+          </div>
+          <p class="export-status" id="exportStatus" aria-live="polite"></p>
+          <p class="export-note">Everything is built on this device — nothing uploads. Share only what you consent to share.</p>
+        </div></section>
+      </div>
+
+      <!-- ============ CANVAS ============ -->
+      <div style="display:grid;gap:16px;">
+        <section class="lab-panel"><div class="lab-pad">
+          <div class="meter-row" style="margin-bottom:10px;">
+            <p class="mini-label" style="margin:0;">The canvas · 512 × 512 — the square many diffusion models denoise</p>
+          </div>
+          <div class="board-frame">
+            <canvas id="board" class="board" width="512" height="512" tabindex="0" role="application"
+                    aria-label="Drawing canvas, step 1" aria-describedby="canvasHelp"
+                    aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight Space Enter Home"></canvas>
+          </div>
+          <p class="small-muted" id="canvasHelp">Keyboard: focus the canvas, use arrow keys to move the cursor, hold Shift while moving to draw, press Space or Enter for a dot, and press Home to recenter.</p>
+          <p class="stage-line" id="stageLine" aria-live="polite"></p>
+        </div></section>
+
+        <section class="lab-panel"><div class="lab-pad">
+          <p class="mini-label">How a round works</p>
+          <ol class="quick-steps">
+            <li><b>Type the words.</b> The facilitator says them; they're your conditioning.</li>
+            <li><b>Draw what you're sure of.</b> Fat brush, biggest shapes. Find them in the noise.</li>
+            <li><b>Commit.</b> A veil of noise falls over everything — thinner each time.</li>
+            <li><b>Repeat, finer each round.</b> After the last step there's no veil left. Export.</li>
+          </ol>
+        </div></section>
+
+        <section class="lab-panel"><div class="lab-pad">
+          <p class="mini-label">Setup — facilitator</p>
+          <div class="chip-row" role="group" aria-label="Number of steps">
+            <span class="small-muted" style="align-self:center;margin:0 4px 0 0;">Steps:</span>
+            <button class="chip-button" data-steps="3" type="button" aria-pressed="false">3</button>
+            <button class="chip-button active" data-steps="4" type="button" aria-pressed="true">4</button>
+            <button class="chip-button" data-steps="5" type="button" aria-pressed="false">5</button>
+          </div>
+          <div class="chip-row" role="group" aria-label="Starting canvas" style="margin-top:8px;">
+            <span class="small-muted" style="align-self:center;margin:0 4px 0 0;">Start from:</span>
+            <button class="chip-button active" data-noise="1" type="button" aria-pressed="true">Noise (like the model)</button>
+            <button class="chip-button" data-noise="0" type="button" aria-pressed="false">Blank paper</button>
+          </div>
+          <div class="btn-stack" style="margin-top:10px;">
+            <button class="tool-button secondary" id="shareBtn" type="button">Copy setup link for the class</button>
+          </div>
+          <p class="small-muted">The link carries the words, step count, and noise setting — paste it in chat and everyone starts from the same setup. Changing setup restarts the canvas.</p>
+        </div></section>
+      </div>
+    </div>
+
+    <!-- ============ MECHANISM MAP ============ -->
+    <section class="lab-panel" style="margin-top:24px;"><div class="lab-pad">
+      <h2>What just happened — the map to real diffusion</h2>
+      <div class="table-wrap">
+        <table class="comparison-table">
+          <thead><tr><th scope="col"></th><th scope="col">You, drawing</th><th scope="col">A diffusion model</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Starts from</th><td>A field of random noise</td><td>A field of random noise (in latent space)</td></tr>
+            <tr><th scope="row">The words</th><td>Said aloud, held in your head every round</td><td>The prompt, encoded once and applied at every step</td></tr>
+            <tr><th scope="row">One step</th><td>Commit marks so this activity preserves a trajectory</td><td>Predict an update to the current noisy representation</td></tr>
+            <tr><th scope="row">Between steps</th><td>A veil — the noise not yet resolved</td><td>Residual noise, on a fixed schedule</td></tr>
+            <tr><th scope="row">Order of work</th><td>A forced coarse-to-fine drawing sequence</td><td>Coarse structure often stabilizes before fine detail</td></tr>
+            <tr><th scope="row">Knows what it's making</th><td>Yes — you have the idea</td><td>No — it has statistics about images-with-these-words</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div></section>
+
+    <!-- ============ WHERE IT BREAKS ============ -->
+    <section class="lab-panel" style="margin-top:16px;"><div class="lab-pad">
+      <h2>Where the analogy breaks — say this part out loud</h2>
+      <div class="break-grid" style="margin-top:12px;">
+        <div class="break-card">
+          <h3>You add. It removes.</h3>
+          <p>You put marks onto the canvas. A diffusion model updates many values in its current image representation in parallel — often latent values rather than final pixels.</p>
+        </div>
+        <div class="break-card">
+          <h3>You mean. It matches.</h3>
+          <p>You know what a cat is and want to draw one. The model has no idea and no wanting — only learned statistics about which pixel patterns co-occur with the words "a cat".</p>
+        </div>
+        <div class="break-card">
+          <h3>Your steps cost a minute. Its steps cost milliseconds.</h3>
+          <p>You'll take 3–5 steps of a minute each. A model usually follows a longer automated noise schedule; the exact step count and speed vary by model and sampler.</p>
+        </div>
+      </div>
+    </div></section>
+
+    <!-- ============ RUN OF SHOW ============ -->
+    <section class="lab-panel" style="margin-top:16px;"><div class="lab-pad">
+      <h2>Classroom run of show</h2>
+      <ol class="run-list" style="margin-top:10px;">
+        <li><b>Set up once, share the link.</b> Pick the step count, type the words, press <em>Copy setup link</em>, paste it in chat.</li>
+        <li><b>Say the words.</b> Everyone types them. Same words for the whole run — that's the conditioning.</li>
+        <li><b>Step 1, about 60 seconds.</b> Fat brush. Biggest shapes only. "Find them in the noise."</li>
+        <li><b>Commit together.</b> The veil falls. Point at the noise-remaining meter — it just dropped, on schedule.</li>
+        <li><b>Repeat, finer each round.</b> Brushes shrink automatically. The last step gets no veil.</li>
+        <li><b>Export GIFs and regroup.</b> Paste them into the <a href="../evidence-wall/">Evidence Wall</a>, watch a wall of human denoising trajectories — then open the <a href="../diffusion-step-through-viewer/">Diffusion Step-Through Viewer</a> and watch the machine run the same shape of process.</li>
+      </ol>
+      <p class="mini-label" style="margin-top:18px;">Field note</p>
+      <textarea class="note-box" aria-label="Field note" placeholder="Where did your image commit earliest? What did the words decide, and what did you decide? What would the model have defaulted to instead?"></textarea>
+    </div></section>
+  </main>
+
+  <script>
+  (function () {
+    "use strict";
+
+    /* ================= SETUP ================= */
+
+    let SIZE = 512;
+
+    /* One row per step. Colors are fixed for the whole class so that when
+       drawings go up side by side, the same color always means the same step. */
+    let MASTER_STEPS = [
+      { name: "Structure", tip: "Biggest shapes only — where things sit",    brush: 30, rgb: [36, 66, 124]  },
+      { name: "Forms",     tip: "Medium forms — bodies, masses, horizon",     brush: 18, rgb: [178, 60, 34]  },
+      { name: "Details",   tip: "Edges, features, texture",                   brush: 9,  rgb: [23, 111, 82]  },
+      { name: "Accents",   tip: "Small accents — the last bits of certainty", brush: 5,  rgb: [94, 60, 143]  },
+      { name: "Touches",   tip: "Final touches — only what is still fuzzy",   brush: 3,  rgb: [140, 94, 22]  }
+    ];
+
+    let totalSteps = 4;
+    let noiseOn = true;
+    let stepIndex = 1;      /* 1-based: the step being drawn right now */
+    let finished = false;
+    let strokes = [];       /* strokes of the current (uncommitted) step */
+    let activeStroke = null;
+    let frames = [];        /* trajectory snapshots for the GIF */
+    let brushPercent = 100; /* slider: percent of the step's default width */
+
+    let board = document.getElementById("board");
+    let boardCtx = board.getContext("2d");
+    let keyboardCursor = { x: SIZE / 2, y: SIZE / 2 };
+    let keyboardCursorVisible = false;
+
+    /* baked = everything committed (noise seed + locked steps + veils).
+       strokeLayer = only the current step, so undo never touches the past. */
+    let baked = document.createElement("canvas");
+    baked.width = SIZE; baked.height = SIZE;
+    let bakedCtx = baked.getContext("2d");
+
+    let strokeLayer = document.createElement("canvas");
+    strokeLayer.width = SIZE; strokeLayer.height = SIZE;
+    let strokeCtx = strokeLayer.getContext("2d");
+
+    function stepPlan(i) { return MASTER_STEPS[i - 1]; }
+    function stepColor(i) {
+      let c = stepPlan(i).rgb;
+      return "rgb(" + c[0] + ", " + c[1] + ", " + c[2] + ")";
+    }
+    function brushSize() {
+      return Math.max(1, Math.round(stepPlan(stepIndex).brush * brushPercent / 100));
+    }
+    function promptText() {
+      let p = document.getElementById("promptInput").value.trim();
+      if (p === "") { return "(no words yet)"; }
+      return p;
+    }
+
+    /* ================= NOISE ================= */
+
+    /* The seed the model starts from: per-pixel grays plus a few soft
+       blotches, so there are almost-shapes for the words to latch onto. */
+    function paintNoise(ctx) {
+      let img = ctx.createImageData(SIZE, SIZE);
+      let d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        /* light grays only — dark strokes must stay legible on top */
+        let v = 150 + Math.floor(Math.random() * 106);
+        d[i] = v; d[i + 1] = v; d[i + 2] = v; d[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      for (let b = 0; b < 26; b++) {
+        let x = Math.random() * SIZE;
+        let y = Math.random() * SIZE;
+        let r = 24 + Math.random() * 90;
+        let shade = Math.floor(120 + Math.random() * 80);
+        let g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, "rgba(" + shade + ", " + shade + ", " + shade + ", 0.35)");
+        g.addColorStop(1, "rgba(" + shade + ", " + shade + ", " + shade + ", 0)");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    /* The veil between steps IS the schedule: after committing step k of T,
+       (1 - k/T) of the noise is still unresolved, so the wash gets thinner
+       every round and vanishes entirely after the last step. */
+    function applyVeil(k) {
+      let remaining = 1 - (k / totalSteps);
+      bakedCtx.fillStyle = "rgba(255, 255, 255, " + (0.5 * remaining).toFixed(3) + ")";
+      bakedCtx.fillRect(0, 0, SIZE, SIZE);
+      if (noiseOn) {
+        let veilNoise = document.createElement("canvas");
+        veilNoise.width = SIZE; veilNoise.height = SIZE;
+        paintNoise(veilNoise.getContext("2d"));
+        bakedCtx.globalAlpha = 0.45 * remaining;
+        bakedCtx.drawImage(veilNoise, 0, 0);
+        bakedCtx.globalAlpha = 1;
+      }
+    }
+
+    function noisePercent() {
+      let committed = stepIndex - 1;
+      if (finished) { committed = totalSteps; }
+      return Math.round(100 * (1 - committed / totalSteps));
+    }
+
+    /* ================= DRAWING ================= */
+
+    let renderQueued = false;
+    function render() {
+      if (renderQueued) { return; }
+      renderQueued = true;
+      requestAnimationFrame(function () {
+        renderQueued = false;
+        boardCtx.clearRect(0, 0, SIZE, SIZE);
+        boardCtx.drawImage(baked, 0, 0);
+        boardCtx.drawImage(strokeLayer, 0, 0);
+        if (keyboardCursorVisible && !finished) {
+          boardCtx.save();
+          boardCtx.strokeStyle = "rgb(20, 20, 20)";
+          boardCtx.lineWidth = 2;
+          boardCtx.setLineDash([6, 4]);
+          boardCtx.beginPath();
+          boardCtx.arc(keyboardCursor.x, keyboardCursor.y, Math.max(8, brushSize() / 2 + 4), 0, Math.PI * 2);
+          boardCtx.stroke();
+          boardCtx.restore();
+        }
+      });
+    }
+
+    function boardPoint(e) {
+      let rect = board.getBoundingClientRect();
+      let x = (e.clientX - rect.left) * SIZE / rect.width;
+      let y = (e.clientY - rect.top) * SIZE / rect.height;
+      return { x: Math.max(0, Math.min(SIZE, x)), y: Math.max(0, Math.min(SIZE, y)) };
+    }
+
+    function strokeSetup(ctx, s) {
+      ctx.strokeStyle = s.color;
+      ctx.fillStyle = s.color;
+      ctx.lineWidth = s.size;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+    }
+
+    function drawDot(ctx, s, p) {
+      strokeSetup(ctx, s);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, s.size / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawSegment(ctx, s, a, b) {
+      strokeSetup(ctx, s);
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    }
+
+    function replayStroke(ctx, s) {
+      if (s.points.length === 1) {
+        drawDot(ctx, s, s.points[0]);
+        return;
+      }
+      for (let i = 1; i < s.points.length; i++) {
+        drawSegment(ctx, s, s.points[i - 1], s.points[i]);
+      }
+    }
+
+    function redrawStrokeLayer() {
+      strokeCtx.clearRect(0, 0, SIZE, SIZE);
+      for (let i = 0; i < strokes.length; i++) {
+        replayStroke(strokeCtx, strokes[i]);
+      }
+    }
+
+    board.addEventListener("pointerdown", function (e) {
+      if (finished) { return; }
+      e.preventDefault();
+      /* capture keeps the stroke alive if the pointer leaves the canvas;
+         synthetic pointers (automated tests) can't be captured — that's fine */
+      try { board.setPointerCapture(e.pointerId); } catch (err) {}
+      let p = boardPoint(e);
+      activeStroke = { color: stepColor(stepIndex), size: brushSize(), points: [p] };
+      drawDot(strokeCtx, activeStroke, p);
+      render();
+    });
+
+    board.addEventListener("pointermove", function (e) {
+      if (activeStroke === null) { return; }
+      e.preventDefault();
+      let p = boardPoint(e);
+      let prev = activeStroke.points[activeStroke.points.length - 1];
+      /* skip sub-pixel jitter so undo replays exactly what was seen */
+      let dx = p.x - prev.x;
+      let dy = p.y - prev.y;
+      if (dx * dx + dy * dy < 1) { return; }
+      activeStroke.points.push(p);
+      drawSegment(strokeCtx, activeStroke, prev, p);
+      render();
+    });
+
+    function endStroke() {
+      if (activeStroke === null) { return; }
+      strokes.push(activeStroke);
+      activeStroke = null;
+      updateUi();
+    }
+    board.addEventListener("pointerup", endStroke);
+    board.addEventListener("pointercancel", endStroke);
+
+    board.addEventListener("focus", function () {
+      keyboardCursorVisible = true;
+      render();
+    });
+
+    board.addEventListener("blur", function () {
+      keyboardCursorVisible = false;
+      render();
+    });
+
+    board.addEventListener("keydown", function (e) {
+      if (finished) { return; }
+      let dx = 0;
+      let dy = 0;
+      let move = e.altKey ? 1 : 8;
+      if (e.key === "ArrowLeft") { dx = -move; }
+      else if (e.key === "ArrowRight") { dx = move; }
+      else if (e.key === "ArrowUp") { dy = -move; }
+      else if (e.key === "ArrowDown") { dy = move; }
+      else if (e.key === "Home") {
+        e.preventDefault();
+        keyboardCursor = { x: SIZE / 2, y: SIZE / 2 };
+        keyboardCursorVisible = true;
+        render();
+        return;
+      } else if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        let dotStroke = { color: stepColor(stepIndex), size: brushSize(), points: [{ x: keyboardCursor.x, y: keyboardCursor.y }] };
+        strokes.push(dotStroke);
+        replayStroke(strokeCtx, dotStroke);
+        updateUi();
+        render();
+        return;
+      } else {
+        return;
+      }
+      e.preventDefault();
+      let previous = { x: keyboardCursor.x, y: keyboardCursor.y };
+      keyboardCursor.x = Math.max(0, Math.min(SIZE, keyboardCursor.x + dx));
+      keyboardCursor.y = Math.max(0, Math.min(SIZE, keyboardCursor.y + dy));
+      keyboardCursorVisible = true;
+      if (e.shiftKey) {
+        let keyStroke = { color: stepColor(stepIndex), size: brushSize(), points: [previous, { x: keyboardCursor.x, y: keyboardCursor.y }] };
+        strokes.push(keyStroke);
+        replayStroke(strokeCtx, keyStroke);
+        updateUi();
+      }
+      render();
+    });
+
+    /* ================= STEPS, VEIL, RESET ================= */
+
+    function captureFrame(label) {
+      frames.push({
+        label: label,
+        prompt: promptText(),
+        image: bakedCtx.getImageData(0, 0, SIZE, SIZE)
+      });
+    }
+
+    function commitStep() {
+      if (finished) { return; }
+      endStroke();
+      bakedCtx.drawImage(strokeLayer, 0, 0);
+      strokes = [];
+      strokeCtx.clearRect(0, 0, SIZE, SIZE);
+
+      if (stepIndex < totalSteps) {
+        captureFrame("step " + stepIndex + " of " + totalSteps + " · committed");
+        applyVeil(stepIndex);
+        stepIndex = stepIndex + 1;
+        captureFrame("noise veil · " + noisePercent() + "% left");
+        restartTimer();
+      } else {
+        finished = true;
+        captureFrame("step " + totalSteps + " of " + totalSteps + " · finished");
+        stopTimer();
+      }
+      document.getElementById("brushSlider").value = 100;
+      brushPercent = 100;
+      updateUi();
+      render();
+    }
+
+    function reset() {
+      stepIndex = 1;
+      finished = false;
+      strokes = [];
+      activeStroke = null;
+      frames = [];
+      keyboardCursor = { x: SIZE / 2, y: SIZE / 2 };
+      strokeCtx.clearRect(0, 0, SIZE, SIZE);
+      bakedCtx.clearRect(0, 0, SIZE, SIZE);
+      bakedCtx.fillStyle = "rgb(255, 255, 255)";
+      bakedCtx.fillRect(0, 0, SIZE, SIZE);
+      if (noiseOn) {
+        paintNoise(bakedCtx);
+        captureFrame("step 0 · pure noise");
+      } else {
+        captureFrame("step 0 · blank paper");
+      }
+      document.getElementById("brushSlider").value = 100;
+      brushPercent = 100;
+      restartTimer();
+      updateUi();
+      render();
+    }
+
+    function workExists() {
+      return strokes.length > 0 || frames.length > 1;
+    }
+
+    document.getElementById("commitBtn").addEventListener("click", commitStep);
+
+    document.getElementById("undoBtn").addEventListener("click", function () {
+      if (strokes.length === 0) { return; }
+      strokes.pop();
+      redrawStrokeLayer();
+      updateUi();
+      render();
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", function () {
+      if (workExists()) {
+        let ok = window.confirm("Start over? The canvas and its trajectory are wiped — committed steps can't be recovered.");
+        if (!ok) { return; }
+      }
+      reset();
+    });
+
+    /* ================= SETUP CHIPS ================= */
+
+    function bindChipGroup(selector, onPick) {
+      let chips = document.querySelectorAll(selector);
+      chips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          if (chip.classList.contains("active")) { return; }
+          if (!onPick(chip)) { return; }
+          chips.forEach(function (c) {
+            c.classList.remove("active");
+            c.setAttribute("aria-pressed", "false");
+          });
+          chip.classList.add("active");
+          chip.setAttribute("aria-pressed", "true");
+        });
+      });
+    }
+
+    function confirmSetupChange() {
+      if (!workExists()) { return true; }
+      return window.confirm("Changing the setup restarts the canvas. Continue?");
+    }
+
+    bindChipGroup("[data-steps]", function (chip) {
+      if (!confirmSetupChange()) { return false; }
+      totalSteps = parseInt(chip.getAttribute("data-steps"), 10);
+      buildSchedule();
+      reset();
+      return true;
+    });
+
+    bindChipGroup("[data-noise]", function (chip) {
+      if (!confirmSetupChange()) { return false; }
+      noiseOn = chip.getAttribute("data-noise") === "1";
+      reset();
+      return true;
+    });
+
+    /* ================= TIMER ================= */
+
+    let timerSeconds = 0;
+    let timerLeft = 0;
+    let timerHandle = null;
+
+    function stopTimer() {
+      if (timerHandle !== null) {
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+      document.getElementById("timerFill").style.width = "0%";
+      document.getElementById("commitBtn").classList.remove("pulse");
+    }
+
+    function restartTimer() {
+      stopTimer();
+      if (timerSeconds === 0 || finished) {
+        document.getElementById("timerLabel").textContent = "No timer — the facilitator calls time.";
+        return;
+      }
+      timerLeft = timerSeconds;
+      tickTimer();
+      timerHandle = setInterval(function () {
+        timerLeft = timerLeft - 1;
+        tickTimer();
+      }, 1000);
+    }
+
+    function tickTimer() {
+      let label = document.getElementById("timerLabel");
+      let fill = document.getElementById("timerFill");
+      if (timerLeft <= 0) {
+        stopTimer();
+        fill.style.width = "100%";
+        label.textContent = "Time — commit the step.";
+        document.getElementById("commitBtn").classList.add("pulse");
+        return;
+      }
+      fill.style.width = (100 * (timerSeconds - timerLeft) / timerSeconds) + "%";
+      label.textContent = timerLeft + "s left in this step.";
+    }
+
+    bindChipGroup("[data-timer]", function (chip) {
+      timerSeconds = parseInt(chip.getAttribute("data-timer"), 10);
+      restartTimer();
+      return true;
+    });
+
+    /* ================= UI ================= */
+
+    function buildSchedule() {
+      let list = document.getElementById("schedList");
+      list.innerHTML = "";
+      for (let i = 1; i <= totalSteps; i++) {
+        let plan = stepPlan(i);
+        let li = document.createElement("li");
+        li.className = "sched-row";
+        li.id = "sched-" + i;
+        let sw = document.createElement("span");
+        sw.className = "sched-sw";
+        sw.style.background = stepColor(i);
+        let mid = document.createElement("span");
+        let name = document.createElement("span");
+        name.className = "sched-name";
+        name.textContent = i + " · " + plan.name;
+        let tip = document.createElement("span");
+        tip.className = "sched-tip";
+        tip.textContent = plan.tip;
+        mid.appendChild(name);
+        mid.appendChild(tip);
+        let brush = document.createElement("span");
+        brush.className = "sched-brush";
+        brush.textContent = plan.brush + "px";
+        li.appendChild(sw);
+        li.appendChild(mid);
+        li.appendChild(brush);
+        list.appendChild(li);
+      }
+    }
+
+    function updateUi() {
+      /* schedule highlight */
+      for (let i = 1; i <= totalSteps; i++) {
+        let row = document.getElementById("sched-" + i);
+        if (row === null) { continue; }
+        row.classList.remove("now", "done");
+        row.removeAttribute("aria-current");
+        if (finished || i < stepIndex) {
+          row.classList.add("done");
+        } else if (i === stepIndex) {
+          row.classList.add("now");
+          row.setAttribute("aria-current", "step");
+        }
+      }
+
+      /* noise meter */
+      let pct = noisePercent();
+      document.getElementById("noiseVal").textContent = pct + "%";
+      document.getElementById("noiseFill").style.width = pct + "%";
+      document.getElementById("noiseMeter").setAttribute("aria-label", "Noise remaining: " + pct + " percent");
+
+      /* brush preview */
+      let size = brushSize();
+      let dot = document.getElementById("brushDot");
+      let shown = Math.min(30, size);
+      dot.style.width = shown + "px";
+      dot.style.height = shown + "px";
+      dot.style.background = stepColor(Math.min(stepIndex, totalSteps));
+      document.getElementById("brushPx").textContent = size + "px";
+
+      /* buttons */
+      let commitBtn = document.getElementById("commitBtn");
+      commitBtn.classList.remove("pulse");
+      if (finished) {
+        commitBtn.textContent = "Image finished — export it below";
+        commitBtn.disabled = true;
+      } else if (stepIndex === totalSteps) {
+        commitBtn.textContent = "Finish image — last step, no veil";
+        commitBtn.disabled = false;
+      } else {
+        commitBtn.textContent = "Commit step " + stepIndex + " — drop the veil";
+        commitBtn.disabled = false;
+      }
+      document.getElementById("undoBtn").disabled = strokes.length === 0;
+
+      /* stage line + canvas state */
+      let stage = document.getElementById("stageLine");
+      if (finished) {
+        board.classList.add("locked");
+        stage.innerHTML = "";
+        let b = document.createElement("b");
+        b.textContent = "Finished after " + totalSteps + " steps.";
+        stage.appendChild(b);
+        stage.appendChild(document.createTextNode(" Export the image and the trajectory GIF."));
+        board.setAttribute("aria-label", "Drawing canvas, finished image");
+      } else {
+        board.classList.remove("locked");
+        let plan = stepPlan(stepIndex);
+        stage.innerHTML = "";
+        let b = document.createElement("b");
+        b.textContent = "Step " + stepIndex + " of " + totalSteps + " · " + plan.name;
+        stage.appendChild(b);
+        stage.appendChild(document.createTextNode(" — " + plan.tip.toLowerCase() + " · noise left " + pct + "%"));
+        board.setAttribute("aria-label", "Drawing canvas, step " + stepIndex + " of " + totalSteps);
+      }
+    }
+
+    document.getElementById("brushSlider").addEventListener("input", function (e) {
+      brushPercent = parseInt(e.target.value, 10);
+      updateUi();
+    });
+
+    /* ================= EXPORT · SHARED ================= */
+
+    function fileSlug() {
+      let p = document.getElementById("promptInput").value.trim().toLowerCase();
+      p = p.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40);
+      if (p === "") { p = "untitled"; }
+      return "human-diffusion-" + p;
+    }
+
+    function setExportStatus(msg) {
+      document.getElementById("exportStatus").textContent = msg;
+    }
+
+    function downloadUrl(url, name) {
+      let a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    /* current composite = committed work + whatever is drawn but uncommitted */
+    function compositeImage() {
+      let snap = document.createElement("canvas");
+      snap.width = SIZE; snap.height = SIZE;
+      let ctx = snap.getContext("2d");
+      ctx.drawImage(baked, 0, 0);
+      ctx.drawImage(strokeLayer, 0, 0);
+      return snap;
+    }
+
+    /* ================= EXPORT · PNG ================= */
+
+    document.getElementById("pngBtn").addEventListener("click", function () {
+      let FOOT = 72;
+      let out = document.createElement("canvas");
+      out.width = SIZE; out.height = SIZE + FOOT;
+      let ctx = out.getContext("2d");
+      ctx.fillStyle = "rgb(255, 255, 255)";
+      ctx.fillRect(0, 0, out.width, out.height);
+      ctx.drawImage(compositeImage(), 0, 0);
+      ctx.strokeStyle = "rgb(210, 210, 210)";
+      ctx.beginPath();
+      ctx.moveTo(0, SIZE + 0.5);
+      ctx.lineTo(SIZE, SIZE + 0.5);
+      ctx.stroke();
+      ctx.fillStyle = "rgb(20, 20, 20)";
+      ctx.font = "600 17px Archivo, 'Helvetica Neue', Arial, sans-serif";
+      ctx.fillText(clipText(ctx, "“" + promptText() + "”", SIZE - 24), 12, SIZE + 30);
+      ctx.fillStyle = "rgb(110, 110, 110)";
+      ctx.font = "11px 'IBM Plex Mono', monospace";
+      ctx.fillText("HUMAN DIFFUSION CANVAS · " + totalSteps + " STEPS · LEARNING MACHINES", 12, SIZE + 52);
+      downloadUrl(out.toDataURL("image/png"), fileSlug() + ".png");
+      setExportStatus("PNG saved.");
+    });
+
+    function clipText(ctx, text, maxWidth) {
+      if (ctx.measureText(text).width <= maxWidth) { return text; }
+      let t = text;
+      while (t.length > 1 && ctx.measureText(t + "…").width > maxWidth) {
+        t = t.slice(0, -1);
+      }
+      return t + "…";
+    }
+
+    /* ================= EXPORT · GIF =================
+       A dependency-free GIF89a writer so the trajectory export works offline.
+       Frames use one fixed 256-color global palette (white + the step inks +
+       30 grays for the noise + a 6x6x6 color cube) and standard LZW. */
+
+    let GIF_W = 320;
+    let GIF_FOOT = 44;
+    let GIF_H = 320 + GIF_FOOT;
+
+    function buildPalette() {
+      let pal = [];
+      pal.push([255, 255, 255]);                       /* 0 · paper */
+      for (let i = 0; i < MASTER_STEPS.length; i++) {  /* 1..5 · step inks */
+        pal.push(MASTER_STEPS[i].rgb.slice());
+      }
+      for (let i = 0; i < 30; i++) {                   /* 6..35 · grays */
+        let v = Math.round(255 * i / 29);
+        pal.push([v, v, v]);
+      }
+      for (let r = 0; r < 6; r++) {                    /* 36..251 · cube */
+        for (let g = 0; g < 6; g++) {
+          for (let b = 0; b < 6; b++) {
+            pal.push([r * 51, g * 51, b * 51]);
+          }
+        }
+      }
+      while (pal.length < 256) { pal.push([0, 0, 0]); }
+      return pal;
+    }
+    let PALETTE = buildPalette();
+
+    function dist2(p, r, g, b) {
+      let dr = p[0] - r;
+      let dg = p[1] - g;
+      let db = p[2] - b;
+      return dr * dr + dg * dg + db * db;
+    }
+
+    function nearestIndex(r, g, b) {
+      /* candidates: cube snap, gray snap, and the six fixed inks */
+      let cube = 36 + 36 * Math.round(r / 51) + 6 * Math.round(g / 51) + Math.round(b / 51);
+      let gray = 6 + Math.round(29 * (r + g + b) / (3 * 255));
+      let best = cube;
+      let bestD = dist2(PALETTE[cube], r, g, b);
+      let d = dist2(PALETTE[gray], r, g, b);
+      if (d < bestD) { best = gray; bestD = d; }
+      for (let i = 0; i <= 5; i++) {
+        d = dist2(PALETTE[i], r, g, b);
+        if (d < bestD) { best = i; bestD = d; }
+      }
+      return best;
+    }
+
+    function quantize(imageData) {
+      let d = imageData.data;
+      let n = imageData.width * imageData.height;
+      let out = new Uint8Array(n);
+      for (let i = 0; i < n; i++) {
+        out[i] = nearestIndex(d[i * 4], d[i * 4 + 1], d[i * 4 + 2]);
+      }
+      return out;
+    }
+
+    /* GIF-variant LZW (Poskanzer-style: width grows as the table fills). */
+    function lzwEncode(indices) {
+      let MIN = 8;
+      let CLEAR = 256;
+      let EOI = 257;
+      let nBits = MIN + 1;
+      let maxCode = (1 << nBits) - 1;
+      let freeEnt = EOI + 1;
+      let clearFlag = false;
+      let accum = 0;
+      let accumBits = 0;
+      let out = [];
+      let table = new Map();
+
+      function output(code) {
+        accum |= code << accumBits;
+        accumBits += nBits;
+        while (accumBits >= 8) {
+          out.push(accum & 255);
+          accum >>= 8;
+          accumBits -= 8;
+        }
+        if (freeEnt > maxCode || clearFlag) {
+          if (clearFlag) {
+            nBits = MIN + 1;
+            maxCode = (1 << nBits) - 1;
+            clearFlag = false;
+          } else {
+            nBits = nBits + 1;
+            if (nBits === 12) { maxCode = 4096; }
+            else { maxCode = (1 << nBits) - 1; }
+          }
+        }
+      }
+
+      output(CLEAR);
+      let prev = indices[0];
+      for (let i = 1; i < indices.length; i++) {
+        let k = indices[i];
+        let key = (prev << 8) | k;
+        if (table.has(key)) {
+          prev = table.get(key);
+          continue;
+        }
+        output(prev);
+        if (freeEnt < 4096) {
+          table.set(key, freeEnt);
+          freeEnt = freeEnt + 1;
+        } else {
+          /* table full: the clear code goes out at the current width, and the
+             width must reset for the very next code — flag first, then emit */
+          table.clear();
+          freeEnt = EOI + 1;
+          clearFlag = true;
+          output(CLEAR);
+        }
+        prev = k;
+      }
+      output(prev);
+      output(EOI);
+      if (accumBits > 0) { out.push(accum & 255); }
+      return out;
+    }
+
+    function encodeGif(frameList) {
+      let bytes = [];
+      function b(v) { bytes.push(v & 255); }
+      function w(v) { b(v); b(v >> 8); }
+      function str(s) { for (let i = 0; i < s.length; i++) { b(s.charCodeAt(i)); } }
+
+      str("GIF89a");
+      w(GIF_W); w(GIF_H);
+      b(0xF7);                       /* global table, 256 entries */
+      b(0); b(0);
+      for (let i = 0; i < 256; i++) {
+        b(PALETTE[i][0]); b(PALETTE[i][1]); b(PALETTE[i][2]);
+      }
+      /* NETSCAPE loop-forever */
+      b(0x21); b(0xFF); b(11); str("NETSCAPE2.0"); b(3); b(1); w(0); b(0);
+
+      for (let f = 0; f < frameList.length; f++) {
+        b(0x21); b(0xF9); b(4);
+        b(0x04);                     /* disposal: keep frame */
+        w(frameList[f].delay);
+        b(0); b(0);
+        b(0x2C);                     /* image descriptor */
+        w(0); w(0); w(GIF_W); w(GIF_H);
+        b(0);
+        b(8);                        /* LZW min code size */
+        let data = lzwEncode(frameList[f].indices);
+        for (let i = 0; i < data.length; i += 255) {
+          let chunk = Math.min(255, data.length - i);
+          b(chunk);
+          for (let j = 0; j < chunk; j++) { b(data[i + j]); }
+        }
+        b(0);
+      }
+      b(0x3B);
+      return new Uint8Array(bytes);
+    }
+
+    function renderGifFrame(frame) {
+      let cnv = document.createElement("canvas");
+      cnv.width = GIF_W; cnv.height = GIF_H;
+      let ctx = cnv.getContext("2d");
+      ctx.fillStyle = "rgb(255, 255, 255)";
+      ctx.fillRect(0, 0, GIF_W, GIF_H);
+      let full = document.createElement("canvas");
+      full.width = SIZE; full.height = SIZE;
+      full.getContext("2d").putImageData(frame.image, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+      ctx.drawImage(full, 0, 0, SIZE, SIZE, 0, 0, GIF_W, GIF_W);
+      ctx.strokeStyle = "rgb(210, 210, 210)";
+      ctx.beginPath();
+      ctx.moveTo(0, GIF_W + 0.5);
+      ctx.lineTo(GIF_W, GIF_W + 0.5);
+      ctx.stroke();
+      ctx.fillStyle = "rgb(110, 110, 110)";
+      ctx.font = "10px 'IBM Plex Mono', monospace";
+      ctx.fillText(clipText(ctx, frame.label.toUpperCase(), GIF_W - 16), 8, GIF_W + 16);
+      ctx.fillStyle = "rgb(20, 20, 20)";
+      ctx.font = "600 13px Archivo, 'Helvetica Neue', Arial, sans-serif";
+      ctx.fillText(clipText(ctx, "“" + frame.prompt + "”", GIF_W - 16), 8, GIF_W + 33);
+      return ctx.getImageData(0, 0, GIF_W, GIF_H);
+    }
+
+    document.getElementById("gifBtn").addEventListener("click", function () {
+      if (frames.length < 2) {
+        setExportStatus("Draw and commit at least one step first.");
+        return;
+      }
+      setExportStatus("Building GIF…");
+      /* let the status paint before the encoder blocks the thread */
+      setTimeout(function () {
+        let frameList = [];
+        for (let i = 0; i < frames.length; i++) {
+          let delay = 100;                       /* hundredths of a second */
+          if (frames[i].label.indexOf("veil") !== -1) { delay = 55; }
+          if (i === frames.length - 1) { delay = 300; }
+          frameList.push({ delay: delay, indices: quantize(renderGifFrame(frames[i])) });
+        }
+        let blob = new Blob([encodeGif(frameList)], { type: "image/gif" });
+        let url = URL.createObjectURL(blob);
+        downloadUrl(url, fileSlug() + ".gif");
+        setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+        setExportStatus("GIF saved — " + frameList.length + " frames.");
+      }, 30);
+    });
+
+    /* ================= SHARE LINK ================= */
+
+    function getState() {
+      let noiseFlag = 0;
+      if (noiseOn) { noiseFlag = 1; }
+      return { p: document.getElementById("promptInput").value, t: totalSteps, n: noiseFlag };
+    }
+
+    function applyState(s) {
+      if (typeof s.p === "string") {
+        document.getElementById("promptInput").value = s.p.slice(0, 120);
+      }
+      if (s.t === 3 || s.t === 4 || s.t === 5) {
+        totalSteps = s.t;
+        document.querySelectorAll("[data-steps]").forEach(function (c) {
+          let selected = parseInt(c.getAttribute("data-steps"), 10) === s.t;
+          c.classList.toggle("active", selected);
+          c.setAttribute("aria-pressed", selected ? "true" : "false");
+        });
+      }
+      if (s.n === 0 || s.n === 1) {
+        noiseOn = s.n === 1;
+        document.querySelectorAll("[data-noise]").forEach(function (c) {
+          let selected = c.getAttribute("data-noise") === String(s.n);
+          c.classList.toggle("active", selected);
+          c.setAttribute("aria-pressed", selected ? "true" : "false");
+        });
+      }
+    }
+
+    window.LMUrl.wire({
+      button: document.getElementById("shareBtn"),
+      getState: getState,
+      applyState: applyState,
+      onShare: function (ok) {
+        if (ok) { setExportStatus("Setup link copied — paste it in chat."); }
+        else { setExportStatus("Couldn't copy — share the address bar URL."); }
+      }
+    });
+
+    /* ================= INIT ================= */
+
+    buildSchedule();
+    reset();
+  })();
+  </script>
+</body>
+</html>

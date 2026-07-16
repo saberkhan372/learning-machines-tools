@@ -33,13 +33,13 @@
         <a href="../index.html#materials">Materials</a><span class="sep">/</span>
         <span>Session 2 Facilitation</span>
       </div>
-      <p class="sess-kicker"><i class="modsq"></i>Pilot script</p>
+      <p class="sess-kicker"><i class="modsq"></i>Live facilitation guide</p>
       <h1 class="sess-title" style="font-size:clamp(2.2rem,5vw,3.6rem);">Session 2: Images</h1>
       <div class="doc-meta">
-        <span class="mono">&#9711; 60&#8211;90 min</span>
+        <span class="mono">&#9711; 120 min</span>
         <span class="mono">&#9636; Facilitation guide</span>
-        <span class="mono">&#10022; Pilot ready</span>
-        <a class="mono" href="session-2-deck.html" style="text-decoration:none">&#9654; Run the live deck (draft)</a>
+        <span class="mono">&#10022; Live ready</span>
+        <a class="mono" href="session-2-deck.html" style="text-decoration:none">&#9654; Run the live deck</a>
       </div>
     </div>
   </header>
@@ -57,13 +57,17 @@
           <a href="#investigation">Investigation prompt</a>
           <a href="#lowai">Low-AI pathway</a>
           <a href="#fallback">Fallback plan</a>
-          <a href="#qa">Pilot QA notes</a>
+          <a href="#qa">Live QA notes</a>
         </nav>
       </aside>
 
       <!-- BODY -->
       <article class="prose">
-        <p style="font-size:1.15rem;color:var(--ink-dim);">Use this script for a 60&#8211;90 minute pilot focused on pixels, features, diffusion, image defaults, and the question of what a machine &#8220;sees.&#8221;</p>
+        <p style="font-size:1.15rem;color:var(--ink-dim);">Use this live run sheet for the fixed two-hour session: 60 minutes of facilitated lesson, 30 minutes of student work, and 30 minutes for the guest.</p>
+
+        <div class="callout">
+          <p><b>Need the words to say and detailed contingencies?</b> Open the evidence-informed <a href="../docs/session-2-live-presenter-script.html">Session 2 Live Presenter Script</a>. It adds speakable transitions, safety notes, studio pathways, pacing flexes, and the guest handoff behind this run sheet.</p>
+        </div>
 
         <div class="callout" id="core">
           <p><b>Core question.</b> When a model sees or generates an image, what is it actually working with?</p>
@@ -71,61 +75,70 @@
 
         <h2 id="materials">Materials</h2>
         <ul>
+          <li><a href="session-2-deck.html">Session 2 live deck</a></li>
+          <li><a href="session-1-recap.html">Session 1 recap</a></li>
           <li><a href="tool-feature-extraction.html">The Squint Test (feature extraction)</a></li>
+          <li><a href="../tools/human-diffusion-canvas/">Human Diffusion Canvas</a></li>
           <li><a href="tool-diffusion.html">Diffusion Step-Through Viewer</a></li>
+          <li><a href="../tools/default-test-comparison-viewer/">Default Test Comparison Viewer</a></li>
+          <li><a href="../tools/cfg-scale-visualizer/">Prompt Pressure / CFG Scale</a></li>
+          <li><a href="../tools/latent-space-compressor/">Latent Space Compressor</a></li>
+          <li><a href="../packs/images/">Image Prompt Pack</a></li>
           <li><a href="../worksheets/image-default-test-board/">Image Default Test Board</a></li>
-          <li>Optional: A/B/C Comparison Board for prompt comparisons</li>
           <li><a href="../worksheets/ai-use-consent-checklist/">AI Use + Consent Checklist</a></li>
-          <li>Optional: curated image outputs from vague prompts</li>
         </ul>
 
         <h2 id="ros">Run of show</h2>
         <table class="doc-table">
           <thead><tr><th>Time</th><th>Segment</th><th>Facilitator move</th><th>Participant action</th></tr></thead>
           <tbody>
-            <tr><td>0&#8211;5</td><td>Welcome &amp; bridge</td><td>Connect Session 1 to Session 2: text becomes tokens; images become pixels, features, and learned patterns.</td><td>Choose a participation pathway.</td></tr>
-            <tr><td>5&#8211;25</td><td>Feature / pixel activity</td><td>Open Feature Extraction. Switch image types and reduce detail until recognition becomes difficult.</td><td>Identify which cues return first: color, outline, texture, context, or location.</td></tr>
-            <tr><td>25&#8211;45</td><td>Diffusion step-through</td><td>Open Diffusion Viewer. Move slowly from pure noise to final image and read the prompt guidance.</td><td>Describe what appears at each stage: composition, subject, edges, texture, details.</td></tr>
-            <tr><td>45&#8211;70</td><td>Default Test</td><td>Introduce a vague prompt such as &#8220;a doctor,&#8221; &#8220;a classroom,&#8221; or &#8220;a beautiful home.&#8221;</td><td>Generate, observe, or critique outputs and fill the Image Default Test Board.</td></tr>
-            <tr><td>70&#8211;90</td><td>Debrief</td><td>Ask what the system filled in without being asked and where those defaults may come from.</td><td>Share one observed default and one responsible revision.</td></tr>
+            <tr><td>0&#8211;5</td><td>Welcome &amp; bridge</td><td>Repeat consent and connect text choices to image choices.</td><td>Choose a participation pathway.</td></tr>
+            <tr><td>5&#8211;10</td><td>Session 1 retrieval</td><td>Share two artifacts or revisit the recap.</td><td>Name the investigation loop.</td></tr>
+            <tr><td>10&#8211;17</td><td>Pixels &amp; features</td><td>Raise detail slowly in the Squint Test.</td><td>Identify which visual cues return first.</td></tr>
+            <tr><td>17&#8211;25</td><td>The room&#8217;s default</td><td>Tally first pictures for &#8220;a doctor,&#8221; then compare frozen outputs.</td><td>Separate a room hypothesis from model evidence.</td></tr>
+            <tr><td>25&#8211;36</td><td>Diffusion &#8212; performed, then watched</td><td>Run the Human Diffusion Canvas, then the step-through viewer.</td><td>Draw an analogy by hand and predict what stabilizes next.</td></tr>
+            <tr><td>36&#8211;44</td><td>Guidance &amp; revision</td><td>Compare vague, specific, and responsible revisions.</td><td>Distinguish prompt wording from CFG strength.</td></tr>
+            <tr><td>44&#8211;52</td><td>Whose picture?</td><td>Map user, system, and hidden human contributions.</td><td>Name one credit, consent, or disclosure decision.</td></tr>
+            <tr><td>52&#8211;60</td><td>Mechanism debrief &amp; studio launch</td><td>Synthesize the loop and launch pathways.</td><td>Share one evidence-based claim.</td></tr>
+            <tr><td>60&#8211;90</td><td>Student work studio</td><td>Protect 25 minutes for investigation and five for posting.</td><td>Complete one observation and next test.</td></tr>
+            <tr><td>90&#8211;120</td><td>Guest spotlight, Q&amp;A &amp; close</td><td>Give the guest the full final block.</td><td>Track one visible and one hidden decision.</td></tr>
           </tbody>
         </table>
-        <p>Optional pilot evidence move: use the A/B/C Comparison Board to compare a vague prompt, one added detail, and a responsible revision. Export only examples that have been reviewed for consent and attribution.</p>
+        <p>Use the A/B/C comparison to compare a vague prompt, one added detail, and a responsible revision. Export only examples reviewed for consent and attribution. Canvas trajectories and debrief shares may be posted to the Evidence Wall only after affirmative sharing consent.</p>
         <p>For credit, attribution, and recap decisions, use the existing <a href="../worksheets/ai-use-consent-checklist/">AI Use + Consent Checklist</a> rather than creating a new worksheet.</p>
 
         <h2 id="prompts">Facilitator prompts</h2>
         <ul>
-          <li>&#8220;When did the image become recognizable?&#8221;</li>
-          <li>&#8220;Which visual cue did the most work?&#8221;</li>
-          <li>&#8220;What does the feature view preserve, and what does it erase?&#8221;</li>
-          <li>&#8220;At what diffusion step does the subject become guessable?&#8221;</li>
-          <li>&#8220;What did the prompt leave unspecified?&#8221;</li>
-          <li>&#8220;Which defaults are technical, and which are social?&#8221;</li>
-          <li>&#8220;What did the human do? What did the model do?&#8221;</li>
-          <li>&#8220;What should be credited, and to whom?&#8221;</li>
-          <li>&#8220;Whose work, data, or labor is hidden in this output?&#8221;</li>
+          <li>&#8220;What is one thing the Squint Test showed&#8212;and one thing it did not show?&#8221;</li>
+          <li>&#8220;When did composition commit on your canvas, and when did it stabilize in the viewer?&#8221;</li>
+          <li>&#8220;What did the prompt leave unspecified, and what repeatedly filled the gap?&#8221;</li>
+          <li>&#8220;What did guidance improve, and what did it break?&#8221;</li>
+          <li>&#8220;Which human decision had the most power over the final image?&#8221;</li>
+          <li>&#8220;What evidence would you need before making a claim about the model rather than one output?&#8221;</li>
         </ul>
 
         <h2 id="investigation">Investigation prompt</h2>
         <blockquote><p>Choose a vague visual prompt such as &#8220;a doctor,&#8221; &#8220;a classroom,&#8221; or &#8220;a beautiful home.&#8221; What does the system fill in without being asked? Which details are technical defaults, and which are social defaults?</p></blockquote>
 
         <h2 id="lowai">Low-AI / No-AI pathway</h2>
-        <p>Participants can analyze curated screenshots or facilitator-provided image sets instead of generating images. They can also design an age-appropriate Default Test without using AI tools.</p>
+        <p>Participants can analyze curated screenshots or facilitator-provided image sets instead of generating images. The canvas analogy can also run with paper, thick-to-thin pens, and tracing-paper veils. Participants may design an age-appropriate Default Test without using AI tools.</p>
 
         <h2 id="fallback">Fallback plan</h2>
         <ul>
           <li>If no image generator is available, use pre-generated examples or ask participants to predict likely defaults before revealing examples.</li>
+          <li>If the Human Diffusion Canvas stalls, use paper and tracing-paper veils or collect each step&#8217;s proposed commitment in chat.</li>
           <li>If the Diffusion Viewer feels abstract, pause at seven named stages and ask participants to describe only what they can see.</li>
           <li>If Default Test prompts feel socially loaded, use safer prompts first, then explicitly frame more sensitive prompts as optional critique.</li>
           <li>If participants object to image generation, shift to consent, attribution, and visual-default analysis.</li>
         </ul>
 
-        <h2 id="qa">Pilot QA notes</h2>
-        <p>During the pilot, note:</p>
+        <h2 id="qa">Live QA notes</h2>
+        <p>During the session, note:</p>
         <ul>
           <li>Which image types in Feature Extraction were most useful.</li>
           <li>Whether the detail slider made recognition thresholds visible.</li>
           <li>Whether the Diffusion Viewer explained denoising without live AI.</li>
+          <li>Whether participants understood where the Human Diffusion Canvas analogy breaks.</li>
           <li>Which Default Test prompts produced the richest discussion.</li>
           <li>Any discomfort around bias, labor, consent, or artist imitation.</li>
         </ul>

@@ -35,7 +35,7 @@ The tool principle is:
 
 ## Launch Roadmap
 
-### Launch-Ready Tools (25)
+### Launch-Ready Tools (26)
 
 | Tool | Status | Session |
 | --- | --- | --- |
@@ -51,6 +51,7 @@ The tool principle is:
 | Latent Space Explorer | Launch ready | 2 · Image |
 | Latent Space Compressor | Launch ready | 2 · Image |
 | Dataset Balance Simulator | Launch ready | 2 · Image |
+| Human Diffusion Canvas | Launch ready | 2 · Image |
 | Temporal Telephone | Launch ready | 3 · Video |
 | Metronome Frame-Scrubber | Launch ready | 3 · Video |
 | Video Failure Gallery Viewer | Launch ready | 3 · Video |
@@ -89,6 +90,7 @@ homepage keeps only a short preview.
 - [`tools/latent-space-explorer/`](tools/latent-space-explorer/) — Launch ready
 - [`tools/latent-space-compressor/`](tools/latent-space-compressor/) — Launch ready
 - [`tools/dataset-balance-simulator/`](tools/dataset-balance-simulator/) — Launch ready
+- [`tools/human-diffusion-canvas/`](tools/human-diffusion-canvas/) — Launch ready
 
 ### Session 3: Video
 

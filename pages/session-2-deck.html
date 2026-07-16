@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex" />
-<title>Session 2 · Images — Human Image Model (live deck · DRAFT)</title>
+<title>Session 2 · Images — Human Image Model (live deck)</title>
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -106,7 +106,6 @@
   .cockpit{display:grid;grid-template-rows:auto 1fr;height:100vh}
   .topbar{display:flex;align-items:center;gap:13px;padding:11px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--paper),var(--paper-2))}
   .tb-badge{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--violet);padding:5px 10px;border-radius:7px}
-  .tb-badge.draft{background:var(--amber)}
   .tb-title{font-family:var(--mono);font-size:13px;color:var(--muted)}
   .tb-sp{flex:1}
   .tb-timer{font-family:var(--mono);font-size:28px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
@@ -209,7 +208,7 @@
 <div class="scrim" id="onboard" style="display:none">
   <div class="card">
     <h3>Two screens, one deck</h3>
-    <p class="small" style="color:var(--muted)">DRAFT — revise after the Session 1 run. A private cockpit for you, a clean slide for the room; the live tools sync between them and survive a refresh.</p>
+    <p class="small" style="color:var(--muted)">Revised after the Session 1 run. A private cockpit for you, a clean slide for the room; the live tools sync between them and survive a refresh.</p>
     <div class="two">
       <div class="vw y"><h4>You see — presenter</h4><p>The slide preview, your script, what the room does, the timer, and the controls for each live tool.</p></div>
       <div class="vw t"><h4>They see — audience</h4><p>Only the slide: the big idea, the room's task, and the live tool's visual. No notes, no controls.</p></div>
@@ -238,9 +237,10 @@
   var VAGUE = 'a doctor';
   var DEMO_ATTRS = 'man man older white coat stethoscope hospital man serious glasses coat man male';
 
-  /* studio slide: mirrors the Session 2 run-of-show in assets/session-runs.js */
+  /* studio slide: the featured pathway tools; the full run-of-show lives in assets/session-runs.js */
   var TOOLS = [
     {n:'The Squint Test', u:SITE+'tools/feature-extraction-pixel-resolution/', w:'pixels → edges → features, for real'},
+    {n:'Human Diffusion Canvas', u:SITE+'tools/human-diffusion-canvas/', w:'you are the denoiser — export your trajectory GIF'},
     {n:'Diffusion Step-Through', u:SITE+'tools/diffusion-step-through-viewer/', w:'noise → image, guidance shown'},
     {n:'Default Test Comparison', u:SITE+'tools/default-test-comparison-viewer/', w:'vague vs. specific vs. revised'},
     {n:'CFG Scale Visualizer', u:SITE+'tools/cfg-scale-visualizer/', w:'guidance — match vs. artifacts'},
@@ -253,52 +253,52 @@
   ];
 
   var SLIDES = [
-    { id:'title', kind:'title', time:4, nav:'Start + bridge',
+    { id:'title', kind:'title', time:10, nav:'Welcome + retrieval',
       head:'Human Image Model',
       idea:'Last week the room became a text machine. Today it becomes an image machine — noise into a picture — then asks whose pictures it learned from.',
       notes:{
         look:'Presenter cockpit: slide preview + notes on the left, live-tool controls on the right, timer and slide list up top. The audience window shows only the slide.',
-        you:['Screen-share the audience window only.','Bridge from Session 1: "text became tokens; images become pixels, then features."','Assign loose roles: Describers (chat), Voters, and a Scribe. You can play Scribe.'],
-        room:['Say hello in chat.','No task yet — get oriented.','Expect to type short descriptions and votes in chat.'],
+        you:['Screen-share the audience window only.','Use five minutes for welcome and consent, then five minutes for two Session 1 artifacts or recap moments.','Recover the method: predict, change one thing, compare, make a claim, name the human decision.'],
+        room:['Say hello in chat.','Share one Session 1 artifact or remembered mechanism.','Expect to type short descriptions and votes in chat.'],
         say:['"Same investigation as last week, new modality. We predict, change one thing, and name the human decision behind the output."','"You do not need an image account today. The room and this console are the machine."'],
         watch:'Keep the Session 1 thread visible: prediction and training shaped that loop; the same is true here, just over pixels instead of words.'} },
 
-    { id:'s0', kind:'setup', aid:'pixel', time:8, shape:true, num:'00', nav:'What a model sees',
+    { id:'s0', kind:'setup', aid:'pixel', time:7, shape:true, num:'00', nav:'What a model sees',
       head:'A model does not see a cat',
-      idea:'It sees pixels, then learns to group them into features — edges, textures, parts — from millions of captioned images.',
+      idea:'It receives numbers, then learns useful visual patterns — edges, textures, parts, and arrangements — from training images and captions.',
       task:'As detail drops, call out in chat: what is the FIRST cue that tells you what this is?',
-      take:'An image model learned patterns from labelled pictures — including who made them.',
+      take:'Images become numerical representations; training makes some visual patterns more useful than others.',
       notes:{
         look:'You look at: the detail slider and the pixels/features toggle. Attendees see: the scene getting blockier, then labelled regions.',
-        you:['Start at low detail (blocky). Ask what they can tell.','Raise detail slowly; note when it "snaps" into recognition.','Flip to Features: the model does not store pixels, it stores learned parts.'],
+        you:['Start at low detail (blocky). Ask what they can tell.','Raise detail slowly; note when it "snaps" into recognition.','Flip to Features: discuss how a model can learn useful relationships among numerical patterns.'],
         room:['Watch the blocks resolve.','In chat: colour, outline, texture, or context — which cue returned first?','Notice you recognised it before every pixel was clear.'],
-        say:['"You did not need every pixel — a few features were enough. That is what the model learned to do: pull features out of pixels."','"This is a cartoon of the Squint Test tool you will open later."'],
-        watch:'Do not claim the model literally draws this scene. The point is pixels → features → recognition, and that those features came from human-made, human-labelled data.'} },
+        say:['"You did not need every pixel — a few visual patterns were enough for recognition."','"This is a simplified recognition demo, not a literal view inside a generator. Many generators work in a compressed learned representation."'],
+        watch:'Keep recognition and generation distinct. The point is numerical input → learned patterns → recognition, not that a generator stores neat labelled object parts.'} },
 
-    { id:'s1', kind:'defaults', aid:'tally', time:9, num:'01', nav:'Round 1 — Defaults',
+    { id:'s1', kind:'defaults', aid:'tally', time:8, num:'01', nav:'Round 1 — Defaults',
       head:'Say "a doctor." What appears?',
-      idea:'When you leave detail unspecified, the model fills it from the average of its training data. So does a room.',
+      idea:'When detail is unspecified, the system samples from learned patterns shaped by training data and product choices. A room has learned defaults, too.',
       prompt:'a doctor',
       task:'Type the FIRST image that comes to mind for "a doctor" — a few words in chat.',
-      take:'A default is a design decision. The model’s defaults come from whose images it saw most.',
+      take:'A default is a design outcome: data, captions, curation, tuning, safety systems, and sampling all shape it.',
       notes:{
         look:'You look at: Zoom chat and the tally box. Attendees see: the prompt and the room’s collective default after you tally.',
-        you:['Ask for the first image, not the "correct" one. Speed matters.','Paste 12–20 chat responses into the tally.','Name the room’s top default aloud, then ask: who is NOT in this picture?','Optionally run a second prompt ("a nurse", "a beautiful home") if time.'],
-        room:['Type fast — first instinct, a few words.','Notice the room has a default too, and where it came from.','Name one person the default leaves out.'],
-        say:['"Nobody chose to exclude anyone. The default just reflects what we have seen most — same mechanism as the model."','"Changing the default is not censorship. It is specifying what you actually want."'],
-        watch:'This is the bias/defaults core — 38 of 80 asked for it. Keep it about mechanism (data averages), not blame. The room’s own tally makes it land without pointing at the model alone.'} },
+        you:['Ask for the first image, not the "correct" one. Speed matters.','Paste 12–20 chat responses into the tally.','Group visible conventions: setting, clothing, props, pose, lighting, camera angle, and apparent representation.','Name the room’s repeated descriptors, then ask what or who is missing.'],
+        room:['Type fast — first instinct, a few words.','Treat the room’s tally as a hypothesis about a cultural default.','Compare that hypothesis with several frozen model outputs.'],
+        say:['"The room’s default is a hypothesis, not evidence of what a model will do. Repeated outputs give us evidence."','"Changing a default is not censorship. It is specifying what the task actually requires."'],
+        watch:'This is the bias/defaults core — 38 of 80 asked for it. Keep the focus on repeated evidence and multiple system layers, not blame, identity inference, or a single output.'} },
 
-    { id:'s2', kind:'aid', aid:'diffuse', time:8, num:'02', nav:'Round 2 — Diffusion',
-      head:'From noise to picture',
-      idea:'A diffusion model starts from pure static and removes noise step by step, pulled toward the prompt.',
-      task:'At each step, call out in chat: what is it becoming?',
-      take:'Generation is guided denoising — structure pulled out of noise toward a prompt.',
+    { id:'s2', kind:'aid', aid:'diffuse', time:11, num:'02', nav:'Round 2 — Diffusion',
+      head:'From noise to picture — you first',
+      idea:'A diffusion model starts from pure static and removes noise step by step, pulled toward the prompt. First the room performs that loop by hand.',
+      task:'Open the canvas link from chat. Draw the words in three timed steps — commit between steps, no going back. Then watch an analogous machine-denoising sequence.',
+      take:'Generation is iterative, prompt-guided denoising. Different initial noise — the seed — can produce different outputs from the same words; different human hands add another kind of variation.',
       notes:{
-        look:'You look at: the step slider. Attendees see: static resolving toward the prompt image.',
-        you:['Start at step 0 — pure noise. Ask what they see (nothing / everything).','Advance slowly. Ask for guesses before the shape is obvious.','Name the prompt only after the room has guessed.'],
-        room:['Watch the static.','Guess early — what is emerging?','Notice the picture was never "drawn" — it was uncovered.'],
-        say:['"It is not painting left to right. It is removing noise everywhere at once, guided toward the prompt."','"Your early guesses are the same bet the model is making — commit to structure before the details exist."'],
-        watch:'This is a cartoon of the Diffusion Step-Through tool. Do not over-explain the math; the felt idea is noise → structure → detail, guided.'} },
+        look:'You look at: the round timer and the step slider. Attendees see: their own canvas first, then static resolving toward the prompt image.',
+        you:['Paste the prepared Human Diffusion Canvas setup link (three steps, noise on, words set). Run three ~60-second steps; commit together; point at the noise-remaining meter as the veil falls.','Then start the step slider at 0 — pure noise. Advance slowly; ask for guesses before the shape is obvious; name the prompt only after the room has guessed.','Name the analogy carefully: their veil represents residual noise; their shrinking brush makes a coarse-to-fine trajectory visible. Neither is a literal model operation.'],
+        room:['Draw the words — biggest shapes first; the brush shrinks each step; commit means commit.','Then watch the static and guess early — what is emerging?','Notice that the machine stabilises the whole field at once rather than stroke by stroke.'],
+        say:['"You added marks. It removes noise everywhere at once — and it has statistics about images-with-these-words, not intentions."','"It is not painting left to right, and a finished picture is not hidden underneath. It repeatedly refines the whole field under prompt guidance."'],
+        watch:'Time-box the drawing at ~6 minutes so the machine comparison keeps ~5. Chat fallback: type what you would commit this step. Exports wait for the studio block. Do not imply the model draws strokes or that the activity’s locked rounds mean later model updates cannot revise structure.'} },
 
     { id:'s3', kind:'aid', aid:'guide', time:8, num:'03', nav:'Round 3 — Guidance',
       head:'How hard should it obey?',
@@ -312,19 +312,19 @@
         say:['"Cranking guidance to the max does not give you obedience — it gives you fried, samey images."','"This is a dial a human sets. The model does not know what you meant."'],
         watch:'A cartoon of the CFG Scale Visualizer. Frame guidance as a human-set trade-off, not intelligence.'} },
 
-    { id:'s4', kind:'contrib', aid:'contrib', time:10, shape:true, num:'04', nav:'Round 4 — Whose picture?',
+    { id:'s4', kind:'contrib', aid:'contrib', time:8, shape:true, num:'04', nav:'Round 4 — Whose picture?',
       head:'Whose picture is this, really?',
       idea:'Every output carries hidden human labour: the data, the captions, and the artists behind the styles.',
-      task:'In chat: name one thing the human contributed, and one thing the model took from someone else.',
+      task:'In chat: name one human decision, one system contribution, and one hidden human contribution.',
       take:'Fluent output is not authorless. Naming the hidden labour is part of using it responsibly.',
       notes:{
         look:'You look at: three boxes you fill from the room. Attendees see: a live contributions map — human / machine / hidden.',
         you:['Fill "the human did" and "the machine did" from chat.','Then the hard one: "hidden in the output" — whose work, style, or labour?','Do not resolve it. Hold the question open; let the room disagree.'],
         room:['Separate the human’s choices from the model’s fill-ins.','Name whose labour or style might be hidden.','Say one thing you think should be credited.'],
-        say:['"The prompt-writer made choices. But the look came from real artists whose work trained it — usually uncredited."','"You can hold two things at once: this is useful, and it carries labour that was not consented or paid."'],
+        say:['"The prompt-writer made choices. The look may also reflect photographers, illustrators, subjects, annotators, and dataset builders behind the training process."','"Licensing, credit, consent, and payment vary by dataset and platform. Responsible use begins by asking rather than treating the output as authorless."'],
         watch:'This round matters most for this cohort — nearly half are artists. Do not moralise or resolve; map the contributions honestly and let the tension stand. Wire it to the AI Use + Consent Checklist.'} },
 
-    { id:'s5', kind:'questions', time:7, num:'05', nav:'Debrief',
+    { id:'s5', kind:'questions', time:8, num:'05', nav:'Debrief + studio launch',
       head:'What did the room become?',
       idea:'Pixels become features; prompts become defaults; noise becomes a picture — all shaped by data.',
       task:'Answer in chat or aloud — we will pick a few.',
@@ -340,9 +340,9 @@
         you:['Pick 3–5. Start with the defaults and the hidden-labour questions.','Take chat first, then call on one or two people.','Tie back to Session 1: same investigation, new modality.'],
         room:['Answer in chat or aloud.','Connect one moment to something you have noticed making or seeing AI images.'],
         say:['"Defaults and hidden labour are not side issues — they are how the system works."','"You can now investigate an image model the way you investigated a text model."'],
-        watch:'End on defaults + labour, not on the diffusion math.'} },
+        watch:'End the facilitated lesson at 60:00. Use the final minute to launch the student-work pathways; do not borrow from their 30 minutes.'} },
 
-    { id:'s6', kind:'studio', time:23, num:'06', nav:'Tool studio',
+    { id:'s6', kind:'studio', time:30, num:'06', nav:'Student work · 30 min',
       head:'Your turn — the real tools',
       idea:'The slides were cartoons. These are the instruments — real defaults, real dials.',
       task:'Pick ONE tool. Log one default + one responsible revision on the Image Default Test Board.',
@@ -351,18 +351,18 @@
         you:['Click Copy links for chat and paste the block into Zoom chat.','Name the deal: one tool, one default, one worksheet row.','Circulate — ask "what did the model fill in that you did not ask for?"','Five-minute warning: one claim in chat.'],
         room:['Open one tool — no accounts, no installs.','Find one default the model fills in unasked.','Write one responsible revision on the Image Default Test Board.','Drop one claim in chat before we regroup.'],
         say:['"The point is not a pretty picture — it is a claim about what the model assumes."','"Also worth a look: the Dataset Balance Simulator, for where those defaults come from."'],
-        watch:'Steer people to finish one worksheet row before touring tools. The claim is the deliverable.'} },
+        watch:'Protect the full 30-minute block. Investigate for 25 minutes, then use the final five for claims; stop at 1:30 for the guest.'} },
 
-    { id:'s7', kind:'close', time:5, shape:true, num:'07', nav:'Close + next week',
-      head:'What you leave with',
-      idea:'You can now narrate an image model: pixels → features → noise → guided denoising → defaults, all shaped by human data.',
-      take:'Next Saturday: video — images plus time, and where staying consistent gets expensive.',
+    { id:'s7', kind:'close', time:30, shape:true, num:'07', nav:'Guest · 30 min',
+      head:'Guest spotlight',
+      idea:'Listen for one place where an artist or educator makes a human decision visible — and one place where the system hides a decision.',
+      take:'At 1:58, ask for one practice to carry forward; then close with next Saturday’s question about coherence across frames.',
       notes:{
-        look:'You look at: the closing pointers and the clock. Attendees see: three links and the takeaway.',
-        you:['Read the recap consent line: recordings are for registered participants; people choose how they are named.','Point at the three links — session page is the map, worksheet is the invitation.','Name next Saturday: video, same time, same room.','After the call: click copy log and paste it into your recap notes.'],
-        room:['Bookmark the session page.','Finish your Image Default Test Board row before Saturday if you can.','Bring one question about video next week.'],
-        say:['"Same loop, new modality: predict, change one thing, compare, name the human decision."','"Next week: what has to stay the same from frame to frame for motion to feel real?"'],
-        watch:'End warm and on time. The worksheet is an invitation, not homework pressure.'} }
+        look:'You look at: the 30-minute guest timer and closing pointers. Attendees see the listening prompt and take-home links.',
+        you:['1:30–1:32: introduce the guest and listening prompt.','1:32–1:50: example-led guest talk.','1:50–1:58: Q&A.','1:58–2:00: ask for one carry-forward practice, paste the links, thank the guest, name next Saturday, and repeat recap consent.'],
+        room:['Track one visible human decision and one hidden system decision.','Ask questions during the final eight minutes.','Leave with one practice to carry forward and one question about video.'],
+        say:['"As you listen, track one place where a human decision becomes more visible and one place where the system hides a decision."','"At the close: what is one practice you want artists or educators to carry forward?"'],
+        watch:'Protect the full guest block from 1:30 to 2:00. The final takeaway and session close happen inside these 30 minutes.'} }
   ];
 
   /* ============ STATE ============ */
@@ -376,8 +376,8 @@
       guide:{g:0.42},
       contrib:{
         human:'chose the prompt, picked and cropped one result, decided it was good enough',
-        model:'filled every unspecified detail from training-data averages',
-        hidden:'the photographers, illustrators, and stock libraries whose captioned images taught it — usually uncredited' }
+        model:'filled unspecified details from learned patterns, product settings, and sampling',
+        hidden:'image makers, subjects, annotators, dataset builders, and platform teams whose work may have shaped the system' }
     };
   }
   var state = freshState(0);
@@ -654,7 +654,7 @@
     var i=state.slide, s=SLIDES[i];
     root.innerHTML=
       '<div class="cockpit">'+
-        '<div class="topbar"><span class="tb-badge draft">draft</span>'+
+        '<div class="topbar"><span class="tb-badge">live</span>'+
           '<span class="tb-title">Session 2 · Human Image Model · only you see this</span><span class="tb-sp"></span>'+
           '<span class="tb-timer" id="timer">00:00</span>'+
           '<button class="mini go" id="tStart">start</button><button class="mini" id="tReset">reset</button>'+
