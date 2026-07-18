@@ -482,6 +482,9 @@
   function buildAffordance() {
     if (!document.body || document.getElementById("lm-notebook-widget")) return;
     if (document.documentElement.hasAttribute("data-no-notebook")) return;
+    /* Embedded frames (e.g. tool previews) suppress the affordance forever,
+       so skip building the widget and its observer there entirely. */
+    if (window.self !== window.top) return;
     injectStyles();
     var id = pageId(window.location.href);
     var note = getNote(window.location.href);
@@ -542,9 +545,13 @@
       toggle.textContent = "Notebook";
     });
     document.addEventListener("fullscreenchange", syncHidden);
-    var observer = new MutationObserver(syncHidden);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-projection"] });
     syncHidden();
+    /* Guarded: one review environment saw observe() reject the target on a
+       cold load. Degrade to no auto-hide on projection toggle, not a break. */
+    try {
+      var observer = new MutationObserver(syncHidden);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-projection"] });
+    } catch (err) {}
   }
 
   function markVisited() {
