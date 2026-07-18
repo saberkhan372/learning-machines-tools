@@ -133,7 +133,7 @@ Do not click **new session** after the live activity begins. Refreshing is safe;
 
 “Last week the room became a language model. We built text one choice at a time and separated prediction, temperature, attention, and human feedback. Today the room becomes an image model.”
 
-“Our image sequence is pixels → human-created labels → shared text/image representations → diffusion. Those are conceptual layers, not a claim that every generator contains the same named projects.”
+“Today we follow the machine’s route: training images with human labels and captions → learned representations → prompt conditioning → iterative denoising → decoded pixels. Those are conceptual layers, not a claim that every generator contains the same named projects — the label layer is training history, not a stage inside every generator.”
 
 “We are not here to get the prettiest picture or to become expert prompt writers. We are here to make a mechanism visible, change one thing, and support a claim with evidence.”
 
@@ -264,7 +264,9 @@ Avoid using “a criminal,” “a safe neighborhood,” or similarly loaded pro
 
 ### Vocabulary
 
-- **Diffusion:** a family of generation methods that learns to reverse a noise-adding process through many small prediction steps.
+- **Diffusion:** a family of generation methods that learns to reverse a noise-adding process through many small prediction steps. It is one major family, not all of image generation — current systems vary: latent diffusion, diffusion transformers, flow matching, and autoregressive approaches.
+
+Training ran in the other direction, and it is worth thirty seconds aloud: clean images were corrupted with noise on a schedule, and the model learned to predict the correction at each noise level. Generation starts from pure noise and applies those learned corrections.
 
 This round has two parts: the room performs an analogy by hand (about six minutes), then watches a simplified machine-denoising sequence (about five minutes).
 
@@ -299,7 +301,7 @@ This round has two parts: the room performs an analogy by hand (about six minute
 
 “A simplified generation loop is: start with noise, use the current image state and the prompt to predict an update, apply a small correction, and repeat. You just did a slow-motion version by hand.”
 
-“Two honest differences. You added marks; the model removes noise everywhere at once, updating the whole field each step. And you know what a cat is; the model has statistics about images that co-occur with these words — not intentions.”
+“Two honest differences. You added marks; the model iteratively updates the whole noisy image or latent representation — every value, a little, each step. And you know what a cat is; the model has statistics about images that co-occur with these words — not intentions.”
 
 “Many modern systems do this denoising in a compressed latent representation and decode it into pixels near the end. Our viewer makes the sequence visible; it does not reproduce every detail of a commercial system.”
 
@@ -563,7 +565,7 @@ Use only four terms: pixel, diffusion, prompt, default. Say which demos are teac
 
 - Do not say that an image model literally “sees” objects as humans do.
 - Do not say that diffusion reveals an image already hidden in noise.
-- Do not let the drawing analogy imply the model adds marks; it updates the whole field at once by removing predicted noise.
+- Do not let the drawing analogy imply the model adds marks; it iteratively updates the whole noisy image or latent representation by removing predicted noise.
 - Do not imply that the activity's locked rounds mean model structure is locked; later denoising updates can still revise the current representation.
 - Do not equate adding prompt detail with changing CFG.
 - Do not call CFG “image temperature.”

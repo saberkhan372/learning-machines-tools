@@ -265,7 +265,7 @@
   var SLIDES = [
     { id:'title', kind:'title', time:10, nav:'Welcome + retrieval',
       head:'Human Image Model',
-      idea:'Today’s image sequence is pixels → human-created labels → shared text/image representations → diffusion.',
+      idea:'Today we follow the machine’s route: training images with human labels and captions → learned representations → prompt conditioning → iterative denoising → decoded pixels.',
       compare:{
         head:['A text model…','A diffusion image model…'],
         rows:[
@@ -307,15 +307,15 @@
 
     { id:'s2', kind:'aid', aid:'diffuse', time:11, num:'02', nav:'Round 2 — Diffusion',
       head:'From noise to picture — you first',
-      idea:'A diffusion model starts from pure static and removes noise step by step, pulled toward the prompt. First the room performs that loop by hand.',
+      idea:'A diffusion model starts from pure static and iteratively updates the whole noisy field, pulled toward the prompt. First the room performs that loop by hand.',
       task:'Open the canvas link from chat. Draw the words in three timed steps — commit between steps, no going back. Then watch an analogous machine-denoising sequence.',
       take:'Generation is iterative, prompt-guided denoising. Different initial noise — the seed — can produce different outputs from the same words; different human hands add another kind of variation.',
       notes:{
         look:'You look at: the round timer and the step slider. Attendees see: their own canvas first, then static resolving toward the prompt image.',
         you:['Paste the prepared Human Diffusion Canvas setup link (three steps, noise on, words set). Run three ~60-second steps; commit together; point at the noise-remaining meter as the veil falls.','Then start the step slider at 0 — pure noise. Advance slowly; ask for guesses before the shape is obvious; name the prompt only after the room has guessed.','Name the analogy carefully: their veil represents residual noise; their shrinking brush makes a coarse-to-fine trajectory visible. Neither is a literal model operation.'],
         room:['Draw the words — biggest shapes first; the brush shrinks each step; commit means commit.','Then watch the static and guess early — what is emerging?','Notice that the machine stabilises the whole field at once rather than stroke by stroke.'],
-        say:['"You added marks. It removes noise everywhere at once — and it has statistics about images-with-these-words, not intentions."','"It is not painting left to right, and a finished picture is not hidden underneath. It repeatedly refines the whole field under prompt guidance."'],
-        watch:'Time-box the drawing at ~6 minutes so the machine comparison keeps ~5. Chat fallback: type what you would commit this step. Exports wait for the studio block. Do not imply the model draws strokes or that the activity’s locked rounds mean later model updates cannot revise structure.'} },
+        say:['"You added marks. It iteratively updates the whole noisy image or latent representation — and it has statistics about images-with-these-words, not intentions."','"Training ran the other way: clean images were noised on a schedule, and it learned the correction. Generation starts from pure noise and applies those learned corrections."','"It is not painting left to right, and a finished picture is not hidden underneath. It repeatedly refines the whole field under prompt guidance."'],
+        watch:'Time-box the drawing at ~6 minutes so the machine comparison keeps ~5. Chat fallback: type what you would commit this step. Exports wait for the studio block. Do not imply the model draws strokes or that the activity’s locked rounds mean later model updates cannot revise structure. Diffusion is one major family — current systems vary (latent diffusion, diffusion transformers, flow matching, autoregressive).'} },
 
     { id:'s3', kind:'aid', aid:'guide', time:8, num:'03', nav:'Round 3 — A/B/C + guidance',
       head:'Change the words — then the pressure',
@@ -477,7 +477,7 @@
     var sh=s.shape?' shape':'';
 
     if(s.kind==='title'){
-      var flow='<div class="title-flow"><span class="f sh">pixels</span><span>→</span><span class="f">human-created labels</span><span>→</span><span class="f">shared text/image representations</span><span>→</span><span class="f">diffusion</span> <span class="bk">↺ refine</span> <span>→</span><span class="f sh">pixels</span></div>';
+      var flow='<div class="title-flow"><span class="f sh">training images + human labels &amp; captions</span><span>→</span><span class="f">learned representations</span><span>→</span><span class="f">prompt conditioning</span><span>→</span><span class="f">iterative denoising</span> <span class="bk">↺</span> <span>→</span><span class="f sh">decoded pixels</span></div>';
       var cmp='';
       if(s.compare){
         cmp='<div class="vs"><div class="vs-h">'+esc(s.compare.head[0])+'</div><div class="vs-h">'+esc(s.compare.head[1])+'</div>'+
