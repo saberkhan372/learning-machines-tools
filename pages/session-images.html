@@ -40,8 +40,8 @@
         <div>
           <p class="sess-kicker"><i class="modsq"></i>Machines that imagine</p>
           <h1 class="sess-title">Images</h1>
-          <p class="sess-q">When an image model draws, <span class="q-accent">what is it actually working with?</span></p>
-          <p class="sess-lede">Pixels, features, <a href="vocabulary-field-guide.html#diffusion">diffusion</a>, prompt guidance, and visual defaults. We watch images resolve out of noise, then give the model a vague prompt and study what it fills in.</p>
+          <p class="sess-q">When an image model generates, <span class="q-accent">what is it actually working with?</span></p>
+          <p class="sess-lede">Pixels, features, <a href="vocabulary-field-guide.html#diffusion">diffusion</a>, prompt guidance, and visual defaults. We watch images resolve out of noise, then learn how documented outputs can test hypotheses about what vague prompts leave open.</p>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
     <div class="wrap">
       <div style="border:1px solid var(--ink);border-left:3px solid var(--m-image);background:var(--surface);padding:16px 20px;max-width:74ch;">
         <p style="font-family:var(--font-mono);font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">New to image generators? Start gently.</p>
-        <p style="font-size:14.5px;color:var(--ink-soft);line-height:1.6;">You don't need an account, an install, or any prior experience with Midjourney, DALL·E, or the rest — about one in five people arrive here having used none of them, and that's a fine place to begin. Open the <a href="../tools/diffusion-step-through-viewer/">Diffusion Step-Through Viewer</a> first and watch an image surface from pure noise; then the mechanisms below will have something to hang on. Everything runs in your browser on frozen examples.</p>
+        <p style="font-size:14.5px;color:var(--ink-soft);line-height:1.6;">You don't need an account, an install, or any prior experience with Midjourney, DALL·E, or the rest — about one in five people arrive here having used none of them, and that's a fine place to begin. Open the <a href="../tools/diffusion-step-through-viewer/">Diffusion Step-Through Viewer</a> first and watch an image surface from pure noise; then the mechanisms below will have something to hang on. Everything runs in your browser with authored teaching simulations.</p>
       </div>
     </div>
   </section>
@@ -71,8 +71,8 @@
       <div class="throughline">
         <div class="through-step"><div class="ts-n">01</div><h4>Pixels &amp; features</h4><p>An image is numbers first. Recognition returns cue by cue — colour, outline, texture, context.</p></div>
         <div class="through-step"><div class="ts-n">02</div><h4>Diffusion</h4><p>The image is refined from pure noise toward a prompt-guided result, step by visible step.</p></div>
-        <div class="through-step"><div class="ts-n">03</div><h4>Prompt guidance</h4><p>Each added word steers the denoising — and each omitted word leaves a gap the model fills.</p></div>
-        <div class="through-step"><div class="ts-n">04</div><h4>Defaults</h4><p>Vague prompts reveal what the training data assumes a doctor, classroom, or home looks like.</p></div>
+        <div class="through-step"><div class="ts-n">03</div><h4>Prompt guidance</h4><p>Each added word steers the denoising; unspecified details remain open to learned patterns, product choices, and sampling.</p></div>
+        <div class="through-step"><div class="ts-n">04</div><h4>Defaults</h4><p>Repeated, documented outputs can reveal default patterns shaped by training data, curation, tuning, and platform design.</p></div>
       </div>
       <div class="session-risk-motif risk-card" data-mod="image" aria-label="Image noise grid motif">
         <div class="plate-cap"><span class="fig">Fig. 02B — Denoising field</span><span>noise → cues → default</span></div>
@@ -157,12 +157,39 @@
       <div class="sec-rule"><h2 class="sec-no">§ C · Run of show</h2><span class="sec-note">two-hour live session</span></div>
       <div class="ros">
         <div class="ros-row"><div class="ros-time">0–10</div><div><p class="ros-seg">Welcome, consent &amp; Session 1 retrieval</p><p class="ros-body">Share two text-session artifacts or revisit the recap. Recover the method: <b>predict → change one thing → compare → claim → human decision</b>.</p></div></div>
-        <div class="ros-row"><div class="ros-time">10–25</div><div><p class="ros-seg">Pixels, features &amp; the room's default</p><p class="ros-body">Use the Squint Test, then describe the first picture prompted by “a doctor.” Treat the room tally as a <b>hypothesis</b> and repeated frozen outputs as evidence.</p></div></div>
+        <div class="ros-row"><div class="ros-time">10–25</div><div><p class="ros-seg">Pixels, features &amp; the room's default</p><p class="ros-body">Use the Squint Test, then describe the first picture prompted by “a doctor.” Treat the room tally as a <b>hypothesis</b>; use authored teaching simulations to rehearse the test, not as evidence about a real model.</p></div></div>
         <div class="ros-row"><div class="ros-time">25–44</div><div><p class="ros-seg">Diffusion — performed, then watched — guidance &amp; revision</p><p class="ros-body">Draw the words on the <b>Human Diffusion Canvas</b> in timed coarse-to-fine steps, then watch an analogous machine-denoising sequence from noise. Compare vague, specific, and revised prompts; keep <b>prompt wording distinct from CFG strength</b>.</p></div></div>
         <div class="ros-row"><div class="ros-time">44–60</div><div><p class="ros-seg">Whose picture? &amp; mechanism debrief</p><p class="ros-body">Map user decisions, system operations, and hidden human contributions. Synthesize the loop and choose a pathway before the lesson ends at <b>60 minutes</b>.</p></div></div>
-        <div class="ros-row"><div class="ros-time">60–90</div><div><p class="ros-seg">Student work studio · 30 minutes</p><p class="ros-body">Investigate for 25 minutes, then post one <b>Image Default Test Board</b> claim plus a next test in the final five. Stop at 1:30.</p></div></div>
+        <div class="ros-row"><div class="ros-time">60–90</div><div><p class="ros-seg">Student work studio · 30 minutes</p><p class="ros-body">Choose one of five routes and investigate for 25 minutes, then post one <b>appropriately framed claim</b> plus a next test in the final five. Stop at 1:30.</p></div></div>
         <div class="ros-row"><div class="ros-time">90–120</div><div><p class="ros-seg">Guest spotlight, Q&amp;A &amp; close · 30 minutes</p><p class="ros-body">The artist/educator guest receives the full final block for examples, questions, one carry-forward practice, and the session close.</p></div></div>
       </div>
+    </div>
+  </section>
+
+  <!-- BUILD ROUTE · THE LOOP AS CODE -->
+  <section class="section-tight" id="build-code" data-mod="image">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ C2 · The diffusion loop as code</h2><span class="sec-note">Build / Code route · annotated pseudocode</span></div>
+      <p style="max-width:74ch;color:var(--ink-soft);line-height:1.6;">This is the <b>shape</b> of the computation, not a runnable model — every real system adds detail. Studio task for the Build route: mark one line you can defend from today's session, and one line that hides real complexity.</p>
+      <pre style="margin-top:14px;padding:18px 20px;border:1px solid var(--rule);background:var(--surface);overflow-x:auto;font-family:var(--font-mono);font-size:13.5px;line-height:1.65;color:var(--ink);"><code>// The diffusion loop — teachable shape, not a runnable model.
+
+let latent = randomLatentNoise();   // start from pure static: no picture is hidden inside
+let prompt = encodeText("a cat asleep on a red chair");
+                                    // words become numbers once, then guide every step
+
+for (let step = TOTAL_STEPS; step > 0; step = step - 1) {
+  // the network estimates what part of the current latent state is noise
+  let predictedNoise = network(latent, step, prompt);
+
+  // subtract a slice of that noise from the WHOLE field at once —
+  // no strokes, no left-to-right; every value updates a little
+  latent = removeSomeNoise(latent, predictedNoise, step);
+
+  // nothing is locked: early structure can still change,
+  // it just becomes increasingly unlikely as the noise shrinks
+}
+
+return decodeToPixels(latent);      // decode the final latent representation into pixels</code></pre>
     </div>
   </section>
 
@@ -190,7 +217,7 @@
           <h3>Worksheet</h3>
           <div class="doc-list">
             <a class="doc-row" href="../worksheets/image-default-test-board/"><span class="d-name">Image Default Test Board</span><span class="d-desc">Defaults, assumptions, revisions</span></a>
-            <a class="doc-row" href="../packs/images/"><span class="d-name">Image Prompt Pack</span><span class="d-desc">Frozen examples with alt text</span></a>
+            <a class="doc-row" href="../packs/images/"><span class="d-name">Image Prompt Pack</span><span class="d-desc">Authored teaching simulations with alt text</span></a>
             <a class="doc-row" href="../tools/concept-bridges/what-does-the-machine-see/"><span class="d-name">Bridge · What does the machine see?</span><span class="d-desc">Pixels, features, representation</span></a>
             <a class="doc-row" href="../tools/concept-bridges/default-is-a-design-decision/"><span class="d-name">Bridge · Default is a design decision</span><span class="d-desc">Where defaults come from</span></a>
             <a class="doc-row" href="tool-cfg-scale.html"><span class="d-name">Advanced · Prompt Pressure</span><span class="d-desc">Prompt pressure and over-guidance</span></a>
@@ -200,7 +227,7 @@
         <div class="doc-group">
           <h3>Low-AI / No-AI pathway</h3>
           <div class="callout">
-            <p>Every activity works with the simulated viewers and the pre-generated Image Prompt Pack — no image generator account needed. Critique and teaching-design pathways use the same evidence. <b>Opting out of direct AI use never means opting out of the camp.</b></p>
+            <p>Every activity works with the simulated viewers and the authored Image Prompt Pack — no image generator account needed. These materials support an <b>illustrated hypothesis</b> and practice with the investigation method; a claim about a real model requires documented real outputs. <b>Opting out of direct AI use never means opting out of the camp.</b></p>
           </div>
         </div>
       </div>

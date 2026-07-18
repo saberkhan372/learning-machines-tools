@@ -42,8 +42,9 @@
     <header class="tool-hero">
       <p class="tool-kicker">Tool 06 &middot; Session 2 · Images · Default tests</p>
       <h1 class="tool-title">Default Test Comparison Viewer</h1>
-      <p class="tool-dek">Choose a vague prompt and compare three versions: the ambiguous default, a more specific prompt, and a critical revision. The point is not to rate the output. The point is to name what the model filled in.</p>
+      <p class="tool-dek">Choose a vague prompt and compare three authored scenes: an illustrated default hypothesis, a more specific condition, and a critical revision. The point is to practice a controlled comparison and name what a real test would need to verify.</p>
       <div class="tool-idea">Big idea: defaults are not neutral.</div>
+      <div class="tool-idea" style="font-weight:600;">Teaching simulation: these scenes are authored illustrations, not outputs from a real image model. Practice the method here — a claim about a real model needs real, documented outputs.</div>
     </header>
 
     <section class="tool-grid-2">
@@ -68,8 +69,8 @@
                 <tr>
                   <th>Version</th>
                   <th>Prompt</th>
-                  <th>Output</th>
-                  <th>What appeared by default?</th>
+                  <th>Simulated scene</th>
+                  <th>Illustrated hypothesis</th>
                   <th>What changed?</th>
                   <th>Ethical question</th>
                 </tr>
@@ -85,8 +86,8 @@
       <section class="lab-panel">
         <div class="lab-pad">
           <h2>Participant claim</h2>
-          <p>Move from "I like it" to evidence: what did the output assume, and where can you point to it?</p>
-          <textarea class="note-box" id="claimBox">This default test matters because...</textarea>
+          <p>Move from “I like it” to a testable hypothesis: what does this authored comparison illustrate, and what documented real outputs would test it?</p>
+          <textarea class="note-box" id="claimBox">This simulation illustrates the hypothesis that... Testing it on a real model would require...</textarea>
         </div>
       </section>
       <section class="lab-panel">
@@ -94,9 +95,9 @@
           <h2>Classroom prompts</h2>
           <ul class="evidence-list">
             <li>What did the prompt leave unspecified?</li>
-            <li>Which default appeared before anyone asked for it?</li>
-            <li>Did the revision fix the default, complicate it, or hide it?</li>
-            <li>What evidence would make this claim stronger?</li>
+            <li>Which possible default is this authored scene designed to illustrate?</li>
+            <li>Does the revision challenge the hypothesis, complicate it, or route around it?</li>
+            <li>Which documented real outputs would test this hypothesis?</li>
           </ul>
           <div class="button-row">
             <button class="tool-button secondary" type="button" id="copyBtn">Copy claim</button>
@@ -111,7 +112,7 @@
     const CASES = [
       {
         title: "A teacher",
-        question: "Who does the system picture as an authority figure when the prompt says almost nothing?",
+        question: "Which authority default is this authored comparison designed to test?",
         button: "a teacher",
         variants: [
           {
@@ -145,7 +146,7 @@
       },
       {
         title: "A scientist",
-        question: "What does the model assume science looks like?",
+        question: "Which visual shorthand for science is this authored comparison designed to test?",
         button: "a scientist",
         variants: [
           { mark: "A", prompt: "a scientist", scene: "scientist-a", caption: "A person in a white coat beside glowing lab glass.", defaults: "Lab coat, indoor lab, chemistry glassware, lone expert.", changed: "Baseline: the role became a familiar lab stereotype.", ethics: "Which kinds of science disappear when the lab coat is the default?" },
@@ -171,7 +172,7 @@
       },
       {
         title: "A successful person",
-        question: "What does success look like before anyone defines it?",
+        question: "Which possible default for success is this authored comparison designed to test?",
         button: "a successful person",
         variants: [
           { mark: "A", prompt: "a successful person", scene: "success-a", caption: "A sharply dressed person in a high-rise office with city lights.", defaults: "Wealth, business clothing, skyscraper, individual achievement.", changed: "Baseline: success became corporate status.", ethics: "Who benefits when success is pictured as wealth and power?" },
@@ -197,7 +198,7 @@
       },
       {
         title: "The future of education",
-        question: "What future does the model choose when the phrase stays abstract?",
+        question: "Which technology-centered future is this authored comparison designed to test?",
         button: "the future of education",
         variants: [
           { mark: "A", prompt: "the future of education", scene: "future-a", caption: "Students surrounded by holograms, tablets, and glowing interfaces.", defaults: "Technology-centered, polished, futuristic, expensive devices.", changed: "Baseline: future became product-like and screen-heavy.", ethics: "Who is included in a future that looks expensive by default?" },
@@ -239,7 +240,7 @@
         "future-c": ["#1c3035", "#f6bd60", "#f0c7a5", "COMMONS", "CHOICE"]
       };
       const c = colors[id];
-      return '<svg class="default-scene" viewBox="0 0 320 210" role="img" aria-label="Simulated image output">' +
+      return '<svg class="default-scene" viewBox="0 0 320 210" role="img" aria-label="Authored teaching simulation">' +
         '<rect width="320" height="210" fill="' + c[0] + '"/>' +
         '<circle cx="260" cy="42" r="42" fill="' + c[1] + '" opacity=".18"/>' +
         '<rect x="28" y="34" width="134" height="72" rx="8" fill="#0e0f13" stroke="' + c[1] + '" opacity=".9"/>' +

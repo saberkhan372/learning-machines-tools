@@ -47,7 +47,14 @@
   .title-tape .tk{font-family:var(--mono);font-size:25px;background:var(--cell);border:1px solid var(--line-2);border-radius:9px;padding:8px 14px}
   .title-tape .tk.last{background:var(--violet-soft);border-color:var(--violet);color:var(--violet-deep);animation:pulse 1.7s var(--ease) infinite}
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(85,70,214,0)}50%{box-shadow:0 0 0 5px rgba(85,70,214,.16)}}
-  .title-flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:26px;font-family:var(--mono);font-size:17px;color:var(--muted)}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin-top:20px;max-width:940px}
+  .vs-h{font-family:var(--mono);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber-ink)}
+  .vs-c{font-size:17px;line-height:1.3;background:var(--cell);border:1px solid var(--line);border-radius:9px;padding:8px 13px}
+  .vs-both{margin-top:10px;font-size:15px;color:var(--muted);max-width:940px}
+  .abc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+  .abc-c{display:flex;flex-direction:column;gap:4px;background:var(--cell);border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-size:18px;line-height:1.3}
+  .abc-c .k{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber-ink)}
+  .title-flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:22px;font-family:var(--mono);font-size:17px;color:var(--muted)}
   .title-flow .f{padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--cell)}
   .title-flow .f.sh{border-color:var(--amber);color:var(--amber-ink);background:var(--amber-soft)}
   .title-flow .bk{color:var(--violet)}
@@ -161,6 +168,9 @@
   .btn:hover{background:var(--violet-deep)}
   .btn.ghost{background:transparent;color:var(--violet-deep)} .btn.ghost:hover{background:var(--violet-soft)}
   .crow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .edit-slide{margin-top:12px}
+  .edit-slide .ed-lab{display:block;margin:9px 0 4px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .edit-slide .ed-lab:first-of-type{margin-top:0}
   input[type=range]{width:100%;accent-color:var(--violet)}
   .seg-toggle{display:inline-flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden}
   .seg-toggle button{font-family:var(--mono);font-size:12px;padding:7px 11px;border:none;background:var(--paper);color:var(--muted)}
@@ -237,14 +247,13 @@
   var VAGUE = 'a doctor';
   var DEMO_ATTRS = 'man man older white coat stethoscope hospital man serious glasses coat man male';
 
-  /* studio slide: the featured pathway tools; the full run-of-show lives in assets/session-runs.js */
-  var TOOLS = [
-    {n:'The Squint Test', u:SITE+'tools/feature-extraction-pixel-resolution/', w:'pixels → edges → features, for real'},
-    {n:'Human Diffusion Canvas', u:SITE+'tools/human-diffusion-canvas/', w:'you are the denoiser — export your trajectory GIF'},
-    {n:'Diffusion Step-Through', u:SITE+'tools/diffusion-step-through-viewer/', w:'noise → image, guidance shown'},
-    {n:'Default Test Comparison', u:SITE+'tools/default-test-comparison-viewer/', w:'vague vs. specific vs. revised'},
-    {n:'CFG Scale Visualizer', u:SITE+'tools/cfg-scale-visualizer/', w:'guidance — match vs. artifacts'},
-    {n:'Image Default Test Board', u:SITE+'worksheets/image-default-test-board/', w:'worksheet — one default, one revision'}
+  /* studio slide: five pathways; the copied chat block supplies the launch links */
+  var ROUTES = [
+    {n:'Recommended · Default test', w:'compare A/B/C and finish one claim', go:'Comparison Viewer + Image Default Test Board'},
+    {n:'Observe / Critique', w:'analyze three authored teaching simulations', go:'Image Prompt Pack'},
+    {n:'Teach / Design', w:'adapt one activity and write its debrief', go:'Squint Test or Human Diffusion Canvas'},
+    {n:'Build / Code', w:'inspect one mechanism or hidden complexity', go:'Dataset Balance + Latent Compressor + annotated loop'},
+    {n:'Critical / No-AI', w:'audit representation, labor, and disclosure', go:'Image Prompt Pack + Consent Checklist'}
   ];
   var CLOSERS = [
     {n:'Session 2 page — your map of everything we touched', u:SITE+'pages/session-images.html'},
@@ -256,12 +265,19 @@
     { id:'title', kind:'title', time:10, nav:'Welcome + retrieval',
       head:'Human Image Model',
       idea:'Last week the room became a text machine. Today it becomes an image machine — noise into a picture — then asks whose pictures it learned from.',
+      compare:{
+        head:['A text model…','A diffusion image model…'],
+        rows:[
+          ['picks the next token, one position at a time','revises a whole noisy field, step by step'],
+          ['samples from next-token probabilities','denoises under prompt guidance, with sampling'],
+          ['samples token IDs that decode into text','decodes its final representation into pixels']],
+        both:'Both learn statistical patterns from human-made data, respond to encoded prompts, involve sampling, and inherit human and platform decisions.'},
       notes:{
         look:'Presenter cockpit: slide preview + notes on the left, live-tool controls on the right, timer and slide list up top. The audience window shows only the slide.',
-        you:['Screen-share the audience window only.','Use five minutes for welcome and consent, then five minutes for two Session 1 artifacts or recap moments.','Recover the method: predict, change one thing, compare, make a claim, name the human decision.'],
-        room:['Say hello in chat.','Share one Session 1 artifact or remembered mechanism.','Expect to type short descriptions and votes in chat.'],
-        say:['"Same investigation as last week, new modality. We predict, change one thing, and name the human decision behind the output."','"You do not need an image account today. The room and this console are the machine."'],
-        watch:'Keep the Session 1 thread visible: prediction and training shaped that loop; the same is true here, just over pixels instead of words.'} },
+        you:['Screen-share the audience window only.','Use five minutes for welcome and consent, then five minutes for two Session 1 artifacts or recap moments.','Walk the comparison table aloud — a participant asked directly how image generation differs from language generation. Then recover the method: predict, change one thing, compare, make a claim, name the human decision.'],
+        room:['Say hello in chat.','Share one Session 1 artifact or remembered mechanism.','Read the text-vs-image table; expect to type short descriptions and votes in chat.'],
+        say:['"Same investigation as last week — but not the same machine. Text goes token by token; diffusion revises a whole noisy field over and over. The table on screen is the honest contrast."','"You do not need an image account today. The room and this console are the machine."'],
+        watch:'Keep the Session 1 thread visible: both machines learn patterns from human-made data and inherit human decisions. The generation processes differ — do not flatten them into "the same thing over pixels."'} },
 
     { id:'s0', kind:'setup', aid:'pixel', time:7, shape:true, num:'00', nav:'What a model sees',
       head:'A model does not see a cat',
@@ -284,9 +300,9 @@
       notes:{
         look:'You look at: Zoom chat and the tally box. Attendees see: the prompt and the room’s collective default after you tally.',
         you:['Ask for the first image, not the "correct" one. Speed matters.','Paste 12–20 chat responses into the tally.','Group visible conventions: setting, clothing, props, pose, lighting, camera angle, and apparent representation.','Name the room’s repeated descriptors, then ask what or who is missing.'],
-        room:['Type fast — first instinct, a few words.','Treat the room’s tally as a hypothesis about a cultural default.','Compare that hypothesis with several frozen model outputs.'],
-        say:['"The room’s default is a hypothesis, not evidence of what a model will do. Repeated outputs give us evidence."','"Changing a default is not censorship. It is specifying what the task actually requires."'],
-        watch:'This is the bias/defaults core — 38 of 80 asked for it. Keep the focus on repeated evidence and multiple system layers, not blame, identity inference, or a single output.'} },
+        room:['Type fast — first instinct, a few words.','Treat the room’s tally as a hypothesis about a cultural default.','Use the authored teaching simulations to rehearse how you would test that hypothesis.'],
+        say:['"The room’s default is a hypothesis, not evidence of what a model will do. These simulated scenes illustrate possible hypotheses; only repeated, documented real outputs can support a claim about a model."','"Changing a default is not censorship. It is specifying what the task actually requires."'],
+        watch:'This is the bias/defaults core — 38 of 80 asked for it. Keep simulations and documented model evidence distinct, and focus on multiple system layers rather than blame, identity inference, or a single output.'} },
 
     { id:'s2', kind:'aid', aid:'diffuse', time:11, num:'02', nav:'Round 2 — Diffusion',
       head:'From noise to picture — you first',
@@ -300,17 +316,21 @@
         say:['"You added marks. It removes noise everywhere at once — and it has statistics about images-with-these-words, not intentions."','"It is not painting left to right, and a finished picture is not hidden underneath. It repeatedly refines the whole field under prompt guidance."'],
         watch:'Time-box the drawing at ~6 minutes so the machine comparison keeps ~5. Chat fallback: type what you would commit this step. Exports wait for the studio block. Do not imply the model draws strokes or that the activity’s locked rounds mean later model updates cannot revise structure.'} },
 
-    { id:'s3', kind:'aid', aid:'guide', time:8, num:'03', nav:'Round 3 — Guidance',
-      head:'How hard should it obey?',
-      idea:'Guidance (CFG) sets how tightly the image is forced to match the prompt. More is not better.',
-      task:'In chat: name one thing low guidance gives you, and one thing high guidance breaks.',
-      take:'Guidance is a dial between the model’s habits and rigid obedience — both extremes cost you.',
+    { id:'s3', kind:'aid', aid:'guide', time:8, num:'03', nav:'Round 3 — A/B/C + guidance',
+      head:'Change the words — then the pressure',
+      idea:'Round 3 is an A/B/C experiment: vague, specific, responsibly revised. Guidance (CFG) is a separate dial — how hard the image is pushed toward whichever words you chose.',
+      abc:[
+        {k:'A · vague', t:'“a doctor” — the default fills every blank'},
+        {k:'B · specific', t:'add one observable context detail'},
+        {k:'C · responsible revision', t:'name what the task actually needs'}],
+      task:'In chat: across A, B, and C — what stayed constant, and which change did the work?',
+      take:'Prompt wording changes the condition; CFG changes the pressure toward it. Neither is quality, and more is not better.',
       notes:{
-        look:'You look at: the guidance slider. Attendees see: three meters — prompt match, the model’s own habits, artifact pressure.',
-        you:['Slide to low: the model wanders, adds its defaults.','Slide to high: match rises, then artifacts and sameness creep in.','Land in the middle and name the trade-off.'],
-        room:['Watch the three meters move together.','In chat: when did it start looking "AI-ish" or broken?','Notice the sweet spot is a choice, not a maximum.'],
-        say:['"Cranking guidance to the max does not give you obedience — it gives you fried, samey images."','"This is a dial a human sets. The model does not know what you meant."'],
-        watch:'A cartoon of the CFG Scale Visualizer. Frame guidance as a human-set trade-off, not intelligence.'} },
+        look:'You look at: the A/B/C strip, then the guidance slider. Attendees see: the three-version comparison first, then three meters — prompt match, habits, artifact pressure.',
+        you:['Run the A/B/C series first: open the Default Test Comparison Viewer and name what each authored scene is designed to test. This is the core of the round.','Only if time allows, spend the final two minutes on the guidance slider: low wanders, high turns rigid and artifact-prone.','Keep the distinction louder than the demo: words change the condition; CFG changes how hard it is enforced.'],
+        room:['Compare A, B, and C: what stayed constant across all three?','In chat: which change did the work — the added detail or the revision?','Optional coda: watch the three meters as guidance climbs; when does it start looking broken?'],
+        say:['"A responsible revision is not a longer prompt. It names the context or representation the task actually needs — and it gives us a test: did it change the default we observed?"','"Cranking guidance to the max does not give you obedience — it gives you fried, samey images. This is a dial a human sets."'],
+        watch:'Do not let the slider eat the round — A/B/C is the experiment; CFG is the optional two-minute coda. The meters are a cartoon of the CFG Scale Visualizer; frame guidance as a human-set trade-off, not intelligence.'} },
 
     { id:'s4', kind:'contrib', aid:'contrib', time:8, shape:true, num:'04', nav:'Round 4 — Whose picture?',
       head:'Whose picture is this, really?',
@@ -343,14 +363,14 @@
         watch:'End the facilitated lesson at 60:00. Use the final minute to launch the student-work pathways; do not borrow from their 30 minutes.'} },
 
     { id:'s6', kind:'studio', time:30, num:'06', nav:'Student work · 30 min',
-      head:'Your turn — the real tools',
-      idea:'The slides were cartoons. These are the instruments — real defaults, real dials.',
-      task:'Pick ONE tool. Log one default + one responsible revision on the Image Default Test Board.',
+      head:'Your turn — choose one route',
+      idea:'Different routes support different kinds of claims. Choose one method, finish one claim, and name the next test.',
+      task:'Pick ONE route from the chat block. Land one observation, one claim, one next test by 1:30.',
       notes:{
-        look:'You look at: the Copy links button and the clock. Attendees see: the tool list with what to notice in each.',
-        you:['Click Copy links for chat and paste the block into Zoom chat.','Name the deal: one tool, one default, one worksheet row.','Circulate — ask "what did the model fill in that you did not ask for?"','Five-minute warning: one claim in chat.'],
-        room:['Open one tool — no accounts, no installs.','Find one default the model fills in unasked.','Write one responsible revision on the Image Default Test Board.','Drop one claim in chat before we regroup.'],
-        say:['"The point is not a pretty picture — it is a claim about what the model assumes."','"Also worth a look: the Dataset Balance Simulator, for where those defaults come from."'],
+        look:'You look at: the Copy routes button and the clock. Attendees see: five pathways with the instrument or material for each.',
+        you:['Click Copy routes for chat and paste the block into Zoom chat.','Name the deal: choose one route; produce one observation, one claim, and one next test.','Circulate — ask whether the evidence is a documented model output or an authored teaching simulation, then use the matching claim frame.','Five-minute warning: finish the claim and next test in chat.'],
+        room:['Choose one of the five routes from the slide and open its link from chat.','Complete the route’s comparison, annotation, activity design, code reading, or audit.','Use “this simulation illustrates the hypothesis that…” for authored scenes; reserve model claims for documented real outputs.','Drop one observation, one claim, and one next test in chat before we regroup.'],
+        say:['"Choose one route, not a tour. Your finish line is one observation, one claim, and one next test."','"A teaching simulation can illustrate a hypothesis; repeated, documented real outputs are what support a claim about a model."'],
         watch:'Protect the full 30-minute block. Investigate for 25 minutes, then use the final five for claims; stop at 1:30 for the guest.'} },
 
     { id:'s7', kind:'close', time:30, shape:true, num:'07', nav:'Guest · 30 min',
@@ -374,6 +394,7 @@
       pixel:{detail:0.14, mode:'pixels'},
       diffuse:{step:0.0, seed:1337},
       guide:{g:0.42},
+      edits:{},
       contrib:{
         human:'chose the prompt, picked and cropped one result, decided it was good enough',
         model:'filled unspecified details from learned patterns, product settings, and sampling',
@@ -426,6 +447,18 @@
 
   /* ============ HELPERS ============ */
   function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function escAttr(t){ return esc(t).replace(/"/g,'&quot;'); }
+  /* live slide-text overrides: a non-empty edited field wins over the script;
+     an empty field falls back to the scripted text */
+  function effSlide(s){
+    var e = (state.edits||{})[s.id];
+    if(!e) return s;
+    var m = {}; for(var k in s){ m[k]=s[k]; }
+    ['head','idea','task','take'].forEach(function(f){
+      if(e[f] && String(e[f]).trim()!==''){ m[f]=e[f]; }
+    });
+    return m;
+  }
   function shortUrl(u){ return u.replace(/^https?:\/\//,''); }
   function clamp01(x){ return x<0?0:x>1?1:x; }
   function clampByte(x){ return x<0?0:x>255?255:x; }
@@ -434,7 +467,7 @@
 
   /* ============ AUDIENCE STAGE HTML ============ */
   function audienceHTML(i){
-    var s=SLIDES[i];
+    var s=effSlide(SLIDES[i]);
     var eyebrow = (s.num!=null)
       ? '<div class="s-eyebrow"><span class="pill">'+s.num+'</span> '+esc(s.nav.replace(/^Round \d+ — /,''))+'</div>'
       : '<div class="s-eyebrow"><span class="pill">workshop</span> 12–40 people · 120 min</div>';
@@ -444,7 +477,13 @@
 
     if(s.kind==='title'){
       var flow='<div class="title-flow"><span class="f sh">captioned images</span><span>→</span><span class="f">pixels</span><span>→</span><span class="f">features</span><span>→</span><span class="f">noise</span><span>→</span><span class="f">denoise</span><span>→</span><span class="f">defaults</span> <span class="bk">↺</span> <span>→</span><span class="f sh">your crop &amp; choices</span></div>';
-      return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:38ch">'+esc(s.idea)+'</div>'+flow+'</div>';
+      var cmp='';
+      if(s.compare){
+        cmp='<div class="vs"><div class="vs-h">'+esc(s.compare.head[0])+'</div><div class="vs-h">'+esc(s.compare.head[1])+'</div>'+
+          s.compare.rows.map(function(r){ return '<div class="vs-c">'+esc(r[0])+'</div><div class="vs-c">'+esc(r[1])+'</div>'; }).join('')+
+          '</div><div class="vs-both">'+esc(s.compare.both)+'</div>';
+      }
+      return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:38ch">'+esc(s.idea)+'</div>'+flow+cmp+'</div>';
     }
     if(s.kind==='setup'){
       var body='<div class="s-body">'+pixelViz()+'</div>';
@@ -458,7 +497,11 @@
       return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+diffuseViz()+'</div>'+task(s)+'</div>';
     }
     if(s.aid==='guide'){
-      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+guideViz()+'</div>'+task(s)+'</div>';
+      var abc='';
+      if(s.abc){
+        abc='<div class="abc">'+s.abc.map(function(x){ return '<div class="abc-c"><span class="k">'+esc(x.k)+'</span><span>'+esc(x.t)+'</span></div>'; }).join('')+'</div>';
+      }
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+abc+guideViz()+'</div>'+task(s)+'</div>';
     }
     if(s.kind==='contrib'){
       return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+contribViz()+'</div>'+task(s)+'</div>';
@@ -468,8 +511,8 @@
       return '<div class="stage">'+eyebrow+head+'<div class="s-body">'+qs+'</div><div class="s-take">'+esc(s.take)+'</div></div>';
     }
     if(s.kind==='studio'){
-      var rows='<div class="qlist c">'+TOOLS.map(function(t,k){
-        return '<div class="qrow c'+(t.opt?' opt':'')+'"><span class="qn">'+(k+1)+'</span><span class="txt2"><span><b>'+esc(t.n)+'</b> <span class="note">— '+esc(t.w)+'</span></span><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
+      var rows='<div class="qlist c">'+ROUTES.map(function(t,k){
+        return '<div class="qrow c"><span class="qn">'+(k+1)+'</span><span class="txt2"><span><b>'+esc(t.n)+'</b> <span class="note">— '+esc(t.w)+'</span></span><span class="go">'+esc(t.go)+'</span></span></div>';
       }).join('')+'</div>';
       return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
     }
@@ -683,7 +726,7 @@
       b.onclick=function(){ goto(k); }; nav.appendChild(b); });
 
     document.getElementById('notes').innerHTML=notesHTML(s);
-    document.getElementById('controls').innerHTML=controlsHTML(s);
+    document.getElementById('controls').innerHTML=controlsHTML(s)+editorHTML(s);
     document.getElementById('cnt').textContent=(i+1)+' / '+SLIDES.length;
 
     paint();
@@ -699,16 +742,19 @@
       copyText(buildLog(), function(){ b.textContent='copied ✓'; setTimeout(function(){b.textContent='copy log';},1400); },
         function(){ b.textContent='copy failed'; setTimeout(function(){b.textContent='copy log';},1400); }); };
     document.getElementById('fresh').onclick=function(){
-      if(!confirm('Start a fresh session? This clears the tally, sliders, and contributions map.')) return;
+      if(!confirm('Start a fresh session? This clears the tally, sliders, and contributions map. Your slide-text edits are kept.')) return;
       var next=newSidValue();
       if(chan) chan.postMessage({type:'rekey', sid:next});
       sid=next; try{ localStorage.setItem(SID_KEY, sid); }catch(e){}
       openChannel(); pruneStores();
-      state=freshState((state.rev||0)+1); TM.rem=SLIDES[0].time*60; TM.run=false; commit();
+      var keepEdits=state.edits||{};
+      state=freshState((state.rev||0)+1); state.edits=keepEdits;
+      TM.rem=SLIDES[0].time*60; TM.run=false; commit();
     };
 
     wireTimer(s.time);
     wireControls(s);
+    wireEditor(s);
     syncAffordances();
   }
 
@@ -759,14 +805,63 @@
       '</div><div class="crow"><span class="small">edits mirror live · <a href="'+SITE+'worksheets/ai-use-consent-checklist/" target="_blank" rel="noopener">Consent checklist ↗</a></span></div></div></div>';
     if(s.kind==='studio') return ''+
       '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Tool links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
-      '<p class="hint">One click copies every tool + the worksheet as a paste-ready block for Zoom chat.</p>'+
-      '<div class="crow"><button class="btn" id="copyL">Copy links for chat</button><span class="small" id="copyLS"></span></div></div></div>'+
-      '<p class="small">Same list as the <a href="session-links.html" target="_blank" rel="noopener">Session Link Sheet</a> — edit <code>assets/session-runs.js</code> to change both.</p>';
+      '<p class="hint">One click copies five named routes — each with an instruction and its link — as a paste-ready block for Zoom chat. Tell the room: pick ONE.</p>'+
+      '<div class="crow"><button class="btn" id="copyL">Copy routes for chat</button><span class="small" id="copyLS"></span></div></div></div>'+
+      '<p class="small">Every link also lives on the <a href="session-links.html" target="_blank" rel="noopener">Session Link Sheet</a> and in <code>assets/session-runs.js</code>.</p>';
     if(s.kind==='close') return ''+
       '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Closing links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
       '<p class="hint">Paste the three take-home links, then click <b>copy log</b> in the top bar and save what the room built.</p>'+
       '<div class="crow"><button class="btn" id="copyX2">Copy closing links</button><span class="small" id="copyXS"></span></div></div></div>';
     return '<p class="small">No live tool on this slide — this one runs entirely in the room and on the slide.</p>';
+  }
+
+  /* ============ LIVE SLIDE-TEXT EDITOR ============ */
+  function editorHTML(s){
+    var e=(state.edits||{})[s.id]||{};
+    function field(label, id, rows, scripted, edited){
+      var f='<label class="small ed-lab" for="'+id+'">'+label+'</label>';
+      if(rows===0){ f+='<input id="'+id+'" type="text" value="'+escAttr(edited||'')+'" placeholder="'+escAttr(scripted||'')+'">'; }
+      else { f+='<textarea id="'+id+'" rows="'+rows+'" placeholder="'+escAttr(scripted||'')+'">'+esc(edited||'')+'</textarea>'; }
+      return f;
+    }
+    var fields=field('headline','edHead',0,s.head,e.head);
+    if(s.kind==='questions'){
+      fields+=field('takeaway','edTake',2,s.take,e.take);
+    } else {
+      fields+=field('big idea','edIdea',2,s.idea,e.idea);
+      if(s.kind==='setup' || s.kind==='defaults' || s.kind==='studio' || s.kind==='contrib' || s.aid==='diffuse' || s.aid==='guide'){
+        fields+=field('your task','edTask',2,s.task,e.task);
+      }
+      if(s.kind==='close'){
+        fields+=field('takeaway','edTake',2,s.take,e.take);
+      }
+    }
+    return '<div class="ctrl edit-slide"><div class="hd"><span class="ct live">edit</span><span class="cn">Slide text · live</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Rewrite what the room sees on this slide — it applies to the audience window immediately. An empty field falls back to the script. Edits survive <b>new session</b>.</p>'+
+      fields+
+      '<div class="crow"><button class="btn" id="edApply">Apply → audience</button><button class="btn ghost" id="edReset">Reset to script</button><span class="small" id="edStatus"></span></div>'+
+      '</div></div>';
+  }
+  function wireEditor(s){
+    var ap=document.getElementById('edApply');
+    if(!ap) return;
+    function val(id){ var el=document.getElementById(id); if(el) return el.value; return ''; }
+    ap.onclick=function(){
+      if(!state.edits) state.edits={};
+      var out={}, any=false;
+      [['head','edHead'],['idea','edIdea'],['task','edTask'],['take','edTake']].forEach(function(p){
+        var v=val(p[1]);
+        if(v && v.trim()!==''){ out[p[0]]=v; any=true; }
+      });
+      if(any){ state.edits[s.id]=out; } else { delete state.edits[s.id]; }
+      update();
+      var st=document.getElementById('edStatus');
+      st.textContent='live ✓'; setTimeout(function(){ st.textContent=''; },1400);
+    };
+    document.getElementById('edReset').onclick=function(){
+      if(state.edits){ delete state.edits[s.id]; }
+      commit();
+    };
   }
 
   /* ============ WIRE CONTROLS ============ */
@@ -805,7 +900,27 @@
     }
     if(s.kind==='studio'){ var ls=document.getElementById('copyLS');
       document.getElementById('copyL').onclick=function(){
-        var txt=TOOLS.map(function(t){return t.n+(t.opt?' (optional)':'')+' — '+t.u;}).join('\n');
+        var txt=[
+          'STUDIO · pick ONE route for the next 25 minutes. Goal: one observation, one claim, one next test — not a tour.',
+          '',
+          'RECOMMENDED · Default test: open the viewer, pick one case, then complete A/B/C + the Claim box on the worksheet.',
+          '  '+SITE+'tools/default-test-comparison-viewer/',
+          '  worksheet: '+SITE+'worksheets/image-default-test-board/',
+          'OBSERVE / CRITIQUE · analyze three scenes in the Image Prompt Pack (teaching simulations, not real model outputs).',
+          '  '+SITE+'packs/images/',
+          'TEACH / DESIGN · adapt the Squint Test or Human Diffusion Canvas for your classroom; write one debrief question.',
+          '  squint test: '+SITE+'tools/feature-extraction-pixel-resolution/',
+          '  diffusion canvas: '+SITE+'tools/human-diffusion-canvas/',
+          'BUILD / CODE · examine one mechanism — dataset balance, latent compression, or the annotated diffusion loop on the session page.',
+          '  '+SITE+'tools/dataset-balance-simulator/',
+          '  '+SITE+'tools/latent-space-compressor/',
+          '  the loop as code: '+SITE+'pages/session-images.html#build-code',
+          'CRITICAL / NO-AI · audit three simulated scenes for representation, labor, and disclosure with the consent checklist.',
+          '  scenes: '+SITE+'packs/images/',
+          '  checklist: '+SITE+'worksheets/ai-use-consent-checklist/',
+          '',
+          'Post in chat by 1:30 — one observation, one claim, one next test.'
+        ].join('\n');
         copyText(txt, function(){ls.textContent='copied';setTimeout(function(){ls.textContent='';},1300);},
           function(){ls.textContent='select & copy';});
       }; }

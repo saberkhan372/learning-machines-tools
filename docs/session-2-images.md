@@ -4,6 +4,9 @@ title: "Session 2: Images"
 ---
 
 # Session 2: Images
+
+> **SUPERSEDED (2026-07-17) — do not run from this document.** It predates the final Session 2 plan: the schedule is outdated and parts of the framing no longer match the live materials. The live sources are `docs/session-2-live-presenter-script.md`, `pages/session-2-deck.html`, and `assets/session-runs.js`. Kept for history only.
+
 ## How do image models turn words into pictures, and what defaults appear when prompts are vague?
 
 **Learning Machines: Text, Images, Video — CC Fest**

@@ -24,7 +24,7 @@ This lesson carries those moves forward:
 - The room becomes an image model before anyone opens an image generator.
 - Each round asks for a short chat action, shows a visible consequence, and names one mechanism.
 - New terms are limited to **pixel, feature, diffusion, guidance, and default**.
-- A room prediction is treated as a hypothesis; repeated frozen outputs are the evidence.
+- A room prediction is treated as a hypothesis; authored teaching simulations illustrate how to test it, while repeated documented real outputs are needed for a model-level claim.
 - Tool studio time is protected. One completed observation is better than a tour of every tool.
 - Every activity has a no-account and no-live-generation route.
 - Every live control has a chat, screenshot, or manual fallback.
@@ -60,6 +60,12 @@ Use this sentence frame in the studio and close:
 
 One image can start a question. It is not enough to support “the model always does this.”
 
+**Simulated scenes use a different frame.** The scenes in the Default Test Comparison Viewer and the Image Prompt Pack are authored teaching simulations, not documented model outputs. They teach the method; they cannot support a claim about what a real model does. Work built on them should use:
+
+> This simulation illustrates the hypothesis that ___. Testing it on a real model would require ___.
+
+Only a live generator, or a documented set of real outputs, supports a claim about a model.
+
 ## Materials
 
 - [Session 2 live deck](../pages/session-2-deck.html)
@@ -76,7 +82,7 @@ One image can start a question. It is not enough to support “the model always 
 - [AI Use + Consent Checklist](../worksheets/ai-use-consent-checklist/)
 - Zoom chat and breakout rooms
 
-No participant needs an image-generator account. The featured tools and frozen examples do not call a live model.
+No participant needs an image-generator account. The featured tools and authored teaching simulations do not call a live model.
 
 ## Run of show
 
@@ -124,7 +130,7 @@ Do not click **new session** after the live activity begins. Refreshing is safe;
 
 “We are not here to get the prettiest picture or to become expert prompt writers. We are here to make a mechanism visible, change one thing, and support a claim with evidence.”
 
-“Camera and microphone are optional. You can work entirely in chat. You do not need an image-generator account, and you can complete every investigation with frozen examples. You choose whether and how your work is named in any public recap.”
+“Camera and microphone are optional. You can work entirely in chat. You do not need an image-generator account, and you can practice every investigation method with authored teaching simulations. You choose whether and how your work is named in any public recap.”
 
 ### Transition
 
@@ -147,6 +153,18 @@ Look for: **predict → change one condition → compare → make a claim → na
 ### Say
 
 “Two ideas carry forward. A probability about language was not the same as truth. And human choices entered through the corpus, the learning setup, and the judgment of what counted as better. In images, those choices become spatial and visible.”
+
+### Show the contrast (on the title slide)
+
+A participant asked directly how image generation differs from language generation. Walk the title slide’s comparison table aloud rather than leaving it as a verbal aside:
+
+| A text model… | A diffusion image model… |
+| --- | --- |
+| picks the next token, one position at a time | revises a whole noisy field, step by step |
+| samples from next-token probabilities | denoises under prompt guidance, with sampling |
+| samples token IDs that decode into text | decodes its final representation into pixels |
+
+Then say the common ground: “Both learn statistical patterns from human-made data, respond to encoded prompts, involve sampling, and inherit human and platform decisions. Same investigation, different machine.”
 
 ### Transition
 
@@ -195,13 +213,13 @@ Do not say that a generator “sees exactly what you see” or that it stores ob
 - Paste 12–20 responses into the deck tally, or count repeated descriptors manually.
 - Group only visible conventions: setting, clothing, props, pose, lighting, camera angle, and apparent representation.
 - Ask, “What or who is missing from this collective picture?”
-- Then open several frozen outputs for the same vague prompt.
+- Then open several authored teaching simulations for the same vague prompt. Name them as simulations before discussing them.
 
 ### Say
 
 “The room’s response is a hypothesis about a cultural default. It is not evidence of what an image model will do.”
 
-“Now we can compare that hypothesis with outputs. We need more than one image because a single seed can be unusual. We are looking for repetition across a small set.”
+“These authored scenes let us rehearse the comparison method, but they do not tell us what a real model will do. A model-level claim would require repeated, documented real outputs — with prompts, settings, and seeds kept with the images.”
 
 “A repeated default can reflect many layers: the images and captions in training data, what was filtered or weighted, the training objective, platform tuning, safety systems, and random sampling. ‘It saw this most’ may be one hypothesis, but it is not the only explanation.”
 
@@ -281,7 +299,7 @@ Do not let the drawing analogy imply the model adds marks or paints strokes. Kee
 
 ### Do
 
-- Show an A/B/C series using the same seed or frozen comparison whenever possible:
+- Show an A/B/C series using the same seed with documented real outputs, or use the authored teaching comparison to practice the method:
   - **A — vague:** “a doctor”
   - **B — specific:** add one observable context detail
   - **C — responsible revision:** address one default while preserving the task’s purpose
@@ -364,25 +382,25 @@ Leave the five-part evidence frame visible while participants choose a pathway.
 
 ### Do
 
-- Paste the tool links and the worksheet into Zoom chat.
+- Use **Copy routes for chat** in the presenter cockpit and paste the five-route block into Zoom chat.
 - Remind canvas users to export their PNG and trajectory GIF now if they want to keep them.
 - Offer a quiet room, a discussion room, and a classroom-design room if breakout rooms are useful.
 - Protect 25 minutes for investigation and use the final five minutes for posting claims.
-- Require only one board row and one claim.
+- Require only one completed route, one appropriately framed claim, and one next test.
 
 ### Route by pathway
 
 - **Use:** Run a vague/specific/revised A/B/C series in the Default Test Comparison Viewer or in a live generator you already choose to use.
-- **Observe / Critique:** Analyze at least three frozen outputs in the Image Prompt Pack. Separate observation from hypothesis.
-- **Teach / Design:** Adapt the Squint Test, Default Test, or Human Diffusion Canvas for a classroom. Write the prompt, collection method, safety frame, and debrief question. The canvas also runs unplugged: paper, thick-to-thin pens, and tracing-paper veils.
-- **Build / Code:** Use the Dataset Balance Simulator, Latent Space Compressor, or CFG visualizer to test how one parameter changes the output representation — or rerun the Human Diffusion Canvas and explain what its veil schedule models and where the analogy lies.
-- **Critical / No-AI:** Use frozen examples and the consent checklist to audit representation, labor, disclosure, and the limits of the available evidence.
+- **Observe / Critique:** Analyze at least three authored scenes in the Image Prompt Pack. These are teaching simulations — separate observation from hypothesis, and use the simulation claim frame.
+- **Teach / Design:** Adapt the Squint Test or Human Diffusion Canvas for a classroom. Write the prompt, collection method, safety frame, and debrief question. The canvas also runs unplugged: paper, thick-to-thin pens, and tracing-paper veils.
+- **Build / Code:** Use the Dataset Balance Simulator or Latent Space Compressor to test one mechanism, or annotate the short diffusion-loop pseudocode on the Session 2 page (`session-images.html#build-code`) — mark one line you can defend and one line that hides real complexity.
+- **Critical / No-AI:** Use the authored teaching simulations and the consent checklist to audit representation, labor, disclosure, and the limits of the available evidence.
 
 ### Say
 
-“Pick one tool. The goal is not a pretty image and not a tour. The goal is one defensible sentence about what changed or what the system filled in.”
+“Pick one route. The goal is not a pretty image and not a tour. The goal is one observation, one appropriately framed claim, and one next test.”
 
-“If you are using a live generator, keep the prompt and settings with the output. If you are using frozen examples, note which examples you compared. Either route produces valid evidence.”
+“If you are using a live generator, keep the prompt and settings with the output. If you are working with the authored scenes, remember they are teaching simulations — frame your result as ‘this simulation illustrates the hypothesis that…’ rather than a claim about a real model. Both routes produce valid work; they support different kinds of claims.”
 
 ### Circulate with
 
@@ -396,7 +414,7 @@ Leave the five-part evidence frame visible while participants choose a pathway.
 
 At 1:25, say:
 
-“Finish the comparison you are in. Put one claim in chat using the frame: ‘Across ___ outputs, the system repeatedly ___, which suggests ___. I would test that next by ___.’”
+“Finish the route you are in. With documented real outputs, use: ‘Across ___ outputs, the system repeatedly ___, which suggests ___.’ With authored scenes, use: ‘This simulation illustrates the hypothesis that ___. Testing it on a real model would require ___.’ Add one next test.”
 
 ### Final five minutes: claim share
 
@@ -460,9 +478,9 @@ All work is optional. One rough artifact counts.
 - **Default · 15–20 minutes:** Complete one vague/specific/revised comparison and submit the prompt, three outputs, and one claim.
 - **Go deeper · 30–45 minutes:** Step through a diffusion sequence and annotate when composition, subject, edges, and detail become stable.
 - **Draw · 15–30 minutes:** Run the Human Diffusion Canvas on your own words. Export the PNG and trajectory GIF, note which step committed which decision, and name one place the analogy breaks.
-- **Compare · 30–45 minutes:** Use the same prompt across two tools or two frozen sets. Name what varies and what persists.
+- **Compare · 30–45 minutes:** Use the same prompt across two live tools, or compare two authored teaching-simulation sets as hypotheses. Name what varies, what persists, and what real test is still needed.
 - **Teach · 45–60 minutes:** Adapt the Squint Test or Default Test into a one-page classroom activity with a safety frame and debrief question.
-- **Critical / No-AI · 20–30 minutes:** Annotate three frozen examples for defaults, missing context, labor, disclosure, and the limits of your evidence.
+- **Critical / No-AI · 20–30 minutes:** Annotate three authored teaching simulations for illustrated defaults, missing context, labor, disclosure, and the limits of your evidence.
 
 Ask participants to submit one thing they can point to: an annotated screenshot, worksheet row, short comparison, rough lesson, or question supported by examples.
 
@@ -480,15 +498,15 @@ Ask participants to submit one thing they can point to: an annotated screenshot,
 
 - Run a second room-default prompt such as “a classroom.”
 - Compare two seeds before changing the prompt.
-- Ask the Dataset Balance Simulator group to explain how its result changes the room’s training-data hypothesis.
+- Ask the Dataset Balance Simulator group to explain what its simulation illustrates, then name what real evidence would be needed to test that training-data hypothesis.
 
 ### If a live control fails
 
 - Count the visible Zoom chat manually.
 - If the drawing canvas stalls or devices cannot run it, ask participants to type what they would commit this step in chat, and continue with the Diffusion Step-Through Viewer alone.
-- Advance with screenshots from the Image Prompt Pack.
+- Advance with the authored teaching simulations in the Image Prompt Pack.
 - Describe a low/middle/high guidance comparison verbally and ask participants to predict the tradeoff.
-- Continue with the worksheet. Every core claim can be built from frozen examples.
+- Continue with the worksheet. Every core investigation move can be practiced with the authored simulations; a model-level claim still waits for documented real outputs.
 
 ### If the discussion becomes too broad
 

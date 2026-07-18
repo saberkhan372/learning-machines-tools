@@ -5,6 +5,8 @@ title: Session 2 Slide Outline
 
 # Session 2 — Images: Slide Outline
 
+> **SUPERSEDED (2026-07-17) — do not run from this document.** It predates the final Session 2 plan: the schedule is outdated, some mechanism statements are misleading (image generation does not "predict pixels"), and its vague-prompt list includes "a criminal," which the current presenter script explicitly warns against using as a warm-up. The live sources are `docs/session-2-live-presenter-script.md`, `pages/session-2-deck.html`, and `assets/session-runs.js`. Kept for history only.
+
 **Learning Machines: Text, Images, Video**
 Slide-ready structure for presentation or screen share. Speaker notes in *italics*.
 

@@ -100,7 +100,7 @@
   <header>
     <div class="eyebrow">Session 2 · Images</div>
     <h1>Image Default Test Board</h1>
-    <p class="subtitle">Generate from underspecified prompts. Document what appears, what the model assumed, and what a different framing would require.</p>
+    <p class="subtitle">Use documented real outputs to test an underspecified prompt, or use authored teaching simulations to practice the method. Keep model evidence distinct from an illustrated hypothesis.</p>
   </header>
   <div class="controls">
     <button class="btn btn-print" onclick="window.print()">Print / Save as PDF</button>
@@ -108,22 +108,30 @@
     <span class="save-status" id="saveStatus">Not saved yet</span>
   </div>
 
+  <!-- Session 2 quick route -->
+  <div class="section" style="border-left:4px solid var(--accent, #b23c22);">
+    <div class="section-head">
+      <h2 class="section-title">Today’s 25-minute route</h2>
+      <div class="section-desc" style="font-size:.95rem;"><b style="color:var(--ink);">Complete <a href="#abc">A/B/C Prompt Control</a> and the Evidence-Based Claim only.</b> Everything else on this board is optional follow-up for after the session — one A/B/C comparison and one claim is a finished investigation.</div>
+    </div>
+  </div>
+
   <!-- Default Test Investigation -->
   <div class="section">
     <div class="section-head">
       <h2 class="section-title">Default Test Investigation</h2>
-      <div class="section-desc">Use deliberately underspecified prompts. Record what the model fills in without being asked.</div>
+      <div class="section-desc">With documented real outputs, record what repeatedly appears without being asked. With an authored simulation, record the hypothesis the scene is designed to illustrate.</div>
     </div>
-    <div class="prompt-seeds">Suggested prompts: "a doctor examining a patient" · "a CEO giving a speech" · "a beautiful family home" · "a student working late" · "a programmer at a computer" · "a safe neighborhood" · "a futuristic classroom"</div>
+    <div class="prompt-seeds">Suggested prompts: "a doctor examining a patient" · "a CEO giving a speech" · "a beautiful family home" · "a student working late" · "a programmer at a computer" · "a community workshop" · "a futuristic classroom"</div>
     <table>
       <thead>
-        <tr><th style="width:20%">Prompt</th><th style="width:20%">Your prediction <em style="font-weight:400">(before generating)</em></th><th style="width:22%">What appeared?</th><th style="width:20%">What was assumed?</th><th>What could be changed?</th></tr>
+        <tr><th style="width:20%">Prompt</th><th style="width:20%">Your prediction <em style="font-weight:400">(before generating)</em></th><th style="width:22%">What appeared or was illustrated?</th><th style="width:20%">Possible default / hypothesis</th><th>What could be changed?</th></tr>
       </thead>
       <tbody>
-        <tr><td><textarea aria-label="Default Test 1 Prompt" data-key="dt1-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 1 Predict" data-key="dt1-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea aria-label="Default Test 1 Appeared" data-key="dt1-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Default Test 1 Assumed" data-key="dt1-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea aria-label="Default Test 1 Change" data-key="dt1-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
-        <tr><td><textarea aria-label="Default Test 2 Prompt" data-key="dt2-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 2 Predict" data-key="dt2-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea aria-label="Default Test 2 Appeared" data-key="dt2-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Default Test 2 Assumed" data-key="dt2-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea aria-label="Default Test 2 Change" data-key="dt2-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
-        <tr><td><textarea aria-label="Default Test 3 Prompt" data-key="dt3-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 3 Predict" data-key="dt3-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea aria-label="Default Test 3 Appeared" data-key="dt3-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Default Test 3 Assumed" data-key="dt3-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea aria-label="Default Test 3 Change" data-key="dt3-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
-        <tr><td><textarea aria-label="Default Test 4 Prompt" data-key="dt4-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 4 Predict" data-key="dt4-predict" rows="3" placeholder="What race, gender, age, setting do you predict?"></textarea></td><td><textarea aria-label="Default Test 4 Appeared" data-key="dt4-appeared" rows="3" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Default Test 4 Assumed" data-key="dt4-assumed" rows="3" placeholder="Assumptions…"></textarea></td><td><textarea aria-label="Default Test 4 Change" data-key="dt4-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Default Test 1 Prompt" data-key="dt1-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 1 Predict" data-key="dt1-predict" rows="3" placeholder="What setting, pose, props, or style do you predict?"></textarea></td><td><textarea aria-label="Default Test 1 Appeared or Illustrated" data-key="dt1-appeared" rows="3" placeholder="Setting, pose, props, style…"></textarea></td><td><textarea aria-label="Default Test 1 Possible Default or Hypothesis" data-key="dt1-assumed" rows="3" placeholder="Possible default or illustrated hypothesis…"></textarea></td><td><textarea aria-label="Default Test 1 Change" data-key="dt1-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Default Test 2 Prompt" data-key="dt2-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 2 Predict" data-key="dt2-predict" rows="3" placeholder="What setting, pose, props, or style do you predict?"></textarea></td><td><textarea aria-label="Default Test 2 Appeared or Illustrated" data-key="dt2-appeared" rows="3" placeholder="Setting, pose, props, style…"></textarea></td><td><textarea aria-label="Default Test 2 Possible Default or Hypothesis" data-key="dt2-assumed" rows="3" placeholder="Possible default or illustrated hypothesis…"></textarea></td><td><textarea aria-label="Default Test 2 Change" data-key="dt2-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Default Test 3 Prompt" data-key="dt3-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 3 Predict" data-key="dt3-predict" rows="3" placeholder="What setting, pose, props, or style do you predict?"></textarea></td><td><textarea aria-label="Default Test 3 Appeared or Illustrated" data-key="dt3-appeared" rows="3" placeholder="Setting, pose, props, style…"></textarea></td><td><textarea aria-label="Default Test 3 Possible Default or Hypothesis" data-key="dt3-assumed" rows="3" placeholder="Possible default or illustrated hypothesis…"></textarea></td><td><textarea aria-label="Default Test 3 Change" data-key="dt3-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Default Test 4 Prompt" data-key="dt4-prompt" rows="3" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Default Test 4 Predict" data-key="dt4-predict" rows="3" placeholder="What setting, pose, props, or style do you predict?"></textarea></td><td><textarea aria-label="Default Test 4 Appeared or Illustrated" data-key="dt4-appeared" rows="3" placeholder="Setting, pose, props, style…"></textarea></td><td><textarea aria-label="Default Test 4 Possible Default or Hypothesis" data-key="dt4-assumed" rows="3" placeholder="Possible default or illustrated hypothesis…"></textarea></td><td><textarea aria-label="Default Test 4 Change" data-key="dt4-change" rows="3" placeholder="Revisions…"></textarea></td></tr>
       </tbody>
     </table>
   </div>
@@ -132,17 +140,17 @@
   <div class="section">
     <div class="section-head">
       <h2 class="section-title">Default Test Observation Grid</h2>
-      <div class="section-desc">Quick observation capture — record the vague prompt, what actually appeared, and what the model silently assumed.</div>
+      <div class="section-desc">Quick observation capture — for documented real outputs, record what appeared and what may have been supplied without being asked. For an authored simulation, record the hypothesis the scene illustrates.</div>
     </div>
     <table>
       <thead>
-        <tr><th style="width:33%">Vague prompt</th><th style="width:33%">What appeared?</th><th>What was assumed?</th></tr>
+        <tr><th style="width:33%">Vague prompt</th><th style="width:33%">What appeared or was illustrated?</th><th>Possible default / illustrated hypothesis</th></tr>
       </thead>
       <tbody>
-        <tr><td><textarea aria-label="Obs Grid 1 Prompt" data-key="og1-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 1 Appeared" data-key="og1-appeared" rows="2" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Obs Grid 1 Assumed" data-key="og1-assumed" rows="2" placeholder="What did the model fill in?"></textarea></td></tr>
-        <tr><td><textarea aria-label="Obs Grid 2 Prompt" data-key="og2-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 2 Appeared" data-key="og2-appeared" rows="2" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Obs Grid 2 Assumed" data-key="og2-assumed" rows="2" placeholder="What did the model fill in?"></textarea></td></tr>
-        <tr><td><textarea aria-label="Obs Grid 3 Prompt" data-key="og3-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 3 Appeared" data-key="og3-appeared" rows="2" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Obs Grid 3 Assumed" data-key="og3-assumed" rows="2" placeholder="What did the model fill in?"></textarea></td></tr>
-        <tr><td><textarea aria-label="Obs Grid 4 Prompt" data-key="og4-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 4 Appeared" data-key="og4-appeared" rows="2" placeholder="Race, gender, setting, style…"></textarea></td><td><textarea aria-label="Obs Grid 4 Assumed" data-key="og4-assumed" rows="2" placeholder="What did the model fill in?"></textarea></td></tr>
+        <tr><td><textarea aria-label="Obs Grid 1 Prompt" data-key="og1-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 1 Appeared" data-key="og1-appeared" rows="2" placeholder="Setting, pose, props, style…"></textarea></td><td><textarea aria-label="Obs Grid 1 Assumed" data-key="og1-assumed" rows="2" placeholder="Possible default or illustrated hypothesis…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Obs Grid 2 Prompt" data-key="og2-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 2 Appeared" data-key="og2-appeared" rows="2" placeholder="Setting, pose, props, style…"></textarea></td><td><textarea aria-label="Obs Grid 2 Assumed" data-key="og2-assumed" rows="2" placeholder="Possible default or illustrated hypothesis…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Obs Grid 3 Prompt" data-key="og3-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 3 Appeared" data-key="og3-appeared" rows="2" placeholder="Setting, pose, props, style…"></textarea></td><td><textarea aria-label="Obs Grid 3 Assumed" data-key="og3-assumed" rows="2" placeholder="Possible default or illustrated hypothesis…"></textarea></td></tr>
+        <tr><td><textarea aria-label="Obs Grid 4 Prompt" data-key="og4-prompt" rows="2" placeholder="Prompt…"></textarea></td><td><textarea aria-label="Obs Grid 4 Appeared" data-key="og4-appeared" rows="2" placeholder="Setting, pose, props, style…"></textarea></td><td><textarea aria-label="Obs Grid 4 Assumed" data-key="og4-assumed" rows="2" placeholder="Possible default or illustrated hypothesis…"></textarea></td></tr>
       </tbody>
     </table>
   </div>
@@ -151,7 +159,7 @@
   <div class="section">
     <div class="section-head">
       <h2 class="section-title">Revision</h2>
-      <div class="section-desc">Pick one default you want to resist. Try a revision, then note what changed and what stayed the same.</div>
+      <div class="section-desc">Pick one possible default to test. Try or inspect a revision, then note what changed and what stayed the same.</div>
     </div>
     <div class="reflect-item">
       <div class="reflect-q">Revision tried</div>
@@ -159,12 +167,12 @@
     </div>
     <div class="reflect-item">
       <div class="reflect-q">What changed / what stayed the same?</div>
-      <textarea aria-label="Revision result" data-key="rev-result" rows="3" placeholder="What shifted in the output? What default persisted even after your revision?"></textarea>
+      <textarea aria-label="Revision result" data-key="rev-result" rows="3" placeholder="What shifted in the output or authored scene? What possible default persisted?"></textarea>
     </div>
   </div>
 
   <!-- A/B/C Control -->
-  <div class="section">
+  <div class="section" id="abc">
     <div class="section-head">
       <h2 class="section-title">A/B/C Prompt Control</h2>
       <div class="section-desc">Start with a basic prompt. Add specificity in B. Respond to a failure, bias, or unwanted default in C.</div>
@@ -185,14 +193,15 @@
   <div class="section">
     <div class="claim-box">
       <div class="claim-label">Evidence-based claim</div>
-      <textarea aria-label="Claim" data-key="claim" rows="3" placeholder="When given [prompt], this model assumed [X], which I believe reflects [Y]…"></textarea>
+      <div class="section-desc" style="margin-bottom:6px;">Documented real-output work: “Across [N] outputs, the system repeatedly supplied [X]…” · Authored teaching simulation: “This simulation illustrates the hypothesis that [X]…”</div>
+      <textarea aria-label="Claim" data-key="claim" rows="3" placeholder="Use the live-output or simulation claim frame shown above…"></textarea>
     </div>
   </div>
 
   <!-- Reflection -->
   <div class="section">
     <div class="section-head"><h2 class="section-title">Reflection</h2></div>
-    <div class="reflect-item"><div class="reflect-q">What did the model assume that you didn't specify?</div><textarea aria-label="Reflection 1" data-key="r1" rows="2"></textarea></div>
+    <div class="reflect-item"><div class="reflect-q">What did documented outputs repeatedly supply — or what hypothesis did the simulation illustrate?</div><textarea aria-label="Reflection 1" data-key="r1" rows="2"></textarea></div>
     <div class="reflect-item"><div class="reflect-q">Which assumptions surprised you? Which did you predict?</div><textarea aria-label="Reflection 2" data-key="r2" rows="2"></textarea></div>
     <div class="reflect-item"><div class="reflect-q">Where do these defaults come from — training data, curation, labeling, platform choices?</div><textarea aria-label="Reflection 3" data-key="r3" rows="2"></textarea></div>
     <div class="reflect-item"><div class="reflect-q">Who benefits from the current defaults? Who doesn't?</div><textarea aria-label="Reflection 4" data-key="r4" rows="2"></textarea></div>
