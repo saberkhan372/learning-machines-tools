@@ -71,6 +71,7 @@ Only a live generator, or a documented set of real outputs, supports a claim abo
 - [Session 2 live deck](../pages/session-2-deck.html)
 - [Session 1 recap](../pages/session-1-recap.html)
 - [The Squint Test](../tools/feature-extraction-pixel-resolution/)
+- [Image–Caption Match Lab](../tools/image-caption-match-lab/)
 - [Human Diffusion Canvas](../tools/human-diffusion-canvas/)
 - [Diffusion Step-Through Viewer](../tools/diffusion-step-through-viewer/)
 - [Default Test Comparison Viewer](../tools/default-test-comparison-viewer/)
@@ -112,7 +113,7 @@ The three blocks are fixed: **60 minutes of facilitated lesson, 30 minutes of st
 3. Open the audience window and plan to share only that window.
 4. Keep the presenter window, Zoom chat, participant list, and timer visible to you.
 5. Open the Image Prompt Pack and Image Default Test Board in backup tabs.
-6. Confirm that the Squint Test, Human Diffusion Canvas, Diffusion Viewer, and Default Test Comparison Viewer work without a login.
+6. Confirm that the Squint Test, Image–Caption Match Lab, Human Diffusion Canvas, Diffusion Viewer, and Default Test Comparison Viewer work without a login.
 7. Open the Human Diffusion Canvas, set **three steps** and **start from noise**, type the Round 2 words, and press **Copy setup link for the class**. Keep the link ready to paste at the start of Round 2 so everyone opens the identical setup.
 8. Choose two Session 1 artifacts to invite at the opening, with the creators’ permission.
 9. Put the guest’s preferred name, links, and introduction in your notes. Confirm the 30-minute spotlight and agree on the final two-minute handoff.
@@ -191,7 +192,9 @@ Then say the common ground: “Both learn statistical patterns from human-made d
 - Toggle from pixels to the simplified feature view.
 - Add PoseNet as a concrete recognition example without opening another tool: one RGB frame goes in; the model returns 17 body keypoints such as shoulders, elbows, and knees, each with x/y coordinates and a confidence score.
 - Name WordNet and ImageNet briefly as the human category-and-label layer.
-- Keep the cat image visible and offer three captions: A **“a shape,”** B **“an orange cat facing forward,”** C **“a red bicycle.”** Ask which would probably land closest in a CLIP-style shared representation space.
+- Open the Image–Caption Match Lab. Keep the cat scene visible and offer three captions: A **“a shape,”** B **“an orange cat facing forward,”** C **“a red bicycle.”** Ask which would probably land closest in a CLIP-style shared representation space.
+- Reveal the authored teaching scores only after the room commits. Change one phrase, test again, and inspect the mapped, other-scene, and unmapped cues.
+- Cap the lab at one scene and one revision—about two minutes inside this round. Leave the full human-created label-layer table for studio or asynchronous exploration.
 
 ### Say
 
@@ -205,13 +208,15 @@ Then say the common ground: “Both learn statistical patterns from human-made d
 
 “Which caption would probably land closest to this cat image: A, B, or C? What learned association makes it closer?”
 
-After the vote: “CLIP compares learned image and text representations. It does not search a folder for an existing finished picture. That relationship can condition generation, but diffusion is the separate mechanism we perform next—and not every generator uses CLIP.”
+After the vote: “The lab’s scores are authored so we can inspect its matching rule; they are not CLIP evidence. CLIP compares learned image and text representations. It does not search a folder for an existing finished picture. That relationship can condition generation, but diffusion is the separate mechanism we perform next—and not every generator uses CLIP.”
 
 “Notice that you recognized the subject before every detail returned. Which cue did the most work for you?”
 
 ### Watch for
 
 Do not say that a generator “sees exactly what you see” or that it stores objects as neat labeled parts. The tool is a teaching model for the path from numerical input to learned visual structure. PoseNet is a task-specific inference model; CLIP is a prominent shared-representation example; neither is a component that every image generator contains.
+
+If the Match Lab stalls, keep the cat image on the deck, collect the A/B/C vote in chat, and say that the hidden reveal would have shown an authored classroom score—not a CLIP result. Continue with the same mechanism boundary.
 
 ### Transition
 
@@ -416,7 +421,7 @@ Leave the five-part evidence frame visible while participants choose a pathway.
 ### Route by pathway
 
 - **Use:** Run a vague/specific/revised A/B/C series in the Default Test Comparison Viewer or in a live generator you already choose to use.
-- **Observe / Critique:** Analyze at least three authored scenes in the Image Prompt Pack. These are teaching simulations — separate observation from hypothesis, and use the simulation claim frame.
+- **Observe / Critique:** Change one phrase in the Image–Caption Match Lab and inspect which human-selected cues move the authored score, or analyze at least three scenes in the Image Prompt Pack. Both are teaching simulations — separate observation from hypothesis and use the simulation claim frame.
 - **Teach / Design:** Adapt the Squint Test or Human Diffusion Canvas for a classroom. Write the prompt, collection method, safety frame, and debrief question. The canvas also runs unplugged: paper, thick-to-thin pens, and tracing-paper veils.
 - **Build / Code:** Use the Dataset Balance Simulator or Latent Space Compressor to test one mechanism, or annotate the short diffusion-loop pseudocode on the Session 2 page (`session-images.html#build-code`) — mark one line you can defend and one line that hides real complexity.
 - **Critical / No-AI:** Use the authored teaching simulations and the consent checklist to audit representation, labor, disclosure, and the limits of the available evidence.

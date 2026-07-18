@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="callout" style="margin-top:18px;max-width:82ch;">
-        <p><b>Teaching move · CLIP:</b> keep one image visible and offer three captions: <i>“a shape,” “an orange cat facing forward,”</i> and <i>“a red bicycle.”</i> Ask which caption would probably land closest to the image in a shared representation space. CLIP compares learned image/text vectors; it does not search a folder for a finished picture, and not every image generator uses CLIP.</p>
+        <p><b>Teaching move · CLIP:</b> open the <a href="../tools/image-caption-match-lab/">Image–Caption Match Lab</a>. Predict which caption lands closest, reveal the authored teaching scores, then change one phrase and inspect which human-selected cues moved the ranking. The lab is not a CLIP measurement; it makes the comparison logic inspectable without implying image search, human understanding, or that every generator uses CLIP.</p>
       </div>
     </div>
   </section>
@@ -99,20 +99,26 @@
           <span class="ix-blurb">Reduce detail until recognition breaks, and identify which visual cues return first.</span>
           <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
         </a>
-        <a class="ix-row" data-mod="image" href="../tools/diffusion-step-through-viewer/">
+        <a class="ix-row" data-mod="image" href="../tools/image-caption-match-lab/">
           <span class="ix-no mono">02</span>
+          <span class="ix-name">Image–Caption Match Lab</span>
+          <span class="ix-blurb">Predict a caption match, reveal a transparent authored score, change one phrase, and inspect the human-created label layer.</span>
+          <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
+        </a>
+        <a class="ix-row" data-mod="image" href="../tools/diffusion-step-through-viewer/">
+          <span class="ix-no mono">03</span>
           <span class="ix-name">Diffusion Step-Through Viewer</span>
           <span class="ix-blurb">Move slowly from pure noise to final image and read the prompt guidance at every stage.</span>
           <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
         </a>
         <a class="ix-row" data-mod="image" href="../tools/default-test-comparison-viewer/">
-          <span class="ix-no mono">03</span>
+          <span class="ix-no mono">04</span>
           <span class="ix-name">Default Test Comparison Viewer</span>
           <span class="ix-blurb">Compare vague prompts, specific prompts, and critical revisions to see what appeared by default.</span>
           <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
         </a>
         <a class="ix-row" data-mod="image" href="../tools/human-diffusion-canvas/">
-          <span class="ix-no mono">04</span>
+          <span class="ix-no mono">05</span>
           <span class="ix-name">Human Diffusion Canvas</span>
           <span class="ix-blurb">The whole class becomes the denoiser: draw from spoken words in timed coarse-to-fine steps, then export the trajectory GIF.</span>
           <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
@@ -160,7 +166,7 @@
       <div class="sec-rule"><h2 class="sec-no">§ C · Run of show</h2><span class="sec-note">two-hour live session</span></div>
       <div class="ros">
         <div class="ros-row"><div class="ros-time">0–10</div><div><p class="ros-seg">Welcome, consent &amp; Session 1 retrieval</p><p class="ros-body">Share two text-session artifacts or revisit the recap. Recover the method: <b>predict → change one thing → compare → claim → human decision</b>.</p></div></div>
-        <div class="ros-row"><div class="ros-time">10–25</div><div><p class="ros-seg">Pixels → labels → shared representations</p><p class="ros-body">Use PoseNet to translate one frame into keypoint coordinates; use WordNet and ImageNet to show that categories and labels were designed; then run the three-caption CLIP question. Treat the room tally as a <b>hypothesis</b>, not proof about a model.</p></div></div>
+        <div class="ros-row"><div class="ros-time">10–25</div><div><p class="ros-seg">Pixels → labels → shared representations</p><p class="ros-body">Use PoseNet to translate one frame into keypoint coordinates; use WordNet and ImageNet to show that categories and labels were designed; then predict, reveal, and revise one match in the <b>Image–Caption Match Lab</b>. Treat its authored scores and the room tally as teaching evidence, not proof about a model.</p></div></div>
         <div class="ros-row"><div class="ros-time">25–44</div><div><p class="ros-seg">Diffusion — performed, then watched — guidance &amp; revision</p><p class="ros-body">Draw the words on the <b>Human Diffusion Canvas</b> in timed coarse-to-fine steps, then watch an analogous machine-denoising sequence from noise. Compare vague, specific, and revised prompts; keep <b>prompt wording distinct from CFG strength</b>.</p></div></div>
         <div class="ros-row"><div class="ros-time">44–60</div><div><p class="ros-seg">Whose picture? &amp; mechanism debrief</p><p class="ros-body">Ask who chose categories, supplied or appeared in images, annotated them, defined correctness, and was represented or excluded. Synthesize the loop and choose a pathway before <b>60 minutes</b>.</p></div></div>
         <div class="ros-row"><div class="ros-time">60–90</div><div><p class="ros-seg">Student work studio · 30 minutes</p><p class="ros-body">Choose one of five routes and investigate for 25 minutes, then post one <b>appropriately framed claim</b> plus a next test in the final five. Stop at 1:30.</p></div></div>

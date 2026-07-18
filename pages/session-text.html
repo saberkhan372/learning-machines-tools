@@ -65,7 +65,10 @@
         <div class="through-step"><div class="ts-n">04</div><h4>Human feedback</h4><p>People and institutions demonstrate, compare, and reward versions of what counts as a better response.</p></div>
       </div>
       <div class="callout" style="margin-top:18px;max-width:82ch;">
-        <p><b>Teaching move · Embedding Projector:</b> place a few nearby words on screen and ask whether they are close because they mean the same thing, appear in similar contexts, or reflect a cultural association in the training data. The <a href="https://projector.tensorflow.org/" target="_blank" rel="noopener">Embedding Projector</a> makes learned proximity visible; use it as a simplified snapshot, not as a literal view of a modern transformer’s context-dependent internal state.</p>
+        <p><b>Teaching move · contextual vectors:</b> open the <a href="../tools/contextual-vector-lab/">Contextual Vector Lab</a>. Keep one token fixed, change its sentence, predict the neighborhood, then reveal the authored move. Ask whether proximity reflects meaning, usage, or a repeated cultural association. The <a href="https://projector.tensorflow.org/" target="_blank" rel="noopener">Embedding Projector</a> remains a useful real-project reference for static learned neighborhoods; neither surface is a literal view of a transformer’s complete internal state.</p>
+      </div>
+      <div class="callout" style="margin-top:12px;max-width:82ch;">
+        <p><b>Teaching move · human feedback:</b> open the <a href="../tools/whose-preference-lab/">Whose Preference? Lab</a>. Rank the same fluent responses, reveal an authored rater panel, then change who is included or how judgments are aggregated. Ask whose definition of “better” became a signal. The lab illustrates preference-data decisions; it is not an RLHF training run.</p>
       </div>
       <div class="session-temp-note">
         <div class="plate-cap"><span class="fig">Fig. 01B — Temperature ladder</span><span>same prompt, rising randomness</span></div>
@@ -103,14 +106,26 @@
           <span class="ix-blurb">Watch text break into tokens, see next-token probabilities, and feel how temperature reshapes sampling.</span>
           <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
         </a>
-        <a class="ix-row" data-mod="text" href="../tools/count-the-next-token/">
+        <a class="ix-row" data-mod="text" href="../tools/contextual-vector-lab/">
           <span class="ix-no mono">02</span>
+          <span class="ix-name">Contextual Vector Lab</span>
+          <span class="ix-blurb">Keep one token fixed across three sentences and watch an authored projection move it toward different contextual neighbors.</span>
+          <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
+        </a>
+        <a class="ix-row" data-mod="text" href="../tools/count-the-next-token/">
+          <span class="ix-no mono">03</span>
           <span class="ix-name">Count the Next Token</span>
           <span class="ix-blurb">Pick a context word, watch the bigram table build, then follow the arithmetic: count → divide → predict.</span>
           <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
         </a>
+        <a class="ix-row" data-mod="text" href="../tools/whose-preference-lab/">
+          <span class="ix-no mono">04</span>
+          <span class="ix-name">Whose Preference? Lab</span>
+          <span class="ix-blurb">Rank fluent responses, change the rater panel or aggregation rule, and inspect which definition of “better” becomes a signal.</span>
+          <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
+        </a>
         <a class="ix-row" data-mod="text" href="../tools/eliza-simulator/">
-          <span class="ix-no mono">03</span>
+          <span class="ix-no mono">05</span>
           <span class="ix-name">ELIZA Simulator</span>
           <span class="ix-blurb">Contrast visible rule-matching with opaque LLM behaviour, so mechanism and effect pull apart.</span>
           <span class="ix-stamp-cell"><span class="stamp featured">Featured</span></span>
@@ -135,10 +150,10 @@
       <div class="ros">
         <div class="ros-row"><div class="ros-time">0–5</div><div><p class="ros-seg">Welcome &amp; norms</p><p class="ros-body">Name the question. Remind everyone direct AI use is optional — each person chooses a <b>participation pathway</b>.</p></div></div>
         <div class="ros-row"><div class="ros-time">5–15</div><div><p class="ros-seg">Unplugged prediction → counting</p><p class="ros-body">Show a sentence stem and collect guesses in Zoom chat (paste into the <b>Next-Token Prediction Game</b> for the room's distribution), then open <b>Count the Next Token</b> to reveal the mechanism: count → divide → predict.</p></div></div>
-        <div class="ros-row"><div class="ros-time">15–35</div><div><p class="ros-seg">Tokens → vectors → probabilities + temperature</p><p class="ros-body">Show token chunks and one learned-vector example, ask what “nearby” means, then run one prompt at low and high temperature. Watch <b>probability bars</b> and greedy vs. sampled output.</p></div></div>
+        <div class="ros-row"><div class="ros-time">15–35</div><div><p class="ros-seg">Tokens → vectors → probabilities + temperature</p><p class="ros-body">Use one <b>Contextual Vector Lab</b> predict → reveal cycle to separate token ID, starting vector, and context-dependent representation; then run one prompt at low and high temperature. Watch probability bars and greedy vs. sampled output.</p></div></div>
         <div class="ros-row"><div class="ros-time">35–55</div><div><p class="ros-seg">ELIZA vs. LLM</p><p class="ros-body">Inspect the matched rule, pattern, and template. Compare <b>visible rule-matching</b> with pre-generated LLM examples.</p></div></div>
-        <div class="ros-row"><div class="ros-time">55–75</div><div><p class="ros-seg">Investigation</p><p class="ros-body">Complete one <b>Text Experiment Board</b> section: a default test, a prompt variation, or an ELIZA comparison.</p></div></div>
-        <div class="ros-row"><div class="ros-time">75–90</div><div><p class="ros-seg">Debrief</p><p class="ros-body">Reflection frame — <b>human, machine, system, ethics, pedagogy</b>. Share one evidence-based claim and one question.</p></div></div>
+        <div class="ros-row"><div class="ros-time">55–75</div><div><p class="ros-seg">Investigation</p><p class="ros-body">Complete one <b>Text Experiment Board</b> section: a default test, prompt variation, ELIZA comparison, or a panel change in the <b>Whose Preference? Lab</b>.</p></div></div>
+        <div class="ros-row"><div class="ros-time">75–90</div><div><p class="ros-seg">Debrief</p><p class="ros-body">Reflection frame — <b>human, machine, system, ethics, pedagogy</b>. Ask whose definition of “better” entered the signal, then share one evidence-based claim and one question.</p></div></div>
       </div>
     </div>
   </section>
@@ -154,6 +169,7 @@
         <div class="prompt">If two words are nearby in an embedding, is that shared meaning, shared context, or a learned cultural association?</div>
         <div class="prompt">At low temperature, what becomes more predictable? At high, more unstable?</div>
         <div class="prompt">What does ELIZA make visible that a modern LLM hides?</div>
+        <div class="prompt">Whose definition of “better” entered the preference signal, and whose was excluded?</div>
         <div class="prompt">Where could fluency be mistaken for understanding?</div>
       </div>
     </div>
@@ -167,11 +183,13 @@
         <div class="doc-group">
           <h3>Worksheet</h3>
           <div class="doc-list">
-            <a class="doc-row" href="session-1-assignment.html"><span class="d-name">Assignment Options</span><span class="d-desc">Five routes for optional async work</span></a>
+            <a class="doc-row" href="session-1-assignment.html"><span class="d-name">Assignment Options</span><span class="d-desc">Six routes for optional async work</span></a>
             <a class="doc-row" href="../worksheets/text-experiment-board/"><span class="d-name">Text Experiment Board</span><span class="d-desc">Prompt versions &amp; observations</span></a>
             <a class="doc-row" href="../worksheets/ai-use-consent-checklist/"><span class="d-name">AI Use + Consent</span><span class="d-desc">Norms &amp; pathways</span></a>
             <a class="doc-row" href="../packs/text/"><span class="d-name">Text Prompt Pack</span><span class="d-desc">Frozen examples &amp; annotations</span></a>
             <a class="doc-row" href="../tools/concept-bridges/prediction-is-not-understanding/"><span class="d-name">Bridge · Prediction ≠ understanding</span><span class="d-desc">Build intuition first</span></a>
+            <a class="doc-row" href="../tools/contextual-vector-lab/"><span class="d-name">Contextual Vector Lab</span><span class="d-desc">Token ID → base vector → contextual neighbors</span></a>
+            <a class="doc-row" href="../tools/whose-preference-lab/"><span class="d-name">Whose Preference? Lab</span><span class="d-desc">Rater panels → aggregate preference signal</span></a>
             <a class="doc-row" href="https://projector.tensorflow.org/" target="_blank" rel="noopener"><span class="d-name">Embedding Projector</span><span class="d-desc">Explore learned vector neighborhoods</span></a>
             <a class="doc-row" href="further-reading.html#mechanism-primers"><span class="d-name">Mechanism primers</span><span class="d-desc">Embedding Projector, CLIP &amp; CoTracker</span></a>
             <a class="doc-row" href="younger-learners.html"><span class="d-name">Adapting for younger learners</span><span class="d-desc">Ages 6&ndash;12 notes for this session</span></a>

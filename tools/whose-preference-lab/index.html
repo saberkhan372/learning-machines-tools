@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="text" data-skin="text-tokenstream">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>Whose Preference? Lab · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/field-theme.js"></script>
+  <style>
+    [hidden] { display: none !important; }
+
+    .preference-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .phase-line {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .phase {
+      padding: 8px 9px;
+      border: 1px solid var(--rule-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.055em;
+      text-transform: uppercase;
+    }
+
+    .phase.active {
+      border-color: var(--accent);
+      background: color-mix(in oklab, var(--accent) 12%, var(--surface));
+      color: var(--ink);
+    }
+
+    .prompt-box {
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
+      background: color-mix(in oklab, var(--accent) 8%, var(--surface));
+      color: var(--ink);
+      font-size: 1.05rem;
+    }
+
+    .response-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .response-card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--rule);
+      border-radius: 9px;
+      background: var(--surface-2);
+    }
+
+    .rank-number {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--on-accent);
+      font-family: var(--font-mono);
+      font-weight: 800;
+    }
+
+    .response-id {
+      display: inline-block;
+      min-width: 2ch;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-weight: 800;
+    }
+
+    .response-copy {
+      margin: 4px 0 0;
+      color: var(--ink);
+      line-height: 1.45;
+    }
+
+    .rank-controls {
+      display: grid;
+      gap: 5px;
+    }
+
+    .rank-button {
+      min-width: 38px;
+      padding: 6px 8px;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+    }
+
+    .rank-button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .rank-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .rater-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .rater-check {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 9px 10px;
+      border: 1px solid var(--rule-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .rater-check input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--accent);
+    }
+
+    .rater-check b { display: block; }
+
+    .rater-check small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+    }
+
+    .method-select {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 10px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .signal-chart {
+      display: grid;
+      gap: 13px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .signal-row {
+      display: grid;
+      grid-template-columns: minmax(110px, 0.44fr) minmax(120px, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .signal-label {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .signal-label span {
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+
+    .signal-track {
+      height: 18px;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: var(--surface-2);
+    }
+
+    .signal-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 240ms ease;
+    }
+
+    .signal-row.winner .signal-track {
+      box-shadow: 0 0 0 2px var(--ink);
+    }
+
+    .signal-value {
+      min-width: 5ch;
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .signal-summary {
+      padding: 12px 14px;
+      border-left: 4px solid var(--accent);
+      background: color-mix(in oklab, var(--accent) 9%, var(--surface));
+    }
+
+    .rater-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .rater-table th,
+    .rater-table td {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--rule-soft);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .rater-table th {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .rater-table td:last-child {
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    .decision-list {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    .decision-list li + li { margin-top: 7px; }
+
+    .status-line {
+      min-height: 1.4em;
+      margin: 0;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    fieldset {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    fieldset:disabled { opacity: 0.58; }
+
+    @media (max-width: 900px) {
+      .preference-shell,
+      .tool-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .phase-line { grid-template-columns: 1fr; }
+      .response-card { grid-template-columns: auto minmax(0, 1fr); }
+      .rank-controls { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
+      .signal-row { grid-template-columns: minmax(90px, 0.55fr) minmax(90px, 1fr) auto; }
+      .rater-table th:nth-child(2),
+      .rater-table td:nth-child(2) { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .signal-fill { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../pages/tools.html" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../../pages/session-text.html">Session 1</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Tool 27 · Session 1 · Text · Human preference</p>
+      <h1 class="tool-title">Whose Preference? Lab</h1>
+      <p class="tool-dek">Rank three fluent responses, assemble a panel of authored rater perspectives, then change how their judgments are aggregated. Watch “better” move when the panel or rule changes.</p>
+      <div class="tool-idea">Big idea: next-token prediction can produce fluent candidates, but people and institutions decide which qualities get demonstrated, compared, rewarded, and eventually treated as preferable.</div>
+      <div class="tool-notice"><b>Authored teaching simulation.</b> The responses, rater priorities, feature values, rankings, and aggregate signals were written for instruction. This is not an RLHF training run, reward-model output, or measurement of real people. Real alignment pipelines involve far more data, labor, policy, modeling, and optimization.</div>
+    </header>
+
+    <section class="preference-shell" aria-label="Human preference investigation">
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Choose an authored prompt</p>
+            <div class="choice-list" id="scenarioList"></div>
+          </div>
+
+          <div class="phase-line" aria-label="Investigation phases">
+            <div class="phase active" id="phaseRank">1 · Rank</div>
+            <div class="phase" id="phasePanel">2 · Panel</div>
+            <div class="phase" id="phaseSignal">3 · Signal</div>
+          </div>
+
+          <div>
+            <p class="mini-label">Prompt</p>
+            <div class="prompt-box" id="promptText"></div>
+          </div>
+
+          <div>
+            <p class="mini-label">Your ranking · move the strongest response to 1</p>
+            <ol class="response-list" id="responseList"></ol>
+          </div>
+
+          <div class="button-row">
+            <button class="tool-button" type="button" id="recordBtn">Record my ranking</button>
+            <button class="tool-button secondary" type="button" id="resetBtn">Reset this prompt</button>
+          </div>
+          <p class="status-line" id="rankingStatus" aria-live="polite">Rank all three responses before looking at the panel.</p>
+        </div>
+      </section>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <fieldset id="panelFieldset" disabled>
+            <div class="stack">
+              <div>
+                <p class="mini-label">Assemble the panel</p>
+                <h2>Whose judgments count?</h2>
+                <p class="small-muted">These are authored priority profiles, not claims that every member of a group thinks the same way.</p>
+              </div>
+              <div class="rater-list" id="raterList"></div>
+              <label for="methodSelect"><b>Aggregation rule</b></label>
+              <select class="method-select" id="methodSelect">
+                <option value="average">Average every rater’s weighted score</option>
+                <option value="votes">One rater, one first-choice vote</option>
+              </select>
+              <button class="tool-button" type="button" id="revealBtn">Reveal aggregate signal</button>
+              <p class="status-line" id="panelStatus" aria-live="polite">Record your ranking to activate the panel.</p>
+            </div>
+          </fieldset>
+
+          <section class="stack" id="signalSection" hidden>
+            <div>
+              <p class="mini-label">Aggregate teaching signal</p>
+              <h2 id="signalHeading">Which response becomes preferred?</h2>
+              <p class="small-muted" id="methodDescription"></p>
+            </div>
+            <ol class="signal-chart" id="signalChart" aria-label="Aggregate preference signal"></ol>
+            <div class="signal-summary" id="signalSummary" aria-live="polite"></div>
+            <div>
+              <p class="mini-label">Selected rater rankings</p>
+              <table class="rater-table">
+                <thead><tr><th>Rater perspective</th><th>Prioritizes</th><th>Authored ranking</th></tr></thead>
+                <tbody id="raterTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <p class="status-line" id="testStatus" aria-live="polite"></p>
+        </div>
+      </section>
+    </section>
+
+    <section class="tool-grid-2" style="margin-top:16px;">
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Investigation note</p>
+            <h2>Make one bounded claim</h2>
+            <p>Describe what changed in this authored panel. A preference signal records a choice under a rule; it does not prove universal quality or truth.</p>
+          </div>
+          <label for="claimBox">Claim
+            <textarea class="note-box" id="claimBox">In this teaching simulation, response ___ became preferred when ___ because ___. This illustrates the hypothesis that preference data can encode ___. Testing that in a real system would require ___.</textarea>
+          </label>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy investigation</button>
+            <button class="tool-button secondary" type="button" id="printBtn">Print / save</button>
+          </div>
+          <p class="status-line" id="copyStatus" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Human decision layer</p>
+            <h2>What gets turned into a signal?</h2>
+          </div>
+          <ul class="decision-list">
+            <li><b>Candidate set:</b> someone decided which responses the panel could compare.</li>
+            <li><b>Evaluation dimensions:</b> accuracy, clarity, care, actionability, and brevity were selected by the author.</li>
+            <li><b>Panel composition:</b> including or excluding a perspective changes whose priorities enter the signal.</li>
+            <li><b>Aggregation:</b> averaging strength and counting first choices answer different questions.</li>
+            <li><b>Training step:</b> a real pipeline still has to learn from many such comparisons; labels do not directly rewrite one answer.</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../../index.html">Home</a> · <a href="../../pages/tools.html">Tool index</a> · <a href="../../pages/session-text.html">Session 1</a></nav>
+      <p class="colophon">Offline teaching simulation · No account, model API, or participant data required.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      let STORAGE_KEY = "lm-whose-preference-lab";
+      let FEATURES = ["accuracy", "clarity", "care", "actionability", "brevity"];
+      let DEFAULT_RATERS = ["learner", "teacher", "access", "policy"];
+
+      let RATERS = [
+        { id: "learner", name: "Learner", priority: "care + brevity", weights: [2, 3, 5, 1, 5] },
+        { id: "teacher", name: "Teacher", priority: "clarity + actionability", weights: [4, 5, 3, 5, 2] },
+        { id: "editor", name: "Editor", priority: "clarity + brevity", weights: [4, 5, 1, 2, 5] },
+        { id: "access", name: "Accessibility advocate", priority: "clarity + care + actionability", weights: [4, 5, 5, 5, 1] },
+        { id: "policy", name: "School policy team", priority: "accuracy + actionability", weights: [5, 2, 1, 5, 2] }
+      ];
+
+      let SCENARIOS = [
+        {
+          id: "apology",
+          short: "Late-work apology",
+          title: "Apologize for late work",
+          prompt: "Write a one-sentence apology to a teacher for turning in an assignment late.",
+          responses: [
+            { id: "A", text: "I’m sorry I turned in the assignment late; I underestimated the time, and I will submit it by 4 p.m. today and plan earlier next time.", features: [5, 5, 4, 5, 2] },
+            { id: "B", text: "Sorry for the delay—things have been really busy, but I hope you understand.", features: [3, 2, 5, 2, 5] },
+            { id: "C", text: "I apologize for the late submission and sincerely regret the delay; I will follow the class policy for making up the work.", features: [5, 4, 2, 3, 5] }
+          ]
+        },
+        {
+          id: "photosynthesis",
+          short: "Explain a concept",
+          title: "Explain photosynthesis",
+          prompt: "Explain photosynthesis to a curious ten-year-old in two sentences.",
+          responses: [
+            { id: "A", text: "Photosynthesis converts photon energy into chemical energy through light-dependent reactions and carbon fixation in chloroplasts.", features: [5, 2, 2, 5, 2] },
+            { id: "B", text: "Plants use sunlight like a tiny kitchen: they combine water and carbon dioxide to make sugar for energy, and oxygen is released along the way.", features: [3, 5, 5, 4, 3] },
+            { id: "C", text: "Plants eat sunlight and breathe out oxygen, which helps them grow.", features: [2, 5, 4, 2, 5] }
+          ]
+        },
+        {
+          id: "announcement",
+          short: "Event announcement",
+          title: "Announce a community event",
+          prompt: "Write a short announcement for a free neighborhood science night.",
+          responses: [
+            { id: "A", text: "Join our free neighborhood science night Friday, 6–8 p.m., at the library; step-free entry, quiet space, materials, and Spanish interpretation are provided.", features: [5, 4, 5, 5, 2] },
+            { id: "B", text: "Science Night is Friday—free experiments, big surprises, and fun for everyone! Come join us!", features: [3, 5, 3, 2, 5] },
+            { id: "C", text: "The library will host a free science program Friday from 6–8 p.m.; registration is not required.", features: [5, 3, 2, 4, 4] }
+          ]
+        }
+      ];
+
+      let state = {
+        scenarioIndex: 0,
+        order: ["A", "B", "C"],
+        recorded: false,
+        recordedOrder: [],
+        selectedRaters: DEFAULT_RATERS.slice(),
+        method: "average",
+        revealed: false,
+        claim: "In this teaching simulation, response ___ became preferred when ___ because ___. This illustrates the hypothesis that preference data can encode ___. Testing that in a real system would require ___."
+      };
+
+      let scenarioList = document.getElementById("scenarioList");
+      let promptText = document.getElementById("promptText");
+      let responseList = document.getElementById("responseList");
+      let recordBtn = document.getElementById("recordBtn");
+      let resetBtn = document.getElementById("resetBtn");
+      let rankingStatus = document.getElementById("rankingStatus");
+      let panelFieldset = document.getElementById("panelFieldset");
+      let raterList = document.getElementById("raterList");
+      let methodSelect = document.getElementById("methodSelect");
+      let revealBtn = document.getElementById("revealBtn");
+      let panelStatus = document.getElementById("panelStatus");
+      let signalSection = document.getElementById("signalSection");
+      let signalHeading = document.getElementById("signalHeading");
+      let methodDescription = document.getElementById("methodDescription");
+      let signalChart = document.getElementById("signalChart");
+      let signalSummary = document.getElementById("signalSummary");
+      let raterTableBody = document.getElementById("raterTableBody");
+      let testStatus = document.getElementById("testStatus");
+      let claimBox = document.getElementById("claimBox");
+      let copyStatus = document.getElementById("copyStatus");
+
+      function currentScenario() {
+        return SCENARIOS[state.scenarioIndex];
+      }
+
+      function responseById(id) {
+        let scenario = currentScenario();
+        return scenario.responses.find(function (response) {
+          return response.id === id;
+        });
+      }
+
+      function raterById(id) {
+        return RATERS.find(function (rater) {
+          return rater.id === id;
+        });
+      }
+
+      function selectedRaters() {
+        return state.selectedRaters.map(raterById).filter(Boolean);
+      }
+
+      function weightedScore(response, rater) {
+        let total = 0;
+        let ceiling = 0;
+        for (let i = 0; i < FEATURES.length; i += 1) {
+          total += response.features[i] * rater.weights[i];
+          ceiling += 5 * rater.weights[i];
+        }
+        return total / ceiling * 100;
+      }
+
+      function raterRanking(rater) {
+        let scenario = currentScenario();
+        return scenario.responses.slice().sort(function (a, b) {
+          let difference = weightedScore(b, rater) - weightedScore(a, rater);
+          if (Math.abs(difference) > 0.0001) {
+            return difference;
+          }
+          return a.id.localeCompare(b.id);
+        });
+      }
+
+      function aggregateSignal() {
+        let raters = selectedRaters();
+        let scenario = currentScenario();
+        let values = {};
+        scenario.responses.forEach(function (response) {
+          values[response.id] = 0;
+        });
+
+        if (state.method === "average") {
+          scenario.responses.forEach(function (response) {
+            let sum = 0;
+            raters.forEach(function (rater) {
+              sum += weightedScore(response, rater);
+            });
+            if (raters.length > 0) {
+              values[response.id] = sum / raters.length;
+            }
+          });
+        } else {
+          raters.forEach(function (rater) {
+            let top = raterRanking(rater)[0];
+            values[top.id] += 1;
+          });
+          scenario.responses.forEach(function (response) {
+            if (raters.length > 0) {
+              values[response.id] = values[response.id] / raters.length * 100;
+            }
+          });
+        }
+
+        let ranking = scenario.responses.slice().sort(function (a, b) {
+          let difference = values[b.id] - values[a.id];
+          if (Math.abs(difference) > 0.0001) {
+            return difference;
+          }
+          return a.id.localeCompare(b.id);
+        });
+        let winners = [ranking[0].id];
+        for (let i = 1; i < ranking.length; i += 1) {
+          if (Math.abs(values[ranking[i].id] - values[ranking[0].id]) < 0.01) {
+            winners.push(ranking[i].id);
+          }
+        }
+        return { values: values, ranking: ranking, winners: winners };
+      }
+
+      function renderScenarioList() {
+        scenarioList.innerHTML = "";
+        SCENARIOS.forEach(function (scenario, index) {
+          let button = document.createElement("button");
+          button.type = "button";
+          button.className = "choice-button";
+          button.textContent = scenario.short;
+          button.setAttribute("aria-pressed", "false");
+          if (index === state.scenarioIndex) {
+            button.classList.add("selected");
+            button.setAttribute("aria-pressed", "true");
+          }
+          button.addEventListener("click", function () {
+            state.scenarioIndex = index;
+            resetInvestigation();
+          });
+          scenarioList.appendChild(button);
+        });
+      }
+
+      function moveResponse(id, direction) {
+        if (state.recorded) {
+          return;
+        }
+        let index = state.order.indexOf(id);
+        let destination = index + direction;
+        if (index < 0 || destination < 0 || destination >= state.order.length) {
+          return;
+        }
+        let nextOrder = state.order.slice();
+        let moved = nextOrder[index];
+        nextOrder[index] = nextOrder[destination];
+        nextOrder[destination] = moved;
+        state.order = nextOrder;
+        render();
+      }
+
+      function renderResponses() {
+        responseList.innerHTML = "";
+        state.order.forEach(function (id, index) {
+          let response = responseById(id);
+          let item = document.createElement("li");
+          item.className = "response-card";
+
+          let rank = document.createElement("span");
+          rank.className = "rank-number";
+          rank.textContent = String(index + 1);
+
+          let copy = document.createElement("div");
+          let label = document.createElement("div");
+          label.innerHTML = '<span class="response-id">' + response.id + '</span> candidate response';
+          let paragraph = document.createElement("p");
+          paragraph.className = "response-copy";
+          paragraph.textContent = response.text;
+          copy.appendChild(label);
+          copy.appendChild(paragraph);
+
+          let controls = document.createElement("div");
+          controls.className = "rank-controls";
+          let up = document.createElement("button");
+          up.type = "button";
+          up.className = "rank-button";
+          up.textContent = "↑";
+          up.setAttribute("aria-label", "Move response " + response.id + " up");
+          up.disabled = index === 0 || state.recorded;
+          up.addEventListener("click", function () {
+            moveResponse(response.id, -1);
+          });
+          let down = document.createElement("button");
+          down.type = "button";
+          down.className = "rank-button";
+          down.textContent = "↓";
+          down.setAttribute("aria-label", "Move response " + response.id + " down");
+          down.disabled = index === state.order.length - 1 || state.recorded;
+          down.addEventListener("click", function () {
+            moveResponse(response.id, 1);
+          });
+          controls.appendChild(up);
+          controls.appendChild(down);
+
+          item.appendChild(rank);
+          item.appendChild(copy);
+          item.appendChild(controls);
+          responseList.appendChild(item);
+        });
+      }
+
+      function renderRaters() {
+        raterList.innerHTML = "";
+        RATERS.forEach(function (rater) {
+          let label = document.createElement("label");
+          label.className = "rater-check";
+          let input = document.createElement("input");
+          input.type = "checkbox";
+          input.value = rater.id;
+          input.checked = state.selectedRaters.indexOf(rater.id) !== -1;
+          input.addEventListener("change", function () {
+            if (input.checked) {
+              if (state.selectedRaters.indexOf(rater.id) === -1) {
+                state.selectedRaters.push(rater.id);
+              }
+            } else {
+              state.selectedRaters = state.selectedRaters.filter(function (id) {
+                return id !== rater.id;
+              });
+            }
+            if (state.revealed) {
+              renderSignal();
+            }
+            updatePanelStatus();
+            saveState();
+          });
+          let text = document.createElement("span");
+          let name = document.createElement("b");
+          name.textContent = rater.name;
+          let priority = document.createElement("small");
+          priority.textContent = "Authored priority: " + rater.priority;
+          text.appendChild(name);
+          text.appendChild(priority);
+          label.appendChild(input);
+          label.appendChild(text);
+          raterList.appendChild(label);
+        });
+      }
+
+      function updatePhases() {
+        let phase = "rank";
+        if (state.recorded) {
+          phase = "panel";
+        }
+        if (state.revealed) {
+          phase = "signal";
+        }
+        document.getElementById("phaseRank").classList.toggle("active", phase === "rank");
+        document.getElementById("phasePanel").classList.toggle("active", phase === "panel");
+        document.getElementById("phaseSignal").classList.toggle("active", phase === "signal");
+      }
+
+      function updatePanelStatus() {
+        if (!state.recorded) {
+          panelStatus.textContent = "Record your ranking to activate the panel.";
+          revealBtn.disabled = true;
+          return;
+        }
+        if (state.selectedRaters.length === 0) {
+          panelStatus.textContent = "Select at least one rater perspective.";
+          revealBtn.disabled = true;
+          return;
+        }
+        revealBtn.disabled = false;
+        panelStatus.textContent = state.selectedRaters.length + " rater perspectives selected. Change the panel or rule after revealing.";
+      }
+
+      function renderSignal() {
+        if (!state.revealed || state.selectedRaters.length === 0) {
+          signalSection.hidden = true;
+          return;
+        }
+        signalSection.hidden = false;
+        let result = aggregateSignal();
+        let raters = selectedRaters();
+        signalChart.innerHTML = "";
+        currentScenario().responses.forEach(function (response) {
+          let row = document.createElement("li");
+          row.className = "signal-row";
+          if (result.winners.indexOf(response.id) !== -1) {
+            row.classList.add("winner");
+          }
+          let label = document.createElement("div");
+          label.className = "signal-label";
+          label.innerHTML = '<span>' + response.id + '</span> response';
+          let track = document.createElement("div");
+          track.className = "signal-track";
+          track.setAttribute("role", "img");
+          track.setAttribute("aria-label", "Response " + response.id + " aggregate signal " + result.values[response.id].toFixed(0) + " percent");
+          let fill = document.createElement("div");
+          fill.className = "signal-fill";
+          fill.style.width = result.values[response.id].toFixed(2) + "%";
+          track.appendChild(fill);
+          let value = document.createElement("span");
+          value.className = "signal-value";
+          if (state.method === "average") {
+            value.textContent = result.values[response.id].toFixed(0) + "%";
+          } else {
+            let votes = Math.round(result.values[response.id] / 100 * raters.length);
+            value.textContent = votes + "/" + raters.length;
+          }
+          row.appendChild(label);
+          row.appendChild(track);
+          row.appendChild(value);
+          signalChart.appendChild(row);
+        });
+
+        let winnerText = "Response " + result.winners.join(" and response ");
+        let verb = "becomes the strongest aggregate signal";
+        if (result.winners.length > 1) {
+          verb = "tie for the strongest aggregate signal";
+        }
+        signalHeading.textContent = winnerText + " " + verb;
+        if (state.method === "average") {
+          methodDescription.textContent = "Each selected rater gives every response a weighted teaching score; the bars show the average strength across the panel.";
+        } else {
+          methodDescription.textContent = "Each selected rater contributes only their first choice; the bars show the share of first-choice votes.";
+        }
+
+        let ownTop = state.recordedOrder[0];
+        let relation = "differs from";
+        if (result.winners.indexOf(ownTop) !== -1) {
+          relation = "matches";
+        }
+        let excluded = RATERS.filter(function (rater) {
+          return state.selectedRaters.indexOf(rater.id) === -1;
+        }).map(function (rater) {
+          return rater.name;
+        });
+        let exclusionText = "No authored perspectives were excluded.";
+        if (excluded.length > 0) {
+          exclusionText = "Excluded from this signal: " + excluded.join(", ") + ".";
+        }
+        signalSummary.innerHTML = '<b>Your first choice ' + relation + ' the aggregate result.</b> The result changed under a panel and rule chosen on this page. ' + exclusionText;
+
+        raterTableBody.innerHTML = "";
+        raters.forEach(function (rater) {
+          let ranking = raterRanking(rater);
+          let row = document.createElement("tr");
+          let name = document.createElement("td");
+          name.textContent = rater.name;
+          let priority = document.createElement("td");
+          priority.textContent = rater.priority;
+          let order = document.createElement("td");
+          order.textContent = ranking.map(function (response) {
+            return response.id;
+          }).join(" › ");
+          row.appendChild(name);
+          row.appendChild(priority);
+          row.appendChild(order);
+          raterTableBody.appendChild(row);
+        });
+      }
+
+      function render() {
+        renderScenarioList();
+        promptText.textContent = currentScenario().prompt;
+        renderResponses();
+        renderRaters();
+        panelFieldset.disabled = !state.recorded;
+        recordBtn.disabled = state.recorded;
+        if (state.recorded) {
+          recordBtn.textContent = "Ranking recorded";
+          rankingStatus.textContent = "Your ranking: " + state.recordedOrder.join(" › ") + ". Now choose whose judgments enter the panel.";
+        } else {
+          recordBtn.textContent = "Record my ranking";
+          rankingStatus.textContent = "Rank all three responses before looking at the panel.";
+        }
+        methodSelect.value = state.method;
+        updatePhases();
+        updatePanelStatus();
+        renderSignal();
+        saveState();
+      }
+
+      function recordRanking() {
+        state.recorded = true;
+        state.recordedOrder = state.order.slice();
+        state.revealed = false;
+        render();
+      }
+
+      function resetInvestigation() {
+        state.order = ["A", "B", "C"];
+        state.recorded = false;
+        state.recordedOrder = [];
+        state.selectedRaters = DEFAULT_RATERS.slice();
+        state.method = "average";
+        state.revealed = false;
+        render();
+      }
+
+      function saveState() {
+        state.claim = claimBox.value;
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (error) {
+          return;
+        }
+      }
+
+      function loadState() {
+        try {
+          let saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (!saved || !Number.isInteger(saved.scenarioIndex) || saved.scenarioIndex < 0 || saved.scenarioIndex >= SCENARIOS.length) {
+            return;
+          }
+          state.scenarioIndex = saved.scenarioIndex;
+          if (Array.isArray(saved.order) && saved.order.slice().sort().join("") === "ABC") {
+            state.order = saved.order.slice();
+          }
+          state.recorded = saved.recorded === true;
+          if (Array.isArray(saved.recordedOrder) && saved.recordedOrder.slice().sort().join("") === "ABC") {
+            state.recordedOrder = saved.recordedOrder.slice();
+          }
+          if (state.recorded && state.recordedOrder.length !== 3) {
+            state.recorded = false;
+          }
+          state.selectedRaters = DEFAULT_RATERS.slice();
+          if (Array.isArray(saved.selectedRaters)) {
+            state.selectedRaters = saved.selectedRaters.filter(function (id) {
+              return Boolean(raterById(id));
+            });
+          }
+          state.method = "average";
+          if (saved.method === "votes") {
+            state.method = "votes";
+          }
+          state.revealed = saved.revealed === true && state.recorded;
+          if (typeof saved.claim === "string") {
+            state.claim = saved.claim;
+          }
+        } catch (error) {
+          return;
+        }
+      }
+
+      function runSelfTests() {
+        let checks = 0;
+        RATERS.forEach(function (rater) {
+          if (rater.weights.length !== FEATURES.length) {
+            throw new Error(rater.id + " has the wrong number of weights");
+          }
+        });
+        SCENARIOS.forEach(function (scenario) {
+          if (scenario.responses.length !== 3) {
+            throw new Error(scenario.id + " must have three candidates");
+          }
+          scenario.responses.forEach(function (response) {
+            if (response.features.length !== FEATURES.length) {
+              throw new Error(scenario.id + "/" + response.id + " has the wrong feature count");
+            }
+            response.features.forEach(function (value) {
+              if (!Number.isFinite(value) || value < 1 || value > 5) {
+                throw new Error(scenario.id + "/" + response.id + " has an invalid feature value");
+              }
+            });
+          });
+          let previousIndex = state.scenarioIndex;
+          state.scenarioIndex = SCENARIOS.indexOf(scenario);
+          let distinct = {};
+          RATERS.forEach(function (rater) {
+            let ranking = raterRanking(rater);
+            distinct[ranking[0].id] = true;
+            ranking.forEach(function (response) {
+              let score = weightedScore(response, rater);
+              if (!Number.isFinite(score) || score < 0 || score > 100) {
+                throw new Error(scenario.id + " produced an invalid score");
+              }
+            });
+          });
+          state.scenarioIndex = previousIndex;
+          if (Object.keys(distinct).length < 2) {
+            throw new Error(scenario.id + " needs genuine rater disagreement");
+          }
+          checks += 1;
+        });
+        return checks;
+      }
+
+      function investigationText() {
+        let scenario = currentScenario();
+        let lines = ["Whose Preference? Lab — authored teaching simulation", "Prompt: " + scenario.prompt];
+        if (state.recordedOrder.length > 0) {
+          lines.push("My ranking: " + state.recordedOrder.join(" > "));
+        }
+        lines.push("Selected panel: " + selectedRaters().map(function (rater) {
+          return rater.name;
+        }).join(", "));
+        lines.push("Aggregation: " + methodSelect.options[methodSelect.selectedIndex].text);
+        if (state.revealed) {
+          let result = aggregateSignal();
+          lines.push("Strongest aggregate signal: " + result.winners.join(" and "));
+          currentScenario().responses.forEach(function (response) {
+            lines.push("Response " + response.id + ": " + result.values[response.id].toFixed(1));
+          });
+        }
+        lines.push("Claim: " + claimBox.value.trim());
+        lines.push("Boundary: These responses, priorities, feature values, rankings, and signals were authored; this was not an RLHF training run.");
+        return lines.join("\n");
+      }
+
+      function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(text);
+        }
+        return new Promise(function (resolve, reject) {
+          let area = document.createElement("textarea");
+          area.value = text;
+          area.setAttribute("readonly", "");
+          area.style.position = "fixed";
+          area.style.opacity = "0";
+          document.body.appendChild(area);
+          area.select();
+          let copied = document.execCommand("copy");
+          area.remove();
+          if (copied) {
+            resolve();
+          } else {
+            reject(new Error("Copy failed"));
+          }
+        });
+      }
+
+      recordBtn.addEventListener("click", recordRanking);
+      resetBtn.addEventListener("click", resetInvestigation);
+      methodSelect.addEventListener("change", function () {
+        state.method = methodSelect.value;
+        if (state.revealed) {
+          renderSignal();
+        }
+        saveState();
+      });
+      revealBtn.addEventListener("click", function () {
+        if (!state.recorded || state.selectedRaters.length === 0) {
+          return;
+        }
+        state.revealed = true;
+        render();
+      });
+      claimBox.addEventListener("input", saveState);
+      document.getElementById("copyBtn").addEventListener("click", function () {
+        copyText(investigationText()).then(function () {
+          copyStatus.textContent = "Investigation copied.";
+        }).catch(function () {
+          copyStatus.textContent = "Copy was blocked. Select the claim text manually.";
+        });
+      });
+      document.getElementById("printBtn").addEventListener("click", function () {
+        window.print();
+      });
+
+      loadState();
+      claimBox.value = state.claim;
+      try {
+        let tests = runSelfTests();
+        testStatus.textContent = SCENARIOS.length + " prompts · " + RATERS.length + " authored rater profiles · " + tests + " disagreement checks passed";
+      } catch (error) {
+        testStatus.textContent = "Self-check failed: " + error.message;
+        console.error(error);
+      }
+      render();
+    }());
+  </script>
+</body>
+</html>

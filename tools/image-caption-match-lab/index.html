@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="image" data-skin="image-spectrum">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>Image–Caption Match Lab · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/field-theme.js"></script>
+  <style>
+    .match-shell {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .scene-stage {
+      min-height: 310px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface-2);
+    }
+
+    .scene-stage svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .scene-stage .paper { fill: var(--surface); }
+    .scene-stage .field { fill: var(--surface-2); }
+    .scene-stage .ink { fill: var(--ink); }
+    .scene-stage .soft { fill: var(--muted); }
+    .scene-stage .line { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .scene-stage .fine { fill: none; stroke: var(--ink-soft); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .scene-stage .image-ink { fill: var(--m-image); }
+    .scene-stage .image-tint { fill: var(--m-image-tint); }
+    .scene-stage .text-ink { fill: var(--m-text); }
+    .scene-stage .text-tint { fill: var(--m-text-tint); }
+    .scene-stage .video-ink { fill: var(--m-video); }
+    .scene-stage .video-tint { fill: var(--m-video-tint); }
+    .scene-stage .cross-ink { fill: var(--m-cross); }
+    .scene-stage .cross-tint { fill: var(--m-cross-tint); }
+
+    .phase-line {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .phase {
+      padding: 8px 9px;
+      border: 1px solid var(--rule-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .phase.active {
+      border-color: var(--accent);
+      background: color-mix(in oklab, var(--accent) 12%, var(--surface));
+      color: var(--ink);
+    }
+
+    .caption-pick {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .caption-letter {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-weight: 800;
+    }
+
+    .ranking-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: minmax(150px, 0.9fr) minmax(160px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+
+    .rank-caption {
+      color: var(--ink);
+      font-size: 0.92rem;
+    }
+
+    .score-track {
+      height: 14px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--surface-2);
+    }
+
+    .score-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 260ms ease;
+    }
+
+    .score-value {
+      min-width: 4ch;
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      text-align: right;
+    }
+
+    .cue-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 8px;
+    }
+
+    .cue {
+      padding: 6px 8px;
+      border: 1px solid var(--rule-soft);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--ink-soft);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+    }
+
+    .cue.matched {
+      border-color: var(--accent);
+      background: color-mix(in oklab, var(--accent) 11%, var(--surface));
+      color: var(--ink);
+    }
+
+    .revision-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: end;
+    }
+
+    .revision-grid label {
+      display: grid;
+      gap: 7px;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .caption-input {
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 10px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .caption-input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .custom-score {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .decision-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .decision-table th,
+    .decision-table td {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule-soft);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .decision-table th {
+      width: 31%;
+      padding-right: 14px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    details summary {
+      cursor: pointer;
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    fieldset {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    fieldset:disabled {
+      opacity: 0.58;
+    }
+
+    .status-line {
+      min-height: 1.4em;
+      margin: 0;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 820px) {
+      .match-shell,
+      .tool-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .scene-stage { min-height: 220px; }
+      .phase-line { grid-template-columns: 1fr; }
+      .rank-row { grid-template-columns: 1fr auto; }
+      .rank-row .score-track { grid-column: 1 / -1; grid-row: 2; }
+      .revision-grid { grid-template-columns: 1fr; }
+      .revision-grid .tool-button { width: 100%; }
+      .decision-table th,
+      .decision-table td { display: block; width: 100%; }
+      .decision-table th { padding-bottom: 3px; border-bottom: 0; }
+      .decision-table td { padding-top: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .score-fill { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../pages/tools.html" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../../pages/session-images.html">Session 2</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Tool 24 · Session 2 · Images · Shared representations</p>
+      <h1 class="tool-title">Image–Caption Match Lab</h1>
+      <p class="tool-dek">Predict which caption best matches an image, reveal a transparent similarity ranking, then change the words and test again. Use the human-decision layer to inspect who supplied the categories, captions, and definition of a “match.”</p>
+      <div class="tool-idea">Big idea: an image and a caption can become comparable numerical representations without the system searching for an existing finished picture.</div>
+      <div class="tool-notice"><b>Teaching simulation.</b> The illustrations, cue vocabulary, weights, and scores on this page were authored for instruction. They are not CLIP outputs or measurements from a live model. They make a simplified matching rule inspectable; claims about CLIP require documented CLIP results.</div>
+    </header>
+
+    <section class="match-shell" aria-label="Image and caption matching investigation">
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Choose an authored scene</p>
+            <div class="choice-list" id="sceneList"></div>
+          </div>
+          <div>
+            <p class="mini-label">Image being compared</p>
+            <div class="scene-stage" id="sceneStage" role="img" aria-label=""></div>
+            <p class="small-muted" id="altText"></p>
+          </div>
+          <p class="status-line" id="testStatus" aria-live="polite"></p>
+        </div>
+      </aside>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div class="phase-line" aria-label="Investigation phases">
+            <div class="phase active" id="phasePredict">1 · Predict</div>
+            <div class="phase" id="phaseReveal">2 · Reveal</div>
+            <div class="phase" id="phaseRevise">3 · Revise</div>
+          </div>
+
+          <div>
+            <p class="mini-label">Candidate captions</p>
+            <h2 id="sceneTitle">Which caption will land closest?</h2>
+            <p class="small-muted">Choose before revealing. The comparison is against this candidate set—not every possible sentence.</p>
+          </div>
+
+          <div class="choice-list" id="captionList" aria-label="Caption predictions"></div>
+
+          <div class="button-row">
+            <button class="tool-button" type="button" id="revealBtn" disabled>Reveal authored scores</button>
+            <button class="tool-button secondary" type="button" id="resetBtn">Reset this scene</button>
+          </div>
+          <p class="status-line" id="predictionStatus" aria-live="polite">Choose a caption to make your prediction.</p>
+
+          <section id="rankingSection" hidden>
+            <p class="mini-label">Authored teaching-score ranking</p>
+            <ol class="ranking-list" id="rankingList"></ol>
+            <p class="small-muted" id="rankingSummary" aria-live="polite"></p>
+          </section>
+
+          <fieldset id="revisionFieldset" disabled>
+            <div class="stack">
+              <div>
+                <p class="mini-label">Change the words</p>
+                <div class="revision-grid">
+                  <label for="customCaption">Test one revised caption
+                    <input class="caption-input" id="customCaption" type="text" autocomplete="off">
+                  </label>
+                  <button class="tool-button" type="button" id="testCaptionBtn">Test revision</button>
+                </div>
+                <p class="small-muted">Try changing one noun, attribute, action, or context phrase. Unrecognized words remain visible instead of being silently treated as understood.</p>
+              </div>
+
+              <div id="customResult" hidden>
+                <div class="custom-score">
+                  <div class="score-track" role="img" id="customTrack" aria-label="Custom caption teaching score">
+                    <div class="score-fill" id="customFill"></div>
+                  </div>
+                  <span class="score-value" id="customValue"></span>
+                </div>
+                <p class="small-muted" id="customSummary"></p>
+                <div class="cue-list" id="cueList" aria-label="Mapped and unmapped caption cues"></div>
+              </div>
+            </div>
+          </fieldset>
+
+          <details id="decisionLayer">
+            <summary>Inspect the human-created label layer</summary>
+            <table class="decision-table">
+              <tbody>
+                <tr><th>Candidate set</th><td id="decisionCandidates"></td></tr>
+                <tr><th>Available cues</th><td id="decisionCues"></td></tr>
+                <tr><th>Definition of match</th><td>Higher score means more of the author-selected scene cues were named, minus a small penalty for cues assigned to a different scene.</td></tr>
+                <tr><th>What gets excluded</th><td id="decisionExcluded"></td></tr>
+              </tbody>
+            </table>
+            <p class="small-muted">WordNet and ImageNet make a related historical layer visible at a much larger scale: people designed category relationships, selected images, supplied annotations, and decided what counted as correct. This lab does not reproduce either dataset.</p>
+          </details>
+        </div>
+      </section>
+    </section>
+
+    <section class="tool-grid-2" style="margin-top:16px;">
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Investigation note</p>
+            <h2>Make one bounded claim</h2>
+            <p>Describe this authored mechanism first. Then name the evidence a real model claim would require.</p>
+          </div>
+          <label for="claimBox">Claim
+            <textarea class="note-box" id="claimBox">In this teaching simulation, changing the caption from ___ to ___ changed the score because ___. This illustrates the hypothesis that shared representations respond to ___. Testing that on CLIP would require ___.</textarea>
+          </label>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy investigation</button>
+            <button class="tool-button secondary" type="button" id="printBtn">Print / save</button>
+          </div>
+          <p class="status-line" id="copyStatus" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Debrief</p>
+            <h2>What moved—and who decided?</h2>
+          </div>
+          <ul class="evidence-list">
+            <li>Which caption did you predict, and which cue did most of the work?</li>
+            <li>What happened when you changed one word or phrase?</li>
+            <li>How would a different candidate-caption set change the result?</li>
+            <li>Who chose the scene cues, labels, examples, and definition of “closest”?</li>
+            <li>What would you need to run before making a claim about CLIP rather than this simulation?</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../../index.html">Home</a> · <a href="../../pages/tools.html">Tool index</a> · <a href="../../pages/session-images.html">Session 2</a></nav>
+      <p class="colophon">Offline teaching simulation · No account, model API, or uploaded image required.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      let CONCEPTS = {
+        animal: { label: "animal", terms: ["animal", "pet", "creature"] },
+        cat: { label: "cat", terms: ["cat", "kitten", "feline"] },
+        orange: { label: "orange colour", terms: ["orange", "ginger"] },
+        front: { label: "front-facing", terms: ["facing forward", "front facing", "looking at camera"] },
+        portrait: { label: "portrait framing", terms: ["portrait", "close up", "close-up"] },
+        bicycle: { label: "bicycle", terms: ["bicycle", "bike", "cycle"] },
+        red: { label: "red colour", terms: ["red", "crimson"] },
+        street: { label: "city street", terms: ["street", "city", "urban"] },
+        parked: { label: "parked", terms: ["parked", "standing", "still"] },
+        garden: { label: "community garden", terms: ["garden", "community garden"] },
+        people: { label: "people", terms: ["people", "neighbors", "neighbours", "group"] },
+        plants: { label: "plants", terms: ["plants", "vegetables", "seedlings", "greens"] },
+        working: { label: "working together", terms: ["working together", "collaborating", "planting", "gardening"] },
+        outdoors: { label: "outdoors", terms: ["outdoors", "outside", "open air"] },
+        scientist: { label: "scientist", terms: ["scientist", "researcher", "ecologist"] },
+        fieldwork: { label: "fieldwork", terms: ["fieldwork", "survey", "sampling", "measuring"] },
+        water: { label: "water sample", terms: ["water", "stream", "river", "sample"] },
+        team: { label: "team", terms: ["team", "colleagues", "collaborators"] },
+        lab: { label: "laboratory", terms: ["laboratory", "lab", "beaker", "test tube"] }
+      };
+
+      let SCENES = [
+        {
+          id: "cat",
+          title: "Orange cat portrait",
+          short: "Cat",
+          alt: "Authored illustration of an orange cat facing forward against a simple indoor background.",
+          features: { animal: 0.42, cat: 1, orange: 0.82, front: 0.58, portrait: 0.34 },
+          captions: ["a shape", "an orange cat facing forward", "a red bicycle on a street", "a small animal indoors"],
+          excluded: "Motion, sound, the cat’s identity, and any concept outside the small authored cue list.",
+          svg: '<svg viewBox="0 0 520 340" aria-hidden="true"><rect class="paper" width="520" height="340"/><rect class="image-tint" x="36" y="34" width="448" height="272" rx="18"/><circle class="image-ink" cx="260" cy="179" r="104"/><path class="image-ink" d="M175 104L194 37l61 54M345 104L326 37l-61 54"/><path class="paper" d="M218 146c13-17 29-17 42 0-13 10-29 10-42 0zm42 0c13-17 29-17 42 0-13 10-29 10-42 0z"/><circle class="ink" cx="239" cy="146" r="6"/><circle class="ink" cx="281" cy="146" r="6"/><path class="paper" d="M250 178h20l-10 12z"/><path class="line" d="M260 190v14m0 0c-10 10-22 10-31 1m31-1c10 10 22 10 31 1M218 190l-77-12m79 29l-78 12m160-29l77-12m-79 29l78 12"/></svg>'
+        },
+        {
+          id: "bicycle",
+          title: "Red bicycle on a city street",
+          short: "Bicycle",
+          alt: "Authored illustration of a red bicycle parked beside a curb on a city street.",
+          features: { bicycle: 1, red: 0.76, street: 0.62, parked: 0.48 },
+          captions: ["a machine", "a red bicycle parked on a city street", "an orange cat facing forward", "a bicycle outdoors"],
+          excluded: "The rider, destination, ownership, neighborhood history, and any category the author did not include.",
+          svg: '<svg viewBox="0 0 520 340" aria-hidden="true"><rect class="paper" width="520" height="340"/><rect class="text-tint" y="214" width="520" height="126"/><path class="fine" d="M0 262h520M65 92v122m390-147v147M65 92h115v122M340 67h115v147M92 120h58m215-24h64m-337 55h58m215-4h64"/><circle class="paper" cx="155" cy="245" r="64"/><circle class="paper" cx="365" cy="245" r="64"/><circle class="line" cx="155" cy="245" r="55"/><circle class="line" cx="365" cy="245" r="55"/><path class="line" d="M155 245l76-89 50 89H155l58-68h93l59 68m-84 0l-38-108h-28m58 20h43"/><circle class="image-ink" cx="260" cy="245" r="9"/></svg>'
+        },
+        {
+          id: "garden",
+          title: "Neighbors in a community garden",
+          short: "Garden",
+          alt: "Authored illustration of four neighbors planting and tending vegetables together in a community garden.",
+          features: { garden: 1, people: 0.72, plants: 0.68, working: 0.64, outdoors: 0.42 },
+          captions: ["some plants", "neighbors working together in a community garden", "a scientist in a laboratory", "people outdoors"],
+          excluded: "The participants’ names, relationships, land history, languages, and work not represented by the cue list.",
+          svg: '<svg viewBox="0 0 520 340" aria-hidden="true"><rect class="paper" width="520" height="340"/><rect class="video-tint" y="205" width="520" height="135"/><circle class="cross-tint" cx="82" cy="74" r="34"/><path class="fine" d="M0 205h520M42 285h436M70 285l44-64m25 64l-19-64m100 64l31-64m9 64l-3-64m108 64l18-64m24 64l-8-64"/><g><circle class="image-ink" cx="128" cy="145" r="22"/><path class="line" d="M128 168v56m0-35l-31 18m31-18l28 19"/><circle class="text-ink" cx="235" cy="142" r="22"/><path class="line" d="M235 165v58m0-35l-28 16m28-16l31 15"/><circle class="video-ink" cx="343" cy="147" r="22"/><path class="line" d="M343 170v54m0-35l-30 18m30-18l30 18"/><circle class="cross-ink" cx="424" cy="151" r="22"/><path class="line" d="M424 174v50m0-32l-24 14m24-14l28 15"/></g><path class="video-ink" d="M52 284c20-44 44-45 64 0zm143 0c18-50 43-51 61 0zm141 0c18-43 43-45 62 0zm94 0c12-31 29-32 43 0z"/></svg>'
+        },
+        {
+          id: "fieldwork",
+          title: "Field scientists sampling water",
+          short: "Fieldwork",
+          alt: "Authored illustration of a small research team measuring and labeling water samples beside a stream.",
+          features: { scientist: 0.92, fieldwork: 1, water: 0.74, team: 0.62, outdoors: 0.46 },
+          captions: ["people near water", "a research team sampling water during fieldwork", "a lone scientist in a laboratory", "an outdoor scene"],
+          excluded: "The team’s disciplines, community relationships, funding, sampling protocol, and work outside the author’s cue list.",
+          svg: '<svg viewBox="0 0 520 340" aria-hidden="true"><rect class="paper" width="520" height="340"/><path class="text-tint" d="M0 235c95-44 173 36 260-5s170-7 260 13v97H0z"/><path class="text-ink" d="M0 271c88-37 172 34 260-3s174-7 260 14v58H0z"/><path class="fine" d="M40 118l55-64 55 64m226 13l44-54 48 54"/><g><circle class="image-ink" cx="167" cy="143" r="24"/><path class="line" d="M167 167v81m0-51l-45 31m45-31l37 21m-37 30l-28 40m28-40l33 37"/><circle class="video-ink" cx="282" cy="151" r="24"/><path class="line" d="M282 175v75m0-48l-37 27m37-27l35 29m-35 19l-27 41m27-41l33 37"/><circle class="cross-ink" cx="378" cy="159" r="24"/><path class="line" d="M378 183v70m0-45l-34 26m34-26l30 21m-30 24l-24 38m24-38l30 36"/></g><rect class="paper" x="206" y="210" width="50" height="62" rx="4"/><path class="fine" d="M214 226h34m-34 13h34m-34 13h22"/><path class="line" d="M316 231l30 49m-15-24l27-18"/></svg>'
+        }
+      ];
+
+      let STOP_WORDS = ["a", "an", "the", "of", "in", "on", "at", "to", "and", "with", "is", "are", "some", "during", "near"];
+      let STORAGE_KEY = "lm-image-caption-match-lab";
+      let state = {
+        sceneIndex: 0,
+        predictionIndex: -1,
+        revealed: false,
+        customCaption: "",
+        customResult: null
+      };
+
+      let sceneList = document.getElementById("sceneList");
+      let sceneStage = document.getElementById("sceneStage");
+      let altText = document.getElementById("altText");
+      let sceneTitle = document.getElementById("sceneTitle");
+      let captionList = document.getElementById("captionList");
+      let revealBtn = document.getElementById("revealBtn");
+      let resetBtn = document.getElementById("resetBtn");
+      let predictionStatus = document.getElementById("predictionStatus");
+      let rankingSection = document.getElementById("rankingSection");
+      let rankingList = document.getElementById("rankingList");
+      let rankingSummary = document.getElementById("rankingSummary");
+      let revisionFieldset = document.getElementById("revisionFieldset");
+      let customCaption = document.getElementById("customCaption");
+      let customResult = document.getElementById("customResult");
+      let customFill = document.getElementById("customFill");
+      let customValue = document.getElementById("customValue");
+      let customTrack = document.getElementById("customTrack");
+      let customSummary = document.getElementById("customSummary");
+      let cueList = document.getElementById("cueList");
+      let claimBox = document.getElementById("claimBox");
+
+      function clamp(value, minimum, maximum) {
+        if (value < minimum) return minimum;
+        if (value > maximum) return maximum;
+        return value;
+      }
+
+      function sceneFeatureWeight(scene, conceptId) {
+        if (Object.prototype.hasOwnProperty.call(scene.features, conceptId)) return scene.features[conceptId];
+        return 0;
+      }
+
+      function containsWholeTerm(text, term) {
+        let escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        escaped = escaped.replace(/\s+/g, "[\\s-]+");
+        let pattern = new RegExp("(^|[^a-z0-9])" + escaped + "(?=$|[^a-z0-9])", "i");
+        return pattern.test(text);
+      }
+
+      function findConcepts(text) {
+        let lowered = text.toLowerCase().replace(/[’']/g, "'");
+        let matches = [];
+        Object.keys(CONCEPTS).forEach(function (conceptId) {
+          let concept = CONCEPTS[conceptId];
+          let matchedTerm = "";
+          concept.terms.forEach(function (term) {
+            if (!matchedTerm && containsWholeTerm(lowered, term)) matchedTerm = term;
+          });
+          if (matchedTerm) matches.push({ id: conceptId, label: concept.label, term: matchedTerm });
+        });
+        return matches;
+      }
+
+      function contentWords(text) {
+        let words = text.toLowerCase().replace(/[^a-z0-9-]+/g, " ").trim().split(/\s+/);
+        return words.filter(function (word) {
+          if (!word) return false;
+          return STOP_WORDS.indexOf(word) < 0;
+        });
+      }
+
+      function scoreCaption(scene, text) {
+        let matches = findConcepts(text);
+        let matched = [];
+        let foreign = [];
+        let positive = 0;
+        let total = 0;
+
+        Object.keys(scene.features).forEach(function (featureId) {
+          total += scene.features[featureId];
+        });
+
+        matches.forEach(function (match) {
+          let weight = sceneFeatureWeight(scene, match.id);
+          if (weight > 0) {
+            positive += weight;
+            matched.push({ id: match.id, label: match.label, term: match.term, weight: weight });
+          } else {
+            foreign.push(match);
+          }
+        });
+
+        let score = 0.08;
+        if (total > 0) score += (positive / total) * 0.84;
+        score -= foreign.length * 0.08;
+        score = clamp(score, 0.04, 0.96);
+
+        let coveredWords = [];
+        matches.forEach(function (match) {
+          match.term.split(/\s+/).forEach(function (word) {
+            if (coveredWords.indexOf(word) < 0) coveredWords.push(word);
+          });
+        });
+        let unmapped = contentWords(text).filter(function (word) {
+          return coveredWords.indexOf(word) < 0;
+        });
+
+        return { score: score, matched: matched, foreign: foreign, unmapped: unmapped };
+      }
+
+      function percent(value) {
+        return Math.round(value * 100);
+      }
+
+      function currentScene() {
+        return SCENES[state.sceneIndex];
+      }
+
+      function escapeHtml(text) {
+        return String(text).replace(/[&<>"']/g, function (character) {
+          let entities = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
+          return entities[character];
+        });
+      }
+
+      function saveState() {
+        let saved = {
+          sceneId: currentScene().id,
+          predictionIndex: state.predictionIndex,
+          revealed: state.revealed,
+          customCaption: customCaption.value,
+          claim: claimBox.value
+        };
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+        } catch (error) {
+          return false;
+        }
+        return true;
+      }
+
+      function loadState() {
+        try {
+          let saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+          if (!saved) return;
+          SCENES.forEach(function (scene, index) {
+            if (scene.id === saved.sceneId) state.sceneIndex = index;
+          });
+          if (typeof saved.predictionIndex === "number") state.predictionIndex = saved.predictionIndex;
+          if (saved.revealed === true) state.revealed = true;
+          if (typeof saved.customCaption === "string") state.customCaption = saved.customCaption;
+          if (typeof saved.claim === "string") claimBox.value = saved.claim;
+        } catch (error) {
+          return;
+        }
+      }
+
+      function renderSceneChoices() {
+        sceneList.innerHTML = "";
+        SCENES.forEach(function (scene, index) {
+          let button = document.createElement("button");
+          button.type = "button";
+          button.className = "choice-button";
+          if (index === state.sceneIndex) button.classList.add("active");
+          button.setAttribute("aria-pressed", String(index === state.sceneIndex));
+          button.innerHTML = "<strong>" + escapeHtml(scene.short) + "</strong><span>" + escapeHtml(scene.title) + "</span>";
+          button.addEventListener("click", function () {
+            state.sceneIndex = index;
+            state.predictionIndex = -1;
+            state.revealed = false;
+            state.customResult = null;
+            state.customCaption = "";
+            renderAll();
+            saveState();
+          });
+          sceneList.appendChild(button);
+        });
+      }
+
+      function renderCaptionChoices() {
+        let scene = currentScene();
+        captionList.innerHTML = "";
+        scene.captions.forEach(function (caption, index) {
+          let button = document.createElement("button");
+          button.type = "button";
+          button.className = "choice-button caption-pick";
+          if (index === state.predictionIndex) button.classList.add("active");
+          button.setAttribute("aria-pressed", String(index === state.predictionIndex));
+          button.innerHTML = '<span class="caption-letter">' + String.fromCharCode(65 + index) + '</span><span>' + escapeHtml(caption) + "</span>";
+          button.addEventListener("click", function () {
+            state.predictionIndex = index;
+            revealBtn.disabled = false;
+            predictionStatus.textContent = "Prediction recorded: “" + caption + ".” Reveal when the room has committed.";
+            renderCaptionChoices();
+            saveState();
+          });
+          captionList.appendChild(button);
+        });
+      }
+
+      function rankedCaptions(scene) {
+        let rows = scene.captions.map(function (caption, index) {
+          return { caption: caption, index: index, result: scoreCaption(scene, caption) };
+        });
+        rows.sort(function (a, b) {
+          return b.result.score - a.result.score;
+        });
+        return rows;
+      }
+
+      function renderRanking() {
+        let scene = currentScene();
+        let rows = rankedCaptions(scene);
+        rankingList.innerHTML = "";
+        rows.forEach(function (row) {
+          let item = document.createElement("li");
+          item.className = "rank-row";
+          let score = percent(row.result.score);
+          item.innerHTML = '<span class="rank-caption"><b>' + String.fromCharCode(65 + row.index) + "</b> · " + escapeHtml(row.caption) + '</span><div class="score-track" role="img" aria-label="' + score + ' out of 100 authored teaching score"><div class="score-fill" style="width:' + score + '%"></div></div><span class="score-value">' + score + "</span>";
+          rankingList.appendChild(item);
+        });
+
+        let top = rows[0];
+        let prediction = scene.captions[state.predictionIndex];
+        if (top.index === state.predictionIndex) {
+          rankingSummary.textContent = "Your prediction matched the top caption in this authored scoring rule. Inspect which named cues produced the ranking.";
+        } else {
+          rankingSummary.textContent = "You predicted “" + prediction + ".” The authored rule ranked “" + top.caption + "” highest. Inspect which named cues changed the result.";
+        }
+      }
+
+      function renderCustomResult() {
+        if (!state.customResult) {
+          customResult.hidden = true;
+          return;
+        }
+        customResult.hidden = false;
+        let result = state.customResult;
+        let score = percent(result.score);
+        customFill.style.width = score + "%";
+        customValue.textContent = String(score);
+        customTrack.setAttribute("aria-label", "Custom caption authored teaching score: " + score + " out of 100");
+
+        let summaryParts = [];
+        if (result.matched.length > 0) summaryParts.push(result.matched.length + " scene cue(s) mapped");
+        if (result.foreign.length > 0) summaryParts.push(result.foreign.length + " cue(s) assigned to another scene");
+        if (result.unmapped.length > 0) summaryParts.push(result.unmapped.length + " content word(s) left unmapped");
+        if (summaryParts.length === 0) summaryParts.push("No authored cues mapped");
+        customSummary.textContent = summaryParts.join(" · ") + ".";
+
+        cueList.innerHTML = "";
+        result.matched.forEach(function (cue) {
+          let span = document.createElement("span");
+          span.className = "cue matched";
+          span.textContent = cue.label + " · mapped";
+          cueList.appendChild(span);
+        });
+        result.foreign.forEach(function (cue) {
+          let span = document.createElement("span");
+          span.className = "cue";
+          span.textContent = cue.label + " · other scene";
+          cueList.appendChild(span);
+        });
+        result.unmapped.forEach(function (word) {
+          let span = document.createElement("span");
+          span.className = "cue";
+          span.textContent = word + " · unmapped";
+          cueList.appendChild(span);
+        });
+      }
+
+      function renderDecisionLayer() {
+        let scene = currentScene();
+        let cueLabels = Object.keys(scene.features).map(function (featureId) {
+          return CONCEPTS[featureId].label;
+        });
+        document.getElementById("decisionCandidates").textContent = "The tool author supplied four captions for “" + scene.title.toLowerCase() + ".” A different set could produce a different winner.";
+        document.getElementById("decisionCues").textContent = cueLabels.join(", ") + ". These labels and weights were written by a person, not discovered as natural names inside the pixels.";
+        document.getElementById("decisionExcluded").textContent = scene.excluded;
+      }
+
+      function renderPhases() {
+        let predict = document.getElementById("phasePredict");
+        let reveal = document.getElementById("phaseReveal");
+        let revise = document.getElementById("phaseRevise");
+        predict.classList.remove("active");
+        reveal.classList.remove("active");
+        revise.classList.remove("active");
+        if (!state.revealed) {
+          predict.classList.add("active");
+        } else if (!state.customResult) {
+          reveal.classList.add("active");
+        } else {
+          revise.classList.add("active");
+        }
+      }
+
+      function renderAll() {
+        let scene = currentScene();
+        renderSceneChoices();
+        sceneStage.innerHTML = scene.svg;
+        sceneStage.setAttribute("aria-label", scene.alt);
+        altText.textContent = "Alt text: " + scene.alt;
+        sceneTitle.textContent = "Which caption will land closest to “" + scene.short.toLowerCase() + "”?";
+        renderCaptionChoices();
+
+        if (state.predictionIndex >= 0) {
+          revealBtn.disabled = false;
+          predictionStatus.textContent = "Prediction recorded: “" + scene.captions[state.predictionIndex] + ".” Reveal when the room has committed.";
+        } else {
+          revealBtn.disabled = true;
+          predictionStatus.textContent = "Choose a caption to make your prediction.";
+        }
+
+        rankingSection.hidden = !state.revealed;
+        revisionFieldset.disabled = !state.revealed;
+        if (state.revealed) renderRanking();
+
+        if (state.customCaption) {
+          customCaption.value = state.customCaption;
+        } else {
+          customCaption.value = scene.captions[1];
+        }
+        renderCustomResult();
+        renderDecisionLayer();
+        renderPhases();
+      }
+
+      function testRevision() {
+        let text = customCaption.value.trim();
+        if (!text) {
+          customCaption.focus();
+          return;
+        }
+        state.customCaption = text;
+        state.customResult = scoreCaption(currentScene(), text);
+        renderCustomResult();
+        renderPhases();
+        saveState();
+      }
+
+      function copyText(text, onSuccess, onFailure) {
+        function fallbackCopy() {
+          let helper = document.createElement("textarea");
+          helper.value = text;
+          helper.setAttribute("readonly", "");
+          helper.style.position = "absolute";
+          helper.style.left = "-9999px";
+          document.body.appendChild(helper);
+          helper.select();
+          let copied = false;
+          try {
+            copied = document.execCommand("copy");
+          } catch (error) {
+            copied = false;
+          }
+          helper.remove();
+          if (copied) onSuccess();
+          else onFailure();
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(onSuccess).catch(fallbackCopy);
+          return;
+        }
+        fallbackCopy();
+      }
+
+      function investigationText() {
+        let scene = currentScene();
+        let prediction = "not recorded";
+        if (state.predictionIndex >= 0) prediction = scene.captions[state.predictionIndex];
+        let top = rankedCaptions(scene)[0];
+        let revision = "not tested";
+        if (state.customResult) revision = "“" + state.customCaption + "” — authored score " + percent(state.customResult.score) + "/100";
+        return [
+          "IMAGE–CAPTION MATCH LAB · TEACHING SIMULATION",
+          "Scene: " + scene.title,
+          "Prediction: " + prediction,
+          "Top authored match: “" + top.caption + "” — " + percent(top.result.score) + "/100",
+          "Revision: " + revision,
+          "",
+          "Claim: " + claimBox.value.trim(),
+          "",
+          "Evidence limit: illustrations, cue vocabulary, weights, and scores are authored—not CLIP outputs."
+        ].join("\n");
+      }
+
+      function runSelfTests() {
+        let failures = [];
+        SCENES.forEach(function (scene) {
+          let rows = rankedCaptions(scene);
+          if (rows[0].index !== 1) failures.push(scene.id + " expected caption B to rank first");
+          let best = scoreCaption(scene, scene.captions[1]).score;
+          let unrelated = scoreCaption(scene, scene.captions[2]).score;
+          if (best <= unrelated) failures.push(scene.id + " expected intended match above unrelated caption");
+        });
+        let boundaryMatches = findConcepts("education label").map(function (match) { return match.id; });
+        if (boundaryMatches.indexOf("cat") >= 0) failures.push("cat should not match inside education");
+        if (boundaryMatches.indexOf("lab") >= 0) failures.push("lab should not match inside label");
+        let testStatus = document.getElementById("testStatus");
+        if (failures.length === 0) {
+          testStatus.textContent = "Self-checks: 10 passed · offline scoring ready.";
+        } else {
+          testStatus.textContent = "Self-checks need attention: " + failures.join("; ");
+        }
+        return failures;
+      }
+
+      revealBtn.addEventListener("click", function () {
+        if (state.predictionIndex < 0) return;
+        state.revealed = true;
+        renderAll();
+        saveState();
+      });
+
+      resetBtn.addEventListener("click", function () {
+        state.predictionIndex = -1;
+        state.revealed = false;
+        state.customCaption = "";
+        state.customResult = null;
+        renderAll();
+        saveState();
+      });
+
+      document.getElementById("testCaptionBtn").addEventListener("click", testRevision);
+      customCaption.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          testRevision();
+        }
+      });
+      claimBox.addEventListener("input", saveState);
+
+      document.getElementById("copyBtn").addEventListener("click", function () {
+        let status = document.getElementById("copyStatus");
+        copyText(investigationText(), function () {
+          status.textContent = "Investigation copied.";
+          window.setTimeout(function () { status.textContent = ""; }, 1600);
+        }, function () {
+          status.textContent = "Copy was blocked. Select the claim and copy it manually.";
+        });
+      });
+
+      document.getElementById("printBtn").addEventListener("click", function () {
+        window.print();
+      });
+
+      loadState();
+      renderAll();
+      runSelfTests();
+    }());
+  </script>
+  <script src="../../assets/analytics.js"></script>
+</body>
+</html>

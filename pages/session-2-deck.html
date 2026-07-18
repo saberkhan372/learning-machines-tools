@@ -250,7 +250,7 @@
   /* studio slide: five pathways; the copied chat block supplies the launch links */
   var ROUTES = [
     {n:'Recommended · Default test', w:'compare A/B/C and finish one claim', go:'Comparison Viewer + Image Default Test Board'},
-    {n:'Observe / Critique', w:'analyze three authored teaching simulations', go:'Image Prompt Pack'},
+    {n:'Observe / Critique', w:'test one caption revision or analyze three authored scenes', go:'Image–Caption Match Lab or Image Prompt Pack'},
     {n:'Teach / Design', w:'adapt one activity and write its debrief', go:'Squint Test or Human Diffusion Canvas'},
     {n:'Build / Code', w:'inspect one mechanism or hidden complexity', go:'Dataset Balance + Latent Compressor + annotated loop'},
     {n:'Critical / No-AI', w:'audit representation, labor, and disclosure', go:'Image Prompt Pack + Consent Checklist'}
@@ -286,11 +286,11 @@
       task:'Name the first useful cue. Then vote: which caption lands closest — A “a shape,” B “an orange cat facing forward,” or C “a red bicycle”?',
       take:'Labels and captions connect human categories to numerical patterns; learned proximity is association, not human understanding.',
       notes:{
-        look:'You look at: the detail slider and pixels/features toggle. Attendees see the cat resolve, then use that same image for the three-caption CLIP question.',
-        you:['Start at low detail; raise it until the cat becomes recognizable.','Offer PoseNet as one representation example: one RGB frame in; 17 keypoints with x/y coordinates and confidence out.','Name WordNet/ImageNet as the human category-and-label layer.','Keep the cat visible; read captions A/B/C and ask which would land closest in a CLIP-style shared space.'],
-        room:['Name the first cue: colour, outline, texture, or context.','Translate “a person dancing” into PoseNet’s narrower output: points and confidence scores.','Vote A/B/C for the cat image, then say which learned association makes that caption closer.'],
+        look:'You look at: the detail slider, then the Image–Caption Match Lab in a second tab. Attendees see the cat resolve, commit to one caption, reveal the authored ranking, and revise one phrase.',
+        you:['Start at low detail; raise it until the cat becomes recognizable.','Offer PoseNet as one representation example: one RGB frame in; 17 keypoints with x/y coordinates and confidence out.','Name WordNet/ImageNet as the human category-and-label layer.','Open the Image–Caption Match Lab. Have the room predict before revealing; then change one phrase and inspect which authored cues moved the teaching score.'],
+        room:['Name the first cue: colour, outline, texture, or context.','Translate “a person dancing” into PoseNet’s narrower output: points and confidence scores.','Vote A/B/C in the lab, reveal the authored ranking, then revise one phrase and name what changed.'],
         say:['"CLIP maps an image and candidate captions into vectors that can be compared. It is not searching for a finished matching picture."','"This gives prompt words a numerical relationship to visual patterns. Diffusion is the separate generation mechanism we perform next."'],
-        watch:'Keep the chain compressed and the boundaries explicit: categories/captions are human-made; PoseNet, CLIP, and diffusion are separate projects or model families. Not every generator uses CLIP.'} },
+        watch:'Keep the chain compressed and the boundaries explicit: categories/captions are human-made; PoseNet, CLIP, and diffusion are separate projects or model families. Not every generator uses CLIP. Cap the lab at one scene and one revision; its visible scores are authored teaching scores, not CLIP results.'} },
 
     { id:'s1', kind:'defaults', aid:'tally', time:8, num:'01', nav:'Round 1 — Defaults',
       head:'Say "a doctor." What appears?',
@@ -907,8 +907,9 @@
           'RECOMMENDED · Default test: open the viewer, pick one case, then complete A/B/C + the Claim box on the worksheet.',
           '  '+SITE+'tools/default-test-comparison-viewer/',
           '  worksheet: '+SITE+'worksheets/image-default-test-board/',
-          'OBSERVE / CRITIQUE · analyze three scenes in the Image Prompt Pack (teaching simulations, not real model outputs).',
-          '  '+SITE+'packs/images/',
+          'OBSERVE / CRITIQUE · test one caption revision in the Match Lab or analyze three scenes in the Image Prompt Pack. Both are teaching simulations, not real model outputs.',
+          '  match lab: '+SITE+'tools/image-caption-match-lab/',
+          '  image pack: '+SITE+'packs/images/',
           'TEACH / DESIGN · adapt the Squint Test or Human Diffusion Canvas for your classroom; write one debrief question.',
           '  squint test: '+SITE+'tools/feature-extraction-pixel-resolution/',
           '  diffusion canvas: '+SITE+'tools/human-diffusion-canvas/',

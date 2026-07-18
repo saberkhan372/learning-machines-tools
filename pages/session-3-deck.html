@@ -53,6 +53,12 @@
   .qrow.opt{border-style:dashed} .qrow.opt .qn{color:var(--muted)}
   .qlist.c{gap:8px} .qrow.c{padding:7px 14px;font-size:18px;gap:12px}
   .qrow.c .note{font-size:15px} .qrow.c .go{font-size:13px}
+  .studio-stage .s-body{margin-top:12px}
+  .studio-stage .qlist.c{gap:5px}
+  .studio-stage .qrow.c{padding:5px 12px;font-size:16px;line-height:1.2}
+  .studio-stage .qrow.c .note{font-size:13px}
+  .studio-stage .qrow.c .go{font-size:11px}
+  .studio-stage .s-task{padding:11px 20px}
 
   /* ===== frame visuals (SVG) ===== */
   .av-film{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
@@ -228,6 +234,7 @@
   var SITE = 'https://saberkhan372.github.io/learning-machines-tools/';
 
   var TOOLS = [
+    {n:'Point Correspondence Lab', u:SITE+'tools/point-correspondence-lab/', w:'select, predict, then reveal a point track'},
     {n:'Temporal Telephone', u:SITE+'tools/temporal-telephone/', w:'draw each frame from the last — watch drift'},
     {n:'Metronome Frame Scrubber', u:SITE+'tools/metronome-frame-scrubber/', w:'step frames on a beat'},
     {n:'Frame-by-Frame Coherence', u:SITE+'tools/frame-by-frame-coherence-viewer/', w:'onion-skin the drift'},
@@ -258,8 +265,8 @@
       task:'Pick one feature—the ball’s center. In chat: where did that point go next, and what had to stay the same?',
       take:'Correspondence asks what matches; coherence asks whether the generated sequence keeps those matches believable.',
       notes:{
-        look:'You look at: play / step / reset for the frame strip. Attendees see: a bouncing ball playing frame by frame, coherent.',
-        you:['Press Play, then step frame by frame.','Ask the room to track one point: the ball’s center.','Connect that path to CoTracker’s point-correspondence task.','Ask what a generator would have to preserve while inventing frame 4.'],
+        look:'You look at: the Point Correspondence Lab link plus play / step / reset for the fallback frame strip. Attendees see: a bouncing ball moving frame by frame.',
+        you:['Open the Point Correspondence Lab; choose Ball arc and select the ball center.','Take one destination prediction before revealing the route.','If the tool cannot open, use Play and Step on the fallback strip.','Connect the revealed path to CoTracker’s point-correspondence task, then ask what a generator would have to preserve while inventing frame 4.'],
         room:['Follow the ball’s center across frames.','In chat: describe where the point went next.','Name colour, size, position, or identity as a property that must persist.'],
         say:['"A tracker starts with frames that already exist and estimates correspondence. A generator must create the next frame and preserve correspondence at the same time."','"That is why a plausible still frame is not enough; the relation across frames is the evidence."'],
         watch:'Keep this one clean and short — it is the "before" picture. Round 1 introduces drift, so this is the contrast.'} },
@@ -481,7 +488,7 @@
       var rows='<div class="qlist c">'+TOOLS.map(function(t,k){
         return '<div class="qrow c'+(t.opt?' opt':'')+'"><span class="qn">'+(k+1)+'</span><span class="txt2"><span><b>'+esc(t.n)+'</b> <span class="note">— '+esc(t.w)+'</span></span><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
       }).join('')+'</div>';
-      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
+      return '<div class="stage studio-stage">'+eyebrow+head+idea+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
     }
     if(s.kind==='close'){
       var pts='<div class="qlist c">'+CLOSERS.map(function(t,k){
@@ -686,8 +693,8 @@
   function controlsHTML(s){
     if(s.aid==='frames') return ''+
       '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Frame strip</span><span class="mark">shows on their screen</span></div><div class="bd">'+
-      '<p class="hint">Play a clean loop, then step frame by frame. Point out the ball is the same ball each time.</p>'+
-      '<div class="crow"><button class="btn" id="frPlay">Play</button><button class="btn ghost" id="frStep">Step</button><button class="btn ghost" id="frRst">Reset</button></div></div></div>'+
+      '<p class="hint">Open the lab for select → predict → reveal. The strip below is the no-network fallback.</p>'+
+      '<div class="crow"><a class="btn" href="'+SITE+'tools/point-correspondence-lab/" target="_blank" rel="noopener">Open Point Lab ↗</a><button class="btn ghost" id="frPlay">Play fallback</button><button class="btn ghost" id="frStep">Step</button><button class="btn ghost" id="frRst">Reset</button></div></div></div>'+
       '<p class="small">This is the "before" picture — coherent motion. Round 1 breaks it on purpose.</p>';
     if(s.aid==='telephone') return ''+
       '<div class="ctrl"><div class="hd"><span class="ct live">live</span><span class="cn">Add a frame</span><span class="mark">grows on their screen</span></div><div class="bd">'+

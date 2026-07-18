@@ -37,7 +37,7 @@ This is a speakable script, not a transcript to follow word for word. Keep the q
 3. Click **open audience window** and screen-share only that window.
 4. Keep the presenter window, Zoom chat, and participant list visible to you.
 5. Confirm that changing slides in the presenter view changes the audience view.
-6. Keep the demo words available in case Zoom chat is slow or difficult to paste.
+6. Confirm the Contextual Vector Lab, Tokenizer + Temperature Visualizer, Count the Next Token, Prediction Game, and ELIZA load without an account. Keep the demo words available in case Zoom chat is slow or difficult to paste.
 
 Do not click **new session** after the live activity begins. Refreshing is safe; starting a new session intentionally clears the room's sentence, tally, attention points, and scores.
 
@@ -72,6 +72,7 @@ Do not click **new session** after the live activity begins. Refreshing is safe;
 - Click **Copy corpus** and paste the paragraph into Zoom chat.
 - Point to the illustrative splits `book / shop` and `after / noon`.
 - Point to the illustrative `cat → [0.18, −0.42, 0.07, …]` mapping.
+- Open the [Contextual Vector Lab](../tools/contextual-vector-lab/) and choose one ambiguous token. Keep the same token ID and starting vector visible, ask which neighborhood one sentence suggests, then reveal the authored move.
 - Ask whether two nearby words might share meaning, occur in similar contexts, or reflect a cultural association in the training data.
 - Ask people to notice repeated words and likely continuations.
 
@@ -85,11 +86,13 @@ Do not click **new session** after the live activity begins. Refreshing is safe;
 
 "A token ID then becomes a learned vector: a long list of numbers the system can operate on. If *cat* and *kitten* appear nearby, do not jump straight to ‘the model knows they mean the same thing.’ Their proximity might reflect shared contexts, related meanings, or a cultural association repeated in the training data."
 
-If useful, open the [Embedding Projector](https://projector.tensorflow.org/) briefly and ask:
+Use one predict → reveal cycle in the Contextual Vector Lab, then ask:
 
 > “Are these words nearby because they mean the same thing, occur in similar contexts, or carry a learned cultural association?”
 
-Keep this move under 90 seconds. The Projector displays simplified embedding snapshots. A modern transformer also changes a token’s representation according to its context, so the projection is a teaching view rather than a literal map of the complete model state.
+Keep this move to one word, one sentence, and about two minutes. The lab’s token IDs, vectors, coordinates, and neighbors are authored teaching data. The [Embedding Projector](https://projector.tensorflow.org/) remains a useful real-project reference for static learned neighborhoods. A modern transformer changes a token’s representation according to context across many layers, so neither 2D view is a literal map of the complete model state.
+
+If the lab stalls, keep the illustrative vector on the deck and run the neighborhood prediction verbally. Do not invent a model result; say that the missing reveal would have been an authored projection.
 
 Ask in chat:
 
@@ -225,6 +228,8 @@ After scoring:
 
 If time permits, revise the losing sentence once using the named reward pattern.
 
+For an individual or asynchronous follow-up, open the [Whose Preference? Lab](../tools/whose-preference-lab/). Rank the same three responses, reveal the authored panel, then include or exclude rater perspectives and switch the aggregation rule. Ask which definition of “better” became a signal. Keep the boundary explicit: this is a preference-data simulation, not an RLHF training run or a measurement of real groups.
+
 ### Transition
 
 "We have played four different parts of the system. Let us step outside the machine and name what just happened."
@@ -276,9 +281,11 @@ Keep the debrief slide visible during the break. Near the end of the break, move
 
 Route participants:
 
+- "Choose the **Contextual Vector Lab** if you want to keep one token fixed and inspect how its neighborhood changes with the sentence."
 - "Choose **Tokenizer + Temperature** if you want to inspect token boundaries, probabilities, and sampling."
 - "Choose **Count the Next Token** if you want to see training as arithmetic: count, divide, predict."
 - "Choose the **Prediction Game** if you want to compare human guesses with a model's top choices."
+- "Choose the **Whose Preference? Lab** if you want to see how panel composition and aggregation change which fluent response becomes preferred."
 - "Choose **ELIZA** if you want to compare visible hand-written rules with learned statistical patterns."
 - "Use the **Text Experiment Board** to capture what you predicted, what changed, and what the evidence supports."
 

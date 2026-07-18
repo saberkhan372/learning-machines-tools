@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="text" data-skin="text-terminal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>Contextual Vector Lab · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/field-theme.js"></script>
+  <style>
+    .vector-shell {
+      display: grid;
+      grid-template-columns: minmax(240px, 0.68fr) minmax(0, 1.32fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .step-line {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .step-button {
+      padding: 10px;
+      border: 1px solid var(--rule-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.05em;
+      text-align: left;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .step-button.active,
+    .step-button:focus-visible {
+      border-color: var(--accent);
+      background: color-mix(in oklab, var(--accent) 12%, var(--surface));
+      color: var(--ink);
+      outline: none;
+    }
+
+    .stage-view {
+      min-height: 500px;
+    }
+
+    .token-view,
+    .base-view {
+      min-height: 460px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 20px;
+      padding: 28px;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      background:
+        linear-gradient(var(--rule-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px),
+        var(--surface-2);
+      background-size: 28px 28px;
+      text-align: center;
+    }
+
+    .token-specimen {
+      display: grid;
+      min-width: min(320px, 100%);
+      padding: 26px;
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      background: var(--surface);
+    }
+
+    .token-word {
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: clamp(2.8rem, 9vw, 6rem);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .token-id {
+      margin-top: 12px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .sentence {
+      max-width: 680px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(1.05rem, 2.4vw, 1.42rem);
+      line-height: 1.55;
+    }
+
+    .sentence mark {
+      padding: 2px 5px;
+      background: color-mix(in oklab, var(--accent) 18%, var(--surface));
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-weight: 800;
+    }
+
+    .vector-values {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(62px, 1fr));
+      gap: 8px;
+      width: min(620px, 100%);
+    }
+
+    .vector-value {
+      display: grid;
+      place-items: center;
+      min-height: 58px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+
+    .vector-bracket {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: clamp(1rem, 3vw, 1.35rem);
+      font-weight: 800;
+    }
+
+    .map-view {
+      display: grid;
+      gap: 12px;
+    }
+
+    .context-map {
+      position: relative;
+      min-height: 460px;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 48%, color-mix(in oklab, var(--accent) 11%, transparent), transparent 18%),
+        linear-gradient(var(--rule-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px),
+        var(--surface-2);
+      background-size: auto, 28px 28px, 28px 28px;
+    }
+
+    .map-line {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      color: var(--accent);
+      pointer-events: none;
+    }
+
+    .map-line line {
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-dasharray: 7 6;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .cluster-label,
+    .map-point,
+    .base-point,
+    .target-point {
+      position: absolute;
+      left: calc(var(--x) * 1%);
+      top: calc(var(--y) * 1%);
+      transform: translate(-50%, -50%);
+    }
+
+    .cluster-label {
+      z-index: 2;
+      padding: 5px 7px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .cluster-label.active {
+      border-color: var(--accent);
+      color: var(--ink);
+    }
+
+    .map-point {
+      z-index: 2;
+      min-width: 58px;
+      padding: 6px 8px;
+      border: 1px solid var(--rule-soft);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--ink-soft);
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .map-point.near {
+      border-color: var(--accent);
+      background: color-mix(in oklab, var(--accent) 11%, var(--surface));
+      color: var(--ink);
+    }
+
+    .base-point {
+      z-index: 3;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--muted);
+      border-radius: 50%;
+      background: var(--surface);
+    }
+
+    .base-point::after {
+      content: "base";
+      position: absolute;
+      left: 22px;
+      top: -3px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+    }
+
+    .target-point {
+      z-index: 4;
+      display: grid;
+      min-width: 64px;
+      min-height: 44px;
+      place-items: center;
+      padding: 7px 10px;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-weight: 800;
+      transition: left 480ms ease, top 480ms ease;
+    }
+
+    .axis-note {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+    }
+
+    .prediction-panel {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      background: var(--surface);
+    }
+
+    .prediction-panel[hidden] { display: none; }
+
+    .prediction-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .prediction-button {
+      min-height: 46px;
+      padding: 8px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .prediction-button.active,
+    .prediction-button:focus-visible {
+      border-color: var(--accent);
+      background: color-mix(in oklab, var(--accent) 12%, var(--surface));
+      outline: none;
+    }
+
+    .same-change {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .same-change div {
+      padding: 11px;
+      border: 1px solid var(--rule-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+    }
+
+    .same-change b {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+    }
+
+    .same-change span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .status-line {
+      min-height: 1.4em;
+      margin: 0;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    .tool-button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 820px) {
+      .vector-shell,
+      .tool-grid-2 { grid-template-columns: 1fr; }
+      .stage-view { min-height: 0; }
+    }
+
+    @media (max-width: 560px) {
+      .step-line,
+      .prediction-options,
+      .same-change { grid-template-columns: 1fr; }
+      .token-view,
+      .base-view { min-height: 380px; padding: 18px; }
+      .vector-values { grid-template-columns: repeat(2, minmax(62px, 1fr)); }
+      .context-map { min-height: 650px; }
+      .map-point { min-width: 48px; padding: 5px 6px; font-size: 0.68rem; }
+      .cluster-label { max-width: 92px; white-space: normal; text-align: center; }
+      .target-point { min-width: 56px; min-height: 40px; }
+      .axis-note { max-width: 170px; text-align: right; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .target-point { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../pages/tools.html" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../../pages/session-text.html">Session 1</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Tool 25 · Session 1 · Text · Contextual representations</p>
+      <h1 class="tool-title">Contextual Vector Lab</h1>
+      <p class="tool-dek">Follow the same token through three layers: an illustrative token ID, one starting lookup vector, and a context-dependent position. Predict the neighborhood before revealing where the authored projection places it.</p>
+      <div class="tool-idea">Big idea: the token can stay the same while its numerical representation changes with context.</div>
+      <div class="tool-notice"><b>Teaching simulation.</b> Token IDs, vector values, coordinates, and neighbors are authored—not extracted from a real language model. Real models use many dimensions and layers; a 2D projection can distort distance and has no fixed semantic axes.</div>
+    </header>
+
+    <section class="vector-shell" aria-label="Contextual vector investigation">
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Choose one token</p>
+            <div class="choice-list" id="wordList"></div>
+          </div>
+          <div>
+            <p class="mini-label">Put it in context</p>
+            <div class="choice-list" id="contextList"></div>
+          </div>
+          <div class="same-change">
+            <div><b>Stays the same</b><span id="sameText">characters, token ID, starting vector</span></div>
+            <div><b>Changes</b><span id="changeText">contextual position and nearest neighbors</span></div>
+          </div>
+          <p class="status-line" id="testStatus" aria-live="polite"></p>
+        </div>
+      </aside>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div class="step-line" aria-label="Representation steps">
+            <button class="step-button active" type="button" data-step="1">1 · Token ID</button>
+            <button class="step-button" type="button" data-step="2">2 · Base vector</button>
+            <button class="step-button" type="button" data-step="3">3 · Contextual map</button>
+          </div>
+
+          <section class="stage-view" id="stageView" aria-live="polite"></section>
+
+          <section class="prediction-panel" id="predictionPanel" hidden>
+            <div>
+              <p class="mini-label">Predict before reveal</p>
+              <p class="small-muted" style="margin:0;">Which neighborhood should this occurrence move toward?</p>
+            </div>
+            <div class="prediction-options" id="predictionOptions"></div>
+            <div class="button-row">
+              <button class="tool-button" type="button" id="revealBtn" disabled>Reveal contextual move</button>
+              <button class="tool-button secondary" type="button" id="resetBtn">Reset prediction</button>
+            </div>
+            <p class="status-line" id="predictionStatus" aria-live="polite">Choose a neighborhood first.</p>
+          </section>
+
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="backBtn">← Previous layer</button>
+            <button class="tool-button" type="button" id="nextBtn">Next layer →</button>
+          </div>
+
+          <details>
+            <summary>Projection guardrails</summary>
+            <ul class="evidence-list" style="margin-top:12px;">
+              <li>Nearby does not automatically mean “synonym.” It may reflect related meanings, similar contexts, or repeated cultural associations.</li>
+              <li>A different model, layer, corpus, or projection method could produce a different neighborhood.</li>
+              <li>The two screen directions have no stable meaning; only relative positions inside this authored map are being compared.</li>
+              <li>Embedding Projector is useful for static learned neighborhoods; contextual models also reshape a token’s representation as surrounding tokens change.</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+    </section>
+
+    <section class="tool-grid-2" style="margin-top:16px;">
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Investigation note</p>
+            <h2>Describe movement without claiming understanding</h2>
+          </div>
+          <label for="claimBox">Claim
+            <textarea class="note-box" id="claimBox">In this authored projection, the token “___” moved toward ___ when the context changed from ___ to ___. This illustrates the hypothesis that context reshapes ___. Testing that on a real model would require ___.</textarea>
+          </label>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy investigation</button>
+            <button class="tool-button secondary" type="button" id="printBtn">Print / save</button>
+          </div>
+          <p class="status-line" id="copyStatus" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Debrief</p>
+            <h2>What does “nearby” mean here?</h2>
+          </div>
+          <ul class="evidence-list">
+            <li>What remained identical across the three contexts?</li>
+            <li>Which surrounding words helped you predict the neighborhood?</li>
+            <li>Are the neighbors close because of meaning, usage, or a repeated association?</li>
+            <li>What does reducing many dimensions to two make visible—and what might it hide?</li>
+            <li>What real model, layer, tokenizer, and projection would you document before making a model-level claim?</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../../index.html">Home</a> · <a href="../../pages/tools.html">Tool index</a> · <a href="../../pages/session-text.html">Session 1</a></nav>
+      <p class="colophon">Offline teaching simulation · No account, model API, or downloaded embedding required.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      let WORDS = [
+        {
+          id: "bank",
+          word: "bank",
+          tokenId: "8932",
+          vector: [0.18, -0.42, 0.07, 0.31, -0.16, 0.54, -0.09, 0.22],
+          clusters: [
+            { id: "finance", label: "money & accounts", x: 24, y: 46, points: [["loan", 14, 25], ["account", 29, 29], ["credit", 13, 61], ["deposit", 31, 65]] },
+            { id: "river", label: "river edge", x: 76, y: 46, points: [["shore", 68, 25], ["stream", 84, 29], ["water", 68, 62], ["edge", 84, 65]] },
+            { id: "mound", label: "pile or slope", x: 50, y: 79, points: [["drift", 39, 76], ["mound", 47, 89], ["pile", 58, 89], ["slope", 64, 76]] }
+          ],
+          contexts: [
+            { before: "She deposited the check at the ", target: "bank", after: " before closing.", cluster: "finance" },
+            { before: "We sat on the ", target: "bank", after: " of the river and watched the water.", cluster: "river" },
+            { before: "The snow ", target: "bank", after: " blocked one side of the narrow road.", cluster: "mound" }
+          ]
+        },
+        {
+          id: "bat",
+          word: "bat",
+          tokenId: "11467",
+          vector: [-0.11, 0.38, 0.26, -0.07, 0.49, -0.23, 0.14, 0.05],
+          clusters: [
+            { id: "sports", label: "baseball equipment", x: 24, y: 46, points: [["ball", 14, 25], ["swing", 30, 29], ["glove", 13, 62], ["inning", 31, 65]] },
+            { id: "animal", label: "flying mammal", x: 76, y: 46, points: [["cave", 68, 25], ["wing", 84, 29], ["nocturnal", 66, 62], ["fruit", 84, 65]] },
+            { id: "gesture", label: "quick movement", x: 50, y: 79, points: [["blink", 39, 76], ["flinch", 47, 89], ["react", 58, 89], ["eyelid", 64, 76]] }
+          ],
+          contexts: [
+            { before: "She swung the ", target: "bat", after: " and sent the ball toward left field.", cluster: "sports" },
+            { before: "A fruit ", target: "bat", after: " folded its wings inside the cave.", cluster: "animal" },
+            { before: "He did not ", target: "bat", after: " an eye when the alarm sounded.", cluster: "gesture" }
+          ]
+        },
+        {
+          id: "cell",
+          word: "cell",
+          tokenId: "6129",
+          vector: [0.44, 0.03, -0.28, 0.16, 0.09, -0.37, 0.41, -0.12],
+          clusters: [
+            { id: "prison", label: "enclosed room", x: 24, y: 46, points: [["bars", 14, 25], ["prison", 30, 29], ["door", 13, 62], ["inmate", 31, 65]] },
+            { id: "biology", label: "living unit", x: 76, y: 46, points: [["membrane", 67, 25], ["nucleus", 84, 29], ["tissue", 68, 62], ["organism", 84, 65]] },
+            { id: "battery", label: "stored energy", x: 50, y: 79, points: [["voltage", 38, 76], ["charge", 47, 89], ["battery", 58, 89], ["power", 65, 76]] }
+          ],
+          contexts: [
+            { before: "The narrow prison ", target: "cell", after: " had one barred window.", cluster: "prison" },
+            { before: "Each plant ", target: "cell", after: " contains structures that perform different jobs.", cluster: "biology" },
+            { before: "They stored the extra power in a single battery ", target: "cell", after: ".", cluster: "battery" }
+          ]
+        },
+        {
+          id: "pitch",
+          word: "pitch",
+          tokenId: "13984",
+          vector: [-0.31, 0.24, 0.12, 0.47, -0.05, 0.19, -0.33, 0.28],
+          clusters: [
+            { id: "music", label: "sound frequency", x: 24, y: 46, points: [["note", 14, 25], ["tone", 30, 29], ["melody", 13, 62], ["frequency", 31, 65]] },
+            { id: "proposal", label: "persuasive proposal", x: 76, y: 46, points: [["idea", 68, 25], ["client", 84, 29], ["proposal", 67, 62], ["persuade", 84, 65]] },
+            { id: "field", label: "playing field", x: 50, y: 79, points: [["match", 38, 76], ["grass", 47, 89], ["team", 58, 89], ["goal", 65, 76]] }
+          ],
+          contexts: [
+            { before: "The singer held the ", target: "pitch", after: " steadily through the final note.", cluster: "music" },
+            { before: "Her short ", target: "pitch", after: " convinced the client to fund the idea.", cluster: "proposal" },
+            { before: "The teams walked onto the football ", target: "pitch", after: " after the rain stopped.", cluster: "field" }
+          ]
+        }
+      ];
+
+      let STORAGE_KEY = "lm-contextual-vector-lab";
+      let state = { wordIndex: 0, contextIndex: 0, step: 1, prediction: "", revealed: false };
+      let wordList = document.getElementById("wordList");
+      let contextList = document.getElementById("contextList");
+      let stageView = document.getElementById("stageView");
+      let predictionPanel = document.getElementById("predictionPanel");
+      let predictionOptions = document.getElementById("predictionOptions");
+      let revealBtn = document.getElementById("revealBtn");
+      let predictionStatus = document.getElementById("predictionStatus");
+      let claimBox = document.getElementById("claimBox");
+
+      function escapeHtml(text) {
+        return String(text).replace(/[&<>"']/g, function (character) {
+          let entities = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
+          return entities[character];
+        });
+      }
+
+      function currentWord() {
+        return WORDS[state.wordIndex];
+      }
+
+      function currentContext() {
+        return currentWord().contexts[state.contextIndex];
+      }
+
+      function clusterById(word, clusterId) {
+        let found = null;
+        word.clusters.forEach(function (cluster) {
+          if (cluster.id === clusterId) found = cluster;
+        });
+        return found;
+      }
+
+      function sentenceHtml(context) {
+        return escapeHtml(context.before) + "<mark>" + escapeHtml(context.target) + "</mark>" + escapeHtml(context.after);
+      }
+
+      function signed(value) {
+        if (value >= 0) return "+" + value.toFixed(2);
+        return value.toFixed(2);
+      }
+
+      function saveState() {
+        let saved = {
+          wordId: currentWord().id,
+          contextIndex: state.contextIndex,
+          step: state.step,
+          prediction: state.prediction,
+          revealed: state.revealed,
+          claim: claimBox.value
+        };
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+        } catch (error) {
+          return false;
+        }
+        return true;
+      }
+
+      function loadState() {
+        try {
+          let saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+          if (!saved) return;
+          WORDS.forEach(function (word, index) {
+            if (word.id === saved.wordId) state.wordIndex = index;
+          });
+          if (typeof saved.contextIndex === "number" && saved.contextIndex >= 0 && saved.contextIndex < 3) state.contextIndex = saved.contextIndex;
+          if (typeof saved.step === "number" && saved.step >= 1 && saved.step <= 3) state.step = saved.step;
+          if (typeof saved.prediction === "string") state.prediction = saved.prediction;
+          if (saved.revealed === true) state.revealed = true;
+          if (typeof saved.claim === "string") claimBox.value = saved.claim;
+        } catch (error) {
+          return;
+        }
+      }
+
+      function renderWordChoices() {
+        wordList.innerHTML = "";
+        WORDS.forEach(function (word, index) {
+          let button = document.createElement("button");
+          button.type = "button";
+          button.className = "choice-button";
+          if (index === state.wordIndex) button.classList.add("active");
+          button.setAttribute("aria-pressed", String(index === state.wordIndex));
+          button.innerHTML = "<strong>“" + escapeHtml(word.word) + "”</strong><span>same characters · three contexts</span>";
+          button.addEventListener("click", function () {
+            state.wordIndex = index;
+            state.contextIndex = 0;
+            state.step = 1;
+            state.prediction = "";
+            state.revealed = false;
+            renderAll();
+            saveState();
+          });
+          wordList.appendChild(button);
+        });
+      }
+
+      function renderContextChoices() {
+        let word = currentWord();
+        contextList.innerHTML = "";
+        word.contexts.forEach(function (context, index) {
+          let button = document.createElement("button");
+          button.type = "button";
+          button.className = "choice-button";
+          if (index === state.contextIndex) button.classList.add("active");
+          button.setAttribute("aria-pressed", String(index === state.contextIndex));
+          button.innerHTML = "<strong>Context " + (index + 1) + "</strong><span>" + sentenceHtml(context) + "</span>";
+          button.addEventListener("click", function () {
+            state.contextIndex = index;
+            state.step = 3;
+            state.prediction = "";
+            state.revealed = false;
+            renderAll();
+            saveState();
+          });
+          contextList.appendChild(button);
+        });
+      }
+
+      function renderTokenView() {
+        let word = currentWord();
+        let context = currentContext();
+        stageView.innerHTML = '<div class="token-view"><p class="mini-label">Layer 1 · illustrative tokenizer lookup</p><div class="token-specimen"><span class="token-word">' + escapeHtml(word.word) + '</span><span class="token-id">token ID · ' + escapeHtml(word.tokenId) + '</span></div><p class="sentence">' + sentenceHtml(context) + '</p><p class="small-muted">The ID is an address in a vocabulary table—not a definition or a measure of meaning.</p></div>';
+      }
+
+      function renderBaseView() {
+        let word = currentWord();
+        let values = word.vector.map(function (value, index) {
+          return '<span class="vector-value" aria-label="dimension ' + (index + 1) + ', ' + signed(value) + '">' + signed(value) + "</span>";
+        }).join("");
+        stageView.innerHTML = '<div class="base-view"><p class="mini-label">Layer 2 · authored starting lookup vector</p>' +
+          '<span class="vector-bracket">' + escapeHtml(word.word) + ' → [ eight illustrative dimensions ]</span>' +
+          '<div class="vector-values" role="img" aria-label="Authored eight-dimensional starting vector for ' + escapeHtml(word.word) + '">' + values + '</div>' +
+          '<p class="small-muted">In this teaching model, all three occurrences begin from this same lookup vector. A real model may tokenize the text differently and uses many more dimensions.</p></div>';
+      }
+
+      function renderMapView() {
+        let word = currentWord();
+        let context = currentContext();
+        let destination = clusterById(word, context.cluster);
+        let targetX = 50;
+        let targetY = 48;
+        if (state.revealed) {
+          targetX = destination.x;
+          targetY = destination.y;
+        }
+
+        let labels = "";
+        let points = "";
+        word.clusters.forEach(function (cluster) {
+          let labelClass = "cluster-label";
+          if (state.revealed && cluster.id === context.cluster) labelClass += " active";
+          let labelY = 12;
+          if (cluster.y > 60) labelY = 65;
+          labels += '<span class="' + labelClass + '" style="--x:' + cluster.x + ';--y:' + labelY + '">' + escapeHtml(cluster.label) + '</span>';
+          cluster.points.forEach(function (point) {
+            let pointClass = "map-point";
+            if (state.revealed && cluster.id === context.cluster) pointClass += " near";
+            points += '<span class="' + pointClass + '" style="--x:' + point[1] + ';--y:' + point[2] + '">' + escapeHtml(point[0]) + '</span>';
+          });
+        });
+
+        let line = "";
+        if (state.revealed) {
+          line = '<svg class="map-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="currentColor"></path></marker></defs><line x1="50" y1="48" x2="' + targetX + '" y2="' + targetY + '" marker-end="url(#arrowhead)"></line></svg>';
+        }
+
+        let aria = "Authored two-dimensional projection with the token " + word.word + " at its shared base position and three candidate neighborhoods.";
+        if (state.revealed) aria = "Authored two-dimensional projection placing " + word.word + " near the " + destination.label + " neighborhood, beside " + destination.points.map(function (point) { return point[0]; }).join(", ") + ".";
+        stageView.innerHTML = '<div class="map-view"><p class="sentence">' + sentenceHtml(context) + '</p><div class="context-map" role="img" aria-label="' + escapeHtml(aria) + '">' + line + labels + points + '<span class="base-point" style="--x:50;--y:48" aria-hidden="true"></span><span class="target-point" style="--x:' + targetX + ';--y:' + targetY + '">' + escapeHtml(word.word) + '</span><span class="axis-note">authored 2D projection · axes have no fixed meaning</span></div></div>';
+      }
+
+      function renderPredictionOptions() {
+        let word = currentWord();
+        predictionOptions.innerHTML = "";
+        word.clusters.forEach(function (cluster) {
+          let button = document.createElement("button");
+          button.type = "button";
+          button.className = "prediction-button";
+          if (cluster.id === state.prediction) button.classList.add("active");
+          button.setAttribute("aria-pressed", String(cluster.id === state.prediction));
+          button.textContent = cluster.label;
+          button.addEventListener("click", function () {
+            state.prediction = cluster.id;
+            revealBtn.disabled = false;
+            predictionStatus.textContent = "Prediction recorded: “" + cluster.label + ".”";
+            renderPredictionOptions();
+            saveState();
+          });
+          predictionOptions.appendChild(button);
+        });
+      }
+
+      function renderStage() {
+        if (state.step === 1) renderTokenView();
+        else if (state.step === 2) renderBaseView();
+        else renderMapView();
+
+        document.querySelectorAll(".step-button").forEach(function (button) {
+          let buttonStep = Number(button.getAttribute("data-step"));
+          button.classList.toggle("active", buttonStep === state.step);
+          button.setAttribute("aria-pressed", String(buttonStep === state.step));
+        });
+        predictionPanel.hidden = state.step !== 3;
+        document.getElementById("backBtn").disabled = state.step === 1;
+        document.getElementById("nextBtn").disabled = state.step === 3;
+      }
+
+      function renderPredictionState() {
+        renderPredictionOptions();
+        if (state.prediction) {
+          revealBtn.disabled = false;
+          let predictedCluster = clusterById(currentWord(), state.prediction);
+          predictionStatus.textContent = "Prediction recorded: “" + predictedCluster.label + ".”";
+        } else {
+          revealBtn.disabled = true;
+          predictionStatus.textContent = "Choose a neighborhood first.";
+        }
+
+        if (state.revealed) {
+          let actual = clusterById(currentWord(), currentContext().cluster);
+          if (state.prediction === currentContext().cluster) predictionStatus.textContent = "Prediction matched this authored projection: “" + actual.label + ".” Now switch contexts and compare the move.";
+          else predictionStatus.textContent = "This authored projection moved toward “" + actual.label + ".” Which context words outweighed your prediction?";
+        }
+      }
+
+      function renderAll() {
+        renderWordChoices();
+        renderContextChoices();
+        renderPredictionState();
+        renderStage();
+      }
+
+      function setStep(step) {
+        state.step = step;
+        renderStage();
+        saveState();
+      }
+
+      function copyText(text, onSuccess, onFailure) {
+        function fallbackCopy() {
+          let helper = document.createElement("textarea");
+          helper.value = text;
+          helper.setAttribute("readonly", "");
+          helper.style.position = "absolute";
+          helper.style.left = "-9999px";
+          document.body.appendChild(helper);
+          helper.select();
+          let copied = false;
+          try {
+            copied = document.execCommand("copy");
+          } catch (error) {
+            copied = false;
+          }
+          helper.remove();
+          if (copied) onSuccess();
+          else onFailure();
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(onSuccess).catch(fallbackCopy);
+          return;
+        }
+        fallbackCopy();
+      }
+
+      function investigationText() {
+        let word = currentWord();
+        let context = currentContext();
+        let actual = clusterById(word, context.cluster);
+        let prediction = "not recorded";
+        if (state.prediction) prediction = clusterById(word, state.prediction).label;
+        let reveal = "not revealed";
+        if (state.revealed) reveal = actual.label + " · neighbors: " + actual.points.map(function (point) { return point[0]; }).join(", ");
+        return [
+          "CONTEXTUAL VECTOR LAB · TEACHING SIMULATION",
+          "Token: “" + word.word + "” · illustrative ID " + word.tokenId,
+          "Context: " + context.before + context.target + context.after,
+          "Prediction: " + prediction,
+          "Authored projection: " + reveal,
+          "",
+          "Claim: " + claimBox.value.trim(),
+          "",
+          "Evidence limit: token IDs, vectors, coordinates, and neighbors are authored—not model outputs."
+        ].join("\n");
+      }
+
+      function runSelfTests() {
+        let failures = [];
+        let passed = 0;
+        let ids = [];
+        WORDS.forEach(function (word) {
+          if (ids.indexOf(word.tokenId) >= 0) failures.push(word.id + " duplicate token ID");
+          else passed += 1;
+          ids.push(word.tokenId);
+          if (word.vector.length === 8) passed += 1;
+          else failures.push(word.id + " vector must have eight values");
+          word.contexts.forEach(function (context) {
+            if (context.target === word.word) passed += 1;
+            else failures.push(word.id + " context changed the target characters");
+            if (clusterById(word, context.cluster)) passed += 1;
+            else failures.push(word.id + " context points to a missing cluster");
+          });
+        });
+        let testStatus = document.getElementById("testStatus");
+        if (failures.length === 0) testStatus.textContent = "Self-checks: " + passed + " passed · offline projection ready.";
+        else testStatus.textContent = "Self-checks need attention: " + failures.join("; ");
+        return failures;
+      }
+
+      document.querySelectorAll(".step-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          setStep(Number(button.getAttribute("data-step")));
+        });
+      });
+
+      document.getElementById("backBtn").addEventListener("click", function () {
+        if (state.step > 1) setStep(state.step - 1);
+      });
+      document.getElementById("nextBtn").addEventListener("click", function () {
+        if (state.step < 3) setStep(state.step + 1);
+      });
+      revealBtn.addEventListener("click", function () {
+        if (!state.prediction) return;
+        state.revealed = true;
+        renderStage();
+        renderPredictionState();
+        saveState();
+      });
+      document.getElementById("resetBtn").addEventListener("click", function () {
+        state.prediction = "";
+        state.revealed = false;
+        renderPredictionState();
+        renderStage();
+        saveState();
+      });
+      claimBox.addEventListener("input", saveState);
+      document.getElementById("copyBtn").addEventListener("click", function () {
+        let status = document.getElementById("copyStatus");
+        copyText(investigationText(), function () {
+          status.textContent = "Investigation copied.";
+          window.setTimeout(function () { status.textContent = ""; }, 1600);
+        }, function () {
+          status.textContent = "Copy was blocked. Select the claim and copy it manually.";
+        });
+      });
+      document.getElementById("printBtn").addEventListener("click", function () { window.print(); });
+
+      loadState();
+      renderAll();
+      runSelfTests();
+    }());
+  </script>
+  <script src="../../assets/analytics.js"></script>
+</body>
+</html>

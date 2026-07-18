@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="video" data-skin="video-slitscan">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>Point Correspondence Lab · Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="../../assets/tool-lab.css">
+  <script src="../../assets/field-theme.js"></script>
+  <style>
+    [hidden] { display: none !important; }
+
+    .correspondence-shell {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.32fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .phase-line {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .phase {
+      padding: 8px 9px;
+      border: 1px solid var(--rule-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.055em;
+      text-transform: uppercase;
+    }
+
+    .phase.active {
+      border-color: var(--accent);
+      background: color-mix(in oklab, var(--accent) 12%, var(--surface));
+      color: var(--ink);
+    }
+
+    .stage-wrap {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      background: var(--surface-2);
+      aspect-ratio: 16 / 9;
+    }
+
+    .stage-wrap svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .stage-wrap .paper { fill: var(--surface); }
+    .stage-wrap .surface { fill: var(--surface); }
+    .stage-wrap .field { fill: var(--surface-2); }
+    .stage-wrap .ink { fill: var(--ink); }
+    .stage-wrap .soft { fill: var(--muted); }
+    .stage-wrap .line { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .stage-wrap .fine { fill: none; stroke: var(--ink-soft); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .stage-wrap .video-ink { fill: var(--m-video); }
+    .stage-wrap .video-tint { fill: var(--m-video-tint); }
+    .stage-wrap .image-ink { fill: var(--m-image); }
+    .stage-wrap .image-tint { fill: var(--m-image-tint); }
+    .stage-wrap .text-ink { fill: var(--m-text); }
+    .stage-wrap .text-tint { fill: var(--m-text-tint); }
+    .stage-wrap .cross-ink { fill: var(--m-cross); }
+    .stage-wrap .cross-tint { fill: var(--m-cross-tint); }
+    .stage-wrap .track-line { fill: none; stroke: var(--m-video); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+    .stage-wrap .reference-line { fill: none; stroke: var(--ink); stroke-width: 4; stroke-dasharray: 12 10; stroke-linecap: round; opacity: 0.72; }
+    .stage-wrap .track-dot { fill: var(--m-video); stroke: var(--surface); stroke-width: 5; }
+    .stage-wrap .reference-dot { fill: var(--surface); stroke: var(--ink); stroke-width: 5; }
+    .stage-wrap .frame-label { fill: var(--ink); font-family: var(--font-mono); font-size: 18px; font-weight: 700; }
+
+    .marker-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .point-marker {
+      position: absolute;
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      transform: translate(-50%, -50%);
+      border: 2px solid var(--surface);
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--on-accent);
+      box-shadow: 0 0 0 2px var(--ink);
+      cursor: pointer;
+      pointer-events: auto;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .point-marker.destination {
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .point-marker.selected {
+      background: var(--ink);
+      color: var(--surface);
+      box-shadow: 0 0 0 4px var(--accent);
+    }
+
+    .point-marker:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 5px;
+    }
+
+    .marker-key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+
+    .marker-key span {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .key-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--m-video);
+    }
+
+    .key-dot.reference {
+      border: 2px solid var(--ink);
+      background: var(--surface);
+    }
+
+    .transport {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .frame-readout {
+      min-width: 8ch;
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .confidence-wrap {
+      display: grid;
+      grid-template-columns: auto minmax(100px, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid var(--rule-soft);
+      border-radius: 8px;
+      background: var(--surface-2);
+    }
+
+    .confidence-track {
+      height: 13px;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: var(--surface);
+    }
+
+    .confidence-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 220ms ease;
+    }
+
+    .failure-card {
+      padding: 12px 14px;
+      border-left: 4px solid var(--accent);
+      background: color-mix(in oklab, var(--accent) 9%, var(--surface));
+    }
+
+    .failure-card b { color: var(--ink); }
+
+    .status-line {
+      min-height: 1.4em;
+      margin: 0;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    .decision-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .decision-table th,
+    .decision-table td {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule-soft);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .decision-table th {
+      width: 32%;
+      padding-right: 14px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.055em;
+      text-transform: uppercase;
+    }
+
+    details summary {
+      cursor: pointer;
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    @media (max-width: 860px) {
+      .correspondence-shell,
+      .tool-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .phase-line { grid-template-columns: 1fr; }
+      .transport { grid-template-columns: 1fr 1fr; }
+      .transport input { grid-column: 1 / -1; grid-row: 1; }
+      .confidence-wrap { grid-template-columns: 1fr auto; }
+      .confidence-track { grid-column: 1 / -1; grid-row: 2; }
+      .point-marker { width: 34px; height: 34px; }
+      .decision-table th,
+      .decision-table td { display: block; width: 100%; }
+      .decision-table th { padding-bottom: 3px; border-bottom: 0; }
+      .decision-table td { padding-top: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .confidence-fill { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../pages/tools.html" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a class="btn btn-sm" href="../../pages/session-video.html">Session 3</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Tool 26 · Session 3 · Video · Point correspondence</p>
+      <h1 class="tool-title">Point Correspondence Lab</h1>
+      <p class="tool-dek">Select a visible point in frame one, predict where it will be in frame eight, then reveal a precomputed track. Compare a clean path with occlusion, identity-switch, and off-screen failures.</p>
+      <div class="tool-idea">Big idea: PoseNet can estimate a keypoint in one frame; tracking asks which later point corresponds to it. Generative video has the harder inverse problem—create each new frame while keeping those relationships coherent.</div>
+      <div class="tool-notice"><b>Authored teaching simulation.</b> The scenes, routes, confidence values, and failures are precomputed illustrations. They are not PoseNet or CoTracker outputs, and they do not measure a live model.</div>
+    </header>
+
+    <section class="correspondence-shell" aria-label="Point correspondence investigation">
+      <aside class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Choose a sequence</p>
+            <div class="choice-list" id="sceneList"></div>
+          </div>
+          <div class="phase-line" aria-label="Investigation phases">
+            <div class="phase active" id="phaseSelect">1 · Select</div>
+            <div class="phase" id="phasePredict">2 · Predict</div>
+            <div class="phase" id="phaseReveal">3 · Reveal</div>
+          </div>
+          <div>
+            <p class="mini-label">Prompt</p>
+            <p id="instructionText">Choose one marked point in frame 1.</p>
+          </div>
+          <p class="status-line" id="testStatus" aria-live="polite"></p>
+        </div>
+      </aside>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label" id="sceneKicker">Clean correspondence</p>
+            <h2 id="sceneTitle">Follow the point, not the object name</h2>
+            <p class="small-muted" id="sceneDescription"></p>
+          </div>
+
+          <div class="stage-wrap" id="stageWrap">
+            <div id="sceneStage" role="img" aria-label=""></div>
+            <div class="marker-layer" id="markerLayer"></div>
+          </div>
+
+          <div class="marker-key" id="markerKey" hidden>
+            <span><i class="key-dot"></i>simulated tracker estimate</span>
+            <span><i class="key-dot reference"></i>expected identity / location</span>
+          </div>
+
+          <div class="button-row">
+            <button class="tool-button" type="button" id="revealBtn" disabled>Reveal precomputed track</button>
+            <button class="tool-button secondary" type="button" id="resetBtn">Reset this sequence</button>
+          </div>
+          <p class="status-line" id="predictionStatus" aria-live="polite">Choose one point in frame 1.</p>
+
+          <div class="stack" id="trackControls" hidden>
+            <div class="transport">
+              <button class="tool-button secondary" type="button" id="prevBtn">← Previous</button>
+              <label for="frameSlider" class="visually-hidden">Frame</label>
+              <input class="scrub-range" id="frameSlider" type="range" min="0" max="7" step="1" value="0">
+              <button class="tool-button secondary" type="button" id="nextBtn">Next →</button>
+            </div>
+            <div class="frame-readout" id="frameReadout">Frame 1 of 8</div>
+            <div class="confidence-wrap">
+              <span class="mini-label" style="margin:0;">Illustrated confidence</span>
+              <div class="confidence-track" role="img" id="confidenceTrack" aria-label="Illustrated confidence">
+                <div class="confidence-fill" id="confidenceFill"></div>
+              </div>
+              <b class="frame-readout" id="confidenceValue">96%</b>
+            </div>
+            <div class="failure-card" id="failureCard"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="tool-grid-2" style="margin-top:16px;">
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Investigation note</p>
+            <h2>Make one bounded claim</h2>
+            <p>Describe what this authored route illustrates. A confidence value is part of the simulation—not proof that the point is correct.</p>
+          </div>
+          <label for="claimBox">Claim
+            <textarea class="note-box" id="claimBox">In this teaching simulation, the selected point ___ because ___. This illustrates the hypothesis that point correspondence becomes difficult when ___. Testing that on a real tracker would require ___.</textarea>
+          </label>
+          <div class="button-row">
+            <button class="tool-button secondary" type="button" id="copyBtn">Copy investigation</button>
+            <button class="tool-button secondary" type="button" id="printBtn">Print / save</button>
+          </div>
+          <p class="status-line" id="copyStatus" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="lab-panel">
+        <div class="lab-pad stack">
+          <div>
+            <p class="mini-label">Mechanism boundary</p>
+            <h2>Tracking is not generation</h2>
+          </div>
+          <table class="decision-table">
+            <tbody>
+              <tr><th>Pose estimation</th><td>Estimate named body keypoints in one existing frame.</td></tr>
+              <tr><th>Point tracking</th><td>Estimate where a selected point went across frames that already exist.</td></tr>
+              <tr><th>Video generation</th><td>Create later frames while making identities, locations, motion, camera, and physics remain believable.</td></tr>
+              <tr><th>Human decisions</th><td>Which points matter, what counts as the same feature, which failures are tolerated, and how confidence is interpreted.</td></tr>
+            </tbody>
+          </table>
+          <details>
+            <summary>Debrief questions</summary>
+            <ul class="evidence-list">
+              <li>What evidence made you call two points “the same” across time?</li>
+              <li>Did confidence fall before, during, or after the visible failure?</li>
+              <li>Why can a plausible point still be the wrong identity?</li>
+              <li>What additional relationships must a generator preserve beyond this one point?</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../../index.html">Home</a> · <a href="../../pages/tools.html">Tool index</a> · <a href="../../pages/session-video.html">Session 3</a></nav>
+      <p class="colophon">Offline teaching simulation · No account, model API, camera, or uploaded video required.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      let FRAME_COUNT = 8;
+      let STORAGE_KEY = "lm-point-correspondence-lab";
+
+      function repeatPoint(x, y) {
+        let points = [];
+        for (let i = 0; i < FRAME_COUNT; i += 1) {
+          points.push([x, y]);
+        }
+        return points;
+      }
+
+      let SCENES = [
+        {
+          id: "ball",
+          kicker: "Clean correspondence",
+          title: "A ball follows a readable arc",
+          short: "Ball arc",
+          description: "The point remains visible and distinct in every frame. This is the easy case.",
+          tracks: [
+            {
+              id: "ball-center",
+              label: "ball center",
+              symbol: "A",
+              actual: [[17,67],[27,48],[38,35],[50,29],[62,35],[73,49],[83,67],[89,78]],
+              estimate: [[17,67],[27,48],[38,35],[50,29],[62,35],[73,49],[83,67],[89,78]],
+              confidence: [98,98,97,97,97,96,96,95],
+              destinations: [
+                { label: "upper middle", x: 62, y: 35 },
+                { label: "lower right", x: 89, y: 78 },
+                { label: "lower left", x: 20, y: 75 }
+              ],
+              correct: 1,
+              failureAt: null,
+              failure: "No illustrated failure",
+              explanation: "The point stays visible and visually distinct, so the estimate can follow the same center through all eight frames."
+            },
+            {
+              id: "shirt-badge",
+              label: "shirt badge",
+              symbol: "B",
+              actual: [[25,61],[26,61],[27,61],[28,61],[29,61],[30,61],[31,61],[32,61]],
+              estimate: [[25,61],[26,61],[27,61],[28,61],[29,61],[30,61],[31,61],[32,61]],
+              confidence: [96,96,96,95,95,95,94,94],
+              destinations: [
+                { label: "near the moving ball", x: 84, y: 66 },
+                { label: "slightly right", x: 32, y: 61 },
+                { label: "at the hoop", x: 91, y: 36 }
+              ],
+              correct: 1,
+              failureAt: null,
+              failure: "No illustrated failure",
+              explanation: "The badge moves only slightly with the person and remains visually distinct from the ball."
+            }
+          ]
+        },
+        {
+          id: "occlusion",
+          kicker: "Failure · occlusion",
+          title: "A moving panel hides the elbow",
+          short: "Occlusion",
+          description: "The elbow disappears for two frames. The simulated tracker must estimate through missing visual evidence, then reacquire it.",
+          occludedFrames: [3, 4],
+          tracks: [
+            {
+              id: "elbow",
+              label: "raised elbow",
+              symbol: "A",
+              actual: [[31,49],[36,45],[42,42],[49,41],[56,43],[63,47],[70,53],[76,60]],
+              estimate: [[31,49],[36,45],[42,42],[48,45],[55,49],[63,47],[70,53],[76,60]],
+              confidence: [95,93,89,61,47,76,88,91],
+              destinations: [
+                { label: "upper left", x: 28, y: 40 },
+                { label: "lower right", x: 76, y: 60 },
+                { label: "behind the panel", x: 56, y: 45 }
+              ],
+              correct: 1,
+              failureAt: 3,
+              failure: "Occlusion begins",
+              explanation: "Frames 4–5 provide no direct view of the elbow. The route between visible points is an estimate, and confidence drops before reacquisition."
+            },
+            {
+              id: "hat-mark",
+              label: "hat mark",
+              symbol: "B",
+              actual: [[25,26],[31,26],[37,27],[43,28],[49,29],[55,30],[61,31],[67,32]],
+              estimate: [[25,26],[31,26],[37,27],[43,28],[49,29],[55,30],[61,31],[67,32]],
+              confidence: [96,96,95,94,93,93,92,92],
+              destinations: [
+                { label: "lower right", x: 72, y: 63 },
+                { label: "upper right", x: 67, y: 32 },
+                { label: "center", x: 50, y: 50 }
+              ],
+              correct: 1,
+              failureAt: null,
+              failure: "No illustrated failure",
+              explanation: "The hat mark stays above the moving panel, so it remains visible while the elbow is hidden."
+            }
+          ]
+        },
+        {
+          id: "crossing",
+          kicker: "Failure · identity switch",
+          title: "Two similar runners cross",
+          short: "Crossing",
+          description: "At the crossing, a plausible nearby shoulder belongs to the wrong person. Position can look right while identity is wrong.",
+          tracks: [
+            {
+              id: "blue-shoulder",
+              label: "blue runner shoulder",
+              symbol: "A",
+              actual: [[18,43],[27,42],[37,42],[47,43],[57,43],[67,42],[77,42],[86,43]],
+              estimate: [[18,43],[27,42],[37,42],[47,43],[45,47],[35,47],[25,47],[16,47]],
+              confidence: [96,95,94,90,82,87,91,92],
+              destinations: [
+                { label: "continues right", x: 86, y: 43 },
+                { label: "switches left", x: 16, y: 47 },
+                { label: "stays at crossing", x: 50, y: 45 }
+              ],
+              correct: 0,
+              failureAt: 4,
+              failure: "Identity switch",
+              explanation: "The simulated estimate jumps from the blue runner to a nearby shoulder on the amber runner. The estimate remains plausible but follows the wrong identity."
+            },
+            {
+              id: "amber-shoulder",
+              label: "amber runner shoulder",
+              symbol: "B",
+              actual: [[82,47],[73,47],[63,47],[53,47],[43,47],[33,47],[23,47],[14,47]],
+              estimate: [[82,47],[73,47],[63,47],[53,47],[55,43],[65,42],[75,42],[84,43]],
+              confidence: [96,95,94,90,81,86,90,92],
+              destinations: [
+                { label: "continues left", x: 14, y: 47 },
+                { label: "switches right", x: 84, y: 43 },
+                { label: "stays at crossing", x: 50, y: 45 }
+              ],
+              correct: 0,
+              failureAt: 4,
+              failure: "Identity switch",
+              explanation: "The simulated estimate jumps from the amber runner to the blue runner as their shoulders overlap."
+            }
+          ]
+        },
+        {
+          id: "offscreen",
+          kicker: "Failure · point leaves the frame",
+          title: "A toy car exits the camera view",
+          short: "Off-screen",
+          description: "After the corner leaves the image, there is no visible point to follow. A tracker must mark it lost or invent an unsupported location.",
+          tracks: [
+            {
+              id: "car-corner",
+              label: "front bumper corner",
+              symbol: "A",
+              actual: [[19,64],[32,64],[45,64],[58,64],[71,64],[84,64],[97,64],null],
+              estimate: [[19,64],[32,64],[45,64],[58,64],[71,64],[84,64],[97,64],[98,64]],
+              confidence: [97,96,96,95,94,89,64,19],
+              destinations: [
+                { label: "outside the right edge", x: 97, y: 64 },
+                { label: "stops in the middle", x: 58, y: 64 },
+                { label: "returns left", x: 20, y: 64 }
+              ],
+              correct: 0,
+              failureAt: 6,
+              failure: "Point becomes lost",
+              explanation: "The car corner reaches the boundary in frame 7 and is outside the image in frame 8. The low-confidence edge estimate is not new visual evidence."
+            },
+            {
+              id: "sign-top",
+              label: "sign top",
+              symbol: "B",
+              actual: repeatPoint(76, 29),
+              estimate: repeatPoint(76, 29),
+              confidence: [98,98,98,98,98,98,98,98],
+              destinations: [
+                { label: "outside right", x: 97, y: 30 },
+                { label: "same location", x: 76, y: 29 },
+                { label: "moves left", x: 35, y: 29 }
+              ],
+              correct: 1,
+              failureAt: null,
+              failure: "No illustrated failure",
+              explanation: "The camera and sign stay fixed, so this background point remains in the same location."
+            }
+          ]
+        }
+      ];
+
+      let state = {
+        sceneIndex: 0,
+        trackIndex: -1,
+        predictionIndex: -1,
+        revealed: false,
+        frameIndex: 0,
+        claim: "In this teaching simulation, the selected point ___ because ___. This illustrates the hypothesis that point correspondence becomes difficult when ___. Testing that on a real tracker would require ___."
+      };
+
+      let sceneList = document.getElementById("sceneList");
+      let sceneStage = document.getElementById("sceneStage");
+      let markerLayer = document.getElementById("markerLayer");
+      let sceneKicker = document.getElementById("sceneKicker");
+      let sceneTitle = document.getElementById("sceneTitle");
+      let sceneDescription = document.getElementById("sceneDescription");
+      let instructionText = document.getElementById("instructionText");
+      let predictionStatus = document.getElementById("predictionStatus");
+      let testStatus = document.getElementById("testStatus");
+      let revealBtn = document.getElementById("revealBtn");
+      let resetBtn = document.getElementById("resetBtn");
+      let trackControls = document.getElementById("trackControls");
+      let frameSlider = document.getElementById("frameSlider");
+      let frameReadout = document.getElementById("frameReadout");
+      let prevBtn = document.getElementById("prevBtn");
+      let nextBtn = document.getElementById("nextBtn");
+      let confidenceTrack = document.getElementById("confidenceTrack");
+      let confidenceFill = document.getElementById("confidenceFill");
+      let confidenceValue = document.getElementById("confidenceValue");
+      let failureCard = document.getElementById("failureCard");
+      let markerKey = document.getElementById("markerKey");
+      let claimBox = document.getElementById("claimBox");
+      let copyStatus = document.getElementById("copyStatus");
+
+      function currentScene() {
+        return SCENES[state.sceneIndex];
+      }
+
+      function currentTrack() {
+        let scene = currentScene();
+        if (state.trackIndex < 0 || state.trackIndex >= scene.tracks.length) {
+          return null;
+        }
+        return scene.tracks[state.trackIndex];
+      }
+
+      function validPoint(point) {
+        return Array.isArray(point) && point.length === 2 && Number.isFinite(point[0]) && Number.isFinite(point[1]);
+      }
+
+      function svgPoint(point) {
+        return [point[0] * 8, point[1] * 4.5];
+      }
+
+      function pointAt(points, index) {
+        if (validPoint(points[index])) {
+          return points[index];
+        }
+        return null;
+      }
+
+      function pathThrough(points, lastIndex) {
+        let commands = [];
+        let drawing = false;
+        for (let i = 0; i <= lastIndex; i += 1) {
+          let point = pointAt(points, i);
+          if (!point) {
+            drawing = false;
+            continue;
+          }
+          let converted = svgPoint(point);
+          if (!drawing) {
+            commands.push("M" + converted[0] + " " + converted[1]);
+            drawing = true;
+          } else {
+            commands.push("L" + converted[0] + " " + converted[1]);
+          }
+        }
+        return commands.join(" ");
+      }
+
+      function sceneBase(scene, frame) {
+        if (scene.id === "ball") {
+          let ball = scene.tracks[0].actual[frame];
+          let badge = scene.tracks[1].actual[frame];
+          let b = svgPoint(ball);
+          let p = svgPoint(badge);
+          return '<rect class="paper" width="800" height="450"/><rect class="video-tint" y="300" width="800" height="150"/><path class="fine" d="M0 300h800M92 300l84-108h448l84 108M633 84v220M633 98h91v56h-91"/><circle class="line" cx="679" cy="179" r="45"/><path class="line" d="M679 224v77"/><circle class="image-tint" cx="' + p[0] + '" cy="' + (p[1] - 108) + '" r="38"/><path class="line" d="M' + p[0] + ' ' + (p[1] - 68) + 'v104m0-70l-48 54m48-54l55 47m-55 23l-38 72m38-72l42 71"/><circle class="cross-ink" cx="' + p[0] + '" cy="' + p[1] + '" r="12"/><circle class="video-ink" cx="' + b[0] + '" cy="' + b[1] + '" r="24"/><path class="fine" d="M' + b[0] + ' ' + (b[1] - 31) + 'v62M' + (b[0] - 31) + ' ' + b[1] + 'h62"/>';
+        }
+
+        if (scene.id === "occlusion") {
+          let elbow = svgPoint(scene.tracks[0].actual[frame]);
+          let hat = svgPoint(scene.tracks[1].actual[frame]);
+          let panelX = 180 + frame * 58;
+          let hidden = scene.occludedFrames.indexOf(frame) !== -1;
+          let elbowDot = "";
+          if (!hidden) {
+            elbowDot = '<circle class="video-ink" cx="' + elbow[0] + '" cy="' + elbow[1] + '" r="13"/>';
+          }
+          return '<rect class="paper" width="800" height="450"/><rect class="image-tint" y="330" width="800" height="120"/><circle class="text-tint" cx="' + hat[0] + '" cy="' + (hat[1] + 54) + '" r="46"/><path class="line" d="M' + hat[0] + ' ' + (hat[1] + 100) + 'v150m0-100L' + elbow[0] + ' ' + elbow[1] + 'm0 0l62-57m-62 57l-52 70m52 80l-45 92m45-92l49 91"/><path class="cross-ink" d="M' + (hat[0] - 44) + ' ' + (hat[1] + 3) + 'h88l-12-32h-64z"/><circle class="cross-ink" cx="' + hat[0] + '" cy="' + hat[1] + '" r="10"/>' + elbowDot + '<rect class="surface" x="' + panelX + '" y="150" width="220" height="170" rx="12"/><rect class="line" x="' + panelX + '" y="150" width="220" height="170" rx="12"/><path class="fine" d="M' + (panelX + 34) + ' 192h152m-152 38h118m-118 38h140"/>';
+        }
+
+        if (scene.id === "crossing") {
+          let blue = svgPoint(scene.tracks[0].actual[frame]);
+          let amber = svgPoint(scene.tracks[1].actual[frame]);
+          return '<rect class="paper" width="800" height="450"/><rect class="video-tint" y="315" width="800" height="135"/><path class="fine" d="M0 315h800M0 380h800"/>' + runnerSVG(blue[0], blue[1], "video-ink", "A", -1) + runnerSVG(amber[0], amber[1], "image-ink", "B", 1);
+        }
+
+        let carPoint = scene.tracks[0].actual[frame];
+        let car = "";
+        if (validPoint(carPoint)) {
+          let cp = svgPoint(carPoint);
+          car = '<path class="video-ink" d="M' + (cp[0] - 150) + ' ' + (cp[1] - 60) + 'h105l42 42h3v52h-168v-52h18z"/><circle class="ink" cx="' + (cp[0] - 123) + '" cy="' + (cp[1] + 33) + '" r="20"/><circle class="ink" cx="' + (cp[0] - 28) + '" cy="' + (cp[1] + 33) + '" r="20"/><circle class="cross-ink" cx="' + cp[0] + '" cy="' + cp[1] + '" r="11"/>';
+        }
+        return '<rect class="paper" width="800" height="450"/><rect class="text-tint" y="318" width="800" height="132"/><path class="fine" d="M0 318h800M0 390h800"/><path class="line" d="M608 130v188"/><rect class="image-ink" x="568" y="86" width="80" height="52" rx="5"/><circle class="cross-ink" cx="608" cy="130" r="10"/>' + car;
+      }
+
+      function runnerSVG(x, y, fillClass, label, direction) {
+        let arm = direction * 52;
+        return '<circle class="' + fillClass + '" cx="' + x + '" cy="' + (y - 78) + '" r="34"/><path class="line" d="M' + x + ' ' + (y - 43) + 'V' + (y + 65) + 'M' + x + ' ' + (y - 10) + 'L' + (x + arm) + ' ' + (y + 14) + 'M' + x + ' ' + (y - 10) + 'L' + (x - arm) + ' ' + (y + 10) + 'M' + x + ' ' + (y + 55) + 'L' + (x + arm * 0.8) + ' ' + (y + 118) + 'M' + x + ' ' + (y + 55) + 'L' + (x - arm * 0.8) + ' ' + (y + 116) + '"/><circle class="' + fillClass + '" cx="' + x + '" cy="' + y + '" r="13"/><text class="frame-label" x="' + (x - 6) + '" y="' + (y + 7) + '">' + label + '</text>';
+      }
+
+      function trackOverlay(track, frame) {
+        if (!state.revealed) {
+          return "";
+        }
+        let estimatePath = pathThrough(track.estimate, frame);
+        let overlay = '<path class="track-line" d="' + estimatePath + '"/>';
+        let estimatePoint = pointAt(track.estimate, frame);
+        if (estimatePoint) {
+          let estimateSVG = svgPoint(estimatePoint);
+          overlay += '<circle class="track-dot" cx="' + estimateSVG[0] + '" cy="' + estimateSVG[1] + '" r="14"/>';
+        }
+        if (track.failureAt !== null && frame >= track.failureAt) {
+          let referencePath = pathThrough(track.actual, frame);
+          overlay += '<path class="reference-line" d="' + referencePath + '"/>';
+          let actualPoint = pointAt(track.actual, frame);
+          if (actualPoint) {
+            let actualSVG = svgPoint(actualPoint);
+            overlay += '<circle class="reference-dot" cx="' + actualSVG[0] + '" cy="' + actualSVG[1] + '" r="14"/>';
+          }
+        }
+        return overlay;
+      }
+
+      function renderSceneList() {
+        sceneList.innerHTML = "";
+        SCENES.forEach(function (scene, index) {
+          let button = document.createElement("button");
+          button.type = "button";
+          button.className = "choice-button";
+          if (index === state.sceneIndex) {
+            button.classList.add("selected");
+            button.setAttribute("aria-pressed", "true");
+          } else {
+            button.setAttribute("aria-pressed", "false");
+          }
+          button.textContent = scene.short;
+          button.addEventListener("click", function () {
+            state.sceneIndex = index;
+            resetInvestigation();
+          });
+          sceneList.appendChild(button);
+        });
+      }
+
+      function markerButton(point, label, symbol, index, destination) {
+        let button = document.createElement("button");
+        button.type = "button";
+        button.className = "point-marker";
+        if (destination) {
+          button.classList.add("destination");
+          if (state.predictionIndex === index) {
+            button.classList.add("selected");
+          }
+        }
+        button.style.left = point[0] + "%";
+        button.style.top = point[1] + "%";
+        button.textContent = symbol;
+        button.setAttribute("aria-label", label);
+        button.title = label;
+        button.addEventListener("click", function () {
+          if (destination) {
+            state.predictionIndex = index;
+          } else {
+            state.trackIndex = index;
+            state.predictionIndex = -1;
+            state.frameIndex = FRAME_COUNT - 1;
+          }
+          saveState();
+          render();
+        });
+        return button;
+      }
+
+      function renderMarkers() {
+        markerLayer.innerHTML = "";
+        let scene = currentScene();
+        if (state.revealed) {
+          return;
+        }
+        if (state.trackIndex < 0) {
+          scene.tracks.forEach(function (track, index) {
+            markerLayer.appendChild(markerButton(track.actual[0], "Select " + track.label, track.symbol, index, false));
+          });
+          return;
+        }
+        let track = currentTrack();
+        track.destinations.forEach(function (destination, index) {
+          markerLayer.appendChild(markerButton([destination.x, destination.y], "Predict " + destination.label, String(index + 1), index, true));
+        });
+      }
+
+      function renderStage() {
+        let scene = currentScene();
+        let track = currentTrack();
+        let frame = state.frameIndex;
+        if (!state.revealed && state.trackIndex < 0) {
+          frame = 0;
+        }
+        if (!state.revealed && state.trackIndex >= 0) {
+          frame = FRAME_COUNT - 1;
+        }
+        let overlay = "";
+        if (track) {
+          overlay = trackOverlay(track, frame);
+        }
+        sceneStage.innerHTML = '<svg viewBox="0 0 800 450" aria-hidden="true">' + sceneBase(scene, frame) + overlay + '<text class="frame-label" x="24" y="36">frame ' + (frame + 1) + ' / ' + FRAME_COUNT + '</text></svg>';
+        sceneStage.setAttribute("aria-label", scene.title + ", frame " + (frame + 1) + " of " + FRAME_COUNT + ". " + scene.description);
+      }
+
+      function phaseName() {
+        if (state.revealed) {
+          return "reveal";
+        }
+        if (state.trackIndex >= 0) {
+          return "predict";
+        }
+        return "select";
+      }
+
+      function updatePhases() {
+        let phase = phaseName();
+        document.getElementById("phaseSelect").classList.toggle("active", phase === "select");
+        document.getElementById("phasePredict").classList.toggle("active", phase === "predict");
+        document.getElementById("phaseReveal").classList.toggle("active", phase === "reveal");
+      }
+
+      function updateInstructions() {
+        let track = currentTrack();
+        if (!track) {
+          instructionText.textContent = "Choose one marked point in frame 1.";
+          predictionStatus.textContent = "Choose one point in frame 1.";
+          return;
+        }
+        if (!state.revealed) {
+          instructionText.textContent = "Predict where “" + track.label + "” will be in frame 8.";
+          if (state.predictionIndex < 0) {
+            predictionStatus.textContent = "Point selected: " + track.label + ". Choose a numbered destination.";
+          } else {
+            predictionStatus.textContent = "Prediction: " + track.destinations[state.predictionIndex].label + ". Reveal when ready.";
+          }
+          return;
+        }
+        let prediction = track.destinations[state.predictionIndex];
+        let outcome = "did not match the expected destination";
+        if (state.predictionIndex === track.correct) {
+          outcome = "matched the expected destination";
+        }
+        instructionText.textContent = "Scrub the route and inspect where the estimate becomes uncertain or wrong.";
+        predictionStatus.textContent = "Your prediction (“" + prediction.label + "”) " + outcome + ".";
+      }
+
+      function updateTrackControls() {
+        let track = currentTrack();
+        trackControls.hidden = !state.revealed;
+        markerKey.hidden = !state.revealed;
+        if (!state.revealed || !track) {
+          return;
+        }
+        frameSlider.value = state.frameIndex;
+        frameReadout.textContent = "Frame " + (state.frameIndex + 1) + " of " + FRAME_COUNT;
+        prevBtn.disabled = state.frameIndex === 0;
+        nextBtn.disabled = state.frameIndex === FRAME_COUNT - 1;
+        let confidence = track.confidence[state.frameIndex];
+        confidenceFill.style.width = confidence + "%";
+        confidenceValue.textContent = confidence + "%";
+        confidenceTrack.setAttribute("aria-label", "Illustrated confidence " + confidence + " percent at frame " + (state.frameIndex + 1));
+        let failureText = "";
+        if (track.failureAt === null) {
+          failureText = "<b>" + track.failure + ".</b> " + track.explanation;
+        } else if (state.frameIndex < track.failureAt) {
+          failureText = "<b>Before the failure.</b> The selected point is still directly visible and the estimate follows it.";
+        } else {
+          failureText = "<b>" + track.failure + " · frame " + (track.failureAt + 1) + ".</b> " + track.explanation;
+        }
+        failureCard.innerHTML = failureText;
+      }
+
+      function render() {
+        let scene = currentScene();
+        renderSceneList();
+        sceneKicker.textContent = scene.kicker;
+        sceneTitle.textContent = scene.title;
+        sceneDescription.textContent = scene.description;
+        renderStage();
+        renderMarkers();
+        updatePhases();
+        updateInstructions();
+        updateTrackControls();
+        revealBtn.disabled = state.trackIndex < 0 || state.predictionIndex < 0 || state.revealed;
+        saveState();
+      }
+
+      function resetInvestigation() {
+        state.trackIndex = -1;
+        state.predictionIndex = -1;
+        state.revealed = false;
+        state.frameIndex = 0;
+        render();
+      }
+
+      function revealTrack() {
+        if (state.trackIndex < 0 || state.predictionIndex < 0) {
+          return;
+        }
+        state.revealed = true;
+        state.frameIndex = 0;
+        render();
+      }
+
+      function saveState() {
+        state.claim = claimBox.value;
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (error) {
+          return;
+        }
+      }
+
+      function loadState() {
+        try {
+          let saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (!saved || !Number.isInteger(saved.sceneIndex) || saved.sceneIndex < 0 || saved.sceneIndex >= SCENES.length) {
+            return;
+          }
+          state.sceneIndex = saved.sceneIndex;
+          state.trackIndex = -1;
+          if (Number.isInteger(saved.trackIndex)) {
+            state.trackIndex = saved.trackIndex;
+          }
+          state.predictionIndex = -1;
+          if (Number.isInteger(saved.predictionIndex)) {
+            state.predictionIndex = saved.predictionIndex;
+          }
+          state.revealed = saved.revealed === true;
+          state.frameIndex = 0;
+          if (Number.isInteger(saved.frameIndex)) {
+            state.frameIndex = Math.max(0, Math.min(FRAME_COUNT - 1, saved.frameIndex));
+          }
+          if (typeof saved.claim === "string") {
+            state.claim = saved.claim;
+          }
+          let scene = currentScene();
+          if (state.trackIndex >= scene.tracks.length) {
+            state.trackIndex = -1;
+            state.predictionIndex = -1;
+            state.revealed = false;
+          }
+          let track = currentTrack();
+          if (track && state.predictionIndex >= track.destinations.length) {
+            state.predictionIndex = -1;
+            state.revealed = false;
+          }
+        } catch (error) {
+          return;
+        }
+      }
+
+      function runSelfTests() {
+        let checks = 0;
+        SCENES.forEach(function (scene) {
+          if (scene.tracks.length < 2) {
+            throw new Error(scene.id + " needs at least two selectable points");
+          }
+          scene.tracks.forEach(function (track) {
+            if (track.actual.length !== FRAME_COUNT || track.estimate.length !== FRAME_COUNT || track.confidence.length !== FRAME_COUNT) {
+              throw new Error(scene.id + "/" + track.id + " must contain eight frames");
+            }
+            if (track.correct < 0 || track.correct >= track.destinations.length) {
+              throw new Error(scene.id + "/" + track.id + " has an invalid destination answer");
+            }
+            track.confidence.forEach(function (value) {
+              if (!Number.isFinite(value) || value < 0 || value > 100) {
+                throw new Error(scene.id + "/" + track.id + " has an invalid confidence value");
+              }
+            });
+            checks += 1;
+          });
+        });
+        return checks;
+      }
+
+      function investigationText() {
+        let scene = currentScene();
+        let track = currentTrack();
+        let lines = ["Point Correspondence Lab — authored teaching simulation", "Sequence: " + scene.title];
+        if (track) {
+          lines.push("Selected point: " + track.label);
+          if (state.predictionIndex >= 0) {
+            lines.push("Prediction: " + track.destinations[state.predictionIndex].label);
+            lines.push("Expected destination: " + track.destinations[track.correct].label);
+          }
+          lines.push("Illustrated failure: " + track.failure);
+          lines.push("Interpretation: " + track.explanation);
+        }
+        lines.push("Claim: " + claimBox.value.trim());
+        lines.push("Boundary: These routes and confidence values were authored; they are not PoseNet or CoTracker outputs.");
+        return lines.join("\n");
+      }
+
+      function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(text);
+        }
+        return new Promise(function (resolve, reject) {
+          let area = document.createElement("textarea");
+          area.value = text;
+          area.setAttribute("readonly", "");
+          area.style.position = "fixed";
+          area.style.opacity = "0";
+          document.body.appendChild(area);
+          area.select();
+          let copied = document.execCommand("copy");
+          area.remove();
+          if (copied) {
+            resolve();
+          } else {
+            reject(new Error("Copy failed"));
+          }
+        });
+      }
+
+      revealBtn.addEventListener("click", revealTrack);
+      resetBtn.addEventListener("click", resetInvestigation);
+      frameSlider.addEventListener("input", function () {
+        state.frameIndex = Number(frameSlider.value);
+        render();
+      });
+      prevBtn.addEventListener("click", function () {
+        state.frameIndex = Math.max(0, state.frameIndex - 1);
+        render();
+      });
+      nextBtn.addEventListener("click", function () {
+        state.frameIndex = Math.min(FRAME_COUNT - 1, state.frameIndex + 1);
+        render();
+      });
+      claimBox.addEventListener("input", saveState);
+      document.getElementById("copyBtn").addEventListener("click", function () {
+        copyText(investigationText()).then(function () {
+          copyStatus.textContent = "Investigation copied.";
+        }).catch(function () {
+          copyStatus.textContent = "Copy was blocked. Select the claim text manually.";
+        });
+      });
+      document.getElementById("printBtn").addEventListener("click", function () {
+        window.print();
+      });
+
+      loadState();
+      claimBox.value = state.claim;
+      try {
+        let tests = runSelfTests();
+        testStatus.textContent = SCENES.length + " sequences · " + FRAME_COUNT + " frames each · " + tests + " selectable tracks checked";
+      } catch (error) {
+        testStatus.textContent = "Self-check failed: " + error.message;
+        console.error(error);
+      }
+      render();
+    }());
+  </script>
+</body>
+</html>

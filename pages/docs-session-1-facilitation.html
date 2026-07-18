@@ -71,12 +71,14 @@
         <h2 id="materials">Materials</h2>
         <ul>
           <li><a href="tool-tokenizer.html">Tokenizer + Temperature Visualizer</a></li>
+          <li><a href="../tools/contextual-vector-lab/">Contextual Vector Lab</a> for one predict &#8594; reveal contextual-neighborhood comparison</li>
+          <li><a href="../tools/whose-preference-lab/">Whose Preference? Lab</a> for an individual panel-composition and aggregation comparison</li>
           <li><a href="../tools/eliza-simulator/">ELIZA Simulator</a></li>
           <li><a href="../worksheets/text-experiment-board/">Text Experiment Board</a></li>
           <li>Optional: A/B/C Comparison Board for pilot evidence</li>
           <li><a href="../worksheets/ai-use-consent-checklist/">AI Use + Consent Checklist</a></li>
           <li>Next-Token Prediction Game (paste the Zoom chat block of guesses)</li>
-          <li>Optional: <a href="https://projector.tensorflow.org/" target="_blank" rel="noopener">Embedding Projector</a> for a 90-second vector-neighborhood question</li>
+          <li>Optional: <a href="https://projector.tensorflow.org/" target="_blank" rel="noopener">Embedding Projector</a> as a real-project reference for static embedding neighborhoods</li>
           <li>Optional: 3–5 pre-written sentence stems for the prediction game</li>
         </ul>
 
@@ -86,10 +88,10 @@
           <tbody>
             <tr><td>0–5</td><td>Welcome &amp; norms</td><td>Name the question. Remind everyone direct AI use is optional.</td><td>Choose a participation pathway.</td></tr>
             <tr><td>5–15</td><td>Unplugged prediction</td><td>Show a sentence stem; collect guesses in Zoom chat, then paste the chat block into the Next-Token Prediction Game to tally the room beside the model's top-k.</td><td>Predict next words; compare the room's distribution with the model's and notice how context shapes guesses.</td></tr>
-            <tr><td>15–35</td><td>Tokens, vectors + Temperature</td><td>Show token chunks, one learned-vector example, then probability distributions at low and high temperature.</td><td>Ask what “nearby” means in a learned space; then compare greedy and sampled output.</td></tr>
+            <tr><td>15–35</td><td>Tokens, vectors + Temperature</td><td>Show token chunks, then use one Contextual Vector Lab predict &#8594; reveal cycle before comparing probability distributions at low and high temperature.</td><td>Separate token ID, starting vector, and contextual representation; ask what “nearby” means; then compare greedy and sampled output.</td></tr>
             <tr><td>35–55</td><td>ELIZA vs. LLM</td><td>Inspect matched rule, pattern, and response template.</td><td>Compare visible rule-matching with pre-generated LLM examples.</td></tr>
-            <tr><td>55–75</td><td>Investigation</td><td>Assign one Text Experiment Board section.</td><td>Run or analyse a default test, prompt variation, or comparison.</td></tr>
-            <tr><td>75–90</td><td>Debrief</td><td>Use the frame: human, machine, system, ethics, pedagogy.</td><td>Share one evidence-based claim and one question.</td></tr>
+            <tr><td>55–75</td><td>Investigation</td><td>Assign one Text Experiment Board section. Offer the Whose Preference? Lab for people investigating how rater-panel and aggregation choices become an authored preference signal.</td><td>Run or analyse a default test, prompt variation, ELIZA comparison, or preference-panel change.</td></tr>
+            <tr><td>75–90</td><td>Debrief</td><td>Use the frame: human, machine, system, ethics, pedagogy. Ask whose definition of &#8220;better&#8221; entered the signal.</td><td>Share one evidence-based claim and one question.</td></tr>
           </tbody>
         </table>
         <p>Optional pilot-evidence move: after the investigation, ask one group to enter its baseline, temperature change, and greedy/sample comparison in the A/B/C Comparison Board, then export Markdown for facilitator notes.</p>
@@ -102,6 +104,7 @@
           <li>"At low temperature, what becomes more predictable?"</li>
           <li>"At high temperature, what becomes more surprising or unstable?"</li>
           <li>"What does ELIZA make visible that a modern LLM hides?"</li>
+          <li>"Whose definition of &#8216;better&#8217; entered the preference signal, and whose was excluded?"</li>
           <li>"Where could fluency be mistaken for understanding?"</li>
         </ul>
 
@@ -114,8 +117,10 @@
         <h2 id="fallback">Fallback plan</h2>
         <ul>
           <li>If the Tokenizer tool feels too dense, use only the example buttons and temperature slider.</li>
+          <li>If the Contextual Vector Lab stalls, keep the illustrative vector on the deck and run the neighborhood prediction verbally; name any proposed position as an authored example, not a model result.</li>
           <li>If projection space is limited, focus on the probability chart and generated text stream.</li>
           <li>If ELIZA examples feel sensitive, use low-stakes prompts about school, projects, or planning rather than emotional disclosures.</li>
+          <li>If the preference lab stalls, rank the three apology responses aloud and compare what changes when a learner, teacher, editor, accessibility advocate, or policy team gets the deciding vote. Name this as an authored role-play, not real rater data.</li>
           <li>If a participant does not want to use AI, ask them to design a classroom version of the prediction game.</li>
         </ul>
 
@@ -124,6 +129,7 @@
         <ul>
           <li>Which controls participants found without explanation.</li>
           <li>Whether "temperature" became understandable through the tool.</li>
+          <li>Whether participants distinguished a fixed token ID and starting vector from a context-dependent representation without treating the 2D map as literal model space.</li>
           <li>Whether ELIZA's rule inspector was legible on screen.</li>
           <li>Any moment where participants confused probability with truth.</li>
           <li>Any ethical discomfort, especially around chatbot intimacy or trust.</li>

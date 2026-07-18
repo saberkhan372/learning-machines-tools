@@ -21,6 +21,7 @@ Conceptual sequence: **pixels → human-created labels → shared text/image rep
 - Session 2 live deck
 - Session 1 recap
 - The Squint Test / Feature Extraction
+- Image–Caption Match Lab
 - Human Diffusion Canvas
 - Diffusion Step-Through Viewer
 - Default Test Comparison Viewer
@@ -29,7 +30,7 @@ Conceptual sequence: **pixels → human-created labels → shared text/image rep
 - Image Prompt Pack
 - Image Default Test Board
 - AI Use + Consent Checklist
-- CLIP project overview / three-caption teaching move
+- CLIP project overview / Image–Caption Match Lab teaching move
 
 ## Run of Show
 
@@ -37,7 +38,7 @@ Conceptual sequence: **pixels → human-created labels → shared text/image rep
 | --- | --- | --- | --- |
 | 0-5 min | Welcome and bridge | Repeat consent and participation choices; connect text choices to image choices. | Choose a participation pathway. |
 | 5-10 min | Session 1 retrieval | Share two artifacts or revisit the recap. | Name the investigation loop. |
-| 10-17 min | Pixels, labels, and shared representations | Raise detail slowly, name PoseNet and the WordNet/ImageNet label layer, then ask which of three captions would land closest to the image in a CLIP-style space. | Identify the first visual cue, then justify one caption match. |
+| 10-17 min | Pixels, labels, and shared representations | Raise detail slowly, name PoseNet and the WordNet/ImageNet label layer, then use the Image–Caption Match Lab to predict, reveal, and revise one caption match. | Identify the first visual cue, justify one caption match, then change one phrase. |
 | 17-25 min | The room's default | Tally first pictures for “a doctor,” then compare authored teaching simulations. | Treat each simulated scene as an illustrated hypothesis and name the documented real outputs needed for a model claim. |
 | 25-36 min | Diffusion — performed, then watched | Run the Human Diffusion Canvas, then the step-through viewer. | Draw an analogy by hand and predict what stabilizes next. |
 | 36-44 min | Guidance and revision | Compare vague, specific, and responsible revisions. | Distinguish prompt wording from CFG strength. |
@@ -71,6 +72,7 @@ Participants can analyze curated screenshots or facilitator-provided image sets 
 ## Fallback Plan
 
 - If no image generator is available, use pre-generated examples or ask participants to predict likely defaults before revealing examples.
+- If the Image–Caption Match Lab stalls, use the deck’s cat image and collect the A/B/C vote in chat; name any discussed ranking as an authored teaching example, not a CLIP result.
 - If the Human Diffusion Canvas stalls, use paper and tracing-paper veils or collect each step's proposed commitment in chat.
 - If the Diffusion Viewer feels abstract, pause at seven named stages and ask participants to describe only what they can see.
 - If Default Test prompts feel socially loaded, use safer prompts first, then explicitly frame more sensitive prompts as optional critique.
@@ -82,6 +84,7 @@ During the session, note:
 
 - Which image types in Feature Extraction were most useful.
 - Whether the detail slider made recognition thresholds visible.
+- Whether one predict → reveal → revise cycle made shared image/text representations clearer without being mistaken for image search or a real CLIP result.
 - Whether the Diffusion Viewer explained denoising without live AI.
 - Whether participants understood where the Human Diffusion Canvas analogy breaks.
 - Which Default Test prompts produced the richest discussion.

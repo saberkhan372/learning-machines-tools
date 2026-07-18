@@ -76,19 +76,25 @@ window.LM_SESSION_RUNS = [
           { name: "Count the Next Token", path: "tools/count-the-next-token/" }
         ] },
       { time: "15–35", segment: "Tokens, vectors + Temperature",
-        move: "Show token chunks and one learned-vector example; ask whether nearby words share meaning, contexts, or a learned cultural association. Then run one prompt at low and high temperature.",
-        action: "Connect token → vector → next-token probabilities, then compare greedy and sampled output.",
-        tools: [ { name: "Tokenizer + Temperature Visualizer", path: "tools/tokenizer-temperature-visualizer/" } ] },
+        move: "Show token chunks, then use the Contextual Vector Lab for one predict → reveal cycle: same token ID and starting vector, different contextual neighbors. Ask what nearby means before running one prompt at low and high temperature.",
+        action: "Connect token → base vector → contextual representation → next-token probabilities, then compare greedy and sampled output.",
+        tools: [
+          { name: "Contextual Vector Lab", path: "tools/contextual-vector-lab/" },
+          { name: "Tokenizer + Temperature Visualizer", path: "tools/tokenizer-temperature-visualizer/" }
+        ] },
       { time: "35–55", segment: "ELIZA vs. LLM",
         move: "Inspect the matched rule, pattern, and response template.",
         action: "Compare visible rule-matching with pre-generated LLM examples.",
         tools: [ { name: "ELIZA Simulator", path: "tools/eliza-simulator/" } ] },
       { time: "55–75", segment: "Investigation",
-        move: "Assign one Text Experiment Board section.",
-        action: "Run or analyse a default test, prompt variation, or comparison.",
-        tools: [ { name: "Text Experiment Board", path: "worksheets/text-experiment-board/", worksheet: true } ] },
+        move: "Assign one Text Experiment Board section. Offer the Whose Preference? Lab for participants investigating how a panel and aggregation rule turn judgments into an authored preference signal.",
+        action: "Run or analyse a default test, prompt variation, comparison, or preference-panel change.",
+        tools: [
+          { name: "Text Experiment Board", path: "worksheets/text-experiment-board/", worksheet: true },
+          { name: "Whose Preference? Lab", path: "tools/whose-preference-lab/", optional: true }
+        ] },
       { time: "75–90", segment: "Debrief",
-        move: "Use the frame: human, machine, system, ethics, pedagogy. Optionally have one group log a baseline + change in the A/B/C board.",
+        move: "Use the frame: human, machine, system, ethics, pedagogy. Ask whose definition of ‘better’ entered the preference signal. Optionally have one group log a baseline + change in the A/B/C board.",
         action: "Share one evidence-based claim and one question.",
         tools: [ { name: "A / B / C Comparison Board", path: "tools/abc-comparison-board/", optional: true } ] }
     ]
@@ -113,9 +119,12 @@ window.LM_SESSION_RUNS = [
         action: "Name the investigation loop: predict, change one thing, compare, make a claim, name the human decision.",
         tools: [] },
       { time: "10–17", segment: "Pixels & features",
-        move: "Open the Squint Test. Raise detail slowly; use PoseNet for pixels → keypoints, WordNet/ImageNet for the human label layer, then ask which of three captions would land closest to the cat image in a CLIP-style shared space.",
-        action: "Identify the first cue, justify one caption match, and distinguish representation or inference from generation.",
-        tools: [ { name: "The Squint Test (feature extraction)", path: "tools/feature-extraction-pixel-resolution/" } ] },
+        move: "Open the Squint Test and raise detail slowly; use PoseNet for pixels → keypoints, then open the Image–Caption Match Lab to predict, reveal, and revise one match while naming the WordNet/ImageNet human-label layer.",
+        action: "Identify the first cue, justify one caption match, change one phrase, and distinguish representation or inference from generation.",
+        tools: [
+          { name: "The Squint Test (feature extraction)", path: "tools/feature-extraction-pixel-resolution/" },
+          { name: "Image–Caption Match Lab", path: "tools/image-caption-match-lab/" }
+        ] },
       { time: "17–25", segment: "The room's default",
         move: "Collect first-picture descriptions for “a doctor.” Introduce WordNet as a human-built category system and ImageNet as labeled images organized with that hierarchy, then use authored simulations to rehearse a default test.",
         action: "Name who designed the category and labels, what the simulations illustrate, and which documented real outputs would be needed for a model-level claim.",
@@ -150,6 +159,7 @@ window.LM_SESSION_RUNS = [
           { name: "Default Test Comparison Viewer", path: "tools/default-test-comparison-viewer/" },
           { name: "Image Default Test Board", path: "worksheets/image-default-test-board/", worksheet: true },
           { name: "The Squint Test", path: "tools/feature-extraction-pixel-resolution/", optional: true },
+          { name: "Image–Caption Match Lab", path: "tools/image-caption-match-lab/", optional: true },
           { name: "Human Diffusion Canvas", path: "tools/human-diffusion-canvas/", optional: true },
           { name: "Dataset Balance Simulator", path: "tools/dataset-balance-simulator/", optional: true },
           { name: "Latent Space Compressor", path: "tools/latent-space-compressor/", optional: true },
@@ -174,9 +184,9 @@ window.LM_SESSION_RUNS = [
     deck: "pages/session-3-deck.html",
     steps: [
       { time: "0–5", segment: "Welcome & bridge",
-        move: "Return to PoseNet: locate an elbow in one frame. Name CoTracker’s contrasting task—follow selected points across existing frames—then ask what a generator must preserve while creating later frames.",
-        action: "Distinguish point correspondence from generation, then choose a participation pathway.",
-        tools: [] },
+        move: "Open the Point Correspondence Lab on Ball arc. Select the ball, take a destination prediction, and reveal the clean track. Return to PoseNet’s one-frame keypoints, then name CoTracker’s contrasting task—follow selected points across existing frames.",
+        action: "Predict one point’s destination, distinguish point correspondence from generation, then choose a participation pathway.",
+        tools: [ { name: "Point Correspondence Lab", path: "tools/point-correspondence-lab/" } ] },
       { time: "5–35", segment: "Temporal Telephone · round 1",
         move: "Open Temporal Telephone in previous-frame-only mode. Use “a person at work” as the vague prompt, then check motion defaults after playback.",
         action: "Draw/save frames or observe where defaults and small changes accumulate into drift.",

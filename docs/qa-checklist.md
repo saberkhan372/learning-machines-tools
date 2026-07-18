@@ -26,6 +26,8 @@ Use this before publishing or sharing the repo.
 ## Tool QA
 
 - Tokenizer + Temperature Visualizer: run self-tests, try token examples, step next token, run auto, reset, switch greedy/sample.
+- Contextual Vector Lab: confirm self-checks pass; move through token ID → base vector → contextual map; test all three contexts for each of four tokens; make one correct and one incorrect neighborhood prediction; inspect projection guardrails; and copy the bounded investigation note.
+- Whose Preference? Lab: confirm all three disagreement checks pass; reorder responses with the keyboard; record a ranking; reveal both aggregation rules; include and exclude rater perspectives until the preferred response changes; reload to confirm persistence; and copy the bounded investigation note.
 - ELIZA Simulator: run self-tests, click example prompts, inspect matched rule, review comparison examples.
 - Next-Token Prediction Game: run self-tests, then paste a chat block saved from a real Zoom call (header + indented-message format); confirm guesses tally without timestamp fragments and the room's distribution renders beside the model top-k.
 - Count the Next Token: pick a context word, watch the bigram table build, and follow the count → divide → predict arithmetic to a generated word.
@@ -34,12 +36,14 @@ Use this before publishing or sharing the repo.
 - Access Tiers: compare the same task across paid, free, and unplugged tiers; edit the exclusion panel and print it.
 - Diffusion Step-Through Viewer: confirm self-tests pass, switch sequences, move slider from 0 to final, read prompt, annotation, facilitator, and reflection cards.
 - Feature Extraction / Pixel Resolution: switch image types, change detail level, switch Pixels/Edges/Features.
+- Image–Caption Match Lab: confirm all 10 self-checks pass; predict before reveal; confirm caption B ranks first in all four authored scenes; revise one phrase; inspect mapped and unmapped cues; open the human-created label layer; and copy the bounded investigation note.
 - Default Test Comparison Viewer: switch vague prompts, compare A/B/C rows, review defaults, changes, and ethical questions, then copy or print a claim.
 - Prompt Guidance Word-by-Word: step through each prompt word, confirm the simulated image and change list update, and copy prediction notes.
 - CFG Scale Visualizer: switch prompt families, move CFG through 1/7/14/30 presets, confirm prompt match, model habit, and artifact pressure meters update, then copy notes.
 - Latent Space Explorer: switch datasets and lenses, select map points, confirm nearest neighbors update, and copy visibility/risk notes.
 - Dataset Balance Simulator: switch scenarios, move sliders, use balance/skew presets, confirm the default and likelihood bars update, and copy notes.
 - Temporal Telephone: confirm self-tests pass, draw frames, save, switch previous/anchor/both modes, play sequence, use the failure bridge, clear and reset.
+- Point Correspondence Lab: confirm all eight selectable tracks pass self-checks; select with keyboard, predict a destination, reveal and scrub the route; inspect the occlusion, identity-switch, and off-screen failures; copy a bounded investigation.
 - Video Failure Gallery Viewer: switch clips, scrub frames, click failure labels, and copy the claim/evidence/classroom-question set.
 - Frame-by-Frame Coherence Viewer: scrub sample frames, toggle onion-skin and difference highlight, upload a small still-frame set, and copy drift notes.
 - A/B/C Comparison Board: load a starter template, edit fields, copy Markdown, export JSON, and reset only after export.

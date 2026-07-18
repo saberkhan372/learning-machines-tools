@@ -67,6 +67,12 @@
   .qrow.opt{border-style:dashed} .qrow.opt .qn{color:var(--muted)}
   .qlist.c{gap:8px} .qrow.c{padding:7px 14px;font-size:18px;gap:12px}
   .qrow.c .note{font-size:15px} .qrow.c .go{font-size:13px}
+  .studio-stage .s-body{margin-top:10px}
+  .studio-stage .qlist.c{gap:4px}
+  .studio-stage .qrow.c{padding:4px 11px;font-size:15px;line-height:1.15}
+  .studio-stage .qrow.c .note{font-size:12px}
+  .studio-stage .qrow.c .go{font-size:10px}
+  .studio-stage .s-task{padding:10px 19px}
 
   /* aid visuals on stage */
   .av-bars{display:flex;flex-direction:column;gap:10px;margin-top:4px}
@@ -250,9 +256,11 @@
 
   /* studio slide: mirrors the Session 1 run-of-show in assets/session-runs.js */
   var TOOLS = [
+    {n:'Contextual Vector Lab', u:SITE+'tools/contextual-vector-lab/', w:'same token, different context-dependent neighbors'},
     {n:'Tokenizer + Temperature Visualizer', u:SITE+'tools/tokenizer-temperature-visualizer/', w:'Rounds 1–2 for real — tokens, probabilities, sampling'},
     {n:'Count the Next Token', u:SITE+'tools/count-the-next-token/', w:'training as arithmetic — count, divide, predict'},
     {n:'Next-Token Prediction Game', u:SITE+'tools/next-token-prediction-game/', w:'the room’s guesses vs. a model’s top-k'},
+    {n:'Whose Preference? Lab', u:SITE+'tools/whose-preference-lab/', w:'change who rates and how judgments aggregate'},
     {n:'ELIZA Simulator', u:SITE+'tools/eliza-simulator/', w:'optional — visible rules vs. learned patterns', opt:true},
     {n:'Text Experiment Board', u:SITE+'worksheets/text-experiment-board/', w:'the worksheet — one claim: prediction, evidence, change'}
   ];
@@ -282,10 +290,10 @@
       aid:'corpus',
       notes:{
         look:'You look at: the corpus copy button and token examples. Attendees see: the paragraph, token chips, and one illustrative token → vector mapping.',
-        you:['Click Copy corpus and paste it into Zoom chat.','Point at book·shop and after·noon, then at the illustrative vector.','Ask: if “cat” and “kitten” land nearby, is that same meaning, similar contexts, or a learned cultural association?','Say the restriction and the displayed vector are teaching simplifications.'],
-        room:['Read the corpus once.','Rounds 1–2: only suggest words that appear in it.','Answer the vector-neighborhood question in chat, then notice repeated words and likely next words.'],
+        you:['Click Copy corpus and paste it into Zoom chat.','Point at book·shop and after·noon, then at the illustrative vector.','Open the Contextual Vector Lab for one word and one sentence. Have the room predict before revealing the contextual neighborhood.','Ask whether nearby means same meaning, similar contexts, or a learned cultural association; name both displays as teaching simplifications.'],
+        room:['Read the corpus once.','Rounds 1–2: only suggest words that appear in it.','Predict where the same token moves when its sentence changes, then notice repeated words and likely next words.'],
         say:['"For this activity, this paragraph is everything our stand-in model can use. Real LLMs are far more flexible — they recombine patterns — but they’re still shaped by the data, styles, and blind spots they learned."','"A token ID is mapped to a learned vector. Nearby does not automatically mean synonym; it can reflect shared contexts and cultural patterns in the data."'],
-        watch:'Keep this to about 90 seconds. The vector is illustrative, and Embedding Projector shows a simplified embedding snapshot; modern transformer representations also change with context.'} },
+        watch:'Keep this to one word, one context, and about two minutes. The lab’s coordinates are authored, and Embedding Projector shows a simplified static embedding snapshot; neither is a literal map of a modern transformer. Leave the other contexts for studio.'} },
 
     { id:'s1', kind:'prompt', num:'01', nav:'Round 1 — Prediction',
       head:'Predict the next token',
@@ -328,13 +336,13 @@
       idea:'Now humans judge which output better serves a person.',
       prompt:'Write a one-sentence apology to a teacher for turning in late work.',
       task:'Team A and Team B each propose one sentence; raters pick the more useful one.',
-      take:'Usefulness is probable text shaped toward human needs by repeated feedback.',
+      take:'Preference data can shape probable text toward particular human-defined criteria—not one universal definition of “better.”',
       notes:{
         look:'You look at: two team outputs, score sliders, and the reward summary. Attendees see: the prompt, both outputs, and the rating result.',
         you:['Split the room loosely into Team A and Team B.','Each team writes one sentence; paste them into the boxes.','A rater panel scores clarity, responsibility, usefulness.','Click Score round and name the reward pattern.','Run one quick revision aimed at that pattern.'],
         room:['Teams propose full sentences, not just next words.','Raters judge usefulness, not just fluency.','Reward person says what humans seem to prefer.'],
-        say:['"Nothing about next-token prediction disappeared. But now human preference shapes which answer wins."','"The model became more useful because humans repeatedly taught it what useful looked like."'],
-        watch:'Do not claim real LLM training is exactly this simple. This dramatizes instruction tuning / preference learning.'} },
+        say:['"Nothing about next-token prediction disappeared. But now an authored panel and scoring rule shape which answer receives reward."','"Better is not universal here: the criteria, panel composition, and aggregation rule are human decisions."'],
+        watch:'Do not claim real LLM training is exactly this simple. This dramatizes one preference-data step; the Whose Preference? Lab makes disagreement and aggregation choices inspectable.'} },
 
     { id:'s5', kind:'questions', num:'05', nav:'Debrief',
       head:'What did the room become?',
@@ -501,7 +509,7 @@
       var rows='<div class="qlist c">'+TOOLS.map(function(t,k){
         return '<div class="qrow c'+(t.opt?' opt':'')+'"><span class="qn">'+(k+1)+'</span><span class="txt2"><span><b>'+esc(t.n)+'</b> <span class="note">— '+esc(t.w)+(t.opt?' ':'')+'</span></span><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
       }).join('')+'</div>';
-      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
+      return '<div class="stage studio-stage">'+eyebrow+head+idea+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
     }
     if(s.kind==='close'){
       var pts='<div class="qlist c">'+CLOSERS.map(function(t,k){
@@ -745,7 +753,7 @@
           '<label>clarity <input id="b1" type="range" min="1" max="5"></label>'+
           '<label>responsibility <input id="b2" type="range" min="1" max="5"></label>'+
           '<label>usefulness <input id="b3" type="range" min="1" max="5"></label></div>'+
-      '</div><div class="crow"><button class="btn" id="alScore">Score round → audience</button><button class="btn ghost" id="alClr">Reset scores</button></div></div></div>';
+      '</div><div class="crow"><button class="btn" id="alScore">Score round → audience</button><button class="btn ghost" id="alClr">Reset scores</button><a class="btn ghost" href="'+SITE+'tools/whose-preference-lab/" target="_blank" rel="noopener">Open full lab ↗</a></div></div></div>';
     if(s.kind==='studio') return ''+
       '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Tool links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
       '<p class="hint">One click copies every tool + the worksheet as a paste-ready block for Zoom chat. Links point at the live site.</p>'+

@@ -155,7 +155,7 @@
           </div>
         </div>
         <div class="callout" style="margin-top:18px;max-width:82ch;">
-          <p><b>Teaching move · PoseNet → CoTracker:</b> PoseNet can locate an elbow in one frame; CoTracker asks where that selected point went in later frames. Generative video has the harder inverse problem of creating each new frame while keeping the elbow, the person, and the scene mutually coherent. Tracking analyzes correspondence—it is not itself video generation.</p>
+          <p><b>Teaching move · PoseNet → CoTracker:</b> PoseNet can locate an elbow in one frame; CoTracker asks where that selected point went in later frames. Try that distinction in the <a href="../tools/point-correspondence-lab/">Point Correspondence Lab</a>, then name the harder generative problem: creating each new frame while keeping the elbow, the person, and the scene mutually coherent. Tracking analyzes correspondence—it is not itself video generation.</p>
         </div>
         <div class="session-risk-motif risk-card" data-mod="video" aria-label="Video frame drift motif">
           <div class="plate-cap"><span class="fig">Fig. 03B — Drift strip</span><span>same subject, unstable time</span></div>
@@ -265,14 +265,20 @@
           </h2>
         </div>
         <div class="tool-list">
-        <a class="ix-row" data-mod="video" href="../tools/temporal-telephone/">
+        <a class="ix-row" data-mod="video" href="../tools/point-correspondence-lab/">
           <span class="ix-no mono">01</span>
+          <span class="ix-name">Point Correspondence Lab</span>
+          <span class="ix-blurb">Select a point, predict where it travels, then reveal clean, occluded, switched, or lost tracks.</span>
+          <span class="ix-mod"><span class="stamp featured">Featured</span></span>
+        </a>
+        <a class="ix-row" data-mod="video" href="../tools/temporal-telephone/">
+          <span class="ix-no mono">02</span>
           <span class="ix-name">Temporal Telephone</span>
           <span class="ix-blurb">Pass a drawing through a sequence and compare previous-frame drift to anchored reference.</span>
           <span class="ix-mod"><span class="stamp featured">Featured</span></span>
         </a>
         <a class="ix-row" data-mod="video" href="../tools/video-failure-gallery-viewer/">
-          <span class="ix-no mono">02</span>
+          <span class="ix-no mono">03</span>
           <span class="ix-name">Video Failure Gallery Viewer</span>
           <span class="ix-blurb">Scrub curated examples, label failure modes, and write an evidence-based claim.</span>
           <span class="ix-mod"><span class="stamp featured">Featured</span></span>
@@ -315,7 +321,7 @@
                 Welcome and framing
               </p>
               <p class="ros-body">
-                Bridge PoseNet’s one-frame keypoints to CoTracker’s point correspondence, then name the generative problem: video claims persistence across frames.
+                In the Point Correspondence Lab, predict and reveal one clean track. Bridge PoseNet’s one-frame keypoints to CoTracker’s point correspondence, then name the generative problem: video claims persistence across frames.
               </p>
             </div>
           </div>

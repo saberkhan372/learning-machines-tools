@@ -12,7 +12,9 @@ Core question: when a language model writes, what is it actually doing?
 ## Materials
 
 - Next-Token Prediction Game (paste the Zoom chat block of guesses)
-- Optional: [Embedding Projector](https://projector.tensorflow.org/) for a 90-second vector-neighborhood question
+- [Contextual Vector Lab](../tools/contextual-vector-lab/) for one predict → reveal contextual-neighborhood comparison
+- [Whose Preference? Lab](../tools/whose-preference-lab/) for an individual panel-composition and aggregation comparison
+- Optional: [Embedding Projector](https://projector.tensorflow.org/) as a real-project reference for static embedding neighborhoods
 - Tokenizer + Temperature Visualizer
 - ELIZA Simulator
 - Text Experiment Board
@@ -27,10 +29,10 @@ Core question: when a language model writes, what is it actually doing?
 | --- | --- | --- | --- |
 | 0-5 min | Welcome and norms | Name the question: "What is the machine actually doing?" Remind everyone that direct AI use is optional. | Choose a participation pathway: use, observe, teach/design, build/code, or critical/no-AI. |
 | 5-15 min | Unplugged prediction game | Show a sentence stem and collect next-word guesses in Zoom chat. Copy the chat block and paste it into the Next-Token Prediction Game to tally the room's distribution beside the model's top-k. | Predict next words, then compare the room's distribution with the model's and notice how context, genre, culture, and expectation shape guesses. |
-| 15-35 min | Tokens, vectors + Temperature | Show token chunks, one learned-vector example, then probability distributions at low and high temperature. | Ask what “nearby” means in a learned space; then compare greedy and sampled output. |
+| 15-35 min | Tokens, vectors + Temperature | Show token chunks, then use one Contextual Vector Lab predict → reveal cycle before comparing probability distributions at low and high temperature. | Separate token ID, starting vector, and contextual representation; ask what “nearby” means; then compare greedy and sampled output. |
 | 35-55 min | ELIZA vs. LLM | Open ELIZA. Try examples and inspect the matched rule, pattern, and response template. | Compare visible rule matching with the pre-generated LLM comparison examples. |
-| 55-75 min | Investigation | Ask participants to complete one Text Experiment Board section. | Run or analyze a text default test, prompt variation, or ELIZA comparison. |
-| 75-90 min | Debrief | Use the reflection frame: human, machine, system, ethics, pedagogy. | Share one evidence-based claim and one question. |
+| 55-75 min | Investigation | Ask participants to complete one Text Experiment Board section. Offer the Whose Preference? Lab for people investigating how rater-panel and aggregation choices become an authored preference signal. | Run or analyze a text default test, prompt variation, ELIZA comparison, or preference-panel change. |
+| 75-90 min | Debrief | Use the reflection frame: human, machine, system, ethics, pedagogy. Ask whose definition of “better” entered the signal. | Share one evidence-based claim and one question. |
 
 Optional pilot evidence move: after the investigation, ask one group to enter its baseline, temperature change, and greedy/sample comparison in the A/B/C Comparison Board, then export Markdown for facilitator notes. Debrief claims shared in chat can also be pasted into the Evidence Wall (the consent banner applies before anything is shown on screen).
 
@@ -42,6 +44,7 @@ Optional pilot evidence move: after the investigation, ask one group to enter it
 - "At low temperature, what becomes more predictable?"
 - "At high temperature, what becomes more surprising or unstable?"
 - "What does ELIZA make visible that a modern LLM hides?"
+- "Whose definition of 'better' entered the preference signal, and whose was excluded?"
 - "Where could fluency be mistaken for understanding?"
 
 ## Investigation Prompt
@@ -55,8 +58,10 @@ Participants can complete the session using only the visualizer, ELIZA, and pre-
 ## Fallback Plan
 
 - If the Tokenizer tool feels too dense, use only the example buttons and temperature slider.
+- If the Contextual Vector Lab stalls, keep the illustrative vector on the deck and run the neighborhood prediction verbally; name any proposed position as an authored example, not a model result.
 - If projection space is limited, focus on the probability chart and generated text stream.
 - If ELIZA examples feel sensitive, use low-stakes prompts about school, projects, or planning rather than emotional disclosures.
+- If the preference lab stalls, rank the three apology responses aloud and compare what changes when a learner, teacher, editor, accessibility advocate, or policy team gets the deciding vote. Name this as an authored role-play, not real rater data.
 - If a participant does not want to use AI, ask them to design a classroom version of the prediction game.
 
 ## Pilot QA Notes
@@ -65,6 +70,7 @@ During the pilot, note:
 
 - Which controls participants found without explanation.
 - Whether "temperature" became understandable through the tool.
+- Whether participants distinguished a fixed token ID and starting vector from a context-dependent representation without treating the 2D map as literal model space.
 - Whether ELIZA's rule inspector was legible on screen.
 - Any moment where participants confused probability with truth.
 - Any ethical discomfort, especially around chatbot intimacy or trust.
