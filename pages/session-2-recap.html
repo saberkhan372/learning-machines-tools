@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-skin="image-spectrum">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Session 2 Recap · Images — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    /* ── Recap-specific layout ─────────────────────────────────── */
+    .recap-lede {
+      font-size: 1.15rem;
+      line-height: 1.75;
+      max-width: 65ch;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+
+    /* Start-here tier cards */
+    .start-here-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0 0;
+    }
+    .sh-card {
+      border: 1px solid var(--line);
+      padding: 16px 18px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+    .sh-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .sh-card h3 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .sh-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .sh-link {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .sh-link:hover { text-decoration: underline; }
+
+    /* Moment pull-quotes */
+    .moment {
+      border-left: 3px solid var(--accent);
+      padding: 10px 16px;
+      margin: 18px 0;
+      background: var(--surface);
+    }
+    .moment p {
+      margin: 0;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .moment cite {
+      display: block;
+      margin-top: 6px;
+      font-style: normal;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* Guest spotlight */
+    .guest-card {
+      border: 1px solid var(--line);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: start;
+      margin: 20px 0;
+    }
+    .guest-name { font-size: 1.15rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+    .guest-role { font-size: 0.88rem; color: var(--ink-soft); margin: 0 0 12px; }
+    .guest-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .guest-links a {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      padding: 4px 8px;
+    }
+    .guest-links a:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Action items */
+    .action-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+      display: grid;
+      gap: 8px;
+    }
+    .prose .action-list li {
+      display: block;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      padding: 10px 0 10px 30px;
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .prose .action-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      top: 0.95em;
+      width: 20px;
+      height: auto;
+      background: none;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    html[data-skin] .prose .action-list li::before {
+      background: none;
+    }
+
+    /* Links & resources */
+    .resource-group {
+      margin: 16px 0 24px;
+    }
+    .resource-group h4 {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 8px;
+      font-weight: 500;
+    }
+    .resource-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 6px;
+    }
+    .resource-list li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: baseline;
+      font-size: 0.9rem;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--line-soft, color-mix(in srgb, var(--line) 40%, transparent));
+    }
+    .resource-list li:last-child { border-bottom: none; }
+    .resource-list a { color: var(--ink); word-break: break-all; }
+    .resource-list a:hover { color: var(--accent); }
+    .res-who {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* Participants list */
+    .participant-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .participant-chip {
+      font-size: 0.85rem;
+      border: 1px solid var(--line);
+      padding: 4px 10px;
+      background: var(--surface);
+      white-space: nowrap;
+    }
+    .participant-chip.notable {
+      border-color: var(--accent);
+    }
+
+    /* Narrow teaching-note callout */
+    .teaching-note {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--m-image, var(--accent));
+      padding: 14px 18px;
+      margin: 14px 0;
+      background: var(--surface);
+    }
+    .teaching-note p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .teaching-note strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+      .start-here-grid { grid-template-columns: 1fr; }
+      .guest-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="run-console.html?s=2" class="hide-sm">Run console</a>
+        <a class="btn btn-sm" href="session-images.html#recap">← Back to recap</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero" data-mod="image">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#sessions">Sessions</a><span class="sep">/</span>
+        <a href="session-images.html">Images</a><span class="sep">/</span>
+        <span>Recap</span>
+      </div>
+      <div class="sess-hero-grid">
+        <div class="sess-num">02<span class="of">recap</span></div>
+        <div>
+          <p class="sess-kicker"><i class="modsq"></i>Session 2 · Images · Saturday July 18</p>
+          <h1 class="sess-title">How machines imagine</h1>
+          <p class="sess-lede recap-lede">We became the diffusion model — a gray field, a prompt arriving in pieces, and a room of drawings that converged on the same haunted hallway. Then we traced why: pixels, human labels, denoising, and the defaults a prompt fills in when you don't ask.</p>
+          <p class="doc-meta" style="margin-top: 14px;">
+            <span class="chip">15+ contributors</span>
+            <span class="chip">9–11 am PT</span>
+            <span class="chip">Registered participants · never used to train AI</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section-tight" data-screen-label="Recap body">
+    <div class="wrap docs-layout">
+
+      <!-- TOC -->
+      <aside class="toc">
+        <p class="toc-label">On this page</p>
+        <nav>
+          <a href="#start-here">Start here</a>
+          <a href="#overview">Session overview</a>
+          <a href="#the-room">Who was in the room</a>
+          <a href="#session-1">Session 1, revisited</a>
+          <a href="#pixels">Pixels &amp; the label layer</a>
+          <a href="#diffusion">Diffusion</a>
+          <a href="#one-answer">The Sudoku analogy</a>
+          <a href="#doctor">The doctor default</a>
+          <a href="#canvas">Human Diffusion Canvas</a>
+          <a href="#guest">Guest: Aurora Mititelu</a>
+          <a href="#teaching-notes">Teaching notes</a>
+          <a href="#action-items">Action items</a>
+          <a href="#links">Links &amp; resources</a>
+        </nav>
+      </aside>
+
+      <!-- BODY -->
+      <article class="prose">
+
+        <!-- ── START HERE ──────────────────────────────────────────── -->
+        <h2 id="start-here">Start here</h2>
+        <div class="start-here-grid">
+          <div class="sh-card">
+            <span class="sh-label">5 min</span>
+            <h3>Just the highlights</h3>
+            <p>Read the <a class="sh-link" href="#overview">session overview</a> and the <a class="sh-link" href="#canvas">Human Diffusion Canvas</a> debrief — the activity the whole session built toward.</p>
+          </div>
+          <div class="sh-card">
+            <span class="sh-label">20 min</span>
+            <h3>The full mechanism tour</h3>
+            <p>Read through <a class="sh-link" href="#pixels">pixels &amp; labels</a>, <a class="sh-link" href="#diffusion">diffusion</a>, <a class="sh-link" href="#one-answer">the Sudoku analogy</a>, and <a class="sh-link" href="#doctor">the doctor default</a> — the mechanisms in order.</p>
+          </div>
+          <div class="sh-card">
+            <span class="sh-label">Deeper path</span>
+            <h3>Read everything</h3>
+            <p>Add <a class="sh-link" href="#guest">Aurora's spotlight</a>, the <a class="sh-link" href="#teaching-notes">teaching notes</a>, and the full <a class="sh-link" href="#links">links &amp; resources</a> section.</p>
+          </div>
+        </div>
+
+        <!-- ── SESSION OVERVIEW ──────────────────────────────────── -->
+        <h2 id="overview">Session overview</h2>
+        <p>The core question was: <em>when an image model generates a picture, what is it actually deciding?</em> We moved from tokens to pixels — an image is a two-dimensional grid of pixel data rather than a one-directional token stream, which is one reason image generation costs so much more compute than text.</p>
+        <p>The tour ran in order: the human pre-work underneath everything (WordNet's map of English words, ImageNet's millions of human-labeled images), then diffusion — generation as machine-learning-aided <em>denoising</em>, chiseling an image out of a field of gray noise the way a sculptor works. During training, known noise is added to examples and the network learns to predict and remove it. From there: how the whole prompt conditions each denoising step, why the same prompt can produce many plausible images, why uncontrolled edits often redraw more than intended, and where defaults come from when a prompt leaves details unspecified.</p>
+
+        <div class="callout" id="patterns">
+          <p><b>Two takeaways from the mechanism tour:</b></p>
+          <ol style="margin: 8px 0 0; padding-left: 1.2em; line-height: 1.8;">
+            <li>The room converged on culturally familiar visual conventions — evidence of shared defaults, not proof that a prompt has one correct image.</li>
+            <li>A base generated output is not a conventional layer-based scene file, so plain re-prompting can redraw broadly; masks, cross-attention, locked noise, and other controls can preserve or localize parts of an edit.</li>
+          </ol>
+        </div>
+
+        <!-- ── WHO WAS IN THE ROOM ──────────────────────────────── -->
+        <h2 id="the-room">Who was in the room</h2>
+        <p>Around fifteen people contributed in chat and discussion. Participants are identified here by first name or chosen display name only:</p>
+
+        <div class="participant-grid">
+          <span class="participant-chip notable">Shane</span>
+          <span class="participant-chip notable">Ryan</span>
+          <span class="participant-chip notable">Shelly</span>
+          <span class="participant-chip notable">Sharleen</span>
+          <span class="participant-chip notable">Meghan</span>
+          <span class="participant-chip notable">Andrea</span>
+          <span class="participant-chip">Randy</span>
+          <span class="participant-chip">Judy</span>
+          <span class="participant-chip">Yunseo</span>
+          <span class="participant-chip">Hope</span>
+          <span class="participant-chip">Wilson</span>
+          <span class="participant-chip">Pop Penguin</span>
+          <span class="participant-chip">Andy</span>
+          <span class="participant-chip">Cha</span>
+          <span class="participant-chip notable">Aurora <span style="font-size:0.78em;color:var(--muted)">guest</span></span>
+        </div>
+
+        <div class="moment">
+          <p>Randy, in chat after the drawing activity: "As someone who feels like an imposter whenever I have to draw something, this was surprisingly fun. :-)"</p>
+          <cite>— Chat, 1:13</cite>
+        </div>
+
+        <!-- ── SESSION 1 REVISITED ──────────────────────────────── -->
+        <h2 id="session-1">Session 1, revisited</h2>
+        <p>We opened with what landed and what's still fuzzy from the text session. The lingering questions were sharp enough to shape the rest of the camp:</p>
+        <ul>
+          <li><b>Ryan</b> wanted more on how a model processes <em>input</em>, not just how it generates output — how does it determine what the user intends?</li>
+          <li><b>Cha</b> asked how the training corpus is compiled, and what the smallest useful LLM would even look like.</li>
+          <li><b>Randy</b> asked what actually drives model improvement — better data, better algorithms, or something else?</li>
+          <li><b>Shelly</b> brought the classic doctor riddle: swap the genders in the riddle and models still give the statistically popular answer rather than the logical one. The most probable answer is not the reasoned answer — which set up this session's bias discussion perfectly.</li>
+          <li><b>Meghan</b> went down a rabbit hole on tokenization across languages and dialects — if a model is trained in Spanish, how much better is it at Italian than English? She's building this into a new class on AI and Social Impact, and shared <a href="https://aclanthology.org/2025.findings-acl.95.pdf">a paper on token alignment across languages</a>.</li>
+          <li><b>Shane</b> showed his LLM-built dev kit for microcontrollers (ESP32-P4/S3) that treats actuators and LEDs as first-class objects — built entirely through conversation, no hand-written code, inspired by Digimon-era handheld toys.</li>
+        </ul>
+        <p>The Session 1 survey (five participant responses) matched the discussion: temperature, attention, and alignment clicked; "how it all comes together" is the piece people still want. Text conditioning is central to text-to-image systems, so many of these questions carry forward.</p>
+
+        <!-- ── PIXELS & LABELS ──────────────────────────────────── -->
+        <h2 id="pixels">Pixels &amp; the human label layer</h2>
+        <p>An image model never sees a cat, a tree, or a hallway in the human sense. It processes numerical representations of pixels or latent features. We walked a blurry image up through increasing detail and asked the human version of the machine's question: at what point do features snap into place? Earlier work in classification, edge detection, and recognizing text inside images helped establish foundations that later generative systems build on.</p>
+        <p>Underneath modern image systems sits decades of human pre-work. <b>WordNet</b> (Princeton, 1980s) mapped English words and their relationships; <b>ImageNet</b> (Stanford) organized millions of human-labeled images with that hierarchy. Their human-designed categories and labels helped shape major lines of computer vision; modern generative systems also draw on large-scale captions and, in some cases, later preference ratings.</p>
+
+        <!-- ── DIFFUSION ────────────────────────────────────────── -->
+        <h2 id="diffusion">Diffusion: chiseling from noise</h2>
+        <p>Generation starts as a field of noise, and the model <em>denoises</em> it under prompt conditioning — like the sculptor's line about the statue already being in the marble, you chisel away noise until an image is left. During training, known amounts of noise are added to examples and the network learns to predict that noise, supplying the denoising step used during generation.</p>
+        <p>Image-processing techniques such as denoising and anti-aliasing are old; learned versions now use the same broad GPU ecosystem that accelerated modern ML. Shane asked whether classic dithering techniques from games are folded into ML denoising. The room treated that as an open question and pointed to DLSS as a nearby example of learned reconstruction. Gaming graphics and ML both benefited from GPUs, while cryptocurrency mining drove additional demand for the hardware; they are not the same computation.</p>
+
+        <div class="moment">
+          <p>"This class is so great because everything you're describing makes sense, but I haven't made those connections — this is so low level and that's so high level."</p>
+          <cite>— Shane, during the dithering exchange</cite>
+        </div>
+
+        <!-- ── ONE RIGHT ANSWER ─────────────────────────────────── -->
+        <h2 id="one-answer">The Sudoku frame: a teaching analogy</h2>
+        <p>Ryan asked whether each clause in a prompt adds a new layer of diffusion. Adding words does not add layers or new embedding dimensions; it changes the prompt representation that conditions the denoising process. The Sudoku frame is useful because the prompt's conditions interact and must cohere, but the analogy has a limit: unlike a completed Sudoku, a prompt has no unique solution. Repeated generations can produce many different images that all plausibly satisfy the words.</p>
+        <p>That helps explain why editing can be hard without making it universal. A base generated output is not a conventional editable scene graph, so plain re-prompting may redraw more than the requested detail. Masks, cross-attention controls, locked noise, and structured workflows can preserve or localize parts of an edit. Shane connected the broader consistency problem to why much of Hollywood cooled on image generation and to workflows that add control back: ComfyUI's model chains and Corridor Crew locking the initial noise to get consistent frames (Ryan shared <a href="https://youtu.be/7QAGEvt-btI">their video</a>). Repeated generation — especially for video — still raises a real compute and sustainability question.</p>
+
+        <div class="moment">
+          <p>"It's really easy to see these tools where the primary way to interact with them is through text and just associate it with one super AI … but in reality it's just a bunch of tools in a trench coat."</p>
+          <cite>— Ryan, on multi-modal systems calling image models as tools</cite>
+        </div>
+
+        <!-- ── DOCTOR DEFAULT ───────────────────────────────────── -->
+        <h2 id="doctor">The doctor default</h2>
+        <p>Prompt an image model with "a doctor" and nothing else, and the model still has to decide gender, age, race, setting, camera angle, language on the wall. Those decisions come from defaults baked into the training data — the image-layer version of Shelly's riddle. We ran it live in ChatGPT and read the choices off the result together.</p>
+        <p>A follow-up experiment failed in an instructive way: Shane asked for a <em>half-diffused</em> version of the image, and the model just rendered a doctor behind blurry glass. The words in a prompt are treated as content to depict, not as controls over the generation process — you'd need access to the model itself to stop diffusion halfway.</p>
+
+        <div class="moment">
+          <p>"I think the results are still relying on stereotype references of what we have been taught to associate words with."</p>
+          <cite>— Judy, in chat</cite>
+        </div>
+
+        <!-- ── HUMAN DIFFUSION CANVAS ───────────────────────────── -->
+        <h2 id="canvas">Human Diffusion Canvas: being the model</h2>
+        <p>The centerpiece: everyone opened the <a href="../tools/human-diffusion-canvas/">Human Diffusion Canvas</a> and became the image model. The prompt arrived in pieces — <em>pale figure</em> → <em>emerging from shadows</em> → <em>a slow scratching sound</em> → <em>echoed through the hallway</em> — and each phrase meant committing a pass of drawing, coarse to fine, like steps of denoising. (Full prompt: "A pale figure emerged from the flickering shadows as a slow scratching sound echoed through the hallway.")</p>
+        <p>The results across participants were strikingly similar: a figure centered in a receding hallway, creepy horror palette. When we generated the same prompt in ChatGPT, its composition matched the room's — hallway perspective, small figure in the distance. The convergence revealed culturally shared visual conventions, not one correct image; the defaults live in shared culture as much as in training data. Judy thought the hallway image resembled imagery from the French film <em>Diabolique</em>.</p>
+
+        <div class="moment">
+          <p>Sharleen walked through her drawing: "pale figure" alone already gave creepy-horror vibes, and she predicted the hallway before the word arrived — which opened the question of why hallways work in horror at all: something far away, coming closer, with you as the only exit.</p>
+          <cite>— Canvas debrief</cite>
+        </div>
+
+        <div class="moment">
+          <p>Shelly flipped the exercise: her first mark was a dark field, treating the canvas as negative space so the pale figure could <em>emerge</em> from it. "It's kind of like revealing the image over time, little by little — which is more to me like sculpture." Andrea flagged it as the drawing that broke from everyone's shared default.</p>
+          <cite>— Canvas debrief</cite>
+        </div>
+
+        <p>Two honest caveats we named: revealing the prompt piecemeal mimics thinking word-by-word, but a real model receives all the words at once; and the room's convergence partly reflects our shared genre knowledge — which is exactly the point about where defaults come from. A "slow scratching sound" also forced the question of what you draw for words with no visual referent.</p>
+        <p><b>Tool friction, logged:</b> the brush color wouldn't change between commit steps for participants, and the brush size could be manually overridden (defeating the big-to-small progression). Fixes are on the host's list below. Exporting PNG/GIF worked, and the GIF replays of everyone's drawing process were a highlight.</p>
+
+        <div class="moment">
+          <p>"Definitely highlights how we still need human creativity + humans in the loop!"</p>
+          <cite>— Sharleen, in chat</cite>
+        </div>
+
+        <!-- ── GUEST SPOTLIGHT ─────────────────────────────────── -->
+        <h2 id="guest">Guest spotlight</h2>
+        <div class="guest-card">
+          <div>
+            <h3 class="guest-name">Aurora Mititelu</h3>
+            <p class="guest-role">Romanian artist · member of NEW INC (Year 12) at the New Museum · coordinator of an AI-and-art summer institute at UCLA · MFA, UCLA Media Arts</p>
+            <p>Aurora works with hybrid computer images — photography, CGI, and generative AI mixed in one frame — to examine how computational media constructs contemporary social reality. She grew up in post-socialist Romania looking at the West through the early internet while studying Byzantine icon painting in high school, then spent years in Berlin as a 3D artist before turning her practice toward more personal questions.</p>
+            <p>Works shared: <b>Meta-Mahala</b> (2023), a sculptural installation with a CGI avatar of herself envisioned as an Eastern European man — an instinctive choice she then interrogated for what it revealed about power, class, and the life she might have had without leaving Romania. That avatar became <b>Abel</b>: a full AI agent built from her own message history, with a personality that can get upset and decide not to text back — a deliberately flawed relationship dynamic. <b>Double Texting</b> (New Museum) set two phones — her agent and Abel's — in continuous generative exchange. <b>Body Count</b> scaled up to a multi-agent performance: ten AI boyfriends in a group chat trying to schedule one dinner reservation.</p>
+            <p>Her sharpest frame connected AI images to her icon-painting training: images that claim reality are images produced and circulated in spaces of community. The church wall then, the social feed now — both construct a shared sense of what life is. And on the "everyone hates AI" mood, she drew a working distinction: people mostly hate <em>corporate</em> AI — the exploitative industrial complex — which is not the same as hating algorithms, and engagement plus open-source alternatives beats blanket rejection.</p>
+            <p>In the Q&amp;A, Shelly — a military veteran — noted that AI-generated "veteran influencer" propaganda gets uniform details wrong in ways she could spot from her service experience, and that the default output of "military veteran" looks nothing like her: the propaganda works by amplifying biases already in the data. Randy asked about Aurora's Visualising AI collaboration with Google DeepMind (they met multiple times; the researchers didn't contribute directly to the art). Shane and Aurora compared notes on realizing that <em>systems</em>, not images or conversations, are the real material.</p>
+            <div class="guest-links" style="margin-top: 12px;">
+              <a href="https://auroramititelu.com/">auroramititelu.com</a>
+              <a href="https://www.newmuseum.org/pages/new-inc">NEW INC</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TEACHING NOTES ─────────────────────────────────── -->
+        <h2 id="teaching-notes">Teaching notes</h2>
+
+        <div class="teaching-note">
+          <strong>The paper version is the proven version</strong>
+          <p>The canvas activity ran in a classroom before it was a tool: big box of markers, everyone grays their paper, each new phrase means a new color added on top, then compare everyone's results at the end. Screens optional; the convergence lands either way.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Words with no visual referent</strong>
+          <p>"A slow scratching sound" was the productive stumble — what do you draw for a sound? Great discussion prompt for how models handle non-visual language in a prompt.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Name the piecemeal caveat</strong>
+          <p>Revealing the prompt phrase by phrase is a teaching device; a real model conditions on the whole prompt at once. Say so in the debrief — then run a second round giving the full prompt up front and compare.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>The doctor test scales into an investigation</strong>
+          <p>Generate "a doctor" (or your own unspecified prompt) across models, print the results, put them on a board, and ask where each default came from. This is the same hypothesis-test-poster structure Shelly's riddle suggests for text.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Spatial-reasoning probes expose the seams</strong>
+          <p>Shelly's benchmark tests: ask a coding model for a pure-CSS image, or ask an image model for a one-page zine layout (eight panels, top row upside down). Both fail in ways a red-panda prompt never reveals — fast ways to show students the difference between fluent output and reasoning. Sharleen's workaround: generate one small image at a time and do the layout yourself.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Ethics threads to carry forward</strong>
+          <p>Sharleen raised artists' work being scraped without consent; Adobe Firefly's licensed-stock approach and Shelly's eBird/Merlin example (Cornell's citizen-science bird ID) came up as contrasting models for how training data can be sourced. Pair with Aurora's corporate-AI-vs-algorithms distinction for a classroom debate structure.</p>
+        </div>
+
+        <!-- ── ACTION ITEMS ───────────────────────────────────── -->
+        <h2 id="action-items">Action items</h2>
+        <ul class="action-list">
+          <li><b>Participants:</b> make one Session 2 artifact — a tool, webpage, activity, or set of questions about image generation that would be useful for your students or your own learning — and share it before Session 3 (six routes on the <a href="session-2-assignment.html">assignment page</a>)</li>
+          <li><b>Participants:</b> try the session tools and report back — what works, what doesn't, what's missing</li>
+          <li><b>Participants:</b> the <a href="https://github.com/saberkhan372/learning-machines-tools">GitHub repo</a> is open — feed a tool into an LLM and generate your own customized version (yes, pull requests welcome)</li>
+          <li><b>Host:</b> fix the Human Diffusion Canvas — brush color change between commits, lock the brush-size progression</li>
+          <li><b>Host:</b> build in-person classroom versions of the Zoom-specific activities</li>
+          <li><b>Host (long-term):</b> the digital workbook goal — interactive tools that build ML intuition the way physics and biology sims do</li>
+        </ul>
+
+        <!-- ── LINKS & RESOURCES ──────────────────────────────── -->
+        <h2 id="links">Links &amp; resources from chat</h2>
+
+        <div class="resource-group">
+          <h4>Session tools (used live)</h4>
+          <ul class="resource-list">
+            <li><a href="../tools/human-diffusion-canvas/">Human Diffusion Canvas</a><span class="res-who">session tool</span></li>
+            <li><a href="session-images.html">Session 2 · Images overview</a><span class="res-who">session page</span></li>
+            <li><a href="../worksheets/image-default-test-board/">Image Default Test Board</a><span class="res-who">worksheet</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Shared in chat — diffusion &amp; image models</h4>
+          <ul class="resource-list">
+            <li><a href="https://youtu.be/x2GRE-RzmD8">IBM's diffusion explainer (YouTube)</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://poloclub.github.io/diffusion-explainer/">Diffusion Explainer — Polo Club</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://www.inceptionlabs.ai/">Inception Labs — text diffusion models</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://deepmind.google/models/gemini-diffusion/">Gemini Diffusion</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://youtu.be/7QAGEvt-btI">Corridor Crew — locked-noise consistent AI frames</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://www.youtube.com/watch?v=c-NzVc_Krus">Image-processing explainer (YouTube; see also Rich Radke's series)</a><span class="res-who">Wilson</span></li>
+            <li><a href="https://shanecurry.com/lab/toys/dithering-heights/">Dithering Heights — Shane's dithering toy</a><span class="res-who">Shane</span></li>
+            <li><a href="https://deviationgame.com/">Deviation Game — draw without the AI guessing</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://deadline.com/2026/01/darren-aronofsky-ai-series-revolutionary-war-google-1236702311/">Aronofsky's AI series (Deadline)</a><span class="res-who">Judy</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Shared in chat — language &amp; tokens follow-ups</h4>
+          <ul class="resource-list">
+            <li><a href="https://aclanthology.org/2025.findings-acl.95.pdf">Token alignment across languages (ACL paper)</a><span class="res-who">Meghan</span></li>
+            <li><a href="https://maartengr.github.io/BERTopic/getting_started/visualization/visualization.html">BERTopic — visualizing vector embeddings</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://arxiv.org/abs/2604.14210">Token efficiency across scripts (arXiv)</a><span class="res-who">Ryan</span></li>
+            <li><a href="https://www.infobip.com/blog/gibberlink-ai-secret-language">Gibberlink — AI-to-AI protocol</a><span class="res-who">Sharleen</span></li>
+            <li><a href="https://www.manim.community/">Manim — 3Blue1Brown's animation library</a><span class="res-who">Ryan</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Shared in chat — hardware &amp; projects</h4>
+          <ul class="resource-list">
+            <li><a href="https://www.instagram.com/reel/Da8K2Chu1Ww/">Shane's microcontroller dev-kit demo (Instagram)</a><span class="res-who">Shane</span></li>
+            <li><a href="https://www.espressif.com/en/products/socs/esp32-p4">ESP32-P4</a><span class="res-who">Ryan</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Guest &amp; next session</h4>
+          <ul class="resource-list">
+            <li><a href="https://auroramititelu.com/">Aurora Mititelu — artist site</a><span class="res-who">guest</span></li>
+            <li><a href="https://en.wikipedia.org/wiki/Holly_Herndon">Holly Herndon — systems art context</a><span class="res-who">Saber</span></li>
+            <li><a href="https://thegrene.github.io/">Dr. Emily Thomforde — Session 3 guest</a><span class="res-who">Saber</span></li>
+          </ul>
+        </div>
+
+        <p class="colophon">This summary was drafted and revised with AI assistance. Quotations and attributions were checked against the session transcript and chat export; final facilitator review is recommended.</p>
+
+      </article>
+    </div>
+  </main>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-images.html#recap"><span class="pg-dir mono">&larr; Back</span><span class="pg-title">Session 2 overview</span></a>
+        <a class="next" href="session-2-assignment.html"><span class="pg-dir mono">Next &rarr;</span><span class="pg-title">Assignment options</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <p class="colophon">Session 2 · Images · Recap — participant names use first names only; never used to train AI.</p>
+    </div>
+  </footer>
+  <script src="../assets/analytics.js"></script>
+</body>
+</html>
