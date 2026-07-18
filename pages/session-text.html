@@ -41,7 +41,7 @@
           <p class="sess-kicker"><i class="modsq"></i>Machines that write</p>
           <h1 class="sess-title">Text</h1>
           <p class="sess-q">When a language model writes, <span class="q-accent">what is it actually doing?</span></p>
-          <p class="sess-lede">Tokens, prediction, <a href="vocabulary-field-guide.html#temperature">temperature</a>, and the gap between fluent output and understanding. We start unplugged — guessing the next word, tallying the room — then open the machine and watch it do the same, visibly.</p>
+          <p class="sess-lede">Tokens become vectors; context turns those representations into next-token probabilities; human feedback helps shape which fluent answers count as useful. We start unplugged — guessing the next word, tallying the room — then open the machine and watch the sequence become visible.</p>
         </div>
       </div>
     </div>
@@ -59,10 +59,13 @@
     <div class="wrap">
       <div class="sec-rule"><h2 class="sec-no">§ A · What we make visible</h2><span class="sec-note">four mechanisms, one session</span></div>
       <div class="throughline">
-        <div class="through-step"><div class="ts-n">01</div><h4>Tokens</h4><p>Text is chopped into pieces a model can count — often not where a human would cut.</p></div>
-        <div class="through-step"><div class="ts-n">02</div><h4>Prediction</h4><p>The model only ever guesses the next token from what came before.</p></div>
-        <div class="through-step"><div class="ts-n">03</div><h4>Temperature</h4><p>One dial slides output from predictable to surprising — and unstable.</p></div>
-        <div class="through-step"><div class="ts-n">04</div><h4>The illusion</h4><p>Fluency is easy to mistake for understanding. ELIZA shows why.</p></div>
+        <div class="through-step"><div class="ts-n">01</div><h4>Token</h4><p>Text is split into token IDs — often not where a human would divide words or meaning.</p></div>
+        <div class="through-step"><div class="ts-n">02</div><h4>Vector</h4><p>Each token ID becomes a learned numerical vector; its representation is then reshaped by context.</p></div>
+        <div class="through-step"><div class="ts-n">03</div><h4>Next-token probabilities</h4><p>The current context becomes a distribution over possible next tokens, then a sampling rule chooses one.</p></div>
+        <div class="through-step"><div class="ts-n">04</div><h4>Human feedback</h4><p>People and institutions demonstrate, compare, and reward versions of what counts as a better response.</p></div>
+      </div>
+      <div class="callout" style="margin-top:18px;max-width:82ch;">
+        <p><b>Teaching move · Embedding Projector:</b> place a few nearby words on screen and ask whether they are close because they mean the same thing, appear in similar contexts, or reflect a cultural association in the training data. The <a href="https://projector.tensorflow.org/" target="_blank" rel="noopener">Embedding Projector</a> makes learned proximity visible; use it as a simplified snapshot, not as a literal view of a modern transformer’s context-dependent internal state.</p>
       </div>
       <div class="session-temp-note">
         <div class="plate-cap"><span class="fig">Fig. 01B — Temperature ladder</span><span>same prompt, rising randomness</span></div>
@@ -132,7 +135,7 @@
       <div class="ros">
         <div class="ros-row"><div class="ros-time">0–5</div><div><p class="ros-seg">Welcome &amp; norms</p><p class="ros-body">Name the question. Remind everyone direct AI use is optional — each person chooses a <b>participation pathway</b>.</p></div></div>
         <div class="ros-row"><div class="ros-time">5–15</div><div><p class="ros-seg">Unplugged prediction → counting</p><p class="ros-body">Show a sentence stem and collect guesses in Zoom chat (paste into the <b>Next-Token Prediction Game</b> for the room's distribution), then open <b>Count the Next Token</b> to reveal the mechanism: count → divide → predict.</p></div></div>
-        <div class="ros-row"><div class="ros-time">15–35</div><div><p class="ros-seg">Tokenizer + Temperature</p><p class="ros-body">Show token chunks, then run one prompt at low and high temperature. Watch <b>probability bars</b> and greedy vs. sampled output.</p></div></div>
+        <div class="ros-row"><div class="ros-time">15–35</div><div><p class="ros-seg">Tokens → vectors → probabilities + temperature</p><p class="ros-body">Show token chunks and one learned-vector example, ask what “nearby” means, then run one prompt at low and high temperature. Watch <b>probability bars</b> and greedy vs. sampled output.</p></div></div>
         <div class="ros-row"><div class="ros-time">35–55</div><div><p class="ros-seg">ELIZA vs. LLM</p><p class="ros-body">Inspect the matched rule, pattern, and template. Compare <b>visible rule-matching</b> with pre-generated LLM examples.</p></div></div>
         <div class="ros-row"><div class="ros-time">55–75</div><div><p class="ros-seg">Investigation</p><p class="ros-body">Complete one <b>Text Experiment Board</b> section: a default test, a prompt variation, or an ELIZA comparison.</p></div></div>
         <div class="ros-row"><div class="ros-time">75–90</div><div><p class="ros-seg">Debrief</p><p class="ros-body">Reflection frame — <b>human, machine, system, ethics, pedagogy</b>. Share one evidence-based claim and one question.</p></div></div>
@@ -148,6 +151,7 @@
         <div class="prompt">What made your next-word guess feel obvious?</div>
         <div class="prompt">Where does the room's distribution agree with the model's — and where does it differ?</div>
         <div class="prompt">What does the tokenizer split that you wouldn't split as a human reader?</div>
+        <div class="prompt">If two words are nearby in an embedding, is that shared meaning, shared context, or a learned cultural association?</div>
         <div class="prompt">At low temperature, what becomes more predictable? At high, more unstable?</div>
         <div class="prompt">What does ELIZA make visible that a modern LLM hides?</div>
         <div class="prompt">Where could fluency be mistaken for understanding?</div>
@@ -168,6 +172,8 @@
             <a class="doc-row" href="../worksheets/ai-use-consent-checklist/"><span class="d-name">AI Use + Consent</span><span class="d-desc">Norms &amp; pathways</span></a>
             <a class="doc-row" href="../packs/text/"><span class="d-name">Text Prompt Pack</span><span class="d-desc">Frozen examples &amp; annotations</span></a>
             <a class="doc-row" href="../tools/concept-bridges/prediction-is-not-understanding/"><span class="d-name">Bridge · Prediction ≠ understanding</span><span class="d-desc">Build intuition first</span></a>
+            <a class="doc-row" href="https://projector.tensorflow.org/" target="_blank" rel="noopener"><span class="d-name">Embedding Projector</span><span class="d-desc">Explore learned vector neighborhoods</span></a>
+            <a class="doc-row" href="further-reading.html#mechanism-primers"><span class="d-name">Mechanism primers</span><span class="d-desc">Embedding Projector, CLIP &amp; CoTracker</span></a>
             <a class="doc-row" href="younger-learners.html"><span class="d-name">Adapting for younger learners</span><span class="d-desc">Ages 6&ndash;12 notes for this session</span></a>
           </div>
         </div>

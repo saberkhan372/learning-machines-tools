@@ -14,6 +14,8 @@ Use this live run sheet for the fixed two-hour session: 60 minutes of facilitate
 
 Core question: when a model sees or generates an image, what is it actually working with?
 
+Conceptual sequence: **pixels → human-created labels → shared text/image representations → diffusion**.
+
 ## Materials
 
 - Session 2 live deck
@@ -27,6 +29,7 @@ Core question: when a model sees or generates an image, what is it actually work
 - Image Prompt Pack
 - Image Default Test Board
 - AI Use + Consent Checklist
+- CLIP project overview / three-caption teaching move
 
 ## Run of Show
 
@@ -34,8 +37,8 @@ Core question: when a model sees or generates an image, what is it actually work
 | --- | --- | --- | --- |
 | 0-5 min | Welcome and bridge | Repeat consent and participation choices; connect text choices to image choices. | Choose a participation pathway. |
 | 5-10 min | Session 1 retrieval | Share two artifacts or revisit the recap. | Name the investigation loop. |
-| 10-17 min | Pixels and features | Raise detail slowly in the Squint Test. | Identify which visual cues return first. |
-| 17-25 min | The room's default | Tally first pictures for “a doctor,” then compare frozen outputs. | Separate a room hypothesis from model evidence. |
+| 10-17 min | Pixels, labels, and shared representations | Raise detail slowly, name PoseNet and the WordNet/ImageNet label layer, then ask which of three captions would land closest to the image in a CLIP-style space. | Identify the first visual cue, then justify one caption match. |
+| 17-25 min | The room's default | Tally first pictures for “a doctor,” then compare authored teaching simulations. | Treat each simulated scene as an illustrated hypothesis and name the documented real outputs needed for a model claim. |
 | 25-36 min | Diffusion — performed, then watched | Run the Human Diffusion Canvas, then the step-through viewer. | Draw an analogy by hand and predict what stabilizes next. |
 | 36-44 min | Guidance and revision | Compare vague, specific, and responsible revisions. | Distinguish prompt wording from CFG strength. |
 | 44-52 min | Whose picture? | Map user, system, and hidden human contributions. | Name one credit, consent, or disclosure decision. |
@@ -50,6 +53,7 @@ For credit, attribution, and recap decisions, use the existing [AI Use + Consent
 ## Facilitator Prompts
 
 - "What is one thing the Squint Test showed—and one thing it did not show?"
+- "Which caption would probably sit closest to this image in a shared representation space—and what association makes it closer?"
 - "When did composition commit on your canvas, and when did it stabilize in the viewer?"
 - "What did the prompt leave unspecified, and what repeatedly filled the gap?"
 - "What did guidance improve, and what did it break?"

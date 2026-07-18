@@ -62,7 +62,7 @@
 
       <!-- BODY -->
       <article class="prose">
-        <p class="lede">Use this script for a 60–90 minute pilot focused on text generation, tokenization, probability, and the difference between fluent output and understanding.</p>
+        <p class="lede">Use this script for a 60–90 minute pilot focused on the sequence <b>token → vector → next-token probabilities → human feedback</b>, and the difference between fluent output and understanding.</p>
 
         <div class="callout" id="core" style="margin-top: 18px;">
           <p><b>Core question.</b> When a language model writes, what is it actually doing?</p>
@@ -76,6 +76,7 @@
           <li>Optional: A/B/C Comparison Board for pilot evidence</li>
           <li><a href="../worksheets/ai-use-consent-checklist/">AI Use + Consent Checklist</a></li>
           <li>Next-Token Prediction Game (paste the Zoom chat block of guesses)</li>
+          <li>Optional: <a href="https://projector.tensorflow.org/" target="_blank" rel="noopener">Embedding Projector</a> for a 90-second vector-neighborhood question</li>
           <li>Optional: 3–5 pre-written sentence stems for the prediction game</li>
         </ul>
 
@@ -85,7 +86,7 @@
           <tbody>
             <tr><td>0–5</td><td>Welcome &amp; norms</td><td>Name the question. Remind everyone direct AI use is optional.</td><td>Choose a participation pathway.</td></tr>
             <tr><td>5–15</td><td>Unplugged prediction</td><td>Show a sentence stem; collect guesses in Zoom chat, then paste the chat block into the Next-Token Prediction Game to tally the room beside the model's top-k.</td><td>Predict next words; compare the room's distribution with the model's and notice how context shapes guesses.</td></tr>
-            <tr><td>15–35</td><td>Tokenizer + Temperature</td><td>Show token chunks, then run one prompt at low and high temperature.</td><td>Notice token boundaries, probability bars, greedy vs. sampled.</td></tr>
+            <tr><td>15–35</td><td>Tokens, vectors + Temperature</td><td>Show token chunks, one learned-vector example, then probability distributions at low and high temperature.</td><td>Ask what “nearby” means in a learned space; then compare greedy and sampled output.</td></tr>
             <tr><td>35–55</td><td>ELIZA vs. LLM</td><td>Inspect matched rule, pattern, and response template.</td><td>Compare visible rule-matching with pre-generated LLM examples.</td></tr>
             <tr><td>55–75</td><td>Investigation</td><td>Assign one Text Experiment Board section.</td><td>Run or analyse a default test, prompt variation, or comparison.</td></tr>
             <tr><td>75–90</td><td>Debrief</td><td>Use the frame: human, machine, system, ethics, pedagogy.</td><td>Share one evidence-based claim and one question.</td></tr>
@@ -97,6 +98,7 @@
         <ul>
           <li>"What made your next-word guess feel obvious?"</li>
           <li>"What does the tokenizer split that you would not have split as a human reader?"</li>
+          <li>"Are two nearby words close because they mean the same thing, occur in similar contexts, or reflect a learned cultural association?"</li>
           <li>"At low temperature, what becomes more predictable?"</li>
           <li>"At high temperature, what becomes more surprising or unstable?"</li>
           <li>"What does ELIZA make visible that a modern LLM hides?"</li>

@@ -258,6 +258,7 @@
   ];
   var CLOSERS = [
     {n:'Session 1 page — your map of everything we touched', u:SITE+'pages/session-text.html'},
+    {n:'Mechanism primers — Embedding Projector, CLIP, and CoTracker', u:SITE+'pages/further-reading.html#mechanism-primers'},
     {n:'Vocabulary Field Guide — token, temperature, attention, and friends', u:SITE+'pages/vocabulary-field-guide.html'},
     {n:'Text Experiment Board — finish your claim before Saturday', u:SITE+'worksheets/text-experiment-board/'}
   ];
@@ -265,7 +266,7 @@
   var SLIDES = [
     { id:'title', kind:'title', nav:'Start + roles',
       head:'Human Language Model',
-      idea:'Today the Zoom room becomes a text-generating machine. We build text one piece at a time, then ask what makes it useful to humans.',
+      idea:'Today the Zoom room follows the text sequence: token → vector → next-token probabilities → human feedback.',
       notes:{
         look:'Presenter cockpit: slide preview + your notes on the left, live-tool controls on the right, slide list up top. The audience window shows only the slide.',
         you:['Make sure you are screen-sharing the audience window only.','Tell people they will mostly use Zoom chat, not the webpage.','Keep everyone as predictors. You can play Sampler and Scribe; recruit Raters before the alignment round.'],
@@ -275,16 +276,16 @@
 
     { id:'s0', kind:'setup', shape:true, num:'00', nav:'Training data + tokens',
       head:"The model's tiny world",
-      idea:'A model is shaped by what it read — and it reads in tokens, not exactly words.',
+      idea:'A model reads token IDs, maps them to learned vectors, then reshapes those representations with context.',
       task:'Read the paragraph. In Rounds 1–2, only suggest words you find in it.',
-      take:'A model builds from patterns in its data and the current context.',
+      take:'Nearby vectors may reflect similar contexts, related meanings, or cultural associations in the training data.',
       aid:'corpus',
       notes:{
-        look:'You look at: the corpus copy button and token examples. Attendees see: the paragraph, the rule, and token chips.',
-        you:['Click Copy corpus and paste it into Zoom chat.','Point at book·shop and after·noon — both from our paragraph.','Say the restriction is a simulation, not exactly how real LLMs work.'],
-        room:['Read the corpus once.','Rounds 1–2: only suggest words that appear in it.','Notice repeated words and likely next words.'],
-        say:['"For this activity, this paragraph is everything our stand-in model can use. Real LLMs are far more flexible — they recombine patterns — but they’re still shaped by the data, styles, and blind spots they learned."','"Tokens are chunks: sometimes whole words, sometimes punctuation, sometimes word pieces."'],
-        watch:'Do not overteach tokenization. The point is simply: text becomes pieces, and the pieces are the units the system works with. The Tokenizer tool in the studio block is the real version.'} },
+        look:'You look at: the corpus copy button and token examples. Attendees see: the paragraph, token chips, and one illustrative token → vector mapping.',
+        you:['Click Copy corpus and paste it into Zoom chat.','Point at book·shop and after·noon, then at the illustrative vector.','Ask: if “cat” and “kitten” land nearby, is that same meaning, similar contexts, or a learned cultural association?','Say the restriction and the displayed vector are teaching simplifications.'],
+        room:['Read the corpus once.','Rounds 1–2: only suggest words that appear in it.','Answer the vector-neighborhood question in chat, then notice repeated words and likely next words.'],
+        say:['"For this activity, this paragraph is everything our stand-in model can use. Real LLMs are far more flexible — they recombine patterns — but they’re still shaped by the data, styles, and blind spots they learned."','"A token ID is mapped to a learned vector. Nearby does not automatically mean synonym; it can reflect shared contexts and cultural patterns in the data."'],
+        watch:'Keep this to about 90 seconds. The vector is illustrative, and Embedding Projector shows a simplified embedding snapshot; modern transformer representations also change with context.'} },
 
     { id:'s1', kind:'prompt', num:'01', nav:'Round 1 — Prediction',
       head:'Predict the next token',
@@ -469,12 +470,13 @@
     if(s.kind==='title'){
       var ws=CORPUS.split(' ').slice(0,9);
       var tape='<div class="title-tape">'+ws.map(function(w,k){return '<span class="tk'+(k===ws.length-1?' last':'')+'">'+esc(w)+'</span>';}).join('')+'</div>';
-      var flow='<div class="title-flow"><span class="f sh">training data</span><span>→</span><span class="f">tokenize</span><span>→</span><span class="f">attention</span><span>→</span><span class="f">predict</span><span>→</span><span class="f">sample</span><span>→</span><span class="f">append</span> <span class="bk">↺ keep going</span> <span>→</span><span class="f sh">human feedback</span></div>';
+      var flow='<div class="title-flow"><span class="f sh">text</span><span>→</span><span class="f">token</span><span>→</span><span class="f">vector</span><span>→</span><span class="f">next-token probabilities</span><span>→</span><span class="f">sample + append</span> <span class="bk">↺</span> <span>→</span><span class="f sh">human feedback</span></div>';
       return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:36ch">'+esc(s.idea)+'</div>'+tape+flow+'</div>';
     }
     if(s.kind==='setup'){
       var body='<div class="s-body"><div class="s-corpus">'+esc(CORPUS)+'<div class="s-rule">'+esc(s.task)+'</div></div>'+
         '<div class="chips"><span class="chip">book<span class="sl">·</span>shop</span><span class="chip">after<span class="sl">·</span>noon</span><span class="cap">illustrative splits — real tokenizers choose their own</span></div>'+
+        '<div class="chips"><span class="chip">cat → [0.18, −0.42, 0.07, …]</span><span class="cap">illustrative learned vector — context reshapes representations</span></div>'+
         '<div class="s-take">'+esc(s.take)+'</div></div>';
       return '<div class="stage'+sh+'">'+eyebrow+head+idea+body+'</div>';
     }

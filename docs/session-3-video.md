@@ -15,6 +15,8 @@ title: "Session 3: Video"
 
 In Session 3 we investigate video generation. Video adds time to the image problem — and time breaks things in ways that images never do. We start with a drawing game that makes temporal coherence tangible, then investigate real video generation failures. We finish with a structured investigation using the Video Test Report.
 
+The conceptual sequence is **frame → keypoints/features → correspondence across frames → coherence or drift**. PoseNet can locate an elbow in one frame; CoTracker can analyze where a selected point went in later frames. Generative video has the harder inverse problem: it must create those later frames while keeping the elbow, the person, and the scene mutually coherent.
+
 By the end of this session you will be able to:
 - Explain why video generation is harder than image generation
 - Name specific failure modes (identity drift, body distortion, physics breaks)
@@ -44,6 +46,8 @@ By the end of this session you will be able to:
 > *[Scripted framing]*
 
 Over the last two sessions we found that language models predict without understanding, and image models fill in underspecified prompts with assumptions you can see. Today we add one more dimension: time.
+
+PoseNet gave us a one-frame example: pixels became estimated keypoints. A point tracker such as CoTracker starts with frames that already exist and estimates correspondence—where did this selected point go? A video generator must do something different: create the next frame while preserving enough correspondence for identity, setting, and motion to remain believable.
 
 Video is not a series of independent images. It is a claim that the same thing persists across frames — that the person in frame 1 is the same person in frame 100, that the hand that reaches for the cup will still be a hand when it arrives.
 

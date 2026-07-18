@@ -5,13 +5,14 @@ title: "Session 1 Pilot Script: Text"
 
 # Session 1 Pilot Script: Text
 
-Use this script for a 60-90 minute pilot focused on text generation, tokenization, probability, and the difference between fluent output and understanding.
+Use this script for a 60-90 minute pilot focused on the sequence **token → vector → next-token probabilities → human feedback**, and the difference between fluent output and understanding.
 
 Core question: when a language model writes, what is it actually doing?
 
 ## Materials
 
 - Next-Token Prediction Game (paste the Zoom chat block of guesses)
+- Optional: [Embedding Projector](https://projector.tensorflow.org/) for a 90-second vector-neighborhood question
 - Tokenizer + Temperature Visualizer
 - ELIZA Simulator
 - Text Experiment Board
@@ -26,7 +27,7 @@ Core question: when a language model writes, what is it actually doing?
 | --- | --- | --- | --- |
 | 0-5 min | Welcome and norms | Name the question: "What is the machine actually doing?" Remind everyone that direct AI use is optional. | Choose a participation pathway: use, observe, teach/design, build/code, or critical/no-AI. |
 | 5-15 min | Unplugged prediction game | Show a sentence stem and collect next-word guesses in Zoom chat. Copy the chat block and paste it into the Next-Token Prediction Game to tally the room's distribution beside the model's top-k. | Predict next words, then compare the room's distribution with the model's and notice how context, genre, culture, and expectation shape guesses. |
-| 15-35 min | Tokenizer + Temperature | Open the visualizer. Show token chunks, then run the same prompt at low and high temperature. | Notice token boundaries, probability bars, and changes between greedy and sampled output. |
+| 15-35 min | Tokens, vectors + Temperature | Show token chunks, one learned-vector example, then probability distributions at low and high temperature. | Ask what “nearby” means in a learned space; then compare greedy and sampled output. |
 | 35-55 min | ELIZA vs. LLM | Open ELIZA. Try examples and inspect the matched rule, pattern, and response template. | Compare visible rule matching with the pre-generated LLM comparison examples. |
 | 55-75 min | Investigation | Ask participants to complete one Text Experiment Board section. | Run or analyze a text default test, prompt variation, or ELIZA comparison. |
 | 75-90 min | Debrief | Use the reflection frame: human, machine, system, ethics, pedagogy. | Share one evidence-based claim and one question. |
@@ -37,6 +38,7 @@ Optional pilot evidence move: after the investigation, ask one group to enter it
 
 - "What made your next-word guess feel obvious?"
 - "What does the tokenizer split that you would not have split as a human reader?"
+- "Are two nearby words close because they mean the same thing, occur in similar contexts, or reflect a learned cultural association?"
 - "At low temperature, what becomes more predictable?"
 - "At high temperature, what becomes more surprising or unstable?"
 - "What does ELIZA make visible that a modern LLM hides?"

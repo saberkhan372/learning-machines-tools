@@ -20,7 +20,7 @@ This is a speakable script, not a transcript to follow word for word. Keep the q
 | Deck slide | Purpose |
 |---|---|
 | Start + roles | Welcome, consent, and the room-as-model frame |
-| 00 - Training data + tokens | Establish the tiny corpus and token rule |
+| 00 - Training data + token vectors | Establish the tiny corpus and the token → vector bridge |
 | 01 - Prediction | Build a sentence through repeated next-word votes |
 | 02 - Temperature | Compare safe and surprising sampling |
 | 03 - Attention | Show context changing what "it" refers to |
@@ -57,18 +57,22 @@ Do not click **new session** after the live activity begins. Refreshing is safe;
 
 "Today the Zoom room becomes a language model. You are not pretending to be one smart brain. You are pretending to be many small pieces of a system. Together we will build text one piece at a time, then ask what makes that text useful to a person."
 
+"Our conceptual sequence is token → vector → next-token probabilities → human feedback. Temperature and attention help us inspect what happens inside that sequence; they do not replace it."
+
 "You do not need an AI account for the shared activity. For now, your main tool is Zoom chat."
 
 ### Transition
 
 "Before a model can predict anything, it needs a world of patterns to predict from. Let us make that world very small so we can see it."
 
-## 00: Training data + tokens
+## 00: Training data + token vectors
 
 ### Do
 
 - Click **Copy corpus** and paste the paragraph into Zoom chat.
 - Point to the illustrative splits `book / shop` and `after / noon`.
+- Point to the illustrative `cat → [0.18, −0.42, 0.07, …]` mapping.
+- Ask whether two nearby words might share meaning, occur in similar contexts, or reflect a cultural association in the training data.
 - Ask people to notice repeated words and likely continuations.
 
 ### Say
@@ -79,13 +83,21 @@ Do not click **new session** after the live activity begins. Refreshing is safe;
 
 "A model also does not receive text exactly as we see words on a page. It works with tokens: chunks that may be a whole word, punctuation, or part of a word. These splits are illustrative. Real tokenizers choose their own boundaries."
 
+"A token ID then becomes a learned vector: a long list of numbers the system can operate on. If *cat* and *kitten* appear nearby, do not jump straight to ‘the model knows they mean the same thing.’ Their proximity might reflect shared contexts, related meanings, or a cultural association repeated in the training data."
+
+If useful, open the [Embedding Projector](https://projector.tensorflow.org/) briefly and ask:
+
+> “Are these words nearby because they mean the same thing, occur in similar contexts, or carry a learned cultural association?”
+
+Keep this move under 90 seconds. The Projector displays simplified embedding snapshots. A modern transformer also changes a token’s representation according to its context, so the projection is a teaching view rather than a literal map of the complete model state.
+
 Ask in chat:
 
 "Which words or patterns repeat enough that you would expect them to become likely choices?"
 
 Take two or three responses, then say:
 
-"Good. We are not trying to master tokenization yet. Hold onto two ideas: text becomes pieces, and the model's data changes which pieces are likely."
+"Good. We are not trying to master embedding geometry. Hold onto the sequence: text becomes tokens, tokens become numerical representations, and context turns those representations into next-token probabilities."
 
 ### Transition
 
@@ -293,7 +305,7 @@ Just before the close, read two contrasting claims aloud without opening a new d
 
 ### Say
 
-"You can now narrate the basic generation loop: context in, predict a next token, sample a choice, append it, and repeat. You can also name what sits behind that loop: training data, tokenization, context routing, and human judgments about usefulness."
+"You can now narrate the conceptual sequence: token → vector → next-token probabilities → sample and append → repeat. You can also name the later human judgments that help shape which fluent responses count as useful."
 
 "The session page is the map of everything we touched. The Vocabulary Field Guide has the terms in one place. The Text Experiment Board is there if you want to finish your claim, but this is an invitation, not homework pressure."
 

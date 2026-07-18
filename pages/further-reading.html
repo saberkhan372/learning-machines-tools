@@ -46,9 +46,9 @@
         <a href="../index.html#materials">Materials</a><span class="sep">/</span>
         <span>Further reading</span>
       </div>
-      <p class="sess-kicker"><i class="modsq"></i>Annotated · critical &amp; intersectional · not a technical bibliography</p>
+      <p class="sess-kicker"><i class="modsq"></i>Annotated · critical &amp; intersectional · project and mechanism primers</p>
       <h1 class="sess-title" style="font-size: clamp(36px, 5vw, 60px);">Further reading</h1>
-      <p class="sess-lede" style="max-width: 66ch;">The camp's tools show you the mechanism. These readings ask what the mechanism is doing in the world — who builds it, whose labor and data it runs on, who pays when it fails, and what it does to how we see each other. Deliberately heavier on critique, fiction, and philosophy than on engineering: that part the tools already cover.</p>
+      <p class="sess-lede" style="max-width: 66ch;">The camp's tools show you the mechanism. These readings ask what the mechanism is doing in the world — who builds it, whose labor and data it runs on, who pays when it fails, and what it does to how we see each other. A compact primer section follows the camp arc from token embeddings to shared image/text representations to point tracking across video.</p>
     </div>
   </header>
 
@@ -59,6 +59,7 @@
         <div class="toc-label">On this page</div>
         <nav>
           <a href="#start-three">Start with these three</a>
+          <a href="#mechanism-primers">Mechanism primers</a>
           <a href="#power-data-labor">Power, data, labor</a>
           <a href="#seeing-machines">Seeing machines</a>
           <a href="#fiction-philosophy">Fiction &amp; philosophy</a>
@@ -89,10 +90,31 @@
     </div>
   </section>
 
+  <!-- MECHANISM PRIMERS -->
+  <section class="section-tight" style="--mink: var(--m-cross);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no" id="mechanism-primers">§ B · Mechanism primers</h2><span class="sec-note">token vectors → shared image/text space → point tracks</span></div>
+      <div class="read-list">
+        <div class="read">
+          <div><div class="r-title"><a href="https://projector.tensorflow.org/" target="_blank" rel="noopener">Embedding Projector</a> — TensorFlow</div><div class="r-meta">Interactive project · <span class="free">free online</span></div></div>
+          <p class="r-note">Use it in Session 1 to ask why words are nearby: shared meaning, similar contexts, or a learned cultural association? Treat the projection as a simplified embedding snapshot; modern transformer token representations also change with context.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><a href="https://openai.com/index/clip/" target="_blank" rel="noopener">“CLIP: Connecting Text and Images”</a> — OpenAI</div><div class="r-meta">Project overview · 2021 · <span class="free">free online</span></div></div>
+          <p class="r-note">A direct primer for Session 2’s three-caption question: images and text are mapped into representations that can be compared. This explains one influential form of prompt-image conditioning without implying image search, human understanding, or that every generator uses CLIP.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><a href="https://github.com/facebookresearch/co-tracker" target="_blank" rel="noopener">CoTracker</a> — Meta AI Research &amp; University of Oxford VGG</div><div class="r-meta">Project, papers &amp; code · <span class="free">free online</span></div></div>
+          <p class="r-note">The clean Session 3 bridge from PoseNet: select a point in one frame, then estimate its correspondence through later frames. Tracking analyzes video that already exists; a generator faces the harder inverse problem of creating later frames while maintaining those relations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- POWER -->
   <section class="section-tight" style="--mink: var(--m-cross);">
     <div class="wrap">
-      <div class="sec-rule"><h2 class="sec-no" id="power-data-labor">§ B · Power, data, labor</h2><span class="sec-note">who builds it, who pays</span></div>
+      <div class="sec-rule"><h2 class="sec-no" id="power-data-labor">§ C · Power, data, labor</h2><span class="sec-note">who builds it, who pays</span></div>
       <div class="read-list">
         <div class="read">
           <div><div class="r-title"><em>Algorithms of Oppression</em> — Safiya Umoja Noble</div><div class="r-meta">Book · 2018</div></div>
@@ -137,8 +159,20 @@
   <!-- SEEING -->
   <section class="section-tight" style="--mink: var(--m-image);">
     <div class="wrap">
-      <div class="sec-rule"><h2 class="sec-no" id="seeing-machines">§ C · Seeing machines</h2><span class="sec-note">for Sessions 2 &amp; 3</span></div>
+      <div class="sec-rule"><h2 class="sec-no" id="seeing-machines">§ D · Seeing machines</h2><span class="sec-note">categories → labeled images → keypoints · then critique</span></div>
       <div class="read-list">
+        <div class="read">
+          <div><div class="r-title"><a href="https://wordnet.princeton.edu/" target="_blank" rel="noopener">“About WordNet”</a> — Princeton WordNet</div><div class="r-meta">Project overview · <span class="free">free online</span></div></div>
+          <p class="r-note">The shortest route into the human-built lexical layer: word senses are grouped into synsets and connected by semantic relationships. Read it before asking whether a category is “inside” an image—it is not.</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><a href="https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf" target="_blank" rel="noopener">“ImageNet: A Large-Scale Hierarchical Image Database”</a> — Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li &amp; Li Fei-Fei</div><div class="r-meta">CVPR paper · 2009 · <span class="free">free PDF</span></div></div>
+          <p class="r-note">The original account of building an image database on WordNet’s hierarchy. Pair its scale and engineering ambition with the Session 2 questions: who selected the categories, gathered and annotated the images, defined correctness, and was represented or excluded?</p>
+        </div>
+        <div class="read">
+          <div><div class="r-title"><a href="https://blog.tensorflow.org/2018/05/real-time-human-pose-estimation-in.html" target="_blank" rel="noopener">“Real-time Human Pose Estimation in the Browser with TensorFlow.js”</a> — Dan Oved / Google Creative Lab</div><div class="r-meta">Technical explainer · 2018 · <span class="free">free online</span></div></div>
+          <p class="r-note">A readable explanation of PoseNet’s input and output: an RGB image becomes 17 estimated body keypoints, x/y positions, and confidence scores. It is a recognition/inference example—not identity recognition and not image generation—and it creates the bridge from one frame to motion across time.</p>
+        </div>
         <div class="read">
           <div><div class="r-title">"Excavating AI" — Kate Crawford &amp; Trevor Paglen</div><div class="r-meta">Essay · 2019 · <span class="free">free online</span></div></div>
           <p class="r-note">What's actually inside image training sets — the categories, the politics, the people photographed without consent. Read it the week of Session 2, after the <a href="../tools/dataset-balance-simulator/">Dataset Balance Simulator</a>.</p>
@@ -158,7 +192,7 @@
   <!-- FICTION & PHILOSOPHY -->
   <section class="section-tight" style="--mink: var(--m-video);">
     <div class="wrap">
-      <div class="sec-rule"><h2 class="sec-no" id="fiction-philosophy">§ D · Fiction &amp; philosophy</h2><span class="sec-note">the questions, in other registers</span></div>
+      <div class="sec-rule"><h2 class="sec-no" id="fiction-philosophy">§ E · Fiction &amp; philosophy</h2><span class="sec-note">the questions, in other registers</span></div>
       <div class="read-list">
         <div class="read">
           <div><div class="r-title">"Computing Machinery and Intelligence" — Alan Turing</div><div class="r-meta">Paper · 1950 · <span class="free">free online</span></div></div>
@@ -183,7 +217,7 @@
   <!-- EDUCATORS -->
   <section class="section-tight" style="--mink: var(--m-cross);">
     <div class="wrap">
-      <div class="sec-rule"><h2 class="sec-no" id="for-educators">§ E · For educators</h2><span class="sec-note">the classroom angle</span></div>
+      <div class="sec-rule"><h2 class="sec-no" id="for-educators">§ F · For educators</h2><span class="sec-note">the classroom angle</span></div>
       <div class="read-list">
         <div class="read">
           <div><div class="r-title"><em>Teaching Machines</em> — Audrey Watters</div><div class="r-meta">Book · 2021</div></div>

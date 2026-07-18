@@ -41,7 +41,7 @@
           <p class="sess-kicker"><i class="modsq"></i>Machines that imagine</p>
           <h1 class="sess-title">Images</h1>
           <p class="sess-q">When an image model generates, <span class="q-accent">what is it actually working with?</span></p>
-          <p class="sess-lede">Pixels, features, <a href="vocabulary-field-guide.html#diffusion">diffusion</a>, prompt guidance, and visual defaults. We watch images resolve out of noise, then learn how documented outputs can test hypotheses about what vague prompts leave open.</p>
+          <p class="sess-lede">Pixels become learned features; people create categories and labels; CLIP-like systems place text and images in comparable representation spaces; diffusion turns prompt conditioning into a new image. We watch that sequence without pretending the model searches for a finished picture.</p>
         </div>
       </div>
     </div>
@@ -69,10 +69,10 @@
     <div class="wrap">
       <div class="sec-rule"><h2 class="sec-no">§ A · What we make visible</h2><span class="sec-note">four mechanisms, one session</span></div>
       <div class="throughline">
-        <div class="through-step"><div class="ts-n">01</div><h4>Pixels &amp; features</h4><p>An image is numbers first. Recognition returns cue by cue — colour, outline, texture, context.</p></div>
-        <div class="through-step"><div class="ts-n">02</div><h4>Diffusion</h4><p>The image is refined from pure noise toward a prompt-guided result, step by visible step.</p></div>
-        <div class="through-step"><div class="ts-n">03</div><h4>Prompt guidance</h4><p>Each added word steers the denoising; unspecified details remain open to learned patterns, product choices, and sampling.</p></div>
-        <div class="through-step"><div class="ts-n">04</div><h4>Defaults</h4><p>Repeated, documented outputs can reveal default patterns shaped by training data, curation, tuning, and platform design.</p></div>
+        <div class="through-step"><div class="ts-n">01</div><h4>Pixels</h4><p>An image enters as numbers. PoseNet makes one possible representation concrete: body-keypoint coordinates and confidence scores.</p></div>
+        <div class="through-step"><div class="ts-n">02</div><h4>Human-created labels</h4><p>WordNet and ImageNet expose categories, examples, annotations, and standards of correctness as human decisions.</p></div>
+        <div class="through-step"><div class="ts-n">03</div><h4>Shared text/image representations</h4><p>CLIP learns image and caption vectors that can be compared for similarity; proximity is learned association, not human understanding.</p></div>
+        <div class="through-step"><div class="ts-n">04</div><h4>Diffusion</h4><p>A generator iteratively refines a noisy representation under prompt conditioning, then decodes the result into pixels.</p></div>
       </div>
       <div class="session-risk-motif risk-card" data-mod="image" aria-label="Image noise grid motif">
         <div class="plate-cap"><span class="fig">Fig. 02B — Denoising field</span><span>noise → cues → default</span></div>
@@ -81,6 +81,9 @@
           <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
           <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
         </div>
+      </div>
+      <div class="callout" style="margin-top:18px;max-width:82ch;">
+        <p><b>Teaching move · CLIP:</b> keep one image visible and offer three captions: <i>“a shape,” “an orange cat facing forward,”</i> and <i>“a red bicycle.”</i> Ask which caption would probably land closest to the image in a shared representation space. CLIP compares learned image/text vectors; it does not search a folder for a finished picture, and not every image generator uses CLIP.</p>
       </div>
     </div>
   </section>
@@ -157,9 +160,9 @@
       <div class="sec-rule"><h2 class="sec-no">§ C · Run of show</h2><span class="sec-note">two-hour live session</span></div>
       <div class="ros">
         <div class="ros-row"><div class="ros-time">0–10</div><div><p class="ros-seg">Welcome, consent &amp; Session 1 retrieval</p><p class="ros-body">Share two text-session artifacts or revisit the recap. Recover the method: <b>predict → change one thing → compare → claim → human decision</b>.</p></div></div>
-        <div class="ros-row"><div class="ros-time">10–25</div><div><p class="ros-seg">Pixels, features &amp; the room's default</p><p class="ros-body">Use the Squint Test, then describe the first picture prompted by “a doctor.” Treat the room tally as a <b>hypothesis</b>; use authored teaching simulations to rehearse the test, not as evidence about a real model.</p></div></div>
+        <div class="ros-row"><div class="ros-time">10–25</div><div><p class="ros-seg">Pixels → labels → shared representations</p><p class="ros-body">Use PoseNet to translate one frame into keypoint coordinates; use WordNet and ImageNet to show that categories and labels were designed; then run the three-caption CLIP question. Treat the room tally as a <b>hypothesis</b>, not proof about a model.</p></div></div>
         <div class="ros-row"><div class="ros-time">25–44</div><div><p class="ros-seg">Diffusion — performed, then watched — guidance &amp; revision</p><p class="ros-body">Draw the words on the <b>Human Diffusion Canvas</b> in timed coarse-to-fine steps, then watch an analogous machine-denoising sequence from noise. Compare vague, specific, and revised prompts; keep <b>prompt wording distinct from CFG strength</b>.</p></div></div>
-        <div class="ros-row"><div class="ros-time">44–60</div><div><p class="ros-seg">Whose picture? &amp; mechanism debrief</p><p class="ros-body">Map user decisions, system operations, and hidden human contributions. Synthesize the loop and choose a pathway before the lesson ends at <b>60 minutes</b>.</p></div></div>
+        <div class="ros-row"><div class="ros-time">44–60</div><div><p class="ros-seg">Whose picture? &amp; mechanism debrief</p><p class="ros-body">Ask who chose categories, supplied or appeared in images, annotated them, defined correctness, and was represented or excluded. Synthesize the loop and choose a pathway before <b>60 minutes</b>.</p></div></div>
         <div class="ros-row"><div class="ros-time">60–90</div><div><p class="ros-seg">Student work studio · 30 minutes</p><p class="ros-body">Choose one of five routes and investigate for 25 minutes, then post one <b>appropriately framed claim</b> plus a next test in the final five. Stop at 1:30.</p></div></div>
         <div class="ros-row"><div class="ros-time">90–120</div><div><p class="ros-seg">Guest spotlight, Q&amp;A &amp; close · 30 minutes</p><p class="ros-body">The artist/educator guest receives the full final block for examples, questions, one carry-forward practice, and the session close.</p></div></div>
       </div>
@@ -202,6 +205,7 @@ return decodeToPixels(latent);      // decode the final latent representation in
         <div class="prompt">Which visual cue did the most work?</div>
         <div class="prompt">What does the feature view preserve, and what does it erase?</div>
         <div class="prompt">At what diffusion step does the subject become guessable?</div>
+        <div class="prompt">Which caption would probably sit closest to this image in a CLIP-style shared space—and what association makes it closer?</div>
         <div class="prompt">What did the prompt leave unspecified?</div>
         <div class="prompt">Which defaults are technical, and which are social?</div>
       </div>
@@ -228,6 +232,22 @@ return decodeToPixels(latent);      // decode the final latent representation in
           <h3>Low-AI / No-AI pathway</h3>
           <div class="callout">
             <p>Every activity works with the simulated viewers and the authored Image Prompt Pack — no image generator account needed. These materials support an <b>illustrated hypothesis</b> and practice with the investigation method; a claim about a real model requires documented real outputs. <b>Opting out of direct AI use never means opting out of the camp.</b></p>
+          </div>
+        </div>
+        <div class="doc-group">
+          <h3>Four project readings</h3>
+          <div class="doc-list">
+            <a class="doc-row" href="https://wordnet.princeton.edu/" target="_blank" rel="noopener"><span class="d-name">WordNet · About the project</span><span class="d-desc">Word senses, synsets, and semantic relationships</span></a>
+            <a class="doc-row" href="https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf" target="_blank" rel="noopener"><span class="d-name">ImageNet · Original CVPR paper</span><span class="d-desc">How WordNet categories became a large labeled image database</span></a>
+            <a class="doc-row" href="https://blog.tensorflow.org/2018/05/real-time-human-pose-estimation-in.html" target="_blank" rel="noopener"><span class="d-name">PoseNet · TensorFlow.js explainer</span><span class="d-desc">From an RGB frame to 17 keypoints and confidence scores</span></a>
+            <a class="doc-row" href="https://openai.com/index/clip/" target="_blank" rel="noopener"><span class="d-name">CLIP · OpenAI project overview</span><span class="d-desc">Learning comparable visual and language representations</span></a>
+            <a class="doc-row" href="further-reading.html#mechanism-primers"><span class="d-name">Mechanism primers · Further Reading</span><span class="d-desc">Embedding Projector, CLIP &amp; CoTracker</span></a>
+          </div>
+        </div>
+        <div class="doc-group">
+          <h3>Session 3 bridge</h3>
+          <div class="callout">
+            <p>PoseNet estimates a pose in one image. Tracking those keypoints from frame to frame turns that image problem into a time problem: what stays stable, what drifts, and what counts as the same person or motion?</p>
           </div>
         </div>
       </div>

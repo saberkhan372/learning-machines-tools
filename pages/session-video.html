@@ -84,7 +84,7 @@
               </span>
             </p>
             <p class="sess-lede">
-              Video turns image generation into a temporal <a href="vocabulary-field-guide.html#coherence">coherence</a> problem. Identity, physics, camera language, and background continuity become visible by failing across frames.
+              PoseNet can locate keypoints in one frame; CoTracker can follow selected points across frames. Generative video faces the harder inverse problem: creating each next frame while preserving <a href="vocabulary-field-guide.html#coherence">coherence</a> in identity, setting, and motion.
             </p>
           </div>
         </div>
@@ -114,10 +114,10 @@
               01
             </div>
             <h4>
-              Frames
+              Frame
             </h4>
             <p>
-              Video is a sequence where each frame has to relate to what came before.
+              A video begins as still images ordered in time.
             </p>
           </div>
           <div class="through-step">
@@ -125,10 +125,10 @@
               02
             </div>
             <h4>
-              Drift
+              Keypoints / features
             </h4>
             <p>
-              Small changes accumulate when a system lacks a stable anchor.
+              PoseNet turns one frame into estimated body keypoints; other models represent edges, texture, objects, or regions.
             </p>
           </div>
           <div class="through-step">
@@ -136,10 +136,10 @@
               03
             </div>
             <h4>
-              Coherence
+              Correspondence across frames
             </h4>
             <p>
-              The same subject, setting, and physics have to persist over time.
+              CoTracker follows selected points through a sequence, making “where did this feature go?” a concrete computational question.
             </p>
           </div>
           <div class="through-step">
@@ -147,12 +147,15 @@
               04
             </div>
             <h4>
-              Failure evidence
+              Coherence or drift
             </h4>
             <p>
-              Hands, faces, objects, backgrounds, and camera position reveal what the model is modeling.
+              A generator must create new frames while preserving identity, layout, motion, and physics; failures reveal where that relation breaks.
             </p>
           </div>
+        </div>
+        <div class="callout" style="margin-top:18px;max-width:82ch;">
+          <p><b>Teaching move · PoseNet → CoTracker:</b> PoseNet can locate an elbow in one frame; CoTracker asks where that selected point went in later frames. Generative video has the harder inverse problem of creating each new frame while keeping the elbow, the person, and the scene mutually coherent. Tracking analyzes correspondence—it is not itself video generation.</p>
         </div>
         <div class="session-risk-motif risk-card" data-mod="video" aria-label="Video frame drift motif">
           <div class="plate-cap"><span class="fig">Fig. 03B — Drift strip</span><span>same subject, unstable time</span></div>
@@ -312,7 +315,7 @@
                 Welcome and framing
               </p>
               <p class="ros-body">
-                Name the problem: video claims persistence across frames.
+                Bridge PoseNet’s one-frame keypoints to CoTracker’s point correspondence, then name the generative problem: video claims persistence across frames.
               </p>
             </div>
           </div>
@@ -383,6 +386,9 @@
         </div>
         <div class="prompts">
           <div class="prompt">
+            PoseNet found an elbow in frame 1. What evidence would support calling a point in frame 2 the same elbow?
+          </div>
+          <div class="prompt">
             What changed first: identity, proportion, background, or style?
           </div>
           <div class="prompt">
@@ -427,6 +433,14 @@
               <span class="d-desc">
                 Frozen examples with frame strips
               </span>
+            </a>
+            <a class="doc-row" href="https://github.com/facebookresearch/co-tracker" target="_blank" rel="noopener">
+              <span class="d-name">CoTracker · project and code</span>
+              <span class="d-desc">Follow selected points across video frames</span>
+            </a>
+            <a class="doc-row" href="further-reading.html#mechanism-primers">
+              <span class="d-name">Mechanism primers</span>
+              <span class="d-desc">Embedding Projector, CLIP &amp; CoTracker</span>
             </a>
             <a class="doc-row" href="younger-learners.html">
               <span class="d-name">Adapting for younger learners</span>

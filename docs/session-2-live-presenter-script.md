@@ -23,7 +23,7 @@ This lesson carries those moves forward:
 
 - The room becomes an image model before anyone opens an image generator.
 - Each round asks for a short chat action, shows a visible consequence, and names one mechanism.
-- New terms are limited to **pixel, feature, diffusion, guidance, and default**.
+- New terms are limited to **pixel, feature, shared representation, diffusion, guidance, and default**; CLIP is named as one concrete project, not a new unit.
 - A room prediction is treated as a hypothesis; authored teaching simulations illustrate how to test it, while repeated documented real outputs are needed for a model-level claim.
 - Tool studio time is protected. One completed observation is better than a tour of every tool.
 - Every activity has a no-account and no-live-generation route.
@@ -37,7 +37,7 @@ The lesson also responds to two points raised in Session 1: beginners need unfam
 By the end of the session, participants should be able to:
 
 1. Distinguish an image representation or recognition demo from an image-generation process.
-2. Explain that an image enters a computer as numbers and is often processed through a compressed learned representation.
+2. Explain that an image enters a computer as numbers, that people create its labels and captions, and that CLIP-like systems can place image and text vectors in a comparable space.
 3. Narrate a simplified diffusion loop: begin with noise, predict an update, refine the whole field, and repeat under prompt guidance.
 4. Identify details an image system supplied even though the prompt did not specify them.
 5. Separate an observation about outputs from a hypothesis about training data or platform design.
@@ -80,6 +80,10 @@ Only a live generator, or a documented set of real outputs, supports a claim abo
 - [Image Prompt Pack](../packs/images/)
 - [Image Default Test Board](../worksheets/image-default-test-board/)
 - [AI Use + Consent Checklist](../worksheets/ai-use-consent-checklist/)
+- [WordNet: A Lexical Database for English](https://wordnet.princeton.edu/)
+- [ImageNet: A Large-Scale Hierarchical Image Database](https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf)
+- [Real-time Human Pose Estimation in the Browser with TensorFlow.js](https://blog.tensorflow.org/2018/05/real-time-human-pose-estimation-in.html)
+- [CLIP: Connecting Text and Images](https://openai.com/index/clip/)
 - Zoom chat and breakout rooms
 
 No participant needs an image-generator account. The featured tools and authored teaching simulations do not call a live model.
@@ -127,6 +131,8 @@ Do not click **new session** after the live activity begins. Refreshing is safe;
 ### Say
 
 “Last week the room became a language model. We built text one choice at a time and separated prediction, temperature, attention, and human feedback. Today the room becomes an image model.”
+
+“Our image sequence is pixels → human-created labels → shared text/image representations → diffusion. Those are conceptual layers, not a claim that every generator contains the same named projects.”
 
 “We are not here to get the prettiest picture or to become expert prompt writers. We are here to make a mechanism visible, change one thing, and support a claim with evidence.”
 
@@ -183,6 +189,9 @@ Then say the common ground: “Both learn statistical patterns from human-made d
 - Raise detail slowly.
 - Ask participants to type the first cue that changes their answer: color, outline, texture, location, or context.
 - Toggle from pixels to the simplified feature view.
+- Add PoseNet as a concrete recognition example without opening another tool: one RGB frame goes in; the model returns 17 body keypoints such as shoulders, elbows, and knees, each with x/y coordinates and a confidence score.
+- Name WordNet and ImageNet briefly as the human category-and-label layer.
+- Keep the cat image visible and offer three captions: A **“a shape,”** B **“an orange cat facing forward,”** C **“a red bicycle.”** Ask which would probably land closest in a CLIP-style shared representation space.
 
 ### Say
 
@@ -190,15 +199,23 @@ Then say the common ground: “Both learn statistical patterns from human-made d
 
 “This is a representation and recognition demonstration. It is not a literal camera into a diffusion model’s mind. Many current generators do much of their work in a compressed learned space rather than directly editing every final pixel.”
 
+“PoseNet makes the distinction concrete. It does not receive ‘a person dancing’ and it does not identify the person. It estimates where key joints are in one frame. That is a useful numerical representation, not human-style seeing and not image generation.”
+
+“Categories and captions do not come from pixels by themselves. People created the words, selected examples, and attached descriptions. CLIP is a separate project that learned to map images and text into vectors that can be compared.”
+
+“Which caption would probably land closest to this cat image: A, B, or C? What learned association makes it closer?”
+
+After the vote: “CLIP compares learned image and text representations. It does not search a folder for an existing finished picture. That relationship can condition generation, but diffusion is the separate mechanism we perform next—and not every generator uses CLIP.”
+
 “Notice that you recognized the subject before every detail returned. Which cue did the most work for you?”
 
 ### Watch for
 
-Do not say that a generator “sees exactly what you see” or that it stores objects as neat labeled parts. The tool is a teaching model for the path from numerical input to learned visual structure.
+Do not say that a generator “sees exactly what you see” or that it stores objects as neat labeled parts. The tool is a teaching model for the path from numerical input to learned visual structure. PoseNet is a task-specific inference model; CLIP is a prominent shared-representation example; neither is a component that every image generator contains.
 
 ### Transition
 
-“We have a numerical image and learned visual patterns. Now let us ask what happens when the prompt does not specify enough to determine one picture.”
+“We have moved from pixels to human labels to a shared image/text representation. Now let us ask what happens when the prompt does not specify enough to determine one picture.”
 
 ## Round 1: the room’s default
 
@@ -213,11 +230,16 @@ Do not say that a generator “sees exactly what you see” or that it stores ob
 - Paste 12–20 responses into the deck tally, or count repeated descriptors manually.
 - Group only visible conventions: setting, clothing, props, pose, lighting, camera angle, and apparent representation.
 - Ask, “What or who is missing from this collective picture?”
+- Add the category/data bridge in two sentences: WordNet is a human-built lexical database that groups word senses and relationships; ImageNet used the WordNet hierarchy to organize collected and annotated images.
 - Then open several authored teaching simulations for the same vague prompt. Name them as simulations before discussing them.
 
 ### Say
 
 “The room’s response is a hypothesis about a cultural default. It is not evidence of what an image model will do.”
+
+“A label is not a natural property hiding inside a pixel. People designed WordNet’s categories and relationships; people then selected, supplied, and annotated the images connected to many of those categories in ImageNet.”
+
+“WordNet → ImageNet is a real historical relationship. PoseNet, CLIP, and diffusion are separate systems or model families. We are using them as a conceptual sequence—categories, labeled examples, numerical representations, and generation—not claiming one literal pipeline.”
 
 “These authored scenes let us rehearse the comparison method, but they do not tell us what a real model will do. A model-level claim would require repeated, documented real outputs — with prompts, settings, and seeds kept with the images.”
 
@@ -334,11 +356,14 @@ Do not let the drawing analogy imply the model adds marks or paints strokes. Kee
   - **Human/user:** chose the goal, prompt, constraints, seed or settings, selected an output, cropped, revised, and decided to share.
   - **System/platform:** supplied learned associations, sampled an output, applied filters and product defaults, and rendered the image.
   - **Hidden people/institutions:** image makers, subjects, annotators, data workers, dataset builders, model trainers, safety teams, and communities represented or omitted.
+- Use WordNet and ImageNet to make the hidden column specific. Ask: Who selected the categories? Who supplied or appeared in the images? Who annotated them? Who decided what counted as correct? Who was represented, and who was excluded?
 - Ask for one credit, consent, or disclosure decision before moving on.
 
 ### Say
 
 “A generated image is not authorless. The user made choices, the system made computational selections, and many people’s work and representation sit behind the training process.”
+
+“A dataset and a category system are not authorless either. Their categories, examples, labels, exclusions, and standards of correctness were made by people and institutions.”
 
 “We do not have to settle every authorship question today. We do need to avoid describing the output as if no people, institutions, or prior images shaped it.”
 
@@ -465,9 +490,9 @@ At 1:58, ask:
 
 “What is one practice you want artists or educators to carry into their next encounter with an image generator?”
 
-While the guest answers, paste the Session 2 page, Image Default Test Board, and Image Prompt Pack into chat. Then say:
+While the guest answers, paste the Session 2 page, Image Default Test Board, Image Prompt Pack, and the WordNet/ImageNet/PoseNet readings into chat. Then say:
 
-“Thank you, Aurora, and thank you, everyone. Next Saturday we move from one image to images across time: what has to stay stable from frame to frame for motion to feel coherent?”
+“Thank you, Aurora, and thank you, everyone. PoseNet can estimate keypoint coordinates in one frame. Next Saturday we move from one image to images across time: what has to stay stable when those points, the person, and the scene all have to remain coherent from frame to frame?”
 
 End with the recap consent reminder. Do not add another discussion round after 2:00.
 

@@ -9,6 +9,8 @@ Use this script for a 60-90 minute pilot focused on temporal coherence, drift, a
 
 Core question: what changes when generation has to work across time?
 
+Conceptual sequence: **frame → keypoints/features → correspondence across frames → coherence or drift**.
+
 ## Materials
 
 - Temporal Telephone
@@ -16,12 +18,13 @@ Core question: what changes when generation has to work across time?
 - Optional: A/B/C Comparison Board for coherence tests
 - AI Use + Consent Checklist
 - Optional: curated video clips or still-frame sequences showing drift and failure modes
+- Optional reference: [CoTracker](https://github.com/facebookresearch/co-tracker) for point correspondence across existing frames
 
 ## Run of Show
 
 | Time | Segment | Facilitator Move | Participant Action |
 | --- | --- | --- | --- |
-| 0-5 min | Welcome and bridge | Connect Session 2 to Session 3: a good frame is not enough; video must stay coherent across time. | Choose a participation pathway. |
+| 0-5 min | Welcome and bridge | PoseNet can locate an elbow in one frame; CoTracker asks where that point went in later frames. Contrast that analysis task with a generator creating later frames that remain coherent. | Choose a participation pathway. |
 | 5-35 min | Temporal Telephone round 1 | Open Temporal Telephone in previous-frame-only mode. Use "a person at work" as the vague prompt, then check motion defaults after playback: job, body, setting, tool, pace, gesture. | Draw/save frames or observe where defaults and small changes accumulate into drift. |
 | 35-50 min | Temporal Telephone round 2 | Switch to anchor mode and repeat with the same basic subject or motion. | Compare whether identity, layout, and motion stay more stable. |
 | 50-70 min | Failure analysis | Use curated clips, still frames, or optional generated video examples. Name failure modes precisely. | Mark identity drift, physics breaks, camera inconsistency, style drift, or temporal jumps. |
@@ -34,6 +37,7 @@ For credit, attribution, likeness, and recap decisions, use the existing [AI Use
 ## Facilitator Prompts
 
 - "Where did the sequence first begin to drift?"
+- "PoseNet found an elbow in frame 1. What evidence would support calling a point in frame 2 the same elbow?"
 - "For the vague prompt 'a person at work,' what job, body, setting, tool, pace, or gesture appeared by default?"
 - "What stayed consistent when only the previous frame was visible?"
 - "What did the anchor preserve?"

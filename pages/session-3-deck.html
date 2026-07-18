@@ -236,6 +236,7 @@
   ];
   var CLOSERS = [
     {n:'Session 3 page — your map of everything we touched', u:SITE+'pages/session-video.html'},
+    {n:'Mechanism primers — Embedding Projector, CLIP, and CoTracker', u:SITE+'pages/further-reading.html#mechanism-primers'},
     {n:'Optional Studio / Showcase — show what you made', u:SITE+'pages/session-showcase.html'},
     {n:'Video Test Report — finish your claim any time', u:SITE+'worksheets/video-test-report/'}
   ];
@@ -243,24 +244,24 @@
   var SLIDES = [
     { id:'title', kind:'title', time:4, nav:'Start + bridge',
       head:'Human Video Model',
-      idea:'Text became tokens; images became pixels. Today the room becomes a video machine — motion, one frame at a time — then watches where time breaks.',
+      idea:'Today’s video sequence is frame → keypoints/features → correspondence across frames → coherence or drift.',
       notes:{
         look:'Presenter cockpit: slide preview + notes on the left, live-tool controls on the right, timer and slide list up top. The audience window shows only the slide.',
-        you:['Screen-share the audience window only.','Bridge from Session 2: "a good frame is not enough — video has to stay consistent across time."','Assign loose roles: Describers (chat), Scrubbers, a Scribe.'],
+        you:['Screen-share the audience window only.','Return to PoseNet: one frame in, 17 keypoint coordinates and confidence scores out.','Name CoTracker as the contrasting analysis task: select a point, then estimate where it went across later frames.','Ask what a generator must preserve while creating those later frames; then assign loose roles.'],
         room:['Say hello in chat.','No task yet — get oriented.','Expect to describe frames and vote in chat.'],
-        say:['"A single good image is last week. The new problem is time: the model has to remember what it just made."','"You do not need a video account today. The room and this console are the machine."'],
-        watch:'Set up the whole-camp arc: this is the third and last core session. Text → image → video, same investigation each time.'} },
+        say:['"PoseNet can locate an elbow in one frame. CoTracker asks where that selected point went in the next frames."','"Generative video has the harder inverse problem: it must create those next frames while keeping the elbow, person, setting, and motion coherent. Tracking analyzes correspondence; it is not generation."'],
+        watch:'Keep analysis and generation distinct. The named projects create a conceptual bridge, not one literal pipeline inside every video generator.'} },
 
     { id:'s0', kind:'setup', aid:'frames', time:8, shape:true, num:'00', nav:'Frames + memory',
-      head:'Video is frames that must agree',
-      idea:'A model makes video as a sequence of frames — and each one has to remember the last, or motion falls apart.',
-      task:'Watch the loop. In chat: what has to stay the SAME from frame to frame?',
-      take:'Video generation is prediction across time — coherence is the whole problem.',
+      head:'From a point to a path',
+      idea:'A tracker links evidence across existing frames. A generator must create new frames whose features still agree.',
+      task:'Pick one feature—the ball’s center. In chat: where did that point go next, and what had to stay the same?',
+      take:'Correspondence asks what matches; coherence asks whether the generated sequence keeps those matches believable.',
       notes:{
         look:'You look at: play / step / reset for the frame strip. Attendees see: a bouncing ball playing frame by frame, coherent.',
-        you:['Press Play — let the ball bounce cleanly a couple of loops.','Step frame by frame; point out the ball is the same ball each time.','Ask: what would break if frame 4 forgot the ball was orange?'],
-        room:['Watch the motion.','In chat: colour, size, position, identity — what must persist?','Notice a clean loop is frames agreeing with each other.'],
-        say:['"Nothing here is moving, really. These are still frames your eye stitches into motion."','"The hard job is memory: every frame has to agree with the ones around it."'],
+        you:['Press Play, then step frame by frame.','Ask the room to track one point: the ball’s center.','Connect that path to CoTracker’s point-correspondence task.','Ask what a generator would have to preserve while inventing frame 4.'],
+        room:['Follow the ball’s center across frames.','In chat: describe where the point went next.','Name colour, size, position, or identity as a property that must persist.'],
+        say:['"A tracker starts with frames that already exist and estimates correspondence. A generator must create the next frame and preserve correspondence at the same time."','"That is why a plausible still frame is not enough; the relation across frames is the evidence."'],
         watch:'Keep this one clean and short — it is the "before" picture. Round 1 introduces drift, so this is the contrast.'} },
 
     { id:'s1', kind:'telephone', aid:'telephone', time:12, num:'01', nav:'Round 1 — Telephone',
@@ -285,7 +286,7 @@
         look:'You look at: the scrubber, onion-skin, and reveal. Attendees see: a hand across frames — count the fingers.',
         you:['Scrub slowly. Ask the room to watch the hand.','Collect chat votes for the break frame before you reveal.','Toggle onion-skin to show the ghost of the previous frame.','Reveal — the extra finger appears at a specific frame.'],
         room:['Scrub with me; watch one feature (the fingers).','Vote in chat: which frame breaks?','Notice the break is sudden, not gradual.'],
-        say:['"The model is not tracking a hand — it is re-guessing a plausible hand every frame."','"Onion-skin shows what a coherent model would keep steady."'],
+        say:['"CoTracker would analyze where selected hand points moved in frames that already exist. A generator has to create each new hand while preserving those relations."','"Onion-skin shows what a coherent sequence would keep steady—and where generation drifted."'],
         watch:'Mirrors the Coherence Viewer + Metronome Scrubber. Let the room vote before Reveal — the guess is the engagement.'} },
 
     { id:'s3', kind:'motion', aid:'motion', time:8, num:'03', nav:'Round 3 — Time',
@@ -454,7 +455,7 @@
     var sh=s.shape?' shape':'';
 
     if(s.kind==='title'){
-      var flow='<div class="title-flow"><span class="f sh">filmed footage</span><span>→</span><span class="f">frames</span><span>→</span><span class="f">predict next</span><span>→</span><span class="f">interpolate</span> <span class="bk">↺</span> <span class="f">drift</span><span>→</span><span class="f sh">whose likeness?</span></div>';
+      var flow='<div class="title-flow"><span class="f sh">frame</span><span>→</span><span class="f">keypoints / features</span><span>→</span><span class="f">correspondence across frames</span><span>→</span><span class="f">coherence or drift</span></div>';
       return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:38ch">'+esc(s.idea)+'</div>'+flow+'</div>';
     }
     if(s.kind==='setup'){

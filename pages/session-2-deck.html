@@ -257,6 +257,7 @@
   ];
   var CLOSERS = [
     {n:'Session 2 page — your map of everything we touched', u:SITE+'pages/session-images.html'},
+    {n:'Mechanism readings — WordNet, ImageNet, PoseNet, CLIP, and CoTracker', u:SITE+'pages/further-reading.html#mechanism-primers'},
     {n:'Vocabulary Field Guide — diffusion, guidance, defaults, training data', u:SITE+'pages/vocabulary-field-guide.html'},
     {n:'Image Default Test Board — finish your claim before Saturday', u:SITE+'worksheets/image-default-test-board/'}
   ];
@@ -264,7 +265,7 @@
   var SLIDES = [
     { id:'title', kind:'title', time:10, nav:'Welcome + retrieval',
       head:'Human Image Model',
-      idea:'Last week the room became a text machine. Today it becomes an image machine — noise into a picture — then asks whose pictures it learned from.',
+      idea:'Today’s image sequence is pixels → human-created labels → shared text/image representations → diffusion.',
       compare:{
         head:['A text model…','A diffusion image model…'],
         rows:[
@@ -281,28 +282,28 @@
 
     { id:'s0', kind:'setup', aid:'pixel', time:7, shape:true, num:'00', nav:'What a model sees',
       head:'A model does not see a cat',
-      idea:'It receives numbers, then learns useful visual patterns — edges, textures, parts, and arrangements — from training images and captions.',
-      task:'As detail drops, call out in chat: what is the FIRST cue that tells you what this is?',
-      take:'Images become numerical representations; training makes some visual patterns more useful than others.',
+      idea:'Pixels become learned representations. PoseNet maps a frame to keypoints; CLIP maps images and captions into vectors that can be compared.',
+      task:'Name the first useful cue. Then vote: which caption lands closest — A “a shape,” B “an orange cat facing forward,” or C “a red bicycle”?',
+      take:'Labels and captions connect human categories to numerical patterns; learned proximity is association, not human understanding.',
       notes:{
-        look:'You look at: the detail slider and the pixels/features toggle. Attendees see: the scene getting blockier, then labelled regions.',
-        you:['Start at low detail (blocky). Ask what they can tell.','Raise detail slowly; note when it "snaps" into recognition.','Flip to Features: discuss how a model can learn useful relationships among numerical patterns.'],
-        room:['Watch the blocks resolve.','In chat: colour, outline, texture, or context — which cue returned first?','Notice you recognised it before every pixel was clear.'],
-        say:['"You did not need every pixel — a few visual patterns were enough for recognition."','"This is a simplified recognition demo, not a literal view inside a generator. Many generators work in a compressed learned representation."'],
-        watch:'Keep recognition and generation distinct. The point is numerical input → learned patterns → recognition, not that a generator stores neat labelled object parts.'} },
+        look:'You look at: the detail slider and pixels/features toggle. Attendees see the cat resolve, then use that same image for the three-caption CLIP question.',
+        you:['Start at low detail; raise it until the cat becomes recognizable.','Offer PoseNet as one representation example: one RGB frame in; 17 keypoints with x/y coordinates and confidence out.','Name WordNet/ImageNet as the human category-and-label layer.','Keep the cat visible; read captions A/B/C and ask which would land closest in a CLIP-style shared space.'],
+        room:['Name the first cue: colour, outline, texture, or context.','Translate “a person dancing” into PoseNet’s narrower output: points and confidence scores.','Vote A/B/C for the cat image, then say which learned association makes that caption closer.'],
+        say:['"CLIP maps an image and candidate captions into vectors that can be compared. It is not searching for a finished matching picture."','"This gives prompt words a numerical relationship to visual patterns. Diffusion is the separate generation mechanism we perform next."'],
+        watch:'Keep the chain compressed and the boundaries explicit: categories/captions are human-made; PoseNet, CLIP, and diffusion are separate projects or model families. Not every generator uses CLIP.'} },
 
     { id:'s1', kind:'defaults', aid:'tally', time:8, num:'01', nav:'Round 1 — Defaults',
       head:'Say "a doctor." What appears?',
-      idea:'When detail is unspecified, the system samples from learned patterns shaped by training data and product choices. A room has learned defaults, too.',
+      idea:'When detail is unspecified, the system samples from learned patterns. WordNet and ImageNet expose an earlier human layer: people designed category names, attached images to them, and decided what counted.',
       prompt:'a doctor',
       task:'Type the FIRST image that comes to mind for "a doctor" — a few words in chat.',
       take:'A default is a design outcome: data, captions, curation, tuning, safety systems, and sampling all shape it.',
       notes:{
         look:'You look at: Zoom chat and the tally box. Attendees see: the prompt and the room’s collective default after you tally.',
-        you:['Ask for the first image, not the "correct" one. Speed matters.','Paste 12–20 chat responses into the tally.','Group visible conventions: setting, clothing, props, pose, lighting, camera angle, and apparent representation.','Name the room’s repeated descriptors, then ask what or who is missing.'],
-        room:['Type fast — first instinct, a few words.','Treat the room’s tally as a hypothesis about a cultural default.','Use the authored teaching simulations to rehearse how you would test that hypothesis.'],
-        say:['"The room’s default is a hypothesis, not evidence of what a model will do. These simulated scenes illustrate possible hypotheses; only repeated, documented real outputs can support a claim about a model."','"Changing a default is not censorship. It is specifying what the task actually requires."'],
-        watch:'This is the bias/defaults core — 38 of 80 asked for it. Keep simulations and documented model evidence distinct, and focus on multiple system layers rather than blame, identity inference, or a single output.'} },
+        you:['Ask for the first image, not the "correct" one. Speed matters.','Paste 12–20 chat responses into the tally.','Group visible conventions: setting, clothing, props, pose, lighting, camera angle, and apparent representation.','Name WordNet as a human-built map of word senses and ImageNet as a labeled image collection built on that hierarchy; then ask what or who is missing.'],
+        room:['Type fast — first instinct, a few words.','Treat the room’s tally as a hypothesis about a cultural default.','Ask who made the category, selected the examples, and decided what counted as a correct label.'],
+        say:['"A label is not a natural property hiding inside a pixel. WordNet organized concepts; ImageNet connected many of those concepts to collected and annotated images."','"That history does not explain a modern generator by itself. It makes one human layer visible: categories, examples, and correctness were designed."'],
+        watch:'Keep simulations and documented model evidence distinct. WordNet → ImageNet is a real historical relationship; PoseNet, CLIP, and diffusion are separate systems, so present the sequence conceptually rather than as one literal pipeline.'} },
 
     { id:'s2', kind:'aid', aid:'diffuse', time:11, num:'02', nav:'Round 2 — Diffusion',
       head:'From noise to picture — you first',
@@ -335,13 +336,13 @@
     { id:'s4', kind:'contrib', aid:'contrib', time:8, shape:true, num:'04', nav:'Round 4 — Whose picture?',
       head:'Whose picture is this, really?',
       idea:'Every output carries hidden human labour: the data, the captions, and the artists behind the styles.',
-      task:'In chat: name one human decision, one system contribution, and one hidden human contribution.',
+      task:'In chat: who chose the categories, supplied the images, annotated them, decided what counted as correct, and was represented or excluded?',
       take:'Fluent output is not authorless. Naming the hidden labour is part of using it responsibly.',
       notes:{
         look:'You look at: three boxes you fill from the room. Attendees see: a live contributions map — human / machine / hidden.',
-        you:['Fill "the human did" and "the machine did" from chat.','Then the hard one: "hidden in the output" — whose work, style, or labour?','Do not resolve it. Hold the question open; let the room disagree.'],
-        room:['Separate the human’s choices from the model’s fill-ins.','Name whose labour or style might be hidden.','Say one thing you think should be credited.'],
-        say:['"The prompt-writer made choices. The look may also reflect photographers, illustrators, subjects, annotators, and dataset builders behind the training process."','"Licensing, credit, consent, and payment vary by dataset and platform. Responsible use begins by asking rather than treating the output as authorless."'],
+        you:['Fill "the human did" and "the machine did" from chat.','Use WordNet and ImageNet to make the hidden column concrete: category designers, image makers and subjects, collectors, annotators, evaluators, and institutions.','Ask who was represented, who was excluded, and who got to define a correct label.'],
+        room:['Separate the user’s choices from system operations.','Name one person or institution behind categories, images, labels, or evaluation.','Say one credit, consent, representation, or disclosure decision.'],
+        say:['"The prompt-writer made choices, but decisions began much earlier: what categories existed, whose images entered the collection, how they were labeled, and what counted as correct."','"A generated image is not authorless. Neither is a dataset or a category system."'],
         watch:'This round matters most for this cohort — nearly half are artists. Do not moralise or resolve; map the contributions honestly and let the tension stand. Wire it to the AI Use + Consent Checklist.'} },
 
     { id:'s5', kind:'questions', time:8, num:'05', nav:'Debrief + studio launch',
@@ -376,12 +377,12 @@
     { id:'s7', kind:'close', time:30, shape:true, num:'07', nav:'Guest · 30 min',
       head:'Guest spotlight',
       idea:'Listen for one place where an artist or educator makes a human decision visible — and one place where the system hides a decision.',
-      take:'At 1:58, ask for one practice to carry forward; then close with next Saturday’s question about coherence across frames.',
+      take:'Session 3 bridge: PoseNet can estimate keypoints in one frame; video asks what it takes to track them — and preserve identity, setting, and motion — across time.',
       notes:{
         look:'You look at: the 30-minute guest timer and closing pointers. Attendees see the listening prompt and take-home links.',
-        you:['1:30–1:32: introduce the guest and listening prompt.','1:32–1:50: example-led guest talk.','1:50–1:58: Q&A.','1:58–2:00: ask for one carry-forward practice, paste the links, thank the guest, name next Saturday, and repeat recap consent.'],
+        you:['1:30–1:32: introduce the guest and listening prompt.','1:32–1:50: example-led guest talk.','1:50–1:58: Q&A.','1:58–2:00: ask for one carry-forward practice, paste the links and readings, then bridge PoseNet’s one-frame keypoints to Session 3 tracking across time.'],
         room:['Track one visible human decision and one hidden system decision.','Ask questions during the final eight minutes.','Leave with one practice to carry forward and one question about video.'],
-        say:['"As you listen, track one place where a human decision becomes more visible and one place where the system hides a decision."','"At the close: what is one practice you want artists or educators to carry forward?"'],
+        say:['"As you listen, track one place where a human decision becomes more visible and one place where the system hides a decision."','"PoseNet can turn one frame into keypoint coordinates. Next Saturday we ask what happens when those points, the person, and the scene all have to remain coherent across time."'],
         watch:'Protect the full guest block from 1:30 to 2:00. The final takeaway and session close happen inside these 30 minutes.'} }
   ];
 
@@ -476,7 +477,7 @@
     var sh=s.shape?' shape':'';
 
     if(s.kind==='title'){
-      var flow='<div class="title-flow"><span class="f sh">captioned images</span><span>→</span><span class="f">pixels</span><span>→</span><span class="f">features</span><span>→</span><span class="f">noise</span><span>→</span><span class="f">denoise</span><span>→</span><span class="f">defaults</span> <span class="bk">↺</span> <span>→</span><span class="f sh">your crop &amp; choices</span></div>';
+      var flow='<div class="title-flow"><span class="f sh">pixels</span><span>→</span><span class="f">human-created labels</span><span>→</span><span class="f">shared text/image representations</span><span>→</span><span class="f">diffusion</span> <span class="bk">↺ refine</span> <span>→</span><span class="f sh">pixels</span></div>';
       var cmp='';
       if(s.compare){
         cmp='<div class="vs"><div class="vs-h">'+esc(s.compare.head[0])+'</div><div class="vs-h">'+esc(s.compare.head[1])+'</div>'+
