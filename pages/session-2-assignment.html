@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="image" data-skin="image-spectrum">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Assignment Options · Session 2 Images — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .option-card {
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: var(--surface);
+      padding: 20px 22px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    .option-card.featured {
+      border-color: var(--accent);
+    }
+
+    .option-tag {
+      width: fit-content;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .option-card.featured .option-tag {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .option-card h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .option-card p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .option-time {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .option-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .option-links a {
+      border: 1px solid var(--line-soft);
+      padding: 5px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .option-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .share-block {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: 20px 24px;
+      max-width: 80ch;
+    }
+
+    .share-block p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .share-block p + p {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 760px) {
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="run-console.html?s=2" class="hide-sm">Run console</a>
+        <a class="btn btn-sm" href="session-images.html">Session 2 overview</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero" data-mod="image">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#sessions">Sessions</a><span class="sep">/</span>
+        <a href="session-images.html">Images</a><span class="sep">/</span>
+        <span>Assignment options</span>
+      </div>
+      <div class="sess-hero-grid">
+        <div class="sess-num">02<span class="of">asgn</span></div>
+        <div>
+          <p class="sess-kicker"><i class="modsq"></i>Session 2 · Images</p>
+          <h1 class="sess-title">Assignment Options</h1>
+          <p class="sess-lede">Six ways to keep going before Session 3. The headline ask from the session is the artifact — but every option here counts as full participation. Pick one that fits your time, access, and interest.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- OPTIONS -->
+  <section class="section-tight" style="--mink: var(--m-image);">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ A · Choose one</h2><span class="sec-note">all count as full participation</span></div>
+      <div class="option-grid">
+
+        <article class="option-card featured">
+          <span class="option-tag">The session ask · Artifact</span>
+          <h3>Make one image-generation artifact</h3>
+          <p>Make something useful for your students or your own learning: a tool, a webpage, an activity, or even a well-formed set of questions — a rough list of questions is a real artifact. One route: take an existing tool from the GitHub repo, feed it into an LLM, and ask for the version your classroom actually needs (with credit; pull requests welcome). While you're in the tools, note what works, what doesn't, and what's missing — that feedback shapes the next revision.</p>
+          <p class="option-time">~45–90 min · any form counts, however rough</p>
+          <div class="option-links">
+            <a href="https://github.com/saberkhan372/learning-machines-tools">GitHub repo</a>
+            <a href="tools.html">Tool index</a>
+            <a href="../tools/classroom-activity-builder/">Classroom Activity Builder</a>
+          </div>
+        </article>
+
+        <article class="option-card">
+          <span class="option-tag">Default · Async share</span>
+          <h3>Run the default test</h3>
+          <p>Prompt an image model with "a doctor" — or your own deliberately unspecified prompt — and read off what the model decided for you: gender, age, race, setting, camera angle. Change one detail and run it again. Log what the defaults were, what your one change shifted, and what stayed stubborn. No image model access? Practice the method on the authored simulations instead.</p>
+          <p class="option-time">~15–20 min · one logged comparison and two sentences</p>
+          <div class="option-links">
+            <a href="../worksheets/image-default-test-board/">Image Default Test Board</a>
+            <a href="../tools/default-test-comparison-viewer/">Default Test Comparison Viewer</a>
+          </div>
+        </article>
+
+        <article class="option-card">
+          <span class="option-tag">Go deeper · Be the model</span>
+          <h3>Run your own Human Diffusion Canvas</h3>
+          <p>Write a three- or four-phrase prompt of your own and run the canvas with someone else — family, friends, colleagues — revealing it phrase by phrase while they draw. Export the GIFs. Then run a second round giving the full prompt up front, and compare: did the drawings still converge? Which shared visual conventions appeared, and where might those defaults come from?</p>
+          <p class="option-time">~25–35 min · two or more exported drawings and one observation</p>
+          <div class="option-links">
+            <a href="../tools/human-diffusion-canvas/">Human Diffusion Canvas</a>
+            <a href="../tools/diffusion-step-through-viewer/">Optional: watch the machine's version</a>
+          </div>
+        </article>
+
+        <article class="option-card">
+          <span class="option-tag">Go deeper · Probe</span>
+          <h3>Find where spatial reasoning breaks</h3>
+          <p>Fluent output can hide reliability limits; layout requests make them easier to inspect. Ask an image model for a one-page zine layout (eight panels, top row upside down), or ask a coding model for a pure-CSS image. Compare against an easy prompt like "a red panda." Document exactly where coherence falls apart, what the failure suggests about spatial reliability, and what another test could reveal about whether the problem lies in planning, representation, or rendering.</p>
+          <p class="option-time">~20–30 min · one easy/hard comparison, logged</p>
+          <div class="option-links">
+            <a href="../tools/abc-comparison-board/">A / B / C Comparison Board</a>
+          </div>
+        </article>
+
+        <article class="option-card">
+          <span class="option-tag">Teach</span>
+          <h3>Adapt the marker version for your room</h3>
+          <p>The canvas activity started on paper: everyone grays their page, each revealed phrase means a new color added on top, then the room compares results. Design the version for your students — what's the prompt, how do you time the reveals, and what's the debrief question about where the shared defaults come from? Name the caveat too: a real model gets all the words at once.</p>
+          <p class="option-time">~45–60 min · one-page protocol, slides, or rough worksheet</p>
+          <div class="option-links">
+            <a href="../tools/classroom-activity-builder/">Classroom Activity Builder</a>
+            <a href="../tools/human-diffusion-canvas/">Human Diffusion Canvas</a>
+          </div>
+        </article>
+
+        <article class="option-card">
+          <span class="option-tag">No AI · Critique</span>
+          <h3>Analyze a frozen example</h3>
+          <p>Choose one authored example from the Image Prompt Pack. Identify one default, assumption, or limitation you can support with specific visual evidence — what's in the frame, who's in it, what the composition assumes. Separate what the image shows from your hypothesis about why, then name the real-world test you'd need to check that hypothesis.</p>
+          <p class="option-time">~20–30 min · one annotated example · no live AI use required</p>
+          <div class="option-links">
+            <a href="../packs/images/">Image Prompt Pack (frozen)</a>
+            <a href="no-ai-pathway.html">No-AI participation guide</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT TO BRING -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="sec-rule"><h2 class="sec-no">§ B · What to submit</h2><span class="sec-note">one artifact, however rough</span></div>
+      <div class="share-block">
+        <p>Before Session 3 (Saturday July 25), post <b>one thing you can point to</b> in Google Classroom: the artifact itself, a link, a screenshot, an exported GIF, a logged comparison, or your list of questions. It does not need to be polished — the debrief works better with raw material than with finished analysis.</p>
+        <p>Name the evidence behind it. If you made a claim about what the model did, be ready to say: here is the prompt, here is the output, and here is the specific thing I noticed. That's the whole method.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-images.html"><span class="pg-dir mono">&larr; Session overview</span><span class="pg-title">Session 2 · Images</span></a>
+        <a class="next" href="session-video.html"><span class="pg-dir mono">Next session &rarr;</span><span class="pg-title">03 · Video</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <p class="colophon">Session 2 · Images · Assignment options — make, test, probe, teach, or critique.</p>
+    </div>
+  </footer>
+  <script src="../assets/analytics.js"></script>
+</body>
+</html>

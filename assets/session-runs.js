@@ -105,7 +105,50 @@ window.LM_SESSION_RUNS = [
     when: "Sat July 18 · 9–11 am PT", date: "2026-07-18",
     explore: "Pixels → human-created labels → shared text/image representations → diffusion — plus a method for testing visual-default hypotheses.",
     asyncPrompt: "Use a documented real output with the Image Default Test Board, or use an authored teaching simulation to practice the method. Share one observed pattern or illustrated hypothesis, then name the real-world test needed next.",
-    recap: { video: null, written: null, writtenHref: null },
+    recap: {
+      video: "https://youtu.be/JBpEPsPMsJo", writtenHref: "pages/session-2-recap.html", written: null,
+      sections: {
+        summary: "We became the diffusion model: a gray field, a prompt arriving in pieces, and a room of drawings that converged on the same haunted hallway. Then we traced why — pixels, human labels, denoising, and the defaults a prompt fills in when you don't ask.",
+        investigated: [
+          "Why an image is a harder problem than a sentence: two-dimensional pixel data instead of a one-directional token stream.",
+          "The human pre-work underneath generation — WordNet's map of English words and ImageNet's millions of human-labeled images.",
+          "Diffusion as machine-learning-aided denoising: generation starts from noise; training adds known noise to examples and teaches the network to predict and remove it.",
+          "Prompts as conditioning, not added dimensions — changing the words changes the representation that guides sampling, and one prompt can still yield many plausible images.",
+          "Where defaults come from: prompt 'a doctor' with no other details and read off what the system decides for you."
+        ],
+        mechanisms: [
+          { name: "Pixels & features", where: "Blurry-image walkthrough", observed: "The model processes numerical representations of pixels or latent features, not a cat or hallway in the human sense. Learned features organize patterns at different levels of detail." },
+          { name: "The human label layer", where: "WordNet + ImageNet", observed: "Human-designed categories, labels, captions, and ratings shaped important datasets and many modern image systems — labor that is usually invisible in the output." },
+          { name: "Diffusion / denoising", where: "Slides + live ChatGPT demo", observed: "Generation denoises a gray field toward the prompt. Asking for a 'half-diffused' image just drew blur — prompt words are content to depict, not process controls." },
+          { name: "Prompt conditioning", where: "Ryan's layers question", observed: "Each clause changes the prompt representation; it does not add a layer or new embedding dimensions. The whole prompt guides each denoising step, and different samples can satisfy it differently." },
+          { name: "Defaults / bias", where: "'A doctor' prompt", observed: "Unspecified gender, age, race, and setting get filled from training defaults — the image-layer version of Shelly's doctor riddle from Session 1." },
+          { name: "Guidance / CFG", where: "Training-loop slides", observed: "During sampling, classifier-free guidance combines a prompt-conditioned prediction with an unconditioned prediction. More guidance usually increases prompt adherence while trading off diversity and, at extremes, image quality." }
+        ],
+        patterns: [
+          { what: "Everyone drew the same prompt and produced strikingly similar images — figure centered, hallway receding, horror palette — and ChatGPT's version matched the room's composition.", suggests: "The room converged on culturally familiar defaults, not a single correct image; those defaults live in us as much as in the training data.", next: "Run one unspecified prompt across models and people, board the results, and ask where each shared reference comes from — Judy thought our hallway resembled imagery from the film Diabolique." },
+          { what: "Plain re-prompting can redraw much of an image because a generated output is not a conventional editable scene graph, while masks, cross-attention, locked noise, and other controls can preserve or localize parts of an edit.", suggests: "Editing and consistency remain real workflow challenges, but their severity depends on which controls the system exposes.", next: "Compare workflows that add structure or control back: masks and cross-attention, ComfyUI model chains, Corridor Crew's locked initial noise, and licensed-data approaches like Adobe Firefly." }
+        ],
+        hmse: {
+          human: "Participants chose what to draw for each phrase and judged which results felt right. Shelly worked in negative space so the pale figure could emerge — 'more like sculpture' — a move the averaging machine wouldn't make.",
+          machine: "The model samples one possible image by repeatedly denoising under prompt conditioning. It is not choosing a single correct answer, and a base generated output is not a conventional layer-based scene file.",
+          system: "Annotators, dataset builders, and preference raters shape many systems but rarely appear in the output. Gaming and ML use GPUs for different parallel computations, while cryptocurrency mining added separate demand for the same hardware market.",
+          ethics: "Guest artist Aurora Mititelu distinguished hating corporate AI from hating algorithms, and connected AI images on social feeds to icon painting: community-circulated images that construct a shared reality. Shelly, a military veteran, showed how AI 'veteran influencer' propaganda amplifies biases already in the data."
+        },
+        classroom: {
+          students: "The marker version of the Human Diffusion Canvas needs no screens: gray the paper, reveal the prompt phrase by phrase, add with a new color each round, then compare the room's drawings.",
+          shortCircuit: "Jumping straight to generating real images skips the being-the-model experience — and remember to name the caveat that a real model gets all the words at once, not piecemeal.",
+          noAI: "Full paper-and-marker run, then a printed set of model outputs for the convergence debrief. No accounts, no generation required."
+        },
+        next: {
+          prep: "Session 3 — Video — Saturday July 25, with guest Dr. Emily Thomforde. Optional Week 4 session in August to be decided.",
+          asyncRoute: {
+            prompt: "Make one Session 2 artifact — a tool, webpage, activity, or set of questions about image generation that would help your students or your own learning — and share it before Session 3.",
+            worksheetPath: "worksheets/image-default-test-board/",
+            packPath: "packs/images/"
+          }
+        }
+      }
+    },
     facilitation: "pages/docs-session-2-facilitation.html",
     overview: "pages/session-images.html",
     deck: "pages/session-2-deck.html",
