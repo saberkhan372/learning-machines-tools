@@ -160,8 +160,8 @@ Every worksheet also links the shared export script before `</body>`:
 <script src="../../assets/worksheet-export.js"></script>
 ```
 
-It injects a "Copy as Markdown" button into the `.controls` row and exports all
-`[data-key]` fields (textareas, checkboxes, radios) plus the evidence footer.
+It injects a "Copy my notes" button (Markdown export) into the `.controls` row and
+exports all `[data-key]` fields (textareas, checkboxes, radios) plus the evidence footer.
 
 ---
 

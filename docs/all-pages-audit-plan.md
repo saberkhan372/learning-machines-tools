@@ -198,7 +198,7 @@ Check:
 For each worksheet:
 
 - Fill one field, reload, and confirm persistence.
-- Use Copy as Markdown and confirm the evidence footer appears.
+- Use "Copy my notes" (Markdown export) and confirm the evidence footer appears.
 - Print / Save as PDF and confirm controls are hidden.
 - Confirm identity skins are restrained on screen and Field-clean in print.
 

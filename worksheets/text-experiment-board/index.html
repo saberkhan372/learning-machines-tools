@@ -69,6 +69,14 @@
   .default-table tr:last-child td { border-bottom: none; }
   .prompt-seed { font-size: .78rem; color: var(--muted); padding: 8px 12px; font-style: italic; border-bottom: 1px solid var(--border); }
 
+  .howto-list { padding: 12px 16px 14px 34px; }
+  .howto-list li { font-size: .875rem; color: var(--ink); padding: 3px 0; }
+  .howto-list li::marker { color: var(--warm); font-weight: 700; }
+  .howto-example { margin: 0 16px 14px; padding: 10px 14px; background: var(--row-bg); border: 1px dashed var(--border); border-radius: 6px; font-size: .82rem; color: var(--muted); }
+  .howto-example p { margin: 4px 0 0; }
+  .howto-example strong { color: var(--ink); }
+  .hx-label { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--warm); }
+
   .reflect-list { list-style: none; padding: 0; }
   .reflect-item { display: grid; grid-template-columns: 1fr; gap: 2px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
   .reflect-item:last-child { border-bottom: none; }
@@ -132,7 +140,7 @@
   <header>
     <div class="eyebrow">Session 1 · Text</div>
     <h1>Text Experiment Board</h1>
-    <p class="subtitle">Run a controlled A/B/C prompt experiment and document what the model adds, assumes, or avoids.</p>
+    <p class="subtitle">Run a controlled A/B/C/D prompt experiment and document what the model adds, assumes, or avoids.</p>
   </header>
 
   <div class="controls">
@@ -141,11 +149,34 @@
     <span class="save-status" id="saveStatus">Not saved yet</span>
   </div>
 
+  <!-- How to use -->
+  <div class="section">
+    <div class="section-head">
+      <h2 class="section-title">How to use this board</h2>
+      <div class="section-desc">This page is your lab notebook — it doesn't talk to a model. Open any chat model (ChatGPT, Claude, Gemini…) in another window, run the prompts there, and log what happened here. Everything you type saves in this browser automatically.</div>
+    </div>
+    <div class="section-body">
+      <ol class="howto-list">
+        <li><strong>Pick one small topic</strong> — a story, an apology note, a lesson intro. You'll reuse it in every row.</li>
+        <li><strong>A — Baseline.</strong> Write a plain prompt on your topic, run it, and note what the model produced.</li>
+        <li><strong>B — Change one thing.</strong> Same prompt with exactly one deliberate change: the genre, the audience, the tone, or a constraint. Run it in a <em>fresh</em> chat so answer A can't influence it. Log what changed.</li>
+        <li><strong>C — Respond to something.</strong> This one stays <em>in</em> the chat: pick something in the output that surprised you — a wrong fact, an odd assumption, a detail you never asked for — and write a follow-up prompt that pushes on it. You're now testing how the model behaves with context and a challenge.</li>
+        <li><strong>D — Push further</strong> (optional). Exaggerate the change from B, or stack two changes, until the output breaks or gets strange. Finding the edge is the point.</li>
+        <li><strong>When you're done,</strong> write your evidence-based claim below, then hit <strong>Copy my notes</strong> (top of the page). It copies everything you've typed here as formatted notes — paste them into Zoom chat, the session thread, or your own planning doc. <strong>Print / Save as PDF</strong> makes a clean handout instead.</li>
+      </ol>
+      <div class="howto-example">
+        <div class="hx-label">Worked example — one A → B pair</div>
+        <p><strong>A (baseline):</strong> "Write a four-sentence story about a family dinner." <strong>B (one change — genre):</strong> "Write a four-sentence story about a family dinner, as a nature-documentary voiceover."</p>
+        <p><strong>What changed in the output:</strong> same dinner, new voice — B added a hushed narrator, "the adolescent male," and suspense nobody asked for. <strong>What I learned:</strong> one genre word swapped the whole vocabulary; the model carries a genre's defaults with it.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Prompt Set -->
   <div class="section">
     <div class="section-head">
       <h2 class="section-title">Prompt Set</h2>
-      <div class="section-desc">Choose a topic or genre. Write versions A, B, C, D — changing one thing each time.</div>
+      <div class="section-desc">"Prompt / genre frame" means the framing you hand the model: your topic plus a genre, audience, tone, or format — "write about rain" vs. "write a weather report about rain" is a genre-frame change. Log the exact prompt you ran in the first column.</div>
     </div>
     <div class="section-body">
       <table class="exp-table">
@@ -158,10 +189,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td class="version-label">A</td><td><textarea aria-label="Prompt A" data-key="prompt-a" rows="3" placeholder="Baseline prompt…"></textarea></td><td><textarea aria-label="Change A" data-key="change-a" rows="3" placeholder="Observation…"></textarea></td><td><textarea aria-label="Learn A" data-key="learn-a" rows="3" placeholder="Learning…"></textarea></td></tr>
-          <tr><td class="version-label">B</td><td><textarea aria-label="Prompt B" data-key="prompt-b" rows="3" placeholder="Variation — change one thing…"></textarea></td><td><textarea aria-label="Change B" data-key="change-b" rows="3" placeholder="Observation…"></textarea></td><td><textarea aria-label="Learn B" data-key="learn-b" rows="3" placeholder="Learning…"></textarea></td></tr>
-          <tr><td class="version-label">C</td><td><textarea aria-label="Prompt C" data-key="prompt-c" rows="3" placeholder="Respond to something that surprised you…"></textarea></td><td><textarea aria-label="Change C" data-key="change-c" rows="3" placeholder="Observation…"></textarea></td><td><textarea aria-label="Learn C" data-key="learn-c" rows="3" placeholder="Learning…"></textarea></td></tr>
-          <tr><td class="version-label">D</td><td><textarea aria-label="Prompt D" data-key="prompt-d" rows="3" placeholder="Optional — push further…"></textarea></td><td><textarea aria-label="Change D" data-key="change-d" rows="3" placeholder="Observation…"></textarea></td><td><textarea aria-label="Learn D" data-key="learn-d" rows="3" placeholder="Learning…"></textarea></td></tr>
+          <tr><td class="version-label">A</td><td><textarea aria-label="Prompt A" data-key="prompt-a" rows="3" placeholder="Baseline — a plain prompt on your topic…"></textarea></td><td><textarea aria-label="Change A" data-key="change-a" rows="3" placeholder="What the model produced…"></textarea></td><td><textarea aria-label="Learn A" data-key="learn-a" rows="3" placeholder="Learning…"></textarea></td></tr>
+          <tr><td class="version-label">B</td><td><textarea aria-label="Prompt B" data-key="prompt-b" rows="3" placeholder="Same prompt, exactly one change (genre, audience, tone, length) — run in a fresh chat…"></textarea></td><td><textarea aria-label="Change B" data-key="change-b" rows="3" placeholder="What changed vs. A…"></textarea></td><td><textarea aria-label="Learn B" data-key="learn-b" rows="3" placeholder="Learning…"></textarea></td></tr>
+          <tr><td class="version-label">C</td><td><textarea aria-label="Prompt C" data-key="prompt-c" rows="3" placeholder="Follow-up, same chat — push on something that surprised you in the output…"></textarea></td><td><textarea aria-label="Change C" data-key="change-c" rows="3" placeholder="How the model handled the challenge…"></textarea></td><td><textarea aria-label="Learn C" data-key="learn-c" rows="3" placeholder="Learning…"></textarea></td></tr>
+          <tr><td class="version-label">D</td><td><textarea aria-label="Prompt D" data-key="prompt-d" rows="3" placeholder="Optional — exaggerate or stack changes until the output breaks…"></textarea></td><td><textarea aria-label="Change D" data-key="change-d" rows="3" placeholder="Where it broke or got strange…"></textarea></td><td><textarea aria-label="Learn D" data-key="learn-d" rows="3" placeholder="Learning…"></textarea></td></tr>
         </tbody>
       </table>
     </div>

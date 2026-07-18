@@ -1,7 +1,8 @@
 /* Learning Machines — shared worksheet export.
-   Adds a "Copy as Markdown" button to the worksheet controls row so notes can
-   be pasted straight into Zoom chat, the Evidence Wall, or a planning doc.
-   Walks the same [data-key] fields the worksheet persists to localStorage. */
+   Adds a "Copy my notes" button (Markdown export) to the worksheet controls row
+   so notes can be pasted straight into Zoom chat, the Evidence Wall, or a
+   planning doc. Walks the same [data-key] fields the worksheet persists to
+   localStorage. */
 (function () {
   var controls = document.querySelector(".controls");
   if (!controls) { return; }
@@ -90,7 +91,8 @@
   btn.type = "button";
   btn.className = "btn";
   btn.id = "copyMarkdownBtn";
-  btn.textContent = "Copy as Markdown";
+  btn.textContent = "Copy my notes";
+  btn.title = "Copies everything you've typed on this page as formatted (Markdown) notes — paste into Zoom chat, the session thread, or a doc.";
   var printBtn = controls.querySelector(".btn-print");
   controls.insertBefore(btn, printBtn ? printBtn.nextSibling : controls.firstChild);
 

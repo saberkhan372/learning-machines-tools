@@ -21,7 +21,7 @@ poster identity below the hero and across quieter page families, guided by the
 
 | Priority | Item | Current Repo Status | Needed Next |
 | --- | --- | --- | --- |
-| 1 | Worksheets + AI Use / Consent Checklist | Launch ready interactive boards (localStorage persistence, Print / Save as PDF, Copy as Markdown); printable Markdown mirrors kept | Manual browser QA before session |
+| 1 | Worksheets + AI Use / Consent Checklist | Launch ready interactive boards (localStorage persistence, Print / Save as PDF, "Copy my notes" Markdown export); printable Markdown mirrors kept | Manual browser QA before session |
 | 2 | Tokenizer + Temperature Visualizer | Launch ready | Manual browser QA before session |
 | 3 | ELIZA Simulator | Launch ready | Manual browser QA before session |
 | 4 | Diffusion Step-Through Viewer | Launch ready | Add pre-generated PNG sequences later if curated assets become available |

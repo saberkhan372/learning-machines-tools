@@ -79,7 +79,7 @@ Use this before publishing or sharing the repo.
 ## Worksheet QA
 
 - For each of the five worksheets: fill a field, reload the page, and confirm the entry was restored from localStorage.
-- Use Copy as Markdown and confirm the pasted block includes filled fields, checkbox states, and the evidence footer.
+- Use "Copy my notes" (Markdown export) and confirm the pasted block includes filled fields, checkbox states, and the evidence footer.
 - Use Print / Save as PDF and confirm controls are hidden in the print layout.
 
 ## Offline QA

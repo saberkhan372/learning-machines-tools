@@ -568,6 +568,10 @@
     <strong>Teaching model.</strong> This is a faithful recreation of ELIZA (Weizenbaum, 1966), not a modern AI. It matches keywords and fills response templates — no understanding, no memory of context, no learning. The Rule Inspector shows exactly what it is doing.
   </div>
 
+  <div class="notice">
+    <strong>Not a care tool.</strong> ELIZA plays a therapist because the 1966 original did — that's history, not a recommendation. In the comparison tab, the LLM will usually <em>sound</em> warmer and more understanding. Don't read that as "an LLM would make a good therapist": chat models are trained toward responses people rate highly, and that is where the warmth comes from. The same training can also encourage <em>sycophancy</em> — agreeing with a user's beliefs or preferences even when truthfulness calls for disagreement. Sounding like care is not care, and being more fluent than ELIZA is not evidence a chatbot is safe to lean on for mental-health support. If real support is needed, involve a human (in the U.S., call or text 988).
+  </div>
+
   <!-- Tabs -->
   <div class="tab-bar" role="tablist" aria-label="ELIZA tool tabs">
     <button class="tab-btn" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="true">
@@ -713,13 +717,14 @@
   <!-- ── COMPARE PANEL ── -->
   <div id="panel-compare" role="tabpanel" aria-labelledby="tab-compare" hidden>
     <div class="compare-intro">
-      <strong>Same input. Different mechanisms.</strong> Below, ten prompts are sent to both ELIZA and a large language model (responses pre-generated). ELIZA matches keywords. The LLM predicts the next most likely tokens based on patterns learned from billions of words. Neither one "understands" — but they fail in very different ways.
+      <strong>Same input. Different mechanisms.</strong> Below, ten prompts are sent to both ELIZA and a large language model (responses pre-generated). ELIZA matches keywords. The LLM predicts the next most likely tokens based on patterns learned from billions of words. Neither one "understands" — but they fail in very different ways. One caution as you read: the LLM column will usually feel warmer and more responsive. Notice that pull — <em>better at sounding like a therapist</em> is not the same as <em>safe to use as one</em>.
     </div>
     <div class="compare-items" id="compareItems"></div>
 
     <div class="facilitator-card" style="margin-top:28px">
       <div class="facilitator-label">Discussion — Prediction Is Not Understanding</div>
       <p>ELIZA fails visibly: give it an unusual sentence and it fires the wrong rule. LLMs fail more subtly: they produce fluent, confident text even when wrong. The rule inspector makes ELIZA's mechanism transparent. What would a "rule inspector" for an LLM look like — and why is it harder to build?</p>
+      <p style="margin-top:10px;">The LLM responses here also lean warm and validating. That's not kindness — it's a training outcome: human feedback teaches models what people rate highly. The same training can encourage <em>sycophancy</em> — agreeing with a user's beliefs or preferences even when truthfulness calls for disagreement. Ask the group: if a model is optimized to say what you'll like, what happens when what you need to hear is something you won't like? Weizenbaum's alarm about people confiding in ELIZA applies with more force here, not less. Reading: <a href="https://arxiv.org/abs/2310.13548" target="_blank" rel="noopener">"Towards Understanding Sycophancy in Language Models"</a> (Sharma et al., 2023).</p>
     </div>
   </div>
 
@@ -1261,14 +1266,14 @@ const COMPARE_EXAMPLES = [
     elizaKeyword: "mother",
     elizaRule: "MOTHER rule — weight 8, highest priority family keyword",
     llmResponse: "Feeling misunderstood by a parent can be really painful. Is there something specific you've tried to share with her that didn't land the way you hoped?",
-    annotation: "ELIZA prioritized <strong>\"mother\"</strong> (weight 8) above everything else in your sentence — the word \"understand\" and the personal detail didn't matter at all. The LLM responded to the relational situation. Both responses can feel empathetic. Only one processed what you actually said."
+    annotation: "ELIZA prioritized <strong>\"mother\"</strong> (weight 8) above everything else in your sentence — the word \"understand\" and the personal detail didn't matter at all. The LLM's reply drew on the whole sentence — the relationship, the failed communication — because every token shaped its predictions. Both responses can feel empathetic. Neither one knows what a mother is; the difference is how much of your sentence influenced the pattern-match."
   },
   {
     prompt: "I want to quit my job.",
     elizaKeyword: "i want",
     elizaRule: "WANT rule — captures text after \"I want to\"",
     llmResponse: "That's a significant feeling. What's been making work difficult — is it the role itself, the environment, a specific situation, or something broader going on in your life?",
-    annotation: "ELIZA grabbed <strong>\"i want\"</strong> and reflected <em>\"quit my job\"</em> back in a template. It doesn't know what a job is. The LLM asked a follow-up question that actually narrows the problem — because it predicted that specificity is useful here, based on patterns it learned."
+    annotation: "ELIZA grabbed <strong>\"i want\"</strong> and reflected <em>\"quit my job\"</em> back in a template. It doesn't know what a job is. The LLM asked a follow-up question that narrows the problem — not because it cares how you answer, but because it predicted that specificity is what a helpful reply looks like here, based on patterns it learned."
   },
   {
     prompt: "Nobody likes me.",
@@ -1282,7 +1287,7 @@ const COMPARE_EXAMPLES = [
     elizaKeyword: "i am",
     elizaRule: "AM rule — captures the state after \"I am\"",
     llmResponse: "I'm sorry to hear that. Can you tell me more about what's been going on? Sometimes naming the feeling more specifically can help figure out what's underneath it.",
-    annotation: "ELIZA captured <em>\"not happy\"</em> and asked how long you've been \"not happy\" — technically correct but a little awkward, because it treats any phrase the same way. The LLM produced something that feels more natural. That fluency comes from predicting what sounds human — not from understanding the content."
+    annotation: "ELIZA captured <em>\"not happy\"</em> and asked how long you've been \"not happy\" — technically correct but a little awkward, because it treats any phrase the same way. The LLM's version sounds smoother — but that fluency comes from predicting what sounds human, not from understanding the content. Smoother is not safer."
   },
   {
     prompt: "You don't understand me.",
@@ -1303,14 +1308,14 @@ const COMPARE_EXAMPLES = [
     elizaKeyword: "i can't",
     elizaRule: "CAN'T rule — challenges the limitation stated",
     llmResponse: "Rumination can be really exhausting. Is there a specific memory or period that keeps coming up, or is it more of a general sense of looking backward?",
-    annotation: "ELIZA's CAN'T rule challenges the stated limitation: \"How do you know you can't?\" — a classic Rogerian therapy technique. But it sounds slightly odd applied here, because \"stop thinking\" isn't the same as a capability claim. The rule fired anyway. The LLM bypassed that awkwardness by responding to the actual content — rumination."
+    annotation: "ELIZA's CAN'T rule challenges the stated limitation: \"How do you know you can't?\" — a classic Rogerian therapy technique. But it sounds slightly odd applied here, because \"stop thinking\" isn't the same as a capability claim. The rule fired anyway. The LLM avoided that awkwardness because its training data associates this phrasing with rumination — a statistical association, not a reading of your situation."
   },
   {
     prompt: "Everyone always ignores me.",
     elizaKeyword: "everyone",
     elizaRule: "EVERYONE rule — weight 6, challenges absolute language",
     llmResponse: "That sounds really isolating. Do you feel that way in a particular context — at work, with friends, at home — or is it more of a pervasive feeling?",
-    annotation: "ELIZA caught <strong>\"everyone\"</strong> (weight 6) and challenged the absolute claim. But it missed <strong>\"always\"</strong> — because ELIZA only fires one keyword per response, the highest-weight one wins. Both keywords pointed at the same therapeutic move anyway. The LLM sidestepped the challenge and went straight to where and when — a more diagnostic approach."
+    annotation: "ELIZA caught <strong>\"everyone\"</strong> (weight 6) and challenged the absolute claim. But it missed <strong>\"always\"</strong> — because ELIZA only fires one keyword per response, the highest-weight one wins. Both keywords pointed at the same therapeutic move anyway. The LLM sidestepped the challenge and went straight to where and when — the move that highly-rated helpful responses in its training tend to make."
   },
   {
     prompt: "What do you think I should do?",
