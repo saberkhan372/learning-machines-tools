@@ -94,7 +94,7 @@ window.LM_SESSION_RUNS = [
           { name: "Whose Preference? Lab", path: "tools/whose-preference-lab/", optional: true }
         ] },
       { time: "75–90", segment: "Debrief",
-        move: "Use the frame: human, machine, system, ethics, pedagogy. Ask whose definition of ‘better’ entered the preference signal. Optionally have one group log a baseline + change in the A/B/C board.",
+        move: "Use the frame: human, machine, system, ethics, pedagogy. Ask whose definition of 'better' entered the preference signal. Optionally have one group log a baseline + change in the A/B/C board.",
         action: "Share one evidence-based claim and one question.",
         tools: [ { name: "A / B / C Comparison Board", path: "tools/abc-comparison-board/", optional: true } ] }
     ]
@@ -106,7 +106,7 @@ window.LM_SESSION_RUNS = [
     explore: "Pixels → human-created labels → shared text/image representations → diffusion — plus a method for testing visual-default hypotheses.",
     asyncPrompt: "Use a documented real output with the Image Default Test Board, or use an authored teaching simulation to practice the method. Share one observed pattern or illustrated hypothesis, then name the real-world test needed next.",
     recap: {
-      video: "https://youtu.be/JBpEPsPMsJo", writtenHref: "pages/session-2-recap.html", written: null,
+      video: "https://youtu.be/JBpEPsPMsJo", writtenHref: "pages/session-2-recap.html", written: "We traced image generation from the inside out: pixels as numbers, human-created labels (WordNet and ImageNet), shared text-and-image representations, and diffusion as iterative denoising under prompt guidance. The whole group drew the same phrase and converged on strikingly similar images — culturally familiar defaults, not a single correct answer. Headline finding: prompt 'a doctor' with no further detail and the system fills in gender, age, and setting from training data. Carry forward: a default is a design decision.",
       sections: {
         summary: "We became the diffusion model: a gray field, a prompt arriving in pieces, and a room of drawings that converged on the same haunted hallway. Then we traced why — pixels, human labels, denoising, and the defaults a prompt fills in when you don't ask.",
         investigated: [
@@ -211,7 +211,7 @@ window.LM_SESSION_RUNS = [
         ] },
       { time: "90–120", segment: "Guest spotlight, Q&A & close",
         move: "Give the artist/educator guest the full 30-minute block: two-minute introduction, 18-minute example-led talk, eight-minute Q&A, and two-minute guest takeaway and close.",
-        action: "Track one visible human decision and one hidden system decision; close by bridging PoseNet’s one-frame keypoints to Session 3 tracking and coherence across time.",
+        action: "Track one visible human decision and one hidden system decision; close by bridging PoseNet's one-frame keypoints to Session 3 tracking and coherence across time.",
         tools: [] }
     ]
   },
@@ -227,8 +227,8 @@ window.LM_SESSION_RUNS = [
     deck: "pages/session-3-deck.html",
     steps: [
       { time: "0–5", segment: "Welcome & bridge",
-        move: "Open the Point Correspondence Lab on Ball arc. Select the ball, take a destination prediction, and reveal the clean track. Return to PoseNet’s one-frame keypoints, then name CoTracker’s contrasting task—follow selected points across existing frames.",
-        action: "Predict one point’s destination, distinguish point correspondence from generation, then choose a participation pathway.",
+        move: "Open the Point Correspondence Lab on Ball arc. Select the ball, take a destination prediction, and reveal the clean track. Return to PoseNet's one-frame keypoints, then name CoTracker's contrasting task—follow selected points across existing frames.",
+        action: "Predict one point's destination, distinguish point correspondence from generation, then choose a participation pathway.",
         tools: [ { name: "Point Correspondence Lab", path: "tools/point-correspondence-lab/" } ] },
       { time: "5–35", segment: "Temporal Telephone · round 1",
         move: "Open Temporal Telephone in previous-frame-only mode. Use “a person at work” as the vague prompt, then check motion defaults after playback.",
