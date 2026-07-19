@@ -33,13 +33,13 @@
         <a href="../index.html#materials">Materials</a><span class="sep">/</span>
         <span>Session 3 Facilitation</span>
       </div>
-      <p class="sess-kicker"><i class="modsq"></i>Pilot script</p>
+      <p class="sess-kicker"><i class="modsq"></i>Facilitation guide</p>
       <h1 class="sess-title" style="font-size:clamp(2.2rem,5vw,3.6rem);">Session 3: Video</h1>
       <div class="doc-meta">
-        <span class="mono">&#9711; 60&#8211;90 min</span>
+        <span class="mono">&#9711; 120 min</span>
         <span class="mono">&#9636; Facilitation guide</span>
-        <span class="mono">&#10022; Pilot ready</span>
-        <a class="mono" href="session-3-deck.html" style="text-decoration:none">&#9654; Run the live deck (draft)</a>
+        <span class="mono">&#10022; Session ready</span>
+        <a class="mono" href="session-3-deck.html" style="text-decoration:none">&#9654; Run the live deck</a>
       </div>
     </div>
   </header>
@@ -51,33 +51,52 @@
         <p class="toc-label">On this page</p>
         <nav>
           <a href="#core">Core question</a>
+          <a href="#prep">Before the session</a>
           <a href="#materials">Materials</a>
           <a href="#ros">Run of show</a>
+          <a href="#protocol">Telephone protocol</a>
+          <a href="#language">Mechanism language</a>
+          <a href="#framing">Framing rules</a>
+          <a href="#lanes">Studio lanes</a>
           <a href="#prompts">Facilitator prompts</a>
-          <a href="#investigation">Investigation prompt</a>
-          <a href="#lowai">Low-AI pathway</a>
-          <a href="#fallback">Fallback plan</a>
-          <a href="#qa">Pilot QA notes</a>
+          <a href="#fallback">Fallbacks</a>
+          <a href="#after">After the session</a>
         </nav>
       </aside>
 
       <!-- BODY -->
       <article class="prose">
-        <p style="font-size:1.15rem;color:var(--ink-dim);">Use this script for a 60&#8211;90 minute pilot focused on temporal coherence, drift, anchoring, and why video generation is harder than generating a single image.</p>
+        <p style="font-size:1.15rem;color:var(--ink-dim);">Use this guide for the full 120-minute Session 3 run. It turns the first two meetings into one argument, tests its video version through comparison, protects one finished participant claim, and hands the final half hour to guest Dr. Emily Thomforde.</p>
 
         <div class="callout" id="core">
-          <p><b>Core question.</b> What changes when generation has to work across time?</p>
-          <p><b>Conceptual sequence.</b> Frame → keypoints/features → correspondence across frames → coherence or drift.</p>
+          <p><b>Camp journey.</b> Participants have been the machine three times.</p>
+          <p><b>Session 1, text.</b> Fluent output is not necessarily true.</p>
+          <p><b>Session 2, images.</b> Plausible output is not necessarily neutral.</p>
+          <p><b>Session 3, video.</b> Smooth output is not evidence.</p>
+          <p><b>Core question.</b> What changes when generation has to preserve relationships across time?</p>
         </div>
+
+        <p>A tracker estimates correspondence across frames that already exist. A generator produces new frames whose subjects, objects, setting, camera, and motion must remain mutually coherent. Tracking is a useful contrast, not a literal description of one universal generation pipeline.</p>
+
+        <h2 id="prep">Before the session</h2>
+        <ul>
+          <li>Arrange two participant artifact shares in advance. Ask each person to show one artifact, make one claim, and name one boundary in about three minutes.</li>
+          <li>Send Dr. Emily Thomforde the Session 1 and Session 2 recaps, the three-line argument, the remaining-question list, the 18-minute talk / 8-minute Q&amp;A timing, and the private time signal.</li>
+          <li>Test the live deck, Point Correspondence Lab, and Temporal Telephone at the same browser and Zoom share size you will use live.</li>
+          <li>Prepare two short frozen failure examples: one identity or object-consistency break and one physics, text, or camera-continuity break. Do not rely on live generation.</li>
+          <li>Put the Video Test Report and default / advanced studio links in one paste-ready chat message.</li>
+          <li>Confirm the guest&#8217;s preferred introduction, name pronunciation, and recording consent.</li>
+        </ul>
 
         <h2 id="materials">Materials</h2>
         <ul>
+          <li><a href="session-3-deck.html">Session 3 live deck</a></li>
           <li><a href="../tools/point-correspondence-lab/">Point Correspondence Lab</a></li>
-          <li><a href="tool-temporal-telephone.html">Temporal Telephone</a></li>
+          <li><a href="../tools/temporal-telephone/">Temporal Telephone</a></li>
+          <li><a href="../tools/video-failure-gallery-viewer/">Video Failure Gallery Viewer</a></li>
+          <li><a href="../tools/frame-by-frame-coherence-viewer/">Frame-by-Frame Coherence Viewer</a></li>
           <li><a href="../worksheets/video-test-report/">Video Test Report</a></li>
-          <li>Optional: A/B/C Comparison Board for coherence tests</li>
           <li><a href="../worksheets/ai-use-consent-checklist/">AI Use + Consent Checklist</a></li>
-          <li>Optional: curated video clips or still-frame sequences showing drift and failure modes</li>
           <li>Optional reference: <a href="https://github.com/facebookresearch/co-tracker" target="_blank" rel="noopener">CoTracker</a> for point correspondence across existing frames</li>
         </ul>
 
@@ -85,54 +104,81 @@
         <table class="doc-table">
           <thead><tr><th>Time</th><th>Segment</th><th>Facilitator move</th><th>Participant action</th></tr></thead>
           <tbody>
-            <tr><td>0&#8211;5</td><td>Welcome &amp; bridge</td><td>Open the Point Correspondence Lab on Ball arc. Select the ball, take a destination prediction, and reveal the clean track. Connect PoseNet&#8217;s one-frame keypoints to CoTracker&#8217;s task of following a selected point across existing frames, then contrast both analysis tasks with generation.</td><td>Predict one destination, distinguish tracking from generation, then choose a participation pathway.</td></tr>
-            <tr><td>5&#8211;35</td><td>Temporal Telephone round 1</td><td>Open Temporal Telephone in previous-frame-only mode. Use &#8220;a person at work&#8221; as the vague prompt, then check motion defaults after playback: job, body, setting, tool, pace, gesture.</td><td>Draw/save frames or observe where defaults and small changes accumulate into drift.</td></tr>
-            <tr><td>35&#8211;50</td><td>Temporal Telephone round 2</td><td>Switch to anchor mode and repeat with the same basic subject or motion.</td><td>Compare whether identity, layout, and motion stay more stable.</td></tr>
-            <tr><td>50&#8211;70</td><td>Failure analysis</td><td>Use curated clips, still frames, or optional generated video examples. Name failure modes precisely.</td><td>Mark identity drift, physics breaks, camera inconsistency, style drift, or temporal jumps.</td></tr>
-            <tr><td>70&#8211;90</td><td>Video Test Report</td><td>Ask participants to complete one A/B/C or failure-analysis section.</td><td>Share one coherence claim and one responsible-use boundary.</td></tr>
+            <tr><td>0&#8211;5</td><td>Welcome</td><td>Repeat the recording / likeness boundary and camera-off, chat-only, or watch-only choices. Put the three-line argument on screen.</td><td>Choose a participation route and name the modality that still feels least settled.</td></tr>
+            <tr><td>5&#8211;12</td><td>Two artifact shares</td><td>Invite the two pre-arranged participants: artifact, claim, boundary.</td><td>Listen for the evidence.</td></tr>
+            <tr><td>12&#8211;17</td><td>Active synthesis</td><td>Retrieve, do not re-lecture: fluent ≠ true; plausible ≠ neutral; smooth ≠ evidence.</td><td>Match one prior activity to one line.</td></tr>
+            <tr><td>17&#8211;24</td><td>Point correspondence</td><td>Predict and reveal in Point Lab; distinguish tracking existing frames from generating new ones.</td><td>Name one relationship that must persist.</td></tr>
+            <tr><td>24&#8211;47</td><td>Temporal Telephone</td><td>Run A: previous frame only. Run B: the same first frame as fixed anchor. Play and compare both saved runs.</td><td>Track one feature; name one observation and one analogy limit.</td></tr>
+            <tr><td>47&#8211;57</td><td>Curated failure hunt</td><td>Use two frozen examples and mark the first exact break.</td><td>Name the failure precisely.</td></tr>
+            <tr><td>57&#8211;65</td><td>System map</td><td>Map labor, decisions, consent, and provenance.</td><td>Name one hidden contribution and one question.</td></tr>
+            <tr><td>65&#8211;83</td><td>One-tool studio</td><td>Offer default and advanced lanes. Require one worksheet row before a second tool.</td><td>Finish one observation, claim, and boundary.</td></tr>
+            <tr><td>83&#8211;88</td><td>Two claims</td><td>Invite two concise shares; ask what evidence supports each and where the boundary lies.</td><td>Share or listen for observation versus explanation.</td></tr>
+            <tr><td>88&#8211;90</td><td>Guest introduction</td><td>Introduce Dr. Emily Thomforde and the listening question.</td><td>Close tool tabs and listen.</td></tr>
+            <tr><td>90&#8211;108</td><td>Guest talk</td><td>Yield the floor; send the private three-minute signal at 105.</td><td>Capture one distinction or question.</td></tr>
+            <tr><td>108&#8211;116</td><td>Q&amp;A</td><td>Prioritize participant questions.</td><td>Ask concise questions.</td></tr>
+            <tr><td>116&#8211;118</td><td>Guest takeaway</td><td>Ask Emily for one sentence to carry forward; thank her.</td><td>Put one phrase in chat.</td></tr>
+            <tr><td>118&#8211;120</td><td>Close</td><td>Return to the three lines and invite the optional Studio / Showcase.</td><td>Save one next step.</td></tr>
           </tbody>
         </table>
-        <p>Optional pilot evidence move: use the A/B/C Comparison Board to document a hypothesis, one changed variable, a baseline motion prompt, one continuity anchor, and a stronger anchor or stress test. Keep real-person likeness and consent concerns visible before exporting.</p>
-        <p>For credit, attribution, likeness, and recap decisions, use the existing <a href="../worksheets/ai-use-consent-checklist/">AI Use + Consent Checklist</a> rather than creating a new worksheet.</p>
+
+        <h2 id="protocol">Temporal Telephone protocol</h2>
+        <ol>
+          <li><b>Run A &#8212; previous frame.</b> Use 6&#8211;8 frames, keep the prompt hidden, and ask each drawer to work from the previous-frame ghost. Play the saved sequence once.</li>
+          <li><b>Run B &#8212; anchor.</b> Reveal the prompt. The tool seeds Run B with the exact same first frame as Run A and holds that frame as a fixed reference.</li>
+          <li><b>Compare.</b> Switch between the saved playbacks. Ask what held, what drifted, and what changed with the reference condition.</li>
+          <li><b>State the limit.</b> This is a controlled classroom comparison. Contemporary systems vary in their use of temporal context, reference conditioning, spatiotemporal processing, masking, cross-attention, and editing controls.</li>
+        </ol>
+
+        <h2 id="language">Mechanism language to keep</h2>
+        <ul>
+          <li>Say: &#8220;Small inconsistencies can compound when a sequence does not preserve the same relationships across time.&#8221;</li>
+          <li>Do not say: &#8220;Drift is the model forgetting.&#8221; If you use forgetting as a cartoon, label it.</li>
+          <li>Say: &#8220;Motion learned from patterns does not guarantee physics.&#8221;</li>
+          <li>Do not say: &#8220;Generated motion is interpolation, not physics.&#8221; Some workflows interpolate; the category is broader.</li>
+          <li>Observation can support a failure claim. Causal explanation requires model- and workflow-specific evidence.</li>
+        </ul>
+
+        <h2 id="framing">Framing rules for live discussion</h2>
+        <ul>
+          <li><b>Anchor mode is not locked noise.</b> The activity tests one simplified control: a stable visual reference. Locked noise, reference conditioning, masks, cross-attention controls, and compositing are distinct ways that workflows may add control.</li>
+          <li><b>Glitches are not authentication.</b> Close observation can find a failure; it cannot verify a clip. Verification needs provenance, source context, corroboration, and, where available, content credentials.</li>
+          <li><b>Bound the sustainability claim.</b> Video often introduces much more spatial-temporal data and substantial compute, but costs vary by architecture, workflow, duration, resolution, and hardware.</li>
+          <li><b>Do not assign intent to the generator.</b> Ask what inputs the system receives, how the interface represents prompt / reference / mask controls, which inputs affect generation, and what the surrounding platform adds.</li>
+        </ul>
+
+        <h2 id="lanes">Studio lanes</h2>
+        <p><b>Default lane.</b> Use the Video Failure Gallery Viewer or Frame-by-Frame Coherence Viewer. Identify the first exact break, capture the frame or timestamp, and complete one Video Test Report row.</p>
+        <p><b>Advanced lane.</b> Use Temporal Telephone, Point Correspondence Lab, or an accessible video tool. Change one reference, camera, duration, motion, or subject constraint; compare the result and state what the comparison cannot prove.</p>
+        <p><b>No-AI lane.</b> Analyze frozen frames or run Temporal Telephone on paper. No account or generation is required.</p>
 
         <h2 id="prompts">Facilitator prompts</h2>
         <ul>
-          <li>&#8220;Where did the sequence first begin to drift?&#8221;</li>
-          <li>&#8220;PoseNet found an elbow in frame 1. What evidence would support calling a point in frame 2 the same elbow?&#8221;</li>
-          <li>&#8220;Could a point be in a plausible place but belong to the wrong person or object?&#8221;</li>
-          <li>&#8220;For the vague prompt &#8216;a person at work,&#8217; what job, body, setting, tool, pace, or gesture appeared by default?&#8221;</li>
-          <li>&#8220;What stayed consistent when only the previous frame was visible?&#8221;</li>
-          <li>&#8220;What did the anchor preserve?&#8221;</li>
-          <li>&#8220;What does video require that a single image does not?&#8221;</li>
-          <li>&#8220;Which failure type is easiest to spot frame by frame?&#8221;</li>
-          <li>&#8220;What would you need to specify to keep identity, motion, and setting stable?&#8221;</li>
-          <li>&#8220;What did the human do? What did the model do?&#8221;</li>
-          <li>&#8220;What should be credited, and to whom?&#8221;</li>
-          <li>&#8220;Whose work, data, or labor is hidden in this output?&#8221;</li>
+          <li>&#8220;What exact frame or comparison is your evidence?&#8221;</li>
+          <li>&#8220;What changed, what stayed constant, and what can this test not prove?&#8221;</li>
+          <li>&#8220;What did the anchor preserve? What did it fail to preserve?&#8221;</li>
+          <li>&#8220;What would you need to learn before claiming that a real generator works like this activity?&#8221;</li>
+          <li>&#8220;Is this an observation about the output, or an explanation of the mechanism?&#8221;</li>
+          <li>&#8220;What makes the clip convincing? What would make it trustworthy evidence?&#8221;</li>
+          <li>&#8220;Whose labor, likeness, or data is hidden in the output?&#8221;</li>
+          <li>&#8220;Would a provenance record establish consent, or only document a chain?&#8221;</li>
         </ul>
 
-        <h2 id="investigation">Investigation prompt</h2>
-        <blockquote><p>Compare a baseline motion prompt with one revision that adds an anchor: a consistent subject, fixed camera, repeated setting, or explicit continuity constraint. What improves, and what still breaks?</p></blockquote>
-
-        <h2 id="lowai">Low-AI / No-AI pathway</h2>
-        <p>Participants can complete the session using Temporal Telephone and curated clips only. No one needs to generate video to investigate temporal coherence.</p>
-
-        <h2 id="fallback">Fallback plan</h2>
+        <h2 id="fallback">Fallbacks and cut rules</h2>
         <ul>
-          <li>If drawing with the tool is awkward, have one facilitator draw while participants direct changes verbally.</li>
-          <li>If playback is too fast or hard to see, step through thumbnails manually.</li>
-          <li>If no curated clips are available, use Temporal Telephone outputs as the failure gallery.</li>
-          <li>If participants do not want to analyze AI video, focus on continuity, consent, and classroom-safe critique protocols.</li>
+          <li>If shares are not confirmed, use two prepared recap artifacts; do not cold-call.</li>
+          <li>If Point Lab fails, use the deck&#8217;s fallback ball strip.</li>
+          <li>If Temporal Telephone drawing fails, have one facilitator draw while the room directs changes, or switch to paper. Preserve the Run A / Run B comparison.</li>
+          <li>If time slips before the guest, shorten the failure hunt to one example and the system map to four minutes. Do not take time from the guest.</li>
+          <li>If the guest has a technical problem, extend the studio and use the prepared Q&amp;A prompts; preserve the final callback.</li>
+          <li>If participants finish early, strengthen the boundary of the claim instead of opening another tool.</li>
         </ul>
 
-        <h2 id="qa">Pilot QA notes</h2>
-        <p>During the pilot, note:</p>
+        <h2 id="after">After the session</h2>
         <ul>
-          <li>Whether participants understood previous-frame-only versus anchor mode.</li>
-          <li>Whether the Save frame and Play controls were discoverable.</li>
-          <li>Whether thumbnails were large enough for discussion.</li>
-          <li>Which failure categories participants used naturally.</li>
-          <li>Any ethical concerns around generating motion, simulating people, or using real likenesses.</li>
+          <li>Save the deck log and Zoom chat with the recording, captions, and transcript.</li>
+          <li>Capture the two claims as source notes, but do not publish names, quotes, screenshots, or work without the required permission.</li>
+          <li>Send the Session 3 feedback link with the Week 4 / Optional Studio commitment question.</li>
+          <li>Record what failed operationally, especially guest timing, tool handoffs, and whether participants finished one claim.</li>
         </ul>
       </article>
     </div>

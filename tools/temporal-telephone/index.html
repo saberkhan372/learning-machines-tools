@@ -144,6 +144,8 @@ header {
 .color-dot {
   width: 28px;
   height: 28px;
+  padding: 0;
+  appearance: none;
   border-radius: 50%;
   border: 3px solid transparent;
   cursor: pointer;
@@ -152,6 +154,7 @@ header {
 }
 .color-dot:hover { transform: scale(1.15); }
 .color-dot.on { border-color: var(--ink); box-shadow: 0 0 0 1px white inset; }
+.canvas-wrap:focus-within { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 .divider { width: 1px; height: 28px; background: var(--line); margin: 0 2px; }
 
@@ -569,7 +572,7 @@ h1 { color: var(--ink); }
 <h2 class="sr-only">Interactive temporal telephone workspace</h2>
 
 <div class="info-strip r1" id="info-strip">
-  <strong>Round 1 — Telephone:</strong> Draw what happens next. The prompt is hidden. Only a faint ghost of the previous frame is visible.
+  <strong>Round 1 — Telephone:</strong> Build Run A with the prompt hidden and only the previous frame visible. Each locked frame is saved for comparison.
 </div>
 
 <div class="prompt-bar" id="prompt-bar" style="display:none">
@@ -578,7 +581,8 @@ h1 { color: var(--ink); }
 </div>
 
 <div class="canvas-wrap" id="canvas-wrap">
-  <canvas id="cv"></canvas>
+  <canvas id="cv" tabindex="0" role="application"
+          aria-label="Drawing canvas for the current Temporal Telephone frame"></canvas>
 </div>
 
 <div class="toolbar" id="toolbar">
@@ -586,21 +590,21 @@ h1 { color: var(--ink); }
   <div class="divider"></div>
   <div class="sizes" id="sizes"></div>
   <div class="divider"></div>
-  <button class="erase-btn" id="erase-btn" onclick="toggleErase()">Erase</button>
+  <button class="erase-btn" id="erase-btn" aria-pressed="false" onclick="toggleErase()">Erase</button>
   <button class="clear-btn" onclick="clearCanvas()">Clear</button>
 </div>
 
 <div class="ghost-mode-bar">
-  <span class="gm-label">Ghost mode</span>
-  <button class="gm-btn on" id="gm-prev"   onclick="setGhostMode('prev')">Previous frame</button>
-  <button class="gm-btn"    id="gm-anchor" onclick="setGhostMode('anchor')">Anchor (Frame 1)</button>
-  <button class="gm-btn"    id="gm-both"   onclick="setGhostMode('both')">Both</button>
-  <span class="gm-run rA"   id="run-label">Run A</span>
+  <span class="gm-label">Comparison run</span>
+  <button class="gm-btn on" id="gm-prev"   aria-pressed="true" onclick="setGhostMode('prev')">A · Previous</button>
+  <button class="gm-btn"    id="gm-anchor" aria-pressed="false" onclick="setGhostMode('anchor')">B · Anchor</button>
+  <button class="gm-btn"    id="gm-both"   aria-pressed="false" onclick="setGhostMode('both')">C · Both</button>
+  <span class="gm-run rA"   id="run-label">Run A — Previous frame only</span>
 </div>
 
 <div class="actions" id="actions">
   <div class="frame-badge" id="frame-badge">Frame 1 <span id="locked-count"></span></div>
-  <button class="lock-btn" id="lock-btn" onclick="lockFrame()">Lock &amp; Pass →</button>
+  <button class="lock-btn" id="lock-btn" disabled onclick="lockFrame()">Lock &amp; Pass →</button>
   <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
   <div class="playback-bar" id="pb-bar">
     <button class="pb-btn" onclick="pbStep(-1)">◀</button>
@@ -617,7 +621,7 @@ h1 { color: var(--ink); }
 <div class="toast" id="toast"></div>
 
 <div class="thumbs-wrap" id="thumbs-wrap" style="display:none">
-  <div class="thumbs-label">Locked frames</div>
+  <div class="thumbs-label" id="thumbs-label">Locked frames — Run A</div>
   <div class="thumbs" id="thumbs"></div>
 </div>
 
@@ -647,7 +651,7 @@ h1 { color: var(--ink); }
     </div>
     <div class="lens-card">
       <div class="lens-who system">System</div>
-      A video model generates each frame conditioned on the prompt and sometimes the previous frame — just like Run A. What would it need to maintain identity across 100 frames? What system choices make coherence more or less likely?
+      Video systems must keep relationships coherent across time, but architectures differ in what they process together and which references or controls they use. What system choices make coherence more or less likely?
     </div>
     <div class="lens-card">
       <div class="lens-who ethics">Ethics</div>
@@ -659,14 +663,14 @@ h1 { color: var(--ink); }
 <div class="failure-card">
   <strong>Bridge to AI video failure modes</strong>
   <ul>
-    <li><strong>Identity drift</strong> — a character's face, age, or appearance changes across frames. Your sequence likely showed this.</li>
-    <li><strong>Motion continuity break</strong> — an object or body part teleports between frames. Caused by the same frame-by-frame prediction problem you simulated.</li>
-    <li><strong>Physics break</strong> — objects fall the wrong way, cloth ignores gravity, water moves backwards. Each frame is a prediction, not a simulation.</li>
-    <li><strong>Background teleport</strong> — the scene behind a subject changes without camera movement. The model re-predicts the background independently at each step.</li>
-    <li><strong>Style drift</strong> — the visual style shifts across the sequence. No global style memory across frames.</li>
-    <li><strong>Text corruption</strong> — readable text in frame 1 becomes garbled by frame 10. Text is predicted pixel-by-pixel, not recalled as symbols.</li>
+    <li><strong>Identity drift</strong> — a character's face, age, clothing, or appearance changes across time.</li>
+    <li><strong>Motion continuity break</strong> — an object or body part jumps between positions that should form one continuous action.</li>
+    <li><strong>Physics break</strong> — objects fall the wrong way, cloth ignores gravity, or water moves implausibly. Motion learned from patterns does not guarantee physics.</li>
+    <li><strong>Background teleport</strong> — the setting changes even though the camera and subject imply that it should remain stable.</li>
+    <li><strong>Style drift</strong> — the visual treatment shifts during a sequence that appears to call for continuity.</li>
+    <li><strong>Text corruption</strong> — readable text changes or degrades across frames; visual plausibility does not guarantee symbolic consistency.</li>
   </ul>
-  <p style="margin-top:8px;">Run A (previous frame only) simulates standard video generation. Run B (anchor) simulates using a reference image. Run C (both) simulates hybrid conditioning. Real models use more sophisticated approaches — but the fundamental drift problem is the same.</p>
+  <p style="margin-top:8px;">These runs are teaching comparisons, not replicas of a generator. Run A removes a stable reference; Run B keeps the first frame visible; Run C keeps both references visible. Real video systems use varied combinations of reference conditioning, temporal context, spatiotemporal processing, and editing controls.</p>
 </div>
 
 <div class="facilitator-card">
@@ -679,11 +683,11 @@ h1 { color: var(--ink); }
   </ul>
   <p style="margin-top:8px;"><strong>Key debrief questions:</strong></p>
   <ul>
-    <li>A video model generates each frame using the prompt and sometimes the previous frame. After Round 1, does that mechanism surprise you?</li>
+    <li>This activity deliberately limits what each drawer can see. What did that constraint make visible, and what would you need to learn before claiming that a real generator works the same way?</li>
     <li>What information would a model need to keep a character's face consistent across 60 seconds of video?</li>
     <li>Run B used a fixed anchor — the first frame. Why might that help? What would it miss?</li>
     <li>If this model generated a real person's likeness and it drifted — different skin tone, age, expression — what are the ethical problems with that?</li>
-    <li>You made intentional choices each frame. The model doesn't. What is lost when that judgment is removed?</li>
+    <li>You made intentional choices each frame. A generator samples under learned patterns and conditioning. Where does human judgment re-enter when someone selects, edits, publishes, or rejects the result?</li>
   </ul>
 </div>
 
@@ -702,7 +706,9 @@ const S = {
   size: 10,
   erasing: false,
   ghostMode: 'prev',  // 'prev' | 'anchor' | 'both'
-  frames: [],         // data URLs
+  runs: { prev: [], anchor: [], both: [] },
+  frames: [],         // active run's data URLs
+  baseAnchor: null,   // shared first frame for a fair A/B/C comparison
   ghostEl: null,      // HTMLImageElement — previous frame
   anchorEl: null,     // HTMLImageElement — frame 1
   pbEls: [],          // HTMLImageElements for playback
@@ -710,6 +716,8 @@ const S = {
   fps: 6,
   pbIndex: 0,
   timer: null,
+  hasInk: false,
+  activePointer: null,
 };
 
 // ── Canvas setup ──────────────────────────────────────────────────────────────
@@ -723,15 +731,32 @@ const bufCtx = buf.getContext('2d');
 function resize() {
   const W = wrap.clientWidth;
   const H = Math.round(W * 0.6);
+  if (!W || (cv.width === W && cv.height === H)) return;
+
+  // Preserve unfinished work when the browser or device changes size.
+  const snapshot = document.createElement('canvas');
+  const hadBuffer = buf.width > 0 && buf.height > 0;
+  if (hadBuffer) {
+    snapshot.width = buf.width;
+    snapshot.height = buf.height;
+    snapshot.getContext('2d').drawImage(buf, 0, 0);
+  }
+
   cv.width  = W; cv.height  = H;
   buf.width = W; buf.height = H;
-  wipeBuf();
-  render();
+  paintBlank();
+  if (hadBuffer) bufCtx.drawImage(snapshot, 0, 0, W, H);
 }
 
-function wipeBuf() {
+function paintBlank() {
   bufCtx.fillStyle = BG;
   bufCtx.fillRect(0, 0, buf.width, buf.height);
+}
+
+function clearDrawing() {
+  paintBlank();
+  S.hasInk = false;
+  updateUI();
 }
 
 // ── Render loop ───────────────────────────────────────────────────────────────
@@ -794,33 +819,44 @@ function roundRect(c, x, y, w, h, r) {
 // ── Drawing ───────────────────────────────────────────────────────────────────
 function getPos(e) {
   const r = cv.getBoundingClientRect();
-  const src = e.touches ? e.touches[0] : e;
-  return [(src.clientX - r.left) * (cv.width / r.width),
-          (src.clientY - r.top)  * (cv.height / r.height)];
+  return [(e.clientX - r.left) * (cv.width / r.width),
+          (e.clientY - r.top)  * (cv.height / r.height)];
 }
 
 let prev = null;
 function startDraw(e) {
   if (S.round === 3) return;
   e.preventDefault();
+  S.activePointer = e.pointerId;
+  cv.setPointerCapture(e.pointerId);
   prev = getPos(e);
   const [x, y] = prev;
-  if (!S.erasing) { dot(x, y); }
+  dot(x, y);
+  if (!S.erasing) S.hasInk = true;
+  updateUI();
 }
 function moveDraw(e) {
-  if (!prev || S.round === 3) return;
+  if (!prev || S.round === 3 || e.pointerId !== S.activePointer) return;
   e.preventDefault();
   const [x, y] = getPos(e);
   const [px, py] = prev;
   stroke(px, py, x, y);
+  if (!S.erasing) S.hasInk = true;
   prev = [x, y];
 }
-function endDraw() { prev = null; }
+function endDraw(e) {
+  if (e && S.activePointer !== null && e.pointerId !== S.activePointer) return;
+  if (S.activePointer !== null && cv.hasPointerCapture(S.activePointer)) {
+    cv.releasePointerCapture(S.activePointer);
+  }
+  prev = null;
+  S.activePointer = null;
+}
 
 function dot(x, y) {
-  bufCtx.fillStyle = S.color;
+  bufCtx.fillStyle = S.erasing ? BG : S.color;
   bufCtx.beginPath();
-  bufCtx.arc(x, y, S.size / 2, 0, Math.PI * 2);
+  bufCtx.arc(x, y, (S.erasing ? S.size * 3 : S.size) / 2, 0, Math.PI * 2);
   bufCtx.fill();
 }
 function stroke(x1, y1, x2, y2) {
@@ -830,32 +866,43 @@ function stroke(x1, y1, x2, y2) {
   bufCtx.beginPath(); bufCtx.moveTo(x1, y1); bufCtx.lineTo(x2, y2); bufCtx.stroke();
 }
 
-cv.addEventListener('mousedown',  startDraw);
-cv.addEventListener('mousemove',  moveDraw);
-cv.addEventListener('mouseup',    endDraw);
-cv.addEventListener('mouseleave', endDraw);
-cv.addEventListener('touchstart', startDraw, { passive: false });
-cv.addEventListener('touchmove',  moveDraw,  { passive: false });
-cv.addEventListener('touchend',   endDraw);
+cv.addEventListener('pointerdown', startDraw);
+cv.addEventListener('pointermove', moveDraw);
+cv.addEventListener('pointerup', endDraw);
+cv.addEventListener('pointercancel', endDraw);
 
 // ── Actions ───────────────────────────────────────────────────────────────────
-function clearCanvas() { wipeBuf(); }
+function clearCanvas() { clearDrawing(); }
 
 function setColor(c) {
   S.color = c; S.erasing = false;
-  document.querySelectorAll('.color-dot').forEach(d => d.classList.toggle('on', d.dataset.c === c));
+  document.querySelectorAll('.color-dot').forEach(d => {
+    const on = d.dataset.c === c;
+    d.classList.toggle('on', on);
+    d.setAttribute('aria-pressed', String(on));
+  });
   document.getElementById('erase-btn').classList.remove('on');
+  document.getElementById('erase-btn').setAttribute('aria-pressed', 'false');
 }
 
 function setSize(s) {
   S.size = s;
-  document.querySelectorAll('.size-opt').forEach(b => b.classList.toggle('on', +b.dataset.s === s));
+  document.querySelectorAll('.size-opt').forEach(b => {
+    const on = +b.dataset.s === s;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', String(on));
+  });
 }
 
 function toggleErase() {
   S.erasing = !S.erasing;
   document.getElementById('erase-btn').classList.toggle('on', S.erasing);
-  document.querySelectorAll('.color-dot').forEach(d => d.classList.toggle('on', !S.erasing && d.dataset.c === S.color));
+  document.getElementById('erase-btn').setAttribute('aria-pressed', String(S.erasing));
+  document.querySelectorAll('.color-dot').forEach(d => {
+    const on = !S.erasing && d.dataset.c === S.color;
+    d.classList.toggle('on', on);
+    d.setAttribute('aria-pressed', String(on));
+  });
 }
 
 function makeImg(url) {
@@ -864,27 +911,62 @@ function makeImg(url) {
   return el;
 }
 
+const RUNS = {
+  prev:   { name: 'Run A', label: 'Run A — Previous frame only', cls: 'rA' },
+  anchor: { name: 'Run B', label: 'Run B — Fixed first-frame anchor', cls: 'rB' },
+  both:   { name: 'Run C', label: 'Run C — Anchor + previous frame', cls: 'rC' },
+};
+
+function saveActiveRun() {
+  S.runs[S.ghostMode] = S.frames.slice();
+}
+
+function loadRun(mode) {
+  S.frames = S.runs[mode].slice();
+
+  // Runs B and C begin from the exact same first frame as Run A. That makes the
+  // changed visibility condition—not a different opening drawing—the comparison.
+  if (mode !== 'prev' && S.frames.length === 0 && S.baseAnchor) {
+    S.frames.push(S.baseAnchor);
+    S.runs[mode] = S.frames.slice();
+  }
+
+  const first = S.baseAnchor || S.frames[0] || null;
+  const last = S.frames.length ? S.frames[S.frames.length - 1] : null;
+  S.anchorEl = first ? makeImg(first) : null;
+  S.ghostEl = last ? makeImg(last) : null;
+  S.pbIndex = Math.max(0, S.frames.length - 1);
+  clearDrawing();
+  rebuildPb();
+  rebuildThumbs();
+}
+
 function lockFrame() {
   if (S.frames.length >= 12) { toast('Max 12 frames!'); return; }
+  if (!S.hasInk) { toast('Draw something before locking this frame.'); return; }
   const url = buf.toDataURL('image/png');
   S.frames.push(url);
   S.ghostEl = makeImg(url);
-  if (S.frames.length === 1) S.anchorEl = S.ghostEl;
+  if (!S.baseAnchor) S.baseAnchor = url;
+  S.anchorEl = makeImg(S.baseAnchor);
+  saveActiveRun();
   rebuildPb();
-  addThumb(url, S.frames.length);
-  wipeBuf();
+  rebuildThumbs();
+  clearDrawing();
   updateUI();
-  toast('Frame ' + S.frames.length + ' locked — pass to the next student!');
+  toast(RUNS[S.ghostMode].name + ' · frame ' + S.frames.length + ' locked — pass to the next student!');
 }
 
 function setRound(r) {
   stopPlay();
   S.round = r;
+  if (r === 1 && S.ghostMode !== 'prev') setGhostMode('prev');
+  if (r === 2 && S.ghostMode !== 'anchor') setGhostMode('anchor');
   document.querySelectorAll('.pill').forEach((b, i) => b.classList.toggle('active', i + 1 === r));
   const msgs = [
-    '<strong>Round 1 — Telephone:</strong> Draw what happens next. The prompt is hidden. Use the Ghost mode bar to switch between Run A, B, and C.',
-    '<strong>Round 2 — Conditioned:</strong> The prompt is now visible. Use it as your anchor while drawing.',
-    '<strong>Round 3 — Playback:</strong> Watch the flipbook. Press Play or step through frames to find the drift.',
+    '<strong>Round 1 — Telephone:</strong> Build Run A with the prompt hidden and only the previous frame visible. Each locked frame is saved for comparison.',
+    '<strong>Round 2 — Conditioned:</strong> Build Run B with the prompt visible and Run A\'s first frame held as a fixed anchor.',
+    '<strong>Round 3 — Playback:</strong> Choose Run A, B, or C, then play or step through its saved frames to compare what held and what drifted.',
   ];
   const strip = document.getElementById('info-strip');
   strip.innerHTML = msgs[r - 1];
@@ -896,34 +978,57 @@ function setRound(r) {
   document.getElementById('lock-btn').disabled = off;
   wrap.classList.toggle('playback', off);
   if (r === 3) rebuildPb();
+  updateUI();
 }
 
 function resetAll() {
-  if (S.frames.length && !confirm('Reset everything and start over?')) return;
+  const totalFrames = Object.values(S.runs).reduce((sum, frames) => sum + frames.length, 0);
+  if (totalFrames && !confirm('Reset all three runs and start over?')) return;
   stopPlay();
-  Object.assign(S, { frames: [], pbEls: [], ghostEl: null, anchorEl: null, pbIndex: 0 });
-  wipeBuf();
-  document.getElementById('thumbs').innerHTML = '';
-  document.getElementById('thumbs-wrap').style.display = 'none';
+  Object.assign(S, {
+    runs: { prev: [], anchor: [], both: [] },
+    frames: [], baseAnchor: null, pbEls: [], ghostEl: null, anchorEl: null,
+    pbIndex: 0, hasInk: false, ghostMode: 'prev',
+  });
+  paintBlank();
+  document.querySelectorAll('.gm-btn').forEach(b => {
+    const on = b.id === 'gm-prev';
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', String(on));
+  });
+  const runLabel = document.getElementById('run-label');
+  runLabel.textContent = RUNS.prev.label;
+  runLabel.className = 'gm-run ' + RUNS.prev.cls;
+  rebuildThumbs();
   updateUI(); toast('Reset — ready for a new run.');
 }
 
 // ── Ghost mode ────────────────────────────────────────────────────────────────
 function setGhostMode(mode) {
-  S.ghostMode = mode;
-  document.querySelectorAll('.gm-btn').forEach(b => b.classList.remove('on'));
-  document.getElementById('gm-' + mode).classList.add('on');
-  const cfg = {
-    prev:   { label: 'Run A — Previous frame only', cls: 'rA' },
-    anchor: { label: 'Run B — Anchor (Frame 1)',    cls: 'rB' },
-    both:   { label: 'Run C — Both',                cls: 'rC' },
-  };
-  const lbl = document.getElementById('run-label');
-  lbl.textContent = cfg[mode].label;
-  lbl.className   = 'gm-run ' + cfg[mode].cls;
-  if (mode !== 'prev' && !S.anchorEl) {
-    toast('Tip: lock at least one frame first — that becomes the anchor.');
+  if (!RUNS[mode]) return;
+  if (mode === S.ghostMode) {
+    toast(RUNS[mode].name + ' is already active.');
+    return;
   }
+  if (S.hasInk && !confirm('Switch runs and discard the unlocked drawing?')) return;
+  stopPlay();
+  saveActiveRun();
+  S.ghostMode = mode;
+  loadRun(mode);
+  document.querySelectorAll('.gm-btn').forEach(b => {
+    const on = b.id === 'gm-' + mode;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', String(on));
+  });
+  const lbl = document.getElementById('run-label');
+  lbl.textContent = RUNS[mode].label;
+  lbl.className   = 'gm-run ' + RUNS[mode].cls;
+  if (mode !== 'prev' && !S.baseAnchor) {
+    toast('Build and lock Run A\'s first frame before starting this comparison.');
+  } else {
+    toast(RUNS[mode].name + ' loaded · ' + S.frames.length + ' saved frame' + (S.frames.length === 1 ? '' : 's'));
+  }
+  updateUI();
 }
 
 // ── Playback ──────────────────────────────────────────────────────────────────
@@ -964,16 +1069,45 @@ function updatePos() {
 }
 
 // ── Thumbnails ────────────────────────────────────────────────────────────────
-function addThumb(url, n) {
+function rebuildThumbs() {
   const wrap  = document.getElementById('thumbs-wrap');
   const strip = document.getElementById('thumbs');
-  wrap.style.display = 'block';
-  const div = document.createElement('div'); div.className = 'thumb';
-  const im  = document.createElement('img'); im.src = url; im.id = 'th-' + n;
-  im.onclick = () => { stopPlay(); S.pbIndex = n - 1; S.pbEls = S.frames.map(makeImg); highlightThumb(n - 1); updatePos(); };
-  const lbl = document.createElement('div'); lbl.className = 'thumb-n'; lbl.textContent = n;
-  div.appendChild(im); div.appendChild(lbl);
-  strip.appendChild(div); strip.scrollLeft = strip.scrollWidth;
+  strip.innerHTML = '';
+  wrap.style.display = S.frames.length ? 'block' : 'none';
+  document.getElementById('thumbs-label').textContent = 'Locked frames — ' + RUNS[S.ghostMode].name;
+
+  S.frames.forEach((url, index) => {
+    const div = document.createElement('div');
+    div.className = 'thumb';
+    const im = document.createElement('img');
+    im.src = url;
+    im.id = 'th-' + (index + 1);
+    im.tabIndex = 0;
+    im.alt = RUNS[S.ghostMode].name + ', frame ' + (index + 1);
+    im.setAttribute('role', 'button');
+    const select = () => {
+      stopPlay();
+      S.pbIndex = index;
+      rebuildPb();
+      highlightThumb(index);
+      updatePos();
+    };
+    im.onclick = select;
+    im.onkeydown = e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        select();
+      }
+    };
+    const lbl = document.createElement('div');
+    lbl.className = 'thumb-n';
+    lbl.textContent = index + 1;
+    div.appendChild(im);
+    div.appendChild(lbl);
+    strip.appendChild(div);
+  });
+  strip.scrollLeft = strip.scrollWidth;
+  highlightThumb(S.pbIndex);
 }
 function highlightThumb(i) {
   document.querySelectorAll('#thumbs img').forEach((el, idx) => el.classList.toggle('on', idx === i));
@@ -983,7 +1117,8 @@ function highlightThumb(i) {
 function updateUI() {
   const n = S.frames.length;
   const badge = document.getElementById('frame-badge');
-  badge.innerHTML = 'Frame ' + (n + 1) + (n ? ' <span>' + n + ' locked</span>' : '');
+  badge.innerHTML = RUNS[S.ghostMode].name + ' · Frame ' + (n + 1) + (n ? ' <span>' + n + ' locked</span>' : '');
+  document.getElementById('lock-btn').disabled = S.round === 3 || !S.hasInk || n >= 12;
   updatePos();
 }
 
@@ -995,10 +1130,13 @@ function toast(msg) {
 
 // ── Build color + size controls ───────────────────────────────────────────────
 const cg = document.getElementById('colors');
-COLORS.forEach(c => {
-  const d = document.createElement('div');
+COLORS.forEach((c, index) => {
+  const d = document.createElement('button');
+  d.type = 'button';
   d.className = 'color-dot' + (c === S.color ? ' on' : '');
   d.dataset.c = c; d.style.background = c;
+  d.setAttribute('aria-label', 'Drawing color ' + (index + 1));
+  d.setAttribute('aria-pressed', String(c === S.color));
   if (c === '#f5f0e8') d.style.border = '3px solid rgba(255,255,255,0.35)';
   d.onclick = () => setColor(c); cg.appendChild(d);
 });
@@ -1006,7 +1144,10 @@ COLORS.forEach(c => {
 const sg = document.getElementById('sizes');
 SIZES.forEach(s => {
   const b = document.createElement('button');
+  b.type = 'button';
   b.className = 'size-opt' + (s === S.size ? ' on' : ''); b.dataset.s = s;
+  b.setAttribute('aria-label', 'Brush size ' + s);
+  b.setAttribute('aria-pressed', String(s === S.size));
   const d = document.createElement('div'); d.className = 'dot';
   const dim = Math.min(s * 1.3, 20);
   d.style.cssText = 'width:' + dim + 'px;height:' + dim + 'px';
@@ -1042,12 +1183,19 @@ function runTests() {
   });
   test('initial state is empty and previous-frame mode', () => {
     assert(S.frames.length === 0, 'initial frames should be empty');
+    assert(Object.values(S.runs).every(frames => frames.length === 0), 'initial run stores should be empty');
     assert(S.ghostMode === 'prev', 'initial ghost mode should be previous-frame');
     assert(S.fps === 6, 'initial fps should be 6');
   });
-  test('frame guard max is reachable', () => {
+  test('run comparison and blank-frame guards exist', () => {
     assert(typeof lockFrame === 'function', 'lockFrame missing');
+    assert(typeof loadRun === 'function' && typeof saveActiveRun === 'function', 'run persistence helpers missing');
     assert(S.frames.length < 12, 'initial frame count should be below max');
+    assert(document.getElementById('lock-btn').disabled, 'blank frame should not be lockable');
+  });
+  test('drawing controls expose keyboard buttons', () => {
+    assert(Array.from(document.querySelectorAll('.color-dot')).every(el => el.tagName === 'BUTTON'), 'colors should be buttons');
+    assert(cv.tabIndex === 0, 'canvas should be focusable');
   });
 
   const el = document.getElementById('test-status');
@@ -1065,6 +1213,7 @@ function runTests() {
 // ── Init ──────────────────────────────────────────────────────────────────────
 window.addEventListener('resize', () => { resize(); });
 resize();
+updateUI();
 runTests();
 requestAnimationFrame(render);
 </script>

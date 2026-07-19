@@ -5,6 +5,8 @@ title: Session 3 Slide Outline
 
 # Session 3 — Video: Slide Outline
 
+> **Superseded slide outline.** Do not present from this document. Use [the Session 3 live deck](../pages/session-3-deck.html) and [current facilitation guide](session-3-facilitation.md), which include the revised 120-minute schedule, mechanism language, and Dr. Emily Thomforde guest block.
+
 **Learning Machines: Text, Images, Video**
 Slide-ready structure for presentation or screen share. Speaker notes in *italics*.
 
@@ -21,13 +23,13 @@ Learning Machines: Text, Images, Video — CC Fest
 
 ## SLIDE 2 — The Pattern So Far
 
-| Session | Modality | Unit of prediction |
+| Session | Modality | Generation problem |
 |---|---|---|
-| 1 | Text | Next token |
-| 2 | Images | Next denoising step |
-| 3 | Video | Next frame (across hundreds) |
+| 1 | Text | Select a continuation from tokens and context |
+| 2 | Images | Generate or denoise a spatial representation |
+| 3 | Video | Produce a coherent space-time sequence |
 
-Same mechanism. Different constraint.
+Same investigation method. Not one universal architecture.
 
 **Video adds time. Time requires memory and coherence.**
 
@@ -62,7 +64,7 @@ The model must maintain across hundreds of frames:
 - **Physics** — gravity, cloth, water behave correctly
 - **Style** — consistent visual treatment
 
-Every frame is a new prediction. The model has no persistent memory.
+A video system must produce a coherent space-time sequence. Architectures differ in what they process together and which temporal or reference controls they use.
 
 ---
 
@@ -108,11 +110,11 @@ Draw the same scenario again, 6–8 frames.
 
 | Ghost mode | Analogy |
 |---|---|
-| **Run A — Previous frame only** | Standard video generation: each frame conditioned on the last |
-| **Run B — Anchor (Frame 1)** | Reference-image conditioning: a "key frame" keeps identity stable |
-| **Run C — Both** | Hybrid: prior frame + reference, the strongest coherence strategy |
+| **Run A — Previous frame only** | Classroom condition with no fixed visual anchor |
+| **Run B — Anchor (Frame 1)** | Classroom condition with a stable first-frame reference |
+| **Run C — Both** | Classroom condition with both references visible |
 
-**The telephone game is not a metaphor for video generation. It is the same problem.**
+**The telephone game is a simplified comparison about limited reference and accumulating change. It is not a replica of a generator.**
 
 ---
 
@@ -133,17 +135,17 @@ These are the categories. Name what you saw.
 
 ---
 
-## SLIDE 10 — Why Each Failure Happens
+## SLIDE 10 — What Each Failure Makes Us Ask
 
-| Failure | Why |
+| Failure | System question |
 |---|---|
-| Identity drift | No persistent face representation across frames; each frame re-predicts |
-| Motion break | Physical law isn't in the training signal — trajectory is inferred from patterns |
-| Background teleport | Background and subject are predicted semi-independently |
-| Text corruption | Text is predicted pixel-by-pixel, not as symbols with meaning |
-| Style drift | Style emerges from local prediction, not a global style "lock" |
+| Identity drift | Which temporal context, subject references, or identity controls were available? |
+| Motion break | What learned motion patterns or constraints shaped the trajectory? |
+| Background teleport | Which parts of the scene were preserved, regenerated, masked, or edited? |
+| Text corruption | How was readable symbolic structure represented and constrained across time? |
+| Style drift | Which references or controls were meant to keep visual treatment consistent? |
 
-**The model never "knows" it made a consistent character in frame 1. It predicts frame 2 from a compressed representation of frame 1.**
+**The visible failure supports an observation. Explaining its cause requires evidence about the particular model and workflow.**
 
 ---
 
@@ -208,7 +210,7 @@ Share one thing from your Video Test Report:
 |---|---|---|
 | Text | Predict next token from distribution | Confident wrong answers |
 | Images | Iterative denoising from noise | Default outputs reflect training data |
-| Video | Frame-by-frame prediction | Drift, incoherence, physics breaks |
+| Video | Coherent spatiotemporal generation | Drift, incoherence, physics breaks |
 
 **All three: prediction from learned patterns. All three: defaults from training data. All three: human judgment still required.**
 

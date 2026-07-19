@@ -16,7 +16,7 @@
    Paths are relative to the worker's own location (the site root, under any
    GitHub Pages baseurl). */
 
-var CACHE = "lm-shell-v17";
+var CACHE = "lm-shell-v18";
 
 /* Resolved against the SW scope (the site root). */
 var PRECACHE = [
@@ -47,6 +47,8 @@ var PRECACHE = [
   "pages/docs-session-2-facilitation.html",
   "pages/session-video.html",
   "pages/session-3-deck.html",
+  "pages/session-3-assignment.html",
+  "pages/docs-session-3-facilitation.html",
   "tools/tokenizer-temperature-visualizer/",
   "tools/contextual-vector-lab/",
   "tools/whose-preference-lab/",
@@ -54,7 +56,11 @@ var PRECACHE = [
   "tools/human-diffusion-canvas/",
   "tools/image-caption-match-lab/",
   "tools/point-correspondence-lab/",
-  "tools/metronome-frame-scrubber/"
+  "tools/metronome-frame-scrubber/",
+  "tools/temporal-telephone/",
+  "tools/video-failure-gallery-viewer/",
+  "tools/frame-by-frame-coherence-viewer/",
+  "worksheets/video-test-report/"
 ];
 
 /* Same-origin paths that must never be served stale. */

@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex" />
-<title>Session 3 · Video — Human Video Model (live deck · DRAFT)</title>
+<title>Session 3 · Video — Human Video Model (live deck)</title>
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -206,7 +206,7 @@
 <div class="scrim" id="onboard" style="display:none">
   <div class="card">
     <h3>Two screens, one deck</h3>
-    <p class="small" style="color:var(--muted)">DRAFT — revise after the Session 1 &amp; 2 runs. A private cockpit for you, a clean slide for the room; the live tools sync between them and survive a refresh.</p>
+    <p class="small" style="color:var(--muted)">A private cockpit for you, a clean slide for the room; the live tools sync between them and survive a refresh.</p>
     <div class="two">
       <div class="vw y"><h4>You see — presenter</h4><p>The slide preview, your script, what the room does, the timer, and the controls for each live tool.</p></div>
       <div class="vw t"><h4>They see — audience</h4><p>Only the slide: the big idea, the room's task, and the live tool's visual. No notes, no controls.</p></div>
@@ -235,7 +235,7 @@
 
   var TOOLS = [
     {n:'Point Correspondence Lab', u:SITE+'tools/point-correspondence-lab/', w:'select, predict, then reveal a point track'},
-    {n:'Temporal Telephone', u:SITE+'tools/temporal-telephone/', w:'draw each frame from the last — watch drift'},
+    {n:'Temporal Telephone', u:SITE+'tools/temporal-telephone/', w:'compare frame sequences under different reference conditions'},
     {n:'Metronome Frame Scrubber', u:SITE+'tools/metronome-frame-scrubber/', w:'step frames on a beat'},
     {n:'Frame-by-Frame Coherence', u:SITE+'tools/frame-by-frame-coherence-viewer/', w:'onion-skin the drift'},
     {n:'Video Failure Gallery', u:SITE+'tools/video-failure-gallery-viewer/', w:'name failure modes precisely'},
@@ -243,122 +243,186 @@
   ];
   var CLOSERS = [
     {n:'Session 3 page — your map of everything we touched', u:SITE+'pages/session-video.html'},
-    {n:'Mechanism primers — Embedding Projector, CLIP, and CoTracker', u:SITE+'pages/further-reading.html#mechanism-primers'},
+    {n:'Session 3 assignment — six routes to one evidence-backed artifact', u:SITE+'pages/session-3-assignment.html'},
     {n:'Optional Studio / Showcase — show what you made', u:SITE+'pages/session-showcase.html'},
     {n:'Video Test Report — finish your claim any time', u:SITE+'worksheets/video-test-report/'}
   ];
 
   var SLIDES = [
-    { id:'title', kind:'title', time:4, nav:'Start + bridge',
-      head:'Human Video Model',
-      idea:'Today’s video sequence is frame → keypoints/features → correspondence across frames → coherence or drift.',
+    { id:'title', kind:'title', time:5, nav:'Welcome',
+      head:'You have been the machine three times',
+      idea:'Today we test one argument across text, images, and video.',
       notes:{
-        look:'Presenter cockpit: slide preview + notes on the left, live-tool controls on the right, timer and slide list up top. The audience window shows only the slide.',
-        you:['Screen-share the audience window only.','Return to PoseNet: one frame in, 17 keypoint coordinates and confidence scores out.','Name CoTracker as the contrasting analysis task: select a point, then estimate where it went across later frames.','Ask what a generator must preserve while creating those later frames; then assign loose roles.'],
-        room:['Say hello in chat.','No task yet — get oriented.','Expect to describe frames and vote in chat.'],
-        say:['"PoseNet can locate an elbow in one frame. CoTracker asks where that selected point went in the next frames."','"Generative video has the harder inverse problem: it must create those next frames while keeping the elbow, person, setting, and motion coherent. Tracking analyzes correspondence; it is not generation."'],
-        watch:'Keep analysis and generation distinct. The named projects create a conceptual bridge, not one literal pipeline inside every video generator.'} },
+        look:'The opening synthesis is already visible. The audience sees the camp journey before any recap begins.',
+        you:['Screen-share the audience window only.','Repeat the recording / likeness boundary and camera-off, chat-only, or watch-only participation choices.','Welcome people back and name the 120-minute arc.','Say the three lines once now; they return at the end.'],
+        room:['Choose camera, chat, drawing, or watch-only participation.','Put one word in chat: text, image, or video — which modality feels least settled?'],
+        say:['"You did not just hear three explanations. Across three sessions, you performed a simplified version of one constraint each system faces: continuation, spatial generation, and coherence across time."','"Fluent is not the same as true. Plausible is not the same as neutral. Smooth is not the same as evidence."'],
+        watch:'Do not turn this into a Session 1 lecture. The room earned the argument through the first two activities; today tests its third line.'} },
 
-    { id:'s0', kind:'setup', aid:'frames', time:8, shape:true, num:'00', nav:'Frames + memory',
+    { id:'shares', kind:'questions', time:7, num:'00', nav:'Two artifact shares',
+      head:'What changed when you tested it?',
+      take:'A finished claim, not a polished project, is the unit of progress.',
+      questions:['Share 1 — show the artifact, then state one claim it supports.','Share 2 — show the artifact, then name one boundary or surprise.'],
+      notes:{
+        look:'Two share prompts. The people and artifacts should already be arranged before the session.',
+        you:['Invite the two pre-arranged participants; do not cold-call.','Give each person about three minutes: artifact, claim, boundary.','Capture one phrase from each share for the next slide.'],
+        room:['Listen for the evidence behind each claim.','Ask one clarifying question if time allows.'],
+        say:['"Show us one thing we can point to, then tell us what it lets you claim."'],
+        watch:'Hard stop at 12 minutes elapsed. Park technical troubleshooting in chat.'} },
+
+    { id:'synthesis', kind:'synthesis', time:5, shape:true, num:'01', nav:'Text → image → video',
+      head:'One investigation, three warnings',
+      idea:'The output can feel convincing before it has earned your trust.',
+      task:'Which line did Session 1 or 2 make most concrete for you?',
+      take:'Same investigation method — not one universal architecture.',
+      notes:{
+        look:'Three compact statements: fluent ≠ true, plausible ≠ neutral, smooth ≠ evidence.',
+        you:['Ask for a fast retrieval response, not a new discussion.','Connect Session 1 probability and sycophancy to fluent ≠ true.','Connect Session 2 defaults and shared visual conventions to plausible ≠ neutral.','Name smooth ≠ evidence as today’s hypothesis.'],
+        room:['Choose one line and name the prior activity that supports it.'],
+        say:['"The trilogy is how we earned the argument. These three lines are the argument."'],
+        watch:'End retrieval at 17 minutes even if the conversation is lively; promise to return to the lines after the guest.'} },
+
+    { id:'correspondence', kind:'setup', aid:'frames', time:7, shape:true, num:'02', nav:'Point correspondence',
       head:'From a point to a path',
       idea:'A tracker links evidence across existing frames. A generator must create new frames whose features still agree.',
-      task:'Pick one feature—the ball’s center. In chat: where did that point go next, and what had to stay the same?',
-      take:'Correspondence asks what matches; coherence asks whether the generated sequence keeps those matches believable.',
+      task:'Pick the ball’s center: where did it go next, and what relation had to stay coherent?',
+      take:'Correspondence asks what matches; coherence asks whether a generated sequence keeps those relations believable.',
       notes:{
-        look:'You look at: the Point Correspondence Lab link plus play / step / reset for the fallback frame strip. Attendees see: a bouncing ball moving frame by frame.',
-        you:['Open the Point Correspondence Lab; choose Ball arc and select the ball center.','Take one destination prediction before revealing the route.','If the tool cannot open, use Play and Step on the fallback strip.','Connect the revealed path to CoTracker’s point-correspondence task, then ask what a generator would have to preserve while inventing frame 4.'],
-        room:['Follow the ball’s center across frames.','In chat: describe where the point went next.','Name colour, size, position, or identity as a property that must persist.'],
-        say:['"A tracker starts with frames that already exist and estimates correspondence. A generator must create the next frame and preserve correspondence at the same time."','"That is why a plausible still frame is not enough; the relation across frames is the evidence."'],
-        watch:'Keep this one clean and short — it is the "before" picture. Round 1 introduces drift, so this is the contrast.'} },
+        look:'Point Correspondence Lab plus a fallback frame strip.',
+        you:['Open the Point Correspondence Lab; select the ball center.','Take one prediction before revealing the route.','Distinguish analysis from generation: a tracker estimates correspondence in existing frames; a generator produces new frames.'],
+        room:['Predict the point’s destination.','Name one relation that has to persist: position, size, identity, lighting, or camera.'],
+        say:['"A plausible still is not enough. Across video, the relation between frames becomes part of the evidence."'],
+        watch:'Keep the mechanism bridge to seven minutes. It sets up the activity; it is not the main event.'} },
 
-    { id:'s1', kind:'telephone', aid:'telephone', time:12, num:'01', nav:'Round 1 — Telephone',
-      head:'Draw the next frame from the last',
-      idea:'If each frame is made only from the one before it — with no memory of the whole plan — small errors compound.',
+    { id:'telephone', kind:'telephone', aid:'telephone', time:23, num:'03', nav:'Temporal Telephone',
+      head:'Change one visibility condition',
+      idea:'Run A shows only the previous frame. Run B keeps the same first frame as an anchor. The comparison is the lesson.',
       prompt:'a person waving',
-      task:'Each new frame, describe ONLY the next small change in chat — a few words.',
-      take:'Without a plan for the whole clip, tiny changes accumulate into drift.',
+      task:'Build 6–8 frames in each run. Compare what stayed coherent, what drifted, and what the activity cannot tell us.',
+      take:'Small inconsistencies can compound when a sequence does not preserve the same relations across time.',
       notes:{
-        look:'You look at: an add-frame box. Attendees see: the growing strip — and the figure slowly wandering off.',
-        you:['Take the room’s description of the next frame; type a short label; click Add frame.','Do 6–10 frames. Do not correct earlier frames.','Point out the figure drifting as frames accumulate — that is the mechanism.'],
-        room:['Describe only the next small change, not the whole clip.','Do not fix earlier frames — you cannot see the plan.','Watch identity and position drift by the end.'],
-        say:['"This is previous-frame-only mode — the model’s hardest case. No memory of the whole clip."','"Nobody made a big mistake. Small ones just piled up. That is drift."'],
-        watch:'This mirrors the Temporal Telephone tool. The drift on screen is the point — let it get a little absurd by frame 8.'} },
+        look:'Use the full Temporal Telephone tool in a separate tab; the deck strip is only a fallback.',
+        you:['Run A: prompt hidden, previous frame only, 6–8 locked frames.','Play it once and ask where drift first became visible.','Run B: reveal the prompt and use the fixed first-frame anchor.','Play both saved runs. Ask what improved, what still drifted, and what this classroom constraint leaves out.'],
+        room:['Draw one frame and pass.','Watch one chosen feature across both runs.','Name one observation and one limit of the analogy.'],
+        say:['"This activity deliberately restricts the references available to each drawer. Real video systems vary: some use temporal context, reference conditioning, spatiotemporal processing, or editing controls."','"The comparison shows why references can matter; it does not reveal one universal video architecture."'],
+        watch:'Protect the energy here. If the room is engaged, keep the full 23 minutes and compress commentary inside the failure hunt.'} },
 
-    { id:'s2', kind:'drift', aid:'drift', time:9, num:'02', nav:'Round 2 — Coherence',
-      head:'Find where it stops making sense',
-      idea:'Scrub a clip and watch for the frame where an object changes identity — the classic failure of generated video.',
-      task:'In chat: vote on the frame number where it breaks.',
-      take:'Drift is the model forgetting. Consistency across time is expensive.',
+    { id:'coherence', kind:'drift', aid:'drift', time:5, num:'04A', nav:'Failure hunt — identity',
+      head:'Find where identity breaks',
+      idea:'Scrub one short sequence and track a single relation instead of judging the whole clip by vibe.',
+      task:'Vote on the first frame where the hand stops being structurally consistent.',
+      take:'Drift is visible when small inconsistencies compound across time; “forgetting” is only a classroom shorthand.',
       notes:{
-        look:'You look at: the scrubber, onion-skin, and reveal. Attendees see: a hand across frames — count the fingers.',
-        you:['Scrub slowly. Ask the room to watch the hand.','Collect chat votes for the break frame before you reveal.','Toggle onion-skin to show the ghost of the previous frame.','Reveal — the extra finger appears at a specific frame.'],
-        room:['Scrub with me; watch one feature (the fingers).','Vote in chat: which frame breaks?','Notice the break is sudden, not gradual.'],
-        say:['"CoTracker would analyze where selected hand points moved in frames that already exist. A generator has to create each new hand while preserving those relations."','"Onion-skin shows what a coherent sequence would keep steady—and where generation drifted."'],
-        watch:'Mirrors the Coherence Viewer + Metronome Scrubber. Let the room vote before Reveal — the guess is the engagement.'} },
+        look:'A curated hand sequence with scrubber, onion-skin, and reveal.',
+        you:['Collect votes before revealing.','Toggle onion-skin.','Ask what evidence supports the word drift.'],
+        room:['Track one feature: finger count.','Vote on the first break frame.'],
+        say:['"We can observe inconsistency here. Explaining its cause would require evidence about the particular model and workflow."'],
+        watch:'Do not imply every system generates independently frame by frame.'} },
 
-    { id:'s3', kind:'motion', aid:'motion', time:8, num:'03', nav:'Round 3 — Time',
-      head:'What breaks first?',
-      idea:'Models fake motion by filling in plausible in-between frames — so some things break before others.',
-      task:'Before the reveal, predict in chat: hands, text, faces, or physics — what breaks first?',
-      take:'Generated motion is interpolation, not physics. It has predictable weak points.',
+    { id:'physics', kind:'motion', aid:'motion', time:5, num:'04B', nav:'Failure hunt — physics',
+      head:'Smooth motion can still be wrong',
+      idea:'Learned motion patterns can look continuous without obeying object permanence, anatomy, or physics.',
+      task:'Predict which constraint breaks first: hands, text, faces, or physics.',
+      take:'Motion learned from patterns does not guarantee physics.',
       notes:{
-        look:'You look at: the clip-length toggle and reveal. Attendees see: break-likelihood meters for hands, text, faces, physics.',
-        you:['Ask the room to predict the weakest point before revealing.','Reveal the meters; note hands and text break first.','Switch short → long clip: longer means more drift everywhere.'],
-        room:['Predict what breaks first in chat.','Watch the meters rise as the clip gets longer.','Notice the model has no physics — only plausible frames.'],
-        say:['"It does not simulate a bouncing ball. It guesses what a bounce usually looks like."','"Hands and text break first because they need exact structure the model only approximates."'],
-        watch:'A cartoon of the Failure Gallery patterns. Frame it as interpolation vs. understanding.'} },
+        look:'A teaching cartoon of common failure patterns, not measured model scores.',
+        you:['Ask for predictions before reveal.','Name the meters as a discussion device, not benchmark data.','Connect the result to smooth ≠ evidence.'],
+        room:['Predict, reveal, then name the exact failure rather than saying “weird.”'],
+        say:['"Some systems interpolate or transform representations; others generate with temporal or spatiotemporal context. None of that makes visual smoothness proof of physical correctness."'],
+        watch:'Avoid “the model has no physics.” The defensible claim is that generated motion does not guarantee physical consistency.'} },
 
-    { id:'s4', kind:'contrib', aid:'contrib', time:10, shape:true, num:'04', nav:'Round 4 — Whose motion?',
-      head:'Whose motion is this?',
-      idea:'Video makes the consent stakes concrete: faces, voices, and performances belong to people.',
-      task:'In chat: name one consent question a generated clip of a real person raises.',
-      take:'Likeness and performance are human labour. Naming the consent question is part of using this responsibly.',
+    { id:'system', kind:'contrib', aid:'contrib', time:8, shape:true, num:'05', nav:'System map',
+      head:'A clip is also a system',
+      idea:'Model, interface, training data, workers, prompter, subject, editor, and platform all shape what appears.',
+      task:'Map one human decision, one hidden contribution, one consent question, and one provenance question.',
+      take:'The output hides a chain of labor and decisions; provenance makes that chain easier to inspect.',
       notes:{
-        look:'You look at: three boxes you fill from the room. Attendees see: a live contributions / consent map.',
-        you:['Fill "the human did" and "the machine did" from chat.','Then the hard one: "hidden" — whose likeness, performance, or labour?','Hold the deepfake/consent question open; do not resolve it.'],
-        room:['Separate the prompter’s choices from the model’s fill-ins.','Name whose likeness or performance is hidden in the clip.','Say one consent question this raises.'],
-        say:['"A generated clip of a real person uses a likeness that person did not hand over."','"Two things at once: this is powerful, and it can take a face or a performance without consent."'],
-        watch:'The consent stakes are sharpest in video. Do not moralise — map it honestly and wire it to the AI Use + Consent Checklist.'} },
+        look:'A live contribution map. Use the three fields to gather the room’s language.',
+        you:['Fill human action, machine action, and hidden contribution from chat.','Add provenance aloud: what record would help someone inspect where the clip came from?','Hold consent and provenance apart: documentation does not itself create permission.'],
+        room:['Name a worker, subject, dataset contributor, editor, or platform decision that the clip hides.'],
+        say:['"A provenance record can document a chain. It cannot retroactively supply consent."'],
+        watch:'Eight minutes is enough because the room has already discussed labor and defaults in Sessions 1 and 2.'} },
 
-    { id:'s5', kind:'questions', time:7, num:'05', nav:'Debrief',
-      head:'What did the room become?',
-      idea:'Frames become motion; memory becomes coherence; interpolation fakes physics.',
-      task:'Answer in chat or aloud — we will pick a few.',
-      take:'Video is prediction across time. What has to stay constant, and what it takes from real people, are the whole story.',
-      questions:[
-        'Where did the telephone figure start to drift?',
-        'What one feature did you watch to catch the break?',
-        'Does the model understand time, or fake it? How can you tell?',
-        'Whose likeness or performance is hidden in a generated clip?',
-        'Text → image → video: what stayed the same about how you investigated?'],
+    { id:'studio', kind:'studio', time:18, num:'06', nav:'One-tool studio',
+      head:'One tool, one finished claim',
+      idea:'Use a real instrument, record one observation, and state the boundary of what it proves.',
+      task:'Pick ONE tool. Finish one coherence claim + one boundary on the Video Test Report.',
       notes:{
-        look:'You look at: the questions and the clock. Attendees see: the questions only.',
-        you:['Pick 3–5. Start with drift and the consent question.','Take chat first, then call on one or two people.','Close the whole-camp arc: same investigation across three modalities.'],
-        room:['Answer in chat or aloud.','Name one thing you will carry into your own work or classroom.'],
-        say:['"Coherence and consent are not add-ons — they are what video generation is about."','"You can now investigate any modality the same way: predict, change one thing, compare, name the human decision."'],
-        watch:'End on the camp-wide method, not the video math.'} },
+        look:'The six tool routes and the copy-links control.',
+        you:['Paste the tool links in chat.','Offer two lanes: default route = Failure Gallery or Coherence Viewer; advanced route = Temporal Telephone or Point Lab.','At minute 13, give a five-minute warning.','Circulate with one question: what exact frame or comparison is your evidence?'],
+        room:['Choose one route.','Finish one worksheet row before touring another tool.','Prepare a one-sentence claim and one-sentence boundary.'],
+        say:['"One finished claim beats ten open tabs."'],
+        watch:'Do not extend the studio beyond 83 minutes; the guest handoff needs a calm runway.'} },
 
-    { id:'s6', kind:'studio', time:23, num:'06', nav:'Tool studio',
-      head:'Your turn — the real tools',
-      idea:'The slides were cartoons. These are the instruments — real drift, real scrubbing.',
-      task:'Pick ONE tool. Log one coherence claim + one boundary on the Video Test Report.',
+    { id:'claims', kind:'questions', time:5, num:'07', nav:'Two claims',
+      head:'What does your evidence let you say?',
+      take:'Strong claims name both the observed pattern and the boundary of the test.',
+      questions:['Claim 1 — observation, exact evidence, boundary.','Claim 2 — observation, exact evidence, boundary.'],
       notes:{
-        look:'You look at: the Copy links button and the clock. Attendees see: the tool list with what to notice in each.',
-        you:['Click Copy links for chat and paste the block into Zoom chat.','Name the deal: one tool, one failure named precisely, one worksheet row.','Circulate — ask "which feature drifted, and at which frame?"','Five-minute warning: one claim in chat.'],
-        room:['Open one tool — no accounts, no installs.','Find and name one failure mode precisely.','Write one coherence claim + one boundary on the Video Test Report.','Drop one claim in chat before we regroup.'],
-        say:['"Name the failure precisely: identity drift, physics break, style drift, temporal jump."','"One good claim beats ten broken clips."'],
-        watch:'Steer people to finish one worksheet row before touring. The precise failure name is the deliverable.'} },
+        look:'A strict two-share structure.',
+        you:['Invite two concise shares.','After each, ask only: what is the boundary?','Thank the room and pivot to the guest at minute 88.'],
+        room:['Listen for the difference between observation and explanation.'],
+        say:['"A clip can support an observation without proving why the system produced it."'],
+        watch:'Choose volunteers from the studio instead of opening a general debrief.'} },
 
-    { id:'s7', kind:'close', time:5, shape:true, num:'07', nav:'Close + what’s next',
-      head:'What you leave with',
-      idea:'Three modalities, one method: predict, change one thing, compare, name the human decision — and ask whose labour is inside.',
-      take:'This was the last core session. The optional Studio is where you show what you made and adapt it for your own context.',
+    { id:'guest-intro', kind:'guest', time:2, shape:true, num:'08', nav:'Guest introduction',
+      head:'Dr. Emily Thomforde',
+      idea:'AI researcher and educator · PhD in Artificial Intelligence, University of Edinburgh · Reach University',
+      take:'Listening question: what would count as evidence that a system understands, rather than merely produces a convincing pattern?',
+      questions:['Welcome Emily and connect her work to the room’s text → image → video investigation.'],
       notes:{
-        look:'You look at: the closing pointers and the clock. Attendees see: three links and the takeaway.',
-        you:['Read the recap consent line: recordings are for registered participants; people choose how they are named.','Point at the three links — session page, the optional Studio, the worksheet.','Name the optional Studio / showcase as the next gathering, not a fourth core session.','After the call: click copy log and paste it into your recap notes.'],
-        room:['Bookmark the session page.','Consider bringing something to the optional Studio.','Finish your Video Test Report row when you can.'],
-        say:['"You investigated text, image, and video the same way. That method is the thing to keep."','"The Studio is optional and low-stakes: show one thing you made and the evidence behind it."'],
-        watch:'End warm. This is the camp’s last core beat — name what they can now do, not what they should have memorised.'} }
+        look:'The guest’s name, context, and one listening question.',
+        you:['Give a two-minute introduction.','Name the listening question, then hand over cleanly.'],
+        room:['Close tool tabs and listen with the evidence question in mind.'],
+        say:['"Emily, we have been testing where convincing output outruns the evidence. We would love for you to take us from here."'],
+        watch:'Pronounce Thomforde as confirmed with the guest before the session.'} },
+
+    { id:'guest-talk', kind:'guest', time:18, num:'09', nav:'Guest talk',
+      head:'Guest lens — intelligence, evidence, and education',
+      idea:'Listen for one idea that changes how you would test, teach, or describe an AI system.',
+      task:'Write down one sentence you want to bring into the Q&A.',
+      take:'Guest segment · 18 minutes',
+      questions:['What distinction is Emily asking us to make?','What evidence would that distinction require?'],
+      notes:{
+        look:'A quiet listening slide. The timer protects the guest segment.',
+        you:['Yield the floor.','At 15 minutes, send a private three-minute signal if arranged.','Capture two possible Q&A threads from chat.'],
+        room:['Listen and collect one question.'],
+        say:['"We will hold questions for an eight-minute Q&A."'],
+        watch:'Do not interrupt to connect every point back to the deck; save synthesis for the final two minutes.'} },
+
+    { id:'guest-qa', kind:'questions', time:8, num:'10', nav:'Q&A with Emily',
+      head:'Questions that move the inquiry forward',
+      take:'Ask about mechanisms, evidence, learning, or consequences—not a prediction contest.',
+      questions:['What did the text → image → video sequence make you reconsider?','What would you want learners to test next?','What evidence is usually missing when people claim that a model understands?'],
+      notes:{
+        look:'Three backup questions; prioritize participant questions.',
+        you:['Take participant questions first.','Use one backup only if the room is quiet.','Hard stop Q&A at minute 116.'],
+        room:['Ask one concise question.'],
+        say:['"Let’s take questions that help us investigate, not just forecast."'],
+        watch:'Protect a final guest takeaway and closing callback.'} },
+
+    { id:'guest-takeaway', kind:'guest', time:2, shape:true, num:'11', nav:'Guest takeaway',
+      head:'One sentence to carry forward',
+      idea:'What should this room keep testing after today?',
+      take:'Emily: one closing thought · Room: one phrase in chat',
+      questions:['Invite Emily’s one-sentence takeaway, then ask the room for one phrase in chat.'],
+      notes:{
+        look:'A single closing prompt for the guest and room.',
+        you:['Invite Emily’s takeaway.','Thank her explicitly.','Ask for one phrase in chat while moving to the close.'],
+        room:['Add one phrase you want to remember.'],
+        say:['"Emily, what is the one sentence you hope this room carries into its own work?"'],
+        watch:'Keep this to two minutes; it creates the material for the final callback.'} },
+
+    { id:'close', kind:'close', time:2, shape:true, num:'12', nav:'Close + studio invitation',
+      head:'Convincing is not the same as trustworthy',
+      idea:'Fluent ≠ necessarily true · Plausible ≠ necessarily neutral · Smooth ≠ evidence',
+      take:'Keep the method: predict, change one thing, compare, name the human decision, and state what your evidence cannot prove.',
+      notes:{
+        look:'The three-line argument returns beside the take-home links.',
+        you:['Thank Emily and the participants.','Invite people to the optional Studio / Showcase.','Point to the session page and Video Test Report.','After the call, copy the deck log into recap notes.'],
+        room:['Bookmark the session page.','Bring one artifact and its evidence to the optional Studio if useful.'],
+        say:['"You have been the machine three times. Keep the investigation, not the mystique."'],
+        watch:'This is a callback, not a new synthesis. End at minute 120.'} }
   ];
 
   /* ============ STATE ============ */
@@ -462,8 +526,16 @@
     var sh=s.shape?' shape':'';
 
     if(s.kind==='title'){
-      var flow='<div class="title-flow"><span class="f sh">frame</span><span>→</span><span class="f">keypoints / features</span><span>→</span><span class="f">correspondence across frames</span><span>→</span><span class="f">coherence or drift</span></div>';
+      var flow='<div class="title-flow"><span class="f">text · fluent ≠ necessarily true</span><span class="bk">→</span><span class="f">image · plausible ≠ necessarily neutral</span><span class="bk">→</span><span class="f sh">video · smooth ≠ evidence</span></div>';
       return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:38ch">'+esc(s.idea)+'</div>'+flow+'</div>';
+    }
+    if(s.kind==='synthesis'){
+      var claims='<div class="qlist" style="gap:8px">'+[
+        ['TEXT','Tokens + context','Select a continuation','Fluent ≠ necessarily true'],
+        ['IMAGE','Text / reference conditioning','Generate or denoise a spatial representation','Plausible ≠ necessarily neutral'],
+        ['VIDEO','Text / reference / temporal conditioning','Produce a coherent space-time sequence','Smooth ≠ evidence']
+      ].map(function(x){return '<div class="qrow" style="padding:9px 18px;font-size:21px"><span class="qn">'+x[0]+'</span><span class="txt2"><b>'+x[1]+'</b><span class="note">'+x[2]+' · '+x[3]+'</span></span></div>';}).join('')+'</div>';
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+claims+'</div><div class="s-take">'+esc(s.take)+'</div>'+task(s)+'</div>';
     }
     if(s.kind==='setup'){
       return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+framesViz()+'</div>'+task(s)+'</div>';
@@ -483,6 +555,10 @@
     if(s.kind==='questions'){
       var qs='<div class="qlist">'+s.questions.map(function(q,k){return '<div class="qrow"><span class="qn">Q'+(k+1)+'</span>'+esc(q)+'</div>';}).join('')+'</div>';
       return '<div class="stage">'+eyebrow+head+'<div class="s-body">'+qs+'</div><div class="s-take">'+esc(s.take)+'</div></div>';
+    }
+    if(s.kind==='guest'){
+      var prompts='<div class="qlist">'+(s.questions||[]).map(function(q,k){return '<div class="qrow"><span class="qn">'+String(k+1).padStart(2,'0')+'</span>'+esc(q)+'</div>';}).join('')+'</div>';
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+prompts+'</div>'+task(s)+(s.take?'<div class="s-take">'+esc(s.take)+'</div>':'')+'</div>';
     }
     if(s.kind==='studio'){
       var rows='<div class="qlist c">'+TOOLS.map(function(t,k){
@@ -528,7 +604,7 @@
     var strip=''; for(var k=0;k<d.n;k++){ var brk=d.revealed&&k===d.breakAt;
       strip+='<div class="av-fr'+(k===cur?' on':'')+(brk?' brk':'')+'"><span class="fn">'+k+'</span>'+handSVG(k>=d.breakAt?base+1:base,false)+'</div>'; }
     var cap=d.revealed
-      ? '<div class="av-cap">identity drift at <b>frame '+d.breakAt+'</b> — a sixth finger appears. Same "hand", re-guessed each frame.</div>'
+      ? '<div class="av-cap">identity drift at <b>frame '+d.breakAt+'</b> — a sixth finger appears and the sequence no longer preserves the hand’s structure.</div>'
       : '<div class="av-cap" style="color:var(--muted)">scrub and count the fingers · vote in chat where it breaks'+(d.onion?' · onion-skin on':'')+'</div>';
     return '<div class="av-frbig"><div class="big">'+big+'</div><div class="col"><div class="av-cap" style="text-align:left;margin-top:0">frame <b>'+cur+'</b> of '+(d.n-1)+' · fingers: <b>'+fingers+'</b></div></div></div>'+
       '<div class="av-film">'+strip+'</div>'+cap;
@@ -542,8 +618,8 @@
     var rows=vals.map(function(v,k){ var top=state.motion.revealed&&k===maxi;
       return meterRow(v[0], v[1], top?'#bf7a20':'#5546d6', top); }).join('');
     var cap=state.motion.revealed
-      ? '<div class="av-cap"><b>'+vals[maxi][0]+' break first</b> — they need exact structure the model only approximates.</div>'
-      : '<div class="av-cap" style="color:var(--muted)">'+(lng?'long clip':'short clip')+' — predict in chat what breaks first</div>';
+      ? '<div class="av-cap"><b>'+vals[maxi][0]+' are the test target in this teaching cartoon.</b> Verify the pattern with actual clips; these are not benchmark scores.</div>'
+      : '<div class="av-cap" style="color:var(--muted)">'+(lng?'long clip':'short clip')+' — predict in chat what breaks first · illustrative, not measured</div>';
     return '<div style="margin-top:8px">'+rows+'</div>'+cap;
   }
   function contribViz(){
@@ -559,20 +635,21 @@
   /* ============ SESSION LOG ============ */
   function buildLog(){
     var d=new Date(), L=[];
+    var telephoneSlide=SLIDES.filter(function(slide){ return slide.id==='telephone'; })[0];
     L.push('# Human Video Model — session log');
     L.push('_Session 3 · Video — ' + d.toDateString() + '_');
     L.push('');
-    L.push('## Round 1 — temporal telephone ("'+ (SLIDES[2].prompt||'') +'")');
+    L.push('## Temporal Telephone fallback strip ("'+ (telephoneSlide.prompt||'') +'")');
     var f=state.telephone.frames||[];
     L.push(f.length ? f.map(function(x,k){return '- frame '+(k+1)+': '+x;}).join('\n') : '- no frames recorded');
     L.push('');
-    L.push('## Round 2 — coherence / drift');
+    L.push('## Curated failure hunt — coherence / drift');
     L.push('- break frame: ' + state.drift.breakAt + ' of ' + (state.drift.n-1) + (state.drift.revealed?' (revealed)':' (not revealed)'));
     L.push('');
-    L.push('## Round 3 — motion / time');
+    L.push('## Curated failure hunt — motion / time');
     L.push('- clip length: ' + state.motion.variant + (state.motion.revealed?' · revealed weakest point':''));
     L.push('');
-    L.push('## Round 4 — whose motion (consent map)');
+    L.push('## System / labor / consent / provenance map');
     L.push('- the human did: ' + state.contrib.human);
     L.push('- the machine did: ' + state.contrib.model);
     L.push('- hidden in the output: ' + state.contrib.hidden);
@@ -618,7 +695,7 @@
     var i=state.slide, s=SLIDES[i];
     root.innerHTML=
       '<div class="cockpit">'+
-        '<div class="topbar"><span class="tb-badge draft">draft</span>'+
+        '<div class="topbar"><span class="tb-badge">120 min</span>'+
           '<span class="tb-title">Session 3 · Human Video Model · only you see this</span><span class="tb-sp"></span>'+
           '<span class="tb-timer" id="timer">00:00</span>'+
           '<button class="mini go" id="tStart">start</button><button class="mini" id="tReset">reset</button>'+
@@ -710,8 +787,8 @@
       '<input type="range" id="drBreak" min="3" max="9" value="6" />'+
       '<div class="crow"><button class="btn ghost" id="drOnion">Onion-skin</button><button class="btn" id="drRev">Reveal</button><button class="btn ghost" id="drRst">Reset</button></div></div></div>';
     if(s.aid==='motion') return ''+
-      '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Break-likelihood</span><span class="mark">shows on their screen</span></div><div class="bd">'+
-      '<p class="hint">Let the room predict before you reveal. Longer clips drift more everywhere.</p>'+
+      '<div class="ctrl"><div class="hd"><span class="ct">cartoon</span><span class="cn">Failure-test targets</span><span class="mark">illustrative only</span></div><div class="bd">'+
+      '<p class="hint">Let the room predict before you reveal. The percentages organize discussion; they are not measured model results.</p>'+
       '<div class="crow"><span class="seg-toggle" id="moTog"><button data-v="short">short clip</button><button data-v="long" class="on">long clip</button></span>'+
       '<button class="btn" id="moRev">Reveal</button><button class="btn ghost" id="moRst">Hide</button></div></div></div>';
     if(s.aid==='contrib') return ''+

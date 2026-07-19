@@ -6,6 +6,8 @@ title: "Session 3: Video"
 # Session 3: Video
 ## Why is video generation harder than image generation, and what does that tell us about how models work?
 
+> **Superseded planning draft.** Do not facilitate from this page. The current 120-minute run, mechanism language, guest block, and cut rules live in [Session 3 Facilitation](session-3-facilitation.md); the current slides live in [the Session 3 live deck](../pages/session-3-deck.html).
+
 **Learning Machines: Text, Images, Video — CC Fest**
 **Duration:** 2 hours | **Format:** Virtual, Zoom
 
@@ -76,7 +78,7 @@ Our job today is to look at those failures as evidence.
 
 - Where did the identity drift? What changed first — color, shape, proportion, or context?
 - What would have helped maintain coherence? (Seeing the original frame alongside the previous one.)
-- Now: a video model generates each frame using the previous frame as context, with no guaranteed access to a stable "ground truth" anchor. What does that predict about its failure modes?
+- Now: this activity deliberately limits each drawer's references. What does that predict about coherence, and what would you need to learn before claiming that a real video system works the same way?
 
 > *[Transition:] "That is the problem Temporal Telephone is designed to show. Let's try it with the tool."*
 
@@ -115,7 +117,7 @@ This tool runs the telephone experiment in two rounds with different reference c
 
 > *[Say something like:]*
 >
-> Video generation models face the same tradeoff you just experienced. Conditioning only on the previous frame is computationally cheaper but accumulates drift. Conditioning on the first frame or a keyframe adds coherence but costs more computation. The tradeoff is not solved — it is managed, imperfectly, in every video model you use.
+> The activity isolates one control question: what changes when a stable reference remains available? Real systems vary in their temporal context, reference conditioning, spatiotemporal processing, and editing controls. Use the comparison to form questions about those choices, not to infer one universal architecture.
 
 ---
 
