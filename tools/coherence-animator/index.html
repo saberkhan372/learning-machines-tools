@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="video" data-skin="video-slitscan">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Draw two short animations from one shared frame, compare reference conditions, and inspect what stays coherent across time.">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <title>Coherence Animator — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/field.css">
+  <link rel="stylesheet" href="../../assets/field-tool.css">
+  <link rel="stylesheet" href="coherence-animator.css">
+  <script src="../../assets/field-theme.js"></script>
+  <script src="coherence-animator.js" defer></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="../../index.html#tools" class="hide-sm">Tool index</a>
+        <a href="../../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="../../pages/session-video.html" class="hide-sm">Session 3</a>
+        <a class="btn btn-sm" href="../../pages/session-showcase.html">Studio</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tool-shell ca-shell">
+    <header class="tool-hero">
+      <p class="tool-kicker">Development build · Session 3 extension · Video</p>
+      <h1 class="tool-title">Coherence Animator</h1>
+      <p class="tool-dek">Make nine drawings that become two five-frame animations: one shared opening, then four new frames per run. Change the visual reference, then compare what stays coherent and what drifts.</p>
+      <div class="tool-idea">Draw it → move it → compare it. A stable reference can help without guaranteeing consistency.</div>
+    </header>
+
+    <section class="tool-notice ca-notice" aria-labelledby="teaching-model-title">
+      <div class="tool-notice-inner">
+        <strong id="teaching-model-title">Human animation comparison — not a model simulator.</strong>
+        This tool changes which drawings a human animator can see. Real video systems condition across time in different ways; this activity does not reveal one universal architecture.
+      </div>
+    </section>
+
+    <nav class="phase-rail" aria-label="Animator phases">
+      <div class="phase-step active" data-phase="anchor"><span>1</span><b>Opening frame</b><small>draw once</small></div>
+      <div class="phase-step" data-phase="run-a"><span>2</span><b>Run A</b><small>previous only</small></div>
+      <div class="phase-step" data-phase="run-b"><span>3</span><b>Run B</b><small>anchor + previous</small></div>
+      <div class="phase-step" data-phase="compare"><span>4</span><b>Compare</b><small>same speed</small></div>
+    </nav>
+
+    <section class="animator-grid" aria-label="Animation workspace">
+      <div class="canvas-panel">
+        <div class="canvas-head">
+          <div>
+            <p class="mini-label" id="canvasMode">Shared opening frame</p>
+            <h2 id="canvasTitle">Draw Frame 1</h2>
+          </div>
+          <div class="reference-badges" id="referenceBadges" aria-label="Visible drawing references">
+            <span class="reference-badge active">No ghost yet</span>
+          </div>
+        </div>
+
+        <div class="canvas-wrap" id="canvasWrap">
+          <canvas id="drawCanvas" tabindex="0" role="application" aria-label="Drawing canvas for the shared opening frame"></canvas>
+          <div class="playback-stamp" id="playbackStamp" hidden></div>
+        </div>
+
+        <p class="canvas-summary" id="canvasSummary" aria-live="polite">Opening frame. No frames locked yet. Draw on the blank canvas.</p>
+
+        <div class="drawing-toolbar" id="drawingToolbar" aria-label="Drawing controls">
+          <div class="control-group">
+            <span class="toolbar-label">Color</span>
+            <div class="color-controls" id="colorControls"></div>
+          </div>
+          <div class="control-group">
+            <span class="toolbar-label">Brush</span>
+            <div class="size-controls" id="sizeControls"></div>
+          </div>
+          <div class="toolbar-spacer"></div>
+          <button class="utility-button" type="button" id="eraserBtn" aria-pressed="false">Eraser</button>
+          <button class="utility-button" type="button" id="undoBtn" disabled>Undo stroke</button>
+          <button class="utility-button danger" type="button" id="clearBtn" disabled>Clear frame</button>
+        </div>
+      </div>
+
+      <aside class="guide-panel" aria-labelledby="guideTitle">
+        <p class="mini-label">Current move</p>
+        <h2 id="guideTitle">Draw one shared starting point</h2>
+        <p id="guideCopy">Use the vague prompt as a starting condition. Decide the person, setting, object, camera, and pose. This exact drawing will begin both runs.</p>
+
+        <label class="field-label" for="promptInput">Motion prompt</label>
+        <input id="promptInput" type="text" value="A person at work" maxlength="90">
+        <p class="field-help">You may change the prompt until the opening frame is locked.</p>
+
+        <div class="frame-target" id="frameTarget">
+          <span class="target-label">Guided target</span>
+          <strong>Five timeline frames per run</strong>
+          <span>You draw nine times total. Run B receives the shared Frame 1 automatically.</span>
+        </div>
+
+        <button class="primary-action" type="button" id="lockBtn" disabled>Lock shared Frame 1</button>
+        <button class="secondary-action" type="button" id="resumeBtn" hidden>Return to current drawing</button>
+        <button class="secondary-action unlock-action" type="button" id="unlockBtn" hidden>Unlock last frame</button>
+
+        <div class="recovery-row">
+          <button class="text-button" type="button" id="resetBtn">Reset all work</button>
+        </div>
+
+        <div class="guide-boundary">
+          <strong>What changes?</strong>
+          <p>Run A shows the previous drawing. Run B shows the shared opening anchor and the previous drawing. You draw nine unique images; the shared opening counts in both runs.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="timeline-panel" aria-labelledby="timelineTitle">
+      <div class="section-heading">
+        <div>
+          <p class="mini-label">Branching timeline</p>
+          <h2 id="timelineTitle">One opening frame, two animation runs</h2>
+        </div>
+        <p id="timelineStatus">Draw and lock the shared opening frame to create both branches.</p>
+      </div>
+
+      <div class="timeline-grid">
+        <div class="shared-frame-column">
+          <span class="timeline-label">Shared</span>
+          <button class="frame-slot shared" type="button" id="sharedFrameSlot" disabled aria-label="Shared Frame 1, not locked">
+            <span class="slot-number">1</span>
+            <span class="slot-state">opening</span>
+          </button>
+        </div>
+        <div class="branch-lines" aria-hidden="true"><span></span><span></span></div>
+        <div class="run-rows">
+          <div class="run-row" data-run="a">
+            <div class="run-label"><b>Run A</b><span>previous frame only</span></div>
+            <div class="frame-slots" id="runASlots"></div>
+          </div>
+          <div class="run-row" data-run="b">
+            <div class="run-label"><b>Run B</b><span>anchor + previous</span></div>
+            <div class="frame-slots" id="runBSlots"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare-panel" id="comparePanel" aria-labelledby="compareTitle" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="mini-label">Sequential comparison</p>
+          <h2 id="compareTitle">Follow one feature at one shared speed</h2>
+        </div>
+        <p>Choose the feature before playback. The browser assembles your drawings; it does not evaluate or track their meaning.</p>
+      </div>
+
+      <div class="compare-controls">
+        <label class="feature-field" for="featureInput">
+          Feature to watch
+          <input id="featureInput" type="text" maxlength="60" placeholder="e.g. the hand, tool, doorway, or face">
+        </label>
+
+        <div class="run-toggle" role="group" aria-label="Playback run">
+          <button type="button" id="playRunA" class="active" aria-pressed="true">Run A</button>
+          <button type="button" id="playRunB" aria-pressed="false">Run B</button>
+        </div>
+
+        <div class="playback-buttons" aria-label="Playback controls">
+          <button type="button" id="prevFrameBtn" aria-label="Previous frame">←</button>
+          <button type="button" id="playBtn">▶ Play</button>
+          <button type="button" id="nextFrameBtn" aria-label="Next frame">→</button>
+        </div>
+
+        <label class="fps-control" for="fpsInput">Speed
+          <input id="fpsInput" type="range" min="1" max="12" value="6" step="1">
+          <span><output id="fpsOutput">6</output> fps</span>
+        </label>
+
+        <button class="primary-action compare-action" type="button" id="guidedBtn" disabled>Play A twice, then B twice</button>
+      </div>
+
+      <div class="comparison-protocol">
+        <ol>
+          <li>Choose one feature from the shared opening frame.</li>
+          <li>Watch Run A twice.</li>
+          <li>Watch Run B twice at the same speed.</li>
+          <li>Toggle A → B → A and record what changed.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="phase-one-note" aria-labelledby="nextBuildTitle">
+      <p class="mini-label">Development boundary</p>
+      <h2 id="nextBuildTitle">Phase 1 builds the animation core</h2>
+      <p>Manual feature points, annotated paths, difference view, bounded-claim export, provenance cards, and GIF export arrive only after this draw → branch → return → playback flow survives a dedicated Zoom pilot.</p>
+    </section>
+
+    <div class="status-region" id="statusRegion" role="status" aria-live="polite"></div>
+    <div class="self-test" id="selfTest" aria-live="polite">Self-tests not run.</div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:12px;"><span class="mark"></span>Learning Machines</div>
+      <p class="mono">Development build · Human-drawn frames remain in this browser unless you explicitly export them.</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/analytics.js"></script>
+</body>
+</html>
