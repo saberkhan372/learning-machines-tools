@@ -16,7 +16,7 @@
    Paths are relative to the worker's own location (the site root, under any
    GitHub Pages baseurl). */
 
-var CACHE = "lm-shell-v18";
+var CACHE = "lm-shell-v19";
 
 /* Resolved against the SW scope (the site root). */
 var PRECACHE = [

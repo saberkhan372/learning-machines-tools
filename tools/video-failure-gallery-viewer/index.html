@@ -20,6 +20,11 @@
     .failure-row strong { color: var(--ink); }
     .failure-row span { color: var(--muted); font-size: 0.9rem; }
     @media (max-width: 720px) { .failure-row { grid-template-columns: 1fr; } }
+    .prov-claim { border: 1px solid var(--line); border-left: 3px solid var(--accent); background: var(--surface-2); padding: 10px 14px; border-radius: 2px; font-style: italic; color: var(--ink); }
+    .prov-list { display: grid; gap: 8px; margin: 4px 0 0; padding-left: 1.15em; }
+    .prov-list li { color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+    .prov-list strong { color: var(--ink); }
+    .prov-list li.trap { color: var(--ink); }
   </style>
 </head>
 <body>
@@ -97,6 +102,25 @@
     </section>
 
     <section class="lab-panel" style="margin-top:16px;">
+      <div class="lab-pad stack">
+        <h2>From failure to provenance</h2>
+        <p class="small-muted">Labeling a failure mode is close observation — not verification. A clip with no visible glitch is not thereby real, and a real clip can look strange after compression or editing. Plausibility is not provenance. So imagine this gallery example arrived with a claim attached:</p>
+        <div class="prov-claim" id="claimedAsBox"></div>
+        <p class="mini-label">Before treating it as evidence of that event, what would you actually need?</p>
+        <ul class="prov-list">
+          <li><strong>Source &amp; chain of custody</strong> &mdash; who recorded it, on what device, and can it be traced back unbroken to that moment?</li>
+          <li><strong>Corroboration</strong> &mdash; do independent angles, witnesses, or records show the same event?</li>
+          <li><strong>Context</strong> &mdash; does the original posting and surrounding reporting match, or was it stripped and re-captioned?</li>
+          <li><strong>Content credentials</strong> &mdash; does it carry signed provenance metadata (e.g. C2PA), and is that signature intact?</li>
+          <li class="trap"><strong>The trap</strong> &mdash; a clean clip is not verified, and a glitchy clip is not debunked. Eyeballing plausibility is never enough.</li>
+        </ul>
+        <label>Before I would treat this clip as evidence of the claimed event, I would need&hellip;
+          <textarea class="note-box" id="claimProvenance"></textarea>
+        </label>
+      </div>
+    </section>
+
+    <section class="lab-panel" style="margin-top:16px;">
       <div class="lab-pad">
         <h2>Failure mode guide</h2>
         <div class="failure-table" id="modeGuide"></div>
@@ -119,6 +143,7 @@
         title: "Runner with changing jacket",
         prompt: "A person in a yellow jacket runs past a brick wall.",
         mode: "identity",
+        claimedAs: "Posted online as security-camera footage identifying a specific person near an incident.",
         colors: ["#f6bd60", "#c084fc"],
         captions: [
           "Frame 1: yellow jacket and dark pants are clear.",
@@ -133,6 +158,7 @@
         title: "Cup that forgets itself",
         prompt: "A ceramic cup slides across a table and stops by a notebook.",
         mode: "object",
+        claimedAs: "Shared as eyewitness phone video proving an object was on the table during a dispute.",
         colors: ["#5eead4", "#f6bd60"],
         captions: [
           "Frame 1: cup, handle, notebook, and table are visible.",
@@ -147,6 +173,7 @@
         title: "Ball with impossible bounce",
         prompt: "A red ball bounces down three stairs.",
         mode: "physics",
+        claimedAs: "Submitted as footage showing exactly how an accident happened.",
         colors: ["#ef4444", "#5eead4"],
         captions: [
           "Frame 1: the ball sits at the top stair.",
@@ -161,6 +188,7 @@
         title: "Kitchen camera jump",
         prompt: "A camera slowly circles a kitchen table while someone pours tea.",
         mode: "camera",
+        claimedAs: "Circulated as real footage from inside a private home.",
         colors: ["#c084fc", "#5eead4"],
         captions: [
           "Frame 1: table and window establish a viewpoint.",
@@ -275,6 +303,7 @@
       const clip = CLIPS[activeClip];
       document.getElementById("clipTitle").textContent = clip.title;
       document.getElementById("clipPrompt").textContent = clip.prompt;
+      document.getElementById("claimedAsBox").textContent = clip.claimedAs;
       document.getElementById("frameStage").innerHTML = clipSvg(clip, activeFrame);
       document.getElementById("frameCaption").textContent = clip.captions[activeFrame];
       document.getElementById("frameRange").value = activeFrame;
@@ -297,9 +326,11 @@
 
     document.getElementById("copyBtn").addEventListener("click", function () {
       const text = [
+        "Claimed as: " + CLIPS[activeClip].claimedAs,
         "This clip fails because: " + document.getElementById("claimFail").value,
         "The evidence is: " + document.getElementById("claimEvidence").value,
-        "A classroom question this opens is: " + document.getElementById("claimClassroom").value
+        "A classroom question this opens is: " + document.getElementById("claimClassroom").value,
+        "Before treating it as evidence I would need: " + document.getElementById("claimProvenance").value
       ].join("\n");
       navigator.clipboard.writeText(text);
     });
