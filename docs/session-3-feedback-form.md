@@ -13,6 +13,7 @@ The runnable Google Apps Script is [make-session-3-feedback-form.gs](make-sessio
 
 - Name or display name — short answer; optional / anonymous by default
 - How did you attend? — live, recording, or some of each
+- How did you participate today? — checkboxes: spoke, chat, drew / used tools, private writing / poll, watched / listened
 
 ## The session
 
@@ -24,12 +25,14 @@ The runnable Google Apps Script is [make-session-3-feedback-form.gs](make-sessio
   - Smooth video is not evidence that an event happened
   - Provenance documents a chain but does not itself establish consent
 - What does a video model have to keep coherent across time? — paragraph
+- Complete the sentence: “Smooth video is not evidence because…” — paragraph
 - What is still fuzzy or worth testing next? — paragraph
 
 ## Activities and tools
 
 - Which tools or routes did you use? — checkboxes, so participants are not forced into one answer
 - Could you compare saved Run A and Run B sequences in Temporal Telephone? — single operational check
+- What did you finish? — checkboxes: exact-break observation, bounded claim, missing provenance evidence, classroom adaptation, A / B comparison, or watch / listen route
 - Any tool friction? — paragraph with tool / device prompt
 
 ## Guest spotlight
@@ -44,6 +47,7 @@ The runnable Google Apps Script is [make-session-3-feedback-form.gs](make-sessio
 
 ## Optional Studio / Showcase
 
+- Which follow-up would you actually use? — single choice: downloadable classroom pack, recording + notes, live studio, short office hour, or none / not sure
 - Would you present something at an August Studio / Showcase? — yes / maybe / attend only / no
 - What might you bring or develop? — paragraph
 - What would help you participate? — checkboxes, not a single-answer commitment

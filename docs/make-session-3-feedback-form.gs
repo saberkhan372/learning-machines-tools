@@ -34,6 +34,17 @@ function createSession3FeedbackForm() {
     .setTitle('How did you attend?')
     .setChoiceValues(['Live on Zoom', 'Watched the recording', 'Some of each']);
 
+  var qParticipationMode = form.addCheckboxItem()
+    .setTitle('How did you participate today?')
+    .setHelpText('Choose every mode that applies. Watching or listening is a valid form of participation.')
+    .setChoiceValues([
+      'Spoke aloud',
+      'Used the chat',
+      'Drew or used a tool',
+      'Used private writing or a poll',
+      'Mainly watched or listened'
+    ]);
+
   form.addSectionHeaderItem().setTitle('The session');
 
   var qClick = form.addCheckboxItem()
@@ -66,6 +77,10 @@ function createSession3FeedbackForm() {
     .setTitle('In one or two sentences: what does a video model have to keep coherent across time?')
     .setHelpText('No grading — this tells us what the session actually taught.');
 
+  var qEvidenceSentence = form.addParagraphTextItem()
+    .setTitle('Complete the sentence: “Smooth video is not evidence because…”')
+    .setHelpText('A short answer is enough. We are checking the session’s central claim, not grading your wording.');
+
   var qFuzzy = form.addParagraphTextItem()
     .setTitle('What is still fuzzy, unresolved, or worth testing next?');
 
@@ -93,6 +108,18 @@ function createSession3FeedbackForm() {
       'I did not use Temporal Telephone'
     ]);
 
+  var qFinished = form.addCheckboxItem()
+    .setTitle('What did you finish during the session?')
+    .setHelpText('Choose any that apply. Partial work and watch / listen routes count.')
+    .setChoiceValues([
+      'An exact-break observation',
+      'A bounded claim supported by a frame or comparison',
+      'One piece of missing provenance evidence',
+      'A sentence about classroom use',
+      'A five-frame Run A / Run B comparison',
+      'I mainly watched or listened'
+    ]);
+
   var qFriction = form.addParagraphTextItem()
     .setTitle('Any tool friction?')
     .setHelpText('Anything confusing, broken, hard to read, hard to draw, or hard to recover from? Name the tool and device if useful.');
@@ -117,6 +144,16 @@ function createSession3FeedbackForm() {
     .setHelpText('Access, pacing, recording, likeness, consent, a difficult example, or anything else that affected participation.');
 
   form.addSectionHeaderItem().setTitle('Optional Studio / Showcase');
+
+  var qFollowup = form.addMultipleChoiceItem()
+    .setTitle('Which follow-up would you actually use?')
+    .setChoiceValues([
+      'A downloadable classroom activity pack',
+      'The recording plus concise facilitator notes',
+      'A live studio / co-design session',
+      'A short office hour for questions',
+      'None of these / not sure yet'
+    ]);
 
   var qStudio = form.addMultipleChoiceItem()
     .setTitle('Would you present something at an August Learning Machines Studio / Showcase?')
@@ -157,19 +194,23 @@ function createSession3FeedbackForm() {
   var prefill = form.createResponse()
     .withItemResponse(qName.createResponse('x'))
     .withItemResponse(qAttend.createResponse('Live on Zoom'))
+    .withItemResponse(qParticipationMode.createResponse(['Drew or used a tool']))
     .withItemResponse(qClick.createResponse(['The text → image → video synthesis']))
     .withItemResponse(qGrid.createResponse([
       'Clearer than before', 'Clearer than before', 'Clearer than before',
       'Clearer than before', 'Clearer than before']))
     .withItemResponse(qSentence.createResponse('x'))
+    .withItemResponse(qEvidenceSentence.createResponse('x'))
     .withItemResponse(qFuzzy.createResponse('x'))
     .withItemResponse(qTool.createResponse(['Temporal Telephone']))
     .withItemResponse(qRunCompare.createResponse('Yes — both runs saved and played back'))
+    .withItemResponse(qFinished.createResponse(['An exact-break observation']))
     .withItemResponse(qFriction.createResponse('x'))
     .withItemResponse(qGuest.createResponse('x'))
     .withItemResponse(qPace.createResponse('About right'))
     .withItemResponse(qParticipate.createResponse('Yes'))
     .withItemResponse(qConcerns.createResponse('x'))
+    .withItemResponse(qFollowup.createResponse('A downloadable classroom activity pack'))
     .withItemResponse(qStudio.createResponse('Maybe — I want more details first'))
     .withItemResponse(qBring.createResponse('x'))
     .withItemResponse(qSupport.createResponse(['A clear date and time']))

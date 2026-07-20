@@ -59,6 +59,7 @@
   .studio-stage .qrow.c .note{font-size:13px}
   .studio-stage .qrow.c .go{font-size:11px}
   .studio-stage .s-task{padding:11px 20px}
+  .studio-example{margin-top:10px;border-left:4px solid var(--violet);background:var(--violet-soft);border-radius:0 10px 10px 0;padding:8px 13px;font-size:15px;line-height:1.3;color:var(--violet-deep)}
 
   /* ===== frame visuals (SVG) ===== */
   .av-film{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
@@ -254,8 +255,8 @@
       idea:'Today we test one argument across text, images, and video.',
       notes:{
         look:'The opening synthesis is already visible. The audience sees the camp journey before any recap begins.',
-        you:['Screen-share the audience window only.','Repeat the recording / likeness boundary and camera-off, chat-only, or watch-only participation choices.','Welcome people back and name the 120-minute arc.','Say the three lines once now; they return at the end.'],
-        room:['Choose camera, chat, drawing, or watch-only participation.','Put one word in chat: text, image, or video — which modality feels least settled?'],
+        you:['Screen-share the audience window only.','Repeat the recording / likeness boundary and camera-off, chat-only, private-writing, or watch-only participation choices.','Welcome people back and name the 120-minute arc.','Ask for an anonymous poll or private response before opening chat.','Say the three lines once now; they return at the end.'],
+        room:['Choose camera, speech, chat, private writing, drawing, or watch-only participation.','Respond privately or in the poll: text, image, or video — which modality feels least settled?'],
         say:['"You did not just hear three explanations. Across three sessions, you performed a simplified version of one constraint each system faces: continuation, spatial generation, and coherence across time."','"Fluent is not the same as true. Plausible is not the same as neutral. Smooth is not the same as evidence."'],
         watch:'Do not turn this into a Session 1 lecture. The room earned the argument through the first two activities; today tests its third line.'} },
 
@@ -265,7 +266,7 @@
       questions:['Share 1 — show the artifact, then state one claim it supports.','Share 2 — show the artifact, then name one boundary or surprise.'],
       notes:{
         look:'Two share prompts. The people and artifacts should already be arranged before the session.',
-        you:['Invite the two pre-arranged participants; do not cold-call.','Give each person about three minutes: artifact, claim, boundary.','Capture one phrase from each share for the next slide.'],
+        you:['Invite the two pre-arranged participants; do not cold-call.','Include one classroom-facing share and do not choose only from the people most visible in chat.','Give each person about three minutes: artifact, claim, boundary.','Capture one phrase from each share for the next slide.'],
         room:['Listen for the evidence behind each claim.','Ask one clarifying question if time allows.'],
         say:['"Show us one thing we can point to, then tell us what it lets you claim."'],
         watch:'Hard stop at 12 minutes elapsed. Park technical troubleshooting in chat.'} },
@@ -277,8 +278,8 @@
       take:'Same investigation method — not one universal architecture.',
       notes:{
         look:'Three compact statements: fluent ≠ true, plausible ≠ neutral, smooth ≠ evidence.',
-        you:['Ask for a fast retrieval response, not a new discussion.','Connect Session 1 probability and sycophancy to fluent ≠ true.','Connect Session 2 defaults and shared visual conventions to plausible ≠ neutral.','Name smooth ≠ evidence as today’s hypothesis.'],
-        room:['Choose one line and name the prior activity that supports it.'],
+        you:['Give 30 seconds for private writing.','Take one anonymous poll or precise chat response, then invite two voluntary spoken responses.','Connect Session 1 probability and sycophancy to fluent ≠ true.','Connect Session 2 defaults and shared visual conventions to plausible ≠ neutral.','Name smooth ≠ evidence as today’s hypothesis.'],
+        room:['Choose one line and name the prior activity that supports it through any offered channel.'],
         say:['"The trilogy is how we earned the argument. These three lines are the argument."'],
         watch:'End retrieval at 17 minutes even if the conversation is lively; promise to return to the lines after the guest.'} },
 
@@ -298,11 +299,11 @@
       head:'Change one visibility condition',
       idea:'Run A shows only the previous frame. Run B keeps the same first frame as an anchor. The comparison is the lesson.',
       prompt:'a person waving',
-      task:'Build 6–8 frames in each run. Compare what stayed coherent, what drifted, and what the activity cannot tell us.',
+      task:'Lock exactly five frames in each run. Follow one feature, compare A / B, then name the analogy’s limit.',
       take:'Small inconsistencies can compound when a sequence does not preserve the same relations across time.',
       notes:{
         look:'Use the full Temporal Telephone tool in a separate tab; the deck strip is only a fallback.',
-        you:['Run A: prompt hidden, previous frame only, 6–8 locked frames.','Play it once and ask where drift first became visible.','Run B: reveal the prompt and use the fixed first-frame anchor.','Play both saved runs. Ask what improved, what still drifted, and what this classroom constraint leaves out.'],
+        you:['Run A: prompt hidden, previous frame only, exactly five locked frames.','Play A twice, then ask everyone to choose one feature to follow.','Run B: reveal the prompt, use the fixed first-frame anchor, and lock exactly five frames.','Play B twice. Toggle A / B while collecting observations about the chosen feature.','Ask what this classroom constraint leaves out. Playback speed is already shared by the tool.'],
         room:['Draw one frame and pass.','Watch one chosen feature across both runs.','Name one observation and one limit of the analogy.'],
         say:['"This activity deliberately restricts the references available to each drawer. Real video systems vary: some use temporal context, reference conditioning, spatiotemporal processing, or editing controls."','"The comparison shows why references can matter; it does not reveal one universal video architecture."'],
         watch:'Protect the energy here. If the room is engaged, keep the full 23 minutes and compress commentary inside the failure hunt.'} },
@@ -322,11 +323,11 @@
     { id:'physics', kind:'motion', aid:'motion', time:5, num:'04B', nav:'Failure hunt — physics',
       head:'Smooth motion can still be wrong',
       idea:'Learned motion patterns can look continuous without obeying object permanence, anatomy, or physics.',
-      task:'Predict which constraint breaks first: hands, text, faces, or physics.',
+      task:'Name the first exact break. Then ask: what verifies the source, and what can we not conclude?',
       take:'Motion learned from patterns does not guarantee physics.',
       notes:{
         look:'A teaching cartoon of common failure patterns, not measured model scores.',
-        you:['Ask for predictions before reveal.','Name the meters as a discussion device, not benchmark data.','Connect the result to smooth ≠ evidence.'],
+        you:['Ask for predictions before reveal.','Name the meters as a discussion device, not benchmark data.','Use the four-question protocol: what changed, what supports it, what would verify the source, and what can we not conclude?','Connect the result to smooth ≠ evidence.'],
         room:['Predict, reveal, then name the exact failure rather than saying “weird.”'],
         say:['"Some systems interpolate or transform representations; others generate with temporal or spatiotemporal context. None of that makes visual smoothness proof of physical correctness."'],
         watch:'Avoid “the model has no physics.” The defensible claim is that generated motion does not guarantee physical consistency.'} },
@@ -334,7 +335,7 @@
     { id:'system', kind:'contrib', aid:'contrib', time:8, shape:true, num:'05', nav:'System map',
       head:'A clip is also a system',
       idea:'Model, interface, training data, workers, prompter, subject, editor, and platform all shape what appears.',
-      task:'Map one human decision, one hidden contribution, one consent question, and one provenance question.',
+      task:'Map one human decision and hidden contribution. Then ask what would verify the source and what the clip cannot establish.',
       take:'The output hides a chain of labor and decisions; provenance makes that chain easier to inspect.',
       notes:{
         look:'A live contribution map. Use the three fields to gather the room’s language.',
@@ -345,12 +346,13 @@
 
     { id:'studio', kind:'studio', time:18, num:'06', nav:'One-tool studio',
       head:'One tool, one finished claim',
-      idea:'Use a real instrument, record one observation, and state the boundary of what it proves.',
-      task:'Pick ONE tool. Finish one coherence claim + one boundary on the Video Test Report.',
+      idea:'Start with the frozen default route; choose an advanced comparison only if the first claim is complete.',
+      example:'Worked example · Frame 4: the cup handle disappears. Evidence: frames 3 → 4. Boundary: cause unproven. Classroom move: pause and separate observation from explanation.',
+      task:'Finish: exact break + evidence + bounded claim + missing source evidence + “With learners, I would…”.',
       notes:{
         look:'The six tool routes and the copy-links control.',
-        you:['Paste the tool links in chat.','Offer two lanes: default route = Failure Gallery or Coherence Viewer; advanced route = Temporal Telephone or Point Lab.','At minute 13, give a five-minute warning.','Circulate with one question: what exact frame or comparison is your evidence?'],
-        room:['Choose one route.','Finish one worksheet row before touring another tool.','Prepare a one-sentence claim and one-sentence boundary.'],
+        you:['Read the worked example before releasing the room.','Paste the tool links in chat.','Default route: one frozen Failure Gallery example; no generation and no second tool required. Advanced route: Temporal Telephone, Point Lab, or Coherence Viewer after one claim is complete.','At minute 13, give a five-minute warning.','Circulate with the four questions: what changed, what supports it, what verifies the source, and what can you not conclude?'],
+        room:['Choose one route.','Finish one worksheet row before touring another tool.','Add one sentence about how you could use the protocol with learners.'],
         say:['"One finished claim beats ten open tabs."'],
         watch:'Do not extend the studio beyond 83 minutes; the guest handoff needs a calm runway.'} },
 
@@ -360,7 +362,7 @@
       questions:['Claim 1 — observation, exact evidence, boundary.','Claim 2 — observation, exact evidence, boundary.'],
       notes:{
         look:'A strict two-share structure.',
-        you:['Invite two concise shares.','After each, ask only: what is the boundary?','Thank the room and pivot to the guest at minute 88.'],
+        you:['Choose two volunteers during the studio instead of opening a general debrief. Do not rely only on chat visibility.','Include one classroom adaptation if available.','After each, ask only: what is the boundary?','Thank the room and pivot to the guest at minute 88.'],
         room:['Listen for the difference between observation and explanation.'],
         say:['"A clip can support an observation without proving why the system produced it."'],
         watch:'Choose volunteers from the studio instead of opening a general debrief.'} },
@@ -526,7 +528,7 @@
     var sh=s.shape?' shape':'';
 
     if(s.kind==='title'){
-      var flow='<div class="title-flow"><span class="f">text · fluent ≠ necessarily true</span><span class="bk">→</span><span class="f">image · plausible ≠ necessarily neutral</span><span class="bk">→</span><span class="f sh">video · smooth ≠ evidence</span></div>';
+      var flow='<div class="title-flow"><span class="f">text · continuation → fluent ≠ true</span><span class="bk">→</span><span class="f">image · conditioned sampling → plausible ≠ neutral</span><span class="bk">→</span><span class="f sh">video · relations across time → smooth ≠ evidence</span></div>';
       return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:38ch">'+esc(s.idea)+'</div>'+flow+'</div>';
     }
     if(s.kind==='synthesis'){
@@ -564,7 +566,8 @@
       var rows='<div class="qlist c">'+TOOLS.map(function(t,k){
         return '<div class="qrow c'+(t.opt?' opt':'')+'"><span class="qn">'+(k+1)+'</span><span class="txt2"><span><b>'+esc(t.n)+'</b> <span class="note">— '+esc(t.w)+'</span></span><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
       }).join('')+'</div>';
-      return '<div class="stage studio-stage">'+eyebrow+head+idea+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
+      var example=s.example?'<div class="studio-example">'+esc(s.example)+'</div>':'';
+      return '<div class="stage studio-stage">'+eyebrow+head+idea+example+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
     }
     if(s.kind==='close'){
       var pts='<div class="qlist c">'+CLOSERS.map(function(t,k){
