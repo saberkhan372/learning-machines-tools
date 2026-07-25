@@ -49,6 +49,8 @@ The runnable Google Apps Script is [make-session-3-feedback-form.gs](make-sessio
 
 - Which follow-up would you actually use? — single choice: downloadable classroom pack, recording + notes, live studio, short office hour, or none / not sure
 - Would you present something at an August Studio / Showcase? — yes / maybe / attend only / no
+- If you took a Showcase slot, what would you present? — checkboxes: a Session 1 (text), Session 2 (images), or Session 3 (video) product; a new or combined piece; a classroom activity or adaptation; a critique or work in progress; or not sure
+- If we hold a 4th Showcase session in August, which date works better? — single choice: Saturday, August 8; Saturday, August 15; either; neither; or not attending
 - What might you bring or develop? — paragraph
 - What would help you participate? — checkboxes, not a single-answer commitment
 
@@ -63,7 +65,7 @@ The runnable Google Apps Script is [make-session-3-feedback-form.gs](make-sessio
 
 - [x] Question set written
 - [x] Google Apps Script builder written
-- [ ] Form created in the facilitator’s Google account
-- [ ] Prefilled URL returned and `entry.N` ids mapped
-- [ ] `pages/session-3-feedback.html` created and browser-tested
-- [ ] Feedback link added to `pages/session-video.html`
+- [x] Form created in the facilitator’s Google account
+- [x] Prefilled URL returned and `entry.N` ids mapped
+- [x] `pages/session-3-feedback.html` created and browser-tested
+- [x] Feedback link added to `pages/session-video.html`

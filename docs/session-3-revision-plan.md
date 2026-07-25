@@ -145,8 +145,8 @@ Suggested listening question: **What would count as evidence that a system under
 - [ ] Emily confirms the focus, 18-minute talk, eight-minute Q&A, name pronunciation, time signal, and recording boundary.
 - [ ] Two participants opt in privately to the opening shares, at least one share is classroom-facing, and both know how their item will be labeled.
 - [ ] One short, captioned or audio-independent failure clip is chosen, source-checked, and ready in one click.
-- [ ] The Google Apps Script is run in the facilitator’s account; the returned prefilled URL is used to wire the site-native Session 3 feedback page.
-- [ ] The feedback link is added to the Session 3 overview after the form endpoint and `entry.N` ids are known.
+- [x] The Google Apps Script is run in the facilitator’s account; the returned prefilled URL is used to wire the site-native Session 3 feedback page.
+- [x] The feedback link is added to the Session 3 overview after the form endpoint and `entry.N` ids are known.
 - [ ] A hard-stop cue is set for minute 88.
 
 ## Ready-to-run gate
