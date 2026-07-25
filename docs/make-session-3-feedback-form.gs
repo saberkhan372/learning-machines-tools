@@ -164,6 +164,29 @@ function createSession3FeedbackForm() {
       'No / not this time'
     ]);
 
+  var qShowcasePresent = form.addCheckboxItem()
+    .setTitle('If you took a Showcase slot, what would you present?')
+    .setHelpText('Choose any that apply — work from earlier sessions counts. Nothing here is a commitment.')
+    .setChoiceValues([
+      'Something I made in Session 1 (text)',
+      'Something I made in Session 2 (images)',
+      'Something I made in Session 3 (video)',
+      'A new or combined piece across sessions',
+      'A classroom activity, lesson, or adaptation',
+      'A question, critique, or work in progress',
+      'Not sure yet'
+    ]);
+
+  var qShowcaseDate = form.addMultipleChoiceItem()
+    .setTitle('If we hold a 4th Showcase session in August, which date works better?')
+    .setChoiceValues([
+      'Saturday, August 8',
+      'Saturday, August 15',
+      'Either works for me',
+      'Neither — tell us more below',
+      'Not planning to attend'
+    ]);
+
   var qBring = form.addParagraphTextItem()
     .setTitle('What might you bring or develop for the Studio?')
     .setHelpText('A tool, experiment, classroom activity, creative artifact, critique, or question — a rough idea is enough.');
@@ -212,6 +235,8 @@ function createSession3FeedbackForm() {
     .withItemResponse(qConcerns.createResponse('x'))
     .withItemResponse(qFollowup.createResponse('A downloadable classroom activity pack'))
     .withItemResponse(qStudio.createResponse('Maybe — I want more details first'))
+    .withItemResponse(qShowcasePresent.createResponse(['Something I made in Session 3 (video)']))
+    .withItemResponse(qShowcaseDate.createResponse('Either works for me'))
     .withItemResponse(qBring.createResponse('x'))
     .withItemResponse(qSupport.createResponse(['A clear date and time']))
     .withItemResponse(qKeep.createResponse('x'))

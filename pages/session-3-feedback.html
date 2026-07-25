@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="video" data-skin="worksheet-print">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>Session 3 Feedback — Learning Machines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/field.css">
+<link rel="stylesheet" href="../assets/field-tool.css">
+<script src="../assets/field-theme.js"></script><style>
+  :root {
+    --card: var(--surface); --border: var(--line); --accent-bg: color-mix(in oklab, var(--accent) 12%, transparent);
+    --warm: var(--accent); --radius: 10px; --shadow: 0 1px 4px rgba(0,0,0,.07); --row-bg: var(--surface-2);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { line-height: 1.5; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 28px 20px 60px; }
+  header { margin-bottom: 20px; }
+  .eyebrow { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--warm); margin-bottom: 6px; }
+  h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 4px; }
+  .subtitle { font-size: .9rem; color: var(--muted); }
+  .privacy { font-size: .85rem; color: var(--muted); border: 1px solid var(--border); border-left: 3px solid var(--warm); border-radius: 2px; background: var(--card); padding: 10px 14px; margin-bottom: 24px; }
+
+  .section { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin: 0 0 16px; padding: 0; overflow: hidden; }
+  .section-head { padding: 12px 16px 10px; border-bottom: 1px solid var(--border); background: var(--row-bg); }
+  .section-title { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+  .section-desc { font-size: .85rem; color: var(--muted); margin-top: 3px; }
+
+  .q { padding: 13px 16px; border-bottom: 1px solid var(--border); }
+  .q:last-child { border-bottom: none; }
+  .q-title { font-size: .9rem; font-weight: 700; margin-bottom: 3px; }
+  .q-help { font-size: .8rem; color: var(--muted); margin-bottom: 8px; }
+  .q-title:has(+ .opt-list), .q-title:has(+ textarea), .q-title:has(+ input) { margin-bottom: 8px; }
+
+  .opt-list { display: flex; flex-direction: column; gap: 2px; }
+  .opt { display: flex; gap: 10px; align-items: flex-start; padding: 6px 8px; border-radius: 2px; cursor: pointer; transition: background .12s; font-size: .875rem; }
+  .opt:hover { background: var(--row-bg); }
+  .opt input { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
+
+  input[type=text], textarea { width: 100%; font-family: inherit; font-size: .875rem; color: var(--ink); border: 1px solid var(--border); border-radius: 2px; padding: 8px 10px; background: var(--bg, #fff); resize: none; line-height: 1.5; transition: border-color .15s; }
+  textarea { min-height: 44px; overflow: hidden; }
+  input[type=text]:focus, textarea:focus { outline: none; border-color: var(--accent); background: var(--accent-bg); }
+
+  /* clarity grid */
+  .grid-head, .grid-row { display: grid; grid-template-columns: 1fr repeat(3, 92px); gap: 8px; align-items: center; }
+  .grid-head { padding: 4px 0 8px; }
+  .grid-head span { font-size: .7rem; font-weight: 700; color: var(--muted); text-align: center; line-height: 1.25; }
+  .grid-row { padding: 8px 0; border-top: 1px solid var(--border); }
+  .grid-row .idea { font-size: .85rem; padding-right: 6px; }
+  .grid-row label { display: flex; justify-content: center; cursor: pointer; padding: 4px 0; }
+  .grid-row input { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+  @media (max-width: 620px) {
+    .grid-head { display: none; }
+    .grid-row { grid-template-columns: 1fr; gap: 4px; }
+    .grid-row label { justify-content: flex-start; gap: 8px; font-size: .8rem; color: var(--muted); padding: 2px 8px; }
+    .grid-row label::after { content: attr(data-col); }
+  }
+
+  .submit-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
+  .btn-submit { font-family: inherit; font-size: .9rem; font-weight: 700; padding: 11px 26px; border-radius: 2px; border: 1.5px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; transition: filter .12s; }
+  .btn-submit:hover { filter: brightness(1.08); }
+  .btn-submit:disabled { opacity: .55; cursor: default; }
+  .submit-note { font-size: .8rem; color: var(--muted); }
+  .submit-note a { color: var(--accent); }
+  .status { font-size: .85rem; font-weight: 600; }
+  .status.err { color: #b42318; }
+
+  .thanks { display: none; background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px 24px; }
+  .thanks h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; }
+  .thanks p { font-size: .9rem; color: var(--muted); }
+  .thanks a { color: var(--accent); }
+  body.sent form { display: none; }
+  body.sent .thanks { display: block; }
+
+  #lm-worksheet-nav-overrides.nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
+  #lm-worksheet-nav-overrides .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
+  #lm-worksheet-nav-overrides .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
+  #lm-worksheet-nav-overrides .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
+  #lm-worksheet-nav-overrides .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 2px !important; display: grid !important; place-items: center !important; }
+  #lm-worksheet-nav-overrides .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
+  #lm-worksheet-nav-overrides .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
+  #lm-worksheet-nav-overrides .nav-links a { font-family: var(--font-body) !important; font-size: 0.92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 2px !important; text-decoration: none !important; }
+  #lm-worksheet-nav-overrides .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
+  #lm-worksheet-nav-overrides .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
+  #lm-worksheet-nav-overrides .btn-sm { padding: 8px 13px !important; font-size: 0.86rem !important; border-radius: 2px !important; }
+  @media (max-width: 720px) { #lm-worksheet-nav-overrides .hide-sm { display: none !important; } #lm-worksheet-nav-overrides .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
+</style>
+</head>
+<body>
+<nav class="nav" id="lm-worksheet-nav-overrides">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+    <div class="nav-links">
+      <a href="session-video.html" class="hide-sm">Session 3 page</a>
+      <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+      <a class="btn btn-ghost btn-sm nav-cta" href="../index.html">← Home</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Session 3 · Video</div>
+    <h1>Session 3 Feedback</h1>
+    <p class="subtitle">Thanks for investigating video with us. This takes about three minutes.</p>
+  </header>
+  <div class="privacy">Every question is optional, and you can leave your name blank — honest and anonymous beats complete. Responses are read only by facilitators and never quoted publicly without permission. Nothing is stored in your browser; answers leave this page only when you press send.</div>
+
+  <div class="thanks">
+    <h2>Response sent — thank you.</h2>
+    <p>This helps shape the optional Studio / Showcase and future Learning Machines sessions. The <a href="session-video.html">Session 3 page</a> has everything we touched today.</p>
+  </div>
+
+  <form id="fb" novalidate>
+
+    <div class="section">
+      <div class="section-head"><h2 class="section-title">About you</h2></div>
+      <div class="q">
+        <div class="q-title">Name or display name</div>
+        <div class="q-help">Optional — leave blank to stay anonymous.</div>
+        <input type="text" data-entry="entry.1384485495" aria-label="Name or display name">
+      </div>
+      <div class="q">
+        <div class="q-title">How did you attend?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="attend" data-entry="entry.688901497" value="Live on Zoom"><span>Live on Zoom</span></label>
+          <label class="opt"><input type="radio" name="attend" data-entry="entry.688901497" value="Watched the recording"><span>Watched the recording</span></label>
+          <label class="opt"><input type="radio" name="attend" data-entry="entry.688901497" value="Some of each"><span>Some of each</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">How did you participate today?</div>
+        <div class="q-help">Choose every mode that applies. Watching or listening is a valid form of participation.</div>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Spoke aloud"><span>Spoke aloud</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Used the chat"><span>Used the chat</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Drew or used a tool"><span>Drew or used a tool</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Used private writing or a poll"><span>Used private writing or a poll</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Mainly watched or listened"><span>Mainly watched or listened</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="section-title">The session</h2></div>
+      <div class="q">
+        <div class="q-title">Which parts made something click for you?</div>
+        <div class="q-help">Choose any that apply.</div>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The text → image → video synthesis"><span>The text → image → video synthesis</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="Point correspondence (tracking a point across existing frames)"><span>Point correspondence (tracking a point across existing frames)</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="Temporal Telephone Run A / Run B comparison"><span>Temporal Telephone Run A / Run B comparison</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The curated video-failure hunt"><span>The curated video-failure hunt</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The labor, consent, and provenance map"><span>The labor, consent, and provenance map</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The one-tool studio"><span>The one-tool studio</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="Dr. Emily Thomforde's guest talk"><span>Dr. Emily Thomforde's guest talk</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The Q&amp;A or closing synthesis"><span>The Q&amp;A or closing synthesis</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="Nothing has clicked yet — useful for us to know"><span>Nothing has clicked yet — useful for us to know</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">For each idea, where are you now?</div>
+        <div class="grid-head"><span></span><span>Clearer than before</span><span>About the same</span><span>More tangled than before</span></div>
+        <div class="grid-row"><span class="idea">Tracking points in existing video is different from generating new frames</span><label data-col="Clearer than before"><input type="radio" name="g1" data-entry="entry.354042010" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g1" data-entry="entry.354042010" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g1" data-entry="entry.354042010" value="More tangled than before"></label></div>
+        <div class="grid-row"><span class="idea">Video coherence depends on relationships staying consistent across time</span><label data-col="Clearer than before"><input type="radio" name="g2" data-entry="entry.1346444009" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g2" data-entry="entry.1346444009" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g2" data-entry="entry.1346444009" value="More tangled than before"></label></div>
+        <div class="grid-row"><span class="idea">A visible failure supports an observation but does not by itself prove its cause</span><label data-col="Clearer than before"><input type="radio" name="g3" data-entry="entry.1610003918" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g3" data-entry="entry.1610003918" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g3" data-entry="entry.1610003918" value="More tangled than before"></label></div>
+        <div class="grid-row"><span class="idea">Smooth or plausible video is not evidence that an event happened</span><label data-col="Clearer than before"><input type="radio" name="g4" data-entry="entry.1697601618" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g4" data-entry="entry.1697601618" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g4" data-entry="entry.1697601618" value="More tangled than before"></label></div>
+        <div class="grid-row"><span class="idea">Provenance can document a chain but does not itself establish consent</span><label data-col="Clearer than before"><input type="radio" name="g5" data-entry="entry.1772587818" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g5" data-entry="entry.1772587818" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g5" data-entry="entry.1772587818" value="More tangled than before"></label></div>
+      </div>
+      <div class="q">
+        <div class="q-title">In one or two sentences: what does a video model have to keep coherent across time?</div>
+        <div class="q-help">No grading — this tells us what the session actually taught.</div>
+        <textarea data-entry="entry.389286802" rows="2" aria-label="What a video model keeps coherent"></textarea>
+      </div>
+      <div class="q">
+        <div class="q-title">Complete the sentence: “Smooth video is not evidence because…”</div>
+        <div class="q-help">A short answer is enough. We are checking the session's central claim, not grading your wording.</div>
+        <textarea data-entry="entry.1887771441" rows="2" aria-label="Smooth video is not evidence because"></textarea>
+      </div>
+      <div class="q">
+        <div class="q-title">What is still fuzzy, unresolved, or worth testing next?</div>
+        <textarea data-entry="entry.1170834568" rows="2" aria-label="Still fuzzy"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="section-title">Activities and tools</h2></div>
+      <div class="q">
+        <div class="q-title">Which tools or routes did you use?</div>
+        <div class="q-help">Choose any that apply.</div>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Point Correspondence Lab"><span>Point Correspondence Lab</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Temporal Telephone"><span>Temporal Telephone</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Video Failure Gallery Viewer"><span>Video Failure Gallery Viewer</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Frame-by-Frame Coherence Viewer"><span>Frame-by-Frame Coherence Viewer</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Video Test Report"><span>Video Test Report</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="A frozen / no-AI example"><span>A frozen / no-AI example</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="I mainly listened or watched"><span>I mainly listened or watched</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">Could you compare saved Run A and Run B sequences in Temporal Telephone?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="runcompare" data-entry="entry.1564141425" value="Yes — both runs saved and played back"><span>Yes — both runs saved and played back</span></label>
+          <label class="opt"><input type="radio" name="runcompare" data-entry="entry.1564141425" value="Partly — I completed only one run"><span>Partly — I completed only one run</span></label>
+          <label class="opt"><input type="radio" name="runcompare" data-entry="entry.1564141425" value="Tried, but something did not work"><span>Tried, but something did not work</span></label>
+          <label class="opt"><input type="radio" name="runcompare" data-entry="entry.1564141425" value="I did not use Temporal Telephone"><span>I did not use Temporal Telephone</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">What did you finish during the session?</div>
+        <div class="q-help">Choose any that apply. Partial work and watch / listen routes count.</div>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="An exact-break observation"><span>An exact-break observation</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="A bounded claim supported by a frame or comparison"><span>A bounded claim supported by a frame or comparison</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="One piece of missing provenance evidence"><span>One piece of missing provenance evidence</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="A sentence about classroom use"><span>A sentence about classroom use</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="A five-frame Run A / Run B comparison"><span>A five-frame Run A / Run B comparison</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="I mainly watched or listened"><span>I mainly watched or listened</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">Any tool friction?</div>
+        <div class="q-help">Anything confusing, broken, hard to read, hard to draw, or hard to recover from? Name the tool and device if useful.</div>
+        <textarea data-entry="entry.299192401" rows="2" aria-label="Tool friction"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="section-title">Guest spotlight</h2></div>
+      <div class="q">
+        <div class="q-title">What idea or question from Dr. Emily Thomforde's talk stayed with you?</div>
+        <textarea data-entry="entry.574853859" rows="2" aria-label="Guest segment reflection"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="section-title">Format, access, and consent</h2></div>
+      <div class="q">
+        <div class="q-title">How was the pace?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="pace" data-entry="entry.971218623" value="Too fast"><span>Too fast</span></label>
+          <label class="opt"><input type="radio" name="pace" data-entry="entry.971218623" value="About right"><span>About right</span></label>
+          <label class="opt"><input type="radio" name="pace" data-entry="entry.971218623" value="Too slow"><span>Too slow</span></label>
+          <label class="opt"><input type="radio" name="pace" data-entry="entry.971218623" value="It varied — say more below"><span>It varied — say more below</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">Could you participate in the way you wanted?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="participate" data-entry="entry.887508158" value="Yes"><span>Yes</span></label>
+          <label class="opt"><input type="radio" name="participate" data-entry="entry.887508158" value="Mostly"><span>Mostly</span></label>
+          <label class="opt"><input type="radio" name="participate" data-entry="entry.887508158" value="No — tell us more below"><span>No — tell us more below</span></label>
+          <label class="opt"><input type="radio" name="participate" data-entry="entry.887508158" value="I mostly watched, and that felt fine"><span>I mostly watched, and that felt fine</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">Anything facilitators should know about?</div>
+        <div class="q-help">Access, pacing, recording, likeness, consent, a difficult example, or anything else that affected participation.</div>
+        <textarea data-entry="entry.551224159" rows="2" aria-label="For facilitators"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="section-title">Optional Studio / Showcase</h2></div>
+      <div class="q">
+        <div class="q-title">Which follow-up would you actually use?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="A downloadable classroom activity pack"><span>A downloadable classroom activity pack</span></label>
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="The recording plus concise facilitator notes"><span>The recording plus concise facilitator notes</span></label>
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="A live studio / co-design session"><span>A live studio / co-design session</span></label>
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="A short office hour for questions"><span>A short office hour for questions</span></label>
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="None of these / not sure yet"><span>None of these / not sure yet</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">Would you present something at an August Learning Machines Studio / Showcase?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="studio" data-entry="entry.1893329810" value="Yes — I would like a presentation slot"><span>Yes — I would like a presentation slot</span></label>
+          <label class="opt"><input type="radio" name="studio" data-entry="entry.1893329810" value="Maybe — I want more details first"><span>Maybe — I want more details first</span></label>
+          <label class="opt"><input type="radio" name="studio" data-entry="entry.1893329810" value="I would attend but not present"><span>I would attend but not present</span></label>
+          <label class="opt"><input type="radio" name="studio" data-entry="entry.1893329810" value="No / not this time"><span>No / not this time</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">If you took a Showcase slot, what would you present?</div>
+        <div class="q-help">Choose any that apply — work from earlier sessions counts. Nothing here is a commitment.</div>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="Something I made in Session 1 (text)"><span>Something I made in Session 1 (text)</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="Something I made in Session 2 (images)"><span>Something I made in Session 2 (images)</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="Something I made in Session 3 (video)"><span>Something I made in Session 3 (video)</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="A new or combined piece across sessions"><span>A new or combined piece across sessions</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="A classroom activity, lesson, or adaptation"><span>A classroom activity, lesson, or adaptation</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="A question, critique, or work in progress"><span>A question, critique, or work in progress</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="Not sure yet"><span>Not sure yet</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">If we hold a 4th Showcase session in August, which date works better?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Saturday, August 8"><span>Saturday, August 8</span></label>
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Saturday, August 15"><span>Saturday, August 15</span></label>
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Either works for me"><span>Either works for me</span></label>
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Neither — tell us more below"><span>Neither — tell us more below</span></label>
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Not planning to attend"><span>Not planning to attend</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">What might you bring or develop for the Studio?</div>
+        <div class="q-help">A tool, experiment, classroom activity, creative artifact, critique, or question — a rough idea is enough.</div>
+        <textarea data-entry="entry.988512534" rows="2" aria-label="What you might bring to the Studio"></textarea>
+      </div>
+      <div class="q">
+        <div class="q-title">What would help you participate?</div>
+        <div class="q-help">Choose any that apply.</div>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A clear date and time"><span>A clear date and time</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A short presentation template"><span>A short presentation template</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A practice / feedback session"><span>A practice / feedback session</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A partner or small-group format"><span>A partner or small-group format</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A no-slides option"><span>A no-slides option</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="An asynchronous way to share"><span>An asynchronous way to share</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="Accessibility or technical support"><span>Accessibility or technical support</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="section-title">Anything else</h2></div>
+      <div class="q">
+        <div class="q-title">What should we make sure to keep?</div>
+        <textarea data-entry="entry.2063246636" rows="2" aria-label="What to keep"></textarea>
+      </div>
+      <div class="q">
+        <div class="q-title">What should we change next time?</div>
+        <textarea data-entry="entry.539826893" rows="2" aria-label="What to change"></textarea>
+      </div>
+      <div class="q">
+        <div class="q-title">Would you recommend Learning Machines to a colleague or friend?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="rec" data-entry="entry.1294662149" value="Definitely"><span>Definitely</span></label>
+          <label class="opt"><input type="radio" name="rec" data-entry="entry.1294662149" value="Probably"><span>Probably</span></label>
+          <label class="opt"><input type="radio" name="rec" data-entry="entry.1294662149" value="Not sure yet"><span>Not sure yet</span></label>
+          <label class="opt"><input type="radio" name="rec" data-entry="entry.1294662149" value="No — and we would genuinely like to know why above"><span>No — and we would genuinely like to know why above</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <div class="q-title">Anything else?</div>
+        <textarea data-entry="entry.599602867" rows="2" aria-label="Anything else"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-row">
+      <button type="submit" class="btn-submit" id="sendBtn">Send feedback</button>
+      <span class="status" id="status" role="status"></span>
+    </div>
+    <p class="submit-note" style="margin-top:12px">Prefer a plain form? <a href="https://docs.google.com/forms/d/e/1FAIpQLSfM7wWh556tatIx050IMc8n5XCYBFt10sZpyWeMWAx134nScg/viewform" target="_blank" rel="noopener">Open the Google Form version</a> — same questions, same place.</p>
+  </form>
+</div>
+<script>
+(function(){
+  "use strict";
+  var ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSfM7wWh556tatIx050IMc8n5XCYBFt10sZpyWeMWAx134nScg/formResponse';
+  var form = document.getElementById('fb');
+  var btn = document.getElementById('sendBtn');
+  var status = document.getElementById('status');
+
+  function autosize(el){ el.style.height='auto'; el.style.height=el.scrollHeight+'px'; }
+  form.querySelectorAll('textarea').forEach(function(t){ t.addEventListener('input', function(){ autosize(t); }); });
+
+  function payload(){
+    var p = new URLSearchParams();
+    form.querySelectorAll('[data-entry]').forEach(function(el){
+      if(el.type==='radio' || el.type==='checkbox'){ if(el.checked) p.append(el.dataset.entry, el.value); }
+      else if(el.value.trim()) p.append(el.dataset.entry, el.value.trim());
+    });
+    return p;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var p = payload();
+    if(!p.toString()){
+      status.textContent = 'Nothing filled in yet — anything you share helps.';
+      status.classList.remove('err');
+      return;
+    }
+    p.append('fvv','1'); p.append('pageHistory','0');
+    btn.disabled = true; status.textContent = 'Sending…'; status.classList.remove('err');
+    fetch(ACTION, { method:'POST', mode:'no-cors', body:p })
+      .then(function(){ document.body.classList.add('sent'); window.scrollTo({top:0}); })
+      .catch(function(){
+        btn.disabled = false;
+        status.classList.add('err');
+        status.innerHTML = 'Could not send — check your connection, or use the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfM7wWh556tatIx050IMc8n5XCYBFt10sZpyWeMWAx134nScg/viewform" target="_blank" rel="noopener">Google Form</a> instead.';
+      });
+  });
+
+  /* debug handle: inspect the outgoing payload without sending */
+  window.__s3fb = { payload: function(){ return payload().toString(); } };
+})();
+</script>
+<script src="../assets/analytics.js"></script>
+</body>
+</html>

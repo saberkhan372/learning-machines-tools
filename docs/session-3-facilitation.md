@@ -9,7 +9,7 @@ Use this guide for the full 120-minute Session 3 run. Treat it as a re-entry and
 
 ## Session spine
 
-**Camp journey:** participants have been the machine three times.
+**Camp journey:** across the camp, we've played the machine three ways.
 
 - Session 1, text: fluent output is not necessarily true.
 - Session 2, images: plausible output is not necessarily neutral.
@@ -48,9 +48,9 @@ Use this guide for the full 120-minute Session 3 run. Treat it as a re-entry and
 | 5–12 | Two artifact shares | Invite the two pre-arranged participants, including one classroom-facing share. Give each about three minutes: artifact, claim, boundary. | Listen for the evidence and ask at most one clarifying question. |
 | 12–17 | Active synthesis | Retrieve, do not re-lecture. Give 30 seconds of private writing, take one poll response or precise chat response, then invite two voluntary spoken responses. | Match one prior activity to one line using any offered channel. |
 | 17–24 | Point correspondence | Use the Ball arc in Point Correspondence Lab. Predict, reveal, then distinguish tracking existing frames from generating new ones. | Predict one point's destination and name one relationship that must persist. |
-| 24–47 | Temporal Telephone | Lock exactly five frames in each run. Play A twice, ask everyone to choose one feature, play B twice, then toggle A / B while collecting observations. | Draw, track the chosen feature, then name one observation and one limit of the analogy. |
+| 24–47 | Temporal Telephone | Give a 60-second interface demo with prepared frames, then assign three roles — Drawer (locks a frame), Feature Tracker (follows one named relation), Evidence Recorder (logs the first exact change and frame number). Lock exactly five frames in each run. Play A twice, ask everyone to choose one feature, play B twice, then toggle A / B while collecting observations. | Take a role (draw, track the chosen feature, or record evidence), then name one observation and one limit of the analogy. |
 | 47–57 | Curated failure hunt | Use two short frozen examples. Track one feature at a time and use the four-question protocol: what changed, what supports it, what would verify the source, and what can we not conclude? | Mark the first exact break and separate observation, explanation, verification, and boundary. |
-| 57–65 | System map | Map model, interface, training data, workers, prompter, subject, editor, and platform. Add consent and provenance as separate questions. | Name one human decision, one hidden contribution, one consent question, and one provenance question using the same four-question frame. |
+| 57–65 | System map | Map model, interface, training data, workers, prompter, subject, editor, and platform. Trace the production path — source/reference → generator or code-rendering system → editor/interpolator/compositor → platform; mark unknown stages. Add consent and provenance as separate questions. | Name one human decision, one hidden contribution, one consent question, and one provenance question using the same four-question frame. |
 | 65–83 | One-tool studio | Show the completed worked example before releasing the room. Offer a nearly impossible-to-fail default lane and an advanced lane. Require one worksheet row before a second tool. Give a five-minute warning at 78. | Finish one observation, one bounded claim, one missing piece of provenance evidence, and one sentence about classroom use. |
 | 83–88 | Two claims | Invite two concise shares selected during the studio, using more than chat visibility as the selection signal. Include one classroom adaptation if available. Ask only what evidence supports each claim and where its boundary lies. | Share or listen for observation versus explanation. |
 | 88–90 | Guest introduction | Introduce Dr. Emily Thomforde and the listening question; hand over cleanly. | Close tool tabs and listen. |
@@ -60,6 +60,8 @@ Use this guide for the full 120-minute Session 3 run. Treat it as a re-entry and
 | 118–120 | Close | Return to the three lines and invite the optional Studio / Showcase. | Save the session page and one next step. |
 
 ## Temporal Telephone protocol
+
+**Before you start:** give a 60-second interface demonstration using prepared frames (not a full run), then assign three equal roles so drawing is never required: **Drawer** (adds and locks a frame), **Feature Tracker** (follows one named relation), **Evidence Recorder** (records the first exact change and its frame number).
 
 1. **Run A — previous frame:** lock exactly five frames, keep the prompt hidden, and ask each drawer to work from the previous-frame ghost. Play the saved sequence twice.
 2. **Choose one feature:** before showing Run B, ask everyone to name one feature they will follow: a hand, face, object edge, position, scale, or camera relationship.
