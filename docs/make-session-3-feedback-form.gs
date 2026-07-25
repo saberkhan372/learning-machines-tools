@@ -53,7 +53,7 @@ function createSession3FeedbackForm() {
     .setChoiceValues([
       'The text → image → video synthesis',
       'Point correspondence (tracking a point across existing frames)',
-      'Temporal Telephone Run A / Run B comparison',
+      'Coherence Animator Run A / Run B comparison',
       'The curated video-failure hunt',
       'The labor, consent, and provenance map',
       'The one-tool studio',
@@ -91,7 +91,7 @@ function createSession3FeedbackForm() {
     .setHelpText('Choose any that apply.')
     .setChoiceValues([
       'Point Correspondence Lab',
-      'Temporal Telephone',
+      'Coherence Animator',
       'Video Failure Gallery Viewer',
       'Frame-by-Frame Coherence Viewer',
       'Video Test Report',
@@ -100,12 +100,12 @@ function createSession3FeedbackForm() {
     ]);
 
   var qRunCompare = form.addMultipleChoiceItem()
-    .setTitle('Could you compare saved Run A and Run B sequences in Temporal Telephone?')
+    .setTitle('Could you complete and compare Run A and Run B in Coherence Animator?')
     .setChoiceValues([
-      'Yes — both runs saved and played back',
+      'Yes — both runs completed and played back',
       'Partly — I completed only one run',
       'Tried, but something did not work',
-      'I did not use Temporal Telephone'
+      'I did not use Coherence Animator'
     ]);
 
   var qFinished = form.addCheckboxItem()
@@ -225,8 +225,8 @@ function createSession3FeedbackForm() {
     .withItemResponse(qSentence.createResponse('x'))
     .withItemResponse(qEvidenceSentence.createResponse('x'))
     .withItemResponse(qFuzzy.createResponse('x'))
-    .withItemResponse(qTool.createResponse(['Temporal Telephone']))
-    .withItemResponse(qRunCompare.createResponse('Yes — both runs saved and played back'))
+    .withItemResponse(qTool.createResponse(['Coherence Animator']))
+    .withItemResponse(qRunCompare.createResponse('Yes — both runs completed and played back'))
     .withItemResponse(qFinished.createResponse(['An exact-break observation']))
     .withItemResponse(qFriction.createResponse('x'))
     .withItemResponse(qGuest.createResponse('x'))

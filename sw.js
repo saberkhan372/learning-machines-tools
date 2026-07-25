@@ -16,7 +16,7 @@
    Paths are relative to the worker's own location (the site root, under any
    GitHub Pages baseurl). */
 
-var CACHE = "lm-shell-v22";
+var CACHE = "lm-shell-v23";
 
 /* Resolved against the SW scope (the site root). */
 var PRECACHE = [
@@ -57,6 +57,9 @@ var PRECACHE = [
   "tools/image-caption-match-lab/",
   "tools/point-correspondence-lab/",
   "tools/metronome-frame-scrubber/",
+  "tools/coherence-animator/",
+  "tools/coherence-animator/coherence-animator.css",
+  "tools/coherence-animator/coherence-animator.js",
   "tools/temporal-telephone/",
   "tools/video-failure-gallery-viewer/",
   "tools/frame-by-frame-coherence-viewer/",

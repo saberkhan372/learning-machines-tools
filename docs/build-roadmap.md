@@ -26,9 +26,10 @@ poster identity below the hero and across quieter page families, guided by the
 | 3 | ELIZA Simulator | Launch ready | Manual browser QA before session |
 | 4 | Diffusion Step-Through Viewer | Launch ready | Add pre-generated PNG sequences later if curated assets become available |
 | 5 | Feature Extraction / Pixel Resolution Tool | Launch ready | Replace generated teaching images with curated assets later if desired |
-| 6 | Temporal Telephone | Launch ready | Use as the Session 3 centerpiece and pilot with facilitators before live run |
-| 7 | Facilitation docs | Pilot scripts ready | Expand after first cohort feedback |
-| 8 | Pilot checklist + feedback template | Ready for pilot | Convert to form only if needed |
+| 6 | Coherence Animator | Launch ready | Use as the Session 3 core solo A/B comparison |
+| 7 | Temporal Telephone | Launch ready | Keep as the facilitator-led group or paper fallback |
+| 8 | Facilitation docs | Pilot scripts ready | Expand after first cohort feedback |
+| 9 | Pilot checklist + feedback template | Ready for pilot | Convert to form only if needed |
 
 Canonical tool folders now exist for every launch, second-wave, and stretch tool. See [`../tools/README.html`](../tools/README.html).
 

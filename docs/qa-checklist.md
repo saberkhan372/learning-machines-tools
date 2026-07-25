@@ -42,7 +42,8 @@ Use this before publishing or sharing the repo.
 - CFG Scale Visualizer: switch prompt families, move CFG through 1/7/14/30 presets, confirm prompt match, model habit, and artifact pressure meters update, then copy notes.
 - Latent Space Explorer: switch datasets and lenses, select map points, confirm nearest neighbors update, and copy visibility/risk notes.
 - Dataset Balance Simulator: switch scenarios, move sliders, use balance/skew presets, confirm the default and likelihood bars update, and copy notes.
-- Temporal Telephone: confirm self-tests pass, draw frames, save, switch previous/anchor/both modes, play sequence, use the failure bridge, clear and reset.
+- Coherence Animator: confirm self-tests pass; lock one shared opening plus four new frames per run; choose a feature; run guided A twice → B twice playback; reopen the latest frame; reset.
+- Temporal Telephone (optional group fallback): confirm self-tests pass, draw frames, save, switch previous/anchor/both modes, play sequence, use the failure bridge, clear and reset.
 - Point Correspondence Lab: confirm all eight selectable tracks pass self-checks; select with keyboard, predict a destination, reveal and scrub the route; inspect the occlusion, identity-switch, and off-screen failures; copy a bounded investigation.
 - Video Failure Gallery Viewer: switch clips, scrub frames, click failure labels, and copy the claim/evidence/classroom-question set.
 - Frame-by-Frame Coherence Viewer: scrub sample frames, toggle onion-skin and difference highlight, upload a small still-frame set, and copy drift notes.

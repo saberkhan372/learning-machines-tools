@@ -8,7 +8,7 @@ title: Tool Directory
 Canonical tool folders for the Learning Machines camp.
 Status reflects the current build; `tools-data.js` is the single source of truth for the homepage tool browser.
 
-## Launch-Ready Tools (25)
+## Launch-Ready Tools (26)
 
 | Tool | Folder | Session | Modality |
 | --- | --- | --- | --- |
@@ -24,6 +24,7 @@ Status reflects the current build; `tools-data.js` is the single source of truth
 | Latent Space Explorer | `latent-space-explorer/` | 2 | Image |
 | Latent Space Compressor | `latent-space-compressor/` | 2 | Image |
 | Dataset Balance Simulator | `dataset-balance-simulator/` | 2 | Image |
+| Coherence Animator | `coherence-animator/` | 3 | Video |
 | Temporal Telephone | `temporal-telephone/` | 3 | Video |
 | Metronome Frame-Scrubber | `metronome-frame-scrubber/` | 3 | Video |
 | Video Failure Gallery Viewer | `video-failure-gallery-viewer/` | 3 | Video |

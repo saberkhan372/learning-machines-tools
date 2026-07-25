@@ -52,6 +52,7 @@ The tool principle is:
 | Latent Space Compressor | Launch ready | 2 · Image |
 | Dataset Balance Simulator | Launch ready | 2 · Image |
 | Human Diffusion Canvas | Launch ready | 2 · Image |
+| Coherence Animator | Launch ready | 3 · Video |
 | Temporal Telephone | Launch ready | 3 · Video |
 | Metronome Frame-Scrubber | Launch ready | 3 · Video |
 | Video Failure Gallery Viewer | Launch ready | 3 · Video |
@@ -94,6 +95,7 @@ homepage keeps only a short preview.
 
 ### Session 3: Video
 
+- [`tools/coherence-animator/`](tools/coherence-animator/) — Launch ready · core solo A/B activity
 - [`tools/temporal-telephone/`](tools/temporal-telephone/) — Launch ready
 - [`tools/metronome-frame-scrubber/`](tools/metronome-frame-scrubber/) — Launch ready
 - [`tools/video-failure-gallery-viewer/`](tools/video-failure-gallery-viewer/) — Launch ready

@@ -20,7 +20,7 @@ minutes and total exactly 120.
 | 00 | Two artifact shares | 5–12 |
 | 01 | Synthesis: text → image → video | 12–17 |
 | 02 | Point correspondence | 17–24 |
-| 03 | Temporal Telephone | 24–47 |
+| 03 | Coherence Animator · solo A/B comparison | 24–47 |
 | 04A | Failure hunt — identity | 47–52 |
 | 04B | Failure hunt — physics | 52–57 |
 | 05 | System map | 57–65 |
@@ -86,9 +86,11 @@ minutes and total exactly 120.
 ## 01 · Synthesis: text → image → video · 12–17
 
 **On screen:** *One investigation, three warnings* — The output can feel convincing before it has earned your trust.
+- Text: prior words → predict what comes next → fluent ≠ true.
+- Image: prompt + references → make one still → plausible ≠ neutral.
+- Video: prompt + references + time → keep frames consistent → smooth ≠ evidence.
 - Task: which line did Session 1 or 2 make most concrete for you?
 - Take-home: same investigation method — not one universal architecture.
-- *Three compact statements on screen: fluent ≠ true, plausible ≠ neutral, smooth ≠ evidence.*
 
 **Say:**
 > "The trilogy is how we earned the argument. These three lines are the argument."
@@ -111,7 +113,7 @@ minutes and total exactly 120.
 
 **On screen:** *From a point to a path* — A tracker links evidence across existing frames. A generator must create new frames whose features still agree.
 - Task: pick the ball's center — where did it go next, and what relation had to stay coherent?
-- Take-home: correspondence asks what matches; coherence asks whether a generated sequence keeps those relations believable.
+- Definition: correspondence = finding the same point across different frames.
 
 **In plain terms:** a tracker points at a dot that is already in the footage and follows it; a generator has to invent the next frame and make every dot still line up.
 
@@ -133,37 +135,37 @@ minutes and total exactly 120.
 
 ---
 
-## 03 · Temporal Telephone · 24–47
+## 03 · Coherence Animator · solo A/B comparison · 24–47
 
-**On screen:** *Change one visibility condition* — Run A shows only the previous frame. Run B keeps the same first frame as an anchor. The comparison is the lesson.
-- Prompt: *a person waving*
-- Task: lock exactly five frames in each run. Follow one feature, compare A / B, then name the analogy's limit.
+**On screen:** *One opening frame, two reference conditions* — Run A shows only the previous frame. Run B shows the shared opening anchor and the previous frame. The comparison is the lesson.
+- Prompt: *a person at work*
+- Task: draw nine times. Choose one feature. Play A twice, then B twice. Record what changed and what the analogy cannot prove.
 - Take-home: small inconsistencies can compound when a sequence does not preserve the same relations across time.
-- *Use the full Temporal Telephone tool in a separate tab; the deck strip is only a fallback.*
+- *Every participant opens Coherence Animator and completes the same guided solo A/B sequence.*
 
 **In plain terms:** the fewer references each step can see, the faster small changes compound into drift; a steadier reference holds more in place. The activity shows that pressure — it does not reproduce any one system's architecture.
 
 **Say:**
-> "Run A gives each drawer only the previous frame. Run B also keeps the first frame visible as a fixed reference. You are comparing what those two reference conditions keep stable."
+> "The tool changes one thing: what visual references stay available while you draw."
 >
-> "This activity deliberately restricts the references available to each drawer. Real systems vary: some use more frames of context (temporal context), some are held to a reference image (reference conditioning), some process space and time jointly (spatiotemporal processing), and some add editing controls."
+> "Run A gives you only the previous drawing. Run B also keeps the shared opening visible. Compare what those two conditions keep stable."
 >
-> "The comparison shows why references can matter; it does not reveal one universal video architecture."
+> "Real systems use many different architectures and controls. This human drawing comparison shows why references can matter; it does not reveal how one particular model works."
 
 **Do:**
-- **Give a 60-second interface demo with prepared frames**, then assign roles: **Drawer** locks a frame, **Feature Tracker** follows one named relation, **Evidence Recorder** logs the first exact change and frame number.
-- Run A: prompt hidden, previous frame only, exactly five locked frames.
-- Play A twice, then ask everyone to choose one feature to follow.
-- Run B: reveal the prompt, use the fixed first-frame anchor, and lock exactly five frames.
-- Play B twice. Toggle A / B while collecting observations about the chosen feature.
-- Ask what this classroom constraint leaves out. Playback speed is already shared by the tool.
+- Paste the Coherence Animator link and give a 60-second interface demo with prepared frames.
+- Ask everyone to keep the tab open; the current build resets on refresh.
+- Draw and lock the shared opening once. Run A then adds Frames 2–5 from the previous-frame ghost.
+- Run B adds Frames 2–5 while the shared opening anchor and previous frame remain visible.
+- Before playback, choose one feature. Use the guided button: A twice, then B twice at one speed.
+- Collect one observation and one limit of the analogy.
 
 **Room:**
-- Take a role — draw a frame and pass, track the chosen feature, or record evidence.
-- Watch one chosen feature across both runs.
-- Name one observation and one limit of the analogy.
+- Complete the nine-drawing sequence individually.
+- Choose and follow one feature across both runs.
+- Record one exact change and one limit of the analogy.
 
-**Watch:** Protect the energy here. If the room is engaged, keep the full 23 minutes and compress commentary inside the failure hunt.
+**Watch:** Protect the full 23 minutes. Use Temporal Telephone only as the paper or facilitator-led fallback if the Animator cannot run.
 
 ---
 
@@ -204,8 +206,8 @@ minutes and total exactly 120.
 > "Some systems interpolate or transform representations; others generate with temporal or spatiotemporal context. None of that makes visual smoothness proof of physical correctness."
 
 **Do:**
-- Ask for predictions before reveal.
-- Name the meters as a discussion device, not benchmark data.
+- Ask which target the room would inspect first: hands, text, faces, or physics.
+- Reveal physics as this example's inspection target; do not imply a score or ranking.
 - Use the four-question protocol: what changed, what supports it, what would verify the source, and what can we not conclude?
 - Connect the result to smooth ≠ evidence.
 
@@ -218,11 +220,15 @@ minutes and total exactly 120.
 
 ## 05 · System map · 57–65
 
-**On screen:** *A clip is also a system* — Model, interface, training data, workers, prompter, subject, editor, and platform all shape what appears.
-- Task: map one human decision and hidden contribution. Then ask what would verify the source and what the clip cannot establish.
-- Take-home: the output hides a chain of labor and decisions; provenance makes that chain easier to inspect.
+**On screen:** *A clip is also a system* — Describe only the parts this workflow lets us support; mark the rest unknown.
+- Human: chose the prompt, references, clip, and edits.
+- System: generated or transformed frames in this workflow.
+- Not visible from the clip: source material and contributors.
+- Production path: source/reference → generator or code → editor/compositor → platform.
+- Provenance: what documents the chain? Consent: who gave permission?
+- Take-home: a documented chain can improve provenance; it does not itself create permission.
 
-**In plain terms:** the clip is the last step of a chain — prompter, model, editor, platform, and the uncredited people whose footage taught it to move. Provenance is the paper trail of that chain; it records who and what, not whether anyone consented.
+**In plain terms:** the clip is the last visible step of a longer production chain. Mark any unseen source material or contributors as unknown rather than inferring them. Provenance records the chain; consent asks whether the people involved gave permission.
 
 **Say:**
 > "A provenance record — a trail of where a clip came from and who touched it — can document a chain. It cannot retroactively supply consent."
@@ -234,7 +240,7 @@ minutes and total exactly 120.
 - Hold consent and provenance apart: documentation does not itself create permission.
 
 **Room:**
-- Name a worker, subject, dataset contributor, editor, or platform decision that the clip hides.
+- Name one human choice, one supported system action, and one part of the chain that remains unknown.
 
 **Watch:** Eight minutes is enough because the room has already discussed labor and defaults in Sessions 1 and 2.
 
@@ -242,7 +248,7 @@ minutes and total exactly 120.
 
 ## 06 · One-tool studio · 65–83
 
-**On screen:** *One tool, one finished claim* — Start with the frozen default route; choose an advanced comparison only if the first claim is complete.
+**On screen:** *Start here: Video Failure Gallery* — Finish one claim before opening another tool.
 - **Worked example** · Frame 4: the cup handle disappears. Evidence: frames 3 → 4. Boundary: cause unproven. Classroom move: pause and separate observation from explanation.
 - Task: finish — exact break + evidence + bounded claim + missing source evidence + "With learners, I would…".
 
@@ -252,7 +258,7 @@ minutes and total exactly 120.
 **Do:**
 - Read the worked example before releasing the room.
 - Paste the tool links in chat.
-- Default route: one frozen Failure Gallery example; no generation and no second tool required. Advanced route: Temporal Telephone, Point Lab, or Coherence Viewer after one claim is complete.
+- Default route: one frozen Failure Gallery example; no generation and no second tool required. Advanced only after the claim is complete: Coherence Animator, Point Lab, or Coherence Viewer.
 - At minute 13 (of the studio), give a five-minute warning.
 - Circulate with the four questions: what changed, what supports it, what verifies the source, and what can you not conclude?
 

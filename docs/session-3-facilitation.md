@@ -24,7 +24,7 @@ Use this guide for the full 120-minute Session 3 run. Treat it as a re-entry and
 - Arrange two participant artifact shares in advance. Ask each person to show one artifact, make one claim, and name one boundary in about three minutes. Include at least one classroom-facing share, and do not select only from the people most visible in chat.
 - Send Dr. Emily Thomforde the Session 1 and Session 2 recaps, the three-line session argument, the remaining-question list, the 18-minute talk / 8-minute Q&A timing, and the private time signal. Brief her that the likely room includes people who are still figuring the tools out, that bias and learned defaults have been a strong live interest, and that many registrants want classroom transfer. Ask for one beginner-readable example and one practical implication for educators.
 - Prepare one anonymous poll or private-writing prompt for the opening. Make chat an option, not the only visible participation channel.
-- Open and test the [Session 3 live deck](../pages/session-3-deck.html), [Point Correspondence Lab](../tools/point-correspondence-lab/), and [Temporal Telephone](../tools/temporal-telephone/) in the same browser and at the same Zoom share size you will use live.
+- Open and test the [Session 3 live deck](../pages/session-3-deck.html), [Point Correspondence Lab](../tools/point-correspondence-lab/), and [Coherence Animator](../tools/coherence-animator/) in the same browser and at the same Zoom share size you will use live.
 - Build two short, frozen failure examples into the run: one identity or object-consistency break and one physics, text, or camera-continuity break. Do not rely on live generation.
 - Put the [Video Test Report](../worksheets/video-test-report/) and default / advanced studio links in one paste-ready chat message.
 - Confirm the guest's preferred introduction, name pronunciation, and whether the recording may include her segment.
@@ -33,7 +33,8 @@ Use this guide for the full 120-minute Session 3 run. Treat it as a re-entry and
 
 - [Session 3 live deck](../pages/session-3-deck.html)
 - [Point Correspondence Lab](../tools/point-correspondence-lab/)
-- [Temporal Telephone](../tools/temporal-telephone/)
+- [Coherence Animator](../tools/coherence-animator/) — core individual activity
+- [Temporal Telephone](../tools/temporal-telephone/) — optional facilitator-led or paper fallback
 - [Video Failure Gallery Viewer](../tools/video-failure-gallery-viewer/)
 - [Frame-by-Frame Coherence Viewer](../tools/frame-by-frame-coherence-viewer/)
 - [Video Test Report](../worksheets/video-test-report/)
@@ -48,7 +49,7 @@ Use this guide for the full 120-minute Session 3 run. Treat it as a re-entry and
 | 5–12 | Two artifact shares | Invite the two pre-arranged participants, including one classroom-facing share. Give each about three minutes: artifact, claim, boundary. | Listen for the evidence and ask at most one clarifying question. |
 | 12–17 | Active synthesis | Retrieve, do not re-lecture. Give 30 seconds of private writing, take one poll response or precise chat response, then invite two voluntary spoken responses. | Match one prior activity to one line using any offered channel. |
 | 17–24 | Point correspondence | Use the Ball arc in Point Correspondence Lab. Predict, reveal, then distinguish tracking existing frames from generating new ones. | Predict one point's destination and name one relationship that must persist. |
-| 24–47 | Temporal Telephone | Give a 60-second interface demo with prepared frames, then assign three roles — Drawer (locks a frame), Feature Tracker (follows one named relation), Evidence Recorder (logs the first exact change and frame number). Lock exactly five frames in each run. Play A twice, ask everyone to choose one feature, play B twice, then toggle A / B while collecting observations. | Take a role (draw, track the chosen feature, or record evidence), then name one observation and one limit of the analogy. |
+| 24–47 | Coherence Animator · solo A/B comparison | Give a 60-second interface demo, remind participants to keep the tab open, then let each person complete one shared opening and four new drawings per run. Run A shows the previous frame; Run B shows the shared opening anchor plus the previous frame. Use the guided A twice → B twice playback at one speed. | Complete the nine-drawing comparison individually, follow one chosen feature, then name one observation and one limit of the analogy. |
 | 47–57 | Curated failure hunt | Use two short frozen examples. Track one feature at a time and use the four-question protocol: what changed, what supports it, what would verify the source, and what can we not conclude? | Mark the first exact break and separate observation, explanation, verification, and boundary. |
 | 57–65 | System map | Map model, interface, training data, workers, prompter, subject, editor, and platform. Trace the production path — source/reference → generator or code-rendering system → editor/interpolator/compositor → platform; mark unknown stages. Add consent and provenance as separate questions. | Name one human decision, one hidden contribution, one consent question, and one provenance question using the same four-question frame. |
 | 65–83 | One-tool studio | Show the completed worked example before releasing the room. Offer a nearly impossible-to-fail default lane and an advanced lane. Require one worksheet row before a second tool. Give a five-minute warning at 78. | Finish one observation, one bounded claim, one missing piece of provenance evidence, and one sentence about classroom use. |
@@ -59,15 +60,16 @@ Use this guide for the full 120-minute Session 3 run. Treat it as a re-entry and
 | 116–118 | Guest takeaway | Ask Emily for one sentence the room should carry forward; thank her. | Put one phrase in chat. |
 | 118–120 | Close | Return to the three lines and invite the optional Studio / Showcase. | Save the session page and one next step. |
 
-## Temporal Telephone protocol
+## Coherence Animator protocol
 
-**Before you start:** give a 60-second interface demonstration using prepared frames (not a full run), then assign three equal roles so drawing is never required: **Drawer** (adds and locks a frame), **Feature Tracker** (follows one named relation), **Evidence Recorder** (records the first exact change and its frame number).
+**Before you start:** paste one direct link and give a 60-second demonstration using prepared frames. Ask participants to keep the tab open because this build resets on refresh. Drawing is the active route; watching the demonstration and recording evidence is an equally valid alternative.
 
-1. **Run A — previous frame:** lock exactly five frames, keep the prompt hidden, and ask each drawer to work from the previous-frame ghost. Play the saved sequence twice.
-2. **Choose one feature:** before showing Run B, ask everyone to name one feature they will follow: a hand, face, object edge, position, scale, or camera relationship.
-3. **Run B — anchor:** reveal the prompt. The tool seeds Run B with the exact same first frame as Run A, then holds that frame as the fixed reference. Lock exactly five frames and play the sequence twice. Playback speed is shared by the tool.
-4. **Compare:** toggle between the saved Run A and Run B playbacks while collecting observations about the chosen feature. Ask what held, what drifted, and what changed when the reference condition changed.
-5. **State the limit:** this is a controlled classroom comparison. Contemporary systems vary in their use of temporal context, reference conditioning, spatiotemporal processing, masking, cross-attention, and editing controls. The activity does not reproduce a universal video-model architecture.
+1. **Shared opening:** use the motion prompt to draw and lock Frame 1 once. The tool places the exact same image at the start of both runs.
+2. **Run A — previous only:** draw Frames 2–5 using the previous-frame ghost. The tool stops the run at exactly five frames.
+3. **Run B — anchor + previous:** draw Frames 2–5 while both the shared opening and previous drawing remain visible. The tool again stops at five frames.
+4. **Choose one feature:** name a hand, face, object edge, position, scale, or camera relationship from the shared opening before playback.
+5. **Compare at one speed:** use **Play A twice, then B twice**, then toggle A → B → A. Record the first exact change and its frame number.
+6. **State the limit:** this is a human drawing comparison with one changed visibility condition. Real systems vary in their use of temporal context, references, joint space-time processing, masks, attention, and editing controls. The activity does not reproduce a universal video-model architecture.
 
 ## Mechanism language to keep
 
@@ -93,9 +95,9 @@ Show this worked example before the studio begins:
 
 **Default lane:** use one frozen example in the Video Failure Gallery Viewer. Identify the first exact break, capture the frame or timestamp, complete the bounded claim, name one piece of source evidence still needed, and add one sentence beginning “With learners, I would…”. This route requires no generation and no second tool.
 
-**Advanced lane:** use Temporal Telephone, Point Correspondence Lab, or an accessible video tool. Change one reference, camera, duration, motion, or subject constraint; compare the result and state what the comparison cannot prove.
+**Advanced lane:** use Coherence Animator, Point Correspondence Lab, or an accessible video tool. Change one reference, camera, duration, motion, or subject constraint; compare the result and state what the comparison cannot prove.
 
-**No-AI lane:** analyze frozen frames or run Temporal Telephone on paper. No account or generation is required to make a defensible coherence claim.
+**No-AI lane:** analyze frozen frames or draw the Coherence Animator branching sequence on paper. Temporal Telephone remains available as a facilitator-led group variation. No account or generation is required to make a defensible coherence claim.
 
 ## Four-question verification handoff
 
@@ -134,7 +136,7 @@ These questions turn visible failure analysis into a classroom protocol. They al
 
 - If the artifact shares are not confirmed, replace them with two prepared recap artifacts; do not cold-call.
 - If Point Correspondence Lab fails, use the deck's fallback ball strip and take one chat prediction.
-- If Temporal Telephone drawing fails, have one facilitator draw while the room directs changes, or switch to paper. Preserve the Run A / Run B reference comparison.
+- If Coherence Animator fails, have participants make the same one-opening/two-branch sequence on paper, or run Temporal Telephone as a facilitator-led relay. Preserve the Run A / Run B reference comparison.
 - If time slips before the guest, shorten the failure hunt to one example and the system map to four minutes. Do not take time from the guest block.
 - If the guest has a technical problem, move directly into the one-tool studio extension and the prepared Q&A prompts; preserve the 118-minute closing callback.
 - If participants finish early, ask them to strengthen the boundary of the claim rather than open another tool.

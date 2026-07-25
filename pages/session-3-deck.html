@@ -77,13 +77,20 @@
   .av-frbig .big{flex:none}
   .av-frbig .col{min-width:0}
 
-  /* meters (motion failure) */
-  .av-meter{display:grid;grid-template-columns:200px 1fr 62px;align-items:center;gap:14px;margin:0 0 13px}
-  .av-meter .nm{font-family:var(--mono);font-size:21px;text-align:right}
-  .av-meter .track{height:28px;background:var(--paper-2);border-radius:8px;overflow:hidden}
-  .av-meter .fill{height:100%;width:0;border-radius:8px;transition:width .3s var(--ease)}
-  .av-meter.top .nm{color:var(--amber-ink);font-weight:500}
-  .av-meter .v{font-family:var(--mono);font-size:18px;color:var(--muted)}
+  /* prediction targets (motion failure) */
+  .av-target-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
+  .av-target{min-height:118px;display:flex;align-items:center;justify-content:center;border:2px solid var(--line);border-radius:12px;background:var(--cell);font-family:var(--mono);font-size:24px;text-align:center;transition:.2s var(--ease)}
+  .av-target.inspect{border-color:var(--amber);background:var(--amber-soft);color:var(--amber-ink);font-weight:600;transform:translateY(-3px)}
+  .av-protocol{display:grid;gap:9px;margin-top:14px}
+  .av-path,.av-question-pair{border:1px solid var(--line);border-radius:10px;background:var(--cell);padding:10px 14px;font-family:var(--mono);font-size:16px;line-height:1.35}
+  .av-question-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:var(--violet-soft);color:var(--violet-deep)}
+  .animator-map{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:10px;align-items:center;margin-top:20px}
+  .animator-step{min-height:116px;border:2px solid var(--line);border-radius:12px;background:var(--cell);padding:16px;display:flex;flex-direction:column;justify-content:center;gap:6px;text-align:center}
+  .animator-step b{font-family:var(--mono);font-size:21px}.animator-step span{font-size:15px;color:var(--muted)}
+  .animator-arrow{font-size:30px;color:var(--violet)}
+  .studio-choice{display:grid;gap:12px;margin-top:18px}
+  .studio-choice .primary{border:2px solid var(--violet);background:var(--violet-soft);border-radius:12px;padding:16px 20px;font-size:24px;color:var(--violet-deep)}
+  .studio-choice .line{border:1px solid var(--line);background:var(--cell);border-radius:10px;padding:12px 18px;font-size:19px}
 
   /* contributions / consent map */
   .av-contrib{display:flex;gap:16px;margin-top:4px}
@@ -235,18 +242,15 @@
   var SITE = 'https://saberkhan372.github.io/learning-machines-tools/';
 
   var TOOLS = [
+    {n:'Video Failure Gallery', u:SITE+'tools/video-failure-gallery-viewer/', w:'start here — name one exact break and finish one bounded claim'},
+    {n:'Coherence Animator', u:SITE+'tools/coherence-animator/', w:'core A/B activity — compare previous-only with anchor + previous'},
     {n:'Point Correspondence Lab', u:SITE+'tools/point-correspondence-lab/', w:'select, predict, then reveal a point track'},
-    {n:'Temporal Telephone', u:SITE+'tools/temporal-telephone/', w:'compare frame sequences under different reference conditions'},
     {n:'Metronome Frame Scrubber', u:SITE+'tools/metronome-frame-scrubber/', w:'step frames on a beat'},
     {n:'Frame-by-Frame Coherence', u:SITE+'tools/frame-by-frame-coherence-viewer/', w:'onion-skin the drift'},
-    {n:'Video Failure Gallery', u:SITE+'tools/video-failure-gallery-viewer/', w:'name failure modes precisely'},
     {n:'Video Test Report', u:SITE+'worksheets/video-test-report/', w:'worksheet — one claim, one boundary'}
   ];
   var CLOSERS = [
-    {n:'Session 3 page — your map of everything we touched', u:SITE+'pages/session-video.html'},
-    {n:'Session 3 assignment — six routes to one evidence-backed artifact', u:SITE+'pages/session-3-assignment.html'},
-    {n:'Optional Studio / Showcase — show what you made', u:SITE+'pages/session-showcase.html'},
-    {n:'Video Test Report — finish your claim any time', u:SITE+'worksheets/video-test-report/'}
+    {n:'Session 3 page — tools, assignment, showcase, and feedback', u:SITE+'pages/session-video.html'}
   ];
 
   var SLIDES = [
@@ -287,7 +291,7 @@
       head:'From a point to a path',
       idea:'A tracker links evidence across existing frames. A generator must create new frames whose features still agree.',
       task:'Pick the ball’s center: where did it go next, and what relation had to stay coherent?',
-      take:'Correspondence asks what matches; coherence asks whether a generated sequence keeps those relations believable.',
+      take:'Correspondence = finding the same point across different frames.',
       notes:{
         look:'Point Correspondence Lab plus a fallback frame strip.',
         you:['Open the Point Correspondence Lab; select the ball center.','Take one prediction before revealing the route.','Distinguish analysis from generation: a tracker estimates correspondence in existing frames; a generator produces new frames.'],
@@ -295,18 +299,18 @@
         say:['"Point correspondence just means: which dot in the next frame is the same dot as this one?"','"A still only has to be convincing once. A video has to keep agreeing with itself, frame after frame — so the relation between frames becomes part of the evidence."'],
         watch:'Keep the mechanism bridge to seven minutes. It sets up the activity; it is not the main event.'} },
 
-    { id:'telephone', kind:'telephone', aid:'telephone', time:23, num:'03', nav:'Temporal Telephone',
-      head:'Change one visibility condition',
-      idea:'Run A shows only the previous frame. Run B keeps the same first frame as an anchor. The comparison is the lesson.',
-      prompt:'a person waving',
-      task:'Lock exactly five frames in each run. Follow one feature, compare A / B, then name the analogy’s limit.',
+    { id:'animator', kind:'animator', aid:'animator', time:23, num:'03', nav:'Coherence Animator',
+      head:'One opening frame, two reference conditions',
+      idea:'Run A shows the previous frame. Run B shows the shared opening anchor and the previous frame. The comparison is the lesson.',
+      prompt:'a person at work',
+      task:'Draw nine times. Choose one feature. Play A twice, then B twice. Record what changed and what the analogy cannot prove.',
       take:'Small inconsistencies can compound when a sequence does not preserve the same relations across time.',
       notes:{
-        look:'Use the full Temporal Telephone tool in a separate tab; the deck strip is only a fallback.',
-        you:['Give a 60-second interface demo with prepared frames, then assign roles: Drawer locks a frame, Feature Tracker follows one named relation, Evidence Recorder logs the first exact change and frame number.','Run A: prompt hidden, previous frame only, exactly five locked frames.','Play A twice, then ask everyone to choose one feature to follow.','Run B: reveal the prompt, use the fixed first-frame anchor, and lock exactly five frames.','Play B twice. Toggle A / B while collecting observations about the chosen feature.','Ask what this classroom constraint leaves out. Playback speed is already shared by the tool.'],
-        room:['Take a role — draw a frame and pass, track the chosen feature, or record evidence.','Watch one chosen feature across both runs.','Name one observation and one limit of the analogy.'],
-        say:['"Run A gives each drawer only the previous frame. Run B also keeps the first frame visible as a fixed reference. You are comparing what those two reference conditions keep stable."','"This activity deliberately restricts the references available to each drawer. Real systems vary: some use more frames of context (temporal context), some are held to a reference image (reference conditioning), some process space and time jointly (spatiotemporal processing), and some add editing controls."','"The comparison shows why references can matter; it does not reveal one universal video architecture."'],
-        watch:'Protect the energy here. If the room is engaged, keep the full 23 minutes and compress commentary inside the failure hunt.'} },
+        look:'Every participant opens Coherence Animator and completes the same guided solo A/B sequence.',
+        you:['Paste the Coherence Animator link and give a 60-second interface demo with prepared frames.','Ask everyone to keep the tab open; the current build resets on refresh.','Shared opening: draw and lock Frame 1 once. The tool places it in both runs.','Run A: draw Frames 2–5 from the previous-frame ghost.','Run B: draw Frames 2–5 while the shared opening anchor and previous frame remain visible.','Before playback, choose one feature to follow. Use the guided button: A twice, then B twice at one speed.','Collect one observation and one limit of the analogy.'],
+        room:['Complete the nine-drawing sequence individually.','Choose one feature from the shared opening frame.','Watch A twice and B twice, then record one exact change and one limit.'],
+        say:['"The tool changes one thing: what visual references stay available while you draw."','"Run A gives you only the previous drawing. Run B also keeps the shared opening visible. Compare what those two conditions keep stable."','"Real systems use many different architectures and controls. This human drawing comparison shows why references can matter; it does not reveal how one particular model works."'],
+        watch:'Protect the full 23 minutes. Use Temporal Telephone only as the paper or facilitator-led fallback if the Animator cannot run.'} },
 
     { id:'coherence', kind:'drift', aid:'drift', time:5, num:'04A', nav:'Failure hunt — identity',
       head:'Find where identity breaks',
@@ -327,31 +331,31 @@
       take:'Motion learned from patterns does not guarantee physics.',
       notes:{
         look:'A teaching cartoon of common failure patterns, not measured model scores.',
-        you:['Ask for predictions before reveal.','Name the meters as a discussion device, not benchmark data.','Use the four-question protocol: what changed, what supports it, what would verify the source, and what can we not conclude?','Connect the result to smooth ≠ evidence.'],
+        you:['Ask the room which target they would inspect first: hands, text, faces, or physics.','Reveal physics as this example’s inspection target; do not imply a score or ranking.','Use the four-question protocol: what changed, what supports it, what would verify the source, and what can we not conclude?','Connect the result to smooth ≠ evidence.'],
         room:['Predict, reveal, then name the exact failure rather than saying “weird.”'],
         say:['"Some systems interpolate or transform representations; others generate with temporal or spatiotemporal context. None of that makes visual smoothness proof of physical correctness."'],
         watch:'Avoid “the model has no physics.” The defensible claim is that generated motion does not guarantee physical consistency.'} },
 
     { id:'system', kind:'contrib', aid:'contrib', time:8, shape:true, num:'05', nav:'System map',
       head:'A clip is also a system',
-      idea:'Model, interface, training data, workers, prompter, subject, editor, and platform all shape what appears.',
-      task:'Map one human decision and hidden contribution. Then ask what would verify the source and what the clip cannot establish.',
-      take:'The output hides a chain of labor and decisions; provenance makes that chain easier to inspect.',
+      idea:'Describe only the parts this workflow lets us support; mark the rest unknown.',
+      task:'Trace the production path. Then keep provenance and consent as two separate questions.',
+      take:'A documented chain can improve provenance; it does not itself create permission.',
       notes:{
         look:'A live contribution map. Use the three fields to gather the room’s language.',
         you:['Fill human action, machine action, and hidden contribution from the room.','Trace the production path aloud: source/reference → generator or code-rendering system → editor/interpolator/compositor → platform; mark unknown stages.','Add provenance aloud: what record would help someone inspect where the clip came from?','Hold consent and provenance apart: documentation does not itself create permission.'],
-        room:['Name a worker, subject, dataset contributor, editor, or platform decision that the clip hides.'],
+        room:['Name one human choice, one system action supported by this workflow, and one part of the chain that remains unknown.'],
         say:['"A provenance record — a trail of where a clip came from and who touched it — can document a chain. It cannot retroactively supply consent."'],
         watch:'Eight minutes is enough because the room has already discussed labor and defaults in Sessions 1 and 2.'} },
 
     { id:'studio', kind:'studio', time:18, num:'06', nav:'One-tool studio',
-      head:'One tool, one finished claim',
-      idea:'Start with the frozen default route; choose an advanced comparison only if the first claim is complete.',
+      head:'Start here: Video Failure Gallery',
+      idea:'Finish one claim before opening another tool.',
       example:'Worked example · Frame 4: the cup handle disappears. Evidence: frames 3 → 4. Boundary: cause unproven. Classroom move: pause and separate observation from explanation.',
       task:'Finish: exact break + evidence + bounded claim + missing source evidence + “With learners, I would…”.',
       notes:{
-        look:'The six tool routes and the copy-links control.',
-        you:['Read the worked example before releasing the room.','Paste the tool links in chat.','Default route: one frozen Failure Gallery example; no generation and no second tool required. Advanced route: Temporal Telephone, Point Lab, or Coherence Viewer after one claim is complete.','At minute 13, give a five-minute warning.','Circulate with the four questions: what changed, what supports it, what verifies the source, and what can you not conclude?'],
+        look:'One default decision, one finish line, and the advanced routes. URLs stay in chat.',
+        you:['Read the worked example before releasing the room.','Paste the tool links in chat.','Default route: one frozen Failure Gallery example; no generation and no second tool required. Advanced only after the claim is complete: Coherence Animator, Point Lab, or Coherence Viewer.','At minute 13, give a five-minute warning.','Circulate with the four questions: what changed, what supports it, what verifies the source, and what can you not conclude?'],
         room:['Choose one route.','Finish one worksheet row before touring another tool.','Add one sentence about how you could use the protocol with learners.'],
         say:['"One finished claim beats ten open tabs."'],
         watch:'Do not extend the studio beyond 83 minutes; the guest handoff needs a calm runway.'} },
@@ -371,7 +375,7 @@
       head:'Dr. Emily Thomforde',
       idea:'AI researcher and educator · PhD in Artificial Intelligence, University of Edinburgh · Reach University',
       take:'Listening question: what would count as evidence that a system understands, rather than merely produces a convincing pattern?',
-      questions:['Welcome Emily and connect her work to the room’s text → image → video investigation.'],
+      questions:['What would count as evidence that a system understands, rather than merely produces a convincing pattern?'],
       notes:{
         look:'The guest’s name, context, and one listening question.',
         you:['Give a two-minute introduction.','Name the listening question, then hand over cleanly.'],
@@ -433,19 +437,18 @@
       rev: rev||0,
       slide:0,
       play:{head:0, n:8},
-      telephone:{frames:[], seed:7},
       drift:{frame:0, n:10, breakAt:6, onion:false, revealed:false},
-      motion:{variant:'long', revealed:false},
+      motion:{revealed:false},
       contrib:{
-        human:'described the scene, chose the clip, decided it was usable',
-        model:'guessed every in-between frame to fake smooth motion',
-        hidden:'the filmed performers, animators, and videographers whose footage taught it motion — likeness and labour, often without consent' }
+        human:'chose the prompt, references, clip, and edits',
+        model:'generated or transformed frames in this workflow',
+        hidden:'source material and contributors not visible from the clip' }
     };
   }
   var state = freshState(0);
 
   /* ============ SESSION IDENTITY + PERSISTENCE ============ */
-  var SID_KEY = 'hlm-s3-sid', STORE_BASE = 'hlm-s3-deck-', CHAN_BASE = 'hlm-s3-deck-v1-';
+  var SID_KEY = 'hlm-s3-sid', STORE_BASE = 'hlm-s3-deck-v2-', CHAN_BASE = 'hlm-s3-deck-v2-';
   function newSidValue(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
   var sid = (function(){ try{
     var s = localStorage.getItem(SID_KEY);
@@ -489,9 +492,6 @@
   /* ============ HELPERS ============ */
   function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function shortUrl(u){ return u.replace(/^https?:\/\//,''); }
-  function clamp01(x){ return x<0?0:x>1?1:x; }
-  function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a);
-    t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
 
   /* ============ SVG FRAME PRIMITIVES ============ */
   // bouncing ball, viewBox 0 0 100 100, optional drift offsets + hue shift
@@ -528,22 +528,22 @@
     var sh=s.shape?' shape':'';
 
     if(s.kind==='title'){
-      var flow='<div class="title-flow"><span class="f">text · continuation → fluent ≠ true</span><span class="bk">→</span><span class="f">image · conditioned sampling → plausible ≠ neutral</span><span class="bk">→</span><span class="f sh">video · relations across time → smooth ≠ evidence</span></div>';
+      var flow='<div class="title-flow"><span class="f">text · predict what comes next → fluent ≠ true</span><span class="bk">→</span><span class="f">image · make one still → plausible ≠ neutral</span><span class="bk">→</span><span class="f sh">video · keep frames consistent → smooth ≠ evidence</span></div>';
       return '<div class="stage">'+eyebrow+head+'<div class="s-idea" style="max-width:38ch">'+esc(s.idea)+'</div>'+flow+'</div>';
     }
     if(s.kind==='synthesis'){
       var claims='<div class="qlist" style="gap:8px">'+[
-        ['TEXT','Tokens + context','Select a continuation','Fluent ≠ necessarily true'],
-        ['IMAGE','Text / reference conditioning','Generate or denoise a spatial representation','Plausible ≠ necessarily neutral'],
-        ['VIDEO','Text / reference / temporal conditioning','Produce a coherent space-time sequence','Smooth ≠ evidence']
-      ].map(function(x){return '<div class="qrow" style="padding:9px 18px;font-size:21px"><span class="qn">'+x[0]+'</span><span class="txt2"><b>'+x[1]+'</b><span class="note">'+x[2]+' · '+x[3]+'</span></span></div>';}).join('')+'</div>';
+        ['TEXT','prior words → predict what comes next','Fluent ≠ true'],
+        ['IMAGE','prompt + references → make one still','Plausible ≠ neutral'],
+        ['VIDEO','prompt + references + time → keep frames consistent','Smooth ≠ evidence']
+      ].map(function(x){return '<div class="qrow" style="padding:11px 18px;font-size:21px"><span class="qn">'+x[0]+'</span><span class="txt2"><b>'+x[1]+'</b><span class="note">'+x[2]+'</span></span></div>';}).join('')+'</div>';
       return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+claims+'</div><div class="s-take">'+esc(s.take)+'</div>'+task(s)+'</div>';
     }
     if(s.kind==='setup'){
-      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+framesViz()+'</div>'+task(s)+'</div>';
+      return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-take">'+esc(s.take)+'</div><div class="s-body">'+framesViz()+'</div>'+task(s)+'</div>';
     }
-    if(s.kind==='telephone'){
-      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+telephoneViz()+'</div>'+task(s)+'</div>';
+    if(s.kind==='animator'){
+      return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+coherenceAnimatorViz()+'</div>'+task(s)+'</div>';
     }
     if(s.kind==='drift'){
       return '<div class="stage">'+eyebrow+head+idea+'<div class="s-body">'+driftViz()+'</div>'+task(s)+'</div>';
@@ -563,11 +563,9 @@
       return '<div class="stage'+sh+'">'+eyebrow+head+idea+'<div class="s-body">'+prompts+'</div>'+task(s)+(s.take?'<div class="s-take">'+esc(s.take)+'</div>':'')+'</div>';
     }
     if(s.kind==='studio'){
-      var rows='<div class="qlist c">'+TOOLS.map(function(t,k){
-        return '<div class="qrow c'+(t.opt?' opt':'')+'"><span class="qn">'+(k+1)+'</span><span class="txt2"><span><b>'+esc(t.n)+'</b> <span class="note">— '+esc(t.w)+'</span></span><span class="go">'+esc(shortUrl(t.u))+'</span></span></div>';
-      }).join('')+'</div>';
       var example=s.example?'<div class="studio-example">'+esc(s.example)+'</div>':'';
-      return '<div class="stage studio-stage">'+eyebrow+head+idea+example+'<div class="s-body">'+rows+'</div>'+task(s)+'</div>';
+      var choice='<div class="studio-choice"><div class="primary"><b>Start here:</b> Video Failure Gallery</div><div class="line"><b>Finish one claim:</b> exact break → evidence → boundary → learner move</div><div class="line"><b>Advanced after that:</b> Coherence Animator · Point Lab · Coherence Viewer</div><div class="line"><b>Links:</b> in chat</div></div>';
+      return '<div class="stage studio-stage">'+eyebrow+head+idea+example+'<div class="s-body">'+choice+'</div>'+task(s)+'</div>';
     }
     if(s.kind==='close'){
       var pts='<div class="qlist c">'+CLOSERS.map(function(t,k){
@@ -585,19 +583,16 @@
     return '<div class="av-film">'+strip+'</div>'+
       '<div class="av-cap">frame <b>'+head+'</b> of '+n+' — a clean, coherent loop the room stitches into motion</div>';
   }
-  function driftFor(k){ // deterministic cumulative wander for telephone frame k
-    var rnd=mulberry32(state.telephone.seed|0), ox=0, oy=0, hue=0;
-    for(var j=0;j<=k;j++){ ox+=(rnd()*2-1)*4.2; oy+=(rnd()*2-1)*4.2; hue+=(rnd()*2-1)*26; }
-    return [ox,oy,hue];
-  }
-  function telephoneViz(){
-    var frames=state.telephone.frames||[];
-    if(!frames.length) return '<div class="av-empty">Frames appear here as the room describes each next change. Watch the figure wander.</div>';
-    var strip=''; for(var k=0;k<frames.length;k++){ var dr=driftFor(k);
-      strip+='<div class="av-fr"><span class="fn">'+(k+1)+'</span>'+ballSVG(k,Math.max(2,frames.length),[dr[0],dr[1]],dr[2])+
-        '<div class="lab">'+esc(frames[k])+'</div></div>'; }
-    return '<div class="av-film">'+strip+'</div>'+
-      '<div class="av-cap">'+frames.length+' frames · each drawn from the last — <b>watch the drift compound</b></div>';
+  function coherenceAnimatorViz(){
+    var steps=[
+      ['1 · shared opening','draw once'],
+      ['2 · Run A','previous only'],
+      ['3 · Run B','anchor + previous'],
+      ['4 · compare','A twice → B twice']
+    ];
+    return '<div class="animator-map">'+steps.map(function(step,k){
+      return (k?'<span class="animator-arrow">→</span>':'')+'<div class="animator-step"><b>'+esc(step[0])+'</b><span>'+esc(step[1])+'</span></div>';
+    }).join('')+'</div><div class="av-cap">one shared opening · nine drawings total · five frames in each run</div>';
   }
   function driftViz(){
     var d=state.drift, cur=d.frame, base=5, fingers=(cur>=d.breakAt?base+1:base);
@@ -612,25 +607,24 @@
     return '<div class="av-frbig"><div class="big">'+big+'</div><div class="col"><div class="av-cap" style="text-align:left;margin-top:0">frame <b>'+cur+'</b> of '+(d.n-1)+' · fingers: <b>'+fingers+'</b></div></div></div>'+
       '<div class="av-film">'+strip+'</div>'+cap;
   }
-  function meterRow(nm,val,color,top){ var pct=Math.round(clamp01(val)*100);
-    return '<div class="av-meter'+(top?' top':'')+'"><span class="nm">'+esc(nm)+'</span><span class="track"><span class="fill" style="width:'+pct+'%;background:'+color+'"></span></span><span class="v">'+pct+'%</span></div>'; }
   function motionViz(){
-    var lng=state.motion.variant==='long';
-    var vals=[['hands', lng?0.82:0.55],['text', lng?0.72:0.5],['faces', lng?0.55:0.36],['physics', lng?0.5:0.3]];
-    var maxi=0; vals.forEach(function(v,k){ if(v[1]>vals[maxi][1]) maxi=k; });
-    var rows=vals.map(function(v,k){ var top=state.motion.revealed&&k===maxi;
-      return meterRow(v[0], v[1], top?'#bf7a20':'#5546d6', top); }).join('');
+    var targets=['hands','text','faces','physics'];
+    var rows='<div class="av-target-grid">'+targets.map(function(target){
+      return '<div class="av-target'+(state.motion.revealed&&target==='physics'?' inspect':'')+'">'+esc(target)+'</div>';
+    }).join('')+'</div>';
     var cap=state.motion.revealed
-      ? '<div class="av-cap"><b>'+vals[maxi][0]+' are the test target in this teaching cartoon.</b> Verify the pattern with actual clips; these are not benchmark scores.</div>'
-      : '<div class="av-cap" style="color:var(--muted)">'+(lng?'long clip':'short clip')+' — predict in chat what breaks first · illustrative, not measured</div>';
-    return '<div style="margin-top:8px">'+rows+'</div>'+cap;
+      ? '<div class="av-cap"><b>Our inspection target: physics.</b> Name the first exact break; do not turn this choice into a model score.</div>'
+      : '<div class="av-cap" style="color:var(--muted)">Which relation would you inspect first?</div>';
+    return rows+cap;
   }
   function contribViz(){
     var c=state.contrib;
     return '<div class="av-contrib">'+
       '<div class="av-col h"><h4>the human did</h4><p>'+esc(c.human||'—')+'</p></div>'+
-      '<div class="av-col m"><h4>the machine did</h4><p>'+esc(c.model||'—')+'</p></div>'+
-      '</div><div class="av-hidden"><b>hidden in the output:</b> '+esc(c.hidden||'—')+'</div>';
+      '<div class="av-col m"><h4>the system did</h4><p>'+esc(c.model||'—')+'</p></div>'+
+      '</div><div class="av-hidden"><b>not visible from the clip:</b> '+esc(c.hidden||'—')+'</div>'+
+      '<div class="av-protocol"><div class="av-path"><b>production path:</b> source/reference → generator or code → editor/compositor → platform</div>'+
+      '<div class="av-question-pair"><span><b>Provenance:</b> what documents the chain?</span><span><b>Consent:</b> who gave permission?</span></div></div>';
   }
 
   function wireStage(rootEl){ /* no clickable stage elements */ }
@@ -638,19 +632,18 @@
   /* ============ SESSION LOG ============ */
   function buildLog(){
     var d=new Date(), L=[];
-    var telephoneSlide=SLIDES.filter(function(slide){ return slide.id==='telephone'; })[0];
     L.push('# Human Video Model — session log');
     L.push('_Session 3 · Video — ' + d.toDateString() + '_');
     L.push('');
-    L.push('## Temporal Telephone fallback strip ("'+ (telephoneSlide.prompt||'') +'")');
-    var f=state.telephone.frames||[];
-    L.push(f.length ? f.map(function(x,k){return '- frame '+(k+1)+': '+x;}).join('\n') : '- no frames recorded');
+    L.push('## Coherence Animator A/B comparison');
+    L.push('- core activity: one shared opening; Run A previous-only; Run B anchor + previous');
+    L.push('- participant drawings stay in each participant’s open tool tab');
     L.push('');
     L.push('## Curated failure hunt — coherence / drift');
     L.push('- break frame: ' + state.drift.breakAt + ' of ' + (state.drift.n-1) + (state.drift.revealed?' (revealed)':' (not revealed)'));
     L.push('');
     L.push('## Curated failure hunt — motion / time');
-    L.push('- clip length: ' + state.motion.variant + (state.motion.revealed?' · revealed weakest point':''));
+    L.push('- inspection targets: hands, text, faces, physics' + (state.motion.revealed?' · physics target revealed':''));
     L.push('');
     L.push('## System / labor / consent / provenance map');
     L.push('- the human did: ' + state.contrib.human);
@@ -776,11 +769,11 @@
       '<p class="hint">Open the lab for select → predict → reveal. The strip below is the no-network fallback.</p>'+
       '<div class="crow"><a class="btn" href="'+SITE+'tools/point-correspondence-lab/" target="_blank" rel="noopener">Open Point Lab ↗</a><button class="btn ghost" id="frPlay">Play fallback</button><button class="btn ghost" id="frStep">Step</button><button class="btn ghost" id="frRst">Reset</button></div></div></div>'+
       '<p class="small">This is the "before" picture — coherent motion. Round 1 breaks it on purpose.</p>';
-    if(s.aid==='telephone') return ''+
-      '<div class="ctrl"><div class="hd"><span class="ct live">live</span><span class="cn">Add a frame</span><span class="mark">grows on their screen</span></div><div class="bd">'+
-      '<p class="hint">Type the room’s next-frame description; click Add. Do not fix earlier frames — the drift is the point.</p>'+
-      '<input type="text" id="tpIn" placeholder="hand a little higher..." />'+
-      '<div class="crow"><button class="btn" id="tpAdd">Add frame</button><button class="btn ghost" id="tpUndo">Undo</button><button class="btn ghost" id="tpRst">Reset</button></div></div></div>';
+    if(s.aid==='animator') return ''+
+      '<div class="ctrl"><div class="hd"><span class="ct live">solo</span><span class="cn">Coherence Animator</span><span class="mark">opens in a new tab</span></div><div class="bd">'+
+      '<p class="hint">Participants complete one shared opening, Run A, Run B, then the guided comparison. Ask them to keep the tab open; refresh resets the current build.</p>'+
+      '<div class="crow"><a class="btn" href="'+SITE+'tools/coherence-animator/" target="_blank" rel="noopener">Open Coherence Animator ↗</a></div></div></div>'+
+      '<p class="small">Fallback: draw the same nine-frame branching sequence on paper. Temporal Telephone remains available for a facilitator-led group version.</p>';
     if(s.aid==='drift') return ''+
       '<div class="ctrl"><div class="hd"><span class="ct">demo</span><span class="cn">Coherence scrubber</span><span class="mark">shows on their screen</span></div><div class="bd">'+
       '<p class="hint">Scrub and count fingers. Take chat votes for the break frame before Reveal.</p>'+
@@ -791,16 +784,15 @@
       '<div class="crow"><button class="btn ghost" id="drOnion">Onion-skin</button><button class="btn" id="drRev">Reveal</button><button class="btn ghost" id="drRst">Reset</button></div></div></div>';
     if(s.aid==='motion') return ''+
       '<div class="ctrl"><div class="hd"><span class="ct">cartoon</span><span class="cn">Failure-test targets</span><span class="mark">illustrative only</span></div><div class="bd">'+
-      '<p class="hint">Let the room predict before you reveal. The percentages organize discussion; they are not measured model results.</p>'+
-      '<div class="crow"><span class="seg-toggle" id="moTog"><button data-v="short">short clip</button><button data-v="long" class="on">long clip</button></span>'+
-      '<button class="btn" id="moRev">Reveal</button><button class="btn ghost" id="moRst">Hide</button></div></div></div>';
+      '<p class="hint">Let the room choose an inspection target before you reveal this example’s target. No scores or rankings are implied.</p>'+
+      '<div class="crow"><button class="btn" id="moRev">Reveal target</button><button class="btn ghost" id="moRst">Hide</button></div></div></div>';
     if(s.aid==='contrib') return ''+
-      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Consent map</span><span class="mark">shows on their screen</span></div><div class="bd">'+
-      '<p class="hint">Fill each box from the room. The hard one is "hidden" — whose likeness or performance. Do not resolve it.</p>'+
+      '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Bounded system map</span><span class="mark">shows on their screen</span></div><div class="bd">'+
+      '<p class="hint">Fill each box only with claims this workflow supports. Mark unseen source material or contributors unknown; do not infer them from the clip.</p>'+
       '<div style="display:grid;gap:10px;margin-top:4px">'+
         '<div><div class="small" style="margin-bottom:3px;color:var(--violet-deep)">the human did</div><textarea id="coH" rows="2"></textarea></div>'+
-        '<div><div class="small" style="margin-bottom:3px;color:var(--amber-ink)">the machine did</div><textarea id="coM" rows="2"></textarea></div>'+
-        '<div><div class="small" style="margin-bottom:3px;color:var(--amber-ink)">hidden in the output</div><textarea id="coX" rows="3"></textarea></div>'+
+        '<div><div class="small" style="margin-bottom:3px;color:var(--amber-ink)">the system did</div><textarea id="coM" rows="2"></textarea></div>'+
+        '<div><div class="small" style="margin-bottom:3px;color:var(--amber-ink)">not visible from the clip</div><textarea id="coX" rows="3"></textarea></div>'+
       '</div><div class="crow"><span class="small"><a href="'+SITE+'worksheets/ai-use-consent-checklist/" target="_blank" rel="noopener">Consent checklist ↗</a></span></div></div></div>';
     if(s.kind==='studio') return ''+
       '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Tool links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
@@ -809,8 +801,8 @@
       '<p class="small">Same list as the <a href="session-links.html" target="_blank" rel="noopener">Session Link Sheet</a> — edit <code>assets/session-runs.js</code> to change both.</p>';
     if(s.kind==='close') return ''+
       '<div class="ctrl"><div class="hd"><span class="ct live">shared</span><span class="cn">Closing links</span><span class="mark">for Zoom chat</span></div><div class="bd">'+
-      '<p class="hint">Paste the three take-home links, then click <b>copy log</b> in the top bar and save what the room built.</p>'+
-      '<div class="crow"><button class="btn" id="copyX2">Copy closing links</button><span class="small" id="copyXS"></span></div></div></div>';
+      '<p class="hint">Paste the one canonical Session 3 page, then click <b>copy log</b> in the top bar and save what the room built.</p>'+
+      '<div class="crow"><button class="btn" id="copyX2">Copy Session 3 link</button><span class="small" id="copyXS"></span></div></div></div>';
     return '<p class="small">No live tool on this slide — this one runs entirely in the room and on the slide.</p>';
   }
 
@@ -828,14 +820,6 @@
       document.getElementById('frStep').onclick=function(){ stopPlay(); state.play.head=(state.play.head+1)%state.play.n; update(); };
       document.getElementById('frRst').onclick=function(){ stopPlay(); state.play.head=0; update(); };
     }
-    if(s.aid==='telephone'){
-      var inp=document.getElementById('tpIn');
-      var add=function(){ var v=inp.value.trim(); if(!v) return; state.telephone.frames=state.telephone.frames.concat([v.slice(0,42)]); inp.value=''; update(); };
-      document.getElementById('tpAdd').onclick=add;
-      inp.onkeydown=function(e){ if(e.key==='Enter'){ e.preventDefault(); add(); } };
-      document.getElementById('tpUndo').onclick=function(){ state.telephone.frames=state.telephone.frames.slice(0,-1); update(); };
-      document.getElementById('tpRst').onclick=function(){ state.telephone.frames=[]; update(); };
-    }
     if(s.aid==='drift'){ var sl=document.getElementById('drSlider'), v=document.getElementById('drv'),
         bs=document.getElementById('drBreak'), bv=document.getElementById('drb');
       sl.max=state.drift.n-1; sl.value=state.drift.frame; v.textContent=state.drift.frame;
@@ -847,9 +831,6 @@
       document.getElementById('drRst').onclick=function(){ state.drift.revealed=false; state.drift.onion=false; state.drift.frame=0; sl.value=0; v.textContent='0'; update(); };
     }
     if(s.aid==='motion'){
-      document.getElementById('moTog').onclick=function(e){ var b=e.target.closest('button'); if(!b)return;
-        Array.prototype.forEach.call(this.children,function(c){c.classList.toggle('on',c===b);});
-        state.motion.variant=b.dataset.v; update(); };
       document.getElementById('moRev').onclick=function(){ state.motion.revealed=true; update(); };
       document.getElementById('moRst').onclick=function(){ state.motion.revealed=false; update(); };
     }

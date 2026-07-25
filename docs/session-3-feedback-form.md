@@ -17,7 +17,7 @@ The runnable Google Apps Script is [make-session-3-feedback-form.gs](make-sessio
 
 ## The session
 
-- Which parts made something click? — checkboxes; includes synthesis, point correspondence, Temporal Telephone, failure hunt, system map, studio, guest, Q&A, and “nothing yet”
+- Which parts made something click? — checkboxes; includes synthesis, point correspondence, the Coherence Animator A/B comparison, failure hunt, system map, studio, guest, Q&A, and “nothing yet”
 - Five-row clarity grid:
   - Tracking existing frames is different from generating new ones
   - Coherence depends on relationships staying consistent across time
@@ -31,7 +31,7 @@ The runnable Google Apps Script is [make-session-3-feedback-form.gs](make-sessio
 ## Activities and tools
 
 - Which tools or routes did you use? — checkboxes, so participants are not forced into one answer
-- Could you compare saved Run A and Run B sequences in Temporal Telephone? — single operational check
+- Could you complete and compare Run A and Run B in the core A/B activity? — single operational check
 - What did you finish? — checkboxes: exact-break observation, bounded claim, missing provenance evidence, classroom adaptation, A / B comparison, or watch / listen route
 - Any tool friction? — paragraph with tool / device prompt
 

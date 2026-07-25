@@ -242,10 +242,10 @@ window.LM_SESSION_RUNS = [
         move: "Predict and reveal a ball track, then distinguish tracking across existing frames from generating new ones.",
         action: "Predict one point’s destination and name one relation that must persist.",
         tools: [ { name: "Point Correspondence Lab", path: "tools/point-correspondence-lab/" } ] },
-      { time: "24–47", segment: "Temporal Telephone",
-        move: "Lock exactly five frames in Run A and play it twice. Choose one feature. Lock exactly five frames in Run B, play it twice, then toggle A / B and name the analogy’s limit.",
-        action: "Track the chosen feature and state one observation plus one limit.",
-        tools: [ { name: "Temporal Telephone", path: "tools/temporal-telephone/" } ] },
+      { time: "24–47", segment: "Coherence Animator · solo A/B comparison",
+        move: "Demo the nine-drawing flow, then let each participant build one shared opening, Run A with previous-only, and Run B with anchor + previous. Choose one feature and use the guided A twice → B twice playback.",
+        action: "Complete the comparison individually, track one feature, and state one observation plus one limit.",
+        tools: [ { name: "Coherence Animator", path: "tools/coherence-animator/" } ] },
       { time: "47–57", segment: "Curated failure hunt",
         move: "Use two frozen examples and the four-question protocol: what changed, what supports it, what would verify the source, and what can we not conclude?",
         action: "Name the first exact break, its evidence, missing provenance, and the claim boundary.",
@@ -263,6 +263,7 @@ window.LM_SESSION_RUNS = [
         tools: [
           { name: "Video Test Report", path: "worksheets/video-test-report/", worksheet: true },
           { name: "Video Failure Gallery Viewer", path: "tools/video-failure-gallery-viewer/" },
+          { name: "Coherence Animator", path: "tools/coherence-animator/", optional: true },
           { name: "Frame-by-Frame Coherence Viewer", path: "tools/frame-by-frame-coherence-viewer/", optional: true },
           { name: "Point Correspondence Lab", path: "tools/point-correspondence-lab/", optional: true }
         ] },
