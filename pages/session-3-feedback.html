@@ -46,7 +46,7 @@
   input[type=text]:focus, textarea:focus { outline: none; border-color: var(--accent); background: var(--accent-bg); }
 
   /* clarity grid */
-  .grid-head, .grid-row { display: grid; grid-template-columns: 1fr repeat(3, 92px); gap: 8px; align-items: center; }
+  .grid-head, .grid-row { display: grid; grid-template-columns: 1fr repeat(4, 82px); gap: 8px; align-items: center; }
   .grid-head { padding: 4px 0 8px; }
   .grid-head span { font-size: .7rem; font-weight: 700; color: var(--muted); text-align: center; line-height: 1.25; }
   .grid-row { padding: 8px 0; border-top: 1px solid var(--border); }
@@ -105,9 +105,9 @@
   <header>
     <div class="eyebrow">Session 3 · Video</div>
     <h1>Session 3 Feedback</h1>
-    <p class="subtitle">Thanks for investigating video with us. This takes about three minutes.</p>
+    <p class="subtitle">Thanks for investigating video with us. This takes about four minutes.</p>
   </header>
-  <div class="privacy">Every question is optional, and you can leave your name blank — honest and anonymous beats complete. Responses are read only by facilitators and never quoted publicly without permission. Nothing is stored in your browser; answers leave this page only when you press send.</div>
+  <div class="privacy">Every question is optional, and you can leave your name blank. Responses are read only by facilitators. We will not quote or identify you publicly from this feedback form without separate permission. Nothing is stored in your browser; answers leave this page only when you press send.</div>
 
   <div class="thanks">
     <h2>Response sent — thank you.</h2>
@@ -121,237 +121,137 @@
       <div class="q">
         <div class="q-title">Name or display name</div>
         <div class="q-help">Optional — leave blank to stay anonymous.</div>
-        <input type="text" data-entry="entry.1384485495" aria-label="Name or display name">
+        <input type="text" data-entry="entry.45283775" aria-label="Name or display name">
       </div>
       <div class="q">
-        <div class="q-title">How did you attend?</div>
+        <div class="q-title">How did you attend or participate?</div>
+        <div class="q-help">Choose every mode that applies. Watching or listening is a full participation route.</div>
         <div class="opt-list">
-          <label class="opt"><input type="radio" name="attend" data-entry="entry.688901497" value="Live on Zoom"><span>Live on Zoom</span></label>
-          <label class="opt"><input type="radio" name="attend" data-entry="entry.688901497" value="Watched the recording"><span>Watched the recording</span></label>
-          <label class="opt"><input type="radio" name="attend" data-entry="entry.688901497" value="Some of each"><span>Some of each</span></label>
-        </div>
-      </div>
-      <div class="q">
-        <div class="q-title">How did you participate today?</div>
-        <div class="q-help">Choose every mode that applies. Watching or listening is a valid form of participation.</div>
-        <div class="opt-list">
-          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Spoke aloud"><span>Spoke aloud</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Used the chat"><span>Used the chat</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Drew or used a tool"><span>Drew or used a tool</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Used private writing or a poll"><span>Used private writing or a poll</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.1761532834" value="Mainly watched or listened"><span>Mainly watched or listened</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1649419211" value="Attended live on Zoom"><span>Attended live on Zoom</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1649419211" value="Watched or plan to watch the recording"><span>Watched or plan to watch the recording</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1649419211" value="Spoke aloud"><span>Spoke aloud</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1649419211" value="Used the chat"><span>Used the chat</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1649419211" value="Drew in Coherence Animator"><span>Drew in Coherence Animator</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1649419211" value="Shared an assignment or animation"><span>Shared an assignment or animation</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1649419211" value="Used private writing or another tool"><span>Used private writing or another tool</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.1649419211" value="Mainly watched or listened"><span>Mainly watched or listened</span></label>
         </div>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-head"><h2 class="section-title">The session</h2></div>
+      <div class="section-head"><h2 class="section-title">What happened in Session 3</h2></div>
       <div class="q">
-        <div class="q-title">Which parts made something click for you?</div>
+        <div class="q-title">Which parts made something click or gave you a useful question?</div>
         <div class="q-help">Choose any that apply.</div>
         <div class="opt-list">
-          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The text → image → video synthesis"><span>The text → image → video synthesis</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="Point correspondence (tracking a point across existing frames)"><span>Point correspondence (tracking a point across existing frames)</span></label>
-          <!-- Keep the legacy value for compatibility with the already-created Google Form choice. -->
-          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="Temporal Telephone Run A / Run B comparison"><span>Coherence Animator Run A / Run B comparison</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The curated video-failure hunt"><span>The curated video-failure hunt</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The labor, consent, and provenance map"><span>The labor, consent, and provenance map</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The one-tool studio"><span>The one-tool studio</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="Dr. Emily Thomforde's guest talk"><span>Dr. Emily Thomforde's guest talk</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="The Q&amp;A or closing synthesis"><span>The Q&amp;A or closing synthesis</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.897468446" value="Nothing has clicked yet — useful for us to know"><span>Nothing has clicked yet — useful for us to know</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="Assignment reviews and participant projects"><span>Assignment reviews and participant projects</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="The Session 2 feedback discussion"><span>The Session 2 feedback discussion</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="The text → image → video synthesis"><span>The text → image → video synthesis</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="Coherence Animator: Run A and Run B"><span>Coherence Animator: Run A and Run B</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="Sharing and comparing the animations"><span>Sharing and comparing the animations</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="Timing, keyframes, and foreground/background insights"><span>Timing, keyframes, and foreground/background insights</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="The tour of video tools and follow-up options"><span>The tour of video tools and follow-up options</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="Dr. Emily Thomforde's guest talk"><span>Dr. Emily Thomforde's guest talk</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="The Q&amp;A or closing discussion"><span>The Q&amp;A or closing discussion</span></label>
+          <label class="opt"><input type="checkbox" data-entry="entry.384552119" value="Nothing has clicked yet — useful for us to know"><span>Nothing has clicked yet — useful for us to know</span></label>
         </div>
       </div>
       <div class="q">
         <div class="q-title">For each idea, where are you now?</div>
-        <div class="grid-head"><span></span><span>Clearer than before</span><span>About the same</span><span>More tangled than before</span></div>
-        <div class="grid-row"><span class="idea">Tracking points in existing video is different from generating new frames</span><label data-col="Clearer than before"><input type="radio" name="g1" data-entry="entry.354042010" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g1" data-entry="entry.354042010" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g1" data-entry="entry.354042010" value="More tangled than before"></label></div>
-        <div class="grid-row"><span class="idea">Video coherence depends on relationships staying consistent across time</span><label data-col="Clearer than before"><input type="radio" name="g2" data-entry="entry.1346444009" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g2" data-entry="entry.1346444009" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g2" data-entry="entry.1346444009" value="More tangled than before"></label></div>
-        <div class="grid-row"><span class="idea">A visible failure supports an observation but does not by itself prove its cause</span><label data-col="Clearer than before"><input type="radio" name="g3" data-entry="entry.1610003918" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g3" data-entry="entry.1610003918" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g3" data-entry="entry.1610003918" value="More tangled than before"></label></div>
-        <div class="grid-row"><span class="idea">Smooth or plausible video is not evidence that an event happened</span><label data-col="Clearer than before"><input type="radio" name="g4" data-entry="entry.1697601618" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g4" data-entry="entry.1697601618" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g4" data-entry="entry.1697601618" value="More tangled than before"></label></div>
-        <div class="grid-row"><span class="idea">Provenance can document a chain but does not itself establish consent</span><label data-col="Clearer than before"><input type="radio" name="g5" data-entry="entry.1772587818" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g5" data-entry="entry.1772587818" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g5" data-entry="entry.1772587818" value="More tangled than before"></label></div>
+        <div class="grid-head"><span></span><span>Clearer than before</span><span>About the same</span><span>More tangled than before</span><span>I did not encounter this</span></div>
+        <div class="grid-row"><span class="idea">Video coherence concerns relationships staying consistent across time</span><label data-col="Clearer than before"><input type="radio" name="g1" data-entry="entry.535360521" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g1" data-entry="entry.535360521" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g1" data-entry="entry.535360521" value="More tangled than before"></label><label data-col="I did not encounter this"><input type="radio" name="g1" data-entry="entry.535360521" value="I did not encounter this"></label></div>
+        <div class="grid-row"><span class="idea">A stable reference may improve consistency but does not guarantee it</span><label data-col="Clearer than before"><input type="radio" name="g2" data-entry="entry.166665766" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g2" data-entry="entry.166665766" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g2" data-entry="entry.166665766" value="More tangled than before"></label><label data-col="I did not encounter this"><input type="radio" name="g2" data-entry="entry.166665766" value="I did not encounter this"></label></div>
+        <div class="grid-row"><span class="idea">Coherence Animator is a teaching analogy, not a literal video-model architecture</span><label data-col="Clearer than before"><input type="radio" name="g3" data-entry="entry.1475855966" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g3" data-entry="entry.1475855966" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g3" data-entry="entry.1475855966" value="More tangled than before"></label><label data-col="I did not encounter this"><input type="radio" name="g3" data-entry="entry.1475855966" value="I did not encounter this"></label></div>
+        <div class="grid-row"><span class="idea">Animation ideas such as timing, keyframes, and layers can guide observation without proving how a model works</span><label data-col="Clearer than before"><input type="radio" name="g4" data-entry="entry.262846412" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g4" data-entry="entry.262846412" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g4" data-entry="entry.262846412" value="More tangled than before"></label><label data-col="I did not encounter this"><input type="radio" name="g4" data-entry="entry.262846412" value="I did not encounter this"></label></div>
+        <div class="grid-row"><span class="idea">Smooth video is not evidence that an event happened</span><label data-col="Clearer than before"><input type="radio" name="g5" data-entry="entry.1817622506" value="Clearer than before"></label><label data-col="About the same"><input type="radio" name="g5" data-entry="entry.1817622506" value="About the same"></label><label data-col="More tangled than before"><input type="radio" name="g5" data-entry="entry.1817622506" value="More tangled than before"></label><label data-col="I did not encounter this"><input type="radio" name="g5" data-entry="entry.1817622506" value="I did not encounter this"></label></div>
       </div>
       <div class="q">
-        <div class="q-title">In one or two sentences: what does a video model have to keep coherent across time?</div>
-        <div class="q-help">No grading — this tells us what the session actually taught.</div>
-        <textarea data-entry="entry.389286802" rows="2" aria-label="What a video model keeps coherent"></textarea>
-      </div>
-      <div class="q">
-        <div class="q-title">Complete the sentence: “Smooth video is not evidence because…”</div>
-        <div class="q-help">A short answer is enough. We are checking the session's central claim, not grading your wording.</div>
-        <textarea data-entry="entry.1887771441" rows="2" aria-label="Smooth video is not evidence because"></textarea>
-      </div>
-      <div class="q">
-        <div class="q-title">What is still fuzzy, unresolved, or worth testing next?</div>
-        <textarea data-entry="entry.1170834568" rows="2" aria-label="Still fuzzy"></textarea>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-head"><h2 class="section-title">Activities and tools</h2></div>
-      <div class="q">
-        <div class="q-title">Which tools or routes did you use?</div>
-        <div class="q-help">Choose any that apply.</div>
-        <div class="opt-list">
-          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Point Correspondence Lab"><span>Point Correspondence Lab</span></label>
-          <!-- Keep the legacy value for compatibility with the already-created Google Form choice. -->
-          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Temporal Telephone"><span>Coherence Animator</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Video Failure Gallery Viewer"><span>Video Failure Gallery Viewer</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Frame-by-Frame Coherence Viewer"><span>Frame-by-Frame Coherence Viewer</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="Video Test Report"><span>Video Test Report</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="A frozen / no-AI example"><span>A frozen / no-AI example</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.45697772" value="I mainly listened or watched"><span>I mainly listened or watched</span></label>
-        </div>
-      </div>
-      <div class="q">
-        <div class="q-title">Could you complete and compare Run A and Run B in the core A/B activity?</div>
-        <div class="opt-list">
-          <label class="opt"><input type="radio" name="runcompare" data-entry="entry.1564141425" value="Yes — both runs saved and played back"><span>Yes — both runs completed and played back</span></label>
-          <label class="opt"><input type="radio" name="runcompare" data-entry="entry.1564141425" value="Partly — I completed only one run"><span>Partly — I completed only one run</span></label>
-          <label class="opt"><input type="radio" name="runcompare" data-entry="entry.1564141425" value="Tried, but something did not work"><span>Tried, but something did not work</span></label>
-          <label class="opt"><input type="radio" name="runcompare" data-entry="entry.1564141425" value="I did not use Temporal Telephone"><span>I did not use the A/B activity</span></label>
-        </div>
-      </div>
-      <div class="q">
-        <div class="q-title">What did you finish during the session?</div>
-        <div class="q-help">Choose any that apply. Partial work and watch / listen routes count.</div>
-        <div class="opt-list">
-          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="An exact-break observation"><span>An exact-break observation</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="A bounded claim supported by a frame or comparison"><span>A bounded claim supported by a frame or comparison</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="One piece of missing provenance evidence"><span>One piece of missing provenance evidence</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="A sentence about classroom use"><span>A sentence about classroom use</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="A five-frame Run A / Run B comparison"><span>A five-frame Run A / Run B comparison</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.907542874" value="I mainly watched or listened"><span>I mainly watched or listened</span></label>
-        </div>
-      </div>
-      <div class="q">
-        <div class="q-title">Any tool friction?</div>
-        <div class="q-help">Anything confusing, broken, hard to read, hard to draw, or hard to recover from? Name the tool and device if useful.</div>
-        <textarea data-entry="entry.299192401" rows="2" aria-label="Tool friction"></textarea>
+        <div class="q-title">What did Coherence Animator or the animation discussion help you notice — and what is still fuzzy?</div>
+        <div class="q-help">A short observation or unresolved question is enough. You can also say what the activity did not demonstrate.</div>
+        <textarea data-entry="entry.477623618" rows="2" aria-label="Coherence Animator observation or unresolved question"></textarea>
       </div>
     </div>
 
     <div class="section">
       <div class="section-head"><h2 class="section-title">Guest spotlight</h2></div>
       <div class="q">
-        <div class="q-title">What idea or question from Dr. Emily Thomforde's talk stayed with you?</div>
-        <textarea data-entry="entry.574853859" rows="2" aria-label="Guest segment reflection"></textarea>
+        <div class="q-title">What idea or question from Dr. Emily Thomforde's “Axiology of Mystery” talk stayed with you?</div>
+        <textarea data-entry="entry.1611761301" rows="2" aria-label="Guest segment reflection"></textarea>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-head"><h2 class="section-title">Format, access, and consent</h2></div>
-      <div class="q">
-        <div class="q-title">How was the pace?</div>
-        <div class="opt-list">
-          <label class="opt"><input type="radio" name="pace" data-entry="entry.971218623" value="Too fast"><span>Too fast</span></label>
-          <label class="opt"><input type="radio" name="pace" data-entry="entry.971218623" value="About right"><span>About right</span></label>
-          <label class="opt"><input type="radio" name="pace" data-entry="entry.971218623" value="Too slow"><span>Too slow</span></label>
-          <label class="opt"><input type="radio" name="pace" data-entry="entry.971218623" value="It varied — say more below"><span>It varied — say more below</span></label>
-        </div>
-      </div>
+      <div class="section-head"><h2 class="section-title">Format and access</h2></div>
       <div class="q">
         <div class="q-title">Could you participate in the way you wanted?</div>
         <div class="opt-list">
-          <label class="opt"><input type="radio" name="participate" data-entry="entry.887508158" value="Yes"><span>Yes</span></label>
-          <label class="opt"><input type="radio" name="participate" data-entry="entry.887508158" value="Mostly"><span>Mostly</span></label>
-          <label class="opt"><input type="radio" name="participate" data-entry="entry.887508158" value="No — tell us more below"><span>No — tell us more below</span></label>
-          <label class="opt"><input type="radio" name="participate" data-entry="entry.887508158" value="I mostly watched, and that felt fine"><span>I mostly watched, and that felt fine</span></label>
+          <label class="opt"><input type="radio" name="access" data-entry="entry.1723257064" value="Yes — the pace and access worked for me"><span>Yes — the pace and access worked for me</span></label>
+          <label class="opt"><input type="radio" name="access" data-entry="entry.1723257064" value="Mostly"><span>Mostly</span></label>
+          <label class="opt"><input type="radio" name="access" data-entry="entry.1723257064" value="No — the pace got in the way"><span>No — the pace got in the way</span></label>
+          <label class="opt"><input type="radio" name="access" data-entry="entry.1723257064" value="No — a tool or access issue got in the way"><span>No — a tool or access issue got in the way</span></label>
+          <label class="opt"><input type="radio" name="access" data-entry="entry.1723257064" value="I mostly watched, and that felt fine"><span>I mostly watched, and that felt fine</span></label>
         </div>
       </div>
       <div class="q">
         <div class="q-title">Anything facilitators should know about?</div>
-        <div class="q-help">Access, pacing, recording, likeness, consent, a difficult example, or anything else that affected participation.</div>
-        <textarea data-entry="entry.551224159" rows="2" aria-label="For facilitators"></textarea>
+        <div class="q-help">Tool friction, pacing, access, recording, likeness, consent, or anything else that affected participation.</div>
+        <textarea data-entry="entry.832837592" rows="2" aria-label="Anything facilitators should know"></textarea>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-head"><h2 class="section-title">Optional Studio / Showcase</h2></div>
+      <div class="section-head"><h2 class="section-title">What comes next</h2></div>
       <div class="q">
         <div class="q-title">Which follow-up would you actually use?</div>
         <div class="opt-list">
-          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="A downloadable classroom activity pack"><span>A downloadable classroom activity pack</span></label>
-          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="The recording plus concise facilitator notes"><span>The recording plus concise facilitator notes</span></label>
-          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="A live studio / co-design session"><span>A live studio / co-design session</span></label>
-          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="A short office hour for questions"><span>A short office hour for questions</span></label>
-          <label class="opt"><input type="radio" name="followup" data-entry="entry.1673458721" value="None of these / not sure yet"><span>None of these / not sure yet</span></label>
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1881761624" value="A downloadable classroom activity pack"><span>A downloadable classroom activity pack</span></label>
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1881761624" value="The recording plus a concise written recap"><span>The recording plus a concise written recap</span></label>
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1881761624" value="A live Studio / co-design session"><span>A live Studio / co-design session</span></label>
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1881761624" value="A short office hour for questions"><span>A short office hour for questions</span></label>
+          <label class="opt"><input type="radio" name="followup" data-entry="entry.1881761624" value="None of these / not sure yet"><span>None of these / not sure yet</span></label>
         </div>
       </div>
       <div class="q">
-        <div class="q-title">Would you present something at an August Learning Machines Studio / Showcase?</div>
+        <div class="q-title">Would you join an August Learning Machines Studio / Showcase?</div>
         <div class="opt-list">
-          <label class="opt"><input type="radio" name="studio" data-entry="entry.1893329810" value="Yes — I would like a presentation slot"><span>Yes — I would like a presentation slot</span></label>
-          <label class="opt"><input type="radio" name="studio" data-entry="entry.1893329810" value="Maybe — I want more details first"><span>Maybe — I want more details first</span></label>
-          <label class="opt"><input type="radio" name="studio" data-entry="entry.1893329810" value="I would attend but not present"><span>I would attend but not present</span></label>
-          <label class="opt"><input type="radio" name="studio" data-entry="entry.1893329810" value="No / not this time"><span>No / not this time</span></label>
+          <label class="opt"><input type="radio" name="studio" data-entry="entry.1879765501" value="Yes — I would like to present something"><span>Yes — I would like to present something</span></label>
+          <label class="opt"><input type="radio" name="studio" data-entry="entry.1879765501" value="Maybe — I want more details first"><span>Maybe — I want more details first</span></label>
+          <label class="opt"><input type="radio" name="studio" data-entry="entry.1879765501" value="I would attend but not present"><span>I would attend but not present</span></label>
+          <label class="opt"><input type="radio" name="studio" data-entry="entry.1879765501" value="No / not this time"><span>No / not this time</span></label>
         </div>
       </div>
       <div class="q">
-        <div class="q-title">If you took a Showcase slot, what would you present?</div>
-        <div class="q-help">Choose any that apply — work from earlier sessions counts. Nothing here is a commitment.</div>
+        <div class="q-title">Which Saturday works better for the optional Studio / Showcase?</div>
         <div class="opt-list">
-          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="Something I made in Session 1 (text)"><span>Something I made in Session 1 (text)</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="Something I made in Session 2 (images)"><span>Something I made in Session 2 (images)</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="Something I made in Session 3 (video)"><span>Something I made in Session 3 (video)</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="A new or combined piece across sessions"><span>A new or combined piece across sessions</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="A classroom activity, lesson, or adaptation"><span>A classroom activity, lesson, or adaptation</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="A question, critique, or work in progress"><span>A question, critique, or work in progress</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.392846056" value="Not sure yet"><span>Not sure yet</span></label>
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.1967992253" value="Saturday, August 8"><span>Saturday, August 8</span></label>
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.1967992253" value="Saturday, August 15"><span>Saturday, August 15</span></label>
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.1967992253" value="Either works for me"><span>Either works for me</span></label>
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.1967992253" value="Neither works for me"><span>Neither works for me</span></label>
+          <label class="opt"><input type="radio" name="showdate" data-entry="entry.1967992253" value="Not planning to attend"><span>Not planning to attend</span></label>
         </div>
       </div>
       <div class="q">
-        <div class="q-title">If we hold a 4th Showcase session in August, which date works better?</div>
-        <div class="opt-list">
-          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Saturday, August 8"><span>Saturday, August 8</span></label>
-          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Saturday, August 15"><span>Saturday, August 15</span></label>
-          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Either works for me"><span>Either works for me</span></label>
-          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Neither — tell us more below"><span>Neither — tell us more below</span></label>
-          <label class="opt"><input type="radio" name="showdate" data-entry="entry.579962498" value="Not planning to attend"><span>Not planning to attend</span></label>
-        </div>
-      </div>
-      <div class="q">
-        <div class="q-title">What might you bring or develop for the Studio?</div>
-        <div class="q-help">A tool, experiment, classroom activity, creative artifact, critique, or question — a rough idea is enough.</div>
-        <textarea data-entry="entry.988512534" rows="2" aria-label="What you might bring to the Studio"></textarea>
-      </div>
-      <div class="q">
-        <div class="q-title">What would help you participate?</div>
-        <div class="q-help">Choose any that apply.</div>
-        <div class="opt-list">
-          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A clear date and time"><span>A clear date and time</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A short presentation template"><span>A short presentation template</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A practice / feedback session"><span>A practice / feedback session</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A partner or small-group format"><span>A partner or small-group format</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="A no-slides option"><span>A no-slides option</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="An asynchronous way to share"><span>An asynchronous way to share</span></label>
-          <label class="opt"><input type="checkbox" data-entry="entry.881733596" value="Accessibility or technical support"><span>Accessibility or technical support</span></label>
-        </div>
+        <div class="q-title">What might you bring, develop, or need in order to participate?</div>
+        <div class="q-help">A tool, experiment, classroom activity, creative artifact, critique, question, support need, or rough idea.</div>
+        <textarea data-entry="entry.2018936353" rows="2" aria-label="What you might bring or need"></textarea>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-head"><h2 class="section-title">Anything else</h2></div>
+      <div class="section-head"><h2 class="section-title">Last word</h2></div>
       <div class="q">
-        <div class="q-title">What should we make sure to keep?</div>
-        <textarea data-entry="entry.2063246636" rows="2" aria-label="What to keep"></textarea>
-      </div>
-      <div class="q">
-        <div class="q-title">What should we change next time?</div>
-        <textarea data-entry="entry.539826893" rows="2" aria-label="What to change"></textarea>
+        <div class="q-title">What should we keep, change, or carry into the next version?</div>
+        <textarea data-entry="entry.1603346564" rows="2" aria-label="What to keep or change"></textarea>
       </div>
       <div class="q">
         <div class="q-title">Would you recommend Learning Machines to a colleague or friend?</div>
         <div class="opt-list">
-          <label class="opt"><input type="radio" name="rec" data-entry="entry.1294662149" value="Definitely"><span>Definitely</span></label>
-          <label class="opt"><input type="radio" name="rec" data-entry="entry.1294662149" value="Probably"><span>Probably</span></label>
-          <label class="opt"><input type="radio" name="rec" data-entry="entry.1294662149" value="Not sure yet"><span>Not sure yet</span></label>
-          <label class="opt"><input type="radio" name="rec" data-entry="entry.1294662149" value="No — and we would genuinely like to know why above"><span>No — and we would genuinely like to know why above</span></label>
+          <label class="opt"><input type="radio" name="recommend" data-entry="entry.887940127" value="Definitely"><span>Definitely</span></label>
+          <label class="opt"><input type="radio" name="recommend" data-entry="entry.887940127" value="Probably"><span>Probably</span></label>
+          <label class="opt"><input type="radio" name="recommend" data-entry="entry.887940127" value="Not sure yet"><span>Not sure yet</span></label>
+          <label class="opt"><input type="radio" name="recommend" data-entry="entry.887940127" value="No — and we would genuinely like to know why"><span>No — and we would genuinely like to know why</span></label>
         </div>
-      </div>
-      <div class="q">
-        <div class="q-title">Anything else?</div>
-        <textarea data-entry="entry.599602867" rows="2" aria-label="Anything else"></textarea>
       </div>
     </div>
 

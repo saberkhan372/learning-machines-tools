@@ -1,28 +1,110 @@
 /**
- * Creates the Session 3 feedback Google Form (Learning Machines camp).
+ * Creates or updates the Session 3 feedback Google Form.
  *
- * How to use:
- *   1. Go to https://script.google.com → New project.
- *   2. Replace the default code with this file's contents.
- *   3. Run ▶ createSession3FeedbackForm (approve the authorization prompt).
- *   4. Open the Execution log and copy the edit, share, and prefilled URLs.
+ * Recommended: edit the existing form in place
+ *   1. Open the existing Google Form editor.
+ *   2. Open its Apps Script project (three-dot menu -> Script editor).
+ *   3. Replace the default code with this file.
+ *   4. Run updateExistingSession3FeedbackForm().
  *
- * Run it ONCE — running again creates a duplicate form.
- * Every question is optional; email collection and sign-in are disabled.
+ * If this is a standalone Apps Script project, paste the form editor ID below.
+ * It is the value between /d/ and /edit in the editor URL. If the ID is blank,
+ * the script looks for exactly one Drive form named SESSION_3_FORM_TITLE.
+ *
+ * The updater makes a timestamped form copy and exports existing responses to a
+ * private spreadsheet before replacing the questions. It preserves the original
+ * form itself, its participant URL, accepting-responses state, and response
+ * destination. Every question remains optional; email and sign-in are disabled.
+ *
+ * IMPORTANT: rebuilding questions creates new entry.N field IDs. After running
+ * the updater, copy the logged PREFILLED URL so pages/session-3-feedback.html can
+ * be rewired to the updated form.
  */
-function createSession3FeedbackForm() {
-  var form = FormApp.create('Session 3 Feedback: How Machines Move');
 
+var SESSION_3_FORM_TITLE = 'Session 3 Feedback: How Machines Move';
+var SESSION_3_FORM_ID = ''; // Optional: paste the ID from the existing /edit URL.
+
+function updateExistingSession3FeedbackForm() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  var form;
+  var wasAcceptingResponses;
+
+  try {
+    form = getExistingSession3FeedbackForm_();
+    wasAcceptingResponses = form.isAcceptingResponses();
+    form.setAcceptingResponses(false);
+
+    var backup = backupExistingSession3Feedback_(form);
+    clearFormItems_(form);
+    var questions = buildSession3FeedbackForm_(form);
+    var prefilledUrl = createSession3PrefilledUrl_(form, questions);
+
+    logSession3FeedbackLinks_(form, prefilledUrl, backup);
+  } finally {
+    if (form && typeof wasAcceptingResponses === 'boolean') {
+      form.setAcceptingResponses(wasAcceptingResponses);
+    }
+    lock.releaseLock();
+  }
+}
+
+/** Use only when there is no existing Session 3 feedback form. */
+function createSession3FeedbackForm() {
+  var form = FormApp.create(SESSION_3_FORM_TITLE);
+  var questions = buildSession3FeedbackForm_(form);
+  var prefilledUrl = createSession3PrefilledUrl_(form, questions);
+  logSession3FeedbackLinks_(form, prefilledUrl, null);
+}
+
+/** Read-only helper: prints the URLs for the existing form. */
+function logSession3FeedbackLinks() {
+  var form = getExistingSession3FeedbackForm_();
+  logSession3FeedbackLinks_(form, '', null);
+}
+
+function getExistingSession3FeedbackForm_() {
+  var activeForm = FormApp.getActiveForm();
+  if (activeForm) return activeForm;
+
+  if (SESSION_3_FORM_ID) return FormApp.openById(SESSION_3_FORM_ID.trim());
+
+  var matches = DriveApp.getFilesByName(SESSION_3_FORM_TITLE);
+  var ids = [];
+  while (matches.hasNext()) ids.push(matches.next().getId());
+
+  if (ids.length === 1) return FormApp.openById(ids[0]);
+  if (ids.length === 0) {
+    throw new Error(
+      'No existing form named "' + SESSION_3_FORM_TITLE + '" was found. ' +
+      'Run this from the form\'s bound Apps Script project or paste its editor ID into SESSION_3_FORM_ID.'
+    );
+  }
+
+  throw new Error(
+    'Found ' + ids.length + ' forms named "' + SESSION_3_FORM_TITLE + '". ' +
+    'Paste the correct editor ID into SESSION_3_FORM_ID. Candidate IDs: ' + ids.join(', ')
+  );
+}
+
+function buildSession3FeedbackForm_(form) {
+  form.setTitle(SESSION_3_FORM_TITLE);
   form.setDescription(
-    'Thanks for investigating video with us. This takes about three minutes. ' +
-    'Every question is optional, and you can leave your name blank — honest and anonymous beats complete. ' +
-    'Responses are read only by facilitators and never quoted publicly without permission.');
-  form.setConfirmationMessage('Thank you — this helps shape the optional Studio / Showcase and future Learning Machines sessions.');
+    'Thanks for investigating video with us. This takes about four minutes. ' +
+    'Every question is optional, and you can leave your name blank. Responses are read only by facilitators. ' +
+    'We will not quote or identify you publicly from this feedback form without separate permission.'
+  );
+  form.setConfirmationMessage(
+    'Thank you — this will shape the Session 3 follow-up materials and the optional August Studio / Showcase.'
+  );
   form.setLimitOneResponsePerUser(false);
   form.setShowLinkToRespondAgain(false);
-  try { form.setEmailCollectionType(FormApp.EmailCollectionType.DO_NOT_COLLECT); }
-  catch (e) { try { form.setCollectEmail(false); } catch (e2) {} }
-  try { form.setRequireLogin(false); } catch (e) {}
+  try {
+    form.setEmailCollectionType(FormApp.EmailCollectionType.DO_NOT_COLLECT);
+  } catch (e) {
+    try { form.setCollectEmail(false); } catch (ignored) {}
+  }
+  try { form.setRequireLogin(false); } catch (ignored) {}
 
   form.addSectionHeaderItem().setTitle('About you');
 
@@ -30,222 +112,229 @@ function createSession3FeedbackForm() {
     .setTitle('Name or display name')
     .setHelpText('Optional — leave blank to stay anonymous.');
 
-  var qAttend = form.addMultipleChoiceItem()
-    .setTitle('How did you attend?')
-    .setChoiceValues(['Live on Zoom', 'Watched the recording', 'Some of each']);
-
-  var qParticipationMode = form.addCheckboxItem()
-    .setTitle('How did you participate today?')
-    .setHelpText('Choose every mode that applies. Watching or listening is a valid form of participation.')
+  var qParticipation = form.addCheckboxItem()
+    .setTitle('How did you attend or participate?')
+    .setHelpText('Choose every mode that applies. Watching or listening is a full participation route.')
     .setChoiceValues([
+      'Attended live on Zoom',
+      'Watched or plan to watch the recording',
       'Spoke aloud',
       'Used the chat',
-      'Drew or used a tool',
-      'Used private writing or a poll',
+      'Drew in Coherence Animator',
+      'Shared an assignment or animation',
+      'Used private writing or another tool',
       'Mainly watched or listened'
     ]);
 
-  form.addSectionHeaderItem().setTitle('The session');
+  form.addSectionHeaderItem().setTitle('What happened in Session 3');
 
-  var qClick = form.addCheckboxItem()
-    .setTitle('Which parts made something click for you?')
+  var qParts = form.addCheckboxItem()
+    .setTitle('Which parts made something click or gave you a useful question?')
     .setHelpText('Choose any that apply.')
     .setChoiceValues([
+      'Assignment reviews and participant projects',
+      'The Session 2 feedback discussion',
       'The text → image → video synthesis',
-      'Point correspondence (tracking a point across existing frames)',
-      'Coherence Animator Run A / Run B comparison',
-      'The curated video-failure hunt',
-      'The labor, consent, and provenance map',
-      'The one-tool studio',
+      'Coherence Animator: Run A and Run B',
+      'Sharing and comparing the animations',
+      'Timing, keyframes, and foreground/background insights',
+      'The tour of video tools and follow-up options',
       'Dr. Emily Thomforde\'s guest talk',
-      'The Q&A or closing synthesis',
+      'The Q&A or closing discussion',
       'Nothing has clicked yet — useful for us to know'
     ]);
 
-  var qGrid = form.addGridItem()
+  var qClarity = form.addGridItem()
     .setTitle('For each idea, where are you now?')
     .setRows([
-      'Tracking points in existing video is different from generating new frames',
-      'Video coherence depends on relationships staying consistent across time',
-      'A visible failure supports an observation but does not by itself prove its cause',
-      'Smooth or plausible video is not evidence that an event happened',
-      'Provenance can document a chain but does not itself establish consent'
+      'Video coherence concerns relationships staying consistent across time',
+      'A stable reference may improve consistency but does not guarantee it',
+      'Coherence Animator is a teaching analogy, not a literal video-model architecture',
+      'Animation ideas such as timing, keyframes, and layers can guide observation without proving how a model works',
+      'Smooth video is not evidence that an event happened'
     ])
-    .setColumns(['Clearer than before', 'About the same', 'More tangled than before']);
+    .setColumns(['Clearer than before', 'About the same', 'More tangled than before', 'I did not encounter this']);
 
-  var qSentence = form.addParagraphTextItem()
-    .setTitle('In one or two sentences: what does a video model have to keep coherent across time?')
-    .setHelpText('No grading — this tells us what the session actually taught.');
-
-  var qEvidenceSentence = form.addParagraphTextItem()
-    .setTitle('Complete the sentence: “Smooth video is not evidence because…”')
-    .setHelpText('A short answer is enough. We are checking the session’s central claim, not grading your wording.');
-
-  var qFuzzy = form.addParagraphTextItem()
-    .setTitle('What is still fuzzy, unresolved, or worth testing next?');
-
-  form.addSectionHeaderItem().setTitle('Activities and tools');
-
-  var qTool = form.addCheckboxItem()
-    .setTitle('Which tools or routes did you use?')
-    .setHelpText('Choose any that apply.')
-    .setChoiceValues([
-      'Point Correspondence Lab',
-      'Coherence Animator',
-      'Video Failure Gallery Viewer',
-      'Frame-by-Frame Coherence Viewer',
-      'Video Test Report',
-      'A frozen / no-AI example',
-      'I mainly listened or watched'
-    ]);
-
-  var qRunCompare = form.addMultipleChoiceItem()
-    .setTitle('Could you complete and compare Run A and Run B in Coherence Animator?')
-    .setChoiceValues([
-      'Yes — both runs completed and played back',
-      'Partly — I completed only one run',
-      'Tried, but something did not work',
-      'I did not use Coherence Animator'
-    ]);
-
-  var qFinished = form.addCheckboxItem()
-    .setTitle('What did you finish during the session?')
-    .setHelpText('Choose any that apply. Partial work and watch / listen routes count.')
-    .setChoiceValues([
-      'An exact-break observation',
-      'A bounded claim supported by a frame or comparison',
-      'One piece of missing provenance evidence',
-      'A sentence about classroom use',
-      'A five-frame Run A / Run B comparison',
-      'I mainly watched or listened'
-    ]);
-
-  var qFriction = form.addParagraphTextItem()
-    .setTitle('Any tool friction?')
-    .setHelpText('Anything confusing, broken, hard to read, hard to draw, or hard to recover from? Name the tool and device if useful.');
+  var qAnimator = form.addParagraphTextItem()
+    .setTitle('What did Coherence Animator or the animation discussion help you notice — and what is still fuzzy?')
+    .setHelpText('A short observation or unresolved question is enough. You can also say what the activity did not demonstrate.');
 
   form.addSectionHeaderItem().setTitle('Guest spotlight');
 
   var qGuest = form.addParagraphTextItem()
-    .setTitle('What idea or question from Dr. Emily Thomforde\'s talk stayed with you?');
+    .setTitle('What idea or question from Dr. Emily Thomforde\'s “Axiology of Mystery” talk stayed with you?');
 
-  form.addSectionHeaderItem().setTitle('Format, access, and consent');
+  form.addSectionHeaderItem().setTitle('Format and access');
 
-  var qPace = form.addMultipleChoiceItem()
-    .setTitle('How was the pace?')
-    .setChoiceValues(['Too fast', 'About right', 'Too slow', 'It varied — say more below']);
-
-  var qParticipate = form.addMultipleChoiceItem()
+  var qAccess = form.addMultipleChoiceItem()
     .setTitle('Could you participate in the way you wanted?')
-    .setChoiceValues(['Yes', 'Mostly', 'No — tell us more below', 'I mostly watched, and that felt fine']);
+    .setChoiceValues([
+      'Yes — the pace and access worked for me',
+      'Mostly',
+      'No — the pace got in the way',
+      'No — a tool or access issue got in the way',
+      'I mostly watched, and that felt fine'
+    ]);
 
-  var qConcerns = form.addParagraphTextItem()
+  var qFriction = form.addParagraphTextItem()
     .setTitle('Anything facilitators should know about?')
-    .setHelpText('Access, pacing, recording, likeness, consent, a difficult example, or anything else that affected participation.');
+    .setHelpText('Tool friction, pacing, access, recording, likeness, consent, or anything else that affected participation.');
 
-  form.addSectionHeaderItem().setTitle('Optional Studio / Showcase');
+  form.addSectionHeaderItem().setTitle('What comes next');
 
   var qFollowup = form.addMultipleChoiceItem()
     .setTitle('Which follow-up would you actually use?')
     .setChoiceValues([
       'A downloadable classroom activity pack',
-      'The recording plus concise facilitator notes',
-      'A live studio / co-design session',
+      'The recording plus a concise written recap',
+      'A live Studio / co-design session',
       'A short office hour for questions',
       'None of these / not sure yet'
     ]);
 
   var qStudio = form.addMultipleChoiceItem()
-    .setTitle('Would you present something at an August Learning Machines Studio / Showcase?')
+    .setTitle('Would you join an August Learning Machines Studio / Showcase?')
     .setChoiceValues([
-      'Yes — I would like a presentation slot',
+      'Yes — I would like to present something',
       'Maybe — I want more details first',
       'I would attend but not present',
       'No / not this time'
     ]);
 
-  var qShowcasePresent = form.addCheckboxItem()
-    .setTitle('If you took a Showcase slot, what would you present?')
-    .setHelpText('Choose any that apply — work from earlier sessions counts. Nothing here is a commitment.')
-    .setChoiceValues([
-      'Something I made in Session 1 (text)',
-      'Something I made in Session 2 (images)',
-      'Something I made in Session 3 (video)',
-      'A new or combined piece across sessions',
-      'A classroom activity, lesson, or adaptation',
-      'A question, critique, or work in progress',
-      'Not sure yet'
-    ]);
-
-  var qShowcaseDate = form.addMultipleChoiceItem()
-    .setTitle('If we hold a 4th Showcase session in August, which date works better?')
+  var qDate = form.addMultipleChoiceItem()
+    .setTitle('Which Saturday works better for the optional Studio / Showcase?')
     .setChoiceValues([
       'Saturday, August 8',
       'Saturday, August 15',
       'Either works for me',
-      'Neither — tell us more below',
+      'Neither works for me',
       'Not planning to attend'
     ]);
 
   var qBring = form.addParagraphTextItem()
-    .setTitle('What might you bring or develop for the Studio?')
-    .setHelpText('A tool, experiment, classroom activity, creative artifact, critique, or question — a rough idea is enough.');
+    .setTitle('What might you bring, develop, or need in order to participate?')
+    .setHelpText('A tool, experiment, classroom activity, creative artifact, critique, question, support need, or rough idea.');
 
-  var qSupport = form.addCheckboxItem()
-    .setTitle('What would help you participate?')
-    .setHelpText('Choose any that apply.')
-    .setChoiceValues([
-      'A clear date and time',
-      'A short presentation template',
-      'A practice / feedback session',
-      'A partner or small-group format',
-      'A no-slides option',
-      'An asynchronous way to share',
-      'Accessibility or technical support'
-    ]);
+  form.addSectionHeaderItem().setTitle('Last word');
 
-  form.addSectionHeaderItem().setTitle('Anything else');
+  var qKeepChange = form.addParagraphTextItem()
+    .setTitle('What should we keep, change, or carry into the next version?');
 
-  var qKeep = form.addParagraphTextItem().setTitle('What should we make sure to keep?');
-  var qChange = form.addParagraphTextItem().setTitle('What should we change next time?');
   var qRecommend = form.addMultipleChoiceItem()
     .setTitle('Would you recommend Learning Machines to a colleague or friend?')
-    .setChoiceValues(['Definitely', 'Probably', 'Not sure yet', 'No — and we would genuinely like to know why above']);
-  var qElse = form.addParagraphTextItem().setTitle('Anything else?');
+    .setChoiceValues(['Definitely', 'Probably', 'Not sure yet', 'No — and we would genuinely like to know why']);
 
-  // The sample response exposes each entry.N id without submitting anything.
-  var prefill = form.createResponse()
-    .withItemResponse(qName.createResponse('x'))
-    .withItemResponse(qAttend.createResponse('Live on Zoom'))
-    .withItemResponse(qParticipationMode.createResponse(['Drew or used a tool']))
-    .withItemResponse(qClick.createResponse(['The text → image → video synthesis']))
-    .withItemResponse(qGrid.createResponse([
-      'Clearer than before', 'Clearer than before', 'Clearer than before',
-      'Clearer than before', 'Clearer than before']))
-    .withItemResponse(qSentence.createResponse('x'))
-    .withItemResponse(qEvidenceSentence.createResponse('x'))
-    .withItemResponse(qFuzzy.createResponse('x'))
-    .withItemResponse(qTool.createResponse(['Coherence Animator']))
-    .withItemResponse(qRunCompare.createResponse('Yes — both runs completed and played back'))
-    .withItemResponse(qFinished.createResponse(['An exact-break observation']))
-    .withItemResponse(qFriction.createResponse('x'))
-    .withItemResponse(qGuest.createResponse('x'))
-    .withItemResponse(qPace.createResponse('About right'))
-    .withItemResponse(qParticipate.createResponse('Yes'))
-    .withItemResponse(qConcerns.createResponse('x'))
-    .withItemResponse(qFollowup.createResponse('A downloadable classroom activity pack'))
-    .withItemResponse(qStudio.createResponse('Maybe — I want more details first'))
-    .withItemResponse(qShowcasePresent.createResponse(['Something I made in Session 3 (video)']))
-    .withItemResponse(qShowcaseDate.createResponse('Either works for me'))
-    .withItemResponse(qBring.createResponse('x'))
-    .withItemResponse(qSupport.createResponse(['A clear date and time']))
-    .withItemResponse(qKeep.createResponse('x'))
-    .withItemResponse(qChange.createResponse('x'))
-    .withItemResponse(qRecommend.createResponse('Definitely'))
-    .withItemResponse(qElse.createResponse('x'))
+  return {
+    name: qName,
+    participation: qParticipation,
+    parts: qParts,
+    clarity: qClarity,
+    animator: qAnimator,
+    guest: qGuest,
+    access: qAccess,
+    friction: qFriction,
+    followup: qFollowup,
+    studio: qStudio,
+    date: qDate,
+    bring: qBring,
+    keepChange: qKeepChange,
+    recommend: qRecommend
+  };
+}
+
+function createSession3PrefilledUrl_(form, q) {
+  return form.createResponse()
+    .withItemResponse(q.name.createResponse('x'))
+    .withItemResponse(q.participation.createResponse(['Attended live on Zoom', 'Drew in Coherence Animator']))
+    .withItemResponse(q.parts.createResponse(['Coherence Animator: Run A and Run B']))
+    .withItemResponse(q.clarity.createResponse([
+      'Clearer than before',
+      'Clearer than before',
+      'Clearer than before',
+      'Clearer than before',
+      'Clearer than before'
+    ]))
+    .withItemResponse(q.animator.createResponse('x'))
+    .withItemResponse(q.guest.createResponse('x'))
+    .withItemResponse(q.access.createResponse('Yes — the pace and access worked for me'))
+    .withItemResponse(q.friction.createResponse('x'))
+    .withItemResponse(q.followup.createResponse('The recording plus a concise written recap'))
+    .withItemResponse(q.studio.createResponse('Maybe — I want more details first'))
+    .withItemResponse(q.date.createResponse('Either works for me'))
+    .withItemResponse(q.bring.createResponse('x'))
+    .withItemResponse(q.keepChange.createResponse('x'))
+    .withItemResponse(q.recommend.createResponse('Definitely'))
     .toPrefilledUrl();
+}
 
-  Logger.log('EDIT URL (for you):            ' + form.getEditUrl());
-  Logger.log('SHARE URL (for participants):  ' + form.getPublishedUrl());
-  Logger.log('PREFILLED URL (for wiring the site form): ' + prefill);
+function clearFormItems_(form) {
+  var items = form.getItems();
+  for (var i = items.length - 1; i >= 0; i--) form.deleteItem(items[i]);
+}
+
+function backupExistingSession3Feedback_(form) {
+  var stamp = Utilities.formatDate(
+    new Date(),
+    Session.getScriptTimeZone() || 'America/Los_Angeles',
+    'yyyy-MM-dd HHmm'
+  );
+  var copy = DriveApp.getFileById(form.getId()).makeCopy(form.getTitle() + ' — backup ' + stamp);
+  var responseBackupUrl = '';
+  var responses = form.getResponses();
+
+  if (responses.length) {
+    var items = form.getItems().filter(function(item) {
+      return item.getType() !== FormApp.ItemType.SECTION_HEADER &&
+        item.getType() !== FormApp.ItemType.PAGE_BREAK &&
+        item.getType() !== FormApp.ItemType.IMAGE &&
+        item.getType() !== FormApp.ItemType.VIDEO;
+    });
+    var spreadsheet = SpreadsheetApp.create(form.getTitle() + ' — response backup ' + stamp);
+    var sheet = spreadsheet.getSheets()[0];
+    var rows = [['Timestamp'].concat(items.map(function(item) { return item.getTitle(); }))];
+
+    responses.forEach(function(response) {
+      var byId = {};
+      response.getItemResponses().forEach(function(itemResponse) {
+        var value = itemResponse.getResponse();
+        byId[itemResponse.getItem().getId()] = Array.isArray(value) ? value.join(' | ') : String(value || '');
+      });
+      rows.push([response.getTimestamp()].concat(items.map(function(item) {
+        return byId[item.getId()] || '';
+      })));
+    });
+
+    sheet.getRange(1, 1, rows.length, rows[0].length).setValues(rows);
+    sheet.setFrozenRows(1);
+    responseBackupUrl = spreadsheet.getUrl();
+  }
+
+  return {
+    formCopyUrl: copy.getUrl(),
+    responseBackupUrl: responseBackupUrl,
+    responseCount: responses.length
+  };
+}
+
+function logSession3FeedbackLinks_(form, prefilledUrl, backup) {
+  Logger.log('Participant form:');
+  Logger.log(form.getPublishedUrl());
+  Logger.log('Form editor:');
+  Logger.log(form.getEditUrl());
+  if (form.getDestinationId()) {
+    Logger.log('Response spreadsheet:');
+    Logger.log('https://docs.google.com/spreadsheets/d/' + form.getDestinationId() + '/edit');
+  }
+  if (prefilledUrl) {
+    Logger.log('PREFILLED URL — send this back to rewire the site:');
+    Logger.log(prefilledUrl);
+  }
+  if (backup) {
+    Logger.log('Backup form (' + backup.responseCount + ' existing responses):');
+    Logger.log(backup.formCopyUrl);
+    if (backup.responseBackupUrl) {
+      Logger.log('Private response backup:');
+      Logger.log(backup.responseBackupUrl);
+    }
+  }
 }

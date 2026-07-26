@@ -5,67 +5,62 @@ title: "Session 3 Feedback Form"
 
 # Session 3 Feedback: How Machines Move
 
-This is the source-of-truth question set for the Session 3 Google Form and eventual site-native feedback page. Every question is optional. Do not collect email addresses or require sign-in. Responses are facilitator-only and are never quoted publicly without permission.
+This is the source-of-truth question set for the Session 3 Google Form and site-native feedback page. It was revised after the session to match what actually happened rather than the planned run-of-show.
 
-The runnable Google Apps Script is [make-session-3-feedback-form.gs](make-session-3-feedback-form.gs). After it creates the form, use the logged prefilled URL to map the generated `entry.N` ids into `pages/session-3-feedback.html`.
+Every question is optional. Do not collect email addresses or require sign-in. Responses are facilitator-only and are not quoted or attributed publicly without separate permission.
+
+The runnable Google Apps Script is [make-session-3-feedback-form.gs](make-session-3-feedback-form.gs). Run `updateExistingSession3FeedbackForm()` from the existing form's Apps Script project. The updater:
+
+- preserves the existing participant URL and response destination;
+- makes a timestamped copy of the form;
+- exports any existing responses to a private backup spreadsheet;
+- replaces the planned-session questions with the delivered-session set below;
+- logs a new prefilled URL for remapping `entry.N` fields in `pages/session-3-feedback.html`.
 
 ## About you
 
 - Name or display name — short answer; optional / anonymous by default
-- How did you attend? — live, recording, or some of each
-- How did you participate today? — checkboxes: spoke, chat, drew / used tools, private writing / poll, watched / listened
+- How did you attend or participate? — checkboxes covering live / recording, speaking, chat, drawing, sharing, private work, and watching / listening
 
-## The session
+## What happened in Session 3
 
-- Which parts made something click? — checkboxes; includes synthesis, point correspondence, the Coherence Animator A/B comparison, failure hunt, system map, studio, guest, Q&A, and “nothing yet”
+- Which parts made something click or gave you a useful question? — checkboxes grounded in the delivered session: assignment reviews, Session 2 feedback, synthesis, Coherence Animator, animation sharing, timing/keyframes/layers, tools tour, guest, Q&A, and “nothing yet”
 - Five-row clarity grid:
-  - Tracking existing frames is different from generating new ones
-  - Coherence depends on relationships staying consistent across time
-  - A visible failure supports an observation but does not prove its cause
+  - Coherence concerns relationships staying consistent across time
+  - A stable reference may help but does not guarantee consistency
+  - Coherence Animator is a teaching analogy, not a literal architecture
+  - Animation concepts can guide observation without proving model internals
   - Smooth video is not evidence that an event happened
-  - Provenance documents a chain but does not itself establish consent
-- What does a video model have to keep coherent across time? — paragraph
-- Complete the sentence: “Smooth video is not evidence because…” — paragraph
-- What is still fuzzy or worth testing next? — paragraph
-
-## Activities and tools
-
-- Which tools or routes did you use? — checkboxes, so participants are not forced into one answer
-- Could you complete and compare Run A and Run B in the core A/B activity? — single operational check
-- What did you finish? — checkboxes: exact-break observation, bounded claim, missing provenance evidence, classroom adaptation, A / B comparison, or watch / listen route
-- Any tool friction? — paragraph with tool / device prompt
+- What did Coherence Animator or the animation discussion help you notice, and what is still fuzzy? — paragraph
 
 ## Guest spotlight
 
-- What idea or question from Dr. Emily Thomforde’s talk stayed with you? — paragraph
+- What idea or question from Dr. Emily Thomforde's “Axiology of Mystery” talk stayed with you? — paragraph
 
-## Format, access, and consent
+## Format and access
 
-- Pace — single choice
-- Could you participate in the way you wanted? — single choice
-- Anything facilitators should know about? — paragraph
+- Could you participate in the way you wanted? — single choice that distinguishes pace, tool/access friction, and a valid watch/listen route
+- Anything facilitators should know about? — paragraph covering tool friction, access, recording, likeness, consent, or other participation conditions
 
-## Optional Studio / Showcase
+## What comes next
 
-- Which follow-up would you actually use? — single choice: downloadable classroom pack, recording + notes, live studio, short office hour, or none / not sure
-- Would you present something at an August Studio / Showcase? — yes / maybe / attend only / no
-- If you took a Showcase slot, what would you present? — checkboxes: a Session 1 (text), Session 2 (images), or Session 3 (video) product; a new or combined piece; a classroom activity or adaptation; a critique or work in progress; or not sure
-- If we hold a 4th Showcase session in August, which date works better? — single choice: Saturday, August 8; Saturday, August 15; either; neither; or not attending
-- What might you bring or develop? — paragraph
-- What would help you participate? — checkboxes, not a single-answer commitment
+- Which follow-up would you actually use? — single choice: downloadable classroom pack, recording + recap, live Studio, short office hour, or none / not sure
+- Would you join an August Studio / Showcase? — present / maybe / attend only / no
+- Which Saturday works better? — August 8, August 15, either, neither, or not attending
+- What might you bring, develop, or need in order to participate? — paragraph
 
-## Anything else
+## Last word
 
-- What should we keep?
-- What should we change?
+- What should we keep, change, or carry into the next version?
 - Would you recommend Learning Machines?
-- Anything else?
 
 ## Wiring status
 
-- [x] Question set written
-- [x] Google Apps Script builder written
-- [x] Form created in the facilitator’s Google account
-- [x] Prefilled URL returned and `entry.N` ids mapped
-- [x] `pages/session-3-feedback.html` created and browser-tested
+- [x] Delivered-session question set written
+- [x] Google Apps Script create/update workflow written
+- [x] Existing Google Form and site-native page exist
+- [x] Run `updateExistingSession3FeedbackForm()` in the existing form project
+- [x] Return the logged prefilled URL and remap `entry.N` ids
+- [x] Update `pages/session-3-feedback.html`
+- [ ] Re-run browser interaction QA when the browser task's URL scope permits it
 - [x] Feedback link added to `pages/session-video.html`
