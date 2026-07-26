@@ -28,9 +28,11 @@ We record every session for asynchronous access. Participants are notified at re
 - Recordings are shared with registered participants only unless a participant explicitly consents to broader sharing.
 
 **What we do not do:**
-- We do not use recordings to train AI models.
+- Learning Machines does not use recordings for AI training.
 - We do not share unedited recordings publicly without cohort-level consent.
 - We do not share recordings with external parties, sponsors, or media without individual consent.
+
+This describes Learning Machines' own use of the recordings. It does not make a claim about how third-party hosting platforms process data under their own terms and privacy policies.
 
 ---
 
@@ -164,4 +166,4 @@ A participant who does not complete the end-of-camp form is treated as anonymous
 | Linking to a participant's project | Yes — explicit per project |
 | Using participant work in a future session as an example | Yes — explicit |
 | Mentioning a participant's project in a social post | Yes — explicit |
-| Using participant data to train AI | Never |
+| Learning Machines using participant data for AI training | No — prohibited |

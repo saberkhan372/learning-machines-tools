@@ -371,7 +371,7 @@ public listing at <https://ccfest.rocks/ccfest-camp>: `pages/camp-2026.html`.
   (No-AI pathway + consent checklist) and open one tool ahead of Saturday.
 - **Recordings & the async route**: the Consent and Recap Protocol's policy
   stated plainly (recorded for async access, registered participants only,
-  never used to train models), with the per-session recording + worksheet +
+  and Learning Machines does not use the recordings for AI training), with the per-session recording + worksheet +
   prompt-pack route presented as a full path, not a consolation.
 - Wired into the homepage hero eyebrow ("Summer 2026 — July 11 / 18 / 25"),
   the Materials list, and the README; the roadmap's two schedule questions

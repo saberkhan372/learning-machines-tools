@@ -98,7 +98,7 @@ window.LM_BUILD = {
     { title: "Two LLMs, checked against each other",
       body: "Built with both Claude and ChatGPT, deliberately playing them off one another: one drafts, the other critiques; one writes the copy, the other audits it for contrast, bias, or overreach. Disagreements between the two models were often where the real problems were hiding. Because the camp studies AI, that assistance stays visible and reviewed, not hidden." },
     { title: "One readable file per tool",
-      body: "No bundler, no framework, no build step. Every tool is a single self-contained HTML file you can open and read top to bottom. The constraint is pedagogical, not just technical: if you can read the file, you can teach the idea — and change one line and watch the output move." },
+      body: "No bundler or application server. The early tools were deliberately self-contained; the current site also uses shared assets and a few multi-file instruments. The pedagogical constraint remains legibility: the local source should make the teaching idea inspectable and changeable." },
     { title: "Let the data drive the pages",
       body: "The session run-of-shows, the tool catalog, and even this timeline live in small JS data files (session-runs.js, tools-data.js, build-history.js). Edit one and every surface updates at once — the link sheet, the run console, and the participant home all read from the same source instead of repeating each other." },
     { title: "Audit → propose → build → commit",

@@ -53,7 +53,7 @@ Do not click **new session** after the live activity begins. Refreshing is safe;
 
 "Welcome to Learning Machines. This is a camp about investigation, not about becoming better at prompting. Across text, images, and video, we are going to keep asking the same question: what is the machine actually doing?"
 
-"A quick participation note before we begin: this session is recorded for registered participants. Camera and microphone are always optional. You can participate entirely through chat, and you choose whether and how you are named in any public recap. The recording is not used to train AI models."
+"A quick participation note before we begin: this session is recorded for registered participants. Camera and microphone are always optional. You can participate entirely through chat, and you choose whether and how you are named in any public recap. Learning Machines does not use the recording for AI training."
 
 "Today the Zoom room becomes a language model. You are not pretending to be one smart brain. You are pretending to be many small pieces of a system. Together we will build text one piece at a time, then ask what makes that text useful to a person."
 

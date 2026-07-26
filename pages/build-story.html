@@ -168,9 +168,9 @@
     <section style="padding:14px 0 28px;">
       <div class="sec-rule"><h2 class="sec-no">§ E · How it's built</h2><span class="sec-note">no build step · static HTML · GitHub Pages</span></div>
       <p class="sub-lede" style="margin-bottom:18px;">The architecture is deliberately boring so it survives a live session
-        and outlives the camp: every tool is a single self-contained HTML file, a thin shared <code>assets/</code> layer
-        gives them one look and a few data files, and the whole thing is static — no bundler, no accounts, no server.</p>
-      <svg class="bs-arch" viewBox="0 0 720 300" role="img" aria-label="Architecture: single-file tools and pages draw on a shared assets layer of one CSS system and data files, served statically from GitHub Pages with no build step.">
+        and outlives the camp: static HTML entry points draw on a shared <code>assets/</code> layer, while larger instruments
+        such as Coherence Animator use multiple local files. The site still needs no bundler, participant account, or application server.</p>
+      <svg class="bs-arch" viewBox="0 0 720 300" role="img" aria-label="Architecture: static tool and page entry points draw on a shared CSS and data layer, with some tools using additional local files, all served from GitHub Pages without an application server.">
         <style>
           .ab { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
           .abx { fill: var(--surface); stroke: var(--accent); stroke-width: 1.3; }
@@ -179,11 +179,11 @@
           .ac { fill: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
           .aedge { stroke: var(--accent); stroke-width: 1.2; fill: none; }
         </style>
-        <text x="20" y="28" class="am">SURFACES · one HTML file each</text>
-        <rect class="ab" x="20"  y="38" width="150" height="40"/><text x="34" y="56" class="al">25 tools/</text><text x="34" y="70" class="am">single-file + inline JS</text>
-        <rect class="ab" x="186" y="38" width="150" height="40"/><text x="200" y="56" class="al">53 pages/</text><text x="200" y="70" class="am">sessions · console · home</text>
-        <rect class="ab" x="352" y="38" width="150" height="40"/><text x="366" y="56" class="al">5 worksheets/</text><text x="366" y="70" class="am">printable boards</text>
-        <rect class="ab" x="518" y="38" width="182" height="40"/><text x="532" y="56" class="al">34 docs/ (md)</text><text x="532" y="70" class="am">briefs · plans · facilitation</text>
+        <text x="20" y="28" class="am">SURFACES · static entry points</text>
+        <rect class="ab" x="20"  y="38" width="150" height="40"/><text x="34" y="56" class="al">tools/</text><text x="34" y="70" class="am">single- + multi-file</text>
+        <rect class="ab" x="186" y="38" width="150" height="40"/><text x="200" y="56" class="al">pages/</text><text x="200" y="70" class="am">sessions · console · home</text>
+        <rect class="ab" x="352" y="38" width="150" height="40"/><text x="366" y="56" class="al">worksheets/</text><text x="366" y="70" class="am">printable boards</text>
+        <rect class="ab" x="518" y="38" width="182" height="40"/><text x="532" y="56" class="al">docs/</text><text x="532" y="70" class="am">briefs · plans · facilitation</text>
         <path class="aedge" d="M95 78 L95 118"/><path class="aedge" d="M261 78 L261 118"/><path class="aedge" d="M427 78 L427 118"/>
         <text x="20" y="140" class="am">SHARED · assets/ (~976 lines JS, one CSS system)</text>
         <rect class="abx" x="20" y="150" width="680" height="66"/>

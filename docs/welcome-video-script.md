@@ -71,7 +71,7 @@ when you can.
 **[2:25 — consent + close; back to talking head]**
 
 Cameras are optional. You choose how you're named in anything we share.
-And our recordings are never used to train AI models.
+Learning Machines does not use its recordings for AI training.
 
 Before Saturday, take five minutes in Classroom and Start Here. Then come
 as you are, and bring one honest question about these machines. We'll
@@ -101,8 +101,8 @@ See you there.
   you cut to screens, the Diffusion Step-Through Viewer mid-drag is the
   most legible five seconds of "what this camp feels like."
 - **Consent triple is a commitment, not boilerplate** — cameras optional,
-  naming choice, never used to train models — it restates the Consent and
-  Recap Protocol on camera.
+  naming choice, and Learning Machines does not use its recordings for AI
+  training. This restates the Consent and Recap Protocol on camera.
 
 ## Where to post
 
