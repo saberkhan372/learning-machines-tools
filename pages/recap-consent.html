@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="cross" data-skin="worksheet-print">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Consent for camp materials — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-tool.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    :root {
+      --card: var(--surface);
+      --border: var(--line);
+      --accent-bg: color-mix(in oklab, var(--accent) 12%, transparent);
+      --warm: var(--accent);
+      --radius: 10px;
+      --shadow: 0 1px 4px rgba(0,0,0,.07);
+      --row-bg: var(--surface-2);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { line-height: 1.5; }
+    .form-wrap { max-width: 640px; margin: 0 auto; padding: 28px 20px 60px; }
+    header { margin-bottom: 20px; }
+    .eyebrow { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--warm); margin-bottom: 6px; }
+    h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 4px; }
+    .subtitle { font-size: .9rem; color: var(--muted); }
+    .privacy { font-size: .85rem; color: var(--muted); border: 1px solid var(--border); border-left: 3px solid var(--warm); border-radius: 2px; background: var(--card); padding: 10px 14px; margin-bottom: 16px; }
+    .recap-links { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .recap-links a { font-family: var(--font-mono); font-size: .72rem; color: var(--ink); text-decoration: none; border: 1px solid var(--border); background: var(--card); padding: 6px 9px; }
+    .recap-links a:hover, .recap-links a:focus-visible { border-color: var(--accent); }
+
+    .section { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin: 0 0 16px; overflow: hidden; }
+    .q { padding: 16px 16px; border-bottom: 1px solid var(--border); }
+    .q:last-child { border-bottom: none; }
+    .q-title { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .q-help { font-size: .8rem; color: var(--muted); margin: 0 0 8px; }
+    .required { color: var(--accent); }
+    .opt-list { display: flex; flex-direction: column; gap: 2px; }
+    .opt { display: flex; gap: 10px; align-items: flex-start; padding: 9px 8px; border-radius: 2px; cursor: pointer; transition: background .12s; font-size: .9rem; }
+    .opt:hover { background: var(--row-bg); }
+    .opt input { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; margin-top: 1px; }
+    input[type=text], textarea { width: 100%; font-family: inherit; font-size: .9rem; color: var(--ink); border: 1px solid var(--border); border-radius: 2px; padding: 9px 10px; background: var(--bg); resize: none; line-height: 1.5; transition: border-color .15s; }
+    textarea { min-height: 74px; }
+    input[type=text]:focus, textarea:focus { outline: none; border-color: var(--accent); background: var(--accent-bg); }
+    .submit-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
+    .btn-submit { font-family: inherit; font-size: .9rem; font-weight: 700; padding: 11px 26px; border-radius: 2px; border: 1.5px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; transition: filter .12s; }
+    .btn-submit:hover { filter: brightness(1.08); }
+    .btn-submit:disabled { opacity: .55; cursor: default; }
+    .submit-note { font-size: .8rem; color: var(--muted); margin-top: 12px; }
+    .submit-note a { color: var(--accent); }
+    .status { font-size: .85rem; font-weight: 600; }
+    .status.err { color: #b42318; }
+    .thanks { display: none; background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px 24px; }
+    .thanks h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; }
+    .thanks p { font-size: .9rem; color: var(--muted); }
+    .thanks a { color: var(--accent); }
+    body.sent form, body.sent .recap-links { display: none; }
+    body.sent .thanks { display: block; }
+
+    #lm-worksheet-nav-overrides.nav { position: sticky !important; top: 0 !important; z-index: 1000 !important; padding: 0 !important; backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); background: color-mix(in oklab, var(--bg) 80%, transparent) !important; border-bottom: 1px solid var(--line-soft) !important; }
+    #lm-worksheet-nav-overrides .wrap { width: min(1200px, calc(100% - 48px)) !important; max-width: none !important; margin: 0 auto !important; padding: 0 !important; }
+    #lm-worksheet-nav-overrides .nav-inner { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 62px !important; }
+    #lm-worksheet-nav-overrides .brand { display: flex !important; align-items: center !important; gap: 11px !important; font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-size: 1.02rem !important; color: var(--ink) !important; text-decoration: none !important; }
+    #lm-worksheet-nav-overrides .brand .mark { width: 26px !important; height: 26px !important; flex: none !important; position: relative !important; border: 1.5px solid var(--accent) !important; border-radius: 2px !important; display: grid !important; place-items: center !important; }
+    #lm-worksheet-nav-overrides .brand .mark::after { content: "" !important; width: 8px !important; height: 8px !important; border-radius: 2px !important; background: var(--accent) !important; }
+    #lm-worksheet-nav-overrides .nav-links { display: flex !important; align-items: center !important; gap: 4px !important; }
+    #lm-worksheet-nav-overrides .nav-links a { font-family: var(--font-body) !important; font-size: .92rem !important; color: var(--muted) !important; padding: 7px 13px !important; border-radius: 2px !important; text-decoration: none !important; }
+    #lm-worksheet-nav-overrides .nav-links a:hover { color: var(--ink) !important; background: var(--surface-2) !important; }
+    #lm-worksheet-nav-overrides .btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; font-family: var(--font-body) !important; font-weight: 600 !important; white-space: nowrap !important; border: 1px solid var(--line) !important; background: transparent !important; color: var(--ink) !important; }
+    #lm-worksheet-nav-overrides .btn-sm { padding: 8px 13px !important; font-size: .86rem !important; border-radius: 2px !important; }
+    @media (max-width: 720px) { #lm-worksheet-nav-overrides .hide-sm { display: none !important; } #lm-worksheet-nav-overrides .wrap { width: min(1200px, calc(100% - 28px)) !important; } }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="lm-worksheet-nav-overrides">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="materials.html" class="hide-sm">Materials</a>
+        <a href="session-3-recap.html" class="hide-sm">Latest recap</a>
+        <a class="btn btn-ghost btn-sm nav-cta" href="../index.html">← Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="form-wrap">
+    <header>
+      <div class="eyebrow">Sessions 1–3 · Recaps, recording &amp; promotion</div>
+      <h1>Consent for camp materials</h1>
+      <p class="subtitle">What are you comfortable being included in? About a minute.</p>
+    </header>
+
+    <div class="privacy">No reply means we leave you out of everything, and you can change your mind anytime. Nothing here is ever used to train AI. <a href="../docs/consent-recap-protocol.html">Read the protocol.</a></div>
+
+    <div class="recap-links" aria-label="Review the session recaps">
+      <a href="session-1-recap.html" target="_blank">Review Session 1 ↗</a>
+      <a href="session-2-recap.html" target="_blank">Review Session 2 ↗</a>
+      <a href="session-3-recap.html" target="_blank">Review Session 3 ↗</a>
+    </div>
+
+    <div class="thanks">
+      <h2>Thanks — your answers are in.</h2>
+      <p>You can return to the <a href="materials.html">materials directory</a> or contact the facilitator later to change any of your choices.</p>
+    </div>
+
+    <form id="consentForm" novalidate>
+      <div class="section">
+        <div class="q">
+          <div class="q-title">1. Your name or alias <span class="required">*</span></div>
+          <div class="q-help">However you're named in the recap — first name or alias is fine.</div>
+          <input type="text" data-entry="entry.539091580" aria-label="Your name or alias" autocomplete="name">
+        </div>
+
+        <div class="q">
+          <div class="q-title">2. The written recaps <span class="required">*</span></div>
+          <div class="q-help">Our AI-drafted, human-reviewed write-ups of each session.</div>
+          <div class="opt-list">
+            <label class="opt"><input type="radio" name="recaps" data-entry="entry.335761944" value="Yes — include me as I appear"><span>Yes — include me as I appear</span></label>
+            <label class="opt"><input type="radio" name="recaps" data-entry="entry.335761944" value="Yes — but keep me anonymous (no name)"><span>Yes — but keep me anonymous (no name)</span></label>
+            <label class="opt"><input type="radio" name="recaps" data-entry="entry.335761944" value="No — leave me out of the recaps"><span>No — leave me out of the recaps</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-title">3. The group session recording <span class="required">*</span></div>
+          <div class="q-help">The full class video — shared as an unlisted link with our group only, never posted publicly.</div>
+          <div class="opt-list">
+            <label class="opt"><input type="radio" name="recording" data-entry="entry.236623929" value="Yes — fine to include me in the group recording"><span>Yes — fine to include me in the group recording</span></label>
+            <label class="opt"><input type="radio" name="recording" data-entry="entry.236623929" value="No — please leave me out of the shared recording"><span>No — please leave me out of the shared recording</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-title">4. Promotion &amp; social media <span class="required">*</span></div>
+          <div class="q-help">Clips, quotes, or images used to promote future programs.</div>
+          <div class="opt-list">
+            <label class="opt"><input type="radio" name="promotion" data-entry="entry.1408119934" value="Yes — you may include me"><span>Yes — you may include me</span></label>
+            <label class="opt"><input type="radio" name="promotion" data-entry="entry.1408119934" value="Anonymous only (no name or face)"><span>Anonymous only (no name or face)</span></label>
+            <label class="opt"><input type="radio" name="promotion" data-entry="entry.1408119934" value="No — do not use me in promotion"><span>No — do not use me in promotion</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-title">5. Anything to add?</div>
+          <div class="q-help">Optional. How you'd like to be credited, any conditions, or different choices for different sessions.</div>
+          <textarea data-entry="entry.1701594135" rows="3" aria-label="Anything to add"></textarea>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn-submit" id="sendBtn">Send my answers</button>
+        <span class="status" id="status" role="status" aria-live="polite"></span>
+      </div>
+      <p class="submit-note">Prefer Google's plain form? <a href="https://docs.google.com/forms/d/e/1FAIpQLSd1fR_eFXsHnwkjlVxzzLCMPrIfFfs2b6Nk5f4lkYpdP3HBZg/viewform" target="_blank" rel="noopener">Open the same consent form in Google Forms</a>.</p>
+    </form>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+      var ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSd1fR_eFXsHnwkjlVxzzLCMPrIfFfs2b6Nk5f4lkYpdP3HBZg/formResponse';
+      var FALLBACK = 'https://docs.google.com/forms/d/e/1FAIpQLSd1fR_eFXsHnwkjlVxzzLCMPrIfFfs2b6Nk5f4lkYpdP3HBZg/viewform';
+      var form = document.getElementById('consentForm');
+      var button = document.getElementById('sendBtn');
+      var status = document.getElementById('status');
+
+      function autosize(element) {
+        element.style.height = 'auto';
+        element.style.height = element.scrollHeight + 'px';
+      }
+      form.querySelectorAll('textarea').forEach(function (textarea) {
+        textarea.addEventListener('input', function () { autosize(textarea); });
+      });
+
+      function payload() {
+        var params = new URLSearchParams();
+        form.querySelectorAll('[data-entry]').forEach(function (element) {
+          if (element.type === 'radio' || element.type === 'checkbox') {
+            if (element.checked) params.append(element.dataset.entry, element.value);
+          } else if (element.value.trim()) {
+            params.append(element.dataset.entry, element.value.trim());
+          }
+        });
+        return params;
+      }
+
+      function validate() {
+        var name = form.querySelector('[data-entry="entry.539091580"]');
+        if (!name.value.trim()) return 'Please enter the name or alias used in the recap.';
+        if (!form.querySelector('[data-entry="entry.335761944"]:checked')) return 'Please choose an option for the written recaps.';
+        if (!form.querySelector('[data-entry="entry.236623929"]:checked')) return 'Please choose an option for the recording.';
+        if (!form.querySelector('[data-entry="entry.1408119934"]:checked')) return 'Please choose an option for promotion.';
+        return '';
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var error = validate();
+        if (error) {
+          status.textContent = error;
+          status.classList.add('err');
+          return;
+        }
+
+        var params = payload();
+        params.append('fvv', '1');
+        params.append('pageHistory', '0');
+        button.disabled = true;
+        status.textContent = 'Sending…';
+        status.classList.remove('err');
+
+        fetch(ACTION, { method: 'POST', mode: 'no-cors', body: params })
+          .then(function () {
+            document.body.classList.add('sent');
+            window.scrollTo({ top: 0 });
+          })
+          .catch(function () {
+            button.disabled = false;
+            status.classList.add('err');
+            status.innerHTML = 'Could not send — check your connection, or use the <a href="' + FALLBACK + '" target="_blank" rel="noopener">Google Form</a> instead.';
+          });
+      });
+
+      window.__recapConsent = { payload: function () { return payload().toString(); } };
+    })();
+  </script>
+  <script src="../assets/analytics.js"></script>
+</body>
+</html>

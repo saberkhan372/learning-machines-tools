@@ -20,5 +20,8 @@ participant-prep-*
 applicant-data/
 _private/
 
+# Recap consent form builder — embeds the private participant roster (TRACKER_PEOPLE).
+scripts/create-recap-consent-form.gs
+
 # Analysis outputs may contain participant PII (rosters, invite trackers)
 outputs/

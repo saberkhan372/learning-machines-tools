@@ -9,6 +9,8 @@ Practical policy for recordings, screenshots, participant names, AI-generated no
 
 This protocol applies to all Learning Machines: Text, Images, Video sessions and any public materials derived from them.
 
+**Participant action:** [Submit or update your consent](../pages/recap-consent.html) for the written recaps, the group recording, and promotion — one short form covering Sessions 1–3.
+
 ---
 
 ## 1. Recordings
