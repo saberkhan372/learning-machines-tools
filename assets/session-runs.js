@@ -221,7 +221,50 @@ window.LM_SESSION_RUNS = [
     when: "Sat July 25 · 9–11 am PT", date: "2026-07-25",
     explore: "You have been the machine three times: fluent is not necessarily true, plausible is not necessarily neutral, and smooth is not evidence. Session 3 tests what must stay coherent across time.",
     asyncPrompt: "Open the Video Failure Gallery Viewer (or use a frozen clip), find the first exact frame where one relation breaks, and write one observation plus one boundary: what does the clip show, and what can it not prove about the model?",
-    recap: { video: null, written: null, writtenHref: null },
+    recap: {
+      video: "https://youtu.be/kn-3P3tjafY", writtenHref: "pages/session-3-recap.html", written: null,
+      sections: {
+        summary: "We used an image model, one frame at a time, as a way into video — a classroom model, not a claim about any real architecture — and found the hard part is not any single frame but keeping them coherent across time. Participants became the model in the Coherence Animator, animating 'a person at work' under two memory conditions, and then guest Dr. Emily Thomforde traced how the unexplainable core of these systems came to be treated as magic rather than a problem.",
+        investigated: [
+          "Why video is a harder problem than an image: frames have to cohere not only across X and Y but over time — coherence in a new, third direction.",
+          "The camp's through-line, stated in one place: fluent text is not necessarily true, plausible images are not necessarily neutral, and smooth video is not evidence that an event happened.",
+          "How a still-image model could be run frame by frame, and why the seams between frames — not the frames themselves — are the real problem.",
+          "What human animators already know about that problem — timing, spacing, and foreground/background order — and how those concepts can generate questions to check against documented video workflows.",
+          "Where the mystery inside neural networks comes from, and why (per Dr. Thomforde) its cultural acceptance, not the technology, is what changed."
+        ],
+        mechanisms: [
+          { name: "Temporal coherence", where: "Coherence Animator setup", observed: "The activity runs an image model frame by frame to make one point concrete: the hard part is not any single frame but keeping the subject, objects, and motion consistent across them — coherence in time on top of space. Real systems vary; the activity does not reproduce any one architecture." },
+          { name: "Memory / context", where: "Run A vs Run B", observed: "Run A let you see only the previous frame; Run B added the fixed first frame as an anchor. With more to refer back to, participants held background elements steadier but had more to track — an observation about the two drawing conditions, not a measurement of how a model spends memory or compute." },
+          { name: "Keyframe interpolation", where: "Sharleen's start-and-end constraint", observed: "Fixing a start and end frame led Sharleen to rush the in-between frames toward the endpoint. That prompted a facilitator hypothesis — to check against documented workflows, not shown by the activity — that some systems rely on keyframes and interpolation, which could over-converge and flatten detail." },
+          { name: "Foreground / background split", where: "Ryan's drawing order", observed: "Drawing the static scene first versus the character first changed line quality and attention. Separating foreground from background is a known human animation move; whether a given video pipeline splits work the same way is a question for documented workflows, not something the activity shows." },
+          { name: "Timing as meaning", where: "Shane's timing-supervisor read", observed: "Holding a drawing a few extra frames implies thinking or intention and changes what the motion means — timing is semantically driven. In Shane's own experience giving an LLM the same timing rules, it followed them discretely, without a sense of the relativity of spacing, and overshot subtle moves." },
+          { name: "Chained-model workflows", where: "ComfyUI / fuser.studio discussion", observed: "Because video is compute- and token-expensive and many relations must hold at once, some production workflows chain several specialized models — one holds the background, another the foreground, another composites — as discussed via ComfyUI and fuser.studio. This describes those workflows, not a universal architecture." }
+        ],
+        patterns: [
+          { what: "With only the previous frame (Run A), participants made more vivid, active choices; with an anchor frame (Run B), some drifted toward replicating the opening — Yunseo compared Run B to a near-static 'Wimpy Kid' diary.", suggests: "In this activity, the added anchor sometimes steadied details but also constrained how much could change. This is an observation about two drawing conditions, not a measurement of model memory or compute.", next: "Ask what a model should be free to change versus must keep fixed, then check how documented workflows manage those constraints." },
+          { what: "The room surfaced concepts human animators already use — foreground/background order, keyframes, and the meaning of a held beat.", suggests: "Those parallels give us useful questions to ask about video systems; they do not show that a model represents or solves the problems in the same way.", next: "Carry this into the showcase: take one animation constraint, imagine the software a model would need to satisfy it, then compare that hypothesis with what documented workflows (ComfyUI, node graphs) actually build." }
+        ],
+        hmse: {
+          human: "Participants chose the action, the drawing order, the timing, and how much to change frame to frame. Ryan drew the background first in Run A and the character first in Run B; a professional animator (Shane) read held beats as intention; others caught themselves rushing toward an ending frame.",
+          machine: "A video model has to keep a scene coherent across time, not just render one plausible still. The room's hypotheses — split foreground and background, lean on keyframes and interpolation, edit one part of a frame without regenerating the whole — name problems a video model has to contend with, and questions to check against real systems rather than mechanisms the activity proved.",
+          system: "Some node-based production workflows, including workflows built with tools such as ComfyUI or fuser.studio, connect multiple stages such as generation, masking, and compositing. This is one production pattern, not a universal video-model architecture. Additional stages can increase computation, but resource use depends on the models, resolution, duration, and deployment.",
+          ethics: "Dr. Emily Thomforde's talk, 'Artificial Intelligence and the Axiology of Mystery,' argued the explainability problem — neural nets keep no paper trail of why an output happened — was once disqualifying and is now marketed as wonder. She placed the shift in culture and economics, not technical progress, and warned that magical thinking (hope or fear) fills the space where evidence and expertise do not yet exist."
+        },
+        classroom: {
+          students: "The Coherence Animator runs in the browser with no login: students animate a shared prompt twice — once seeing only the previous frame, once with an anchor frame — then compare and name one thing that changed. Being the model surfaces the coherence problem faster than watching a finished clip.",
+          shortCircuit: "Jumping to a polished AI video hides the problem: today's models are good enough that mistakes are hard to spot, so students skip the being-the-model friction where the coherence intuition forms.",
+          noAI: "The in-person Temporal Telephone variant needs only paper: each person animates a frame and hands it on, and you can separate the 'models' so groups can or cannot see each other's work — an unplugged, gamified way to feel context and drift."
+        },
+        next: {
+          prep: "This was the last pre-planned session. An optional August Showcase — where participants present something they made — will be scheduled for a Saturday in August (the 8th or the 15th) based on the feedback form, and end-of-month August office hours will be emailed to every cohort.",
+          asyncRoute: {
+            prompt: "Make something for the optional August Showcase — a tool, activity, artifact, or set of questions drawn from any of the three sessions — and fill out the feedback form, including whether you would present and which August date works.",
+            worksheetPath: "worksheets/video-test-report/",
+            packPath: "packs/video/"
+          }
+        }
+      }
+    },
     facilitation: "pages/docs-session-3-facilitation.html",
     overview: "pages/session-video.html",
     deck: "pages/session-3-deck.html",

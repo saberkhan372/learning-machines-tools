@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-skin="video-slitscan">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Session 3 Recap · Video — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    /* ── Recap-specific layout ─────────────────────────────────── */
+    .recap-lede {
+      font-size: 1.15rem;
+      line-height: 1.75;
+      max-width: 65ch;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+
+    /* Start-here tier cards */
+    .start-here-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0 0;
+    }
+    .sh-card {
+      border: 1px solid var(--line);
+      padding: 16px 18px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+    .sh-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .sh-card h3 { margin: 0; font-size: 1rem; letter-spacing: -0.01em; }
+    .sh-card p { margin: 0; font-size: 0.88rem; color: var(--ink-soft); line-height: 1.55; }
+    .sh-link { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); text-decoration: none; }
+    .sh-link:hover { text-decoration: underline; }
+
+    /* Moment pull-quotes */
+    .moment { border-left: 3px solid var(--accent); padding: 10px 16px; margin: 18px 0; background: var(--surface); }
+    .moment p { margin: 0; font-style: italic; color: var(--ink); line-height: 1.6; }
+    .moment cite { display: block; margin-top: 6px; font-style: normal; font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+
+    /* Guest spotlight */
+    .guest-card { border: 1px solid var(--line); padding: 22px 24px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; margin: 20px 0; }
+    .guest-name { font-size: 1.15rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+    .guest-role { font-size: 0.88rem; color: var(--ink-soft); margin: 0 0 12px; }
+    .guest-links { display: flex; flex-wrap: wrap; gap: 6px; }
+    .guest-links a { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink); text-decoration: none; border: 1px solid var(--line); padding: 4px 8px; }
+    .guest-links a:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Action items */
+    .action-list { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 8px; }
+    .prose .action-list li { display: block; font-size: 0.95rem; line-height: 1.55; padding: 10px 0 10px 30px; position: relative; width: 100%; min-width: 0; overflow-wrap: anywhere; }
+    .prose .action-list li::before { content: "→"; position: absolute; left: 0; top: 0.95em; width: 20px; height: auto; background: none; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+    html[data-skin] .prose .action-list li::before { background: none; }
+
+    /* Links & resources */
+    .resource-group { margin: 16px 0 24px; }
+    .resource-group h4 { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; font-weight: 500; }
+    .resource-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .resource-list li { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: baseline; font-size: 0.9rem; padding-bottom: 6px; border-bottom: 1px solid var(--line-soft, color-mix(in srgb, var(--line) 40%, transparent)); }
+    .resource-list li:last-child { border-bottom: none; }
+    .resource-list a { color: var(--ink); word-break: break-all; }
+    .resource-list a:hover { color: var(--accent); }
+    .res-who { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); white-space: nowrap; }
+
+    /* Participants list */
+    .participant-grid { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+    .participant-chip { font-size: 0.85rem; border: 1px solid var(--line); padding: 4px 10px; background: var(--surface); white-space: nowrap; }
+    .participant-chip.notable { border-color: var(--accent); }
+
+    /* Narrow teaching-note callout */
+    .teaching-note { border: 1px solid var(--line); border-left: 3px solid var(--m-video, var(--accent)); padding: 14px 18px; margin: 14px 0; background: var(--surface); }
+    .teaching-note p { margin: 0; font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft); }
+    .teaching-note strong { display: block; margin-bottom: 4px; color: var(--ink); font-size: 0.8rem; font-family: var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase; }
+
+    @media (max-width: 720px) {
+      .start-here-grid { grid-template-columns: 1fr; }
+      .guest-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a href="../index.html#sessions" class="hide-sm">Sessions</a>
+        <a href="run-console.html?s=3" class="hide-sm">Run console</a>
+        <a class="btn btn-sm" href="session-video.html#recap">← Back to recap</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="sub-hero" data-mod="video">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="../index.html">Home</a><span class="sep">/</span>
+        <a href="../index.html#sessions">Sessions</a><span class="sep">/</span>
+        <a href="session-video.html">Video</a><span class="sep">/</span>
+        <span>Recap</span>
+      </div>
+      <div class="sess-hero-grid">
+        <div class="sess-num">03<span class="of">recap</span></div>
+        <div>
+          <p class="sess-kicker"><i class="modsq"></i>Session 3 · Video · Saturday July 25</p>
+          <h1 class="sess-title">How machines move</h1>
+          <p class="sess-lede recap-lede">We used an image model, one frame at a time, as a way into video — and found the hard part is not any single frame but keeping them coherent across time. Participants became the model in the Coherence Animator, and then Dr. Emily Thomforde traced how the unexplainable core of these systems became something we now treat as magic rather than a problem.</p>
+          <p class="doc-meta" style="margin-top: 14px;">
+            <span class="chip">10+ contributors</span>
+            <span class="chip">9–11 am PT</span>
+            <span class="chip">Registered participants · never used to train AI</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section-tight" data-screen-label="Recap body">
+    <div class="wrap docs-layout">
+
+      <!-- TOC -->
+      <aside class="toc">
+        <p class="toc-label">On this page</p>
+        <nav>
+          <a href="#recording">Watch the recording</a>
+          <a href="#start-here">Start here</a>
+          <a href="#overview">Session overview</a>
+          <a href="#the-room">Who was in the room</a>
+          <a href="#assignments">Assignment reviews</a>
+          <a href="#feedback">Session 2 feedback</a>
+          <a href="#animator">The Coherence Animator</a>
+          <a href="#noticed">What the room noticed</a>
+          <a href="#guest">Guest: Dr. Emily Thomforde</a>
+          <a href="#teaching-notes">Teaching notes</a>
+          <a href="#action-items">Action items</a>
+          <a href="#links">Links &amp; resources</a>
+        </nav>
+      </aside>
+
+      <!-- BODY -->
+      <article class="prose">
+
+        <div class="callout">
+          <p><b>Are you named, quoted, or represented here?</b> Use the <a href="recap-consent.html">consent form</a> to choose what you're included in — the written recaps, the group recording, and promotion — as yourself, anonymously, or not at all.</p>
+        </div>
+
+        <!-- ── RECORDING ──────────────────────────────────────────── -->
+        <h2 id="recording">Watch the recording</h2>
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/kn-3P3tjafY"
+            title="Learning Machines Session 3: How machines move"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <p class="video-caption"><a href="https://youtu.be/kn-3P3tjafY">Open the Session 3 recording on YouTube (unlisted)</a> — never used to train AI models.</p>
+
+        <!-- ── START HERE ──────────────────────────────────────────── -->
+        <h2 id="start-here">Start here</h2>
+        <div class="start-here-grid">
+          <div class="sh-card">
+            <span class="sh-label">5 min</span>
+            <h3>Just the highlights</h3>
+            <p>Read the <a class="sh-link" href="#overview">session overview</a> and the <a class="sh-link" href="#animator">Coherence Animator</a> debrief — the activity the whole session built toward.</p>
+          </div>
+          <div class="sh-card">
+            <span class="sh-label">15 min</span>
+            <h3>The full arc</h3>
+            <p>Add <a class="sh-link" href="#noticed">what the room noticed</a> and <a class="sh-link" href="#guest">Dr. Thomforde's talk</a> on the axiology of mystery.</p>
+          </div>
+          <div class="sh-card">
+            <span class="sh-label">Deeper path</span>
+            <h3>Read everything</h3>
+            <p>Include the <a class="sh-link" href="#assignments">assignment reviews</a>, the <a class="sh-link" href="#teaching-notes">teaching notes</a>, and the full <a class="sh-link" href="#links">links &amp; resources</a>.</p>
+          </div>
+        </div>
+
+        <!-- ── SESSION OVERVIEW ──────────────────────────────────── -->
+        <h2 id="overview">Session overview</h2>
+        <p>The camp's one-line argument arrived whole this week: <em>fluent</em> text is not necessarily true, <em>plausible</em> images are not necessarily neutral, and <em>smooth</em> video is not evidence that an event happened. Session 3's job was the third line — and the mechanism behind it.</p>
+        <p>In the activity we built video out of images: take an image model, ask it for one frame, then the next, then the next, and play the frames back. (That is a classroom model to reason with — real video systems vary and don't necessarily generate strictly frame by frame.) The frames are the easy part; the hard part is the <em>seams</em> — does each frame agree with the one before it, and does the whole sequence hold together? That is coherence in a new direction: not just across a frame's X and Y, but across time. Everything after that followed from one activity — participants became the model in the <a href="../tools/coherence-animator/">Coherence Animator</a> — and then guest <b>Dr. Emily Thomforde</b> gave the ethical and epistemic backbone in a talk called <em>Artificial Intelligence and the Axiology of Mystery</em>.</p>
+
+        <div class="callout" id="patterns">
+          <p><b>Two takeaways from the activity:</b></p>
+          <ol style="margin: 8px 0 0; padding-left: 1.2em; line-height: 1.8;">
+            <li>In this activity, adding the opening frame as an anchor sometimes steadied background details, but it also pulled some participants toward repeating the opening pose.</li>
+            <li>Keyframes, timing, and foreground/background order are concepts human animators already use. The parallels give us useful questions to ask about video systems; they do not show that a model represents or solves these problems in the same way.</li>
+          </ol>
+        </div>
+
+        <!-- ── WHO WAS IN THE ROOM ──────────────────────────────── -->
+        <h2 id="the-room">Who was in the room</h2>
+        <p>A smaller, engaged group this final week. Participants are identified by first name or chosen display name only:</p>
+
+        <div class="participant-grid">
+          <span class="participant-chip notable">Ryan</span>
+          <span class="participant-chip notable">Shane</span>
+          <span class="participant-chip notable">Yunseo</span>
+          <span class="participant-chip notable">Randy</span>
+          <span class="participant-chip">Andy</span>
+          <span class="participant-chip">Judy</span>
+          <span class="participant-chip">Sharleen</span>
+          <span class="participant-chip">Meghan</span>
+          <span class="participant-chip">Hope</span>
+          <span class="participant-chip">Andrea</span>
+          <span class="participant-chip">Wilson</span>
+          <span class="participant-chip notable">Dr. Emily Thomforde <span style="font-size:0.78em;color:var(--muted)">guest</span></span>
+        </div>
+
+        <div class="moment">
+          <p>Shane, in chat, when both animation runs went sideways: "Just like real life, either way you're doomed lol."</p>
+          <cite>— Chat, 1:30</cite>
+        </div>
+
+        <!-- ── ASSIGNMENT REVIEWS ───────────────────────────────── -->
+        <h2 id="assignments">Assignment reviews (Sessions 1 &amp; 2)</h2>
+        <p>We opened by looking at submitted work — a chance to turn loose intuitions into something concrete to carry into the school year:</p>
+        <ul>
+          <li><b>Ryan (Session 1):</b> drew parallels between narrative game design and simple rule-based dialogue systems like ELIZA, arguing that the versatility of LLMs can overshadow simpler tools that do a lot with a little. His broader point: games make learning memorable because interaction takes more effort than passive consumption. (Judy pushed back in chat that films and plays can be just as transformative — a good tension to keep.)</li>
+          <li><b>Randy (Session 1):</b> ran an AI summer camp for middle-schoolers using Raspberry Pi's <a href="https://experience-ai.org/en/units/foundations-of-ai">Experience AI</a> curriculum and <a href="https://machinelearningforkids.co.uk/">Machine Learning for Kids</a>. Students built image classifiers (tomatoes vs. apples, dogs vs. cats) and a "which animal do you look like" webcam model. His planned next lesson: using text analysis to help students identify features of fake news.</li>
+          <li><b>Cierra (Session 2, submitted; absent):</b> compared two Claude-generated frogs — a plain "photo frog" and an "unsettling frog" — showing how one descriptor shifts the model's defaults (darker color, smaller yellow eyes, more warts) while the graphic style and centered placement stay stubborn. In chat, Meghan asked why the frogs weren't more realistic; Ryan suggested they were drawn with SVG graphics rather than generated by diffusion — a reminder to ask which production path actually made an artifact before reading mechanism off it.</li>
+          <li><b>Andy (Session 2):</b> tried to get Gemini to explain how the <em>text</em> modifies the image in diffusion, and hit the honest wall — explanations from an LLM smooth over exactly the friction where a good teacher would catch a misconception. The key that unlocked it: diffusion is steered by the tokenized/vectorized text space the prompt provides.</li>
+          <li><b>Ray (Session 1, submitted; absent):</b> a screenshot from the room-guesses-vs-model-prediction activity.</li>
+        </ul>
+
+        <div class="moment">
+          <p>"You can start to go down this misconception rabbit hole … and that's where a good teacher comes in — gets inside your head and says, oh, <em>this</em> is how you're understanding it. I don't think the LLMs are very good at that yet."</p>
+          <cite>— Andy, on explanatory conversations with LLMs</cite>
+        </div>
+
+        <!-- ── SESSION 2 FEEDBACK ───────────────────────────────── -->
+        <h2 id="feedback">Session 2 feedback, briefly</h2>
+        <p>For most respondents, image mechanics were brand new. What landed: diffusion as denoising — chiseling coherence out of noise — and the idea that a model works with pixel data, not objects or a scene graph. What stayed fuzzy: the concrete route from text tokens to pixels, and where the human label layer (WordNet, ImageNet) sits in the pipeline. One respondent described diffusion as <b>pointillism</b> — building an image dot by dot — which we connected to photography arriving at the same historical moment: artists mimicking systems of seeing. Judy added that generative images need very specific lighting instruction; the model does not author a lighting plot on its own.</p>
+
+        <!-- ── THE COHERENCE ANIMATOR ───────────────────────────── -->
+        <h2 id="animator">The Coherence Animator: being the model, twice</h2>
+        <p>The centerpiece. Participants opened the <a href="../tools/coherence-animator/">Coherence Animator</a> and drew a five-frame animation of one shared prompt — <em>a person at work</em> — under two conditions, so the constraint itself would reveal something:</p>
+        <ul>
+          <li><b>Run A — previous frame only.</b> You can see only the frame you just drew.</li>
+          <li><b>Run B — anchor + previous frame.</b> You can see both the opening frame and the frame you just drew. The additional reference may help preserve some details, but it also adds another constraint to reconcile.</li>
+        </ul>
+        <p>These are two drawing conditions — not measurements of a model's memory, context window, compute, or hardware.</p>
+        <p>Then participants compared their own Run A and Run B at different playback speeds and picked one feature to watch. (Most first frames were a stick figure at a desk with a laptop — "nothing profound; it's about what work means to most of us.") The honest caveat, named aloud: this is not a controlled experiment — Run B also comes second, with more practice — so it fails scientific-method muster, but the friction still makes the coherence problem legible.</p>
+
+        <div class="moment">
+          <p>"My measure of success is whether someone can recognize what action or idea I'm trying to represent."</p>
+          <cite>— Randy, in chat</cite>
+        </div>
+
+        <!-- ── WHAT THE ROOM NOTICED ────────────────────────────── -->
+        <h2 id="noticed">What the room noticed</h2>
+        <p>The shares did the teaching. They surfaced several hypotheses that we can compare with documented animation and video-generation workflows:</p>
+        <ul>
+          <li><b>Ryan</b> found Run B no better in raw quality, but he changed his <em>drawing order</em> — static background first in Run A, character first in Run B — which shifted line quality and where his attention went. Separating foreground from background is a real human workflow move; whether a model splits work the same way is a hypothesis to check against documented pipelines, not something the activity shows. (His character's arm-to-chin gesture stayed coherent across both runs; he "spent his tokens" on the figure and had little left for the background.)</li>
+          <li><b>Shane</b>, a professional animator and timing supervisor, saw Run B's background elements come out slightly more coherent — "everything that isn't important is a little more stable when I had something to anchor me." His deeper point: animation timing is <em>semantically driven</em>. Holding a drawing a few extra frames implies thinking, which implies intention, and changes the meaning of the whole sequence.</li>
+          <li><b>Yunseo</b> found Run A pulled toward vivid, active motion (only the last frame to react to), while Run B pulled toward near-static, deliberate poses — like a "Wimpy Kid" or Powerpuff Girls diary telling a story through still images. Anchoring reduces how much can happen.</li>
+          <li>Sharleen gave herself a start-and-end-frame constraint and noticed she <em>rushed the middle</em> ("let the fire take over the screen so I have less to draw") — which prompted a facilitator hypothesis, to check against real workflows rather than shown by the activity, that some systems lean on keyframes and interpolation and might need a separate system to avoid over-converging on them.</li>
+        </ul>
+
+        <div class="moment">
+          <p>"Once you get to a certain amount of rules and a certain amount of text, you begin to build software on accident … and once you lose the mental model and just have to trust the agent is doing what you think, I lose everything."</p>
+          <cite>— Shane, on dictating an animation system to an LLM</cite>
+        </div>
+
+        <p>Shane also described trying to give an LLM the four elements of any move — start pose, end pose, anticipation, overshoot — and watching it overshoot <em>subtle</em> moves because it followed the discrete rule without any sense of the <em>relativity of spacing</em>. The room used human animation concepts as a vocabulary for asking how video pipelines handle timing, spacing, and scene consistency. The activity does not establish that a model represents those problems as a human animator does. The room also circled a desired capability: editing one part of a frame without regenerating the whole. Some node-based workflows (<a href="https://fuser.studio">fuser.studio</a>, ComfyUI) connect multiple stages to support targeted generation, masking, or compositing, but the exact production path varies.</p>
+
+        <!-- ── GUEST SPOTLIGHT ─────────────────────────────────── -->
+        <h2 id="guest">Guest spotlight</h2>
+        <div class="guest-card">
+          <div>
+            <h3 class="guest-name">Dr. Emily Thomforde <span style="font-size:0.7em;color:var(--muted)">(she/her · "Em")</span></h3>
+            <p class="guest-role">Machine learning PhD, University of Edinburgh (School of Informatics) · NLP / computational linguistics · AI educator for teachers, administrators, and policymakers · self-described AI skeptic who does not use AI to generate content</p>
+            <p>Em's talk, <em>Artificial Intelligence and the Axiology of Mystery</em>, opened with a distinction (from AI for Education, later adopted by the California Department of Education): learning <em>about</em> AI — her field, from CS education and engineering — versus learning <em>with</em> AI, which belongs to educational technology and the learning sciences. She educates the people who have to make the "learning with" decisions.</p>
+            <p><b>The explainability problem.</b> "No one really knows how AI works" is false but points at something real. Like the water cycle: we can model it, predict it, simulate it — but ask <em>where did this one drop come from</em> and there is no answer. Neural networks keep no paper trail of which training data led to a given output. That was once disqualifying — you couldn't ship a product or earn a PhD on a system with no accountability — and it is still unsolved. What changed with ChatGPT, she argued, was not technical progress but a cultural and economic shift that now treats mystery as acceptable, even desirable.</p>
+            <p><b>The framework.</b> Any discipline has three parts: <em>ontology</em> (what AI is and isn't), <em>epistemology</em> (how it works — including the explainability problem), and <em>axiology</em> (what we value — ethics and aesthetics). AI literacy usually teaches only a thin slice of the ethics; without the ontology and methodology underneath, that ethics is thin and produces poor policy. Her advice for educators: <em>start with bias</em> (where people already have footing), then work up to methodology and ontology. When she quizzed her own university's AI Literacy work group with a research-backed instrument, they bombed it — half thought a chatbot can fully explain its own reasoning.</p>
+            <p><b>Against magical thinking.</b> A <a href="https://journals.sagepub.com/doi/10.1177/00222429251314491"><em>Journal of Marketing</em> study</a> (published online January 2025) found that people who know <em>less</em> about AI are more likely to adopt it; a later <a href="https://www.ama.org/2025/11/11/those-who-know-less-about-ai-are-more-likely-to-adopt-it/">American Marketing Association summary</a> of the work urged educators to "enhance understanding without eroding the excitement that drives adoption" — casting educators as drivers of consumerism. She argued that in the absence of an evidence base — and she stressed there is none yet showing AI tools benefit students — of technical understanding, and of true domain experts, responses default to hope or fear, both magical thinking. Her alternative: <em>speculative fiction</em>. Decades of writers have already imagined technology in education; works like <em>Ender's Game</em> and <em>Klara and the Sun</em> give structured imagination for policy.</p>
+            <p><b>What's next, technically.</b> Asked about symbolic AI, she called it the likely next frontier: combining sub-symbolic neural methods with symbolic processing, because <em>symbols are the only thing that lets you access logic</em> — "without the symbolic layer, there's no reasoning, there's just prediction." Neural nets can now automate the human labeling that symbolic methods need, enabling a hybrid pipeline that could improve reasoning and, maybe, cut compute. And on owning your tools: open models and communities (Hugging Face) are proliferating; gain the power to build your own before dependency turns into a subscription. A useful diagnostic she offered — is this an <em>automation</em> problem (cheap) or a <em>generation</em> problem (expensive)?</p>
+            <div class="guest-links" style="margin-top: 12px;">
+              <a href="https://thegrene.github.io/">thegrene.github.io</a>
+              <a href="https://docs.google.com/presentation/d/1lxTwCz173f6rloLwcPml4ptdOyrMRwFTutmYgB5btYs/edit">Talk slides</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="moment">
+          <p>"Where did this drop of water come from? If you can't tell me, you don't know. That's what people mean by 'no one really knows how AI works' — there's no paper trail."</p>
+          <cite>— Dr. Emily Thomforde, on the explainability problem</cite>
+        </div>
+
+        <!-- ── TEACHING NOTES ─────────────────────────────────── -->
+        <h2 id="teaching-notes">Teaching notes</h2>
+
+        <div class="teaching-note">
+          <strong>Build video out of images, out loud</strong>
+          <p>Don't introduce video as its own thing. Start from an image model, ask for frame after frame, and let students feel that the frames are easy and the seams are hard. Coherence in time lands better as a discovered problem than a defined term.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>The two-run comparison is the lesson</strong>
+          <p>Run A (previous frame only) vs Run B (anchor + previous) makes the memory/context tradeoff physical. Name the caveat that it isn't a controlled experiment — Run B also comes second — and compare anyway; the point is the felt difference, not a score.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Add an onion-skin</strong>
+          <p>Randy's suggestion, worth building: let the previous frame's ghost carry the static elements forward so students aren't redrawing the desk every frame. It removes busywork and focuses attention on what actually changes — the motion.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Mine the animators in the room</strong>
+          <p>Shane's timing-supervisor read — a held beat implies intention; subtle moves need proportional spacing an LLM doesn't feel — is the richest bridge to why models struggle. If you have a domain expert (animation, film, music), give them room; their craft language predicts the machine's failure modes.</p>
+        </div>
+
+        <div class="teaching-note">
+          <strong>Temporal Telephone, on paper</strong>
+          <p>The in-person version needs no screens: each person animates a frame and hands it to the next. Separate the "models" so groups can or can't see each other's work, add roles (someone picks colors, someone tracks a feature) — it turns coherence and drift into a game.</p>
+        </div>
+
+        <!-- ── ACTION ITEMS ───────────────────────────────────── -->
+        <h2 id="action-items">Action items</h2>
+        <ul class="action-list">
+          <li><b>Participants:</b> fill out the <a href="session-3-feedback.html">Session 3 feedback form</a> — including whether you'd present at an August showcase and which Saturday works (the 8th or the 15th)</li>
+          <li><b>Participants:</b> if you're joining the showcase, make one thing to present — a tool, activity, artifact, or set of questions from any of the three sessions — and submit outstanding assignments beforehand</li>
+          <li><b>Educators of 13–16-year-olds:</b> see Andy's shared invite about the Experience AI / Google DeepMind educator workshop (run a day-long workshop, give feedback to researchers)</li>
+          <li><b>Host:</b> schedule the optional August showcase from feedback responses (needs ~3–4 presenters to be worthwhile), and email an end-of-month August office hour to every cohort</li>
+          <li><b>Host:</b> consider an onion-skin option in the Coherence Animator, and a "fix one part of a frame" concept for a future tool</li>
+        </ul>
+
+        <!-- ── LINKS & RESOURCES ──────────────────────────────── -->
+        <h2 id="links">Links &amp; resources from chat</h2>
+
+        <div class="resource-group">
+          <h4>Session tools (used live)</h4>
+          <ul class="resource-list">
+            <li><a href="../tools/coherence-animator/">Coherence Animator</a><span class="res-who">session tool</span></li>
+            <li><a href="session-video.html">Session 3 · Video overview</a><span class="res-who">session page</span></li>
+            <li><a href="../worksheets/video-test-report/">Video Test Report</a><span class="res-who">worksheet</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Teaching AI with kids</h4>
+          <ul class="resource-list">
+            <li><a href="https://experience-ai.org/en/units/foundations-of-ai">Experience AI — Foundations of AI</a><span class="res-who">Saber / Andy</span></li>
+            <li><a href="https://machinelearningforkids.co.uk/">Machine Learning for Kids</a><span class="res-who">Saber</span></li>
+            <li><a href="https://teachablemachine.withgoogle.com/">Teachable Machine</a><span class="res-who">Saber</span></li>
+            <li><a href="https://www.raspberrypi.org/teach/">Raspberry Pi — Teach</a><span class="res-who">Andy</span></li>
+            <li><a href="https://studio.code.org/courses/oceans/units/1/lessons/1/levels/1">Code.org — AI for Oceans</a><span class="res-who">Saber</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Guest talk &amp; further reading</h4>
+          <ul class="resource-list">
+            <li><a href="https://docs.google.com/presentation/d/1lxTwCz173f6rloLwcPml4ptdOyrMRwFTutmYgB5btYs/edit">Dr. Thomforde — talk slides</a><span class="res-who">Emily</span></li>
+            <li><a href="https://thegrene.github.io/">Dr. Emily Thomforde — site</a><span class="res-who">Saber</span></li>
+            <li><a href="https://en.wikipedia.org/wiki/Symbolic_artificial_intelligence">Symbolic AI (Wikipedia)</a><span class="res-who">Saber</span></li>
+            <li><a href="https://www.scientificamerican.com/article/why-new-york-state-imposed-a-data-center-moratorium/">Data centers &amp; the environmental toll of AI (Scientific American)</a><span class="res-who">Judy</span></li>
+            <li><a href="https://www.cbc.ca/listen/cbc-podcasts/187-uncover">CBC Uncover — an AI-for-policing scam (podcast)</a><span class="res-who">Hope</span></li>
+          </ul>
+        </div>
+
+        <div class="resource-group">
+          <h4>Video, animation &amp; workflows</h4>
+          <ul class="resource-list">
+            <li><a href="https://fuser.studio">fuser.studio — node-based model chaining</a><span class="res-who">Saber</span></li>
+            <li><a href="https://vimeo.com/1197427493">An AI short film (lots of scripting &amp; direction)</a><span class="res-who">Judy</span></li>
+            <li><a href="https://en.wikipedia.org/wiki/Pointillism">Pointillism (Wikipedia)</a><span class="res-who">Ryan / Saber</span></li>
+            <li><a href="https://www.instagram.com/reel/DSFTIsGjajZ/">Size-drift animation reel</a><span class="res-who">Sharleen</span></li>
+          </ul>
+        </div>
+
+        <p class="colophon">This summary was drafted with AI assistance and reviewed by a human facilitator. Quotations and attributions were checked against the session transcript and chat export.</p>
+
+      </article>
+    </div>
+  </main>
+
+  <!-- PAGER -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="pager">
+        <a href="session-video.html#recap"><span class="pg-dir mono">&larr; Back</span><span class="pg-title">Session 3 overview</span></a>
+        <a class="next" href="session-3-feedback.html"><span class="pg-dir mono">Next &rarr;</span><span class="pg-title">Feedback &amp; showcase</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom: 12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="tools.html">Tool index</a> · <a href="materials.html">Materials</a></nav>
+      <p class="colophon">Session 3 · Video · Recap — participant names use first names only; never used to train AI.</p>
+    </div>
+  </footer>
+  <script src="../assets/analytics.js"></script>
+</body>
+</html>
