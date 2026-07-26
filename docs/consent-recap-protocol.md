@@ -75,11 +75,14 @@ At the end of each session, ask: "May I screenshot your work for the recap? How 
 
 ---
 
-## 4. AI-Generated Notes and Recaps
+## 4. AI-Assisted Notes and Recaps
 
-**What we use AI for:**
-- Drafting session summaries and recaps from facilitator notes and chat transcripts
+**What we used AI for:**
+- Organizing and drafting session summaries and recaps from facilitator notes, session transcripts and captions, and chat exports
 - Generating first-draft outlines for session documentation
+
+**What source material was processed:**
+The transcripts, captions, and chat exports used for recap drafting included participant display names, speaker labels, attributed messages, and descriptions of participant work. AI-assisted tools therefore processed those identifiers and contributions as part of the drafting workflow. The recap consent form governs what may appear publicly; it does not change the fact that this source material was used during drafting.
 
 **What we never publish without human review:**
 Every AI-assisted recap must be reviewed by a human before publication. The reviewer checks:
@@ -92,9 +95,8 @@ Every AI-assisted recap must be reviewed by a human before publication. The revi
 **Disclosure:** Recaps that were AI-assisted include a note: *"This summary was drafted with AI assistance and reviewed by a human facilitator."*
 
 **What we do not do:**
-- We do not publish AI-generated recaps without human review.
-- We do not use participant names in prompts submitted to third-party AI services unless the participant has consented.
-- We do not use participant quotes or work in AI training datasets.
+- We do not publish AI-assisted recaps without human review.
+- Learning Machines does not intentionally use participant quotes or work to train or fine-tune a model. Third-party AI services process submitted material according to their account settings, retention policies, and terms.
 
 ---
 
@@ -114,8 +116,10 @@ If a participant's prompt or model output is referenced in a recap or teaching m
 - The prompt and output must be attributed as the participant described (or anonymized).
 - If the output reveals sensitive personal information or could be used to identify someone who did not consent, it is not shared.
 
-**Pre-generated examples used in tools or teaching:**
-Pre-generated examples in the camp tools (e.g., ELIZA comparisons, diffusion sequences) were created by the facilitator for teaching purposes, not from participant data.
+**Frozen and generated examples used in tools or teaching:**
+“Pre-generated” is not a sufficient source label. Genuine model outputs should record the product and model, date, exact prompt, relevant settings, completeness or excerpt status, facilitator editing, and whether participant material is present. Use the labels defined in `docs/evidence-status-standard.md`.
+
+The ELIZA comparison is a historical provenance gap: its frozen comparison text was added to the repository on May 18, 2026, but the original product/model, generation date, settings, completeness, and editing history were not preserved. It is labeled **Provenance incomplete · do not attribute to a named model**. The examples were not drawn from participant transcripts or participant work.
 
 ---
 

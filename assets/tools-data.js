@@ -124,6 +124,6 @@ window.LM_TOOLS = [
     tags: ["Frames", "Motion", "Continuity"], href: "tools/frame-by-frame-coherence-viewer/" },
   { name: "Metronome Frame-Scrubber", session: "3", modality: "video",
     status: "ready", statusLabel: "Launch ready",
-    blurb: "Give the machine a wider memory and the flipping pancake stays a pancake; shrink its memory to a single frame and the pancake melts into nonsense.",
-    tags: ["Temporal attention", "Drift", "Onion-skin"], href: "tools/metronome-frame-scrubber/" }
+    blurb: "Change the reference span in an authored animation and inspect how the code's designed variation changes—without treating it as a benchmark of real video-model memory.",
+    tags: ["Teaching simulation", "Reference span", "Onion-skin"], href: "tools/metronome-frame-scrubber/" }
 ];

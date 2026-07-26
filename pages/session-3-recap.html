@@ -119,7 +119,7 @@
         <div>
           <p class="sess-kicker"><i class="modsq"></i>Session 3 · Video · Saturday July 25</p>
           <h1 class="sess-title">How machines move</h1>
-          <p class="sess-lede recap-lede">We used an image model, one frame at a time, as a way into video — and found the hard part is not any single frame but keeping them coherent across time. Participants became the model in the Coherence Animator, and then Dr. Emily Thomforde traced how the unexplainable core of these systems became something we now treat as magic rather than a problem.</p>
+          <p class="sess-lede recap-lede">Participants used a human-drawing teaching analogy, creating short animations frame by frame under two reference conditions. They performed one simplified coherence constraint rather than operating or reproducing an image or video model. Dr. Emily Thomforde then traced how the unexplainable core of these systems became something we now treat as magic rather than a problem.</p>
           <p class="doc-meta" style="margin-top: 14px;">
             <span class="chip">10+ contributors</span>
             <span class="chip">9–11 am PT</span>
@@ -195,8 +195,8 @@
 
         <!-- ── SESSION OVERVIEW ──────────────────────────────────── -->
         <h2 id="overview">Session overview</h2>
-        <p>The camp's one-line argument arrived whole this week: <em>fluent</em> text is not necessarily true, <em>plausible</em> images are not necessarily neutral, and <em>smooth</em> video is not evidence that an event happened. Session 3's job was the third line — and the mechanism behind it.</p>
-        <p>In the activity we built video out of images: take an image model, ask it for one frame, then the next, then the next, and play the frames back. (That is a classroom model to reason with — real video systems vary and don't necessarily generate strictly frame by frame.) The frames are the easy part; the hard part is the <em>seams</em> — does each frame agree with the one before it, and does the whole sequence hold together? That is coherence in a new direction: not just across a frame's X and Y, but across time. Everything after that followed from one activity — participants became the model in the <a href="../tools/coherence-animator/">Coherence Animator</a> — and then guest <b>Dr. Emily Thomforde</b> gave the ethical and epistemic backbone in a talk called <em>Artificial Intelligence and the Axiology of Mystery</em>.</p>
+        <p>The camp's one-line argument arrived whole this week: <em>fluent</em> text is not necessarily true, <em>plausible</em> images are not necessarily neutral, and <em>smooth</em> video is not evidence that an event happened. Session 3 focused on the third line and one simplified way to investigate coherence across time.</p>
+        <p>In the <a href="../tools/coherence-animator/">Coherence Animator</a>, participants used a human-drawing teaching analogy to create short animations frame by frame under two reference conditions. The comparison made one simplified coherence constraint tangible: what changes when a person can refer only to the previous drawing versus the previous drawing plus a fixed opening anchor? It did not run an image model or measure model memory, context, hardware, or architecture. Guest <b>Dr. Emily Thomforde</b> then gave the ethical and epistemic backbone in a talk called <em>Artificial Intelligence and the Axiology of Mystery</em>.</p>
 
         <div class="callout" id="patterns">
           <p><b>Two takeaways from the activity:</b></p>
@@ -251,7 +251,7 @@
         <p>For most respondents, image mechanics were brand new. What landed: diffusion as denoising — chiseling coherence out of noise — and the idea that a model works with pixel data, not objects or a scene graph. What stayed fuzzy: the concrete route from text tokens to pixels, and where the human label layer (WordNet, ImageNet) sits in the pipeline. One respondent described diffusion as <b>pointillism</b> — building an image dot by dot — which we connected to photography arriving at the same historical moment: artists mimicking systems of seeing. Judy added that generative images need very specific lighting instruction; the model does not author a lighting plot on its own.</p>
 
         <!-- ── THE COHERENCE ANIMATOR ───────────────────────────── -->
-        <h2 id="animator">The Coherence Animator: being the model, twice</h2>
+        <h2 id="animator">The Coherence Animator: performing one constraint, twice</h2>
         <p>The centerpiece. Participants opened the <a href="../tools/coherence-animator/">Coherence Animator</a> and drew a five-frame animation of one shared prompt — <em>a person at work</em> — under two conditions, so the constraint itself would reveal something:</p>
         <ul>
           <li><b>Run A — previous frame only.</b> You can see only the frame you just drew.</li>
@@ -309,13 +309,13 @@
         <h2 id="teaching-notes">Teaching notes</h2>
 
         <div class="teaching-note">
-          <strong>Build video out of images, out loud</strong>
-          <p>Don't introduce video as its own thing. Start from an image model, ask for frame after frame, and let students feel that the frames are easy and the seams are hard. Coherence in time lands better as a discovered problem than a defined term.</p>
+          <strong>Make one coherence constraint tangible</strong>
+          <p>Let learners draw a short sequence under two reference conditions, then compare what persisted and what changed. The activity makes coherence across time available for discussion; it does not run a model or demonstrate how a particular video architecture works.</p>
         </div>
 
         <div class="teaching-note">
           <strong>The two-run comparison is the lesson</strong>
-          <p>Run A (previous frame only) vs Run B (anchor + previous) makes the memory/context tradeoff physical. Name the caveat that it isn't a controlled experiment — Run B also comes second — and compare anyway; the point is the felt difference, not a score.</p>
+          <p>Run A (previous frame only) vs Run B (anchor + previous) makes the effect of a changed human reference condition physical. Name the caveat that it isn't a controlled experiment — Run B also comes second — and compare anyway. The result does not measure model memory or context.</p>
         </div>
 
         <div class="teaching-note">

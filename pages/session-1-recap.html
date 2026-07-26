@@ -592,9 +592,9 @@
 
         <!-- ── ELIZA ────────────────────────────────────────────── -->
         <h2 id="eliza">ELIZA vs. LLM</h2>
-        <p>We closed the mechanism tour with ELIZA — the 1966 rule-based chatbot that matches patterns and substitutes pronouns. The exercise: inspect the actual rule ELIZA matched, see the template it selected, read the output. Completely transparent. Then compare to a pre-generated LLM response to the same input.</p>
+        <p>We closed the mechanism tour with ELIZA — the 1966 rule-based chatbot that matches patterns and substitutes pronouns. The exercise: inspect the actual rule ELIZA matched, see the template it selected, and read the output. Then compare it with frozen LLM-style response text. The original product, model, generation date, settings, completeness, and editing history for that comparison text were not preserved, so it should not be treated as evidence about a named model.</p>
 
-        <p>The Rule Inspector made ELIZA's mechanism visible: a keyword or pattern selects a programmed response template. The comparison panel then placed that rule-based output beside a pre-generated LLM response to the same input.</p>
+        <p>The Rule Inspector made ELIZA's mechanism visible: a keyword or pattern selects a programmed response template. The comparison panel then placed that rule-based output beside frozen response text to the same input, labeled in the tool as having incomplete provenance.</p>
 
         <div class="moment">
           <p>Yunseo asked how ELIZA differs from an LLM. Saber explained that ELIZA follows explicit conditional rules for keywords, while an LLM learns numerical weights from language data and uses the prior context to predict continuations. Those learned weights are normally fixed during inference; variation comes from the context and decoding process, not from the weights changing with every response.</p>

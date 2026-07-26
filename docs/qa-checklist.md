@@ -28,7 +28,7 @@ Use this before publishing or sharing the repo.
 - Tokenizer + Temperature Visualizer: run self-tests, try token examples, step next token, run auto, reset, switch greedy/sample.
 - Contextual Vector Lab: confirm self-checks pass; move through token ID → base vector → contextual map; test all three contexts for each of four tokens; make one correct and one incorrect neighborhood prediction; inspect projection guardrails; and copy the bounded investigation note.
 - Whose Preference? Lab: confirm all three disagreement checks pass; reorder responses with the keyboard; record a ranking; reveal both aggregation rules; include and exclude rater perspectives until the preferred response changes; reload to confirm persistence; and copy the bounded investigation note.
-- ELIZA Simulator: run self-tests, click example prompts, inspect matched rule, review comparison examples.
+- ELIZA Simulator: run self-tests, click example prompts, inspect the matched rule, and review the frozen comparison text. Confirm the visible provenance card lists what is known and unknown, and that no example is attributed to a named model.
 - Next-Token Prediction Game: run self-tests, then paste a chat block saved from a real Zoom call (header + indented-message format); confirm guesses tally without timestamp fragments and the room's distribution renders beside the model top-k.
 - Count the Next Token: pick a context word, watch the bigram table build, and follow the count → divide → predict arithmetic to a generated word.
 - Evidence Wall: paste a saved real-Zoom chat block; confirm tiles attribute to participant names (not "14" or "Anonymous"), the consent banner is visible, and the URL-hash export reproduces the wall.
@@ -50,7 +50,7 @@ Use this before publishing or sharing the repo.
 - A/B/C Comparison Board: load a starter template, edit fields, copy Markdown, export JSON, and reset only after export.
 - Model Card Builder: load a starter template, edit fields, copy Markdown, export JSON, and confirm self-tests pass.
 - Classroom Activity Builder: change grade band, subject, concept, pathway, tool, no-AI option, evidence artifact, and reflection question; confirm the printable skeleton updates and copy Markdown works.
-- Concept Bridges: open the index and all six full bridge pages (Prediction Is Not Understanding, What Does the Machine See, Confidence Is Not Truth, Default Is a Design Decision, Time Makes Failure Visible, Current Is Not Known); confirm links, tabs/widgets, frame viewer, and bridge cards fit at desktop and mobile widths.
+- Concept Bridges: open the index and all six full bridge pages (Prediction Is Not Understanding, What Does the Machine See, Confidence Is Not Truth, Default Is a Design Decision, Time Makes Failure Visible, Current Requires a Source); confirm links, tabs/widgets, frame viewer, and bridge cards fit at desktop and mobile widths.
 
 ## Responsive QA
 
@@ -96,3 +96,12 @@ Use this before publishing or sharing the repo.
 - Consent and public attribution questions are explicit.
 - Each session script includes timing, facilitator prompts, participant actions, and fallback notes.
 - The pilot checklist explains how to classify feedback as launch blocker, pilot caveat, later polish, or second-wave idea.
+
+## Model-output provenance QA
+
+- Do not use “pre-generated” as the only source label.
+- For each genuine model output, record the product and model (if known), generation date, exact prompt, relevant settings, completeness or excerpt status, facilitator editing, and whether participant material is present.
+- Display one of the approved labels beside the example: Authored teaching simulation; Frozen real-model output · model/date documented; Edited or excerpted model output; AI-assisted text · human-reviewed; Participant-created artifact; or Live external model.
+- If required history cannot be recovered, display “Provenance incomplete · do not attribute to a named model,” list the missing fields, and avoid causal claims about its model or training process.
+- Treat a repository commit date only as the date the artifact is known to have existed in the repository, not as its generation date.
+- Confirm participant material follows the applicable consent and credit record before publication.

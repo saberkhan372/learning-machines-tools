@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
-<title>Current Is Not Known — Concept Bridge</title>
+<title>Current Requires a Source — Concept Bridge</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -186,11 +186,11 @@ h1 {
     <span class="badge session">Cross-session · Evaluation</span>
   </div>
 
-  <h1>Current Is Not Known</h1>
+  <h1>Current Requires a Source</h1>
 
-  <p class="lead">A model is trained on data up to a specific cutoff date, then deployed into a world that keeps moving. It has no calendar. It cannot know how much time has passed, what has changed, or what new facts have emerged. When you ask it about current events, current people, or current rankings, it answers from its training window — with the same confidence it brings to everything else.</p>
+  <p class="lead">A base model learns from a bounded training snapshot, while the world keeps changing. A product may add browsing, retrieval, tools, stored memory, or newer instructions. Fluent wording alone does not reveal which information source, date, or product layer shaped an answer.</p>
 
-  <div class="chain-label">Watch a claim drift — from source to model output</div>
+  <div class="chain-label">Authored teaching scenario — watch source details disappear</div>
 
   <div class="chain">
     <div class="chain-step">
@@ -233,8 +233,8 @@ h1 {
       </div>
       <div class="step-body">
         <div class="step-tag drift3">Absorbed into training data</div>
-        <div class="step-text very-faded">[Millions of variations — "Google YouTube Facebook most popular" — appear across training text in many forms and time periods, weighted toward the most common phrasing. The model has no record of which version was sourced or when.]</div>
-        <div class="step-note">The model learned a pattern, not a dated fact.</div>
+        <div class="step-text very-faded">[A base model could encounter many differently dated and sourced versions of the claim during training. Its learned parameters do not function as a citation ledger for each generated phrase.]</div>
+        <div class="step-note">Training can preserve a linguistic pattern without preserving a usable source trail.</div>
       </div>
     </div>
     <div class="chain-step">
@@ -242,9 +242,9 @@ h1 {
         <div class="step-dot final">→</div>
       </div>
       <div class="step-body">
-        <div class="step-tag final">Model output — asked in 2026</div>
+        <div class="step-tag final">Authored base-model example — asked in 2026 without tools</div>
         <div class="step-text" style="border-color:#fecaca; background:#fff5f5;">"The most visited websites in the world are Google, YouTube, and Facebook."</div>
-        <div class="step-note">Confident. Present tense. Plausible — but the landscape has shifted. TikTok's traffic has surged. The model doesn't know. It never will, from training data alone.</div>
+        <div class="step-note">Confident. Present tense. Plausible—but not verified here. Parameters alone cannot supply post-training evidence; a connected product may retrieve newer sources.</div>
       </div>
     </div>
   </div>
@@ -270,8 +270,8 @@ h1 {
   </div>
 
   <div class="cutoff-box">
-    <div class="cutoff-label">The training cutoff</div>
-    <p>Every model has a cutoff date — the point after which no new training data was added. The model is deployed and used for months or years after that. When you ask about current events, current rankings, current prices, or living people — it answers from its training window as if now and then are the same. It has no way to flag what it doesn't know because it happened after the cutoff.</p>
+    <div class="cutoff-label">Training boundary versus product access</div>
+    <p>Every trained model version has a bounded training period, but there may not be one simple public “cutoff” for every data source. At use time, a product can also provide retrieved documents, browsing results, conversation memory, tools, or system instructions. Ask what information was available for this specific answer rather than treating the base model and the product as the same thing.</p>
     <div class="cutoff-timeline">
       <div class="ct-seg trained">Training data collected</div>
       <div class="ct-seg cutoff">Cutoff</div>
@@ -282,16 +282,16 @@ h1 {
 
   <div class="key-line">
     <span class="kl-label">Key line</span>
-    "Current is not a category the model has. It knows what was in its training data. That's all. The gap between then and now is invisible to it — and has to be visible to you."
+    "Currency belongs to the answer's source chain, not its tone. Ask what information was available, when it was dated, and how you can verify it."
   </div>
 
   <div class="nuance">
-    <strong>This is a stress test for the other bridges too.</strong> Confidence is not truth — temporal drift is one of the clearest examples. Defaults are not neutral — and stale defaults don't update when the world does. Prediction is not understanding — a system that cannot track time cannot understand change. Asking "when was this trained, and how much has shifted since?" is one of the most practical habits in AI evaluation.
+    <strong>Base model and product are different evidence layers.</strong> Browsing or retrieval can supply current material; it can also return stale, low-quality, or misread sources. A safety layer may flag uncertainty; another interface may not. None of those behaviors settles the philosophical question of understanding. For current claims, inspect dates, sources, retrieval behavior, and corroboration.
   </div>
 
   <div class="connect">
     <h2 class="connect-label">Now open the tools</h2>
-    <p>The Model Card Builder asks you to document what a model knows and doesn't know — including its training cutoff. The Investigation Journal prompts you to note when confidence and currency come apart. Both are places where this bridge becomes evidence.</p>
+    <p>The Model Card Builder asks you to distinguish training boundaries from product features such as retrieval or browsing. The Investigation Journal prompts you to record dates, sources, and whether confident wording is actually current.</p>
     <div class="connect-links">
       <a href="../../model-card-builder/">Open Model Card Builder →</a>
       <a href="../../../worksheets/model-investigation-journal/">Open Investigation Journal →</a>

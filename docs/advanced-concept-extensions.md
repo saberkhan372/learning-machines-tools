@@ -94,7 +94,7 @@ is a backlog, not a launch requirement.
 |---|---|---|
 | Classifier-free guidance (CFG) | `tools/cfg-scale-visualizer/` | Shows prompt pressure moving from loose to useful to over-forced, making it clear that guidance is not the same as quality. Consolidated 2026-06: canvas morph (cherries → broccoli → breakdown) + live guidance-vector diagram |
 | VAE / latent compression | `tools/latent-space-compressor/` | Compress an image into a tiny latent grid and decode it back; sample from random latents to show generative hallucination. Pairs with `latent-space-explorer` (compression vs. similarity) |
-| Temporal attention | `tools/metronome-frame-scrubber/` | Widen/shrink the temporal-window to lock motion or induce spatiotemporal drift; onion-skin trail makes the memory span visible |
+| Temporal reference analogy | `tools/metronome-frame-scrubber/` | Change an authored animation's reference span and inspect the designed variation; the onion-skin trail does not measure a real model's memory or guarantee coherence |
 | Network-grounded verification | `tools/network-grounded-truth-sieve/` | Strips a passage to proper-noun phrases + dates and runs a live Wikipedia existence audit on each anchor (Level 1) |
 | Relational co-occurrence | `tools/relational-co-occurrence-sieve/` | Pulls the subject's real Wikipedia page and checks every other anchor actually appears on it — catches "Lincoln used an iPhone in 1865" (Level 2). Uses the live Wikipedia API |
 

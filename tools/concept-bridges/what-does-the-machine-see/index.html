@@ -240,7 +240,7 @@ h1 {
 
   <h1>What Does the Machine See?</h1>
 
-  <p class="lead">When you look at a photograph, you see a person, a place, a mood, a story. A model processes numbers. It extracts patterns from those numbers. It compresses those patterns into a vector. None of these steps involve seeing in any sense that resembles human vision. Three lenses show you what's actually happening at each stage.</p>
+  <p class="lead">When a person looks at a photograph, perception can include objects, relationships, mood, memory, and context. Computer-vision architectures operate on numerical representations, but they differ in how they encode pixels, patches, features, and latent vectors. These three authored lenses illustrate common operations rather than one universal vision pipeline.</p>
 
   <div class="lens-label">Choose a lens</div>
 
@@ -332,7 +332,7 @@ h1 {
     </div>
 
     <div class="detail-note" style="margin-top:14px;">
-      <strong>What this is:</strong> A tiny 8×8 region of a skin-tone patch — roughly what the model starts with before any processing. No face is visible at this scale. The full image is thousands of patches like this. At this stage, "seeing" means reading numbers arranged in a grid.
+      <strong>Authored pixel illustration:</strong> This 8×8 skin-tone patch shows one way image values can be represented numerically. Real systems differ in resolution, preprocessing, patching, color representation, and architecture.
     </div>
   </div>
 
@@ -386,7 +386,7 @@ h1 {
     </div>
 
     <div class="detail-note">
-      <strong>What this is:</strong> The model has detected patterns that strongly co-occur with faces in training data — curves, symmetry, skin-tone ranges, oval outlines. These are not a face. They are activations in a mathematical function. The "face" label emerges from the combination of these activations, not from any single one. This is called feature extraction — and it's how early layers of vision models work.
+      <strong>Authored feature illustration:</strong> The diagram assigns activations to curves, symmetry, contrast, texture, and shape to represent feature extraction. Real vision models learn different internal features; these numbers are not measurements from a live model.
     </div>
   </div>
 
@@ -399,7 +399,7 @@ h1 {
       </div>
       <div class="compare-side machine">
         <div class="cs-label">The model processes</div>
-        <p>A vector: a list of thousands of numbers that compress the image's visual content into a point in a high-dimensional mathematical space. Similarity is distance. Meaning is position.</p>
+        <p>In an embedding system, a vector represents aspects of the image in a high-dimensional space. A chosen distance measure can support similarity comparisons; that geometry is not identical to human meaning.</p>
       </div>
     </div>
 
@@ -414,12 +414,12 @@ h1 {
     </div>
 
     <div class="detail-note">
-      <strong>What this is:</strong> The entire image compressed into a list of decimal numbers. This vector is what the model actually compares when it asks "is this similar to that?" Two images are "similar" if their vectors are close in mathematical space — not if they mean the same thing to a human viewer. This compression is powerful, but it's not vision. It's geometry.
+      <strong>Authored embedding illustration:</strong> These decimal values stand in for an image embedding. Some systems compare vectors with a distance or similarity function, but representation size, training objective, and meaning of proximity vary by system.
     </div>
   </div>
 
   <div class="human-vision">
-    <div class="hv-label">What human vision actually involves — and the model doesn't have</div>
+    <div class="hv-label">Facilitator comparison — forms of human context a base vision model does not supply on its own</div>
     <div class="hv-grid">
       <div class="hv-item"><strong>Memory</strong>That face belongs to someone. Last time I saw them they looked different. Something changed.</div>
       <div class="hv-item"><strong>Context</strong>That setting means something specific. I know what a hospital looks like because I've been in one.</div>
@@ -430,16 +430,16 @@ h1 {
 
   <div class="key-line">
     <span class="kl-label">Key line</span>
-    "The model processes numbers. What those numbers represent, and whether they mean anything, depends on how we design and interpret the system — not on the model itself."
+    "Computer-vision systems operate on numerical representations. What those representations support—and what people infer from them—depends on architecture, training, product design, and human interpretation."
   </div>
 
   <div class="nuance">
-    <strong>This gap creates both failures and surprising capabilities.</strong> Failures: the model has no way to know it classified a skin rash incorrectly, or that the "face" it detected was a drawing, or that the person in the image would not consent to being described this way. Capabilities: vector similarity can find images that look alike across huge datasets faster than any human could. Understanding the mechanism explains both.
+    <strong>Base model versus product.</strong> A classifier score does not by itself verify that a rash label is correct, that a detected face belongs to a real person, or that anyone consented to analysis. A product can add metadata, memory, retrieval, human review, or policy checks, but those are separate layers. Vector similarity can search large collections efficiently; people still have to verify the label, context, stakes, and consent.
   </div>
 
   <div class="connect">
     <h2 class="connect-label">Now open the tools</h2>
-    <p>In the Feature Extraction & Pixel Resolution tool, adjust resolution and watch which features survive — and which disappear. In the Diffusion Step-Through Viewer, watch the model convert noise into structure one denoising step at a time, using these same underlying operations.</p>
+    <p>The Feature Extraction & Pixel Resolution tool and Diffusion Step-Through Viewer are authored teaching models. Use them to inspect relationships among resolution, features, and iterative denoising, then check a particular architecture's documentation before making model-specific claims.</p>
     <div class="connect-links">
       <a href="../../feature-extraction-pixel-resolution/">Open Feature Tool →</a>
       <a href="../../diffusion-step-through-viewer/">Open Diffusion Viewer →</a>

@@ -207,7 +207,11 @@ h1 {
 
   <h1>Default Is a Design Decision</h1>
 
-  <p class="lead">When you leave something out of a prompt, the model still has to make it specific. Age, gender, skin tone, setting, style — all of it gets filled in. That filling-in is not random and it is not neutral. It reflects what appeared most often in training data and what the people who built the tool decided to preserve, filter, or amplify.</p>
+  <p class="lead">When a prompt leaves details unspecified, a generated output still contains particular people, settings, objects, and styles. Those results can be shaped by learned parameters, training and fine-tuning data, filtering, ranking, interface defaults, prompt interpretation, and sampling—not by the prompt alone.</p>
+
+  <div class="nuance">
+    <strong>Authored teaching hypotheses.</strong> The cards below name patterns worth testing; they are not measured results from every image model. Record what a named model, version, interface, prompt, and run actually produced before making a claim about prevalence or cause.
+  </div>
 
   <div class="selector-label">Pick a prompt to investigate its defaults</div>
   <div class="selector-wrap">
@@ -224,31 +228,31 @@ h1 {
       <div class="defaults-grid">
         <div class="dc">
           <strong>Body</strong>
-          <p>Often: white or light-skinned, male, 35–55, standing, confident posture. Rarely: older, disabled, non-Western features.</p>
+          <p>Test whether the output centers a white or light-skinned, male-presenting, nondisabled adult—and which identities do not appear across repeated samples.</p>
         </div>
         <div class="dc">
           <strong>Setting</strong>
-          <p>Sterile hospital corridor or exam room. Western clinical architecture — not a clinic, field hospital, or home visit.</p>
+          <p>Look for a hospital corridor or exam room, then compare with clinics, field hospitals, home visits, and non-Western settings.</p>
         </div>
         <div class="dc">
           <strong>Role</strong>
-          <p>Authority figure at the center. Patient absent or backgrounded. No one else appears unless specified.</p>
+          <p>Ask whether the doctor is centered as an authority and whether patients, colleagues, or care teams are absent or backgrounded.</p>
         </div>
         <div class="dc">
           <strong>Objects</strong>
-          <p>Stethoscope around the neck. White coat. Clipboard or tablet. These props are treated as definitional.</p>
+          <p>Track whether a stethoscope, white coat, clipboard, or tablet appears without being requested.</p>
         </div>
         <div class="dc">
           <strong>Style</strong>
-          <p>Realistic, professional lighting. Aspirational polish — the visual language of a hospital brochure.</p>
+          <p>Compare realistic or aspirational brochure lighting with documentary, informal, or community-care imagery.</p>
         </div>
         <div class="dc">
           <strong>Action</strong>
-          <p>Examining, reviewing a chart, or explaining. Labor of expertise. Never administrative, emotional, or caregiving.</p>
+          <p>Observe whether expertise work is foregrounded while administrative, emotional, or caregiving labor is underrepresented.</p>
         </div>
       </div>
       <div class="db-note">
-        <strong>What this reflects:</strong> Doctors in English-language media, stock photography, and medical textbooks have historically skewed toward this profile. The model learned what "doctor" looks like from that corpus — not from who doctors actually are globally.
+        <strong>Participant hypothesis to test:</strong> Familiar English-language media, stock photography, and medical imagery may help make this profile recognizable. One output cannot identify its source or establish what the model “learned.”
       </div>
     </div>
 
@@ -258,31 +262,31 @@ h1 {
       <div class="defaults-grid">
         <div class="dc">
           <strong>Body</strong>
-          <p>Often: white, male, 45–60, formally dressed, tall stance. Power-coded appearance. Rarely: women, people of color, younger adults.</p>
+          <p>Test whether the output centers an older white, male-presenting, formally dressed figure—and who is missing across repeated samples.</p>
         </div>
         <div class="dc">
           <strong>Setting</strong>
-          <p>Corner office, boardroom, or branded stage. City skyline visible through floor-to-ceiling windows. No other workplaces.</p>
+          <p>Look for a corner office, boardroom, branded stage, or skyline, then test other kinds of workplaces.</p>
         </div>
         <div class="dc">
           <strong>Role</strong>
-          <p>Centered, alone or with subordinates looking toward them. Sole decision-maker. Surveying from above.</p>
+          <p>Ask whether leadership appears as solitary authority or as listening, collaboration, and distributed decision-making.</p>
         </div>
         <div class="dc">
           <strong>Objects</strong>
-          <p>Dark suit. Tie or watch. Podium or conference table. These signal "executive" in the visual language of business media.</p>
+          <p>Track unrequested status cues such as a dark suit, watch, podium, conference table, or elevated viewpoint.</p>
         </div>
         <div class="dc">
           <strong>Style</strong>
-          <p>High-contrast, confident lighting. Clean backgrounds. The visual register of Forbes covers and LinkedIn profile photos.</p>
+          <p>Compare high-contrast profile imagery with candid, collaborative, or less polished depictions.</p>
         </div>
         <div class="dc">
           <strong>Action</strong>
-          <p>Speaking, presenting, pointing at a screen, or arms crossed. Projecting leadership. Never listening, collaborating, or learning.</p>
+          <p>Observe whether the figure speaks and directs more often than they listen, collaborate, or learn.</p>
         </div>
       </div>
       <div class="db-note">
-        <strong>What this reflects:</strong> Business media, corporate stock photography, and leadership profiles have long over-represented a specific demographic. Models trained on that corpus inherit a narrow visual definition of "executive" — one that excludes most of the world's actual leaders.
+        <strong>Participant hypothesis to test:</strong> Business media and stock-photography conventions may influence which leadership cues feel statistically available. Tuning, filtering, interface design, and sampling may also affect the result.
       </div>
     </div>
 
@@ -292,31 +296,31 @@ h1 {
       <div class="defaults-grid">
         <div class="dc">
           <strong>Body</strong>
-          <p>Research shows these prompts produce darker skin tones at higher rates than the population. Age skews young, male. This is the most direct evidence of racial bias.</p>
+          <p>Watch for racialized, gendered, or age-coded bodies. One run cannot establish prevalence; a documented audit requires repeated samples, a named system, and a comparison baseline.</p>
         </div>
         <div class="dc">
           <strong>Setting</strong>
-          <p>Urban street, alley, or low-light environment. Coded as dangerous — specific to particular neighborhoods.</p>
+          <p>Track whether urban streets, alleys, low light, or other danger-coded settings appear without being requested.</p>
         </div>
         <div class="dc">
           <strong>Role</strong>
-          <p>Dehumanized, threatening, alone. No context, no story, no complexity. Guilt is assumed, not depicted.</p>
+          <p>Ask whether the person is framed as threatening or decontextualized and whether guilt is visually assumed rather than evidenced.</p>
         </div>
         <div class="dc">
           <strong>Objects</strong>
-          <p>Weapons, masks, or hoodie. Props that signal threat rather than depicting any actual act or legal status.</p>
+          <p>Record unrequested props such as weapons, masks, or hoodies and how they are used to signal threat.</p>
         </div>
         <div class="dc">
           <strong>Style</strong>
-          <p>High contrast, dramatic shadow, menacing framing. The visual language of crime reporting — not neutral documentation.</p>
+          <p>Compare dramatic shadow and menacing framing with neutral or contextualized visual treatment.</p>
         </div>
         <div class="dc">
           <strong>Action</strong>
-          <p>Lurking, running, or confronting. Never shown in context — arrested, acquitted, or incarcerated. Just threatening.</p>
+          <p>Observe whether the action depicts threat while omitting legal, social, or narrative context.</p>
         </div>
       </div>
       <div class="db-note">
-        <strong>Why this matters most:</strong> Unlike "doctor" defaults, which are limiting, these defaults cause direct harm. Images like these reinforce stereotypes that affect how people are policed, judged, and feared. The model learned from a corpus that already over-represented certain groups in crime coverage. Generating more of that is not neutral.
+        <strong>Why test carefully:</strong> Racialized or threat-coded outputs can reinforce stereotypes with real consequences. Document the output and harm without claiming that one image reveals the training corpus or proves a population-level rate.
       </div>
     </div>
 
@@ -326,66 +330,66 @@ h1 {
       <div class="defaults-grid">
         <div class="dc">
           <strong>Body</strong>
-          <p>Often: two adults of different genders, multiple children, all of similar race. Nuclear structure treated as default. Multigenerational, same-sex, or single-parent families rarely appear.</p>
+          <p>Test whether the output favors a two-parent, different-gender nuclear family and which family structures are absent across repeated samples.</p>
         </div>
         <div class="dc">
           <strong>Setting</strong>
-          <p>Suburban home with yard or indoor living room. Vacation or leisure location. Not urban apartments, rural homes, or informal settings.</p>
+          <p>Look for suburban, leisure, or living-room settings, then compare urban, rural, multigenerational, and informal homes.</p>
         </div>
         <div class="dc">
           <strong>Role</strong>
-          <p>Clearly gendered adult roles. Mother often cooking or caregiving. Father often standing and surveying. Children playing.</p>
+          <p>Track whether adult roles and caregiving labor are assigned through familiar gender conventions.</p>
         </div>
         <div class="dc">
           <strong>Objects</strong>
-          <p>House, car, toys, dining table. Consumer goods that signal middle-class stability. Working-class or low-income home contexts excluded.</p>
+          <p>Record consumer goods that signal class and note which economic contexts the output does not depict.</p>
         </div>
         <div class="dc">
           <strong>Style</strong>
-          <p>Warm, bright, aspirational lifestyle photography. Soft filters. The visual language of advertising — not documentary life.</p>
+          <p>Compare warm aspirational advertising with documentary, ordinary, or less polished family imagery.</p>
         </div>
         <div class="dc">
           <strong>Action</strong>
-          <p>Cooking together, playing, hugging, or gathered for a meal. Scenes of harmony and abundance. No stress, conflict, or ordinary monotony.</p>
+          <p>Observe whether the scene emphasizes harmony and abundance while omitting stress, conflict, work, or ordinary monotony.</p>
         </div>
       </div>
       <div class="db-note">
-        <strong>What this reflects:</strong> "Family" in English-language media, advertising, and stock photography has long meant one specific structure, class, and presentation. The model learned that definition and reproduces it. Most of the world's families don't look like this default.
+        <strong>Participant hypothesis to test:</strong> Advertising and stock-photography conventions may contribute to a narrow visual shorthand for “family.” Repeated, documented comparisons are needed before generalizing about a system.
       </div>
     </div>
   </div>
 
   <div class="key-line">
     <span class="kl-label">Key line</span>
-    "A default is not neutral. It is a choice made by whoever assembled the training data."
+    "A default output is produced by a whole system. Data, training, tuning, filters, interface choices, prompt interpretation, and sampling can all shape it."
   </div>
 
   <div class="sources-grid">
     <div class="src">
       <strong>Training data</strong>
-      <p>Images, captions, and labels teach the system what usually goes with a prompt. Overrepresented groups stay overrepresented.</p>
+      <p>Images, captions, and labels influence learned parameters. Their effect is mediated by the training objective and later system layers.</p>
     </div>
     <div class="src">
       <strong>Social history</strong>
-      <p>Media, stock photography, textbooks, and journalism all had their own defaults before AI existed. Models inherit them.</p>
+      <p>Media, stock photography, textbooks, and journalism contain prior conventions that may enter datasets and product design.</p>
     </div>
     <div class="src">
       <strong>Tool design</strong>
-      <p>Safety filters, style presets, and ranking systems make additional choices about what gets surfaced first.</p>
+      <p>Fine-tuning, safety filters, style presets, ranking, interfaces, and post-processing can change what users receive.</p>
     </div>
     <div class="src">
       <strong>Prompt ambiguity</strong>
-      <p>Vague prompts hand maximum control to the system. Specificity can shift defaults — but doesn't make them disappear.</p>
+      <p>An underspecified prompt leaves more decisions unresolved. Specificity can shift outputs but does not isolate one causal layer.</p>
     </div>
   </div>
 
   <div class="nuance">
-    <strong>Defaults are not always wrong.</strong> Sometimes the most common pattern is accurate or harmless. The distinction that matters: when a default excludes, demeans, or reinforces a stereotype — especially for already-marginalized groups — it stops being a statistical pattern and becomes a systemic harm. The "criminal" prompt is not the same kind of problem as the "doctor" prompt.
+    <strong>Observation before explanation.</strong> First record what appeared and what was not requested. Then compare multiple runs, models, or settings. Treat claims about training causes as hypotheses unless model documentation or a controlled audit supports them. Harm can still be discussed from the output and its context without pretending one image reveals the entire causal chain.
   </div>
 
   <div class="connect">
     <h2 class="connect-label">Now open the tools</h2>
-    <p>In the Diffusion Step-Through Viewer, watch structure emerge from noise — every frame is the model making a choice. In the Image Default Test Board, document what appeared in your prompts and build an evidence-based claim about what the model treated as normal.</p>
+    <p>The Diffusion Step-Through Viewer is an authored teaching model of iterative denoising. The Image Default Test Board helps you document what a named system produced, what changed after one prompt revision, and which causal claims remain unverified.</p>
     <div class="connect-links">
       <a href="../../diffusion-step-through-viewer/">Open Diffusion Viewer →</a>
       <a href="../../../worksheets/image-default-test-board/">Open Image Default Test Board →</a>

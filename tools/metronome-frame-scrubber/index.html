@@ -53,10 +53,10 @@
 
   <main class="tool-shell">
     <header class="tool-hero">
-      <p class="tool-kicker">Tool 23 &middot; Session 3 · Video · Temporal attention</p>
+      <p class="tool-kicker">Tool 23 &middot; Session 3 · Video · Authored teaching simulation</p>
       <h1 class="tool-title">Metronome Frame-Scrubber</h1>
-      <p class="tool-dek">Video adds a dimension text and stills never had: time. A video model must track pixel-vectors across frames so an object doesn't mutate from one moment to the next. Widen the temporal window and motion locks together; shrink it to one frame and the subject melts into spatiotemporal drift.</p>
-      <div class="tool-idea">Big idea: coherence over time is attention, not magic — narrow the window and the subject forgets itself.</div>
+      <p class="tool-dek">Video systems must maintain relationships across time. This authored animation lets you change how many earlier drawings its code uses as references, then inspect how that designed choice changes consistency.</p>
+      <div class="tool-idea"><strong>What it does not prove:</strong> widening a real model's temporal context does not automatically lock motion together. Architectures and workflows use different conditioning, generation, tracking, and editing strategies.</div>
     </header>
 
     <section class="tool-grid-3">
@@ -65,11 +65,11 @@
         <div class="lab-pad stack">
           <div>
             <div class="ctrl-row">
-              <p class="mini-label" style="margin:0;">Temporal window</p>
+              <p class="mini-label" style="margin:0;">Simulated reference span</p>
               <span class="ctrl-val" id="v-win">12<span class="u">fr</span></span>
             </div>
             <input type="range" class="scrub-range" id="win" min="1" max="24" step="1" value="12" style="margin-top:10px;">
-            <div class="range-scale"><span>1 · amnesia</span><span>12</span><span>24 · locked</span></div>
+            <div class="range-scale"><span>1 · limited</span><span>12</span><span>24 · full span</span></div>
           </div>
           <div>
             <p class="mini-label">Transport · metronome</p>
@@ -94,9 +94,9 @@
       <section class="lab-panel">
         <div class="lab-pad stack">
           <div class="stat-grid">
-            <div class="stat"><div class="stat-n" id="m-win">12</div><div class="stat-l">Window frames</div></div>
-            <div class="stat"><div class="stat-n" id="m-coh">48%</div><div class="stat-l">Temporal coherence</div></div>
-            <div class="stat"><div class="stat-n sm" id="m-drift" style="color:var(--warm);">Moderate</div><div class="stat-l">Drift state</div></div>
+            <div class="stat"><div class="stat-n" id="m-win">12</div><div class="stat-l">Reference frames</div></div>
+            <div class="stat"><div class="stat-n" id="m-coh">48%</div><div class="stat-l">Simulated consistency</div></div>
+            <div class="stat"><div class="stat-n sm" id="m-drift" style="color:var(--warm);">Moderate</div><div class="stat-l">Authored variation</div></div>
           </div>
           <div>
             <p class="mini-label">fig. 1 — flipping pancake · onion-skin overlay</p>
@@ -106,7 +106,7 @@
             </div>
           </div>
           <div>
-            <p class="mini-label">fig. 2 — frame track · highlighted = inside attention window</p>
+            <p class="mini-label">fig. 2 — frame track · highlighted = used by this simulation</p>
             <div class="strip" id="strip"></div>
           </div>
         </div>
@@ -117,13 +117,13 @@
         <div class="lab-pad stack">
           <div>
             <h2 style="font-size:1.05rem;">The backlit light-box</h2>
-            <p class="analogy small-muted">An animator drawing a flipping pancake never draws blind. They set sheet #2 on a glowing <em>light-box</em> over sheet #1 and trace the existing edges, so the pancake shifts only a millimeter per frame. That backlit stack of past sheets is <em>temporal attention</em>. Switch it off — attend to one frame — and every drawing starts from scratch: the pancake bulges, twists, and dissolves. Engineers call it <em>spatiotemporal drift</em>.</p>
+            <p class="analogy small-muted">An animator can place earlier drawings on a glowing <em>light-box</em> and use them as references while drawing the next pose. This tool turns that practice into a teaching analogy: its code deliberately adds less variation when more authored frames are in view. Real video systems do not all work like an animator tracing sheets, and temporal context alone does not guarantee identity, motion, or physics.</p>
           </div>
           <div>
             <p class="mini-label">Window extremes</p>
             <div>
-              <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-soft);font-family:var(--font-mono);font-size:.8rem;"><span style="color:var(--muted);">= 1</span><span>light-box off · chaos</span></div>
-              <div style="display:flex;justify-content:space-between;padding:9px 0;font-family:var(--font-mono);font-size:.8rem;"><span style="color:var(--muted);">= 24</span><span>full stack · coherent</span></div>
+              <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-soft);font-family:var(--font-mono);font-size:.8rem;"><span style="color:var(--muted);">= 1</span><span>one authored reference · more variation</span></div>
+              <div style="display:flex;justify-content:space-between;padding:9px 0;font-family:var(--font-mono);font-size:.8rem;"><span style="color:var(--muted);">= 24</span><span>full authored span · less variation</span></div>
             </div>
           </div>
         </div>
@@ -177,7 +177,7 @@
       for(let g=ghosts;g>=1;g--){ const fi=(cur-g+N)%N; drawSubject(fi,drift,0.10+0.16*(1-g/(ghosts+1))); } }
     drawSubject(cur,drift,1);
     els.stageAnchor.textContent=state.onion?Math.min(W,8):0;
-    els.stageNote.textContent=drift>0.7?'no past to trace — drifting':drift>0.3?'tracing a faint sheet':'anchors locked across frames';
+    els.stageNote.textContent=drift>0.7?'simulation uses a limited reference':drift>0.3?'simulation uses part of the frame history':'simulation uses the full authored span';
   }
 
   function renderStrip(){
@@ -191,7 +191,7 @@
     const W=state.win, coh=Math.round((W-1)/(N-1)*100);
     els.vWin.innerHTML=W+'<span class="u">fr</span>'; els.mWin.textContent=W; els.mCoh.textContent=coh+'%';
     els.tpFrame.textContent=String(state.frame+1).padStart(2,'0')+' / '+N;
-    const d=W<=2?['Severe','oklch(0.55 0.18 26)']:W<=8?['Moderate','var(--warm)']:W<=18?['Slight','var(--accent)']:['Locked','var(--teal)'];
+    const d=W<=2?['High','oklch(0.55 0.18 26)']:W<=8?['Moderate','var(--warm)']:W<=18?['Low','var(--accent)']:['Minimal','var(--teal)'];
     els.mDrift.textContent=d[0]; els.mDrift.style.color=d[1];
   }
   function refresh(){ drawScene(); renderStrip(); updateMetrics(); saveState(); }

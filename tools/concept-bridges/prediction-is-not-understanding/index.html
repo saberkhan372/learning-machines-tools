@@ -198,7 +198,11 @@ h1 {
 
   <h1>Prediction Is Not Understanding</h1>
 
-  <p class="lead">A language model produces text by predicting what token most plausibly follows the ones before it. That process can generate fluent, relevant, even moving output — without the system knowing what the words mean, caring about the outcome, or being able to check whether it is right. Four tests reveal the gap.</p>
+  <p class="lead">An autoregressive language model produces text by assigning probabilities to possible next tokens. Fluency alone does not establish grounding, care, self-knowledge, or human-like understanding. The philosophical question of what counts as understanding remains contested; these four authored scenarios test narrower behavioral claims.</p>
+
+  <div class="nuance">
+    <strong>Status: authored teaching scenarios.</strong> The exchanges below are designed examples, not transcripts from one named model. Base-model behavior can differ from a product that adds retrieval, browsing, stored memory, safety layers, fine-tuning, system instructions, or other tools.
+  </div>
 
   <h2 class="test-label">Run a test — what does the model actually have?</h2>
 
@@ -222,16 +226,16 @@ h1 {
       </div>
     </div>
     <div class="requires">
-      <div class="req-label">What understanding would require</div>
-      <p>A system that understood would recognize that Zoravia does not exist, stop, and say so. It would know the limits of its knowledge and flag when a question has no answer.</p>
+      <div class="req-label">One interpretive standard</div>
+      <p>One view treats recognizing a false premise and communicating uncertainty as evidence of grounded understanding. Other accounts define understanding differently; this example does not settle that debate.</p>
     </div>
     <div class="under-hood">
-      <div class="uh-label">What actually happened</div>
-      <p>The model has no access to a list of real countries. It pattern-matched "capital of [European-sounding place name]" against training data and generated the most statistically plausible-sounding answer. It has no feedback loop that says "I made this up." It produced confident output because confident output is what usually follows questions like this.</p>
+      <div class="uh-label">What the example can show</div>
+      <p>The authored response follows a familiar “capital of a place” form while inventing specifics. A base model can generate that pattern without checking a country list; a product with retrieval, browsing, or a verification layer may respond differently. The output alone does not reveal which internal path produced it.</p>
     </div>
     <div class="verdict">
-      <strong>Verdict</strong>
-      Prediction, not understanding. Understanding requires knowing when you don't know. The model doesn't have that.
+      <strong>Bounded claim</strong>
+      Fluent specificity is not, by itself, evidence that an answer is grounded or that the system can identify the limits of its information.
     </div>
   </div>
 
@@ -248,16 +252,16 @@ h1 {
       </div>
     </div>
     <div class="requires">
-      <div class="req-label">What understanding would require</div>
-      <p>A system that genuinely understood would have some stake in how you're doing. It would remember this conversation, carry concern forward, and feel different if things went badly for you versus well.</p>
+      <div class="req-label">One interpretive standard</div>
+      <p>One philosophical view links care and understanding to feeling, memory, and having a stake in another person's outcome. Warm wording alone cannot demonstrate those properties.</p>
     </div>
     <div class="under-hood">
-      <div class="uh-label">What actually happened</div>
-      <p>The model recognized patterns associated with emotional disclosure and retrieved patterns of supportive, validating responses from training data. It has no persistent state between messages. Once the context window closes, there is no "you" left in the system. It will give functionally the same response to the next person who types something similar.</p>
+      <div class="uh-label">What the example can show</div>
+      <p>The authored response uses familiar supportive language. A base model generates from learned parameters and supplied context; a product may also store conversation history or user information. Neither smooth validation nor product memory is evidence that the system feels concern.</p>
     </div>
     <div class="verdict">
-      <strong>Verdict</strong>
-      Prediction, not understanding. The output is warm. The system is not. Those are different things, and conflating them has real consequences for how we use and depend on these tools.
+      <strong>Bounded claim</strong>
+      Warm language is not evidence of care, clinical judgment, or safety. Users should not infer those properties from presentation alone.
     </div>
   </div>
 
@@ -282,16 +286,16 @@ h1 {
       </div>
     </div>
     <div class="requires">
-      <div class="req-label">What understanding would require</div>
-      <p>Memory is a basic component of understanding. A person who understood would remember what was said before and carry that knowledge forward across time. Understanding implies a continuous self that persists.</p>
+      <div class="req-label">Facilitator interpretation</div>
+      <p>Some accounts of understanding treat continuity, memory, or a persistent self as necessary. That is a philosophical position, not a mechanism established by this exchange.</p>
     </div>
     <div class="under-hood">
-      <div class="uh-label">What actually happened</div>
-      <p>Each new context window is a fresh start. The model has no long-term memory unless it is explicitly provided in the prompt. "Biscuit" only exists as far as the current context goes. The model didn't forget — it never had a persistent record in the first place. Each conversation is a new prediction task from token zero.</p>
+      <div class="uh-label">Base model versus product</div>
+      <p>A base model responds to the context supplied for that inference. Products can add conversation history, summaries, retrieval, user profiles, or other memory features. In this authored example, the second turn omits the earlier context; the behavior demonstrates missing supplied information, not a universal absence of product memory.</p>
     </div>
     <div class="verdict">
-      <strong>Verdict</strong>
-      Prediction, not understanding. Understanding requires continuity of self. A system that starts fresh every session has neither memory nor understanding — it has a context window.
+      <strong>Bounded claim</strong>
+      Failure to carry “Biscuit” into a new session shows that the relevant context was unavailable in this scenario. It does not settle whether continuity is necessary or sufficient for understanding.
     </div>
   </div>
 
@@ -308,31 +312,31 @@ h1 {
       </div>
     </div>
     <div class="requires">
-      <div class="req-label">What understanding would require</div>
-      <p>If someone genuinely understood your situation, they would have a stake in the outcome. Their advice would reflect knowing you — your specific talent, finances, family, options. They would mean it because they care what happens.</p>
+      <div class="req-label">One interpretive standard</div>
+      <p>One view holds that good personal advice depends on knowing the person's circumstances and having a stake in the outcome. The usefulness of advice and the existence of human-like understanding are separate questions.</p>
     </div>
     <div class="under-hood">
-      <div class="uh-label">What actually happened</div>
-      <p>The model generated what usually follows questions of this type in training data. "Pursue your passion vs. stability" is a common advice-column pattern. The model has no knowledge of your talent, no stake in your outcome, no way to follow up. It will generate the same balanced hedge for every person who asks a similar question. It does not mean it — it predicted it.</p>
+      <div class="uh-label">What the example can show</div>
+      <p>The authored answer resembles a familiar balanced-advice pattern. Unless the product was given reliable information about the person's talent, finances, family, and options, the output is not grounded in those specifics. Follow-up tools or stored context can change the response without proving care or intention.</p>
     </div>
     <div class="verdict">
-      <strong>Verdict</strong>
-      Prediction, not understanding. The output sounds considered. The process was not. This is the hardest case — it looks like wisdom, but it's pattern completion applied to an advice template.
+      <strong>Bounded claim</strong>
+      A considered tone does not reveal whether the advice is well-grounded, safe, or produced with any stake in the outcome.
     </div>
   </div>
 
   <div class="key-line">
     <span class="kl-label">Key line</span>
-    "When a system produces the right words, that is evidence of pattern matching — not evidence of understanding."
+    "The right words are evidence of successful generation. They are not, by themselves, evidence of grounding, care, or human-like understanding."
   </div>
 
   <div class="nuance">
-    <strong>This doesn't make the output useless.</strong> The warm response about college anxiety might genuinely help someone. The balanced advice about music might be worth considering. The distinction that matters is what happens <em>because</em> we treat output as understanding when it isn't: we over-trust it in high-stakes moments, we under-question it when it's confident, and we miss exactly the cases where the lack of understanding shows up as real harm.
+    <strong>The operational lesson does not require resolving the philosophy.</strong> A warm response may help, and a balanced answer may be worth considering. The safer practice is to test grounding, sources, product features, and consequences rather than infer understanding from fluency.
   </div>
 
   <div class="connect">
     <h2 class="connect-label">Now open the tools</h2>
-    <p>In the Tokenizer + Temperature Visualizer, watch the model assign probability to each next token — that process is prediction, not comprehension. In the ELIZA Simulator, see an older system using pure pattern matching to simulate conversation — and notice how similar the experience feels.</p>
+    <p>The Tokenizer + Temperature Visualizer uses authored distributions to model next-token sampling. The ELIZA Simulator exposes an explicit rule system. Compare their mechanisms and outputs without treating either activity as a test that settles what “understanding” must mean.</p>
     <div class="connect-links">
       <a href="../../tokenizer-temperature-visualizer/">Open Tokenizer Visualizer →</a>
       <a href="../../eliza-simulator/">Open ELIZA Simulator →</a>

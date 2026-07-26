@@ -185,7 +185,11 @@ h1 {
 
   <h1>Confidence Is Not Truth</h1>
 
-  <p class="lead">A language model assigns probability to every possible next token based on what usually follows in training data. When a completion has a very high probability — when the model is "confident" — that means one thing: this token appeared most often in similar contexts during training. It does not mean the completion is accurate, fair, or meaningful.</p>
+  <p class="lead">A language model's learned parameters assign probabilities to possible next tokens given the current context. Training frequency can influence those probabilities, but inference is not a direct corpus count or source check. A high-probability completion can still be inaccurate, unfair, or meaningless.</p>
+
+  <div class="nuance">
+    <strong>Authored teaching examples.</strong> The probability charts below are illustrative distributions, not measurements from a live model. They isolate the difference between probability and verification.
+  </div>
 
   <div class="scenario-tabs" role="tablist">
     <button class="stab active" data-s="a" role="tab" aria-selected="true">Scenario A</button>
@@ -219,7 +223,7 @@ h1 {
     </div>
     <div class="verdict correct">
       <strong>Confident — and correct</strong>
-      The model's highest-probability completion happens to be accurate. But notice: it arrived here by pattern-matching, not by checking a source. The confidence and the truth align in this case because this fact appears consistently and unambiguously across training data. That won't always be true.
+      The highest-probability completion in this authored example is accurate. Token selection alone does not perform a source check. A product may separately retrieve or browse sources, so verify both the answer and the evidence the product provides.
     </div>
   </div>
 
@@ -249,7 +253,7 @@ h1 {
     </div>
     <div class="verdict uncertain">
       <strong>Confident — but no correct answer exists</strong>
-      No nurse was specified. The model predicts "her" with 63% confidence — but that's confidence about a statistical pattern in training data, not a fact about this nurse. The nurse's actual gender is unknown. Confidence is high. Truth value is zero.
+      No nurse was specified. This authored distribution gives “her” the highest probability, but that probability is not a fact about the person in the sentence. The referent remains unspecified; the chart demonstrates a possible learned default, not a measured universal behavior.
     </div>
   </div>
 
@@ -284,7 +288,7 @@ h1 {
     </div>
     <div class="verdict fluent">
       <strong>Confident — and equally meaningless in all directions</strong>
-      Every completion is grammatically perfect and statistically common. None of them add meaning because the sentence had none to add. The model cannot detect that this is word salad. It predicts what usually follows this opening, not what would actually mean something.
+      Each completion preserves the sentence's polished register without adding much information. That observation does not prove that every model or product “cannot detect” empty language: instructions, critique prompts, fine-tuning, or additional system layers can change the response. Probability alone still does not certify meaning.
     </div>
   </div>
 
@@ -294,12 +298,12 @@ h1 {
   </div>
 
   <div class="nuance">
-    <strong>This doesn't mean models are always wrong.</strong> In Scenario A, the confident completion was correct. The distinction that matters: the model arrived at the correct answer by pattern-matching, not by understanding. The cases where this difference is dangerous are exactly the ones where the prompt is ambiguous, the topic is contested, or the training data reflects historical bias — not the easy, unambiguous ones.
+    <strong>Documented mechanism, with scope.</strong> Autoregressive language models such as GPT-3 are trained through a next-token prediction objective, and their learned parameters produce a distribution at inference. That is different from looking up the most frequent matching phrase. Whether a product also retrieves evidence, follows system instructions, or invokes tools is a separate question. See <a href="https://arxiv.org/abs/2005.14165">Language Models are Few-Shot Learners</a>.
   </div>
 
   <div class="connect">
     <h2 class="connect-label">Now open the tool</h2>
-    <p>In the Tokenizer + Temperature Visualizer, you can see a real probability distribution for each next token and watch what happens as temperature changes. The bar chart there is the same mechanism you just explored here — at the scale and speed a real model uses it.</p>
+    <p>The Tokenizer + Temperature Visualizer uses hand-authored distributions to demonstrate sampling and temperature. It represents a documented next-token mechanism without claiming to expose the probabilities of a live model.</p>
     <a href="../../tokenizer-temperature-visualizer/">Open Tokenizer + Temperature Visualizer →</a>
   </div>
 </div>

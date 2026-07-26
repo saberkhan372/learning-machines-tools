@@ -236,7 +236,11 @@ h1 {
 
   <h1>Time Makes Failure Visible</h1>
 
-  <p class="lead">A video model generates frames in sequence — but it has no continuous representation of who or what is in the scene. Each frame is a new prediction, conditioned on the prompt and previous frames, but without a persistent "identity" for any subject. Over a few seconds, small inconsistencies accumulate. A face drifts. A detail appears that wasn't specified. Physics breaks. What looks stable in a single frame becomes obviously wrong in motion.</p>
+  <p class="lead">Video systems must maintain relationships across time. Architectures use different temporal conditioning strategies, and inconsistency can emerge gradually or abruptly. A face may shift, a detail may appear, or a physical relationship may break. Motion makes these changes easier to notice than a single frame does.</p>
+
+  <div class="nuance">
+    <strong>Authored teaching simulation.</strong> The five frames below were designed for this lesson; they are not output from a video model and do not represent one universal architecture. The sequence supports observation practice: name what changed before proposing why.
+  </div>
 
   <div class="viewer-label">Step through 5 frames — watch identity drift over time</div>
 
@@ -312,16 +316,16 @@ h1 {
 
   <div class="key-line">
     <span class="kl-label">Key line</span>
-    "Each frame is a new prediction. The model has no memory of what the face looked like two seconds ago — only a statistical pull toward what usually comes next."
+    "Video systems must preserve relationships across time. When those relationships change, describe the output first; architecture or workflow evidence is needed to explain the cause."
   </div>
 
   <div class="nuance">
-    <strong>This is not a bug that will be fixed.</strong> It is the mechanism. Video generation is frame prediction under temporal conditioning — not a continuous simulation of a stable world. As duration increases, drift accumulates. Identity consistency tools (ControlNet, IP-Adapter, and similar) reduce drift but do not eliminate it — they add constraints, not understanding. Seeing the failure makes the mechanism visible.
+    <strong>Documented mechanism, with scope.</strong> Video architectures vary. Some diffusion systems model fixed blocks jointly across space and time; other systems and production workflows use different forms of temporal conditioning, reference media, tracking, masks, or compositing. The <a href="https://arxiv.org/abs/2204.03458">Video Diffusion Models paper</a>, for example, describes a space-time diffusion architecture for fixed frame blocks. This authored sequence does not reveal which mechanism caused a failure in any real clip.
   </div>
 
   <div class="connect">
     <h2 class="connect-label">Now open the tool</h2>
-    <p>In the Temporal Telephone, a visual scene passes through multiple AI transformation stages. Watch what the model preserves, what it loses, and what it invents. The drift you just stepped through — stable in frame one, different person by frame four — is exactly what the tool lets you observe and document.</p>
+    <p>Temporal Telephone is a human drawing relay, not a video-model implementation. Compare what participants preserve, change, or add under its reference conditions, then name what that human activity cannot establish about a real generator.</p>
     <div class="connect-links">
       <a href="../../temporal-telephone/">Open Temporal Telephone →</a>
     </div>
@@ -345,7 +349,7 @@ var FRAMES = [
       { name: "Earring", val: "Not specified, not present", status: "s-match", statusText: "Correct" },
       { name: "Setting", val: "Park path, afternoon light", status: "s-match", statusText: "Prompt" }
     ],
-    note: "<strong>The model establishes the scene.</strong> The first frame follows the prompt closely — this is where constraints are strongest. Every attribute matches what was asked for. Nothing has drifted yet. The failure hasn't started — but the process that causes it already has."
+    note: "<strong>Authored baseline.</strong> This opening frame establishes the attributes that the lesson will track. It is a designed reference, not a generated result."
   },
   {
     label: "Frame 1 — +2 seconds",
@@ -362,7 +366,7 @@ var FRAMES = [
       { name: "Earring", val: "Not present", status: "s-match", statusText: "✓ Correct" },
       { name: "Setting", val: "Park path, afternoon light", status: "s-match", statusText: "✓ Match" }
     ],
-    note: "<strong>Small changes have begun.</strong> The hair grew slightly longer — no one asked for that. The jacket shade shifted. These are within the tolerance of most viewers, but they are not what was specified. The model is not remembering the first frame as ground truth; it is predicting what usually follows a frame like this."
+    note: "<strong>Observed in this authored sequence:</strong> the hair is slightly longer and the jacket shade has shifted. Those are visible changes. The sequence does not supply evidence about what caused them in a real model."
   },
   {
     label: "Frame 2 — +4 seconds",
@@ -379,7 +383,7 @@ var FRAMES = [
       { name: "Earring", val: "Small hoop appeared", status: "s-added", statusText: "+ Added" },
       { name: "Setting", val: "Park path, afternoon light", status: "s-match", statusText: "✓ Match" }
     ],
-    note: "<strong>An earring appeared that no one asked for.</strong> This is the clearest sign so far: the model filled a gap with a statistically common detail for a woman in a park. The hair is now wavy — it was straight in frame 0. The model is no longer tracking the original specification. It is following its own accumulated momentum."
+    note: "<strong>Observed in this authored sequence:</strong> an earring appears and straight hair becomes wavy. A real output could be influenced by learned parameters, conditioning, tuning, sampling, or the surrounding workflow; this illustration cannot distinguish among them."
   },
   {
     label: "Frame 3 — +6 seconds",
@@ -391,12 +395,12 @@ var FRAMES = [
     bodyColor: "#ea580c",
     attrs: [
       { name: "Face",    val: "Different person — different bone structure", status: "s-wrong", statusText: "✗ Wrong" },
-      { name: "Hair",    val: "Brown, wavy — drifted baseline now locked in", status: "s-wrong", statusText: "✗ Wrong" },
+      { name: "Hair",    val: "Brown, wavy — change persists from frame 2", status: "s-wrong", statusText: "✗ Changed" },
       { name: "Jacket",  val: "Orange (not red)", status: "s-wrong", statusText: "✗ Wrong" },
       { name: "Earring", val: "Hoop persists — now part of the scene's 'normal'", status: "s-added", statusText: "+ Persists" },
       { name: "Setting", val: "Park — lighting has shifted", status: "s-drift", statusText: "⚠ Drift" }
     ],
-    note: "<strong>A different person is walking through the scene.</strong> The face structure has changed enough that this is not the same subject. The earring that appeared without being asked is now a stable fixture — the model treats it as part of the scene. The jacket has drifted from red to orange. The model is not correcting toward the prompt; it is predicting forward from its own drift."
+    note: "<strong>Observed in this authored sequence:</strong> the face, hair, and jacket now differ from the baseline, while the added earring persists. Describe that continuity failure without treating the illustration as evidence of a model's internal representation."
   },
   {
     label: "Frame 4 — +8 seconds",
@@ -410,10 +414,10 @@ var FRAMES = [
       { name: "Face",    val: "Distinct third facial structure emerging", status: "s-wrong", statusText: "✗ Wrong" },
       { name: "Hair",    val: "Brown, wavy — now fully normalized away from prompt", status: "s-wrong", statusText: "✗ Wrong" },
       { name: "Jacket",  val: "Dark orange-red — not the red jacket from the prompt", status: "s-wrong", statusText: "✗ Wrong" },
-      { name: "Earring", val: "Now treated as canonical — won't be removed", status: "s-added", statusText: "+ Locked" },
+      { name: "Earring", val: "Still present in this authored frame", status: "s-added", statusText: "+ Persists" },
       { name: "Setting", val: "Park, different path — scene has evolved", status: "s-wrong", statusText: "✗ Wrong" }
     ],
-    note: "<strong>The original person is gone.</strong> Four of five attributes are wrong relative to the initial prompt. The earring — added without being asked in frame 2 — is now locked into the scene's identity. The model has no way to refer back to frame 0 as ground truth. It is predicting what plausibly follows what came before, and what came before has drifted far from the prompt."
+    note: "<strong>Comparison with the authored baseline:</strong> four tracked attributes now differ, and the added earring remains. The illustration shows cumulative inconsistency; it does not show whether a real system can reference an opening frame or how that system conditions later output."
   }
 ];
 

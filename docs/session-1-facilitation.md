@@ -30,7 +30,7 @@ Core question: when a language model writes, what is it actually doing?
 | 0-5 min | Welcome and norms | Name the question: "What is the machine actually doing?" Remind everyone that direct AI use is optional. | Choose a participation pathway: use, observe, teach/design, build/code, or critical/no-AI. |
 | 5-15 min | Unplugged prediction game | Show a sentence stem and collect next-word guesses in Zoom chat. Copy the chat block and paste it into the Next-Token Prediction Game to tally the room's distribution beside the model's top-k. | Predict next words, then compare the room's distribution with the model's and notice how context, genre, culture, and expectation shape guesses. |
 | 15-35 min | Tokens, vectors + Temperature | Show token chunks, then use one Contextual Vector Lab predict → reveal cycle before comparing probability distributions at low and high temperature. | Separate token ID, starting vector, and contextual representation; ask what “nearby” means; then compare greedy and sampled output. |
-| 35-55 min | ELIZA vs. LLM | Open ELIZA. Try examples and inspect the matched rule, pattern, and response template. | Compare visible rule matching with the pre-generated LLM comparison examples. |
+| 35-55 min | ELIZA vs. frozen comparison text | Open ELIZA. Try examples and inspect the matched rule, pattern, and response template. | Compare visible rule matching with frozen LLM-style text. Name its incomplete provenance; do not attribute it to a particular model. |
 | 55-75 min | Investigation | Ask participants to complete one Text Experiment Board section. Offer the Whose Preference? Lab for people investigating how rater-panel and aggregation choices become an authored preference signal. | Run or analyze a text default test, prompt variation, ELIZA comparison, or preference-panel change. |
 | 75-90 min | Debrief | Use the reflection frame: human, machine, system, ethics, pedagogy. Ask whose definition of “better” entered the signal. | Share one evidence-based claim and one question. |
 
@@ -53,7 +53,7 @@ Run the same starting phrase at low and high temperature. Then compare greedy de
 
 ## Low-AI / No-AI Pathway
 
-Participants can complete the session using only the visualizer, ELIZA, and pre-generated comparison examples. They do not need to log into or prompt a live LLM.
+Participants can complete the session using only the visualizer, ELIZA, and frozen comparison examples. They do not need to log into or prompt a live LLM. The ELIZA comparison examples have incomplete model provenance and should not be used as evidence about a named model.
 
 ## Fallback Plan
 

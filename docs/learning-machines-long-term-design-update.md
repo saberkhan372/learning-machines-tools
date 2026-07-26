@@ -222,7 +222,7 @@ Use one contrast sequence rather than touring every text tool:
 
 1. Count the Next Token;
 2. Tokenizer + Temperature Visualizer;
-3. ELIZA rule inspection versus a pre-generated LLM response.
+3. ELIZA rule inspection versus frozen comparison text, with its source and editing status visibly documented—or explicitly labeled as provenance incomplete.
 
 #### Human layer: Whose Preference?
 

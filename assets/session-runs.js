@@ -82,9 +82,9 @@ window.LM_SESSION_RUNS = [
           { name: "Contextual Vector Lab", path: "tools/contextual-vector-lab/" },
           { name: "Tokenizer + Temperature Visualizer", path: "tools/tokenizer-temperature-visualizer/" }
         ] },
-      { time: "35–55", segment: "ELIZA vs. LLM",
+      { time: "35–55", segment: "ELIZA vs. frozen comparison text",
         move: "Inspect the matched rule, pattern, and response template.",
-        action: "Compare visible rule-matching with pre-generated LLM examples.",
+        action: "Compare visible rule-matching with frozen LLM-style text. Name its incomplete provenance; do not attribute it to a particular model.",
         tools: [ { name: "ELIZA Simulator", path: "tools/eliza-simulator/" } ] },
       { time: "55–75", segment: "Investigation",
         move: "Assign one Text Experiment Board section. Offer the Whose Preference? Lab for participants investigating how a panel and aggregation rule turn judgments into an authored preference signal.",
@@ -224,17 +224,17 @@ window.LM_SESSION_RUNS = [
     recap: {
       video: "https://youtu.be/kn-3P3tjafY", writtenHref: "pages/session-3-recap.html", written: null,
       sections: {
-        summary: "We used an image model, one frame at a time, as a way into video — a classroom model, not a claim about any real architecture — and found the hard part is not any single frame but keeping them coherent across time. Participants became the model in the Coherence Animator, animating 'a person at work' under two memory conditions, and then guest Dr. Emily Thomforde traced how the unexplainable core of these systems came to be treated as magic rather than a problem.",
+        summary: "Participants used a human-drawing teaching analogy, creating short animations frame by frame under two reference conditions. They performed one simplified coherence constraint rather than operating or reproducing an image or video model. Guest Dr. Emily Thomforde then traced how the unexplainable core of these systems came to be treated as magic rather than a problem.",
         investigated: [
           "Why video is a harder problem than an image: frames have to cohere not only across X and Y but over time — coherence in a new, third direction.",
           "The camp's through-line, stated in one place: fluent text is not necessarily true, plausible images are not necessarily neutral, and smooth video is not evidence that an event happened.",
-          "How a still-image model could be run frame by frame, and why the seams between frames — not the frames themselves — are the real problem.",
+          "How relationships can persist or change across a hand-drawn sequence, and what that simplified comparison can and cannot suggest about temporal coherence.",
           "What human animators already know about that problem — timing, spacing, and foreground/background order — and how those concepts can generate questions to check against documented video workflows.",
           "Where the mystery inside neural networks comes from, and why (per Dr. Thomforde) its cultural acceptance, not the technology, is what changed."
         ],
         mechanisms: [
-          { name: "Temporal coherence", where: "Coherence Animator setup", observed: "The activity runs an image model frame by frame to make one point concrete: the hard part is not any single frame but keeping the subject, objects, and motion consistent across them — coherence in time on top of space. Real systems vary; the activity does not reproduce any one architecture." },
-          { name: "Memory / context", where: "Run A vs Run B", observed: "Run A let you see only the previous frame; Run B added the fixed first frame as an anchor. With more to refer back to, participants held background elements steadier but had more to track — an observation about the two drawing conditions, not a measurement of how a model spends memory or compute." },
+          { name: "Temporal coherence", where: "Coherence Animator setup", observed: "Participants used a human-drawing teaching analogy, creating short animations frame by frame under two reference conditions. The activity made one simplified coherence constraint tangible; it did not run a model or measure model memory, context, hardware, or architecture." },
+          { name: "Reference conditions", where: "Run A vs Run B", observed: "Run A let participants see only the previous drawing; Run B added the fixed first drawing as an anchor. With more to refer back to, participants held some background elements steadier but had more to track — an observation about two human-drawing conditions, not a measurement of model memory, context, hardware, or architecture." },
           { name: "Keyframe interpolation", where: "Sharleen's start-and-end constraint", observed: "Fixing a start and end frame led Sharleen to rush the in-between frames toward the endpoint. That prompted a facilitator hypothesis — to check against documented workflows, not shown by the activity — that some systems rely on keyframes and interpolation, which could over-converge and flatten detail." },
           { name: "Foreground / background split", where: "Ryan's drawing order", observed: "Drawing the static scene first versus the character first changed line quality and attention. Separating foreground from background is a known human animation move; whether a given video pipeline splits work the same way is a question for documented workflows, not something the activity shows." },
           { name: "Timing as meaning", where: "Shane's timing-supervisor read", observed: "Holding a drawing a few extra frames implies thinking or intention and changes what the motion means — timing is semantically driven. In Shane's own experience giving an LLM the same timing rules, it followed them discretely, without a sense of the relativity of spacing, and overshot subtle moves." },
@@ -251,9 +251,9 @@ window.LM_SESSION_RUNS = [
           ethics: "Dr. Emily Thomforde's talk, 'Artificial Intelligence and the Axiology of Mystery,' argued the explainability problem — neural nets keep no paper trail of why an output happened — was once disqualifying and is now marketed as wonder. She placed the shift in culture and economics, not technical progress, and warned that magical thinking (hope or fear) fills the space where evidence and expertise do not yet exist."
         },
         classroom: {
-          students: "The Coherence Animator runs in the browser with no login: students animate a shared prompt twice — once seeing only the previous frame, once with an anchor frame — then compare and name one thing that changed. Being the model surfaces the coherence problem faster than watching a finished clip.",
-          shortCircuit: "Jumping to a polished AI video hides the problem: today's models are good enough that mistakes are hard to spot, so students skip the being-the-model friction where the coherence intuition forms.",
-          noAI: "The in-person Temporal Telephone variant needs only paper: each person animates a frame and hands it on, and you can separate the 'models' so groups can or cannot see each other's work — an unplugged, gamified way to feel context and drift."
+          students: "The Coherence Animator runs in the browser with no login: students animate a shared prompt twice — once seeing only the previous frame, once with an anchor frame — then compare and name one thing that changed. Performing one simplified coherence constraint makes the comparison tangible without claiming to reproduce a model.",
+          shortCircuit: "Jumping directly to a polished AI video can hide the coherence question. The human-drawing comparison gives students a concrete constraint to inspect before they analyze finished clips.",
+          noAI: "The in-person Temporal Telephone variant needs only paper: each person animates a frame and hands it on, and groups can receive different visual references — an unplugged, gamified way to observe how a reference condition affects a hand-drawn sequence."
         },
         next: {
           prep: "This was the last pre-planned session. An optional August Showcase — where participants present something they made — will be scheduled for a Saturday in August (the 8th or the 15th) based on the feedback form, and end-of-month August office hours will be emailed to every cohort.",
