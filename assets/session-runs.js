@@ -221,7 +221,7 @@ window.LM_SESSION_RUNS = [
     when: "Sat July 25 · 9–11 am PT", date: "2026-07-25",
     explore: "You have been the machine three times: fluent is not necessarily true, plausible is not necessarily neutral, and smooth is not evidence. Session 3 tests what must stay coherent across time.",
     asyncPrompt: "Open the Video Failure Gallery Viewer (or use a frozen clip), find the first exact frame where one relation breaks, and write one observation plus one boundary: what does the clip show, and what can it not prove about the model?",
-    recap: { video: null, written: null, writtenHref: null },
+    recap: { video: null, written: "We tested what must stay coherent when a model adds time. The Coherence Animator A/B comparison — drawing with only the previous frame versus drawing with an anchor plus the previous frame — showed how reference conditions shape drift. We then named failure modes precisely in curated video clips, treating that naming as a form of evidence. The session closed the camp argument: fluent is not true, plausible is not neutral, smooth is not evidence. To carry forward: what would a student need to say before a claim counts?", writtenHref: null },
     facilitation: "pages/docs-session-3-facilitation.html",
     overview: "pages/session-video.html",
     deck: "pages/session-3-deck.html",
