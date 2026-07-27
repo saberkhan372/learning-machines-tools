@@ -33,7 +33,7 @@
     /* header */
     out += '<div class="recap-head">';
     out += '<h2>Recap</h2>';
-    out += '<span class="recap-note">registered participants \xb7 Learning Machines does not use these materials for AI training</span>';
+    out += '<span class="recap-note">unlisted recording link \xb7 anyone with the link may view or reshare</span>';
     out += "</div>";
 
     if (rc.video) {
@@ -166,7 +166,7 @@
     }
     return '<div class="recap">' +
       '<div class="recap-head"><h2>Recap</h2>' +
-      '<span class="recap-note">registered participants \xb7 Learning Machines does not use these materials for AI training</span></div>' +
+      '<span class="recap-note">unlisted recording link \xb7 anyone with the link may view or reshare</span></div>' +
       '<div class="recap-body">' + parts.join("") + "</div></div>";
   }
 
@@ -189,8 +189,8 @@
 
     el.innerHTML =
       '<div class="recap is-pending"><h2>Recap</h2>' +
-      "<p>A video recording and a short written recap will be posted here after the session — " +
-      "shared with registered participants; Learning Machines does not use these materials for AI training.</p></div>";
+      "<p>A recording link and a short written recap will be posted here after facilitator review. " +
+      "Recording access and written-recap consent are handled separately.</p></div>";
   }
 
   function init() {

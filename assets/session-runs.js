@@ -33,7 +33,7 @@ window.LM_SESSION_RUNS = [
           { name: "Next-token prediction", where: "Room guessing game", observed: "Room split toward 'walks'; model's top choice matched the corpus. Pattern-matching, not understanding." },
           { name: "Temperature", where: "Tokenizer + Temperature Visualizer", observed: "Lower values sharpen the probability distribution; higher values make lower-probability tokens more available." },
           { name: "Attention", where: "Trophy-case pronoun flip", observed: "'Too big' → 'too small' — one word flipped which object the pronoun referred to. The model held the whole sentence in relation to itself." },
-          { name: "Alignment / human feedback", where: "Homework apology comparison", observed: "Almost everyone chose Team A; the activity used their reasons to make human scoring and judgment visible." }
+          { name: "Alignment / human feedback", where: "Homework apology comparison", observed: "The visible responses favored Team A; the activity used participants' reasons to make human scoring and judgment visible." }
         ],
         patterns: [
           { what: "A next-token probability describes a language pattern, not whether the resulting statement is true.", suggests: "Prediction and verification are separate classroom moves.", next: "Ask learners to name the evidence they would need before treating an output as factual." },

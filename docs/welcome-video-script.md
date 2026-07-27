@@ -61,8 +61,9 @@ behave. We don't train them from scratch.
 
 Everything lives in two places. Google Classroom is our shared home:
 materials, recordings, recaps. The website has the tools and a Start Here
-guide. Every session is recorded, and recordings go to registered
-participants only. If 9 a.m. Pacific is the middle of your night, and for
+guide. Every session is recorded, and recordings are shared afterward by
+unlisted YouTube link. Anyone with the link may be able to view or reshare
+it; unlisted does not mean private. If 9 a.m. Pacific is the middle of your night, and for
 some of you it is, the async route is a full path through this camp, not
 a consolation prize. Two small asks: if you haven't joined Classroom yet,
 please do. And if you plan to attend live, respond to the Calendar invite
@@ -70,8 +71,8 @@ when you can.
 
 **[2:25 — consent + close; back to talking head]**
 
-Cameras are optional. You choose how you're named in anything we share.
-Learning Machines does not use its recordings for AI training.
+Cameras are optional. You separately choose how your name, words, or described
+work may appear in public written recaps and promotion.
 
 Before Saturday, take five minutes in Classroom and Start Here. Then come
 as you are, and bring one honest question about these machines. We'll

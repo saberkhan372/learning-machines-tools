@@ -9,7 +9,7 @@ Practical policy for recordings, screenshots, participant names, AI-generated no
 
 This protocol applies to all Learning Machines: Text, Images, Video sessions and any public materials derived from them.
 
-**Participant action:** [Submit or update your consent](../pages/recap-consent.html) for the written recaps, the group recording, and promotion — one short form covering Sessions 1–3.
+**Participant action:** [Submit or update your consent](../pages/recap-consent.html) for the public written recaps and optional use of specifically approved words in promotion — one short form covering Sessions 1–3. Recording access is handled separately and cannot be changed through this form.
 
 ---
 
@@ -25,14 +25,13 @@ We record every session for asynchronous access. Participants are notified at re
 **Participant options:**
 - Participants may turn off their camera and/or microphone at any time without explanation.
 - A participant who prefers not to appear in recordings should be directed to an asynchronous-only participation option. Recordings will not be edited retroactively to remove individual participants.
-- Recordings are shared with registered participants only unless a participant explicitly consents to broader sharing.
+- Recordings are shared after each session by unlisted YouTube link. Anyone with the link may be able to view or reshare it; unlisted does not mean private.
+- Written-recap consent controls public use of a participant's name, words, and described work. It does not grant or revoke access to an existing recording and cannot remove a participant from that recording.
 
-**What we do not do:**
-- Learning Machines does not use recordings for AI training.
-- We do not share unedited recordings publicly without cohort-level consent.
-- We do not share recordings with external parties, sponsors, or media without individual consent.
-
-This describes Learning Machines' own use of the recordings. It does not make a claim about how third-party hosting platforms process data under their own terms and privacy policies.
+**Boundaries:**
+- Do not describe an unlisted recording as private, access-controlled, or limited to registered participants.
+- Written-recap consent is not permission to create promotional clips or excerpts from a recording. Any identifiable promotional use requires separate affirmative permission.
+- YouTube, Zoom, and other external services process uploaded or submitted material under their own account settings, retention policies, and terms.
 
 ---
 
@@ -96,7 +95,7 @@ Every AI-assisted recap must be reviewed by a human before publication. The revi
 
 **What we do not do:**
 - We do not publish AI-assisted recaps without human review.
-- Learning Machines does not intentionally use participant quotes or work to train or fine-tune a model. Third-party AI services process submitted material according to their account settings, retention policies, and terms.
+- We do not claim that submitted records are excluded from a third-party provider's retention or model-improvement practices. Facilitators should review the relevant account settings and terms before submitting session records.
 
 ---
 
@@ -134,7 +133,7 @@ Participants may contact the facilitator at any time to:
 
 **Response time:** Corrections will be addressed within 5 business days. Participants will receive confirmation when the correction is made.
 
-**Removal:** If a participant requests removal of their content from public materials, we will remove it. We cannot retroactively edit recordings that have already been downloaded by other registered participants, but we will remove the recording from any public or semi-public links.
+**Removal:** If a participant requests removal of their name, words, or described work from public written materials, we will remove or anonymize it. We cannot retroactively remove a participant from the existing session recording or undo copies and reshares. We can remove embeds and links from Learning Machines pages we control, but that does not invalidate an unlisted YouTube URL that has already been shared.
 
 **No retaliation:** A request for correction or removal never affects a participant's standing in the camp, their eligibility for future programs, or their relationship with the CC Fest community.
 
@@ -142,17 +141,17 @@ Participants may contact the facilitator at any time to:
 
 ## 7. End-of-Camp Consent Review
 
-At the end of Optional Studio, facilitator collects from each participant:
+The end-of-camp form collects these choices from each participant:
 
 | Question | Options |
 |---|---|
-| How do you want to be credited in the cohort recap? | Full name / display name / role only / anonymous |
-| May your project be described in the recap? | Yes / Yes with review / No |
-| May your project be linked? | Yes / Yes with review / No |
-| May screenshots or clips of your work appear publicly? | Yes / Yes with review / No |
-| Do you want to be contacted for the second cohort or future programs? | Yes / No |
+| Your name or alias | Optional short answer |
+| May your name, words, and described work appear in the written recaps? | Yes with name or alias / Yes anonymously / No — remove from public recaps |
+| May specifically approved words be used in promotion? | Yes with name or alias / Yes anonymously / No |
+| What exact words may be used in promotion? | Optional quotation supplied by the participant |
+| Conditions or different choices for different sessions | Optional explanation |
 
-A participant who does not complete the end-of-camp form is treated as anonymous and no-share by default.
+A participant who does not complete the form is treated as anonymous or removed from the public written recaps and as no promotional use by default. The form does not alter an existing session recording.
 
 ---
 
@@ -160,14 +159,13 @@ A participant who does not complete the end-of-camp form is treated as anonymous
 
 | Action | Consent Required? |
 |---|---|
-| Recording the session | Notified at registration; opt-out = async-only |
+| Recording the live session | Advance notice plus camera-off, microphone-off, chat-only, watch-only, or asynchronous participation choices |
 | Screenshot of facilitator screen / tools | No (public tools) |
 | Screenshot of participant's work | Yes — explicit, affirmative |
 | Quoting a participant by name | Yes — display name + permission |
 | Quoting a participant anonymously | Yes — confirm they're comfortable being paraphrased |
-| Sharing the recording with registered participants | No (covered by registration) |
-| Sharing the recording publicly | Yes — cohort-level consent |
+| Viewing or resharing the existing unlisted recording link | Not controlled by the written-recap consent form; anyone with the link may be able to do so |
+| Creating a promotional recording clip or excerpt | Yes — separate affirmative permission from identifiable participants |
 | Linking to a participant's project | Yes — explicit per project |
 | Using participant work in a future session as an example | Yes — explicit |
 | Mentioning a participant's project in a social post | Yes — explicit |
-| Learning Machines using participant data for AI training | No — prohibited |

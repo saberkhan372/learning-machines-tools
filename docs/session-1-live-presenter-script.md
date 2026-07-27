@@ -53,7 +53,7 @@ Do not click **new session** after the live activity begins. Refreshing is safe;
 
 "Welcome to Learning Machines. This is a camp about investigation, not about becoming better at prompting. Across text, images, and video, we are going to keep asking the same question: what is the machine actually doing?"
 
-"A quick participation note before we begin: this session is recorded for registered participants. Camera and microphone are always optional. You can participate entirely through chat, and you choose whether and how you are named in any public recap. Learning Machines does not use the recording for AI training."
+"A quick participation note before we begin: this session is recorded, and the recording may be shared afterward by unlisted link. Anyone with the link may be able to view or reshare it; unlisted does not mean private. Camera and microphone are always optional. You can participate entirely through chat, and you separately choose whether and how you are named in any public written recap."
 
 "Today the Zoom room becomes a language model. You are not pretending to be one smart brain. You are pretending to be many small pieces of a system. Together we will build text one piece at a time, then ask what makes that text useful to a person."
 
@@ -316,7 +316,7 @@ Just before the close, read two contrasting claims aloud without opening a new d
 
 "The session page is the map of everything we touched. The Vocabulary Field Guide has the terms in one place. The Text Experiment Board is there if you want to finish your claim, but this is an invitation, not homework pressure."
 
-"A reminder about the recording: it is shared with registered participants. You choose whether and how your words or work are named in any public recap."
+"A reminder about the recording: it is shared separately by unlisted link, which anyone who has the link may be able to view or reshare. You separately choose whether and how your words or work are named in any public written recap."
 
 "Next Saturday we move from words to images. The question becomes more visible: what does a model fill in when you do not specify? Same time, same Zoom room. Thank you for making the machine with me today."
 
