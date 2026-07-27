@@ -46,6 +46,17 @@
   .stem-context { font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 18px; }
 
+  /* solo / group entry */
+  .mode-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+  .mode-btn { border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
+    padding: 8px 11px; font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em;
+    cursor: pointer; }
+  .mode-btn:hover, .mode-btn:focus-visible { border-color: var(--accent); }
+  .mode-btn.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .provenance-note { margin: 0 0 22px; padding: 12px 14px; border: 1px solid var(--line);
+    background: var(--surface-2); color: var(--ink-dim); font-size: 0.82rem; line-height: 1.55; }
+  .provenance-note b { color: var(--ink); }
+
   /* paste zone */
   .paste-section { margin-bottom: 22px; }
   .paste-section label { display: block; font-family: var(--font-mono); font-size: 0.74rem;
@@ -138,8 +149,13 @@
     <div class="panel">
       <p style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin:0 0 10px;">Tool 15 · Session 1 · Text · Paste-aggregation</p>
       <h1>Next-Token Prediction Game</h1>
-      <p>Before opening a language model, humans guess the next word in a sentence. This tool collects those guesses from a Zoom chat paste and shows the room's distribution beside the model's predicted probabilities.</p>
+      <p>Guess the next word yourself, or collect a room's guesses from a chat paste. The tool places those choices beside an authored, illustrative probability distribution.</p>
       <p>The gap between the two distributions is the discussion. <b>Every tool should make something invisible visible.</b></p>
+
+      <div class="mode-row" role="group" aria-label="Choose solo or group mode">
+        <button class="mode-btn active" id="soloModeBtn" type="button" aria-pressed="true">Solo · about 5 min</button>
+        <button class="mode-btn" id="groupModeBtn" type="button" aria-pressed="false">Group tally</button>
+      </div>
 
       <div style="margin-top:18px;">
         <div class="stem-context" id="stemContext">Choose a prompt →</div>
@@ -148,13 +164,14 @@
 
       <!-- paste zone -->
       <div class="paste-section" style="margin-top:20px;">
-        <label for="pasteArea">Paste Zoom chat here — one guess per line, or "Name: word" format</label>
-        <textarea id="pasteArea" placeholder="Jan: cat&#10;Alex: floor&#10;Sam: mat&#10;&#10;— or just one word per line —&#10;&#10;cat&#10;floor&#10;chair"></textarea>
-        <div class="parse-status" id="parseStatus">Paste chat guesses, then click Tally.</div>
+        <label for="pasteArea" id="guessInputLabel">Your next-word guess</label>
+        <textarea id="pasteArea" aria-describedby="inputHelp parseStatus" placeholder="Type one word — make your prediction before revealing the distribution."></textarea>
+        <div class="paste-help" id="inputHelp">One word is enough. The tool uses the first token you enter.</div>
+        <div class="parse-status" id="parseStatus" aria-live="polite">Choose a sentence stem, then make one prediction.</div>
       </div>
 
       <div class="btn-row">
-        <button class="btn-tally" id="tallyBtn" type="button">Tally guesses →</button>
+        <button class="btn-tally" id="tallyBtn" type="button">Compare my guess →</button>
         <button class="btn-clear" id="clearBtn" type="button">Clear</button>
       </div>
     </div>
@@ -165,26 +182,30 @@
     </div>
   </div>
 
+  <div class="provenance-note">
+    <b>Authored teaching simulation.</b> The comparison probabilities are illustrative approximations, not frozen output from a documented model and not a live source check. Use them to inspect how a distribution works—not to claim what a particular product would predict.
+  </div>
+
   <!-- ── RESULTS ── -->
   <div class="results-grid" id="resultsGrid" style="display:none;">
     <div class="panel results-panel">
-      <h2>Room guesses</h2>
+      <h2 id="humanHeading">Your guess</h2>
       <div class="legend">
-        <div class="legend-item"><div class="legend-dot human"></div>Participant</div>
+        <div class="legend-item"><div class="legend-dot human"></div><span id="humanLegend">You</span></div>
       </div>
       <div id="humanBars"><div class="empty-state">No guesses tallied yet.</div></div>
     </div>
     <div class="panel results-panel">
-      <h2>Model top predictions</h2>
+      <h2>Illustrative distribution</h2>
       <div class="legend">
-        <div class="legend-item"><div class="legend-dot model"></div>Model probability</div>
+        <div class="legend-item"><div class="legend-dot model"></div>Authored probability</div>
       </div>
       <div id="modelBars"></div>
     </div>
   </div>
 
   <div class="compare-note" id="compareNote" style="display:none;">
-    <b>What to notice:</b> Where do participants and the model agree most? Where do they diverge? Does the model's top choice feel obvious or surprising? A word ranked 4th by the model might be 1st for participants — what does that tell you about context, genre, or expectation?
+    <b>What to notice:</b> Where did your guess land? Does a high-probability continuation have to be true? What can a probability distribution tell you—and what can it not tell you about sources, meaning, or evidence?
   </div>
 </main>
 
@@ -192,14 +213,14 @@
 /* ==========================================================
    Next-Token Prediction Game
    Teaching goal: make next-word prediction visible by
-   comparing room guesses with precomputed model probabilities.
+   comparing human guesses with an authored teaching distribution.
    Pattern: paste-aggregation (SHARED-CONTRACT §5).
    Code style: let, if/else, no ternaries (SHARED-CONTRACT §6).
    ========================================================== */
 
-/* ── Precomputed prompts with model top-k ─────────────────
-   Probabilities are illustrative approximations based on
-   language model behavior for these sentence stems.
+/* ── Precomputed prompts with authored top-k distributions ─
+   Probabilities are illustrative teaching approximations,
+   not captured output from a named language model.
    No live model call is made. All data is inline.
    ──────────────────────────────────────────────────────── */
 let PROMPTS = [
@@ -298,19 +319,69 @@ let PROMPTS = [
 /* ── State ──────────────────────────────────────────────── */
 let activePromptId = null;
 let humanTally = {};
+let entryMode = "solo";
 
 /* ── DOM refs ───────────────────────────────────────────── */
 let promptListEl  = document.getElementById("promptList");
 let stemDisplayEl = document.getElementById("stemDisplay");
 let stemContextEl = document.getElementById("stemContext");
 let pasteAreaEl   = document.getElementById("pasteArea");
+let inputLabelEl  = document.getElementById("guessInputLabel");
+let inputHelpEl   = document.getElementById("inputHelp");
 let parseStatusEl = document.getElementById("parseStatus");
 let tallyBtnEl    = document.getElementById("tallyBtn");
 let clearBtnEl    = document.getElementById("clearBtn");
+let soloModeBtnEl = document.getElementById("soloModeBtn");
+let groupModeBtnEl = document.getElementById("groupModeBtn");
 let resultsGridEl = document.getElementById("resultsGrid");
 let humanBarsEl   = document.getElementById("humanBars");
+let humanHeadingEl = document.getElementById("humanHeading");
+let humanLegendEl = document.getElementById("humanLegend");
 let modelBarsEl   = document.getElementById("modelBars");
 let compareNoteEl = document.getElementById("compareNote");
+
+function resetComparison(message) {
+  pasteAreaEl.value = "";
+  humanTally = {};
+  if (entryMode === "solo") {
+    humanBarsEl.innerHTML = "<div class='empty-state'>Make one prediction, then compare.</div>";
+  } else {
+    humanBarsEl.innerHTML = "<div class='empty-state'>Paste guesses and click Tally.</div>";
+  }
+  resultsGridEl.style.display = "none";
+  compareNoteEl.style.display = "none";
+  parseStatusEl.textContent = message;
+  parseStatusEl.className = "parse-status";
+}
+
+function setEntryMode(mode) {
+  entryMode = mode;
+  let isSolo = mode === "solo";
+  soloModeBtnEl.classList.toggle("active", isSolo);
+  groupModeBtnEl.classList.toggle("active", !isSolo);
+  soloModeBtnEl.setAttribute("aria-pressed", String(isSolo));
+  groupModeBtnEl.setAttribute("aria-pressed", String(!isSolo));
+
+  if (isSolo) {
+    inputLabelEl.textContent = "Your next-word guess";
+    inputHelpEl.textContent = "One word is enough. The tool uses the first token you enter.";
+    pasteAreaEl.placeholder = "Type one word — make your prediction before revealing the distribution.";
+    tallyBtnEl.textContent = "Compare my guess →";
+    humanHeadingEl.textContent = "Your guess";
+    humanLegendEl.textContent = "You";
+    compareNoteEl.innerHTML = "<b>What to notice:</b> Where did your guess land? Does a high-probability continuation have to be true? What can a probability distribution tell you—and what can it not tell you about sources, meaning, or evidence?";
+    resetComparison("Make one prediction, then compare it.");
+  } else {
+    inputLabelEl.textContent = 'Paste chat guesses — one per line, or "Name: word" format';
+    inputHelpEl.textContent = "Zoom and Teams chat formats are supported. The first token after each name is tallied.";
+    pasteAreaEl.placeholder = "Jan: cat\nAlex: floor\nSam: mat\n\n— or just one word per line —\n\ncat\nfloor\nchair";
+    tallyBtnEl.textContent = "Tally guesses →";
+    humanHeadingEl.textContent = "Room guesses";
+    humanLegendEl.textContent = "Participants";
+    compareNoteEl.innerHTML = "<b>What to notice:</b> Where does the room agree with the illustrative distribution? Where does it diverge? What might context, genre, or shared experience contribute?";
+    resetComparison("Paste chat guesses, then click Tally.");
+  }
+}
 
 /* ── Build prompt selector ──────────────────────────────── */
 function buildPromptList() {
@@ -354,11 +425,19 @@ function selectPrompt(id) {
 
   /* clear previous tally */
   humanTally = {};
-  humanBarsEl.innerHTML = "<div class='empty-state'>Paste guesses and click Tally.</div>";
+  if (entryMode === "solo") {
+    humanBarsEl.innerHTML = "<div class='empty-state'>Make one prediction, then compare.</div>";
+  } else {
+    humanBarsEl.innerHTML = "<div class='empty-state'>Paste guesses and click Tally.</div>";
+  }
   modelBarsEl.innerHTML = "";
   resultsGridEl.style.display = "none";
   compareNoteEl.style.display = "none";
-  parseStatusEl.textContent = "Prompt selected. Paste guesses below.";
+  if (entryMode === "solo") {
+    parseStatusEl.textContent = "Prompt selected. Make one prediction below.";
+  } else {
+    parseStatusEl.textContent = "Prompt selected. Paste guesses below.";
+  }
   parseStatusEl.className = "parse-status";
 
   /* render model bars immediately so they're ready */
@@ -507,12 +586,19 @@ tallyBtnEl.addEventListener("click", function() {
 
   let raw = pasteAreaEl.value;
   if (raw.trim() === "") {
-    parseStatusEl.textContent = "Paste is empty — nothing to tally.";
+    if (entryMode === "solo") {
+      parseStatusEl.textContent = "Type one next-word guess before comparing.";
+    } else {
+      parseStatusEl.textContent = "Paste is empty — nothing to tally.";
+    }
     parseStatusEl.className = "parse-status warn";
     return;
   }
 
   let words = parsePaste(raw);
+  if (entryMode === "solo" && words.length > 1) {
+    words = [words[0]];
+  }
   let total = words.length;
 
   if (total === 0) {
@@ -523,12 +609,16 @@ tallyBtnEl.addEventListener("click", function() {
 
   humanTally = tallyWords(words);
 
-  let guessWord = "guesses";
-  if (total === 1) { guessWord = "guess"; }
-  let uniqueCount = Object.keys(humanTally).length;
-  let wordWord = "words";
-  if (uniqueCount === 1) { wordWord = "word"; }
-  parseStatusEl.textContent = total + " " + guessWord + " tallied, " + uniqueCount + " unique " + wordWord + ".";
+  if (entryMode === "solo") {
+    parseStatusEl.textContent = 'Compared your guess: "' + words[0] + '".';
+  } else {
+    let guessWord = "guesses";
+    if (total === 1) { guessWord = "guess"; }
+    let uniqueCount = Object.keys(humanTally).length;
+    let wordWord = "words";
+    if (uniqueCount === 1) { wordWord = "word"; }
+    parseStatusEl.textContent = total + " " + guessWord + " tallied, " + uniqueCount + " unique " + wordWord + ".";
+  }
   parseStatusEl.className = "parse-status ok";
 
   renderHumanBars(humanTally, total);
@@ -543,14 +633,11 @@ tallyBtnEl.addEventListener("click", function() {
 
 /* ── Clear handler ──────────────────────────────────────── */
 clearBtnEl.addEventListener("click", function() {
-  pasteAreaEl.value = "";
-  humanTally = {};
-  humanBarsEl.innerHTML = "<div class='empty-state'>Paste guesses and click Tally.</div>";
-  resultsGridEl.style.display = "none";
-  compareNoteEl.style.display = "none";
-  parseStatusEl.textContent = "Cleared.";
-  parseStatusEl.className = "parse-status";
+  resetComparison("Cleared. Make another prediction when you are ready.");
 });
+
+soloModeBtnEl.addEventListener("click", function() { setEntryMode("solo"); });
+groupModeBtnEl.addEventListener("click", function() { setEntryMode("group"); });
 
 /* ── Utility ────────────────────────────────────────────── */
 function escapeHtml(str) {
@@ -633,6 +720,8 @@ function runTests() {
 
 /* ── Init ───────────────────────────────────────────────── */
 buildPromptList();
+selectPrompt("cat");
+setEntryMode("solo");
 runTests();
 </script>
   <script src="../../assets/analytics.js"></script>

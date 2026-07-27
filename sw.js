@@ -16,7 +16,7 @@
    Paths are relative to the worker's own location (the site root, under any
    GitHub Pages baseurl). */
 
-var CACHE = "lm-shell-v30";
+var CACHE = "lm-shell-v31";
 
 /* Resolved against the SW scope (the site root). */
 var PRECACHE = [
@@ -37,6 +37,8 @@ var PRECACHE = [
   "assets/session-runs.js",
   "assets/recap.js",
   "pages/start-here.html",
+  "pages/start-here-after-camp.html",
+  "pages/classroom-pack-next-word.html",
   "pages/run-console.html",
   "pages/session-text.html",
   "pages/session-1-assignment.html",
@@ -49,6 +51,7 @@ var PRECACHE = [
   "pages/session-3-deck.html",
   "pages/session-3-assignment.html",
   "pages/docs-session-3-facilitation.html",
+  "tools/next-token-prediction-game/",
   "tools/tokenizer-temperature-visualizer/",
   "tools/contextual-vector-lab/",
   "tools/whose-preference-lab/",

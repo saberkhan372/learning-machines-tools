@@ -28,8 +28,8 @@ Lead with **participant-free, browser-based activities** — not recordings or n
 These block the campaign; resolve them in order.
 
 1. **Audience data verified — July 26, 2026.** The newest v3 export contains 81 responses from 81 unique email addresses. Of those respondents, 55 (67.9%) said they use generative-AI tools regularly; 15 (18.5%) had tried a few things but were still figuring them out; 4 (4.9%) had barely used them; 3 (3.7%) were unsure what counts as generative AI; and 4 (4.9%) actively chose not to use them. The private attendance audit preserves the directional comparison: 15 of 55 regular users had an observed-live signal (27.3%), compared with 7 of 15 still-figuring-it-out respondents (46.7%). This difference is a planning signal, not a causal or statistically established effect. **Outreach decision:** lead with “you already use these; here is a way to investigate what is underneath,” while retaining “no prior knowledge required” as an access reassurance rather than presenting the list as beginner-heavy. Source: the latest `Learning Machines_ Text, Images, Video — Interest Form v3 (Responses) (1).xlsx`, reconciled against the private engagement audit.
-2. **Build the PII-safe Start Here page** (Deliverable A, §4). Touch 1 links to it.
-3. **Build + dry-run one classroom pack** (Deliverable B, §5) before Touch 2 advertises it. Existing tools/packs are ingredients, not a turnkey product.
+2. **Build the PII-safe Start Here page** (Deliverable A, §4). **Completed July 27, 2026:** `pages/start-here-after-camp.html` provides the participant-free entry route and links one verified classroom pack.
+3. **Build + dry-run one classroom pack** (Deliverable B, §5) before Touch 2 advertises it. **Completed July 27, 2026:** `pages/classroom-pack-next-word.html` contains all 16 components, exact 15/30/60-minute routes, a No-AI route, print-specific Field Note, and authoritative sources. The 30-minute route has passed a structural timing dry run; a live classroom validation has not yet occurred.
 4. **Lock the showcase date/format** (Aug 8 vs 15, from Session 3 feedback). Gates Touch 3.
 5. **Decide whether there is a future cohort.** Undecided → copy says *"if I run another cohort…"*, never a promise.
 6. **Consent gate:** apply returned written-recap consent choices before any named recap or recording enters outreach. Broad outreach = PII-free only (§2).
@@ -261,16 +261,16 @@ Success = meaningful small actions, not open rates.
 
 **Before Touch 1**
 - [x] Verify signup-pool composition (§0.1); lead with investigation for a regular-user majority while keeping the entry beginner-accessible
-- [ ] Create the PII-safe Start Here page
+- [x] Create the PII-safe Start Here page
 - [ ] Select/create facilitator-owned demo media
-- [ ] Verify the Next-Token Prediction Game as a credible 5-minute entry
-- [ ] Confirm the page has no participant data or recap/recording links
+- [x] Verify the Next-Token Prediction Game as a credible 5-minute entry
+- [x] Confirm the page has no participant data or recap/recording links
 - [ ] Draft educator + general-interest versions
 - [ ] Prepare reply-label workflow: explore / teach / showcase / observe / future / unsubscribe
 
 **Before Touch 2**
-- [ ] Build the classroom next-word pack; dry-run the 30-minute route
-- [ ] Verify print layout + No-AI route
+- [x] Build the classroom next-word pack; structurally dry-run the 30-minute route
+- [x] Verify print layout + No-AI route
 - [ ] Create one facilitator-owned screenshot/excerpt
 
 **Before Touch 3**

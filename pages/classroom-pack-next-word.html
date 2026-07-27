@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en" data-tone="white" data-type="signage" data-ink="full" data-mod="text" data-skin="worksheet-print">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>Classroom pack — Fluent Is Not Necessarily True — Learning Machines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/field.css">
+  <link rel="stylesheet" href="../assets/field-sub.css">
+  <script src="../assets/field-theme.js"></script>
+  <style>
+    .doc { max-width: 820px; margin: 0 auto; padding: 8px 20px 64px; }
+    .doc-head { border-bottom: 2px solid var(--ink); padding-bottom: 14px; margin-bottom: 8px; }
+    .doc-kicker { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .doc-head h1 { font-size: 1.7rem; line-height: 1.15; letter-spacing: -.02em; margin: 6px 0 6px; }
+    .doc-sub { font-size: .95rem; color: var(--ink-soft); line-height: 1.6; max-width: 62ch; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 26px; }
+    .toolbar .btn-print { font-family: var(--font-body); font-weight: 700; font-size: .85rem; padding: 8px 16px; border: 1.5px solid var(--ink); border-radius: 2px; background: var(--ink); color: var(--paper, #fff); cursor: pointer; }
+    .toolbar a { font-family: var(--font-mono); font-size: .74rem; color: var(--ink); text-decoration: none; border: 1px solid var(--line); padding: 8px 12px; }
+    .toolbar a:hover, .toolbar a:focus-visible { border-color: var(--accent); color: var(--accent); }
+
+    .component { border-top: 1px solid var(--line); padding: 18px 0 4px; break-inside: avoid; }
+    .component:first-of-type { border-top: none; }
+    .c-no { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); letter-spacing: .06em; }
+    .component h2 { font-size: 1.12rem; letter-spacing: -.01em; margin: 2px 0 8px; }
+    .component p, .component li { font-size: .95rem; line-height: 1.62; color: var(--ink-soft); }
+    .component ul, .component ol { margin: 6px 0 6px 1.1em; }
+    .component li { margin: 3px 0; }
+    .component strong { color: var(--ink); }
+    .times { display: grid; grid-template-columns: 70px 1fr; gap: 4px 12px; margin: 8px 0; }
+    .times dt { font-family: var(--font-mono); font-size: .78rem; color: var(--ink); font-weight: 600; }
+    .times dd { margin: 0; font-size: .92rem; color: var(--ink-soft); line-height: 1.55; }
+    .box { border: 1.5px solid var(--ink); padding: 14px 16px; margin: 10px 0; }
+    .box .box-label { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+    .prompt-line { font-family: var(--font-mono); font-size: .95rem; color: var(--ink); }
+    .frame { font-family: var(--font-mono); font-size: .9rem; line-height: 1.8; color: var(--ink); }
+    .fieldnote { border: 2px solid var(--ink); padding: 18px 20px; margin: 10px 0; }
+    .fieldnote h3 { font-size: 1rem; margin: 0 0 4px; }
+    .fieldnote .rule { border-bottom: 1px solid var(--ink); height: 22px; margin: 8px 0; }
+    .modelbox { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1.5px solid var(--ink); margin: 10px 0; }
+    .modelbox > div { padding: 12px 14px; }
+    .modelbox > div:first-child { border-right: 1.5px solid var(--ink); }
+    .modelbox h4 { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 6px; color: var(--ink); }
+    .route { border-left: 3px solid var(--ink); padding-left: 14px; margin: 14px 0; }
+    .route h3 { font-size: .96rem; margin: 0 0 6px; }
+    .route ol { margin-top: 4px; }
+    .student-copy { scroll-margin-top: 24px; }
+    .source-list a { overflow-wrap: anywhere; }
+    @media (max-width: 620px) { .modelbox { grid-template-columns: 1fr; } .modelbox > div:first-child { border-right: none; border-bottom: 1.5px solid var(--ink); } .times { grid-template-columns: 1fr; } }
+
+    @media print {
+      @page { margin: .55in; }
+      .nav, .footer, .toolbar, .no-print { display: none !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .doc { max-width: none; margin: 0; padding: 0; }
+      .component, .box, .fieldnote, .modelbox { break-inside: avoid; }
+      .student-copy, .sources { break-before: page; page-break-before: always; }
+      a { color: #000; text-decoration: underline; }
+      .doc-head { border-bottom: 2px solid #000; }
+      .route { border-left-color: #000; }
+      .source-list a[href^="http"]::after { content: " (" attr(href) ")"; font-family: monospace; font-size: 8pt; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="mark"></span>Learning Machines</a>
+      <div class="nav-links">
+        <a href="start-here-after-camp.html" class="hide-sm">Start here</a>
+        <a href="tools.html" class="hide-sm">Tool index</a>
+        <a class="btn btn-sm" href="../index.html">← Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="doc">
+    <div class="doc-head">
+      <p class="doc-kicker">Learning Machines · Classroom pack · Session 1 · Text</p>
+      <h1>Fluent Is Not Necessarily True: A Next-Word Investigation</h1>
+      <p class="doc-sub">An adaptable, ready-to-run classroom activity. Students predict how a sentence continues, compare guesses, and confront the gap between a <em>likely-sounding</em> answer and a <em>true</em> one. Runs in a browser, on paper, or as pure discussion — no AI account required.</p>
+    </div>
+
+    <div class="toolbar no-print">
+      <button class="btn-print" onclick="window.print()">Print / Save as PDF</button>
+      <a href="../tools/next-token-prediction-game/" data-gc-event="postcamp/pack-open-tool">Optional browser tool ↗</a>
+      <a href="no-ai-pathway.html" data-gc-event="postcamp/pack-open-no-ai">No-AI pathway ↗</a>
+    </div>
+
+    <section class="component">
+      <span class="c-no">01</span>
+      <h2>Audience &amp; adaptation range</h2>
+      <p>Designed for grades 6–12, undergraduates, and adult / professional development. No computer-science background is needed for the teacher or students. It can fit English language arts, computer science, social studies, media and information literacy, and library instruction. For younger learners, use one short, concrete prompt and keep the focus on prediction versus verification. For advanced groups, add the data and evaluation layer in the 60-minute route. These grade bands are adaptation guidance, not the result of a formal classroom validation study.</p>
+    </section>
+
+    <section class="component">
+      <span class="c-no">02</span>
+      <h2>Three timed versions</h2>
+      <dl class="times">
+        <dt>15 min</dt><dd>Two quick prediction rounds + a verified answer + one discussion question. Good as a warm-up or exit activity.</dd>
+        <dt>30 min</dt><dd>Two rounds (open prediction, then the truth-gap round), a short tally, the reveal, and guided discussion. <strong>The core version.</strong></dd>
+        <dt>60 min</dt><dd>Adds the data/defaults layer ("who decides what's likely?"), a student-authored sentence, and the bounded-claim write-up (§14–15).</dd>
+      </dl>
+      <div class="route">
+        <h3>15-minute route</h3>
+        <ol>
+          <li><strong>0–2:</strong> frame prediction as different from fact-checking.</li>
+          <li><strong>2–6:</strong> run Round 1 and tally the spread.</li>
+          <li><strong>6–10:</strong> run Round 2, reveal the verified answer, and use the branch note in §06.</li>
+          <li><strong>10–13:</strong> discuss one verification question from §11.</li>
+          <li><strong>13–15:</strong> complete one bounded claim from §15.</li>
+        </ol>
+      </div>
+      <div class="route">
+        <h3>30-minute route · core</h3>
+        <p>Use the exact six-step protocol in §05: 2 + 7 + 9 + 4 + 6 + 2 minutes.</p>
+      </div>
+      <div class="route">
+        <h3>60-minute route</h3>
+        <ol>
+          <li><strong>0–5:</strong> frame the activity and make silent predictions.</li>
+          <li><strong>5–15:</strong> run Round 1, tally, and compare the spread.</li>
+          <li><strong>15–27:</strong> run Round 2, verify the answer, and discuss why a tally is not a source.</li>
+          <li><strong>27–37:</strong> name the documented mechanism and the teaching analogy's limits (§08–10).</li>
+          <li><strong>37–47:</strong> groups write a new sentence stem and predict how changing its context may change the distribution.</li>
+          <li><strong>47–55:</strong> compare next tests and the evidence each would require.</li>
+          <li><strong>55–60:</strong> complete and share the Field Note (§14–15).</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="component">
+      <span class="c-no">03</span>
+      <h2>Learning objective</h2>
+      <p>Students can explain, in their own words, that an autoregressive language model uses learned parameters and the current context to assign probabilities to possible continuations, and that a fluent or confident continuation is <strong>not necessarily true</strong>. They can name one piece of evidence they would need before treating an AI-produced statement as a fact.</p>
+    </section>
+
+    <section class="component">
+      <span class="c-no">04</span>
+      <h2>Materials &amp; setup</h2>
+      <ul>
+        <li>A board, chart paper, or shared doc to tally guesses — or hands / sticky notes.</li>
+        <li>The two sentence prompts in §06 (project them or read aloud).</li>
+        <li><strong>Optional:</strong> the <a href="../tools/next-token-prediction-game/">Next-Token Prediction Game</a> (browser, no login). Its probability display is an <em>authored, illustrative</em> teaching approximation, not output from a live model.</li>
+        <li>The printable Field Note (§14), one per student, for the 30/60-minute versions.</li>
+      </ul>
+      <p>No AI account, no student log-ins, and no generation are required for any version.</p>
+    </section>
+
+    <section class="component">
+      <span class="c-no">05</span>
+      <h2>Step-by-step facilitation protocol (30-minute core)</h2>
+      <ol>
+        <li><strong>Frame (2 min).</strong> "For a few minutes, we'll perform one simplified prediction task: choose a plausible next word. This human activity is an analogy, not a model simulation."</li>
+        <li><strong>Round 1 — open prediction (7 min).</strong> Show the open prompt (§06). Everyone writes one word. Tally the room's answers on the board. You will often get several plausible words rather than one. Ask: <em>why more than one? what made you pick yours?</em> Name the documented connection carefully: autoregressive language models assign probabilities to possible continuations from their learned parameters and the current context. The room tally only makes the idea of a distribution visible.</li>
+        <li><strong>Round 2 — the truth gap (9 min).</strong> Show the second prompt (§06). Tally again, then verify the answer with a source. Use the branch note whether the room favors Sydney, Canberra, or another answer. The tally can show what was common in this room; it cannot establish which answer is true.</li>
+        <li><strong>Name the idea (4 min).</strong> "Prediction can produce fluent text, but prediction alone does not guarantee factual accuracy." Unsupported or false generated content is often called a <em>hallucination</em> or <em>confabulation</em>. This activity illustrates why probability and verification are different; it does not reproduce every cause of those failures.</li>
+        <li><strong>Discuss (6 min).</strong> Use §11.</li>
+        <li><strong>Close (2 min).</strong> Each student completes the bounded-claim frame (§15) about what they saw.</li>
+      </ol>
+    </section>
+
+    <section class="component">
+      <span class="c-no">06</span>
+      <h2>Exact prediction prompts</h2>
+      <div class="box">
+        <span class="box-label">Round 1 · open prediction (several answers may be plausible)</span>
+        <p class="prompt-line">The cat sat on the ________.</p>
+      </div>
+      <div class="box">
+        <span class="box-label">Round 2 · compare a room tally with a verified fact</span>
+        <p class="prompt-line">The capital of Australia is ________.</p>
+      </div>
+      <div class="box">
+        <span class="box-label">Round 2 branch note</span>
+        <p style="font-size:.86rem;color:var(--ink-soft);margin:0;">Verify the answer before class: <strong>Canberra</strong>. If Sydney or another city leads, ask why a familiar answer felt plausible. If Canberra leads, ask whether a correct majority makes the tally a reliable fact-checking method. Either result supports the bounded point: popularity and fluency are not evidence of truth. Do not present this as a prediction of how a particular AI product will answer.</p>
+      </div>
+    </section>
+
+    <section class="component">
+      <span class="c-no">07</span>
+      <h2>Worked example · hypothetical, facilitator-created</h2>
+      <p>Imagine a class of 24 produces: <em>Sydney (16), Melbourne (5), Canberra (2), unsure (1)</em>. This is invented demonstration data, not a result from a Learning Machines participant group. Sydney is the room's most common answer; a source check shows that the capital is <strong>Canberra</strong>. The evidence supports: "Sydney was the most frequent guess in this hypothetical tally, but frequency did not establish truth." It does <strong>not</strong> support a claim about what a particular language model would output or why.</p>
+    </section>
+
+    <section class="component">
+      <span class="c-no">08</span>
+      <h2>What this models</h2>
+      <ul>
+        <li>The distinction between prediction and verification: a continuation can be plausible without being source-checked.</li>
+        <li>A distribution: several possible next words can receive different weights rather than there being one required continuation.</li>
+        <li>The core warning: <strong>fluent, confident, or popular does not necessarily mean true.</strong> Next-token prediction helps explain why factuality is not automatic, but it is not a complete account of model confabulation.</li>
+      </ul>
+    </section>
+
+    <section class="component">
+      <span class="c-no">09</span>
+      <h2>What it does <u>not</u> model (say this out loud)</h2>
+      <div class="modelbox">
+        <div>
+          <h4>The activity is a teaching analogy</h4>
+          <p style="font-size:.9rem;">The room is not a neural network. The board tally is not a model's internal distribution. Predicting by hand shows the <em>idea</em> of likely-next-word; it does not reproduce any real model's architecture.</p>
+        </div>
+        <div>
+          <h4>A real model is not a corpus lookup</h4>
+          <p style="font-size:.9rem;">A language model assigns probabilities from learned patterns across huge amounts of text — not by counting a phrase in a database at the moment you ask. Training frequency <em>influences</em> outputs, but the output is not a direct count or a fact-check.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="component">
+      <span class="c-no">10</span>
+      <h2>What evidence would verify a mechanism claim</h2>
+      <p>If a student claims "the model said Sydney <em>because</em> Sydney appears more often in its training data," treat that as a hypothesis, not a finding. A responsible test would record the product and model/version if known, date, exact prompt and context, relevant settings, and complete output; repeat the prompt under controlled variations; and consult the model card, system documentation, or architecture paper. A claim about training frequency would additionally require relevant dataset evidence, which may not be available. Even then, observed outputs do not by themselves reveal one internal cause. This activity establishes only the conceptual distinction between probability and verification.</p>
+    </section>
+
+    <section class="component">
+      <span class="c-no">11</span>
+      <h2>Discussion questions</h2>
+      <ul>
+        <li>Why did Round 1 produce several answers instead of one? What does that tell you about "prediction"?</li>
+        <li>In Round 2, which answer was most common? What made it feel plausible, and did the tally establish that it was true?</li>
+        <li>If a chatbot answered a homework question in fluent, confident language, what would you check before trusting it — and how?</li>
+        <li>When is "the most likely answer" good enough, and when is it dangerous? (Autocomplete a text vs. a medical dose vs. a citation.)</li>
+        <li>Whose text trained the patterns? Whose sentences count as "likely," and whose might be missing?</li>
+      </ul>
+    </section>
+
+    <section class="component">
+      <span class="c-no">12</span>
+      <h2>No-AI version (paper / discussion only)</h2>
+      <p>Run the entire activity with no device: read the two prompts aloud, collect guesses by show of hands or sticky notes, tally on the board, verify the factual answer from a prepared source, and discuss. The activity itself requires no account, network submission, or generated output. This is the recommended route for restricted networks and for groups that do not want to use generative AI. See the full <a href="no-ai-pathway.html">No-AI pathway</a> for more.</p>
+    </section>
+
+    <section class="component">
+      <span class="c-no">13</span>
+      <h2>Access, privacy &amp; age considerations</h2>
+      <ul>
+        <li><strong>Privacy:</strong> the paper route does not require students to submit names or work to an online service. The optional browser tool needs no login and does not intentionally transmit typed guesses; avoid pasting student names. GitHub Pages, Google Fonts, and aggregate GoatCounter analytics process page requests under their own terms and settings.</li>
+        <li><strong>Age:</strong> the pack is written for grade 6 and up, but that range has not been formally validated. Adapt vocabulary, examples, pacing, and independent browsing to your learners and local requirements.</li>
+        <li><strong>Access:</strong> the printable is legible in grayscale and does not depend on color. Read prompts aloud for print/vision needs; the activity works fully by voice and paper.</li>
+      </ul>
+    </section>
+
+    <section class="component student-copy">
+      <span class="c-no">14</span>
+      <h2>Printable Field Note (one per student)</h2>
+      <div class="fieldnote">
+        <h3>Next-Word Investigation — Field Note</h3>
+        <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:8px;">Name / group (optional): <span style="border-bottom:1px solid var(--ink);display:inline-block;min-width:180px;">&nbsp;</span></p>
+        <p style="font-size:.9rem;"><strong>Round 1.</strong> The cat sat on the ________. My predicted word: <span style="border-bottom:1px solid var(--ink);display:inline-block;min-width:140px;">&nbsp;</span></p>
+        <p style="font-size:.9rem;"><strong>Round 2.</strong> The capital of Australia is ________. My predicted word: <span style="border-bottom:1px solid var(--ink);display:inline-block;min-width:140px;">&nbsp;</span> · Verified answer: <span style="border-bottom:1px solid var(--ink);display:inline-block;min-width:120px;">&nbsp;</span></p>
+        <p style="font-size:.9rem;margin-top:8px;"><strong>My bounded claim</strong> (fill the blanks):</p>
+        <p class="frame" style="font-size:.82rem;line-height:1.55;">I observed ___. The evidence is ___. This suggests ___, but it does not establish ___. My next test would be ___.</p>
+        <div class="rule"></div><div class="rule"></div><div class="rule"></div>
+      </div>
+    </section>
+
+    <section class="component">
+      <span class="c-no">15</span>
+      <h2>Bounded-claim sentence frame</h2>
+      <div class="box">
+        <p class="frame">I observed __________. The evidence is __________. This suggests __________, but it does not establish __________. My next test would be __________.</p>
+      </div>
+    </section>
+
+    <section class="component sources">
+      <span class="c-no">16</span>
+      <h2>Authoritative sources &amp; further reading</h2>
+      <ul class="source-list">
+        <li><strong>On this site:</strong> the <a href="../tools/next-token-prediction-game/">Next-Token Prediction Game</a> and the <a href="session-text.html">Session 1 · Text</a> overview.</li>
+        <li><strong>Fact source for Round 2:</strong> Australian Government Department of Foreign Affairs and Trade, <a href="https://www.dfat.gov.au/about-australia">“About Australia”</a> (lists Canberra as the capital city). Check the source again before teaching rather than relying on this pack alone.</li>
+        <li><strong>Transformer architecture:</strong> Vaswani et al. (2017), <a href="https://arxiv.org/abs/1706.03762">“Attention Is All You Need”</a>. This is a primary technical paper, not an age-adjusted classroom explanation.</li>
+        <li><strong>Autoregressive language modeling:</strong> Brown et al. (2020), <a href="https://arxiv.org/abs/2005.14165">“Language Models are Few-Shot Learners”</a>. It documents GPT-3's autoregressive design and important limitations.</li>
+        <li><strong>Confabulation and verification risk:</strong> National Institute of Standards and Technology (2024), <a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence">AI Risk Management Framework: Generative AI Profile (NIST AI 600-1)</a>.</li>
+      </ul>
+      <p style="font-size:.84rem;color:var(--muted);">These sources support the documented mechanism and risk framing. They do not validate the room activity as a literal model simulation or establish learning outcomes for a particular grade band.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:12px;"><span class="mark"></span>Learning Machines</div>
+      <nav class="footer-links" aria-label="Site"><a href="../index.html">Home</a> · <a href="start-here-after-camp.html">Start here</a> · <a href="tools.html">Tool index</a></nav>
+      <p class="disclosure" style="font-size:.8rem;color:var(--muted);line-height:1.6;max-width:70ch;">A classroom activity you may copy, print, and adapt. Contains no participant names, work, or recordings. This page does not intentionally ask you to submit identifying information; GitHub Pages, Google Fonts, and aggregate GoatCounter analytics process requests under their own terms and settings.</p>
+    </div>
+  </footer>
+  <script src="../assets/analytics.js"></script>
+</body>
+</html>
